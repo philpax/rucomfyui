@@ -21,6 +21,36 @@ impl FromIterator<(u32, WorkflowNode)> for Workflow {
     }
 }
 
+/// A workflow graph constructs a [`Workflow`] by adding nodes to it.
+/// The [`Workflow`] can be retrieved using the [`Into`] implementation or through the [`AsRef`] implementation.
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq, Default)]
+pub struct WorkflowGraph {
+    workflow: Workflow,
+    last_node: WorkflowNodeId,
+}
+impl From<WorkflowGraph> for Workflow {
+    fn from(value: WorkflowGraph) -> Self {
+        value.workflow
+    }
+}
+impl AsRef<Workflow> for WorkflowGraph {
+    fn as_ref(&self) -> &Workflow {
+        &self.workflow
+    }
+}
+impl WorkflowGraph {
+    /// Add a node to the workflow.
+    pub fn add(&mut self, node: impl Into<WorkflowNode>) -> WorkflowNodeId {
+        let id = self.last_node + 1;
+        self.workflow.0.insert(id, node.into());
+        self.last_node = id;
+        id
+    }
+}
+
+/// A workflow node ID.
+pub type WorkflowNodeId = u32;
+
 /// A node in the workflow.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 pub struct WorkflowNode {
@@ -70,7 +100,7 @@ pub enum WorkflowInput {
 }
 impl WorkflowInput {
     /// Create a new slot input.
-    pub fn slot(node_id: u32, slot_index: u32) -> Self {
+    pub fn slot(node_id: WorkflowNodeId, slot_index: u32) -> Self {
         WorkflowInput::Slot(node_id.to_string(), slot_index)
     }
 }

@@ -2,11 +2,14 @@ use super::*;
 
 impl Client {
     /// Send a workflow to the ComfyUI API.
-    pub async fn queue(&self, workflow: &Workflow) -> Result<PromptQueueResult> {
+    pub async fn queue(&self, workflow: impl AsRef<Workflow>) -> Result<PromptQueueResult> {
+        let payload = serde_json::json!({
+            "prompt": workflow.as_ref(),
+        });
         Ok(self
             .client
             .post(format!("{}/prompt", self.api_base))
-            .json(&workflow)
+            .json(&payload)
             .send()
             .await?
             .json()
@@ -14,18 +17,11 @@ impl Client {
     }
 
     /// Helper function that prompts with a workflow, polls for the result, and then returns all output images.
-    pub async fn easy_queue(&self, workflow: &Workflow) -> Result<HashMap<String, Vec<Bytes>>> {
-        let payload = serde_json::json!({
-            "prompt": workflow,
-        });
-        let output: PromptQueueResult = self
-            .client
-            .post(format!("{}/prompt", self.api_base))
-            .json(&payload)
-            .send()
-            .await?
-            .json()
-            .await?;
+    pub async fn easy_queue(
+        &self,
+        workflow: impl AsRef<Workflow>,
+    ) -> Result<HashMap<String, Vec<Bytes>>> {
+        let output = self.queue(workflow).await?;
 
         // Poll for output
         let history_output = loop {
