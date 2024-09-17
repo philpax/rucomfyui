@@ -9,6 +9,8 @@ use thiserror::Error;
 
 mod history;
 mod queue;
+mod workflow;
+pub use workflow::*;
 
 #[derive(Error, Debug)]
 /// Errors that can occur when using the client.
