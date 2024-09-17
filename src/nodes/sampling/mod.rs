@@ -29,6 +29,33 @@ pub struct KSampler<
     ///The amount of denoising applied, lower values will maintain the structure of the initial image allowing for image to image sampling.
     pub denoise: Denoise,
 }
+///Output for [`KSampler`].
+pub struct KSamplerOutput {
+    ///The denoised latent.
+    pub latent: crate::nodes::LatentOut,
+}
+impl<
+    Model: crate::nodes::Model,
+    Seed: crate::nodes::Int,
+    Steps: crate::nodes::Int,
+    Cfg: crate::nodes::Float,
+    Positive: crate::nodes::Conditioning,
+    Negative: crate::nodes::Conditioning,
+    LatentImage: crate::nodes::Latent,
+    Denoise: crate::nodes::Float,
+> crate::nodes::TypedNode
+for KSampler<Model, Seed, Steps, Cfg, Positive, Negative, LatentImage, Denoise> {
+    type Output = KSamplerOutput;
+    fn output(&self) -> Self::Output {
+        Self::Output {
+            latent: crate::nodes::LatentOut(0usize),
+        }
+    }
+    const NAME: &'static str = "KSampler";
+    const DISPLAY_NAME: &'static str = "KSampler";
+    const DESCRIPTION: &'static str = "Uses the provided model, positive and negative conditioning to denoise the latent image.";
+    const CATEGORY: &'static str = "sampling";
+}
 ///**KSampler (Advanced)**
 pub struct KSamplerAdvanced<
     Model: crate::nodes::Model,
@@ -59,4 +86,42 @@ pub struct KSamplerAdvanced<
     pub start_at_step: StartAtStep,
     ///No documentation.
     pub end_at_step: EndAtStep,
+}
+///Output for [`KSamplerAdvanced`].
+pub struct KSamplerAdvancedOutput {
+    ///No documentation.
+    pub latent: crate::nodes::LatentOut,
+}
+impl<
+    Model: crate::nodes::Model,
+    NoiseSeed: crate::nodes::Int,
+    Steps: crate::nodes::Int,
+    Cfg: crate::nodes::Float,
+    Positive: crate::nodes::Conditioning,
+    Negative: crate::nodes::Conditioning,
+    LatentImage: crate::nodes::Latent,
+    StartAtStep: crate::nodes::Int,
+    EndAtStep: crate::nodes::Int,
+> crate::nodes::TypedNode
+for KSamplerAdvanced<
+    Model,
+    NoiseSeed,
+    Steps,
+    Cfg,
+    Positive,
+    Negative,
+    LatentImage,
+    StartAtStep,
+    EndAtStep,
+> {
+    type Output = KSamplerAdvancedOutput;
+    fn output(&self) -> Self::Output {
+        Self::Output {
+            latent: crate::nodes::LatentOut(0usize),
+        }
+    }
+    const NAME: &'static str = "KSamplerAdvanced";
+    const DISPLAY_NAME: &'static str = "KSampler (Advanced)";
+    const DESCRIPTION: &'static str = "";
+    const CATEGORY: &'static str = "sampling";
 }

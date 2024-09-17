@@ -11,7 +11,28 @@ pub struct ClipTextEncodeHunyuanDiT<
     ///No documentation.
     pub bert: Bert,
     ///No documentation.
-    pub mt5xl: Mt5Xl,
+    pub mt_5_xl: Mt5Xl,
+}
+///Output for [`ClipTextEncodeHunyuanDiT`].
+pub struct ClipTextEncodeHunyuanDiTOutput {
+    ///No documentation.
+    pub conditioning: crate::nodes::ConditioningOut,
+}
+impl<
+    Clip: crate::nodes::Clip,
+    Bert: crate::nodes::String,
+    Mt5Xl: crate::nodes::String,
+> crate::nodes::TypedNode for ClipTextEncodeHunyuanDiT<Clip, Bert, Mt5Xl> {
+    type Output = ClipTextEncodeHunyuanDiTOutput;
+    fn output(&self) -> Self::Output {
+        Self::Output {
+            conditioning: crate::nodes::ConditioningOut(0usize),
+        }
+    }
+    const NAME: &'static str = "CLIPTextEncodeHunyuanDiT";
+    const DISPLAY_NAME: &'static str = "CLIPTextEncodeHunyuanDiT";
+    const DESCRIPTION: &'static str = "";
+    const CATEGORY: &'static str = "advanced/conditioning";
 }
 ///**CLIPTextEncodeSD3**
 pub struct ClipTextEncodeSd3<
@@ -27,7 +48,29 @@ pub struct ClipTextEncodeSd3<
     ///No documentation.
     pub clip_g: ClipG,
     ///No documentation.
-    pub t5xxl: T5Xxl,
+    pub t_5_xxl: T5Xxl,
+}
+///Output for [`ClipTextEncodeSd3`].
+pub struct ClipTextEncodeSd3Output {
+    ///No documentation.
+    pub conditioning: crate::nodes::ConditioningOut,
+}
+impl<
+    Clip: crate::nodes::Clip,
+    ClipL: crate::nodes::String,
+    ClipG: crate::nodes::String,
+    T5Xxl: crate::nodes::String,
+> crate::nodes::TypedNode for ClipTextEncodeSd3<Clip, ClipL, ClipG, T5Xxl> {
+    type Output = ClipTextEncodeSd3Output;
+    fn output(&self) -> Self::Output {
+        Self::Output {
+            conditioning: crate::nodes::ConditioningOut(0usize),
+        }
+    }
+    const NAME: &'static str = "CLIPTextEncodeSD3";
+    const DISPLAY_NAME: &'static str = "CLIPTextEncodeSD3";
+    const DESCRIPTION: &'static str = "";
+    const CATEGORY: &'static str = "advanced/conditioning";
 }
 ///**CLIPTextEncodeSDXL**
 pub struct ClipTextEncodeSdxl<
@@ -60,6 +103,44 @@ pub struct ClipTextEncodeSdxl<
     ///No documentation.
     pub text_l: TextL,
 }
+///Output for [`ClipTextEncodeSdxl`].
+pub struct ClipTextEncodeSdxlOutput {
+    ///No documentation.
+    pub conditioning: crate::nodes::ConditioningOut,
+}
+impl<
+    Width: crate::nodes::Int,
+    Height: crate::nodes::Int,
+    CropW: crate::nodes::Int,
+    CropH: crate::nodes::Int,
+    TargetWidth: crate::nodes::Int,
+    TargetHeight: crate::nodes::Int,
+    TextG: crate::nodes::String,
+    Clip: crate::nodes::Clip,
+    TextL: crate::nodes::String,
+> crate::nodes::TypedNode
+for ClipTextEncodeSdxl<
+    Width,
+    Height,
+    CropW,
+    CropH,
+    TargetWidth,
+    TargetHeight,
+    TextG,
+    Clip,
+    TextL,
+> {
+    type Output = ClipTextEncodeSdxlOutput;
+    fn output(&self) -> Self::Output {
+        Self::Output {
+            conditioning: crate::nodes::ConditioningOut(0usize),
+        }
+    }
+    const NAME: &'static str = "CLIPTextEncodeSDXL";
+    const DISPLAY_NAME: &'static str = "CLIPTextEncodeSDXL";
+    const DESCRIPTION: &'static str = "";
+    const CATEGORY: &'static str = "advanced/conditioning";
+}
 ///**CLIPTextEncodeSDXLRefiner**
 pub struct ClipTextEncodeSdxlRefiner<
     Ascore: crate::nodes::Float,
@@ -79,6 +160,30 @@ pub struct ClipTextEncodeSdxlRefiner<
     ///No documentation.
     pub clip: Clip,
 }
+///Output for [`ClipTextEncodeSdxlRefiner`].
+pub struct ClipTextEncodeSdxlRefinerOutput {
+    ///No documentation.
+    pub conditioning: crate::nodes::ConditioningOut,
+}
+impl<
+    Ascore: crate::nodes::Float,
+    Width: crate::nodes::Int,
+    Height: crate::nodes::Int,
+    Text: crate::nodes::String,
+    Clip: crate::nodes::Clip,
+> crate::nodes::TypedNode
+for ClipTextEncodeSdxlRefiner<Ascore, Width, Height, Text, Clip> {
+    type Output = ClipTextEncodeSdxlRefinerOutput;
+    fn output(&self) -> Self::Output {
+        Self::Output {
+            conditioning: crate::nodes::ConditioningOut(0usize),
+        }
+    }
+    const NAME: &'static str = "CLIPTextEncodeSDXLRefiner";
+    const DISPLAY_NAME: &'static str = "CLIPTextEncodeSDXLRefiner";
+    const DESCRIPTION: &'static str = "";
+    const CATEGORY: &'static str = "advanced/conditioning";
+}
 ///**ConditioningSetTimestepRange**
 pub struct ConditioningSetTimestepRange<
     Conditioning: crate::nodes::Conditioning,
@@ -92,8 +197,47 @@ pub struct ConditioningSetTimestepRange<
     ///No documentation.
     pub end: End,
 }
+///Output for [`ConditioningSetTimestepRange`].
+pub struct ConditioningSetTimestepRangeOutput {
+    ///No documentation.
+    pub conditioning: crate::nodes::ConditioningOut,
+}
+impl<
+    Conditioning: crate::nodes::Conditioning,
+    Start: crate::nodes::Float,
+    End: crate::nodes::Float,
+> crate::nodes::TypedNode for ConditioningSetTimestepRange<Conditioning, Start, End> {
+    type Output = ConditioningSetTimestepRangeOutput;
+    fn output(&self) -> Self::Output {
+        Self::Output {
+            conditioning: crate::nodes::ConditioningOut(0usize),
+        }
+    }
+    const NAME: &'static str = "ConditioningSetTimestepRange";
+    const DISPLAY_NAME: &'static str = "ConditioningSetTimestepRange";
+    const DESCRIPTION: &'static str = "";
+    const CATEGORY: &'static str = "advanced/conditioning";
+}
 ///**ConditioningZeroOut**
 pub struct ConditioningZeroOut<Conditioning: crate::nodes::Conditioning> {
     ///No documentation.
     pub conditioning: Conditioning,
+}
+///Output for [`ConditioningZeroOut`].
+pub struct ConditioningZeroOutOutput {
+    ///No documentation.
+    pub conditioning: crate::nodes::ConditioningOut,
+}
+impl<Conditioning: crate::nodes::Conditioning> crate::nodes::TypedNode
+for ConditioningZeroOut<Conditioning> {
+    type Output = ConditioningZeroOutOutput;
+    fn output(&self) -> Self::Output {
+        Self::Output {
+            conditioning: crate::nodes::ConditioningOut(0usize),
+        }
+    }
+    const NAME: &'static str = "ConditioningZeroOut";
+    const DISPLAY_NAME: &'static str = "ConditioningZeroOut";
+    const DESCRIPTION: &'static str = "";
+    const CATEGORY: &'static str = "advanced/conditioning";
 }

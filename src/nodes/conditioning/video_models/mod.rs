@@ -30,3 +30,47 @@ pub struct SvdImg2VidConditioning<
     ///No documentation.
     pub augmentation_level: AugmentationLevel,
 }
+///Output for [`SvdImg2VidConditioning`].
+pub struct SvdImg2VidConditioningOutput {
+    ///No documentation.
+    pub positive: crate::nodes::ConditioningOut,
+    ///No documentation.
+    pub negative: crate::nodes::ConditioningOut,
+    ///No documentation.
+    pub latent: crate::nodes::LatentOut,
+}
+impl<
+    ClipVision: crate::nodes::ClipVision,
+    InitImage: crate::nodes::Image,
+    Vae: crate::nodes::Vae,
+    Width: crate::nodes::Int,
+    Height: crate::nodes::Int,
+    VideoFrames: crate::nodes::Int,
+    MotionBucketId: crate::nodes::Int,
+    Fps: crate::nodes::Int,
+    AugmentationLevel: crate::nodes::Float,
+> crate::nodes::TypedNode
+for SvdImg2VidConditioning<
+    ClipVision,
+    InitImage,
+    Vae,
+    Width,
+    Height,
+    VideoFrames,
+    MotionBucketId,
+    Fps,
+    AugmentationLevel,
+> {
+    type Output = SvdImg2VidConditioningOutput;
+    fn output(&self) -> Self::Output {
+        Self::Output {
+            positive: crate::nodes::ConditioningOut(0usize),
+            negative: crate::nodes::ConditioningOut(1usize),
+            latent: crate::nodes::LatentOut(2usize),
+        }
+    }
+    const NAME: &'static str = "SVD_img2vid_Conditioning";
+    const DISPLAY_NAME: &'static str = "SVD_img2vid_Conditioning";
+    const DESCRIPTION: &'static str = "";
+    const CATEGORY: &'static str = "conditioning/video_models";
+}

@@ -1,25 +1,22 @@
-//!upscale_diffusion
-///**SD_4XUpscale_Conditioning**
-pub struct Sd4XUpscaleConditioning<
-    Images: crate::nodes::Image,
+//!instructpix2pix
+///**InstructPixToPixConditioning**
+pub struct InstructPixToPixConditioning<
     Positive: crate::nodes::Conditioning,
     Negative: crate::nodes::Conditioning,
-    ScaleRatio: crate::nodes::Float,
-    NoiseAugmentation: crate::nodes::Float,
+    Vae: crate::nodes::Vae,
+    Pixels: crate::nodes::Image,
 > {
-    ///No documentation.
-    pub images: Images,
     ///No documentation.
     pub positive: Positive,
     ///No documentation.
     pub negative: Negative,
     ///No documentation.
-    pub scale_ratio: ScaleRatio,
+    pub vae: Vae,
     ///No documentation.
-    pub noise_augmentation: NoiseAugmentation,
+    pub pixels: Pixels,
 }
-///Output for [`Sd4XUpscaleConditioning`].
-pub struct Sd4XUpscaleConditioningOutput {
+///Output for [`InstructPixToPixConditioning`].
+pub struct InstructPixToPixConditioningOutput {
     ///No documentation.
     pub positive: crate::nodes::ConditioningOut,
     ///No documentation.
@@ -28,14 +25,13 @@ pub struct Sd4XUpscaleConditioningOutput {
     pub latent: crate::nodes::LatentOut,
 }
 impl<
-    Images: crate::nodes::Image,
     Positive: crate::nodes::Conditioning,
     Negative: crate::nodes::Conditioning,
-    ScaleRatio: crate::nodes::Float,
-    NoiseAugmentation: crate::nodes::Float,
+    Vae: crate::nodes::Vae,
+    Pixels: crate::nodes::Image,
 > crate::nodes::TypedNode
-for Sd4XUpscaleConditioning<Images, Positive, Negative, ScaleRatio, NoiseAugmentation> {
-    type Output = Sd4XUpscaleConditioningOutput;
+for InstructPixToPixConditioning<Positive, Negative, Vae, Pixels> {
+    type Output = InstructPixToPixConditioningOutput;
     fn output(&self) -> Self::Output {
         Self::Output {
             positive: crate::nodes::ConditioningOut(0usize),
@@ -43,8 +39,8 @@ for Sd4XUpscaleConditioning<Images, Positive, Negative, ScaleRatio, NoiseAugment
             latent: crate::nodes::LatentOut(2usize),
         }
     }
-    const NAME: &'static str = "SD_4XUpscale_Conditioning";
-    const DISPLAY_NAME: &'static str = "SD_4XUpscale_Conditioning";
+    const NAME: &'static str = "InstructPixToPixConditioning";
+    const DISPLAY_NAME: &'static str = "InstructPixToPixConditioning";
     const DESCRIPTION: &'static str = "";
-    const CATEGORY: &'static str = "conditioning/upscale_diffusion";
+    const CATEGORY: &'static str = "conditioning/instructpix2pix";
 }

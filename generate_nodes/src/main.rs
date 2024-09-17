@@ -53,11 +53,18 @@ fn write_category_tree((name, tree): (&str, &CategoryTree), directory: &Path) ->
         let types = NodeType::ALL
             .iter()
             .map(|ty| {
-                let name = name_to_ident(&format!("{ty:?}"), true)?;
                 let doc = format!("**{ty:?}**");
+                let name = name_to_ident(&format!("{ty:?}"), true)?;
+
+                let output_doc = format!("A node output of type [`{ty:?}`].");
+                let output_name = name_to_ident(&format!("{ty:?}Out"), true)?;
                 Ok(quote! {
                     #[doc = #doc]
                     pub trait #name {}
+
+                    #[doc = #output_doc]
+                    pub struct #output_name(pub usize);
+                    impl #name for #output_name {}
                 })
             })
             .collect::<Result<Vec<_>>>()?;
@@ -65,6 +72,22 @@ fn write_category_tree((name, tree): (&str, &CategoryTree), directory: &Path) ->
         (
             "Root module".to_string(),
             quote! {
+                /// Implemented for all typed nodes. Provides the node's output and metadata.
+                pub trait TypedNode {
+                    /// The type of the node's output.
+                    type Output;
+                    /// Returns the node's output.
+                    fn output(&self) -> Self::Output;
+
+                    /// The name of the node.
+                    const NAME: &'static str;
+                    /// The display name of the node.
+                    const DISPLAY_NAME: &'static str;
+                    /// The description of the node.
+                    const DESCRIPTION: &'static str;
+                    /// The category of the node.
+                    const CATEGORY: &'static str;
+                }
                 #(#types)*
             },
         )
@@ -90,33 +113,46 @@ fn write_category_tree((name, tree): (&str, &CategoryTree), directory: &Path) ->
 }
 
 fn write_node(node: &Node) -> Result<TokenStream> {
-    let name = name_to_ident(&node.name, true)?;
-    let mut doc = format!("**{}**", node.display_name);
-    if !node.description.is_empty() {
-        doc.push_str("\n\n");
-        doc.push_str(&node.description);
-    }
+    let (inputs_name, processed_inputs, inputs) = write_node_inputs(node)?;
+    let outputs = write_node_outputs(node, &inputs_name, processed_inputs)?;
 
-    struct ProcessedInput<'a> {
+    Ok(quote! {
+        #inputs
+        #outputs
+    })
+}
+
+struct ProcessedInput<'a> {
+    name: &'a str,
+    tooltip: Option<&'a str>,
+    ty: NodeType,
+    generic_name: syn::Ident,
+    generic_ty: syn::Ident,
+    optional: bool,
+}
+
+fn write_node_inputs(node: &Node) -> Result<(syn::Ident, Vec<ProcessedInput>, TokenStream)> {
+    fn process_input<'a>(
         name: &'a str,
-        tooltip: Option<&'a str>,
-        ty: NodeType,
-        generic_name: syn::Ident,
+        input: &'a Input,
+        optional: bool,
+    ) -> Option<ProcessedInput<'a>> {
+        let ty = input.as_type()?;
+        Some(ProcessedInput {
+            name,
+            tooltip: input.tooltip(),
+            ty,
+            generic_name: name_to_ident(name, true).ok()?,
+            generic_ty: name_to_ident(&format!("{:?}", ty), true).ok()?,
+            optional,
+        })
     }
 
     let required_inputs = node
         .input_order
         .required
         .iter()
-        .flat_map(|name| {
-            let input = node.input.required.get(name)?;
-            Some(ProcessedInput {
-                name: name.as_str(),
-                tooltip: input.tooltip(),
-                ty: input.as_type()?,
-                generic_name: name_to_ident(name, true).ok()?,
-            })
-        })
+        .flat_map(|name| process_input(name, node.input.required.get(name)?, false))
         .collect::<Vec<_>>();
     let optional_inputs = node
         .input_order
@@ -125,49 +161,169 @@ fn write_node(node: &Node) -> Result<TokenStream> {
         .map(|o| {
             o.iter()
                 .flat_map(|name| {
-                    let input = node.input.optional.as_ref()?.get(name)?;
-                    Some(ProcessedInput {
-                        name: name.as_str(),
-                        tooltip: input.tooltip(),
-                        ty: input.as_type()?,
-                        generic_name: name_to_ident(name, true).ok()?,
-                    })
+                    process_input(name, node.input.optional.as_ref()?.get(name)?, true)
                 })
                 .collect::<Vec<_>>()
         })
         .unwrap_or_default();
 
-    let input_generics = required_inputs
+    let processed_inputs = required_inputs
+        .into_iter()
+        .chain(optional_inputs.into_iter())
+        .collect::<Vec<_>>();
+
+    let input_generics = processed_inputs
         .iter()
-        .chain(optional_inputs.iter())
         .map(|input| {
             let generic_name = &input.generic_name;
-            let ty = name_to_ident(&format!("{:?}", input.ty), false)?;
+            let ty = &input.generic_ty;
+            let default = if input.optional {
+                let output_struct_name = input.ty.output_struct_ident();
+                quote! { = crate :: nodes :: #output_struct_name }
+            } else {
+                quote! {}
+            };
             Ok(quote! {
-                #generic_name: crate :: nodes :: #ty
+                #generic_name: crate :: nodes :: #ty #default
             })
         })
         .collect::<Result<Vec<_>>>()?;
 
-    let fields = required_inputs
+    let fields = processed_inputs
         .iter()
-        .chain(optional_inputs.iter())
         .map(|input| {
             let name = name_to_ident(input.name, false)?;
             let generic_name = &input.generic_name;
             let doc = input.tooltip.unwrap_or("No documentation.");
+            let ty = if input.optional {
+                quote! {
+                    Option<#generic_name>
+                }
+            } else {
+                quote! { #generic_name }
+            };
             Ok(quote! {
                 #[doc = #doc]
-                pub #name: #generic_name
+                pub #name: #ty
             })
         })
         .collect::<Result<Vec<_>>>()?;
 
+    let name = name_to_ident(&node.name, true)?;
+    let mut doc = format!("**{}**", node.display_name);
+    if !node.description.is_empty() {
+        doc.push_str("\n\n");
+        doc.push_str(&node.description);
+    }
+
+    Ok((
+        name.clone(),
+        processed_inputs,
+        quote! {
+            #[doc = #doc]
+            pub struct #name < #(#input_generics),* > {
+                #(#fields),*
+            }
+        },
+    ))
+}
+
+fn write_node_outputs(
+    node: &Node,
+    inputs_name: &syn::Ident,
+    processed_inputs: Vec<ProcessedInput<'_>>,
+) -> Result<TokenStream> {
+    struct ProcessedOutput<'a> {
+        name: &'a str,
+        ty: NodeType,
+        tooltip: Option<&'a str>,
+    }
+
+    let outputs = node
+        .output
+        .iter()
+        .zip(node.output_name.iter())
+        .enumerate()
+        .map(|(i, (ty, name))| ProcessedOutput {
+            name: name.as_str(),
+            ty: *ty,
+            tooltip: node.output_tooltips.get(i).map(|s| s.as_str()),
+        })
+        .collect::<Vec<_>>();
+
+    let name = name_to_ident(&format!("{}Output", node.name), true)?;
+    let doc = format!("Output for [`{}`].", inputs_name);
+
+    let fields = outputs
+        .iter()
+        .map(|output| {
+            let name = name_to_ident(output.name, false)?;
+            let ty = output.ty.output_struct_ident();
+            let doc = output.tooltip.unwrap_or("No documentation.");
+            Ok(quote! {
+                #[doc = #doc]
+                pub #name: crate :: nodes :: #ty
+            })
+        })
+        .collect::<Result<Vec<_>>>()?;
+
+    let typed_node = {
+        let outputs_name = name.clone();
+        let node_name = node.name.as_str();
+        let display_name = node.display_name.as_str();
+        let description = node.description.as_str();
+        let category = node.category.as_str();
+
+        let fields = outputs
+            .iter()
+            .enumerate()
+            .map(|(i, output)| {
+                let name = name_to_ident(output.name, false)?;
+                let ty = output.ty.output_struct_ident();
+                Ok(quote! {
+                    #name: crate :: nodes :: #ty (#i)
+                })
+            })
+            .collect::<Result<Vec<_>>>()?;
+
+        let generic_list = processed_inputs.iter().map(|input| {
+            let generic_name = &input.generic_name;
+            let generic_ty = &input.generic_ty;
+            quote! {
+                #generic_name: crate :: nodes :: #generic_ty
+            }
+        });
+
+        let generic_instantiation_list = processed_inputs.iter().map(|input| {
+            let generic_name = &input.generic_name;
+            quote! {
+                #generic_name
+            }
+        });
+
+        quote! {
+            impl < #(#generic_list),* > crate :: nodes :: TypedNode for #inputs_name < #(#generic_instantiation_list),* >  {
+                type Output = #outputs_name;
+                fn output(&self) -> Self::Output {
+                    Self::Output {
+                        #(#fields),*
+                    }
+                }
+
+                const NAME: &'static str = #node_name;
+                const DISPLAY_NAME: &'static str = #display_name;
+                const DESCRIPTION: &'static str = #description;
+                const CATEGORY: &'static str = #category;
+            }
+        }
+    };
+
     Ok(quote! {
         #[doc = #doc]
-        pub struct #name < #(#input_generics),* > {
+        pub struct #name {
             #(#fields),*
         }
+        #typed_node
     })
 }
 
@@ -179,6 +335,8 @@ fn name_to_ident(name: &str, pascal_case: bool) -> Result<syn::Ident> {
 
     if pascal_case {
         name = name.to_case(Case::UpperCamel);
+    } else {
+        name = name.to_case(Case::Snake);
     }
 
     std::panic::catch_unwind(|| quote::format_ident!("{name}"))
@@ -350,4 +508,8 @@ impl NodeType {
         Self::Vae,
         Self::Webcam,
     ];
+
+    fn output_struct_ident(&self) -> syn::Ident {
+        name_to_ident(&format!("{:?}Out", self), true).unwrap()
+    }
 }

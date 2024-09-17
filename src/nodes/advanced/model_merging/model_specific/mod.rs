@@ -68,135 +68,285 @@ pub struct ModelMergeFlux1<
     FinalLayer: crate::nodes::Float,
 > {
     ///No documentation.
-    pub model1: Model1,
+    pub model_1: Model1,
     ///No documentation.
-    pub model2: Model2,
+    pub model_2: Model2,
     ///No documentation.
-    pub img_in_: ImgIn,
+    pub img_in: ImgIn,
     ///No documentation.
-    pub time_in_: TimeIn,
+    pub time_in: TimeIn,
     ///No documentation.
     pub guidance_in: GuidanceIn,
     ///No documentation.
-    pub vector_in_: VectorIn,
+    pub vector_in: VectorIn,
     ///No documentation.
-    pub txt_in_: TxtIn,
+    pub txt_in: TxtIn,
     ///No documentation.
-    pub double_blocks_0_: DoubleBlocks0,
+    pub double_blocks_0: DoubleBlocks0,
     ///No documentation.
-    pub double_blocks_1_: DoubleBlocks1,
+    pub double_blocks_1: DoubleBlocks1,
     ///No documentation.
-    pub double_blocks_2_: DoubleBlocks2,
+    pub double_blocks_2: DoubleBlocks2,
     ///No documentation.
-    pub double_blocks_3_: DoubleBlocks3,
+    pub double_blocks_3: DoubleBlocks3,
     ///No documentation.
-    pub double_blocks_4_: DoubleBlocks4,
+    pub double_blocks_4: DoubleBlocks4,
     ///No documentation.
-    pub double_blocks_5_: DoubleBlocks5,
+    pub double_blocks_5: DoubleBlocks5,
     ///No documentation.
-    pub double_blocks_6_: DoubleBlocks6,
+    pub double_blocks_6: DoubleBlocks6,
     ///No documentation.
-    pub double_blocks_7_: DoubleBlocks7,
+    pub double_blocks_7: DoubleBlocks7,
     ///No documentation.
-    pub double_blocks_8_: DoubleBlocks8,
+    pub double_blocks_8: DoubleBlocks8,
     ///No documentation.
-    pub double_blocks_9_: DoubleBlocks9,
+    pub double_blocks_9: DoubleBlocks9,
     ///No documentation.
-    pub double_blocks_10_: DoubleBlocks10,
+    pub double_blocks_10: DoubleBlocks10,
     ///No documentation.
-    pub double_blocks_11_: DoubleBlocks11,
+    pub double_blocks_11: DoubleBlocks11,
     ///No documentation.
-    pub double_blocks_12_: DoubleBlocks12,
+    pub double_blocks_12: DoubleBlocks12,
     ///No documentation.
-    pub double_blocks_13_: DoubleBlocks13,
+    pub double_blocks_13: DoubleBlocks13,
     ///No documentation.
-    pub double_blocks_14_: DoubleBlocks14,
+    pub double_blocks_14: DoubleBlocks14,
     ///No documentation.
-    pub double_blocks_15_: DoubleBlocks15,
+    pub double_blocks_15: DoubleBlocks15,
     ///No documentation.
-    pub double_blocks_16_: DoubleBlocks16,
+    pub double_blocks_16: DoubleBlocks16,
     ///No documentation.
-    pub double_blocks_17_: DoubleBlocks17,
+    pub double_blocks_17: DoubleBlocks17,
     ///No documentation.
-    pub double_blocks_18_: DoubleBlocks18,
+    pub double_blocks_18: DoubleBlocks18,
     ///No documentation.
-    pub single_blocks_0_: SingleBlocks0,
+    pub single_blocks_0: SingleBlocks0,
     ///No documentation.
-    pub single_blocks_1_: SingleBlocks1,
+    pub single_blocks_1: SingleBlocks1,
     ///No documentation.
-    pub single_blocks_2_: SingleBlocks2,
+    pub single_blocks_2: SingleBlocks2,
     ///No documentation.
-    pub single_blocks_3_: SingleBlocks3,
+    pub single_blocks_3: SingleBlocks3,
     ///No documentation.
-    pub single_blocks_4_: SingleBlocks4,
+    pub single_blocks_4: SingleBlocks4,
     ///No documentation.
-    pub single_blocks_5_: SingleBlocks5,
+    pub single_blocks_5: SingleBlocks5,
     ///No documentation.
-    pub single_blocks_6_: SingleBlocks6,
+    pub single_blocks_6: SingleBlocks6,
     ///No documentation.
-    pub single_blocks_7_: SingleBlocks7,
+    pub single_blocks_7: SingleBlocks7,
     ///No documentation.
-    pub single_blocks_8_: SingleBlocks8,
+    pub single_blocks_8: SingleBlocks8,
     ///No documentation.
-    pub single_blocks_9_: SingleBlocks9,
+    pub single_blocks_9: SingleBlocks9,
     ///No documentation.
-    pub single_blocks_10_: SingleBlocks10,
+    pub single_blocks_10: SingleBlocks10,
     ///No documentation.
-    pub single_blocks_11_: SingleBlocks11,
+    pub single_blocks_11: SingleBlocks11,
     ///No documentation.
-    pub single_blocks_12_: SingleBlocks12,
+    pub single_blocks_12: SingleBlocks12,
     ///No documentation.
-    pub single_blocks_13_: SingleBlocks13,
+    pub single_blocks_13: SingleBlocks13,
     ///No documentation.
-    pub single_blocks_14_: SingleBlocks14,
+    pub single_blocks_14: SingleBlocks14,
     ///No documentation.
-    pub single_blocks_15_: SingleBlocks15,
+    pub single_blocks_15: SingleBlocks15,
     ///No documentation.
-    pub single_blocks_16_: SingleBlocks16,
+    pub single_blocks_16: SingleBlocks16,
     ///No documentation.
-    pub single_blocks_17_: SingleBlocks17,
+    pub single_blocks_17: SingleBlocks17,
     ///No documentation.
-    pub single_blocks_18_: SingleBlocks18,
+    pub single_blocks_18: SingleBlocks18,
     ///No documentation.
-    pub single_blocks_19_: SingleBlocks19,
+    pub single_blocks_19: SingleBlocks19,
     ///No documentation.
-    pub single_blocks_20_: SingleBlocks20,
+    pub single_blocks_20: SingleBlocks20,
     ///No documentation.
-    pub single_blocks_21_: SingleBlocks21,
+    pub single_blocks_21: SingleBlocks21,
     ///No documentation.
-    pub single_blocks_22_: SingleBlocks22,
+    pub single_blocks_22: SingleBlocks22,
     ///No documentation.
-    pub single_blocks_23_: SingleBlocks23,
+    pub single_blocks_23: SingleBlocks23,
     ///No documentation.
-    pub single_blocks_24_: SingleBlocks24,
+    pub single_blocks_24: SingleBlocks24,
     ///No documentation.
-    pub single_blocks_25_: SingleBlocks25,
+    pub single_blocks_25: SingleBlocks25,
     ///No documentation.
-    pub single_blocks_26_: SingleBlocks26,
+    pub single_blocks_26: SingleBlocks26,
     ///No documentation.
-    pub single_blocks_27_: SingleBlocks27,
+    pub single_blocks_27: SingleBlocks27,
     ///No documentation.
-    pub single_blocks_28_: SingleBlocks28,
+    pub single_blocks_28: SingleBlocks28,
     ///No documentation.
-    pub single_blocks_29_: SingleBlocks29,
+    pub single_blocks_29: SingleBlocks29,
     ///No documentation.
-    pub single_blocks_30_: SingleBlocks30,
+    pub single_blocks_30: SingleBlocks30,
     ///No documentation.
-    pub single_blocks_31_: SingleBlocks31,
+    pub single_blocks_31: SingleBlocks31,
     ///No documentation.
-    pub single_blocks_32_: SingleBlocks32,
+    pub single_blocks_32: SingleBlocks32,
     ///No documentation.
-    pub single_blocks_33_: SingleBlocks33,
+    pub single_blocks_33: SingleBlocks33,
     ///No documentation.
-    pub single_blocks_34_: SingleBlocks34,
+    pub single_blocks_34: SingleBlocks34,
     ///No documentation.
-    pub single_blocks_35_: SingleBlocks35,
+    pub single_blocks_35: SingleBlocks35,
     ///No documentation.
-    pub single_blocks_36_: SingleBlocks36,
+    pub single_blocks_36: SingleBlocks36,
     ///No documentation.
-    pub single_blocks_37_: SingleBlocks37,
+    pub single_blocks_37: SingleBlocks37,
     ///No documentation.
-    pub final_layer_: FinalLayer,
+    pub final_layer: FinalLayer,
+}
+///Output for [`ModelMergeFlux1`].
+pub struct ModelMergeFlux1Output {
+    ///No documentation.
+    pub model: crate::nodes::ModelOut,
+}
+impl<
+    Model1: crate::nodes::Model,
+    Model2: crate::nodes::Model,
+    ImgIn: crate::nodes::Float,
+    TimeIn: crate::nodes::Float,
+    GuidanceIn: crate::nodes::Float,
+    VectorIn: crate::nodes::Float,
+    TxtIn: crate::nodes::Float,
+    DoubleBlocks0: crate::nodes::Float,
+    DoubleBlocks1: crate::nodes::Float,
+    DoubleBlocks2: crate::nodes::Float,
+    DoubleBlocks3: crate::nodes::Float,
+    DoubleBlocks4: crate::nodes::Float,
+    DoubleBlocks5: crate::nodes::Float,
+    DoubleBlocks6: crate::nodes::Float,
+    DoubleBlocks7: crate::nodes::Float,
+    DoubleBlocks8: crate::nodes::Float,
+    DoubleBlocks9: crate::nodes::Float,
+    DoubleBlocks10: crate::nodes::Float,
+    DoubleBlocks11: crate::nodes::Float,
+    DoubleBlocks12: crate::nodes::Float,
+    DoubleBlocks13: crate::nodes::Float,
+    DoubleBlocks14: crate::nodes::Float,
+    DoubleBlocks15: crate::nodes::Float,
+    DoubleBlocks16: crate::nodes::Float,
+    DoubleBlocks17: crate::nodes::Float,
+    DoubleBlocks18: crate::nodes::Float,
+    SingleBlocks0: crate::nodes::Float,
+    SingleBlocks1: crate::nodes::Float,
+    SingleBlocks2: crate::nodes::Float,
+    SingleBlocks3: crate::nodes::Float,
+    SingleBlocks4: crate::nodes::Float,
+    SingleBlocks5: crate::nodes::Float,
+    SingleBlocks6: crate::nodes::Float,
+    SingleBlocks7: crate::nodes::Float,
+    SingleBlocks8: crate::nodes::Float,
+    SingleBlocks9: crate::nodes::Float,
+    SingleBlocks10: crate::nodes::Float,
+    SingleBlocks11: crate::nodes::Float,
+    SingleBlocks12: crate::nodes::Float,
+    SingleBlocks13: crate::nodes::Float,
+    SingleBlocks14: crate::nodes::Float,
+    SingleBlocks15: crate::nodes::Float,
+    SingleBlocks16: crate::nodes::Float,
+    SingleBlocks17: crate::nodes::Float,
+    SingleBlocks18: crate::nodes::Float,
+    SingleBlocks19: crate::nodes::Float,
+    SingleBlocks20: crate::nodes::Float,
+    SingleBlocks21: crate::nodes::Float,
+    SingleBlocks22: crate::nodes::Float,
+    SingleBlocks23: crate::nodes::Float,
+    SingleBlocks24: crate::nodes::Float,
+    SingleBlocks25: crate::nodes::Float,
+    SingleBlocks26: crate::nodes::Float,
+    SingleBlocks27: crate::nodes::Float,
+    SingleBlocks28: crate::nodes::Float,
+    SingleBlocks29: crate::nodes::Float,
+    SingleBlocks30: crate::nodes::Float,
+    SingleBlocks31: crate::nodes::Float,
+    SingleBlocks32: crate::nodes::Float,
+    SingleBlocks33: crate::nodes::Float,
+    SingleBlocks34: crate::nodes::Float,
+    SingleBlocks35: crate::nodes::Float,
+    SingleBlocks36: crate::nodes::Float,
+    SingleBlocks37: crate::nodes::Float,
+    FinalLayer: crate::nodes::Float,
+> crate::nodes::TypedNode
+for ModelMergeFlux1<
+    Model1,
+    Model2,
+    ImgIn,
+    TimeIn,
+    GuidanceIn,
+    VectorIn,
+    TxtIn,
+    DoubleBlocks0,
+    DoubleBlocks1,
+    DoubleBlocks2,
+    DoubleBlocks3,
+    DoubleBlocks4,
+    DoubleBlocks5,
+    DoubleBlocks6,
+    DoubleBlocks7,
+    DoubleBlocks8,
+    DoubleBlocks9,
+    DoubleBlocks10,
+    DoubleBlocks11,
+    DoubleBlocks12,
+    DoubleBlocks13,
+    DoubleBlocks14,
+    DoubleBlocks15,
+    DoubleBlocks16,
+    DoubleBlocks17,
+    DoubleBlocks18,
+    SingleBlocks0,
+    SingleBlocks1,
+    SingleBlocks2,
+    SingleBlocks3,
+    SingleBlocks4,
+    SingleBlocks5,
+    SingleBlocks6,
+    SingleBlocks7,
+    SingleBlocks8,
+    SingleBlocks9,
+    SingleBlocks10,
+    SingleBlocks11,
+    SingleBlocks12,
+    SingleBlocks13,
+    SingleBlocks14,
+    SingleBlocks15,
+    SingleBlocks16,
+    SingleBlocks17,
+    SingleBlocks18,
+    SingleBlocks19,
+    SingleBlocks20,
+    SingleBlocks21,
+    SingleBlocks22,
+    SingleBlocks23,
+    SingleBlocks24,
+    SingleBlocks25,
+    SingleBlocks26,
+    SingleBlocks27,
+    SingleBlocks28,
+    SingleBlocks29,
+    SingleBlocks30,
+    SingleBlocks31,
+    SingleBlocks32,
+    SingleBlocks33,
+    SingleBlocks34,
+    SingleBlocks35,
+    SingleBlocks36,
+    SingleBlocks37,
+    FinalLayer,
+> {
+    type Output = ModelMergeFlux1Output;
+    fn output(&self) -> Self::Output {
+        Self::Output {
+            model: crate::nodes::ModelOut(0usize),
+        }
+    }
+    const NAME: &'static str = "ModelMergeFlux1";
+    const DISPLAY_NAME: &'static str = "ModelMergeFlux1";
+    const DESCRIPTION: &'static str = "";
+    const CATEGORY: &'static str = "advanced/model_merging/model_specific";
 }
 ///**ModelMergeSD1**
 pub struct ModelMergeSd1<
@@ -234,69 +384,153 @@ pub struct ModelMergeSd1<
     Out: crate::nodes::Float,
 > {
     ///No documentation.
-    pub model1: Model1,
+    pub model_1: Model1,
     ///No documentation.
-    pub model2: Model2,
+    pub model_2: Model2,
     ///No documentation.
-    pub time_embed_: TimeEmbed,
+    pub time_embed: TimeEmbed,
     ///No documentation.
-    pub label_emb_: LabelEmb,
+    pub label_emb: LabelEmb,
     ///No documentation.
-    pub input_blocks_0_: InputBlocks0,
+    pub input_blocks_0: InputBlocks0,
     ///No documentation.
-    pub input_blocks_1_: InputBlocks1,
+    pub input_blocks_1: InputBlocks1,
     ///No documentation.
-    pub input_blocks_2_: InputBlocks2,
+    pub input_blocks_2: InputBlocks2,
     ///No documentation.
-    pub input_blocks_3_: InputBlocks3,
+    pub input_blocks_3: InputBlocks3,
     ///No documentation.
-    pub input_blocks_4_: InputBlocks4,
+    pub input_blocks_4: InputBlocks4,
     ///No documentation.
-    pub input_blocks_5_: InputBlocks5,
+    pub input_blocks_5: InputBlocks5,
     ///No documentation.
-    pub input_blocks_6_: InputBlocks6,
+    pub input_blocks_6: InputBlocks6,
     ///No documentation.
-    pub input_blocks_7_: InputBlocks7,
+    pub input_blocks_7: InputBlocks7,
     ///No documentation.
-    pub input_blocks_8_: InputBlocks8,
+    pub input_blocks_8: InputBlocks8,
     ///No documentation.
-    pub input_blocks_9_: InputBlocks9,
+    pub input_blocks_9: InputBlocks9,
     ///No documentation.
-    pub input_blocks_10_: InputBlocks10,
+    pub input_blocks_10: InputBlocks10,
     ///No documentation.
-    pub input_blocks_11_: InputBlocks11,
+    pub input_blocks_11: InputBlocks11,
     ///No documentation.
-    pub middle_block_0_: MiddleBlock0,
+    pub middle_block_0: MiddleBlock0,
     ///No documentation.
-    pub middle_block_1_: MiddleBlock1,
+    pub middle_block_1: MiddleBlock1,
     ///No documentation.
-    pub middle_block_2_: MiddleBlock2,
+    pub middle_block_2: MiddleBlock2,
     ///No documentation.
-    pub output_blocks_0_: OutputBlocks0,
+    pub output_blocks_0: OutputBlocks0,
     ///No documentation.
-    pub output_blocks_1_: OutputBlocks1,
+    pub output_blocks_1: OutputBlocks1,
     ///No documentation.
-    pub output_blocks_2_: OutputBlocks2,
+    pub output_blocks_2: OutputBlocks2,
     ///No documentation.
-    pub output_blocks_3_: OutputBlocks3,
+    pub output_blocks_3: OutputBlocks3,
     ///No documentation.
-    pub output_blocks_4_: OutputBlocks4,
+    pub output_blocks_4: OutputBlocks4,
     ///No documentation.
-    pub output_blocks_5_: OutputBlocks5,
+    pub output_blocks_5: OutputBlocks5,
     ///No documentation.
-    pub output_blocks_6_: OutputBlocks6,
+    pub output_blocks_6: OutputBlocks6,
     ///No documentation.
-    pub output_blocks_7_: OutputBlocks7,
+    pub output_blocks_7: OutputBlocks7,
     ///No documentation.
-    pub output_blocks_8_: OutputBlocks8,
+    pub output_blocks_8: OutputBlocks8,
     ///No documentation.
-    pub output_blocks_9_: OutputBlocks9,
+    pub output_blocks_9: OutputBlocks9,
     ///No documentation.
-    pub output_blocks_10_: OutputBlocks10,
+    pub output_blocks_10: OutputBlocks10,
     ///No documentation.
-    pub output_blocks_11_: OutputBlocks11,
+    pub output_blocks_11: OutputBlocks11,
     ///No documentation.
-    pub out_: Out,
+    pub out: Out,
+}
+///Output for [`ModelMergeSd1`].
+pub struct ModelMergeSd1Output {
+    ///No documentation.
+    pub model: crate::nodes::ModelOut,
+}
+impl<
+    Model1: crate::nodes::Model,
+    Model2: crate::nodes::Model,
+    TimeEmbed: crate::nodes::Float,
+    LabelEmb: crate::nodes::Float,
+    InputBlocks0: crate::nodes::Float,
+    InputBlocks1: crate::nodes::Float,
+    InputBlocks2: crate::nodes::Float,
+    InputBlocks3: crate::nodes::Float,
+    InputBlocks4: crate::nodes::Float,
+    InputBlocks5: crate::nodes::Float,
+    InputBlocks6: crate::nodes::Float,
+    InputBlocks7: crate::nodes::Float,
+    InputBlocks8: crate::nodes::Float,
+    InputBlocks9: crate::nodes::Float,
+    InputBlocks10: crate::nodes::Float,
+    InputBlocks11: crate::nodes::Float,
+    MiddleBlock0: crate::nodes::Float,
+    MiddleBlock1: crate::nodes::Float,
+    MiddleBlock2: crate::nodes::Float,
+    OutputBlocks0: crate::nodes::Float,
+    OutputBlocks1: crate::nodes::Float,
+    OutputBlocks2: crate::nodes::Float,
+    OutputBlocks3: crate::nodes::Float,
+    OutputBlocks4: crate::nodes::Float,
+    OutputBlocks5: crate::nodes::Float,
+    OutputBlocks6: crate::nodes::Float,
+    OutputBlocks7: crate::nodes::Float,
+    OutputBlocks8: crate::nodes::Float,
+    OutputBlocks9: crate::nodes::Float,
+    OutputBlocks10: crate::nodes::Float,
+    OutputBlocks11: crate::nodes::Float,
+    Out: crate::nodes::Float,
+> crate::nodes::TypedNode
+for ModelMergeSd1<
+    Model1,
+    Model2,
+    TimeEmbed,
+    LabelEmb,
+    InputBlocks0,
+    InputBlocks1,
+    InputBlocks2,
+    InputBlocks3,
+    InputBlocks4,
+    InputBlocks5,
+    InputBlocks6,
+    InputBlocks7,
+    InputBlocks8,
+    InputBlocks9,
+    InputBlocks10,
+    InputBlocks11,
+    MiddleBlock0,
+    MiddleBlock1,
+    MiddleBlock2,
+    OutputBlocks0,
+    OutputBlocks1,
+    OutputBlocks2,
+    OutputBlocks3,
+    OutputBlocks4,
+    OutputBlocks5,
+    OutputBlocks6,
+    OutputBlocks7,
+    OutputBlocks8,
+    OutputBlocks9,
+    OutputBlocks10,
+    OutputBlocks11,
+    Out,
+> {
+    type Output = ModelMergeSd1Output;
+    fn output(&self) -> Self::Output {
+        Self::Output {
+            model: crate::nodes::ModelOut(0usize),
+        }
+    }
+    const NAME: &'static str = "ModelMergeSD1";
+    const DISPLAY_NAME: &'static str = "ModelMergeSD1";
+    const DESCRIPTION: &'static str = "";
+    const CATEGORY: &'static str = "advanced/model_merging/model_specific";
 }
 ///**ModelMergeSD2**
 pub struct ModelMergeSd2<
@@ -334,69 +568,153 @@ pub struct ModelMergeSd2<
     Out: crate::nodes::Float,
 > {
     ///No documentation.
-    pub model1: Model1,
+    pub model_1: Model1,
     ///No documentation.
-    pub model2: Model2,
+    pub model_2: Model2,
     ///No documentation.
-    pub time_embed_: TimeEmbed,
+    pub time_embed: TimeEmbed,
     ///No documentation.
-    pub label_emb_: LabelEmb,
+    pub label_emb: LabelEmb,
     ///No documentation.
-    pub input_blocks_0_: InputBlocks0,
+    pub input_blocks_0: InputBlocks0,
     ///No documentation.
-    pub input_blocks_1_: InputBlocks1,
+    pub input_blocks_1: InputBlocks1,
     ///No documentation.
-    pub input_blocks_2_: InputBlocks2,
+    pub input_blocks_2: InputBlocks2,
     ///No documentation.
-    pub input_blocks_3_: InputBlocks3,
+    pub input_blocks_3: InputBlocks3,
     ///No documentation.
-    pub input_blocks_4_: InputBlocks4,
+    pub input_blocks_4: InputBlocks4,
     ///No documentation.
-    pub input_blocks_5_: InputBlocks5,
+    pub input_blocks_5: InputBlocks5,
     ///No documentation.
-    pub input_blocks_6_: InputBlocks6,
+    pub input_blocks_6: InputBlocks6,
     ///No documentation.
-    pub input_blocks_7_: InputBlocks7,
+    pub input_blocks_7: InputBlocks7,
     ///No documentation.
-    pub input_blocks_8_: InputBlocks8,
+    pub input_blocks_8: InputBlocks8,
     ///No documentation.
-    pub input_blocks_9_: InputBlocks9,
+    pub input_blocks_9: InputBlocks9,
     ///No documentation.
-    pub input_blocks_10_: InputBlocks10,
+    pub input_blocks_10: InputBlocks10,
     ///No documentation.
-    pub input_blocks_11_: InputBlocks11,
+    pub input_blocks_11: InputBlocks11,
     ///No documentation.
-    pub middle_block_0_: MiddleBlock0,
+    pub middle_block_0: MiddleBlock0,
     ///No documentation.
-    pub middle_block_1_: MiddleBlock1,
+    pub middle_block_1: MiddleBlock1,
     ///No documentation.
-    pub middle_block_2_: MiddleBlock2,
+    pub middle_block_2: MiddleBlock2,
     ///No documentation.
-    pub output_blocks_0_: OutputBlocks0,
+    pub output_blocks_0: OutputBlocks0,
     ///No documentation.
-    pub output_blocks_1_: OutputBlocks1,
+    pub output_blocks_1: OutputBlocks1,
     ///No documentation.
-    pub output_blocks_2_: OutputBlocks2,
+    pub output_blocks_2: OutputBlocks2,
     ///No documentation.
-    pub output_blocks_3_: OutputBlocks3,
+    pub output_blocks_3: OutputBlocks3,
     ///No documentation.
-    pub output_blocks_4_: OutputBlocks4,
+    pub output_blocks_4: OutputBlocks4,
     ///No documentation.
-    pub output_blocks_5_: OutputBlocks5,
+    pub output_blocks_5: OutputBlocks5,
     ///No documentation.
-    pub output_blocks_6_: OutputBlocks6,
+    pub output_blocks_6: OutputBlocks6,
     ///No documentation.
-    pub output_blocks_7_: OutputBlocks7,
+    pub output_blocks_7: OutputBlocks7,
     ///No documentation.
-    pub output_blocks_8_: OutputBlocks8,
+    pub output_blocks_8: OutputBlocks8,
     ///No documentation.
-    pub output_blocks_9_: OutputBlocks9,
+    pub output_blocks_9: OutputBlocks9,
     ///No documentation.
-    pub output_blocks_10_: OutputBlocks10,
+    pub output_blocks_10: OutputBlocks10,
     ///No documentation.
-    pub output_blocks_11_: OutputBlocks11,
+    pub output_blocks_11: OutputBlocks11,
     ///No documentation.
-    pub out_: Out,
+    pub out: Out,
+}
+///Output for [`ModelMergeSd2`].
+pub struct ModelMergeSd2Output {
+    ///No documentation.
+    pub model: crate::nodes::ModelOut,
+}
+impl<
+    Model1: crate::nodes::Model,
+    Model2: crate::nodes::Model,
+    TimeEmbed: crate::nodes::Float,
+    LabelEmb: crate::nodes::Float,
+    InputBlocks0: crate::nodes::Float,
+    InputBlocks1: crate::nodes::Float,
+    InputBlocks2: crate::nodes::Float,
+    InputBlocks3: crate::nodes::Float,
+    InputBlocks4: crate::nodes::Float,
+    InputBlocks5: crate::nodes::Float,
+    InputBlocks6: crate::nodes::Float,
+    InputBlocks7: crate::nodes::Float,
+    InputBlocks8: crate::nodes::Float,
+    InputBlocks9: crate::nodes::Float,
+    InputBlocks10: crate::nodes::Float,
+    InputBlocks11: crate::nodes::Float,
+    MiddleBlock0: crate::nodes::Float,
+    MiddleBlock1: crate::nodes::Float,
+    MiddleBlock2: crate::nodes::Float,
+    OutputBlocks0: crate::nodes::Float,
+    OutputBlocks1: crate::nodes::Float,
+    OutputBlocks2: crate::nodes::Float,
+    OutputBlocks3: crate::nodes::Float,
+    OutputBlocks4: crate::nodes::Float,
+    OutputBlocks5: crate::nodes::Float,
+    OutputBlocks6: crate::nodes::Float,
+    OutputBlocks7: crate::nodes::Float,
+    OutputBlocks8: crate::nodes::Float,
+    OutputBlocks9: crate::nodes::Float,
+    OutputBlocks10: crate::nodes::Float,
+    OutputBlocks11: crate::nodes::Float,
+    Out: crate::nodes::Float,
+> crate::nodes::TypedNode
+for ModelMergeSd2<
+    Model1,
+    Model2,
+    TimeEmbed,
+    LabelEmb,
+    InputBlocks0,
+    InputBlocks1,
+    InputBlocks2,
+    InputBlocks3,
+    InputBlocks4,
+    InputBlocks5,
+    InputBlocks6,
+    InputBlocks7,
+    InputBlocks8,
+    InputBlocks9,
+    InputBlocks10,
+    InputBlocks11,
+    MiddleBlock0,
+    MiddleBlock1,
+    MiddleBlock2,
+    OutputBlocks0,
+    OutputBlocks1,
+    OutputBlocks2,
+    OutputBlocks3,
+    OutputBlocks4,
+    OutputBlocks5,
+    OutputBlocks6,
+    OutputBlocks7,
+    OutputBlocks8,
+    OutputBlocks9,
+    OutputBlocks10,
+    OutputBlocks11,
+    Out,
+> {
+    type Output = ModelMergeSd2Output;
+    fn output(&self) -> Self::Output {
+        Self::Output {
+            model: crate::nodes::ModelOut(0usize),
+        }
+    }
+    const NAME: &'static str = "ModelMergeSD2";
+    const DISPLAY_NAME: &'static str = "ModelMergeSD2";
+    const DESCRIPTION: &'static str = "";
+    const CATEGORY: &'static str = "advanced/model_merging/model_specific";
 }
 ///**ModelMergeSD3_2B**
 pub struct ModelMergeSd32B<
@@ -434,69 +752,153 @@ pub struct ModelMergeSd32B<
     FinalLayer: crate::nodes::Float,
 > {
     ///No documentation.
-    pub model1: Model1,
+    pub model_1: Model1,
     ///No documentation.
-    pub model2: Model2,
+    pub model_2: Model2,
     ///No documentation.
-    pub pos_embed_: PosEmbed,
+    pub pos_embed: PosEmbed,
     ///No documentation.
-    pub x_embedder_: XEmbedder,
+    pub x_embedder: XEmbedder,
     ///No documentation.
-    pub context_embedder_: ContextEmbedder,
+    pub context_embedder: ContextEmbedder,
     ///No documentation.
-    pub y_embedder_: YEmbedder,
+    pub y_embedder: YEmbedder,
     ///No documentation.
-    pub t_embedder_: TEmbedder,
+    pub t_embedder: TEmbedder,
     ///No documentation.
-    pub joint_blocks_0_: JointBlocks0,
+    pub joint_blocks_0: JointBlocks0,
     ///No documentation.
-    pub joint_blocks_1_: JointBlocks1,
+    pub joint_blocks_1: JointBlocks1,
     ///No documentation.
-    pub joint_blocks_2_: JointBlocks2,
+    pub joint_blocks_2: JointBlocks2,
     ///No documentation.
-    pub joint_blocks_3_: JointBlocks3,
+    pub joint_blocks_3: JointBlocks3,
     ///No documentation.
-    pub joint_blocks_4_: JointBlocks4,
+    pub joint_blocks_4: JointBlocks4,
     ///No documentation.
-    pub joint_blocks_5_: JointBlocks5,
+    pub joint_blocks_5: JointBlocks5,
     ///No documentation.
-    pub joint_blocks_6_: JointBlocks6,
+    pub joint_blocks_6: JointBlocks6,
     ///No documentation.
-    pub joint_blocks_7_: JointBlocks7,
+    pub joint_blocks_7: JointBlocks7,
     ///No documentation.
-    pub joint_blocks_8_: JointBlocks8,
+    pub joint_blocks_8: JointBlocks8,
     ///No documentation.
-    pub joint_blocks_9_: JointBlocks9,
+    pub joint_blocks_9: JointBlocks9,
     ///No documentation.
-    pub joint_blocks_10_: JointBlocks10,
+    pub joint_blocks_10: JointBlocks10,
     ///No documentation.
-    pub joint_blocks_11_: JointBlocks11,
+    pub joint_blocks_11: JointBlocks11,
     ///No documentation.
-    pub joint_blocks_12_: JointBlocks12,
+    pub joint_blocks_12: JointBlocks12,
     ///No documentation.
-    pub joint_blocks_13_: JointBlocks13,
+    pub joint_blocks_13: JointBlocks13,
     ///No documentation.
-    pub joint_blocks_14_: JointBlocks14,
+    pub joint_blocks_14: JointBlocks14,
     ///No documentation.
-    pub joint_blocks_15_: JointBlocks15,
+    pub joint_blocks_15: JointBlocks15,
     ///No documentation.
-    pub joint_blocks_16_: JointBlocks16,
+    pub joint_blocks_16: JointBlocks16,
     ///No documentation.
-    pub joint_blocks_17_: JointBlocks17,
+    pub joint_blocks_17: JointBlocks17,
     ///No documentation.
-    pub joint_blocks_18_: JointBlocks18,
+    pub joint_blocks_18: JointBlocks18,
     ///No documentation.
-    pub joint_blocks_19_: JointBlocks19,
+    pub joint_blocks_19: JointBlocks19,
     ///No documentation.
-    pub joint_blocks_20_: JointBlocks20,
+    pub joint_blocks_20: JointBlocks20,
     ///No documentation.
-    pub joint_blocks_21_: JointBlocks21,
+    pub joint_blocks_21: JointBlocks21,
     ///No documentation.
-    pub joint_blocks_22_: JointBlocks22,
+    pub joint_blocks_22: JointBlocks22,
     ///No documentation.
-    pub joint_blocks_23_: JointBlocks23,
+    pub joint_blocks_23: JointBlocks23,
     ///No documentation.
-    pub final_layer_: FinalLayer,
+    pub final_layer: FinalLayer,
+}
+///Output for [`ModelMergeSd32B`].
+pub struct ModelMergeSd32BOutput {
+    ///No documentation.
+    pub model: crate::nodes::ModelOut,
+}
+impl<
+    Model1: crate::nodes::Model,
+    Model2: crate::nodes::Model,
+    PosEmbed: crate::nodes::Float,
+    XEmbedder: crate::nodes::Float,
+    ContextEmbedder: crate::nodes::Float,
+    YEmbedder: crate::nodes::Float,
+    TEmbedder: crate::nodes::Float,
+    JointBlocks0: crate::nodes::Float,
+    JointBlocks1: crate::nodes::Float,
+    JointBlocks2: crate::nodes::Float,
+    JointBlocks3: crate::nodes::Float,
+    JointBlocks4: crate::nodes::Float,
+    JointBlocks5: crate::nodes::Float,
+    JointBlocks6: crate::nodes::Float,
+    JointBlocks7: crate::nodes::Float,
+    JointBlocks8: crate::nodes::Float,
+    JointBlocks9: crate::nodes::Float,
+    JointBlocks10: crate::nodes::Float,
+    JointBlocks11: crate::nodes::Float,
+    JointBlocks12: crate::nodes::Float,
+    JointBlocks13: crate::nodes::Float,
+    JointBlocks14: crate::nodes::Float,
+    JointBlocks15: crate::nodes::Float,
+    JointBlocks16: crate::nodes::Float,
+    JointBlocks17: crate::nodes::Float,
+    JointBlocks18: crate::nodes::Float,
+    JointBlocks19: crate::nodes::Float,
+    JointBlocks20: crate::nodes::Float,
+    JointBlocks21: crate::nodes::Float,
+    JointBlocks22: crate::nodes::Float,
+    JointBlocks23: crate::nodes::Float,
+    FinalLayer: crate::nodes::Float,
+> crate::nodes::TypedNode
+for ModelMergeSd32B<
+    Model1,
+    Model2,
+    PosEmbed,
+    XEmbedder,
+    ContextEmbedder,
+    YEmbedder,
+    TEmbedder,
+    JointBlocks0,
+    JointBlocks1,
+    JointBlocks2,
+    JointBlocks3,
+    JointBlocks4,
+    JointBlocks5,
+    JointBlocks6,
+    JointBlocks7,
+    JointBlocks8,
+    JointBlocks9,
+    JointBlocks10,
+    JointBlocks11,
+    JointBlocks12,
+    JointBlocks13,
+    JointBlocks14,
+    JointBlocks15,
+    JointBlocks16,
+    JointBlocks17,
+    JointBlocks18,
+    JointBlocks19,
+    JointBlocks20,
+    JointBlocks21,
+    JointBlocks22,
+    JointBlocks23,
+    FinalLayer,
+> {
+    type Output = ModelMergeSd32BOutput;
+    fn output(&self) -> Self::Output {
+        Self::Output {
+            model: crate::nodes::ModelOut(0usize),
+        }
+    }
+    const NAME: &'static str = "ModelMergeSD3_2B";
+    const DISPLAY_NAME: &'static str = "ModelMergeSD3_2B";
+    const DESCRIPTION: &'static str = "";
+    const CATEGORY: &'static str = "advanced/model_merging/model_specific";
 }
 ///**ModelMergeSDXL**
 pub struct ModelMergeSdxl<
@@ -528,13 +930,13 @@ pub struct ModelMergeSdxl<
     Out: crate::nodes::Float,
 > {
     ///No documentation.
-    pub model1: Model1,
+    pub model_1: Model1,
     ///No documentation.
-    pub model2: Model2,
+    pub model_2: Model2,
     ///No documentation.
-    pub time_embed_: TimeEmbed,
+    pub time_embed: TimeEmbed,
     ///No documentation.
-    pub label_emb_: LabelEmb,
+    pub label_emb: LabelEmb,
     ///No documentation.
     pub input_blocks_0: InputBlocks0,
     ///No documentation.
@@ -578,5 +980,77 @@ pub struct ModelMergeSdxl<
     ///No documentation.
     pub output_blocks_8: OutputBlocks8,
     ///No documentation.
-    pub out_: Out,
+    pub out: Out,
+}
+///Output for [`ModelMergeSdxl`].
+pub struct ModelMergeSdxlOutput {
+    ///No documentation.
+    pub model: crate::nodes::ModelOut,
+}
+impl<
+    Model1: crate::nodes::Model,
+    Model2: crate::nodes::Model,
+    TimeEmbed: crate::nodes::Float,
+    LabelEmb: crate::nodes::Float,
+    InputBlocks0: crate::nodes::Float,
+    InputBlocks1: crate::nodes::Float,
+    InputBlocks2: crate::nodes::Float,
+    InputBlocks3: crate::nodes::Float,
+    InputBlocks4: crate::nodes::Float,
+    InputBlocks5: crate::nodes::Float,
+    InputBlocks6: crate::nodes::Float,
+    InputBlocks7: crate::nodes::Float,
+    InputBlocks8: crate::nodes::Float,
+    MiddleBlock0: crate::nodes::Float,
+    MiddleBlock1: crate::nodes::Float,
+    MiddleBlock2: crate::nodes::Float,
+    OutputBlocks0: crate::nodes::Float,
+    OutputBlocks1: crate::nodes::Float,
+    OutputBlocks2: crate::nodes::Float,
+    OutputBlocks3: crate::nodes::Float,
+    OutputBlocks4: crate::nodes::Float,
+    OutputBlocks5: crate::nodes::Float,
+    OutputBlocks6: crate::nodes::Float,
+    OutputBlocks7: crate::nodes::Float,
+    OutputBlocks8: crate::nodes::Float,
+    Out: crate::nodes::Float,
+> crate::nodes::TypedNode
+for ModelMergeSdxl<
+    Model1,
+    Model2,
+    TimeEmbed,
+    LabelEmb,
+    InputBlocks0,
+    InputBlocks1,
+    InputBlocks2,
+    InputBlocks3,
+    InputBlocks4,
+    InputBlocks5,
+    InputBlocks6,
+    InputBlocks7,
+    InputBlocks8,
+    MiddleBlock0,
+    MiddleBlock1,
+    MiddleBlock2,
+    OutputBlocks0,
+    OutputBlocks1,
+    OutputBlocks2,
+    OutputBlocks3,
+    OutputBlocks4,
+    OutputBlocks5,
+    OutputBlocks6,
+    OutputBlocks7,
+    OutputBlocks8,
+    Out,
+> {
+    type Output = ModelMergeSdxlOutput;
+    fn output(&self) -> Self::Output {
+        Self::Output {
+            model: crate::nodes::ModelOut(0usize),
+        }
+    }
+    const NAME: &'static str = "ModelMergeSDXL";
+    const DISPLAY_NAME: &'static str = "ModelMergeSDXL";
+    const DESCRIPTION: &'static str = "";
+    const CATEGORY: &'static str = "advanced/model_merging/model_specific";
 }
