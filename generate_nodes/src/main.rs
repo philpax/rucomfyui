@@ -487,7 +487,10 @@ impl InputType {
     fn as_type(&self) -> Option<NodeType> {
         match self {
             Self::Typed(v) => Some(*v),
-            _ => None,
+            // HACK: I'm not sure if this is really what we want in the long run,
+            // but we treat array types as strings so they can be specified in
+            // the workflow
+            Self::Array(_) => Some(NodeType::String),
         }
     }
 }

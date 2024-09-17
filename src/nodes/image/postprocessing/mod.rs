@@ -4,6 +4,7 @@ pub struct ImageBlend<
     Image1: crate::nodes::Image,
     Image2: crate::nodes::Image,
     BlendFactor: crate::nodes::Float,
+    BlendMode: crate::nodes::String,
 > {
     ///No documentation.
     pub image_1: Image1,
@@ -11,6 +12,8 @@ pub struct ImageBlend<
     pub image_2: Image2,
     ///No documentation.
     pub blend_factor: BlendFactor,
+    ///No documentation.
+    pub blend_mode: BlendMode,
 }
 ///Output for [`ImageBlend`].
 pub struct ImageBlendOutput {
@@ -21,7 +24,8 @@ impl<
     Image1: crate::nodes::Image,
     Image2: crate::nodes::Image,
     BlendFactor: crate::nodes::Float,
-> crate::nodes::TypedNode for ImageBlend<Image1, Image2, BlendFactor> {
+    BlendMode: crate::nodes::String,
+> crate::nodes::TypedNode for ImageBlend<Image1, Image2, BlendFactor, BlendMode> {
     type Output = ImageBlendOutput;
     fn output(&self) -> Self::Output {
         Self::Output {
@@ -68,19 +72,28 @@ impl<
     const CATEGORY: &'static str = "image/postprocessing";
 }
 ///**ImageQuantize**
-pub struct ImageQuantize<Image: crate::nodes::Image, Colors: crate::nodes::Int> {
+pub struct ImageQuantize<
+    Image: crate::nodes::Image,
+    Colors: crate::nodes::Int,
+    Dither: crate::nodes::String,
+> {
     ///No documentation.
     pub image: Image,
     ///No documentation.
     pub colors: Colors,
+    ///No documentation.
+    pub dither: Dither,
 }
 ///Output for [`ImageQuantize`].
 pub struct ImageQuantizeOutput {
     ///No documentation.
     pub image: crate::nodes::ImageOut,
 }
-impl<Image: crate::nodes::Image, Colors: crate::nodes::Int> crate::nodes::TypedNode
-for ImageQuantize<Image, Colors> {
+impl<
+    Image: crate::nodes::Image,
+    Colors: crate::nodes::Int,
+    Dither: crate::nodes::String,
+> crate::nodes::TypedNode for ImageQuantize<Image, Colors, Dither> {
     type Output = ImageQuantizeOutput;
     fn output(&self) -> Self::Output {
         Self::Output {
@@ -131,9 +144,15 @@ impl<
     const CATEGORY: &'static str = "image/postprocessing";
 }
 ///**ImageMorphology**
-pub struct Morphology<Image: crate::nodes::Image, KernelSize: crate::nodes::Int> {
+pub struct Morphology<
+    Image: crate::nodes::Image,
+    Operation: crate::nodes::String,
+    KernelSize: crate::nodes::Int,
+> {
     ///No documentation.
     pub image: Image,
+    ///No documentation.
+    pub operation: Operation,
     ///No documentation.
     pub kernel_size: KernelSize,
 }
@@ -142,8 +161,11 @@ pub struct MorphologyOutput {
     ///No documentation.
     pub image: crate::nodes::ImageOut,
 }
-impl<Image: crate::nodes::Image, KernelSize: crate::nodes::Int> crate::nodes::TypedNode
-for Morphology<Image, KernelSize> {
+impl<
+    Image: crate::nodes::Image,
+    Operation: crate::nodes::String,
+    KernelSize: crate::nodes::Int,
+> crate::nodes::TypedNode for Morphology<Image, Operation, KernelSize> {
     type Output = MorphologyOutput;
     fn output(&self) -> Self::Output {
         Self::Output {

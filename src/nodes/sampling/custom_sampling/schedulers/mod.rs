@@ -1,9 +1,12 @@
 //!schedulers
 ///**AlignYourStepsScheduler**
 pub struct AlignYourStepsScheduler<
+    ModelType: crate::nodes::String,
     Steps: crate::nodes::Int,
     Denoise: crate::nodes::Float,
 > {
+    ///No documentation.
+    pub model_type: ModelType,
     ///No documentation.
     pub steps: Steps,
     ///No documentation.
@@ -14,8 +17,11 @@ pub struct AlignYourStepsSchedulerOutput {
     ///No documentation.
     pub sigmas: crate::nodes::SigmasOut,
 }
-impl<Steps: crate::nodes::Int, Denoise: crate::nodes::Float> crate::nodes::TypedNode
-for AlignYourStepsScheduler<Steps, Denoise> {
+impl<
+    ModelType: crate::nodes::String,
+    Steps: crate::nodes::Int,
+    Denoise: crate::nodes::Float,
+> crate::nodes::TypedNode for AlignYourStepsScheduler<ModelType, Steps, Denoise> {
     type Output = AlignYourStepsSchedulerOutput;
     fn output(&self) -> Self::Output {
         Self::Output {
@@ -30,11 +36,14 @@ for AlignYourStepsScheduler<Steps, Denoise> {
 ///**BasicScheduler**
 pub struct BasicScheduler<
     Model: crate::nodes::Model,
+    Scheduler: crate::nodes::String,
     Steps: crate::nodes::Int,
     Denoise: crate::nodes::Float,
 > {
     ///No documentation.
     pub model: Model,
+    ///No documentation.
+    pub scheduler: Scheduler,
     ///No documentation.
     pub steps: Steps,
     ///No documentation.
@@ -47,9 +56,10 @@ pub struct BasicSchedulerOutput {
 }
 impl<
     Model: crate::nodes::Model,
+    Scheduler: crate::nodes::String,
     Steps: crate::nodes::Int,
     Denoise: crate::nodes::Float,
-> crate::nodes::TypedNode for BasicScheduler<Model, Steps, Denoise> {
+> crate::nodes::TypedNode for BasicScheduler<Model, Scheduler, Steps, Denoise> {
     type Output = BasicSchedulerOutput;
     fn output(&self) -> Self::Output {
         Self::Output {

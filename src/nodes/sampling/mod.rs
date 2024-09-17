@@ -7,6 +7,8 @@ pub struct KSampler<
     Seed: crate::nodes::Int,
     Steps: crate::nodes::Int,
     Cfg: crate::nodes::Float,
+    SamplerName: crate::nodes::String,
+    Scheduler: crate::nodes::String,
     Positive: crate::nodes::Conditioning,
     Negative: crate::nodes::Conditioning,
     LatentImage: crate::nodes::Latent,
@@ -20,6 +22,10 @@ pub struct KSampler<
     pub steps: Steps,
     ///The Classifier-Free Guidance scale balances creativity and adherence to the prompt. Higher values result in images more closely matching the prompt however too high values will negatively impact quality.
     pub cfg: Cfg,
+    ///The algorithm used when sampling, this can affect the quality, speed, and style of the generated output.
+    pub sampler_name: SamplerName,
+    ///The scheduler controls how noise is gradually removed to form the image.
+    pub scheduler: Scheduler,
     ///The conditioning describing the attributes you want to include in the image.
     pub positive: Positive,
     ///The conditioning describing the attributes you want to exclude from the image.
@@ -39,12 +45,25 @@ impl<
     Seed: crate::nodes::Int,
     Steps: crate::nodes::Int,
     Cfg: crate::nodes::Float,
+    SamplerName: crate::nodes::String,
+    Scheduler: crate::nodes::String,
     Positive: crate::nodes::Conditioning,
     Negative: crate::nodes::Conditioning,
     LatentImage: crate::nodes::Latent,
     Denoise: crate::nodes::Float,
 > crate::nodes::TypedNode
-for KSampler<Model, Seed, Steps, Cfg, Positive, Negative, LatentImage, Denoise> {
+for KSampler<
+    Model,
+    Seed,
+    Steps,
+    Cfg,
+    SamplerName,
+    Scheduler,
+    Positive,
+    Negative,
+    LatentImage,
+    Denoise,
+> {
     type Output = KSamplerOutput;
     fn output(&self) -> Self::Output {
         Self::Output {
@@ -59,23 +78,33 @@ for KSampler<Model, Seed, Steps, Cfg, Positive, Negative, LatentImage, Denoise> 
 ///**KSampler (Advanced)**
 pub struct KSamplerAdvanced<
     Model: crate::nodes::Model,
+    AddNoise: crate::nodes::String,
     NoiseSeed: crate::nodes::Int,
     Steps: crate::nodes::Int,
     Cfg: crate::nodes::Float,
+    SamplerName: crate::nodes::String,
+    Scheduler: crate::nodes::String,
     Positive: crate::nodes::Conditioning,
     Negative: crate::nodes::Conditioning,
     LatentImage: crate::nodes::Latent,
     StartAtStep: crate::nodes::Int,
     EndAtStep: crate::nodes::Int,
+    ReturnWithLeftoverNoise: crate::nodes::String,
 > {
     ///No documentation.
     pub model: Model,
+    ///No documentation.
+    pub add_noise: AddNoise,
     ///No documentation.
     pub noise_seed: NoiseSeed,
     ///No documentation.
     pub steps: Steps,
     ///No documentation.
     pub cfg: Cfg,
+    ///No documentation.
+    pub sampler_name: SamplerName,
+    ///No documentation.
+    pub scheduler: Scheduler,
     ///No documentation.
     pub positive: Positive,
     ///No documentation.
@@ -86,6 +115,8 @@ pub struct KSamplerAdvanced<
     pub start_at_step: StartAtStep,
     ///No documentation.
     pub end_at_step: EndAtStep,
+    ///No documentation.
+    pub return_with_leftover_noise: ReturnWithLeftoverNoise,
 }
 ///Output for [`KSamplerAdvanced`].
 pub struct KSamplerAdvancedOutput {
@@ -94,25 +125,33 @@ pub struct KSamplerAdvancedOutput {
 }
 impl<
     Model: crate::nodes::Model,
+    AddNoise: crate::nodes::String,
     NoiseSeed: crate::nodes::Int,
     Steps: crate::nodes::Int,
     Cfg: crate::nodes::Float,
+    SamplerName: crate::nodes::String,
+    Scheduler: crate::nodes::String,
     Positive: crate::nodes::Conditioning,
     Negative: crate::nodes::Conditioning,
     LatentImage: crate::nodes::Latent,
     StartAtStep: crate::nodes::Int,
     EndAtStep: crate::nodes::Int,
+    ReturnWithLeftoverNoise: crate::nodes::String,
 > crate::nodes::TypedNode
 for KSamplerAdvanced<
     Model,
+    AddNoise,
     NoiseSeed,
     Steps,
     Cfg,
+    SamplerName,
+    Scheduler,
     Positive,
     Negative,
     LatentImage,
     StartAtStep,
     EndAtStep,
+    ReturnWithLeftoverNoise,
 > {
     type Output = KSamplerAdvancedOutput;
     fn output(&self) -> Self::Output {

@@ -27,17 +27,24 @@ impl<
     const CATEGORY: &'static str = "latent/advanced";
 }
 ///**LatentBatchSeedBehavior**
-pub struct LatentBatchSeedBehavior<Samples: crate::nodes::Latent> {
+pub struct LatentBatchSeedBehavior<
+    Samples: crate::nodes::Latent,
+    SeedBehavior: crate::nodes::String,
+> {
     ///No documentation.
     pub samples: Samples,
+    ///No documentation.
+    pub seed_behavior: SeedBehavior,
 }
 ///Output for [`LatentBatchSeedBehavior`].
 pub struct LatentBatchSeedBehaviorOutput {
     ///No documentation.
     pub latent: crate::nodes::LatentOut,
 }
-impl<Samples: crate::nodes::Latent> crate::nodes::TypedNode
-for LatentBatchSeedBehavior<Samples> {
+impl<
+    Samples: crate::nodes::Latent,
+    SeedBehavior: crate::nodes::String,
+> crate::nodes::TypedNode for LatentBatchSeedBehavior<Samples, SeedBehavior> {
     type Output = LatentBatchSeedBehaviorOutput;
     fn output(&self) -> Self::Output {
         Self::Output {

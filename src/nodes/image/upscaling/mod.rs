@@ -2,15 +2,21 @@
 ///**Upscale Image**
 pub struct ImageScale<
     Image: crate::nodes::Image,
+    UpscaleMethod: crate::nodes::String,
     Width: crate::nodes::Int,
     Height: crate::nodes::Int,
+    Crop: crate::nodes::String,
 > {
     ///No documentation.
     pub image: Image,
     ///No documentation.
+    pub upscale_method: UpscaleMethod,
+    ///No documentation.
     pub width: Width,
     ///No documentation.
     pub height: Height,
+    ///No documentation.
+    pub crop: Crop,
 }
 ///Output for [`ImageScale`].
 pub struct ImageScaleOutput {
@@ -19,9 +25,11 @@ pub struct ImageScaleOutput {
 }
 impl<
     Image: crate::nodes::Image,
+    UpscaleMethod: crate::nodes::String,
     Width: crate::nodes::Int,
     Height: crate::nodes::Int,
-> crate::nodes::TypedNode for ImageScale<Image, Width, Height> {
+    Crop: crate::nodes::String,
+> crate::nodes::TypedNode for ImageScale<Image, UpscaleMethod, Width, Height, Crop> {
     type Output = ImageScaleOutput;
     fn output(&self) -> Self::Output {
         Self::Output {
@@ -34,9 +42,15 @@ impl<
     const CATEGORY: &'static str = "image/upscaling";
 }
 ///**Upscale Image By**
-pub struct ImageScaleBy<Image: crate::nodes::Image, ScaleBy: crate::nodes::Float> {
+pub struct ImageScaleBy<
+    Image: crate::nodes::Image,
+    UpscaleMethod: crate::nodes::String,
+    ScaleBy: crate::nodes::Float,
+> {
     ///No documentation.
     pub image: Image,
+    ///No documentation.
+    pub upscale_method: UpscaleMethod,
     ///No documentation.
     pub scale_by: ScaleBy,
 }
@@ -45,8 +59,11 @@ pub struct ImageScaleByOutput {
     ///No documentation.
     pub image: crate::nodes::ImageOut,
 }
-impl<Image: crate::nodes::Image, ScaleBy: crate::nodes::Float> crate::nodes::TypedNode
-for ImageScaleBy<Image, ScaleBy> {
+impl<
+    Image: crate::nodes::Image,
+    UpscaleMethod: crate::nodes::String,
+    ScaleBy: crate::nodes::Float,
+> crate::nodes::TypedNode for ImageScaleBy<Image, UpscaleMethod, ScaleBy> {
     type Output = ImageScaleByOutput;
     fn output(&self) -> Self::Output {
         Self::Output {
@@ -61,10 +78,13 @@ for ImageScaleBy<Image, ScaleBy> {
 ///**ImageScaleToTotalPixels**
 pub struct ImageScaleToTotalPixels<
     Image: crate::nodes::Image,
+    UpscaleMethod: crate::nodes::String,
     Megapixels: crate::nodes::Float,
 > {
     ///No documentation.
     pub image: Image,
+    ///No documentation.
+    pub upscale_method: UpscaleMethod,
     ///No documentation.
     pub megapixels: Megapixels,
 }
@@ -73,8 +93,11 @@ pub struct ImageScaleToTotalPixelsOutput {
     ///No documentation.
     pub image: crate::nodes::ImageOut,
 }
-impl<Image: crate::nodes::Image, Megapixels: crate::nodes::Float> crate::nodes::TypedNode
-for ImageScaleToTotalPixels<Image, Megapixels> {
+impl<
+    Image: crate::nodes::Image,
+    UpscaleMethod: crate::nodes::String,
+    Megapixels: crate::nodes::Float,
+> crate::nodes::TypedNode for ImageScaleToTotalPixels<Image, UpscaleMethod, Megapixels> {
     type Output = ImageScaleToTotalPixelsOutput;
     fn output(&self) -> Self::Output {
         Self::Output {

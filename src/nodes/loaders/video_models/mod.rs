@@ -1,6 +1,9 @@
 //!video_models
 ///**Image Only Checkpoint Loader (img2vid model)**
-pub struct ImageOnlyCheckpointLoader {}
+pub struct ImageOnlyCheckpointLoader<CkptName: crate::nodes::String> {
+    ///No documentation.
+    pub ckpt_name: CkptName,
+}
 ///Output for [`ImageOnlyCheckpointLoader`].
 pub struct ImageOnlyCheckpointLoaderOutput {
     ///No documentation.
@@ -10,7 +13,8 @@ pub struct ImageOnlyCheckpointLoaderOutput {
     ///No documentation.
     pub vae: crate::nodes::VaeOut,
 }
-impl crate::nodes::TypedNode for ImageOnlyCheckpointLoader {
+impl<CkptName: crate::nodes::String> crate::nodes::TypedNode
+for ImageOnlyCheckpointLoader<CkptName> {
     type Output = ImageOnlyCheckpointLoaderOutput;
     fn output(&self) -> Self::Output {
         Self::Output {

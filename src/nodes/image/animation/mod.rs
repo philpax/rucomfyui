@@ -40,6 +40,7 @@ pub struct SaveAnimatedWebp<
     Fps: crate::nodes::Float,
     Lossless: crate::nodes::Boolean,
     Quality: crate::nodes::Int,
+    Method: crate::nodes::String,
 > {
     ///No documentation.
     pub images: Images,
@@ -51,6 +52,8 @@ pub struct SaveAnimatedWebp<
     pub lossless: Lossless,
     ///No documentation.
     pub quality: Quality,
+    ///No documentation.
+    pub method: Method,
 }
 ///Output for [`SaveAnimatedWebp`].
 pub struct SaveAnimatedWebpOutput {}
@@ -60,8 +63,9 @@ impl<
     Fps: crate::nodes::Float,
     Lossless: crate::nodes::Boolean,
     Quality: crate::nodes::Int,
+    Method: crate::nodes::String,
 > crate::nodes::TypedNode
-for SaveAnimatedWebp<Images, FilenamePrefix, Fps, Lossless, Quality> {
+for SaveAnimatedWebp<Images, FilenamePrefix, Fps, Lossless, Quality, Method> {
     type Output = SaveAnimatedWebpOutput;
     fn output(&self) -> Self::Output {
         Self::Output {}

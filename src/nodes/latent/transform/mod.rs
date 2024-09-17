@@ -42,16 +42,21 @@ impl<
     const CATEGORY: &'static str = "latent/transform";
 }
 ///**Flip Latent**
-pub struct LatentFlip<Samples: crate::nodes::Latent> {
+pub struct LatentFlip<Samples: crate::nodes::Latent, FlipMethod: crate::nodes::String> {
     ///No documentation.
     pub samples: Samples,
+    ///No documentation.
+    pub flip_method: FlipMethod,
 }
 ///Output for [`LatentFlip`].
 pub struct LatentFlipOutput {
     ///No documentation.
     pub latent: crate::nodes::LatentOut,
 }
-impl<Samples: crate::nodes::Latent> crate::nodes::TypedNode for LatentFlip<Samples> {
+impl<
+    Samples: crate::nodes::Latent,
+    FlipMethod: crate::nodes::String,
+> crate::nodes::TypedNode for LatentFlip<Samples, FlipMethod> {
     type Output = LatentFlipOutput;
     fn output(&self) -> Self::Output {
         Self::Output {
@@ -64,16 +69,21 @@ impl<Samples: crate::nodes::Latent> crate::nodes::TypedNode for LatentFlip<Sampl
     const CATEGORY: &'static str = "latent/transform";
 }
 ///**Rotate Latent**
-pub struct LatentRotate<Samples: crate::nodes::Latent> {
+pub struct LatentRotate<Samples: crate::nodes::Latent, Rotation: crate::nodes::String> {
     ///No documentation.
     pub samples: Samples,
+    ///No documentation.
+    pub rotation: Rotation,
 }
 ///Output for [`LatentRotate`].
 pub struct LatentRotateOutput {
     ///No documentation.
     pub latent: crate::nodes::LatentOut,
 }
-impl<Samples: crate::nodes::Latent> crate::nodes::TypedNode for LatentRotate<Samples> {
+impl<
+    Samples: crate::nodes::Latent,
+    Rotation: crate::nodes::String,
+> crate::nodes::TypedNode for LatentRotate<Samples, Rotation> {
     type Output = LatentRotateOutput;
     fn output(&self) -> Self::Output {
         Self::Output {

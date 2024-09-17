@@ -1,6 +1,9 @@
 //!deprecated
 ///**DiffusersLoader**
-pub struct DiffusersLoader {}
+pub struct DiffusersLoader<ModelPath: crate::nodes::String> {
+    ///No documentation.
+    pub model_path: ModelPath,
+}
 ///Output for [`DiffusersLoader`].
 pub struct DiffusersLoaderOutput {
     ///No documentation.
@@ -10,7 +13,8 @@ pub struct DiffusersLoaderOutput {
     ///No documentation.
     pub vae: crate::nodes::VaeOut,
 }
-impl crate::nodes::TypedNode for DiffusersLoader {
+impl<ModelPath: crate::nodes::String> crate::nodes::TypedNode
+for DiffusersLoader<ModelPath> {
     type Output = DiffusersLoaderOutput;
     fn output(&self) -> Self::Output {
         Self::Output {

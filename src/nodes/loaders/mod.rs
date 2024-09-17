@@ -1,13 +1,17 @@
 //!loaders
 pub mod video_models;
 ///**Load CLIP Vision**
-pub struct ClipVisionLoader {}
+pub struct ClipVisionLoader<ClipName: crate::nodes::String> {
+    ///No documentation.
+    pub clip_name: ClipName,
+}
 ///Output for [`ClipVisionLoader`].
 pub struct ClipVisionLoaderOutput {
     ///No documentation.
     pub clip_vision: crate::nodes::ClipVisionOut,
 }
-impl crate::nodes::TypedNode for ClipVisionLoader {
+impl<ClipName: crate::nodes::String> crate::nodes::TypedNode
+for ClipVisionLoader<ClipName> {
     type Output = ClipVisionLoaderOutput;
     fn output(&self) -> Self::Output {
         Self::Output {
@@ -20,7 +24,10 @@ impl crate::nodes::TypedNode for ClipVisionLoader {
     const CATEGORY: &'static str = "loaders";
 }
 #[doc = "**Load Checkpoint**\n\nLoads a diffusion model checkpoint, diffusion models are used to denoise latents."]
-pub struct CheckpointLoaderSimple {}
+pub struct CheckpointLoaderSimple<CkptName: crate::nodes::String> {
+    ///The name of the checkpoint (model) to load.
+    pub ckpt_name: CkptName,
+}
 ///Output for [`CheckpointLoaderSimple`].
 pub struct CheckpointLoaderSimpleOutput {
     ///The model used for denoising latents.
@@ -30,7 +37,8 @@ pub struct CheckpointLoaderSimpleOutput {
     ///The VAE model used for encoding and decoding images to and from latent space.
     pub vae: crate::nodes::VaeOut,
 }
-impl crate::nodes::TypedNode for CheckpointLoaderSimple {
+impl<CkptName: crate::nodes::String> crate::nodes::TypedNode
+for CheckpointLoaderSimple<CkptName> {
     type Output = CheckpointLoaderSimpleOutput;
     fn output(&self) -> Self::Output {
         Self::Output {
@@ -45,13 +53,17 @@ impl crate::nodes::TypedNode for CheckpointLoaderSimple {
     const CATEGORY: &'static str = "loaders";
 }
 ///**Load ControlNet Model**
-pub struct ControlNetLoader {}
+pub struct ControlNetLoader<ControlNetName: crate::nodes::String> {
+    ///No documentation.
+    pub control_net_name: ControlNetName,
+}
 ///Output for [`ControlNetLoader`].
 pub struct ControlNetLoaderOutput {
     ///No documentation.
     pub control_net: crate::nodes::ControlNetOut,
 }
-impl crate::nodes::TypedNode for ControlNetLoader {
+impl<ControlNetName: crate::nodes::String> crate::nodes::TypedNode
+for ControlNetLoader<ControlNetName> {
     type Output = ControlNetLoaderOutput;
     fn output(&self) -> Self::Output {
         Self::Output {
@@ -64,17 +76,24 @@ impl crate::nodes::TypedNode for ControlNetLoader {
     const CATEGORY: &'static str = "loaders";
 }
 ///**Load ControlNet Model (diff)**
-pub struct DiffControlNetLoader<Model: crate::nodes::Model> {
+pub struct DiffControlNetLoader<
+    Model: crate::nodes::Model,
+    ControlNetName: crate::nodes::String,
+> {
     ///No documentation.
     pub model: Model,
+    ///No documentation.
+    pub control_net_name: ControlNetName,
 }
 ///Output for [`DiffControlNetLoader`].
 pub struct DiffControlNetLoaderOutput {
     ///No documentation.
     pub control_net: crate::nodes::ControlNetOut,
 }
-impl<Model: crate::nodes::Model> crate::nodes::TypedNode
-for DiffControlNetLoader<Model> {
+impl<
+    Model: crate::nodes::Model,
+    ControlNetName: crate::nodes::String,
+> crate::nodes::TypedNode for DiffControlNetLoader<Model, ControlNetName> {
     type Output = DiffControlNetLoaderOutput;
     fn output(&self) -> Self::Output {
         Self::Output {
@@ -87,13 +106,17 @@ for DiffControlNetLoader<Model> {
     const CATEGORY: &'static str = "loaders";
 }
 ///**GLIGENLoader**
-pub struct GligenLoader {}
+pub struct GligenLoader<GligenName: crate::nodes::String> {
+    ///No documentation.
+    pub gligen_name: GligenName,
+}
 ///Output for [`GligenLoader`].
 pub struct GligenLoaderOutput {
     ///No documentation.
     pub gligen: crate::nodes::GligenOut,
 }
-impl crate::nodes::TypedNode for GligenLoader {
+impl<GligenName: crate::nodes::String> crate::nodes::TypedNode
+for GligenLoader<GligenName> {
     type Output = GligenLoaderOutput;
     fn output(&self) -> Self::Output {
         Self::Output {
@@ -108,10 +131,13 @@ impl crate::nodes::TypedNode for GligenLoader {
 ///**HypernetworkLoader**
 pub struct HypernetworkLoader<
     Model: crate::nodes::Model,
+    HypernetworkName: crate::nodes::String,
     Strength: crate::nodes::Float,
 > {
     ///No documentation.
     pub model: Model,
+    ///No documentation.
+    pub hypernetwork_name: HypernetworkName,
     ///No documentation.
     pub strength: Strength,
 }
@@ -120,8 +146,11 @@ pub struct HypernetworkLoaderOutput {
     ///No documentation.
     pub model: crate::nodes::ModelOut,
 }
-impl<Model: crate::nodes::Model, Strength: crate::nodes::Float> crate::nodes::TypedNode
-for HypernetworkLoader<Model, Strength> {
+impl<
+    Model: crate::nodes::Model,
+    HypernetworkName: crate::nodes::String,
+    Strength: crate::nodes::Float,
+> crate::nodes::TypedNode for HypernetworkLoader<Model, HypernetworkName, Strength> {
     type Output = HypernetworkLoaderOutput;
     fn output(&self) -> Self::Output {
         Self::Output {
@@ -137,6 +166,7 @@ for HypernetworkLoader<Model, Strength> {
 pub struct LoraLoader<
     Model: crate::nodes::Model,
     Clip: crate::nodes::Clip,
+    LoraName: crate::nodes::String,
     StrengthModel: crate::nodes::Float,
     StrengthClip: crate::nodes::Float,
 > {
@@ -144,6 +174,8 @@ pub struct LoraLoader<
     pub model: Model,
     ///The CLIP model the LoRA will be applied to.
     pub clip: Clip,
+    ///The name of the LoRA.
+    pub lora_name: LoraName,
     ///How strongly to modify the diffusion model. This value can be negative.
     pub strength_model: StrengthModel,
     ///How strongly to modify the CLIP model. This value can be negative.
@@ -159,9 +191,11 @@ pub struct LoraLoaderOutput {
 impl<
     Model: crate::nodes::Model,
     Clip: crate::nodes::Clip,
+    LoraName: crate::nodes::String,
     StrengthModel: crate::nodes::Float,
     StrengthClip: crate::nodes::Float,
-> crate::nodes::TypedNode for LoraLoader<Model, Clip, StrengthModel, StrengthClip> {
+> crate::nodes::TypedNode
+for LoraLoader<Model, Clip, LoraName, StrengthModel, StrengthClip> {
     type Output = LoraLoaderOutput;
     fn output(&self) -> Self::Output {
         Self::Output {
@@ -177,10 +211,13 @@ impl<
 #[doc = "**LoraLoaderModelOnly**\n\nLoRAs are used to modify diffusion and CLIP models, altering the way in which latents are denoised such as applying styles. Multiple LoRA nodes can be linked together."]
 pub struct LoraLoaderModelOnly<
     Model: crate::nodes::Model,
+    LoraName: crate::nodes::String,
     StrengthModel: crate::nodes::Float,
 > {
     ///No documentation.
     pub model: Model,
+    ///No documentation.
+    pub lora_name: LoraName,
     ///No documentation.
     pub strength_model: StrengthModel,
 }
@@ -191,8 +228,9 @@ pub struct LoraLoaderModelOnlyOutput {
 }
 impl<
     Model: crate::nodes::Model,
+    LoraName: crate::nodes::String,
     StrengthModel: crate::nodes::Float,
-> crate::nodes::TypedNode for LoraLoaderModelOnly<Model, StrengthModel> {
+> crate::nodes::TypedNode for LoraLoaderModelOnly<Model, LoraName, StrengthModel> {
     type Output = LoraLoaderModelOnlyOutput;
     fn output(&self) -> Self::Output {
         Self::Output {
@@ -205,13 +243,17 @@ impl<
     const CATEGORY: &'static str = "loaders";
 }
 ///**Load Style Model**
-pub struct StyleModelLoader {}
+pub struct StyleModelLoader<StyleModelName: crate::nodes::String> {
+    ///No documentation.
+    pub style_model_name: StyleModelName,
+}
 ///Output for [`StyleModelLoader`].
 pub struct StyleModelLoaderOutput {
     ///No documentation.
     pub style_model: crate::nodes::StyleModelOut,
 }
-impl crate::nodes::TypedNode for StyleModelLoader {
+impl<StyleModelName: crate::nodes::String> crate::nodes::TypedNode
+for StyleModelLoader<StyleModelName> {
     type Output = StyleModelLoaderOutput;
     fn output(&self) -> Self::Output {
         Self::Output {
@@ -224,13 +266,17 @@ impl crate::nodes::TypedNode for StyleModelLoader {
     const CATEGORY: &'static str = "loaders";
 }
 ///**Load Upscale Model**
-pub struct UpscaleModelLoader {}
+pub struct UpscaleModelLoader<ModelName: crate::nodes::String> {
+    ///No documentation.
+    pub model_name: ModelName,
+}
 ///Output for [`UpscaleModelLoader`].
 pub struct UpscaleModelLoaderOutput {
     ///No documentation.
     pub upscale_model: crate::nodes::UpscaleModelOut,
 }
-impl crate::nodes::TypedNode for UpscaleModelLoader {
+impl<ModelName: crate::nodes::String> crate::nodes::TypedNode
+for UpscaleModelLoader<ModelName> {
     type Output = UpscaleModelLoaderOutput;
     fn output(&self) -> Self::Output {
         Self::Output {
@@ -243,13 +289,16 @@ impl crate::nodes::TypedNode for UpscaleModelLoader {
     const CATEGORY: &'static str = "loaders";
 }
 ///**Load VAE**
-pub struct VaeLoader {}
+pub struct VaeLoader<VaeName: crate::nodes::String> {
+    ///No documentation.
+    pub vae_name: VaeName,
+}
 ///Output for [`VaeLoader`].
 pub struct VaeLoaderOutput {
     ///No documentation.
     pub vae: crate::nodes::VaeOut,
 }
-impl crate::nodes::TypedNode for VaeLoader {
+impl<VaeName: crate::nodes::String> crate::nodes::TypedNode for VaeLoader<VaeName> {
     type Output = VaeLoaderOutput;
     fn output(&self) -> Self::Output {
         Self::Output {
@@ -262,7 +311,10 @@ impl crate::nodes::TypedNode for VaeLoader {
     const CATEGORY: &'static str = "loaders";
 }
 ///**unCLIPCheckpointLoader**
-pub struct UnClipCheckpointLoader {}
+pub struct UnClipCheckpointLoader<CkptName: crate::nodes::String> {
+    ///No documentation.
+    pub ckpt_name: CkptName,
+}
 ///Output for [`UnClipCheckpointLoader`].
 pub struct UnClipCheckpointLoaderOutput {
     ///No documentation.
@@ -274,7 +326,8 @@ pub struct UnClipCheckpointLoaderOutput {
     ///No documentation.
     pub clip_vision: crate::nodes::ClipVisionOut,
 }
-impl crate::nodes::TypedNode for UnClipCheckpointLoader {
+impl<CkptName: crate::nodes::String> crate::nodes::TypedNode
+for UnClipCheckpointLoader<CkptName> {
     type Output = UnClipCheckpointLoaderOutput;
     fn output(&self) -> Self::Output {
         Self::Output {

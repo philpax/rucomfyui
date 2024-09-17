@@ -30,11 +30,14 @@ for ModelSamplingAuraFlow<Model, Shift> {
 ///**ModelSamplingContinuousEDM**
 pub struct ModelSamplingContinuousEdm<
     Model: crate::nodes::Model,
+    Sampling: crate::nodes::String,
     SigmaMax: crate::nodes::Float,
     SigmaMin: crate::nodes::Float,
 > {
     ///No documentation.
     pub model: Model,
+    ///No documentation.
+    pub sampling: Sampling,
     ///No documentation.
     pub sigma_max: SigmaMax,
     ///No documentation.
@@ -47,9 +50,11 @@ pub struct ModelSamplingContinuousEdmOutput {
 }
 impl<
     Model: crate::nodes::Model,
+    Sampling: crate::nodes::String,
     SigmaMax: crate::nodes::Float,
     SigmaMin: crate::nodes::Float,
-> crate::nodes::TypedNode for ModelSamplingContinuousEdm<Model, SigmaMax, SigmaMin> {
+> crate::nodes::TypedNode
+for ModelSamplingContinuousEdm<Model, Sampling, SigmaMax, SigmaMin> {
     type Output = ModelSamplingContinuousEdmOutput;
     fn output(&self) -> Self::Output {
         Self::Output {
@@ -64,11 +69,14 @@ impl<
 ///**ModelSamplingContinuousV**
 pub struct ModelSamplingContinuousV<
     Model: crate::nodes::Model,
+    Sampling: crate::nodes::String,
     SigmaMax: crate::nodes::Float,
     SigmaMin: crate::nodes::Float,
 > {
     ///No documentation.
     pub model: Model,
+    ///No documentation.
+    pub sampling: Sampling,
     ///No documentation.
     pub sigma_max: SigmaMax,
     ///No documentation.
@@ -81,9 +89,11 @@ pub struct ModelSamplingContinuousVOutput {
 }
 impl<
     Model: crate::nodes::Model,
+    Sampling: crate::nodes::String,
     SigmaMax: crate::nodes::Float,
     SigmaMin: crate::nodes::Float,
-> crate::nodes::TypedNode for ModelSamplingContinuousV<Model, SigmaMax, SigmaMin> {
+> crate::nodes::TypedNode
+for ModelSamplingContinuousV<Model, Sampling, SigmaMax, SigmaMin> {
     type Output = ModelSamplingContinuousVOutput;
     fn output(&self) -> Self::Output {
         Self::Output {
@@ -98,10 +108,13 @@ impl<
 ///**ModelSamplingDiscrete**
 pub struct ModelSamplingDiscrete<
     Model: crate::nodes::Model,
+    Sampling: crate::nodes::String,
     Zsnr: crate::nodes::Boolean,
 > {
     ///No documentation.
     pub model: Model,
+    ///No documentation.
+    pub sampling: Sampling,
     ///No documentation.
     pub zsnr: Zsnr,
 }
@@ -110,8 +123,11 @@ pub struct ModelSamplingDiscreteOutput {
     ///No documentation.
     pub model: crate::nodes::ModelOut,
 }
-impl<Model: crate::nodes::Model, Zsnr: crate::nodes::Boolean> crate::nodes::TypedNode
-for ModelSamplingDiscrete<Model, Zsnr> {
+impl<
+    Model: crate::nodes::Model,
+    Sampling: crate::nodes::String,
+    Zsnr: crate::nodes::Boolean,
+> crate::nodes::TypedNode for ModelSamplingDiscrete<Model, Sampling, Zsnr> {
     type Output = ModelSamplingDiscreteOutput;
     fn output(&self) -> Self::Output {
         Self::Output {

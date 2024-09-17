@@ -1,12 +1,16 @@
 //!samplers
 ///**KSamplerSelect**
-pub struct KSamplerSelect {}
+pub struct KSamplerSelect<SamplerName: crate::nodes::String> {
+    ///No documentation.
+    pub sampler_name: SamplerName,
+}
 ///Output for [`KSamplerSelect`].
 pub struct KSamplerSelectOutput {
     ///No documentation.
     pub sampler: crate::nodes::SamplerOut,
 }
-impl crate::nodes::TypedNode for KSamplerSelect {
+impl<SamplerName: crate::nodes::String> crate::nodes::TypedNode
+for KSamplerSelect<SamplerName> {
     type Output = KSamplerSelectOutput;
     fn output(&self) -> Self::Output {
         Self::Output {
@@ -93,19 +97,32 @@ for SamplerDpmAdaptative<
     const CATEGORY: &'static str = "sampling/custom_sampling/samplers";
 }
 ///**SamplerDPMPP_2M_SDE**
-pub struct SamplerDpmpp2MSde<Eta: crate::nodes::Float, SNoise: crate::nodes::Float> {
+pub struct SamplerDpmpp2MSde<
+    SolverType: crate::nodes::String,
+    Eta: crate::nodes::Float,
+    SNoise: crate::nodes::Float,
+    NoiseDevice: crate::nodes::String,
+> {
+    ///No documentation.
+    pub solver_type: SolverType,
     ///No documentation.
     pub eta: Eta,
     ///No documentation.
     pub s_noise: SNoise,
+    ///No documentation.
+    pub noise_device: NoiseDevice,
 }
 ///Output for [`SamplerDpmpp2MSde`].
 pub struct SamplerDpmpp2MSdeOutput {
     ///No documentation.
     pub sampler: crate::nodes::SamplerOut,
 }
-impl<Eta: crate::nodes::Float, SNoise: crate::nodes::Float> crate::nodes::TypedNode
-for SamplerDpmpp2MSde<Eta, SNoise> {
+impl<
+    SolverType: crate::nodes::String,
+    Eta: crate::nodes::Float,
+    SNoise: crate::nodes::Float,
+    NoiseDevice: crate::nodes::String,
+> crate::nodes::TypedNode for SamplerDpmpp2MSde<SolverType, Eta, SNoise, NoiseDevice> {
     type Output = SamplerDpmpp2MSdeOutput;
     fn output(&self) -> Self::Output {
         Self::Output {
@@ -146,19 +163,28 @@ for SamplerDpmpp2SAncestral<Eta, SNoise> {
     const CATEGORY: &'static str = "sampling/custom_sampling/samplers";
 }
 ///**SamplerDPMPP_3M_SDE**
-pub struct SamplerDpmpp3MSde<Eta: crate::nodes::Float, SNoise: crate::nodes::Float> {
+pub struct SamplerDpmpp3MSde<
+    Eta: crate::nodes::Float,
+    SNoise: crate::nodes::Float,
+    NoiseDevice: crate::nodes::String,
+> {
     ///No documentation.
     pub eta: Eta,
     ///No documentation.
     pub s_noise: SNoise,
+    ///No documentation.
+    pub noise_device: NoiseDevice,
 }
 ///Output for [`SamplerDpmpp3MSde`].
 pub struct SamplerDpmpp3MSdeOutput {
     ///No documentation.
     pub sampler: crate::nodes::SamplerOut,
 }
-impl<Eta: crate::nodes::Float, SNoise: crate::nodes::Float> crate::nodes::TypedNode
-for SamplerDpmpp3MSde<Eta, SNoise> {
+impl<
+    Eta: crate::nodes::Float,
+    SNoise: crate::nodes::Float,
+    NoiseDevice: crate::nodes::String,
+> crate::nodes::TypedNode for SamplerDpmpp3MSde<Eta, SNoise, NoiseDevice> {
     type Output = SamplerDpmpp3MSdeOutput;
     fn output(&self) -> Self::Output {
         Self::Output {
@@ -175,6 +201,7 @@ pub struct SamplerDpmppSde<
     Eta: crate::nodes::Float,
     SNoise: crate::nodes::Float,
     R: crate::nodes::Float,
+    NoiseDevice: crate::nodes::String,
 > {
     ///No documentation.
     pub eta: Eta,
@@ -182,6 +209,8 @@ pub struct SamplerDpmppSde<
     pub s_noise: SNoise,
     ///No documentation.
     pub r: R,
+    ///No documentation.
+    pub noise_device: NoiseDevice,
 }
 ///Output for [`SamplerDpmppSde`].
 pub struct SamplerDpmppSdeOutput {
@@ -192,7 +221,8 @@ impl<
     Eta: crate::nodes::Float,
     SNoise: crate::nodes::Float,
     R: crate::nodes::Float,
-> crate::nodes::TypedNode for SamplerDpmppSde<Eta, SNoise, R> {
+    NoiseDevice: crate::nodes::String,
+> crate::nodes::TypedNode for SamplerDpmppSde<Eta, SNoise, R, NoiseDevice> {
     type Output = SamplerDpmppSdeOutput;
     fn output(&self) -> Self::Output {
         Self::Output {
@@ -261,11 +291,14 @@ for SamplerEulerAncestralCfgpp<Eta, SNoise> {
 pub struct SamplerLcmUpscale<
     ScaleRatio: crate::nodes::Float,
     ScaleSteps: crate::nodes::Int,
+    UpscaleMethod: crate::nodes::String,
 > {
     ///No documentation.
     pub scale_ratio: ScaleRatio,
     ///No documentation.
     pub scale_steps: ScaleSteps,
+    ///No documentation.
+    pub upscale_method: UpscaleMethod,
 }
 ///Output for [`SamplerLcmUpscale`].
 pub struct SamplerLcmUpscaleOutput {
@@ -275,7 +308,8 @@ pub struct SamplerLcmUpscaleOutput {
 impl<
     ScaleRatio: crate::nodes::Float,
     ScaleSteps: crate::nodes::Int,
-> crate::nodes::TypedNode for SamplerLcmUpscale<ScaleRatio, ScaleSteps> {
+    UpscaleMethod: crate::nodes::String,
+> crate::nodes::TypedNode for SamplerLcmUpscale<ScaleRatio, ScaleSteps, UpscaleMethod> {
     type Output = SamplerLcmUpscaleOutput;
     fn output(&self) -> Self::Output {
         Self::Output {

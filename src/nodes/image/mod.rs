@@ -188,7 +188,10 @@ for ImagePadForOutpaint<Image, Left, Top, Right, Bottom, Feathering> {
     const CATEGORY: &'static str = "image";
 }
 ///**Load Image**
-pub struct LoadImage {}
+pub struct LoadImage<Image: crate::nodes::String> {
+    ///No documentation.
+    pub image: Image,
+}
 ///Output for [`LoadImage`].
 pub struct LoadImageOutput {
     ///No documentation.
@@ -196,7 +199,7 @@ pub struct LoadImageOutput {
     ///No documentation.
     pub mask: crate::nodes::MaskOut,
 }
-impl crate::nodes::TypedNode for LoadImage {
+impl<Image: crate::nodes::String> crate::nodes::TypedNode for LoadImage<Image> {
     type Output = LoadImageOutput;
     fn output(&self) -> Self::Output {
         Self::Output {

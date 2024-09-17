@@ -40,6 +40,7 @@ pub struct ClipTextEncodeSd3<
     ClipL: crate::nodes::String,
     ClipG: crate::nodes::String,
     T5Xxl: crate::nodes::String,
+    EmptyPadding: crate::nodes::String,
 > {
     ///No documentation.
     pub clip: Clip,
@@ -49,6 +50,8 @@ pub struct ClipTextEncodeSd3<
     pub clip_g: ClipG,
     ///No documentation.
     pub t_5_xxl: T5Xxl,
+    ///No documentation.
+    pub empty_padding: EmptyPadding,
 }
 ///Output for [`ClipTextEncodeSd3`].
 pub struct ClipTextEncodeSd3Output {
@@ -60,7 +63,9 @@ impl<
     ClipL: crate::nodes::String,
     ClipG: crate::nodes::String,
     T5Xxl: crate::nodes::String,
-> crate::nodes::TypedNode for ClipTextEncodeSd3<Clip, ClipL, ClipG, T5Xxl> {
+    EmptyPadding: crate::nodes::String,
+> crate::nodes::TypedNode
+for ClipTextEncodeSd3<Clip, ClipL, ClipG, T5Xxl, EmptyPadding> {
     type Output = ClipTextEncodeSd3Output;
     fn output(&self) -> Self::Output {
         Self::Output {

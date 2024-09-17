@@ -144,16 +144,19 @@ for ImageColorToMask<Image, Color> {
     const CATEGORY: &'static str = "mask";
 }
 ///**Convert Image to Mask**
-pub struct ImageToMask<Image: crate::nodes::Image> {
+pub struct ImageToMask<Image: crate::nodes::Image, Channel: crate::nodes::String> {
     ///No documentation.
     pub image: Image,
+    ///No documentation.
+    pub channel: Channel,
 }
 ///Output for [`ImageToMask`].
 pub struct ImageToMaskOutput {
     ///No documentation.
     pub mask: crate::nodes::MaskOut,
 }
-impl<Image: crate::nodes::Image> crate::nodes::TypedNode for ImageToMask<Image> {
+impl<Image: crate::nodes::Image, Channel: crate::nodes::String> crate::nodes::TypedNode
+for ImageToMask<Image, Channel> {
     type Output = ImageToMaskOutput;
     fn output(&self) -> Self::Output {
         Self::Output {
@@ -188,13 +191,19 @@ impl<Mask: crate::nodes::Mask> crate::nodes::TypedNode for InvertMask<Mask> {
     const CATEGORY: &'static str = "mask";
 }
 ///**Load Image (as Mask)**
-pub struct LoadImageMask {}
+pub struct LoadImageMask<Image: crate::nodes::String, Channel: crate::nodes::String> {
+    ///No documentation.
+    pub image: Image,
+    ///No documentation.
+    pub channel: Channel,
+}
 ///Output for [`LoadImageMask`].
 pub struct LoadImageMaskOutput {
     ///No documentation.
     pub mask: crate::nodes::MaskOut,
 }
-impl crate::nodes::TypedNode for LoadImageMask {
+impl<Image: crate::nodes::String, Channel: crate::nodes::String> crate::nodes::TypedNode
+for LoadImageMask<Image, Channel> {
     type Output = LoadImageMaskOutput;
     fn output(&self) -> Self::Output {
         Self::Output {
@@ -212,6 +221,7 @@ pub struct MaskComposite<
     Source: crate::nodes::Mask,
     X: crate::nodes::Int,
     Y: crate::nodes::Int,
+    Operation: crate::nodes::String,
 > {
     ///No documentation.
     pub destination: Destination,
@@ -221,6 +231,8 @@ pub struct MaskComposite<
     pub x: X,
     ///No documentation.
     pub y: Y,
+    ///No documentation.
+    pub operation: Operation,
 }
 ///Output for [`MaskComposite`].
 pub struct MaskCompositeOutput {
@@ -232,7 +244,8 @@ impl<
     Source: crate::nodes::Mask,
     X: crate::nodes::Int,
     Y: crate::nodes::Int,
-> crate::nodes::TypedNode for MaskComposite<Destination, Source, X, Y> {
+    Operation: crate::nodes::String,
+> crate::nodes::TypedNode for MaskComposite<Destination, Source, X, Y, Operation> {
     type Output = MaskCompositeOutput;
     fn output(&self) -> Self::Output {
         Self::Output {

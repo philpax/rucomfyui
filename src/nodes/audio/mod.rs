@@ -1,12 +1,15 @@
 //!audio
 ///**LoadAudio**
-pub struct LoadAudio {}
+pub struct LoadAudio<Audio: crate::nodes::String> {
+    ///No documentation.
+    pub audio: Audio,
+}
 ///Output for [`LoadAudio`].
 pub struct LoadAudioOutput {
     ///No documentation.
     pub audio: crate::nodes::AudioOut,
 }
-impl crate::nodes::TypedNode for LoadAudio {
+impl<Audio: crate::nodes::String> crate::nodes::TypedNode for LoadAudio<Audio> {
     type Output = LoadAudioOutput;
     fn output(&self) -> Self::Output {
         Self::Output {

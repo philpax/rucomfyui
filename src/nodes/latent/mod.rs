@@ -132,15 +132,21 @@ for LatentCompositeMasked<Destination, Source, X, Y, ResizeSource, Mask> {
 ///**Upscale Latent**
 pub struct LatentUpscale<
     Samples: crate::nodes::Latent,
+    UpscaleMethod: crate::nodes::String,
     Width: crate::nodes::Int,
     Height: crate::nodes::Int,
+    Crop: crate::nodes::String,
 > {
     ///No documentation.
     pub samples: Samples,
     ///No documentation.
+    pub upscale_method: UpscaleMethod,
+    ///No documentation.
     pub width: Width,
     ///No documentation.
     pub height: Height,
+    ///No documentation.
+    pub crop: Crop,
 }
 ///Output for [`LatentUpscale`].
 pub struct LatentUpscaleOutput {
@@ -149,9 +155,12 @@ pub struct LatentUpscaleOutput {
 }
 impl<
     Samples: crate::nodes::Latent,
+    UpscaleMethod: crate::nodes::String,
     Width: crate::nodes::Int,
     Height: crate::nodes::Int,
-> crate::nodes::TypedNode for LatentUpscale<Samples, Width, Height> {
+    Crop: crate::nodes::String,
+> crate::nodes::TypedNode
+for LatentUpscale<Samples, UpscaleMethod, Width, Height, Crop> {
     type Output = LatentUpscaleOutput;
     fn output(&self) -> Self::Output {
         Self::Output {
@@ -164,9 +173,15 @@ impl<
     const CATEGORY: &'static str = "latent";
 }
 ///**Upscale Latent By**
-pub struct LatentUpscaleBy<Samples: crate::nodes::Latent, ScaleBy: crate::nodes::Float> {
+pub struct LatentUpscaleBy<
+    Samples: crate::nodes::Latent,
+    UpscaleMethod: crate::nodes::String,
+    ScaleBy: crate::nodes::Float,
+> {
     ///No documentation.
     pub samples: Samples,
+    ///No documentation.
+    pub upscale_method: UpscaleMethod,
     ///No documentation.
     pub scale_by: ScaleBy,
 }
@@ -175,8 +190,11 @@ pub struct LatentUpscaleByOutput {
     ///No documentation.
     pub latent: crate::nodes::LatentOut,
 }
-impl<Samples: crate::nodes::Latent, ScaleBy: crate::nodes::Float> crate::nodes::TypedNode
-for LatentUpscaleBy<Samples, ScaleBy> {
+impl<
+    Samples: crate::nodes::Latent,
+    UpscaleMethod: crate::nodes::String,
+    ScaleBy: crate::nodes::Float,
+> crate::nodes::TypedNode for LatentUpscaleBy<Samples, UpscaleMethod, ScaleBy> {
     type Output = LatentUpscaleByOutput;
     fn output(&self) -> Self::Output {
         Self::Output {

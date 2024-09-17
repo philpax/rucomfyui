@@ -317,6 +317,7 @@ pub struct ConditioningSetMask<
     Conditioning: crate::nodes::Conditioning,
     Mask: crate::nodes::Mask,
     Strength: crate::nodes::Float,
+    SetCondArea: crate::nodes::String,
 > {
     ///No documentation.
     pub conditioning: Conditioning,
@@ -324,6 +325,8 @@ pub struct ConditioningSetMask<
     pub mask: Mask,
     ///No documentation.
     pub strength: Strength,
+    ///No documentation.
+    pub set_cond_area: SetCondArea,
 }
 ///Output for [`ConditioningSetMask`].
 pub struct ConditioningSetMaskOutput {
@@ -334,7 +337,9 @@ impl<
     Conditioning: crate::nodes::Conditioning,
     Mask: crate::nodes::Mask,
     Strength: crate::nodes::Float,
-> crate::nodes::TypedNode for ConditioningSetMask<Conditioning, Mask, Strength> {
+    SetCondArea: crate::nodes::String,
+> crate::nodes::TypedNode
+for ConditioningSetMask<Conditioning, Mask, Strength, SetCondArea> {
     type Output = ConditioningSetMaskOutput;
     fn output(&self) -> Self::Output {
         Self::Output {

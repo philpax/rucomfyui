@@ -30,6 +30,7 @@ pub struct PorterDuffImageComposite<
     SourceAlpha: crate::nodes::Mask,
     Destination: crate::nodes::Image,
     DestinationAlpha: crate::nodes::Mask,
+    Mode: crate::nodes::String,
 > {
     ///No documentation.
     pub source: Source,
@@ -39,6 +40,8 @@ pub struct PorterDuffImageComposite<
     pub destination: Destination,
     ///No documentation.
     pub destination_alpha: DestinationAlpha,
+    ///No documentation.
+    pub mode: Mode,
 }
 ///Output for [`PorterDuffImageComposite`].
 pub struct PorterDuffImageCompositeOutput {
@@ -52,8 +55,9 @@ impl<
     SourceAlpha: crate::nodes::Mask,
     Destination: crate::nodes::Image,
     DestinationAlpha: crate::nodes::Mask,
+    Mode: crate::nodes::String,
 > crate::nodes::TypedNode
-for PorterDuffImageComposite<Source, SourceAlpha, Destination, DestinationAlpha> {
+for PorterDuffImageComposite<Source, SourceAlpha, Destination, DestinationAlpha, Mode> {
     type Output = PorterDuffImageCompositeOutput;
     fn output(&self) -> Self::Output {
         Self::Output {

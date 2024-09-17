@@ -168,17 +168,24 @@ for ControlNetApplySd3<
     const CATEGORY: &'static str = "conditioning/controlnet";
 }
 ///**SetUnionControlNetType**
-pub struct SetUnionControlNetType<ControlNet: crate::nodes::ControlNet> {
+pub struct SetUnionControlNetType<
+    ControlNet: crate::nodes::ControlNet,
+    Type: crate::nodes::String,
+> {
     ///No documentation.
     pub control_net: ControlNet,
+    ///No documentation.
+    pub type_: Type,
 }
 ///Output for [`SetUnionControlNetType`].
 pub struct SetUnionControlNetTypeOutput {
     ///No documentation.
     pub control_net: crate::nodes::ControlNetOut,
 }
-impl<ControlNet: crate::nodes::ControlNet> crate::nodes::TypedNode
-for SetUnionControlNetType<ControlNet> {
+impl<
+    ControlNet: crate::nodes::ControlNet,
+    Type: crate::nodes::String,
+> crate::nodes::TypedNode for SetUnionControlNetType<ControlNet, Type> {
     type Output = SetUnionControlNetTypeOutput;
     fn output(&self) -> Self::Output {
         Self::Output {
