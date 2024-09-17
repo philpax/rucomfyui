@@ -8,6 +8,7 @@ pub mod loaders;
 pub mod mask;
 pub mod model_patches;
 pub mod sampling;
+pub mod all;
 /// Implemented for all typed nodes. Provides the node's output and metadata.
 pub trait TypedNode {
     /// The type of the node's output.

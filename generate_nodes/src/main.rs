@@ -23,8 +23,45 @@ async fn run() -> Result<()> {
         build_category_tree(object_info.values().filter(|n| {
             !(n.python_module.starts_with("custom_nodes") || n.category.starts_with("_"))
         }));
-    write_category_tree(("", &category_tree), Path::new("src/nodes")).context("root")?;
+
+    let out_dir = Path::new("src/nodes");
+    std::fs::create_dir_all(out_dir)?;
+
+    let all_nodes = build_list_of_all_nodes(&category_tree, &[])?;
+    write_tokenstream_with_formatting(
+        &out_dir.join("all.rs"),
+        quote! {
+            //! Helper module to import all nodes at once.
+            #(#all_nodes)*
+        },
+    )?;
+
+    write_category_tree(("", &category_tree), out_dir).context("root")?;
     Ok(())
+}
+
+fn build_list_of_all_nodes(tree: &CategoryTree, ctx: &[syn::Ident]) -> Result<Vec<TokenStream>> {
+    let mut output = vec![];
+
+    for node in tree.values() {
+        match node {
+            CategoryTreeNode::Category(name, tree) => {
+                let name = name_to_ident(name, false)?;
+                output.extend(build_list_of_all_nodes(
+                    tree,
+                    &ctx.iter().cloned().chain([name]).collect::<Vec<_>>(),
+                )?);
+            }
+            CategoryTreeNode::Node(node) => {
+                let name = name_to_ident(&node.name, true)?;
+                output.push(quote! {
+                    pub use crate :: nodes :: #(#ctx::)* #name;
+                });
+            }
+        }
+    }
+
+    Ok(output)
 }
 
 fn write_category_tree((name, tree): (&str, &CategoryTree), directory: &Path) -> Result<()> {
@@ -77,6 +114,8 @@ fn write_category_tree((name, tree): (&str, &CategoryTree), directory: &Path) ->
         (
             "Root module".to_string(),
             quote! {
+                pub mod all;
+
                 /// Implemented for all typed nodes. Provides the node's output and metadata.
                 pub trait TypedNode {
                     /// The type of the node's output.
@@ -156,14 +195,20 @@ fn write_category_tree((name, tree): (&str, &CategoryTree), directory: &Path) ->
         #(#nodes)*
         #extra
     };
+    let path = directory.join("mod.rs");
+    write_tokenstream_with_formatting(&path, output)?;
+    Ok(())
+}
+
+fn write_tokenstream_with_formatting(path: &Path, output: TokenStream) -> Result<()> {
     let output = match syn::parse2::<syn::File>(output.clone()) {
         Ok(file) => prettyplease::unparse(&file),
         Err(e) => {
-            println!("Error parsing output for {name}: {e}");
+            println!("Error parsing output for {path:?}: {e}");
             output.to_string()
         }
     };
-    std::fs::write(directory.join("mod.rs"), output)?;
+    std::fs::write(path, output)?;
     Ok(())
 }
 
