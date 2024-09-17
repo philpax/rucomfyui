@@ -3,7 +3,7 @@ name = "rucomfyui"
 version = "0.1.0"
 edition = "2021"
 description = "Very basic API client for ComfyUI"
-author = "Philpax <me@philpax.me>"
+authors = ["Philpax <me@philpax.me>"]
 license = "MIT"
 
 [dependencies]
