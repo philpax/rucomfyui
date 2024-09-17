@@ -49,6 +49,12 @@ impl ToTypedValue for std::string::String {
     }
 }
 impl String for std::string::String {}
+impl<'a> ToTypedValue for &'a str {
+    fn to_typed_value(self) -> TypedValue {
+        TypedValue::String(self.to_string())
+    }
+}
+impl<'a> String for &'a str {}
 impl ToTypedValue for f32 {
     fn to_typed_value(self) -> TypedValue {
         TypedValue::F32(self)

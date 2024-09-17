@@ -160,6 +160,12 @@ fn write_category_tree((name, tree): (&str, &CategoryTree), directory: &Path) ->
                     }
                 }
                 impl String for std::string::String {}
+                impl<'a> ToTypedValue for &'a str {
+                    fn to_typed_value(self) -> TypedValue {
+                        TypedValue::String(self.to_string())
+                    }
+                }
+                impl<'a> String for &'a str {}
 
                 impl ToTypedValue for f32 {
                     fn to_typed_value(self) -> TypedValue {
