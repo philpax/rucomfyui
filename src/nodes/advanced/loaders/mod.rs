@@ -1,12 +1,12 @@
 //!loaders
 pub mod deprecated;
 ///**Load CLIP**
-pub struct CLIPLoader {}
+pub struct ClipLoader {}
 ///**Load Checkpoint With Config (DEPRECATED)**
 pub struct CheckpointLoader {}
 ///**DualCLIPLoader**
-pub struct DualCLIPLoader {}
+pub struct DualClipLoader {}
 ///**TripleCLIPLoader**
-pub struct TripleCLIPLoader {}
+pub struct TripleClipLoader {}
 ///**Load Diffusion Model**
-pub struct UNETLoader {}
+pub struct UnetLoader {}

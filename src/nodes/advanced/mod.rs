@@ -2,4 +2,4 @@
 pub mod conditioning;
 pub mod loaders;
 pub mod model;
-pub mod modelmerging;
+pub mod model_merging;
