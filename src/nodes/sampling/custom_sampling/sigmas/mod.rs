@@ -13,7 +13,7 @@ impl<Sigmas: crate::nodes::Sigmas> crate::nodes::TypedNode for FlipSigmas<Sigmas
     type Output = FlipSigmasOutput;
     fn output(&self) -> Self::Output {
         Self::Output {
-            sigmas: crate::nodes::SigmasOut(0usize),
+            sigmas: crate::nodes::SigmasOut(0u32),
         }
     }
     const NAME: &'static str = "FlipSigmas";
@@ -40,8 +40,8 @@ for SplitSigmas<Sigmas, Step> {
     type Output = SplitSigmasOutput;
     fn output(&self) -> Self::Output {
         Self::Output {
-            high_sigmas: crate::nodes::SigmasOut(0usize),
-            low_sigmas: crate::nodes::SigmasOut(1usize),
+            high_sigmas: crate::nodes::SigmasOut(0u32),
+            low_sigmas: crate::nodes::SigmasOut(1u32),
         }
     }
     const NAME: &'static str = "SplitSigmas";
@@ -71,8 +71,8 @@ for SplitSigmasDenoise<Sigmas, Denoise> {
     type Output = SplitSigmasDenoiseOutput;
     fn output(&self) -> Self::Output {
         Self::Output {
-            high_sigmas: crate::nodes::SigmasOut(0usize),
-            low_sigmas: crate::nodes::SigmasOut(1usize),
+            high_sigmas: crate::nodes::SigmasOut(0u32),
+            low_sigmas: crate::nodes::SigmasOut(1u32),
         }
     }
     const NAME: &'static str = "SplitSigmasDenoise";

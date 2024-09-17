@@ -19,7 +19,7 @@ for VideoLinearCfgGuidance<Model, MinCfg> {
     type Output = VideoLinearCfgGuidanceOutput;
     fn output(&self) -> Self::Output {
         Self::Output {
-            model: crate::nodes::ModelOut(0usize),
+            model: crate::nodes::ModelOut(0u32),
         }
     }
     const NAME: &'static str = "VideoLinearCFGGuidance";
@@ -47,7 +47,7 @@ for VideoTriangleCfgGuidance<Model, MinCfg> {
     type Output = VideoTriangleCfgGuidanceOutput;
     fn output(&self) -> Self::Output {
         Self::Output {
-            model: crate::nodes::ModelOut(0usize),
+            model: crate::nodes::ModelOut(0u32),
         }
     }
     const NAME: &'static str = "VideoTriangleCFGGuidance";

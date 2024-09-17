@@ -10,7 +10,7 @@ impl crate::nodes::TypedNode for KSamplerSelect {
     type Output = KSamplerSelectOutput;
     fn output(&self) -> Self::Output {
         Self::Output {
-            sampler: crate::nodes::SamplerOut(0usize),
+            sampler: crate::nodes::SamplerOut(0u32),
         }
     }
     const NAME: &'static str = "KSamplerSelect";
@@ -84,7 +84,7 @@ for SamplerDpmAdaptative<
     type Output = SamplerDpmAdaptativeOutput;
     fn output(&self) -> Self::Output {
         Self::Output {
-            sampler: crate::nodes::SamplerOut(0usize),
+            sampler: crate::nodes::SamplerOut(0u32),
         }
     }
     const NAME: &'static str = "SamplerDPMAdaptative";
@@ -109,7 +109,7 @@ for SamplerDpmpp2MSde<Eta, SNoise> {
     type Output = SamplerDpmpp2MSdeOutput;
     fn output(&self) -> Self::Output {
         Self::Output {
-            sampler: crate::nodes::SamplerOut(0usize),
+            sampler: crate::nodes::SamplerOut(0u32),
         }
     }
     const NAME: &'static str = "SamplerDPMPP_2M_SDE";
@@ -137,7 +137,7 @@ for SamplerDpmpp2SAncestral<Eta, SNoise> {
     type Output = SamplerDpmpp2SAncestralOutput;
     fn output(&self) -> Self::Output {
         Self::Output {
-            sampler: crate::nodes::SamplerOut(0usize),
+            sampler: crate::nodes::SamplerOut(0u32),
         }
     }
     const NAME: &'static str = "SamplerDPMPP_2S_Ancestral";
@@ -162,7 +162,7 @@ for SamplerDpmpp3MSde<Eta, SNoise> {
     type Output = SamplerDpmpp3MSdeOutput;
     fn output(&self) -> Self::Output {
         Self::Output {
-            sampler: crate::nodes::SamplerOut(0usize),
+            sampler: crate::nodes::SamplerOut(0u32),
         }
     }
     const NAME: &'static str = "SamplerDPMPP_3M_SDE";
@@ -196,7 +196,7 @@ impl<
     type Output = SamplerDpmppSdeOutput;
     fn output(&self) -> Self::Output {
         Self::Output {
-            sampler: crate::nodes::SamplerOut(0usize),
+            sampler: crate::nodes::SamplerOut(0u32),
         }
     }
     const NAME: &'static str = "SamplerDPMPP_SDE";
@@ -221,7 +221,7 @@ for SamplerEulerAncestral<Eta, SNoise> {
     type Output = SamplerEulerAncestralOutput;
     fn output(&self) -> Self::Output {
         Self::Output {
-            sampler: crate::nodes::SamplerOut(0usize),
+            sampler: crate::nodes::SamplerOut(0u32),
         }
     }
     const NAME: &'static str = "SamplerEulerAncestral";
@@ -249,7 +249,7 @@ for SamplerEulerAncestralCfgpp<Eta, SNoise> {
     type Output = SamplerEulerAncestralCfgppOutput;
     fn output(&self) -> Self::Output {
         Self::Output {
-            sampler: crate::nodes::SamplerOut(0usize),
+            sampler: crate::nodes::SamplerOut(0u32),
         }
     }
     const NAME: &'static str = "SamplerEulerAncestralCFGPP";
@@ -279,7 +279,7 @@ impl<
     type Output = SamplerLcmUpscaleOutput;
     fn output(&self) -> Self::Output {
         Self::Output {
-            sampler: crate::nodes::SamplerOut(0usize),
+            sampler: crate::nodes::SamplerOut(0u32),
         }
     }
     const NAME: &'static str = "SamplerLCMUpscale";
@@ -301,7 +301,7 @@ impl<Order: crate::nodes::Int> crate::nodes::TypedNode for SamplerLms<Order> {
     type Output = SamplerLmsOutput;
     fn output(&self) -> Self::Output {
         Self::Output {
-            sampler: crate::nodes::SamplerOut(0usize),
+            sampler: crate::nodes::SamplerOut(0u32),
         }
     }
     const NAME: &'static str = "SamplerLMS";

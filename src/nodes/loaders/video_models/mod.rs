@@ -14,9 +14,9 @@ impl crate::nodes::TypedNode for ImageOnlyCheckpointLoader {
     type Output = ImageOnlyCheckpointLoaderOutput;
     fn output(&self) -> Self::Output {
         Self::Output {
-            model: crate::nodes::ModelOut(0usize),
-            clip_vision: crate::nodes::ClipVisionOut(1usize),
-            vae: crate::nodes::VaeOut(2usize),
+            model: crate::nodes::ModelOut(0u32),
+            clip_vision: crate::nodes::ClipVisionOut(1u32),
+            vae: crate::nodes::VaeOut(2u32),
         }
     }
     const NAME: &'static str = "ImageOnlyCheckpointLoader";

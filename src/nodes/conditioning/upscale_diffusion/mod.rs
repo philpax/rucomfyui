@@ -38,9 +38,9 @@ for Sd4XUpscaleConditioning<Images, Positive, Negative, ScaleRatio, NoiseAugment
     type Output = Sd4XUpscaleConditioningOutput;
     fn output(&self) -> Self::Output {
         Self::Output {
-            positive: crate::nodes::ConditioningOut(0usize),
-            negative: crate::nodes::ConditioningOut(1usize),
-            latent: crate::nodes::LatentOut(2usize),
+            positive: crate::nodes::ConditioningOut(0u32),
+            negative: crate::nodes::ConditioningOut(1u32),
+            latent: crate::nodes::LatentOut(2u32),
         }
     }
     const NAME: &'static str = "SD_4XUpscale_Conditioning";

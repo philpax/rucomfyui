@@ -33,7 +33,7 @@ impl<
     type Output = ImageCropOutput;
     fn output(&self) -> Self::Output {
         Self::Output {
-            image: crate::nodes::ImageOut(0usize),
+            image: crate::nodes::ImageOut(0u32),
         }
     }
     const NAME: &'static str = "ImageCrop";

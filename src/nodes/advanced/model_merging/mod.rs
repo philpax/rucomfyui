@@ -17,7 +17,7 @@ for ClipMergeAdd<Clip1, Clip2> {
     type Output = ClipMergeAddOutput;
     fn output(&self) -> Self::Output {
         Self::Output {
-            clip: crate::nodes::ClipOut(0usize),
+            clip: crate::nodes::ClipOut(0u32),
         }
     }
     const NAME: &'static str = "CLIPMergeAdd";
@@ -51,7 +51,7 @@ impl<
     type Output = ClipMergeSimpleOutput;
     fn output(&self) -> Self::Output {
         Self::Output {
-            clip: crate::nodes::ClipOut(0usize),
+            clip: crate::nodes::ClipOut(0u32),
         }
     }
     const NAME: &'static str = "CLIPMergeSimple";
@@ -85,7 +85,7 @@ impl<
     type Output = ClipMergeSubtractOutput;
     fn output(&self) -> Self::Output {
         Self::Output {
-            clip: crate::nodes::ClipOut(0usize),
+            clip: crate::nodes::ClipOut(0u32),
         }
     }
     const NAME: &'static str = "CLIPMergeSubtract";
@@ -165,7 +165,7 @@ for ModelMergeAdd<Model1, Model2> {
     type Output = ModelMergeAddOutput;
     fn output(&self) -> Self::Output {
         Self::Output {
-            model: crate::nodes::ModelOut(0usize),
+            model: crate::nodes::ModelOut(0u32),
         }
     }
     const NAME: &'static str = "ModelMergeAdd";
@@ -207,7 +207,7 @@ impl<
     type Output = ModelMergeBlocksOutput;
     fn output(&self) -> Self::Output {
         Self::Output {
-            model: crate::nodes::ModelOut(0usize),
+            model: crate::nodes::ModelOut(0u32),
         }
     }
     const NAME: &'static str = "ModelMergeBlocks";
@@ -241,7 +241,7 @@ impl<
     type Output = ModelMergeSimpleOutput;
     fn output(&self) -> Self::Output {
         Self::Output {
-            model: crate::nodes::ModelOut(0usize),
+            model: crate::nodes::ModelOut(0u32),
         }
     }
     const NAME: &'static str = "ModelMergeSimple";
@@ -275,7 +275,7 @@ impl<
     type Output = ModelMergeSubtractOutput;
     fn output(&self) -> Self::Output {
         Self::Output {
-            model: crate::nodes::ModelOut(0usize),
+            model: crate::nodes::ModelOut(0u32),
         }
     }
     const NAME: &'static str = "ModelMergeSubtract";

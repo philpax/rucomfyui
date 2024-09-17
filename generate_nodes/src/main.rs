@@ -60,10 +60,15 @@ fn write_category_tree((name, tree): (&str, &CategoryTree), directory: &Path) ->
                 let output_name = name_to_ident(&format!("{ty:?}Out"), true)?;
                 Ok(quote! {
                     #[doc = #doc]
-                    pub trait #name {}
+                    pub trait #name : ToTypedValue {}
 
                     #[doc = #output_doc]
-                    pub struct #output_name(pub usize);
+                    pub struct #output_name(pub u32);
+                    impl ToTypedValue for #output_name {
+                        fn to_typed_value(self) -> TypedValue {
+                            TypedValue::Slot(self.0)
+                        }
+                    }
                     impl #name for #output_name {}
                 })
             })
@@ -88,6 +93,56 @@ fn write_category_tree((name, tree): (&str, &CategoryTree), directory: &Path) ->
                     /// The category of the node.
                     const CATEGORY: &'static str;
                 }
+
+                /// A typed value. Used to determine the value for a given input.
+                #[derive(Debug, Clone, PartialEq)]
+                pub enum TypedValue {
+                    /// A string value.
+                    String(std::string::String),
+                    /// A f32 value.
+                    F32(f32),
+                    /// A i32 value.
+                    I32(i32),
+                    /// A boolean value.
+                    Boolean(bool),
+                    /// A slot value. The inner value is the index of the output slot.
+                    Slot(u32),
+                }
+
+                /// Converts a value to a typed value for use in a workflow.
+                pub trait ToTypedValue {
+                    /// Converts the value to a typed value.
+                    fn to_typed_value(self) -> TypedValue;
+                }
+
+                impl ToTypedValue for std::string::String {
+                    fn to_typed_value(self) -> TypedValue {
+                        TypedValue::String(self)
+                    }
+                }
+                impl String for std::string::String {}
+
+                impl ToTypedValue for f32 {
+                    fn to_typed_value(self) -> TypedValue {
+                        TypedValue::F32(self)
+                    }
+                }
+                impl Float for f32 {}
+
+                impl ToTypedValue for i32 {
+                    fn to_typed_value(self) -> TypedValue {
+                        TypedValue::I32(self)
+                    }
+                }
+                impl Int for i32 {}
+
+                impl ToTypedValue for bool {
+                    fn to_typed_value(self) -> TypedValue {
+                        TypedValue::Boolean(self)
+                    }
+                }
+                impl Boolean for bool {}
+
                 #(#types)*
             },
         )
@@ -280,6 +335,7 @@ fn write_node_outputs(
             .map(|(i, output)| {
                 let name = name_to_ident(output.name, false)?;
                 let ty = output.ty.output_struct_ident();
+                let i = i as u32;
                 Ok(quote! {
                     #name: crate :: nodes :: #ty (#i)
                 })

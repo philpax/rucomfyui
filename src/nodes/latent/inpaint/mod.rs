@@ -16,7 +16,7 @@ for SetLatentNoiseMask<Samples, Mask> {
     type Output = SetLatentNoiseMaskOutput;
     fn output(&self) -> Self::Output {
         Self::Output {
-            latent: crate::nodes::LatentOut(0usize),
+            latent: crate::nodes::LatentOut(0u32),
         }
     }
     const NAME: &'static str = "SetLatentNoiseMask";
@@ -54,7 +54,7 @@ impl<
     type Output = VaeEncodeForInpaintOutput;
     fn output(&self) -> Self::Output {
         Self::Output {
-            latent: crate::nodes::LatentOut(0usize),
+            latent: crate::nodes::LatentOut(0u32),
         }
     }
     const NAME: &'static str = "VAEEncodeForInpaint";

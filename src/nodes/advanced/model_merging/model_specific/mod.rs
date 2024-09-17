@@ -340,7 +340,7 @@ for ModelMergeFlux1<
     type Output = ModelMergeFlux1Output;
     fn output(&self) -> Self::Output {
         Self::Output {
-            model: crate::nodes::ModelOut(0usize),
+            model: crate::nodes::ModelOut(0u32),
         }
     }
     const NAME: &'static str = "ModelMergeFlux1";
@@ -524,7 +524,7 @@ for ModelMergeSd1<
     type Output = ModelMergeSd1Output;
     fn output(&self) -> Self::Output {
         Self::Output {
-            model: crate::nodes::ModelOut(0usize),
+            model: crate::nodes::ModelOut(0u32),
         }
     }
     const NAME: &'static str = "ModelMergeSD1";
@@ -708,7 +708,7 @@ for ModelMergeSd2<
     type Output = ModelMergeSd2Output;
     fn output(&self) -> Self::Output {
         Self::Output {
-            model: crate::nodes::ModelOut(0usize),
+            model: crate::nodes::ModelOut(0u32),
         }
     }
     const NAME: &'static str = "ModelMergeSD2";
@@ -892,7 +892,7 @@ for ModelMergeSd32B<
     type Output = ModelMergeSd32BOutput;
     fn output(&self) -> Self::Output {
         Self::Output {
-            model: crate::nodes::ModelOut(0usize),
+            model: crate::nodes::ModelOut(0u32),
         }
     }
     const NAME: &'static str = "ModelMergeSD3_2B";
@@ -1046,7 +1046,7 @@ for ModelMergeSdxl<
     type Output = ModelMergeSdxlOutput;
     fn output(&self) -> Self::Output {
         Self::Output {
-            model: crate::nodes::ModelOut(0usize),
+            model: crate::nodes::ModelOut(0u32),
         }
     }
     const NAME: &'static str = "ModelMergeSDXL";

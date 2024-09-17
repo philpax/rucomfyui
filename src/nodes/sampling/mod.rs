@@ -48,7 +48,7 @@ for KSampler<Model, Seed, Steps, Cfg, Positive, Negative, LatentImage, Denoise> 
     type Output = KSamplerOutput;
     fn output(&self) -> Self::Output {
         Self::Output {
-            latent: crate::nodes::LatentOut(0usize),
+            latent: crate::nodes::LatentOut(0u32),
         }
     }
     const NAME: &'static str = "KSampler";
@@ -117,7 +117,7 @@ for KSamplerAdvanced<
     type Output = KSamplerAdvancedOutput;
     fn output(&self) -> Self::Output {
         Self::Output {
-            latent: crate::nodes::LatentOut(0usize),
+            latent: crate::nodes::LatentOut(0u32),
         }
     }
     const NAME: &'static str = "KSamplerAdvanced";

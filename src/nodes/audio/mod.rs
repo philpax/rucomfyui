@@ -10,7 +10,7 @@ impl crate::nodes::TypedNode for LoadAudio {
     type Output = LoadAudioOutput;
     fn output(&self) -> Self::Output {
         Self::Output {
-            audio: crate::nodes::AudioOut(0usize),
+            audio: crate::nodes::AudioOut(0u32),
         }
     }
     const NAME: &'static str = "LoadAudio";

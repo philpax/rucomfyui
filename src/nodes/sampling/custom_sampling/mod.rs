@@ -67,8 +67,8 @@ for SamplerCustom<
     type Output = SamplerCustomOutput;
     fn output(&self) -> Self::Output {
         Self::Output {
-            output: crate::nodes::LatentOut(0usize),
-            denoised_output: crate::nodes::LatentOut(1usize),
+            output: crate::nodes::LatentOut(0u32),
+            denoised_output: crate::nodes::LatentOut(1u32),
         }
     }
     const NAME: &'static str = "SamplerCustom";
@@ -113,8 +113,8 @@ for SamplerCustomAdvanced<Noise, Guider, Sampler, Sigmas, LatentImage> {
     type Output = SamplerCustomAdvancedOutput;
     fn output(&self) -> Self::Output {
         Self::Output {
-            output: crate::nodes::LatentOut(0usize),
-            denoised_output: crate::nodes::LatentOut(1usize),
+            output: crate::nodes::LatentOut(0u32),
+            denoised_output: crate::nodes::LatentOut(1u32),
         }
     }
     const NAME: &'static str = "SamplerCustomAdvanced";

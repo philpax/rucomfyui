@@ -26,7 +26,7 @@ impl<
     type Output = ClipTextEncodeHunyuanDiTOutput;
     fn output(&self) -> Self::Output {
         Self::Output {
-            conditioning: crate::nodes::ConditioningOut(0usize),
+            conditioning: crate::nodes::ConditioningOut(0u32),
         }
     }
     const NAME: &'static str = "CLIPTextEncodeHunyuanDiT";
@@ -64,7 +64,7 @@ impl<
     type Output = ClipTextEncodeSd3Output;
     fn output(&self) -> Self::Output {
         Self::Output {
-            conditioning: crate::nodes::ConditioningOut(0usize),
+            conditioning: crate::nodes::ConditioningOut(0u32),
         }
     }
     const NAME: &'static str = "CLIPTextEncodeSD3";
@@ -133,7 +133,7 @@ for ClipTextEncodeSdxl<
     type Output = ClipTextEncodeSdxlOutput;
     fn output(&self) -> Self::Output {
         Self::Output {
-            conditioning: crate::nodes::ConditioningOut(0usize),
+            conditioning: crate::nodes::ConditioningOut(0u32),
         }
     }
     const NAME: &'static str = "CLIPTextEncodeSDXL";
@@ -176,7 +176,7 @@ for ClipTextEncodeSdxlRefiner<Ascore, Width, Height, Text, Clip> {
     type Output = ClipTextEncodeSdxlRefinerOutput;
     fn output(&self) -> Self::Output {
         Self::Output {
-            conditioning: crate::nodes::ConditioningOut(0usize),
+            conditioning: crate::nodes::ConditioningOut(0u32),
         }
     }
     const NAME: &'static str = "CLIPTextEncodeSDXLRefiner";
@@ -210,7 +210,7 @@ impl<
     type Output = ConditioningSetTimestepRangeOutput;
     fn output(&self) -> Self::Output {
         Self::Output {
-            conditioning: crate::nodes::ConditioningOut(0usize),
+            conditioning: crate::nodes::ConditioningOut(0u32),
         }
     }
     const NAME: &'static str = "ConditioningSetTimestepRange";
@@ -233,7 +233,7 @@ for ConditioningZeroOut<Conditioning> {
     type Output = ConditioningZeroOutOutput;
     fn output(&self) -> Self::Output {
         Self::Output {
-            conditioning: crate::nodes::ConditioningOut(0usize),
+            conditioning: crate::nodes::ConditioningOut(0u32),
         }
     }
     const NAME: &'static str = "ConditioningZeroOut";

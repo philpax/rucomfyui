@@ -34,7 +34,7 @@ impl<
     type Output = CropMaskOutput;
     fn output(&self) -> Self::Output {
         Self::Output {
-            mask: crate::nodes::MaskOut(0usize),
+            mask: crate::nodes::MaskOut(0u32),
         }
     }
     const NAME: &'static str = "CropMask";
@@ -76,7 +76,7 @@ impl<
     type Output = FeatherMaskOutput;
     fn output(&self) -> Self::Output {
         Self::Output {
-            mask: crate::nodes::MaskOut(0usize),
+            mask: crate::nodes::MaskOut(0u32),
         }
     }
     const NAME: &'static str = "FeatherMask";
@@ -110,7 +110,7 @@ impl<
     type Output = GrowMaskOutput;
     fn output(&self) -> Self::Output {
         Self::Output {
-            mask: crate::nodes::MaskOut(0usize),
+            mask: crate::nodes::MaskOut(0u32),
         }
     }
     const NAME: &'static str = "GrowMask";
@@ -135,7 +135,7 @@ for ImageColorToMask<Image, Color> {
     type Output = ImageColorToMaskOutput;
     fn output(&self) -> Self::Output {
         Self::Output {
-            mask: crate::nodes::MaskOut(0usize),
+            mask: crate::nodes::MaskOut(0u32),
         }
     }
     const NAME: &'static str = "ImageColorToMask";
@@ -157,7 +157,7 @@ impl<Image: crate::nodes::Image> crate::nodes::TypedNode for ImageToMask<Image> 
     type Output = ImageToMaskOutput;
     fn output(&self) -> Self::Output {
         Self::Output {
-            mask: crate::nodes::MaskOut(0usize),
+            mask: crate::nodes::MaskOut(0u32),
         }
     }
     const NAME: &'static str = "ImageToMask";
@@ -179,7 +179,7 @@ impl<Mask: crate::nodes::Mask> crate::nodes::TypedNode for InvertMask<Mask> {
     type Output = InvertMaskOutput;
     fn output(&self) -> Self::Output {
         Self::Output {
-            mask: crate::nodes::MaskOut(0usize),
+            mask: crate::nodes::MaskOut(0u32),
         }
     }
     const NAME: &'static str = "InvertMask";
@@ -198,7 +198,7 @@ impl crate::nodes::TypedNode for LoadImageMask {
     type Output = LoadImageMaskOutput;
     fn output(&self) -> Self::Output {
         Self::Output {
-            mask: crate::nodes::MaskOut(0usize),
+            mask: crate::nodes::MaskOut(0u32),
         }
     }
     const NAME: &'static str = "LoadImageMask";
@@ -236,7 +236,7 @@ impl<
     type Output = MaskCompositeOutput;
     fn output(&self) -> Self::Output {
         Self::Output {
-            mask: crate::nodes::MaskOut(0usize),
+            mask: crate::nodes::MaskOut(0u32),
         }
     }
     const NAME: &'static str = "MaskComposite";
@@ -258,7 +258,7 @@ impl<Mask: crate::nodes::Mask> crate::nodes::TypedNode for MaskToImage<Mask> {
     type Output = MaskToImageOutput;
     fn output(&self) -> Self::Output {
         Self::Output {
-            image: crate::nodes::ImageOut(0usize),
+            image: crate::nodes::ImageOut(0u32),
         }
     }
     const NAME: &'static str = "MaskToImage";
@@ -292,7 +292,7 @@ impl<
     type Output = SolidMaskOutput;
     fn output(&self) -> Self::Output {
         Self::Output {
-            mask: crate::nodes::MaskOut(0usize),
+            mask: crate::nodes::MaskOut(0u32),
         }
     }
     const NAME: &'static str = "SolidMask";
@@ -317,7 +317,7 @@ for ThresholdMask<Mask, Value> {
     type Output = ThresholdMaskOutput;
     fn output(&self) -> Self::Output {
         Self::Output {
-            mask: crate::nodes::MaskOut(0usize),
+            mask: crate::nodes::MaskOut(0u32),
         }
     }
     const NAME: &'static str = "ThresholdMask";

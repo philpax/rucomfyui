@@ -11,7 +11,7 @@ impl crate::nodes::TypedNode for ClipLoader {
     type Output = ClipLoaderOutput;
     fn output(&self) -> Self::Output {
         Self::Output {
-            clip: crate::nodes::ClipOut(0usize),
+            clip: crate::nodes::ClipOut(0u32),
         }
     }
     const NAME: &'static str = "CLIPLoader";
@@ -34,9 +34,9 @@ impl crate::nodes::TypedNode for CheckpointLoader {
     type Output = CheckpointLoaderOutput;
     fn output(&self) -> Self::Output {
         Self::Output {
-            model: crate::nodes::ModelOut(0usize),
-            clip: crate::nodes::ClipOut(1usize),
-            vae: crate::nodes::VaeOut(2usize),
+            model: crate::nodes::ModelOut(0u32),
+            clip: crate::nodes::ClipOut(1u32),
+            vae: crate::nodes::VaeOut(2u32),
         }
     }
     const NAME: &'static str = "CheckpointLoader";
@@ -55,7 +55,7 @@ impl crate::nodes::TypedNode for DualClipLoader {
     type Output = DualClipLoaderOutput;
     fn output(&self) -> Self::Output {
         Self::Output {
-            clip: crate::nodes::ClipOut(0usize),
+            clip: crate::nodes::ClipOut(0u32),
         }
     }
     const NAME: &'static str = "DualCLIPLoader";
@@ -74,7 +74,7 @@ impl crate::nodes::TypedNode for TripleClipLoader {
     type Output = TripleClipLoaderOutput;
     fn output(&self) -> Self::Output {
         Self::Output {
-            clip: crate::nodes::ClipOut(0usize),
+            clip: crate::nodes::ClipOut(0u32),
         }
     }
     const NAME: &'static str = "TripleCLIPLoader";
@@ -93,7 +93,7 @@ impl crate::nodes::TypedNode for UnetLoader {
     type Output = UnetLoaderOutput;
     fn output(&self) -> Self::Output {
         Self::Output {
-            model: crate::nodes::ModelOut(0usize),
+            model: crate::nodes::ModelOut(0u32),
         }
     }
     const NAME: &'static str = "UNETLoader";

@@ -21,7 +21,7 @@ impl<
     type Output = BasicGuiderOutput;
     fn output(&self) -> Self::Output {
         Self::Output {
-            guider: crate::nodes::GuiderOut(0usize),
+            guider: crate::nodes::GuiderOut(0u32),
         }
     }
     const NAME: &'static str = "BasicGuider";
@@ -59,7 +59,7 @@ impl<
     type Output = CfgGuiderOutput;
     fn output(&self) -> Self::Output {
         Self::Output {
-            guider: crate::nodes::GuiderOut(0usize),
+            guider: crate::nodes::GuiderOut(0u32),
         }
     }
     const NAME: &'static str = "CFGGuider";
@@ -106,7 +106,7 @@ for DualCfgGuider<Model, Cond1, Cond2, Negative, CfgConds, CfgCond2Negative> {
     type Output = DualCfgGuiderOutput;
     fn output(&self) -> Self::Output {
         Self::Output {
-            guider: crate::nodes::GuiderOut(0usize),
+            guider: crate::nodes::GuiderOut(0u32),
         }
     }
     const NAME: &'static str = "DualCFGGuider";

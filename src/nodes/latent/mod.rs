@@ -32,7 +32,7 @@ impl<
     type Output = EmptyLatentImageOutput;
     fn output(&self) -> Self::Output {
         Self::Output {
-            latent: crate::nodes::LatentOut(0usize),
+            latent: crate::nodes::LatentOut(0u32),
         }
     }
     const NAME: &'static str = "EmptyLatentImage";
@@ -74,7 +74,7 @@ impl<
     type Output = LatentCompositeOutput;
     fn output(&self) -> Self::Output {
         Self::Output {
-            latent: crate::nodes::LatentOut(0usize),
+            latent: crate::nodes::LatentOut(0u32),
         }
     }
     const NAME: &'static str = "LatentComposite";
@@ -121,7 +121,7 @@ for LatentCompositeMasked<Destination, Source, X, Y, ResizeSource, Mask> {
     type Output = LatentCompositeMaskedOutput;
     fn output(&self) -> Self::Output {
         Self::Output {
-            latent: crate::nodes::LatentOut(0usize),
+            latent: crate::nodes::LatentOut(0u32),
         }
     }
     const NAME: &'static str = "LatentCompositeMasked";
@@ -155,7 +155,7 @@ impl<
     type Output = LatentUpscaleOutput;
     fn output(&self) -> Self::Output {
         Self::Output {
-            latent: crate::nodes::LatentOut(0usize),
+            latent: crate::nodes::LatentOut(0u32),
         }
     }
     const NAME: &'static str = "LatentUpscale";
@@ -180,7 +180,7 @@ for LatentUpscaleBy<Samples, ScaleBy> {
     type Output = LatentUpscaleByOutput;
     fn output(&self) -> Self::Output {
         Self::Output {
-            latent: crate::nodes::LatentOut(0usize),
+            latent: crate::nodes::LatentOut(0u32),
         }
     }
     const NAME: &'static str = "LatentUpscaleBy";
@@ -205,7 +205,7 @@ for VaeDecode<Samples, Vae> {
     type Output = VaeDecodeOutput;
     fn output(&self) -> Self::Output {
         Self::Output {
-            image: crate::nodes::ImageOut(0usize),
+            image: crate::nodes::ImageOut(0u32),
         }
     }
     const NAME: &'static str = "VAEDecode";
@@ -230,7 +230,7 @@ for VaeEncode<Pixels, Vae> {
     type Output = VaeEncodeOutput;
     fn output(&self) -> Self::Output {
         Self::Output {
-            latent: crate::nodes::LatentOut(0usize),
+            latent: crate::nodes::LatentOut(0u32),
         }
     }
     const NAME: &'static str = "VAEEncode";

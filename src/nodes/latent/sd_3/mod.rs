@@ -25,7 +25,7 @@ impl<
     type Output = EmptySd3LatentImageOutput;
     fn output(&self) -> Self::Output {
         Self::Output {
-            latent: crate::nodes::LatentOut(0usize),
+            latent: crate::nodes::LatentOut(0u32),
         }
     }
     const NAME: &'static str = "EmptySD3LatentImage";

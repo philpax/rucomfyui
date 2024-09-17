@@ -32,8 +32,8 @@ for StableCascadeEmptyLatentImage<Width, Height, Compression, BatchSize> {
     type Output = StableCascadeEmptyLatentImageOutput;
     fn output(&self) -> Self::Output {
         Self::Output {
-            stage_c: crate::nodes::LatentOut(0usize),
-            stage_b: crate::nodes::LatentOut(1usize),
+            stage_c: crate::nodes::LatentOut(0u32),
+            stage_b: crate::nodes::LatentOut(1u32),
         }
     }
     const NAME: &'static str = "StableCascade_EmptyLatentImage";
@@ -69,8 +69,8 @@ impl<
     type Output = StableCascadeStageCVaeEncodeOutput;
     fn output(&self) -> Self::Output {
         Self::Output {
-            stage_c: crate::nodes::LatentOut(0usize),
-            stage_b: crate::nodes::LatentOut(1usize),
+            stage_c: crate::nodes::LatentOut(0u32),
+            stage_b: crate::nodes::LatentOut(1u32),
         }
     }
     const NAME: &'static str = "StableCascade_StageC_VAEEncode";

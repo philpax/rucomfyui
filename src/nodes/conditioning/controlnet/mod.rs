@@ -30,7 +30,7 @@ for ControlNetApply<Conditioning, ControlNet, Image, Strength> {
     type Output = ControlNetApplyOutput;
     fn output(&self) -> Self::Output {
         Self::Output {
-            conditioning: crate::nodes::ConditioningOut(0usize),
+            conditioning: crate::nodes::ConditioningOut(0u32),
         }
     }
     const NAME: &'static str = "ControlNetApply";
@@ -91,8 +91,8 @@ for ControlNetApplyAdvanced<
     type Output = ControlNetApplyAdvancedOutput;
     fn output(&self) -> Self::Output {
         Self::Output {
-            positive: crate::nodes::ConditioningOut(0usize),
-            negative: crate::nodes::ConditioningOut(1usize),
+            positive: crate::nodes::ConditioningOut(0u32),
+            negative: crate::nodes::ConditioningOut(1u32),
         }
     }
     const NAME: &'static str = "ControlNetApplyAdvanced";
@@ -158,8 +158,8 @@ for ControlNetApplySd3<
     type Output = ControlNetApplySd3Output;
     fn output(&self) -> Self::Output {
         Self::Output {
-            positive: crate::nodes::ConditioningOut(0usize),
-            negative: crate::nodes::ConditioningOut(1usize),
+            positive: crate::nodes::ConditioningOut(0u32),
+            negative: crate::nodes::ConditioningOut(1u32),
         }
     }
     const NAME: &'static str = "ControlNetApplySD3";
@@ -182,7 +182,7 @@ for SetUnionControlNetType<ControlNet> {
     type Output = SetUnionControlNetTypeOutput;
     fn output(&self) -> Self::Output {
         Self::Output {
-            control_net: crate::nodes::ControlNetOut(0usize),
+            control_net: crate::nodes::ControlNetOut(0u32),
         }
     }
     const NAME: &'static str = "SetUnionControlNetType";

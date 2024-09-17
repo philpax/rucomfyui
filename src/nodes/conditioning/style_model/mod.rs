@@ -26,7 +26,7 @@ for StyleModelApply<Conditioning, StyleModel, ClipVisionOutput> {
     type Output = StyleModelApplyOutput;
     fn output(&self) -> Self::Output {
         Self::Output {
-            conditioning: crate::nodes::ConditioningOut(0usize),
+            conditioning: crate::nodes::ConditioningOut(0u32),
         }
     }
     const NAME: &'static str = "StyleModelApply";

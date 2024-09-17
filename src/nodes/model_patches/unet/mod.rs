@@ -33,7 +33,7 @@ impl<
     type Output = FreeUOutput;
     fn output(&self) -> Self::Output {
         Self::Output {
-            model: crate::nodes::ModelOut(0usize),
+            model: crate::nodes::ModelOut(0u32),
         }
     }
     const NAME: &'static str = "FreeU";
@@ -75,7 +75,7 @@ impl<
     type Output = FreeUV2Output;
     fn output(&self) -> Self::Output {
         Self::Output {
-            model: crate::nodes::ModelOut(0usize),
+            model: crate::nodes::ModelOut(0u32),
         }
     }
     const NAME: &'static str = "FreeU_V2";
@@ -118,7 +118,7 @@ for HyperTile<Model, TileSize, SwapSize, MaxDepth, ScaleDepth> {
     type Output = HyperTileOutput;
     fn output(&self) -> Self::Output {
         Self::Output {
-            model: crate::nodes::ModelOut(0usize),
+            model: crate::nodes::ModelOut(0u32),
         }
     }
     const NAME: &'static str = "HyperTile";
@@ -146,7 +146,7 @@ for PerturbedAttentionGuidance<Model, Scale> {
     type Output = PerturbedAttentionGuidanceOutput;
     fn output(&self) -> Self::Output {
         Self::Output {
-            model: crate::nodes::ModelOut(0usize),
+            model: crate::nodes::ModelOut(0u32),
         }
     }
     const NAME: &'static str = "PerturbedAttentionGuidance";

@@ -33,7 +33,7 @@ impl<
     type Output = LatentCropOutput;
     fn output(&self) -> Self::Output {
         Self::Output {
-            latent: crate::nodes::LatentOut(0usize),
+            latent: crate::nodes::LatentOut(0u32),
         }
     }
     const NAME: &'static str = "LatentCrop";
@@ -55,7 +55,7 @@ impl<Samples: crate::nodes::Latent> crate::nodes::TypedNode for LatentFlip<Sampl
     type Output = LatentFlipOutput;
     fn output(&self) -> Self::Output {
         Self::Output {
-            latent: crate::nodes::LatentOut(0usize),
+            latent: crate::nodes::LatentOut(0u32),
         }
     }
     const NAME: &'static str = "LatentFlip";
@@ -77,7 +77,7 @@ impl<Samples: crate::nodes::Latent> crate::nodes::TypedNode for LatentRotate<Sam
     type Output = LatentRotateOutput;
     fn output(&self) -> Self::Output {
         Self::Output {
-            latent: crate::nodes::LatentOut(0usize),
+            latent: crate::nodes::LatentOut(0u32),
         }
     }
     const NAME: &'static str = "LatentRotate";

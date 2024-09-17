@@ -25,7 +25,7 @@ impl<
     type Output = ImageBlendOutput;
     fn output(&self) -> Self::Output {
         Self::Output {
-            image: crate::nodes::ImageOut(0usize),
+            image: crate::nodes::ImageOut(0u32),
         }
     }
     const NAME: &'static str = "ImageBlend";
@@ -59,7 +59,7 @@ impl<
     type Output = ImageBlurOutput;
     fn output(&self) -> Self::Output {
         Self::Output {
-            image: crate::nodes::ImageOut(0usize),
+            image: crate::nodes::ImageOut(0u32),
         }
     }
     const NAME: &'static str = "ImageBlur";
@@ -84,7 +84,7 @@ for ImageQuantize<Image, Colors> {
     type Output = ImageQuantizeOutput;
     fn output(&self) -> Self::Output {
         Self::Output {
-            image: crate::nodes::ImageOut(0usize),
+            image: crate::nodes::ImageOut(0u32),
         }
     }
     const NAME: &'static str = "ImageQuantize";
@@ -122,7 +122,7 @@ impl<
     type Output = ImageSharpenOutput;
     fn output(&self) -> Self::Output {
         Self::Output {
-            image: crate::nodes::ImageOut(0usize),
+            image: crate::nodes::ImageOut(0u32),
         }
     }
     const NAME: &'static str = "ImageSharpen";
@@ -147,7 +147,7 @@ for Morphology<Image, KernelSize> {
     type Output = MorphologyOutput;
     fn output(&self) -> Self::Output {
         Self::Output {
-            image: crate::nodes::ImageOut(0usize),
+            image: crate::nodes::ImageOut(0u32),
         }
     }
     const NAME: &'static str = "Morphology";

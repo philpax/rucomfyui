@@ -19,7 +19,7 @@ for ModelSamplingAuraFlow<Model, Shift> {
     type Output = ModelSamplingAuraFlowOutput;
     fn output(&self) -> Self::Output {
         Self::Output {
-            model: crate::nodes::ModelOut(0usize),
+            model: crate::nodes::ModelOut(0u32),
         }
     }
     const NAME: &'static str = "ModelSamplingAuraFlow";
@@ -53,7 +53,7 @@ impl<
     type Output = ModelSamplingContinuousEdmOutput;
     fn output(&self) -> Self::Output {
         Self::Output {
-            model: crate::nodes::ModelOut(0usize),
+            model: crate::nodes::ModelOut(0u32),
         }
     }
     const NAME: &'static str = "ModelSamplingContinuousEDM";
@@ -87,7 +87,7 @@ impl<
     type Output = ModelSamplingContinuousVOutput;
     fn output(&self) -> Self::Output {
         Self::Output {
-            model: crate::nodes::ModelOut(0usize),
+            model: crate::nodes::ModelOut(0u32),
         }
     }
     const NAME: &'static str = "ModelSamplingContinuousV";
@@ -115,7 +115,7 @@ for ModelSamplingDiscrete<Model, Zsnr> {
     type Output = ModelSamplingDiscreteOutput;
     fn output(&self) -> Self::Output {
         Self::Output {
-            model: crate::nodes::ModelOut(0usize),
+            model: crate::nodes::ModelOut(0u32),
         }
     }
     const NAME: &'static str = "ModelSamplingDiscrete";
@@ -158,7 +158,7 @@ for ModelSamplingFlux<Model, MaxShift, BaseShift, Width, Height> {
     type Output = ModelSamplingFluxOutput;
     fn output(&self) -> Self::Output {
         Self::Output {
-            model: crate::nodes::ModelOut(0usize),
+            model: crate::nodes::ModelOut(0u32),
         }
     }
     const NAME: &'static str = "ModelSamplingFlux";
@@ -183,7 +183,7 @@ for ModelSamplingSd3<Model, Shift> {
     type Output = ModelSamplingSd3Output;
     fn output(&self) -> Self::Output {
         Self::Output {
-            model: crate::nodes::ModelOut(0usize),
+            model: crate::nodes::ModelOut(0u32),
         }
     }
     const NAME: &'static str = "ModelSamplingSD3";
@@ -211,7 +211,7 @@ for ModelSamplingStableCascade<Model, Shift> {
     type Output = ModelSamplingStableCascadeOutput;
     fn output(&self) -> Self::Output {
         Self::Output {
-            model: crate::nodes::ModelOut(0usize),
+            model: crate::nodes::ModelOut(0u32),
         }
     }
     const NAME: &'static str = "ModelSamplingStableCascade";
@@ -236,7 +236,7 @@ for RescaleCfg<Model, Multiplier> {
     type Output = RescaleCfgOutput;
     fn output(&self) -> Self::Output {
         Self::Output {
-            model: crate::nodes::ModelOut(0usize),
+            model: crate::nodes::ModelOut(0u32),
         }
     }
     const NAME: &'static str = "RescaleCFG";

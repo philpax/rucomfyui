@@ -25,7 +25,7 @@ impl<
     type Output = ImageFromBatchOutput;
     fn output(&self) -> Self::Output {
         Self::Output {
-            image: crate::nodes::ImageOut(0usize),
+            image: crate::nodes::ImageOut(0u32),
         }
     }
     const NAME: &'static str = "ImageFromBatch";
@@ -50,7 +50,7 @@ for RebatchImages<Images, BatchSize> {
     type Output = RebatchImagesOutput;
     fn output(&self) -> Self::Output {
         Self::Output {
-            image: crate::nodes::ImageOut(0usize),
+            image: crate::nodes::ImageOut(0u32),
         }
     }
     const NAME: &'static str = "RebatchImages";
@@ -75,7 +75,7 @@ for RepeatImageBatch<Image, Amount> {
     type Output = RepeatImageBatchOutput;
     fn output(&self) -> Self::Output {
         Self::Output {
-            image: crate::nodes::ImageOut(0usize),
+            image: crate::nodes::ImageOut(0u32),
         }
     }
     const NAME: &'static str = "RepeatImageBatch";

@@ -14,7 +14,7 @@ for EmptyLatentAudio<Seconds> {
     type Output = EmptyLatentAudioOutput;
     fn output(&self) -> Self::Output {
         Self::Output {
-            latent: crate::nodes::LatentOut(0usize),
+            latent: crate::nodes::LatentOut(0u32),
         }
     }
     const NAME: &'static str = "EmptyLatentAudio";
@@ -39,7 +39,7 @@ for VaeDecodeAudio<Samples, Vae> {
     type Output = VaeDecodeAudioOutput;
     fn output(&self) -> Self::Output {
         Self::Output {
-            audio: crate::nodes::AudioOut(0usize),
+            audio: crate::nodes::AudioOut(0u32),
         }
     }
     const NAME: &'static str = "VAEDecodeAudio";
@@ -64,7 +64,7 @@ for VaeEncodeAudio<Audio, Vae> {
     type Output = VaeEncodeAudioOutput;
     fn output(&self) -> Self::Output {
         Self::Output {
-            latent: crate::nodes::LatentOut(0usize),
+            latent: crate::nodes::LatentOut(0u32),
         }
     }
     const NAME: &'static str = "VAEEncodeAudio";

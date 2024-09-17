@@ -16,7 +16,7 @@ for JoinImageWithAlpha<Image, Alpha> {
     type Output = JoinImageWithAlphaOutput;
     fn output(&self) -> Self::Output {
         Self::Output {
-            image: crate::nodes::ImageOut(0usize),
+            image: crate::nodes::ImageOut(0u32),
         }
     }
     const NAME: &'static str = "JoinImageWithAlpha";
@@ -57,8 +57,8 @@ for PorterDuffImageComposite<Source, SourceAlpha, Destination, DestinationAlpha>
     type Output = PorterDuffImageCompositeOutput;
     fn output(&self) -> Self::Output {
         Self::Output {
-            image: crate::nodes::ImageOut(0usize),
-            mask: crate::nodes::MaskOut(1usize),
+            image: crate::nodes::ImageOut(0u32),
+            mask: crate::nodes::MaskOut(1u32),
         }
     }
     const NAME: &'static str = "PorterDuffImageComposite";
@@ -82,8 +82,8 @@ impl<Image: crate::nodes::Image> crate::nodes::TypedNode for SplitImageWithAlpha
     type Output = SplitImageWithAlphaOutput;
     fn output(&self) -> Self::Output {
         Self::Output {
-            image: crate::nodes::ImageOut(0usize),
-            mask: crate::nodes::MaskOut(1usize),
+            image: crate::nodes::ImageOut(0u32),
+            mask: crate::nodes::MaskOut(1u32),
         }
     }
     const NAME: &'static str = "SplitImageWithAlpha";

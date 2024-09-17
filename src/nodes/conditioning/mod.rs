@@ -30,7 +30,7 @@ impl<
     type Output = ClipSetLastLayerOutput;
     fn output(&self) -> Self::Output {
         Self::Output {
-            clip: crate::nodes::ClipOut(0usize),
+            clip: crate::nodes::ClipOut(0u32),
         }
     }
     const NAME: &'static str = "CLIPSetLastLayer";
@@ -55,7 +55,7 @@ for ClipTextEncode<Text, Clip> {
     type Output = ClipTextEncodeOutput;
     fn output(&self) -> Self::Output {
         Self::Output {
-            conditioning: crate::nodes::ConditioningOut(0usize),
+            conditioning: crate::nodes::ConditioningOut(0u32),
         }
     }
     const NAME: &'static str = "CLIPTextEncode";
@@ -85,7 +85,7 @@ impl<
     type Output = ClipVisionEncodeOutput;
     fn output(&self) -> Self::Output {
         Self::Output {
-            clip_vision_output: crate::nodes::ClipVisionOutputOut(0usize),
+            clip_vision_output: crate::nodes::ClipVisionOutputOut(0u32),
         }
     }
     const NAME: &'static str = "CLIPVisionEncode";
@@ -120,7 +120,7 @@ for ConditioningAverage<ConditioningTo, ConditioningFrom, ConditioningToStrength
     type Output = ConditioningAverageOutput;
     fn output(&self) -> Self::Output {
         Self::Output {
-            conditioning: crate::nodes::ConditioningOut(0usize),
+            conditioning: crate::nodes::ConditioningOut(0u32),
         }
     }
     const NAME: &'static str = "ConditioningAverage";
@@ -150,7 +150,7 @@ impl<
     type Output = ConditioningCombineOutput;
     fn output(&self) -> Self::Output {
         Self::Output {
-            conditioning: crate::nodes::ConditioningOut(0usize),
+            conditioning: crate::nodes::ConditioningOut(0u32),
         }
     }
     const NAME: &'static str = "ConditioningCombine";
@@ -180,7 +180,7 @@ impl<
     type Output = ConditioningConcatOutput;
     fn output(&self) -> Self::Output {
         Self::Output {
-            conditioning: crate::nodes::ConditioningOut(0usize),
+            conditioning: crate::nodes::ConditioningOut(0u32),
         }
     }
     const NAME: &'static str = "ConditioningConcat";
@@ -227,7 +227,7 @@ for ConditioningSetArea<Conditioning, Width, Height, X, Y, Strength> {
     type Output = ConditioningSetAreaOutput;
     fn output(&self) -> Self::Output {
         Self::Output {
-            conditioning: crate::nodes::ConditioningOut(0usize),
+            conditioning: crate::nodes::ConditioningOut(0u32),
         }
     }
     const NAME: &'static str = "ConditioningSetArea";
@@ -274,7 +274,7 @@ for ConditioningSetAreaPercentage<Conditioning, Width, Height, X, Y, Strength> {
     type Output = ConditioningSetAreaPercentageOutput;
     fn output(&self) -> Self::Output {
         Self::Output {
-            conditioning: crate::nodes::ConditioningOut(0usize),
+            conditioning: crate::nodes::ConditioningOut(0u32),
         }
     }
     const NAME: &'static str = "ConditioningSetAreaPercentage";
@@ -304,7 +304,7 @@ impl<
     type Output = ConditioningSetAreaStrengthOutput;
     fn output(&self) -> Self::Output {
         Self::Output {
-            conditioning: crate::nodes::ConditioningOut(0usize),
+            conditioning: crate::nodes::ConditioningOut(0u32),
         }
     }
     const NAME: &'static str = "ConditioningSetAreaStrength";
@@ -338,7 +338,7 @@ impl<
     type Output = ConditioningSetMaskOutput;
     fn output(&self) -> Self::Output {
         Self::Output {
-            conditioning: crate::nodes::ConditioningOut(0usize),
+            conditioning: crate::nodes::ConditioningOut(0u32),
         }
     }
     const NAME: &'static str = "ConditioningSetMask";
@@ -377,7 +377,7 @@ for UnClipConditioning<Conditioning, ClipVisionOutput, Strength, NoiseAugmentati
     type Output = UnClipConditioningOutput;
     fn output(&self) -> Self::Output {
         Self::Output {
-            conditioning: crate::nodes::ConditioningOut(0usize),
+            conditioning: crate::nodes::ConditioningOut(0u32),
         }
     }
     const NAME: &'static str = "unCLIPConditioning";

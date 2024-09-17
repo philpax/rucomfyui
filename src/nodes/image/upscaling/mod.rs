@@ -25,7 +25,7 @@ impl<
     type Output = ImageScaleOutput;
     fn output(&self) -> Self::Output {
         Self::Output {
-            image: crate::nodes::ImageOut(0usize),
+            image: crate::nodes::ImageOut(0u32),
         }
     }
     const NAME: &'static str = "ImageScale";
@@ -50,7 +50,7 @@ for ImageScaleBy<Image, ScaleBy> {
     type Output = ImageScaleByOutput;
     fn output(&self) -> Self::Output {
         Self::Output {
-            image: crate::nodes::ImageOut(0usize),
+            image: crate::nodes::ImageOut(0u32),
         }
     }
     const NAME: &'static str = "ImageScaleBy";
@@ -78,7 +78,7 @@ for ImageScaleToTotalPixels<Image, Megapixels> {
     type Output = ImageScaleToTotalPixelsOutput;
     fn output(&self) -> Self::Output {
         Self::Output {
-            image: crate::nodes::ImageOut(0usize),
+            image: crate::nodes::ImageOut(0u32),
         }
     }
     const NAME: &'static str = "ImageScaleToTotalPixels";
@@ -108,7 +108,7 @@ impl<
     type Output = ImageUpscaleWithModelOutput;
     fn output(&self) -> Self::Output {
         Self::Output {
-            image: crate::nodes::ImageOut(0usize),
+            image: crate::nodes::ImageOut(0u32),
         }
     }
     const NAME: &'static str = "ImageUpscaleWithModel";

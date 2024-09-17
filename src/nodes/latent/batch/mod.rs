@@ -18,7 +18,7 @@ impl<
     type Output = LatentBatchOutput;
     fn output(&self) -> Self::Output {
         Self::Output {
-            latent: crate::nodes::LatentOut(0usize),
+            latent: crate::nodes::LatentOut(0u32),
         }
     }
     const NAME: &'static str = "LatentBatch";
@@ -52,7 +52,7 @@ impl<
     type Output = LatentFromBatchOutput;
     fn output(&self) -> Self::Output {
         Self::Output {
-            latent: crate::nodes::LatentOut(0usize),
+            latent: crate::nodes::LatentOut(0u32),
         }
     }
     const NAME: &'static str = "LatentFromBatch";
@@ -77,7 +77,7 @@ for RebatchLatents<Latents, BatchSize> {
     type Output = RebatchLatentsOutput;
     fn output(&self) -> Self::Output {
         Self::Output {
-            latent: crate::nodes::LatentOut(0usize),
+            latent: crate::nodes::LatentOut(0u32),
         }
     }
     const NAME: &'static str = "RebatchLatents";
@@ -102,7 +102,7 @@ for RepeatLatentBatch<Samples, Amount> {
     type Output = RepeatLatentBatchOutput;
     fn output(&self) -> Self::Output {
         Self::Output {
-            latent: crate::nodes::LatentOut(0usize),
+            latent: crate::nodes::LatentOut(0u32),
         }
     }
     const NAME: &'static str = "RepeatLatentBatch";

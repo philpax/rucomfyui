@@ -19,7 +19,7 @@ for AlignYourStepsScheduler<Steps, Denoise> {
     type Output = AlignYourStepsSchedulerOutput;
     fn output(&self) -> Self::Output {
         Self::Output {
-            sigmas: crate::nodes::SigmasOut(0usize),
+            sigmas: crate::nodes::SigmasOut(0u32),
         }
     }
     const NAME: &'static str = "AlignYourStepsScheduler";
@@ -53,7 +53,7 @@ impl<
     type Output = BasicSchedulerOutput;
     fn output(&self) -> Self::Output {
         Self::Output {
-            sigmas: crate::nodes::SigmasOut(0usize),
+            sigmas: crate::nodes::SigmasOut(0u32),
         }
     }
     const NAME: &'static str = "BasicScheduler";
@@ -91,7 +91,7 @@ impl<
     type Output = BetaSamplingSchedulerOutput;
     fn output(&self) -> Self::Output {
         Self::Output {
-            sigmas: crate::nodes::SigmasOut(0usize),
+            sigmas: crate::nodes::SigmasOut(0u32),
         }
     }
     const NAME: &'static str = "BetaSamplingScheduler";
@@ -125,7 +125,7 @@ impl<
     type Output = ExponentialSchedulerOutput;
     fn output(&self) -> Self::Output {
         Self::Output {
-            sigmas: crate::nodes::SigmasOut(0usize),
+            sigmas: crate::nodes::SigmasOut(0u32),
         }
     }
     const NAME: &'static str = "ExponentialScheduler";
@@ -159,7 +159,7 @@ impl<
     type Output = GitsSchedulerOutput;
     fn output(&self) -> Self::Output {
         Self::Output {
-            sigmas: crate::nodes::SigmasOut(0usize),
+            sigmas: crate::nodes::SigmasOut(0u32),
         }
     }
     const NAME: &'static str = "GITSScheduler";
@@ -197,7 +197,7 @@ impl<
     type Output = KarrasSchedulerOutput;
     fn output(&self) -> Self::Output {
         Self::Output {
-            sigmas: crate::nodes::SigmasOut(0usize),
+            sigmas: crate::nodes::SigmasOut(0u32),
         }
     }
     const NAME: &'static str = "KarrasScheduler";
@@ -235,7 +235,7 @@ impl<
     type Output = PolyexponentialSchedulerOutput;
     fn output(&self) -> Self::Output {
         Self::Output {
-            sigmas: crate::nodes::SigmasOut(0usize),
+            sigmas: crate::nodes::SigmasOut(0u32),
         }
     }
     const NAME: &'static str = "PolyexponentialScheduler";
@@ -269,7 +269,7 @@ impl<
     type Output = SdTurboSchedulerOutput;
     fn output(&self) -> Self::Output {
         Self::Output {
-            sigmas: crate::nodes::SigmasOut(0usize),
+            sigmas: crate::nodes::SigmasOut(0u32),
         }
     }
     const NAME: &'static str = "SDTurboScheduler";
@@ -307,7 +307,7 @@ impl<
     type Output = VpSchedulerOutput;
     fn output(&self) -> Self::Output {
         Self::Output {
-            sigmas: crate::nodes::SigmasOut(0usize),
+            sigmas: crate::nodes::SigmasOut(0u32),
         }
     }
     const NAME: &'static str = "VPScheduler";

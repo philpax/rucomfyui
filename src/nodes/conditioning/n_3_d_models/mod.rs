@@ -46,9 +46,9 @@ for Sv3DConditioning<ClipVision, InitImage, Vae, Width, Height, VideoFrames, Ele
     type Output = Sv3DConditioningOutput;
     fn output(&self) -> Self::Output {
         Self::Output {
-            positive: crate::nodes::ConditioningOut(0usize),
-            negative: crate::nodes::ConditioningOut(1usize),
-            latent: crate::nodes::LatentOut(2usize),
+            positive: crate::nodes::ConditioningOut(0u32),
+            negative: crate::nodes::ConditioningOut(1u32),
+            latent: crate::nodes::LatentOut(2u32),
         }
     }
     const NAME: &'static str = "SV3D_Conditioning";
@@ -116,9 +116,9 @@ for StableZero123Conditioning<
     type Output = StableZero123ConditioningOutput;
     fn output(&self) -> Self::Output {
         Self::Output {
-            positive: crate::nodes::ConditioningOut(0usize),
-            negative: crate::nodes::ConditioningOut(1usize),
-            latent: crate::nodes::LatentOut(2usize),
+            positive: crate::nodes::ConditioningOut(0u32),
+            negative: crate::nodes::ConditioningOut(1u32),
+            latent: crate::nodes::LatentOut(2u32),
         }
     }
     const NAME: &'static str = "StableZero123_Conditioning";
@@ -196,9 +196,9 @@ for StableZero123ConditioningBatched<
     type Output = StableZero123ConditioningBatchedOutput;
     fn output(&self) -> Self::Output {
         Self::Output {
-            positive: crate::nodes::ConditioningOut(0usize),
-            negative: crate::nodes::ConditioningOut(1usize),
-            latent: crate::nodes::LatentOut(2usize),
+            positive: crate::nodes::ConditioningOut(0u32),
+            negative: crate::nodes::ConditioningOut(1u32),
+            latent: crate::nodes::LatentOut(2u32),
         }
     }
     const NAME: &'static str = "StableZero123_Conditioning_Batched";

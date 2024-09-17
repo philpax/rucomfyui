@@ -55,7 +55,7 @@ for GligenTextBoxApply<
     type Output = GligenTextBoxApplyOutput;
     fn output(&self) -> Self::Output {
         Self::Output {
-            conditioning: crate::nodes::ConditioningOut(0usize),
+            conditioning: crate::nodes::ConditioningOut(0u32),
         }
     }
     const NAME: &'static str = "GLIGENTextBoxApply";

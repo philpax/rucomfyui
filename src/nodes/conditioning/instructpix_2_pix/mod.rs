@@ -34,9 +34,9 @@ for InstructPixToPixConditioning<Positive, Negative, Vae, Pixels> {
     type Output = InstructPixToPixConditioningOutput;
     fn output(&self) -> Self::Output {
         Self::Output {
-            positive: crate::nodes::ConditioningOut(0usize),
-            negative: crate::nodes::ConditioningOut(1usize),
-            latent: crate::nodes::LatentOut(2usize),
+            positive: crate::nodes::ConditioningOut(0u32),
+            negative: crate::nodes::ConditioningOut(1u32),
+            latent: crate::nodes::LatentOut(2u32),
         }
     }
     const NAME: &'static str = "InstructPixToPixConditioning";

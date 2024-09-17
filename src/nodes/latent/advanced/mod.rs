@@ -18,7 +18,7 @@ impl<
     type Output = LatentAddOutput;
     fn output(&self) -> Self::Output {
         Self::Output {
-            latent: crate::nodes::LatentOut(0usize),
+            latent: crate::nodes::LatentOut(0u32),
         }
     }
     const NAME: &'static str = "LatentAdd";
@@ -41,7 +41,7 @@ for LatentBatchSeedBehavior<Samples> {
     type Output = LatentBatchSeedBehaviorOutput;
     fn output(&self) -> Self::Output {
         Self::Output {
-            latent: crate::nodes::LatentOut(0usize),
+            latent: crate::nodes::LatentOut(0u32),
         }
     }
     const NAME: &'static str = "LatentBatchSeedBehavior";
@@ -75,7 +75,7 @@ impl<
     type Output = LatentInterpolateOutput;
     fn output(&self) -> Self::Output {
         Self::Output {
-            latent: crate::nodes::LatentOut(0usize),
+            latent: crate::nodes::LatentOut(0u32),
         }
     }
     const NAME: &'static str = "LatentInterpolate";
@@ -105,7 +105,7 @@ impl<
     type Output = LatentMultiplyOutput;
     fn output(&self) -> Self::Output {
         Self::Output {
-            latent: crate::nodes::LatentOut(0usize),
+            latent: crate::nodes::LatentOut(0u32),
         }
     }
     const NAME: &'static str = "LatentMultiply";
@@ -135,7 +135,7 @@ impl<
     type Output = LatentSubtractOutput;
     fn output(&self) -> Self::Output {
         Self::Output {
-            latent: crate::nodes::LatentOut(0usize),
+            latent: crate::nodes::LatentOut(0u32),
         }
     }
     const NAME: &'static str = "LatentSubtract";

@@ -10,7 +10,7 @@ impl crate::nodes::TypedNode for DisableNoise {
     type Output = DisableNoiseOutput;
     fn output(&self) -> Self::Output {
         Self::Output {
-            noise: crate::nodes::NoiseOut(0usize),
+            noise: crate::nodes::NoiseOut(0u32),
         }
     }
     const NAME: &'static str = "DisableNoise";
@@ -32,7 +32,7 @@ impl<NoiseSeed: crate::nodes::Int> crate::nodes::TypedNode for RandomNoise<Noise
     type Output = RandomNoiseOutput;
     fn output(&self) -> Self::Output {
         Self::Output {
-            noise: crate::nodes::NoiseOut(0usize),
+            noise: crate::nodes::NoiseOut(0u32),
         }
     }
     const NAME: &'static str = "RandomNoise";

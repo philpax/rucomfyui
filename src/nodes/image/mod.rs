@@ -35,7 +35,7 @@ impl<
     type Output = EmptyImageOutput;
     fn output(&self) -> Self::Output {
         Self::Output {
-            image: crate::nodes::ImageOut(0usize),
+            image: crate::nodes::ImageOut(0u32),
         }
     }
     const NAME: &'static str = "EmptyImage";
@@ -60,7 +60,7 @@ for ImageBatch<Image1, Image2> {
     type Output = ImageBatchOutput;
     fn output(&self) -> Self::Output {
         Self::Output {
-            image: crate::nodes::ImageOut(0usize),
+            image: crate::nodes::ImageOut(0u32),
         }
     }
     const NAME: &'static str = "ImageBatch";
@@ -107,7 +107,7 @@ for ImageCompositeMasked<Destination, Source, X, Y, ResizeSource, Mask> {
     type Output = ImageCompositeMaskedOutput;
     fn output(&self) -> Self::Output {
         Self::Output {
-            image: crate::nodes::ImageOut(0usize),
+            image: crate::nodes::ImageOut(0u32),
         }
     }
     const NAME: &'static str = "ImageCompositeMasked";
@@ -129,7 +129,7 @@ impl<Image: crate::nodes::Image> crate::nodes::TypedNode for ImageInvert<Image> 
     type Output = ImageInvertOutput;
     fn output(&self) -> Self::Output {
         Self::Output {
-            image: crate::nodes::ImageOut(0usize),
+            image: crate::nodes::ImageOut(0u32),
         }
     }
     const NAME: &'static str = "ImageInvert";
@@ -178,8 +178,8 @@ for ImagePadForOutpaint<Image, Left, Top, Right, Bottom, Feathering> {
     type Output = ImagePadForOutpaintOutput;
     fn output(&self) -> Self::Output {
         Self::Output {
-            image: crate::nodes::ImageOut(0usize),
-            mask: crate::nodes::MaskOut(1usize),
+            image: crate::nodes::ImageOut(0u32),
+            mask: crate::nodes::MaskOut(1u32),
         }
     }
     const NAME: &'static str = "ImagePadForOutpaint";
@@ -200,8 +200,8 @@ impl crate::nodes::TypedNode for LoadImage {
     type Output = LoadImageOutput;
     fn output(&self) -> Self::Output {
         Self::Output {
-            image: crate::nodes::ImageOut(0usize),
-            mask: crate::nodes::MaskOut(1usize),
+            image: crate::nodes::ImageOut(0u32),
+            mask: crate::nodes::MaskOut(1u32),
         }
     }
     const NAME: &'static str = "LoadImage";
@@ -278,7 +278,7 @@ impl<
     type Output = WebcamCaptureOutput;
     fn output(&self) -> Self::Output {
         Self::Output {
-            image: crate::nodes::ImageOut(0usize),
+            image: crate::nodes::ImageOut(0u32),
         }
     }
     const NAME: &'static str = "WebcamCapture";
