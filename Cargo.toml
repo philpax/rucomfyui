@@ -1,3 +1,13 @@
+[workspace]
+members = [".", "generate_nodes"]
+
+[workspace.dependencies]
+serde_json = "1.0"
+
+reqwest = { version = "0.12", features = ["json", "multipart"] }
+serde = { version = "1.0", features = ["derive"] }
+tokio = { version = "1.40.0", features = ["time"] }
+
 [package]
 name = "rucomfyui"
 version = "0.1.0"
@@ -8,9 +18,9 @@ license = "MIT"
 
 [dependencies]
 futures = "0.3"
-serde_json = "1.0"
 thiserror = "1.0.63"
 
-reqwest = { version = "0.12", features = ["json", "multipart"] }
-serde = { version = "1.0", features = ["derive"] }
-tokio = { version = "1.40.0", features = ["time"] }
+serde_json = { workspace = true }
+reqwest = { workspace = true }
+serde = { workspace = true }
+tokio = { workspace = true }

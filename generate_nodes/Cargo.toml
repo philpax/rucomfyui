@@ -1,0 +1,14 @@
+[package]
+name = "generate_nodes"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+serde_json = { workspace = true }
+reqwest = { workspace = true }
+serde = { workspace = true }
+tokio = { workspace = true, features = ["full"] }
+quote = "1.0.37"
+prettyplease = "0.2.22"
+syn = "2.0.77"
+proc-macro2 = "1.0.86"

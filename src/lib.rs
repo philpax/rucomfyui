@@ -12,6 +12,8 @@ mod queue;
 mod workflow;
 pub use workflow::*;
 
+pub mod nodes;
+
 #[derive(Error, Debug)]
 /// Errors that can occur when using the client.
 pub enum ClientError {
