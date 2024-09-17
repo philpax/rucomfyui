@@ -395,6 +395,10 @@ fn name_to_ident(name: &str, pascal_case: bool) -> Result<syn::Ident> {
         name = name.to_case(Case::Snake);
     }
 
+    if name == "type" {
+        name = "type_".to_string();
+    }
+
     std::panic::catch_unwind(|| quote::format_ident!("{name}"))
         .map_err(|e| anyhow::anyhow!("Error parsing {name}: {:?}", e.downcast_ref::<&str>()))
 }
