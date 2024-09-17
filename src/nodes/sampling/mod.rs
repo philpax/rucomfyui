@@ -36,6 +36,7 @@ pub struct KSampler<
     pub denoise: Denoise,
 }
 ///Output for [`KSampler`].
+#[derive(Clone)]
 pub struct KSamplerOutput {
     ///The denoised latent.
     pub latent: crate::nodes::LatentOut,
@@ -119,6 +120,7 @@ pub struct KSamplerAdvanced<
     pub return_with_leftover_noise: ReturnWithLeftoverNoise,
 }
 ///Output for [`KSamplerAdvanced`].
+#[derive(Clone)]
 pub struct KSamplerAdvancedOutput {
     ///No documentation.
     pub latent: crate::nodes::LatentOut,

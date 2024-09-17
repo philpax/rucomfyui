@@ -10,6 +10,7 @@ pub struct BasicGuider<
     pub conditioning: Conditioning,
 }
 ///Output for [`BasicGuider`].
+#[derive(Clone)]
 pub struct BasicGuiderOutput {
     ///No documentation.
     pub guider: crate::nodes::GuiderOut,
@@ -46,6 +47,7 @@ pub struct CfgGuider<
     pub cfg: Cfg,
 }
 ///Output for [`CfgGuider`].
+#[derive(Clone)]
 pub struct CfgGuiderOutput {
     ///No documentation.
     pub guider: crate::nodes::GuiderOut,
@@ -90,6 +92,7 @@ pub struct DualCfgGuider<
     pub cfg_cond_2_negative: CfgCond2Negative,
 }
 ///Output for [`DualCfgGuider`].
+#[derive(Clone)]
 pub struct DualCfgGuiderOutput {
     ///No documentation.
     pub guider: crate::nodes::GuiderOut,

@@ -14,6 +14,7 @@ pub struct ClipTextEncodeHunyuanDiT<
     pub mt_5_xl: Mt5Xl,
 }
 ///Output for [`ClipTextEncodeHunyuanDiT`].
+#[derive(Clone)]
 pub struct ClipTextEncodeHunyuanDiTOutput {
     ///No documentation.
     pub conditioning: crate::nodes::ConditioningOut,
@@ -54,6 +55,7 @@ pub struct ClipTextEncodeSd3<
     pub empty_padding: EmptyPadding,
 }
 ///Output for [`ClipTextEncodeSd3`].
+#[derive(Clone)]
 pub struct ClipTextEncodeSd3Output {
     ///No documentation.
     pub conditioning: crate::nodes::ConditioningOut,
@@ -109,6 +111,7 @@ pub struct ClipTextEncodeSdxl<
     pub text_l: TextL,
 }
 ///Output for [`ClipTextEncodeSdxl`].
+#[derive(Clone)]
 pub struct ClipTextEncodeSdxlOutput {
     ///No documentation.
     pub conditioning: crate::nodes::ConditioningOut,
@@ -166,6 +169,7 @@ pub struct ClipTextEncodeSdxlRefiner<
     pub clip: Clip,
 }
 ///Output for [`ClipTextEncodeSdxlRefiner`].
+#[derive(Clone)]
 pub struct ClipTextEncodeSdxlRefinerOutput {
     ///No documentation.
     pub conditioning: crate::nodes::ConditioningOut,
@@ -203,6 +207,7 @@ pub struct ConditioningSetTimestepRange<
     pub end: End,
 }
 ///Output for [`ConditioningSetTimestepRange`].
+#[derive(Clone)]
 pub struct ConditioningSetTimestepRangeOutput {
     ///No documentation.
     pub conditioning: crate::nodes::ConditioningOut,
@@ -229,6 +234,7 @@ pub struct ConditioningZeroOut<Conditioning: crate::nodes::Conditioning> {
     pub conditioning: Conditioning,
 }
 ///Output for [`ConditioningZeroOut`].
+#[derive(Clone)]
 pub struct ConditioningZeroOutOutput {
     ///No documentation.
     pub conditioning: crate::nodes::ConditioningOut,

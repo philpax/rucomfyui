@@ -13,6 +13,7 @@ pub struct ImageFromBatch<
     pub length: Length,
 }
 ///Output for [`ImageFromBatch`].
+#[derive(Clone)]
 pub struct ImageFromBatchOutput {
     ///No documentation.
     pub image: crate::nodes::ImageOut,
@@ -41,6 +42,7 @@ pub struct RebatchImages<Images: crate::nodes::Image, BatchSize: crate::nodes::I
     pub batch_size: BatchSize,
 }
 ///Output for [`RebatchImages`].
+#[derive(Clone)]
 pub struct RebatchImagesOutput {
     ///No documentation.
     pub image: crate::nodes::ImageOut,
@@ -66,6 +68,7 @@ pub struct RepeatImageBatch<Image: crate::nodes::Image, Amount: crate::nodes::In
     pub amount: Amount,
 }
 ///Output for [`RepeatImageBatch`].
+#[derive(Clone)]
 pub struct RepeatImageBatchOutput {
     ///No documentation.
     pub image: crate::nodes::ImageOut,

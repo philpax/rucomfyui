@@ -19,6 +19,7 @@ pub struct Sd4XUpscaleConditioning<
     pub noise_augmentation: NoiseAugmentation,
 }
 ///Output for [`Sd4XUpscaleConditioning`].
+#[derive(Clone)]
 pub struct Sd4XUpscaleConditioningOutput {
     ///No documentation.
     pub positive: crate::nodes::ConditioningOut,

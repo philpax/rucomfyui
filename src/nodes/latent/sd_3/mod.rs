@@ -13,6 +13,7 @@ pub struct EmptySd3LatentImage<
     pub batch_size: BatchSize,
 }
 ///Output for [`EmptySd3LatentImage`].
+#[derive(Clone)]
 pub struct EmptySd3LatentImageOutput {
     ///No documentation.
     pub latent: crate::nodes::LatentOut,

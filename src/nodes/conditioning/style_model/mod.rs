@@ -13,6 +13,7 @@ pub struct StyleModelApply<
     pub clip_vision_output: ClipVisionOutput,
 }
 ///Output for [`StyleModelApply`].
+#[derive(Clone)]
 pub struct StyleModelApplyOutput {
     ///No documentation.
     pub conditioning: crate::nodes::ConditioningOut,

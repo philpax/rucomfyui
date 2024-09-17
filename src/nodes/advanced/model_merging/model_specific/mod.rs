@@ -199,6 +199,7 @@ pub struct ModelMergeFlux1<
     pub final_layer: FinalLayer,
 }
 ///Output for [`ModelMergeFlux1`].
+#[derive(Clone)]
 pub struct ModelMergeFlux1Output {
     ///No documentation.
     pub model: crate::nodes::ModelOut,
@@ -449,6 +450,7 @@ pub struct ModelMergeSd1<
     pub out: Out,
 }
 ///Output for [`ModelMergeSd1`].
+#[derive(Clone)]
 pub struct ModelMergeSd1Output {
     ///No documentation.
     pub model: crate::nodes::ModelOut,
@@ -633,6 +635,7 @@ pub struct ModelMergeSd2<
     pub out: Out,
 }
 ///Output for [`ModelMergeSd2`].
+#[derive(Clone)]
 pub struct ModelMergeSd2Output {
     ///No documentation.
     pub model: crate::nodes::ModelOut,
@@ -817,6 +820,7 @@ pub struct ModelMergeSd32B<
     pub final_layer: FinalLayer,
 }
 ///Output for [`ModelMergeSd32B`].
+#[derive(Clone)]
 pub struct ModelMergeSd32BOutput {
     ///No documentation.
     pub model: crate::nodes::ModelOut,
@@ -983,6 +987,7 @@ pub struct ModelMergeSdxl<
     pub out: Out,
 }
 ///Output for [`ModelMergeSdxl`].
+#[derive(Clone)]
 pub struct ModelMergeSdxlOutput {
     ///No documentation.
     pub model: crate::nodes::ModelOut,

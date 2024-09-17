@@ -7,6 +7,7 @@ pub struct LatentAdd<Samples1: crate::nodes::Latent, Samples2: crate::nodes::Lat
     pub samples_2: Samples2,
 }
 ///Output for [`LatentAdd`].
+#[derive(Clone)]
 pub struct LatentAddOutput {
     ///No documentation.
     pub latent: crate::nodes::LatentOut,
@@ -37,6 +38,7 @@ pub struct LatentBatchSeedBehavior<
     pub seed_behavior: SeedBehavior,
 }
 ///Output for [`LatentBatchSeedBehavior`].
+#[derive(Clone)]
 pub struct LatentBatchSeedBehaviorOutput {
     ///No documentation.
     pub latent: crate::nodes::LatentOut,
@@ -70,6 +72,7 @@ pub struct LatentInterpolate<
     pub ratio: Ratio,
 }
 ///Output for [`LatentInterpolate`].
+#[derive(Clone)]
 pub struct LatentInterpolateOutput {
     ///No documentation.
     pub latent: crate::nodes::LatentOut,
@@ -101,6 +104,7 @@ pub struct LatentMultiply<
     pub multiplier: Multiplier,
 }
 ///Output for [`LatentMultiply`].
+#[derive(Clone)]
 pub struct LatentMultiplyOutput {
     ///No documentation.
     pub latent: crate::nodes::LatentOut,
@@ -131,6 +135,7 @@ pub struct LatentSubtract<
     pub samples_2: Samples2,
 }
 ///Output for [`LatentSubtract`].
+#[derive(Clone)]
 pub struct LatentSubtractOutput {
     ///No documentation.
     pub latent: crate::nodes::LatentOut,

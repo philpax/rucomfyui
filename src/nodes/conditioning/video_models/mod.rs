@@ -31,6 +31,7 @@ pub struct SvdImg2VidConditioning<
     pub augmentation_level: AugmentationLevel,
 }
 ///Output for [`SvdImg2VidConditioning`].
+#[derive(Clone)]
 pub struct SvdImg2VidConditioningOutput {
     ///No documentation.
     pub positive: crate::nodes::ConditioningOut,

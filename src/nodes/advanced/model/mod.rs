@@ -10,6 +10,7 @@ pub struct ModelSamplingAuraFlow<
     pub shift: Shift,
 }
 ///Output for [`ModelSamplingAuraFlow`].
+#[derive(Clone)]
 pub struct ModelSamplingAuraFlowOutput {
     ///No documentation.
     pub model: crate::nodes::ModelOut,
@@ -44,6 +45,7 @@ pub struct ModelSamplingContinuousEdm<
     pub sigma_min: SigmaMin,
 }
 ///Output for [`ModelSamplingContinuousEdm`].
+#[derive(Clone)]
 pub struct ModelSamplingContinuousEdmOutput {
     ///No documentation.
     pub model: crate::nodes::ModelOut,
@@ -83,6 +85,7 @@ pub struct ModelSamplingContinuousV<
     pub sigma_min: SigmaMin,
 }
 ///Output for [`ModelSamplingContinuousV`].
+#[derive(Clone)]
 pub struct ModelSamplingContinuousVOutput {
     ///No documentation.
     pub model: crate::nodes::ModelOut,
@@ -119,6 +122,7 @@ pub struct ModelSamplingDiscrete<
     pub zsnr: Zsnr,
 }
 ///Output for [`ModelSamplingDiscrete`].
+#[derive(Clone)]
 pub struct ModelSamplingDiscreteOutput {
     ///No documentation.
     pub model: crate::nodes::ModelOut,
@@ -159,6 +163,7 @@ pub struct ModelSamplingFlux<
     pub height: Height,
 }
 ///Output for [`ModelSamplingFlux`].
+#[derive(Clone)]
 pub struct ModelSamplingFluxOutput {
     ///No documentation.
     pub model: crate::nodes::ModelOut,
@@ -190,6 +195,7 @@ pub struct ModelSamplingSd3<Model: crate::nodes::Model, Shift: crate::nodes::Flo
     pub shift: Shift,
 }
 ///Output for [`ModelSamplingSd3`].
+#[derive(Clone)]
 pub struct ModelSamplingSd3Output {
     ///No documentation.
     pub model: crate::nodes::ModelOut,
@@ -218,6 +224,7 @@ pub struct ModelSamplingStableCascade<
     pub shift: Shift,
 }
 ///Output for [`ModelSamplingStableCascade`].
+#[derive(Clone)]
 pub struct ModelSamplingStableCascadeOutput {
     ///No documentation.
     pub model: crate::nodes::ModelOut,
@@ -243,6 +250,7 @@ pub struct RescaleCfg<Model: crate::nodes::Model, Multiplier: crate::nodes::Floa
     pub multiplier: Multiplier,
 }
 ///Output for [`RescaleCfg`].
+#[derive(Clone)]
 pub struct RescaleCfgOutput {
     ///No documentation.
     pub model: crate::nodes::ModelOut,

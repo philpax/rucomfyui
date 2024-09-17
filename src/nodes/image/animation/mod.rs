@@ -16,6 +16,7 @@ pub struct SaveAnimatedPng<
     pub compress_level: CompressLevel,
 }
 ///Output for [`SaveAnimatedPng`].
+#[derive(Clone)]
 pub struct SaveAnimatedPngOutput {}
 impl<
     Images: crate::nodes::Image,
@@ -56,6 +57,7 @@ pub struct SaveAnimatedWebp<
     pub method: Method,
 }
 ///Output for [`SaveAnimatedWebp`].
+#[derive(Clone)]
 pub struct SaveAnimatedWebpOutput {}
 impl<
     Images: crate::nodes::Image,

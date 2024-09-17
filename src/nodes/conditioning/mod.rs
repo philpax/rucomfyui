@@ -19,6 +19,7 @@ pub struct ClipSetLastLayer<
     pub stop_at_clip_layer: StopAtClipLayer,
 }
 ///Output for [`ClipSetLastLayer`].
+#[derive(Clone)]
 pub struct ClipSetLastLayerOutput {
     ///No documentation.
     pub clip: crate::nodes::ClipOut,
@@ -46,6 +47,7 @@ pub struct ClipTextEncode<Text: crate::nodes::String, Clip: crate::nodes::Clip> 
     pub clip: Clip,
 }
 ///Output for [`ClipTextEncode`].
+#[derive(Clone)]
 pub struct ClipTextEncodeOutput {
     ///A conditioning containing the embedded text used to guide the diffusion model.
     pub conditioning: crate::nodes::ConditioningOut,
@@ -74,6 +76,7 @@ pub struct ClipVisionEncode<
     pub image: Image,
 }
 ///Output for [`ClipVisionEncode`].
+#[derive(Clone)]
 pub struct ClipVisionEncodeOutput {
     ///No documentation.
     pub clip_vision_output: crate::nodes::ClipVisionOutputOut,
@@ -107,6 +110,7 @@ pub struct ConditioningAverage<
     pub conditioning_to_strength: ConditioningToStrength,
 }
 ///Output for [`ConditioningAverage`].
+#[derive(Clone)]
 pub struct ConditioningAverageOutput {
     ///No documentation.
     pub conditioning: crate::nodes::ConditioningOut,
@@ -139,6 +143,7 @@ pub struct ConditioningCombine<
     pub conditioning_2: Conditioning2,
 }
 ///Output for [`ConditioningCombine`].
+#[derive(Clone)]
 pub struct ConditioningCombineOutput {
     ///No documentation.
     pub conditioning: crate::nodes::ConditioningOut,
@@ -169,6 +174,7 @@ pub struct ConditioningConcat<
     pub conditioning_from: ConditioningFrom,
 }
 ///Output for [`ConditioningConcat`].
+#[derive(Clone)]
 pub struct ConditioningConcatOutput {
     ///No documentation.
     pub conditioning: crate::nodes::ConditioningOut,
@@ -211,6 +217,7 @@ pub struct ConditioningSetArea<
     pub strength: Strength,
 }
 ///Output for [`ConditioningSetArea`].
+#[derive(Clone)]
 pub struct ConditioningSetAreaOutput {
     ///No documentation.
     pub conditioning: crate::nodes::ConditioningOut,
@@ -258,6 +265,7 @@ pub struct ConditioningSetAreaPercentage<
     pub strength: Strength,
 }
 ///Output for [`ConditioningSetAreaPercentage`].
+#[derive(Clone)]
 pub struct ConditioningSetAreaPercentageOutput {
     ///No documentation.
     pub conditioning: crate::nodes::ConditioningOut,
@@ -293,6 +301,7 @@ pub struct ConditioningSetAreaStrength<
     pub strength: Strength,
 }
 ///Output for [`ConditioningSetAreaStrength`].
+#[derive(Clone)]
 pub struct ConditioningSetAreaStrengthOutput {
     ///No documentation.
     pub conditioning: crate::nodes::ConditioningOut,
@@ -329,6 +338,7 @@ pub struct ConditioningSetMask<
     pub set_cond_area: SetCondArea,
 }
 ///Output for [`ConditioningSetMask`].
+#[derive(Clone)]
 pub struct ConditioningSetMaskOutput {
     ///No documentation.
     pub conditioning: crate::nodes::ConditioningOut,
@@ -368,6 +378,7 @@ pub struct UnClipConditioning<
     pub noise_augmentation: NoiseAugmentation,
 }
 ///Output for [`UnClipConditioning`].
+#[derive(Clone)]
 pub struct UnClipConditioningOutput {
     ///No documentation.
     pub conditioning: crate::nodes::ConditioningOut,

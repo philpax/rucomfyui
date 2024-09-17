@@ -2,6 +2,7 @@
 ///**DisableNoise**
 pub struct DisableNoise {}
 ///Output for [`DisableNoise`].
+#[derive(Clone)]
 pub struct DisableNoiseOutput {
     ///No documentation.
     pub noise: crate::nodes::NoiseOut,
@@ -24,6 +25,7 @@ pub struct RandomNoise<NoiseSeed: crate::nodes::Int> {
     pub noise_seed: NoiseSeed,
 }
 ///Output for [`RandomNoise`].
+#[derive(Clone)]
 pub struct RandomNoiseOutput {
     ///No documentation.
     pub noise: crate::nodes::NoiseOut,

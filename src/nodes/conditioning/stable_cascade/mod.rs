@@ -10,6 +10,7 @@ pub struct StableCascadeStageBConditioning<
     pub stage_c: StageC,
 }
 ///Output for [`StableCascadeStageBConditioning`].
+#[derive(Clone)]
 pub struct StableCascadeStageBConditioningOutput {
     ///No documentation.
     pub conditioning: crate::nodes::ConditioningOut,

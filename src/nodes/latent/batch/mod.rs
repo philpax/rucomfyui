@@ -7,6 +7,7 @@ pub struct LatentBatch<Samples1: crate::nodes::Latent, Samples2: crate::nodes::L
     pub samples_2: Samples2,
 }
 ///Output for [`LatentBatch`].
+#[derive(Clone)]
 pub struct LatentBatchOutput {
     ///No documentation.
     pub latent: crate::nodes::LatentOut,
@@ -40,6 +41,7 @@ pub struct LatentFromBatch<
     pub length: Length,
 }
 ///Output for [`LatentFromBatch`].
+#[derive(Clone)]
 pub struct LatentFromBatchOutput {
     ///No documentation.
     pub latent: crate::nodes::LatentOut,
@@ -68,6 +70,7 @@ pub struct RebatchLatents<Latents: crate::nodes::Latent, BatchSize: crate::nodes
     pub batch_size: BatchSize,
 }
 ///Output for [`RebatchLatents`].
+#[derive(Clone)]
 pub struct RebatchLatentsOutput {
     ///No documentation.
     pub latent: crate::nodes::LatentOut,
@@ -93,6 +96,7 @@ pub struct RepeatLatentBatch<Samples: crate::nodes::Latent, Amount: crate::nodes
     pub amount: Amount,
 }
 ///Output for [`RepeatLatentBatch`].
+#[derive(Clone)]
 pub struct RepeatLatentBatchOutput {
     ///No documentation.
     pub latent: crate::nodes::LatentOut,

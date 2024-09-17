@@ -8,6 +8,7 @@ pub struct ClipMergeAdd<Clip1: crate::nodes::Clip, Clip2: crate::nodes::Clip> {
     pub clip_2: Clip2,
 }
 ///Output for [`ClipMergeAdd`].
+#[derive(Clone)]
 pub struct ClipMergeAddOutput {
     ///No documentation.
     pub clip: crate::nodes::ClipOut,
@@ -39,6 +40,7 @@ pub struct ClipMergeSimple<
     pub ratio: Ratio,
 }
 ///Output for [`ClipMergeSimple`].
+#[derive(Clone)]
 pub struct ClipMergeSimpleOutput {
     ///No documentation.
     pub clip: crate::nodes::ClipOut,
@@ -73,6 +75,7 @@ pub struct ClipMergeSubtract<
     pub multiplier: Multiplier,
 }
 ///Output for [`ClipMergeSubtract`].
+#[derive(Clone)]
 pub struct ClipMergeSubtractOutput {
     ///No documentation.
     pub clip: crate::nodes::ClipOut,
@@ -101,6 +104,7 @@ pub struct ClipSave<Clip: crate::nodes::Clip, FilenamePrefix: crate::nodes::Stri
     pub filename_prefix: FilenamePrefix,
 }
 ///Output for [`ClipSave`].
+#[derive(Clone)]
 pub struct ClipSaveOutput {}
 impl<
     Clip: crate::nodes::Clip,
@@ -132,6 +136,7 @@ pub struct CheckpointSave<
     pub filename_prefix: FilenamePrefix,
 }
 ///Output for [`CheckpointSave`].
+#[derive(Clone)]
 pub struct CheckpointSaveOutput {}
 impl<
     Model: crate::nodes::Model,
@@ -156,6 +161,7 @@ pub struct ModelMergeAdd<Model1: crate::nodes::Model, Model2: crate::nodes::Mode
     pub model_2: Model2,
 }
 ///Output for [`ModelMergeAdd`].
+#[derive(Clone)]
 pub struct ModelMergeAddOutput {
     ///No documentation.
     pub model: crate::nodes::ModelOut,
@@ -193,6 +199,7 @@ pub struct ModelMergeBlocks<
     pub out: Out,
 }
 ///Output for [`ModelMergeBlocks`].
+#[derive(Clone)]
 pub struct ModelMergeBlocksOutput {
     ///No documentation.
     pub model: crate::nodes::ModelOut,
@@ -229,6 +236,7 @@ pub struct ModelMergeSimple<
     pub ratio: Ratio,
 }
 ///Output for [`ModelMergeSimple`].
+#[derive(Clone)]
 pub struct ModelMergeSimpleOutput {
     ///No documentation.
     pub model: crate::nodes::ModelOut,
@@ -263,6 +271,7 @@ pub struct ModelMergeSubtract<
     pub multiplier: Multiplier,
 }
 ///Output for [`ModelMergeSubtract`].
+#[derive(Clone)]
 pub struct ModelMergeSubtractOutput {
     ///No documentation.
     pub model: crate::nodes::ModelOut,
@@ -291,6 +300,7 @@ pub struct ModelSave<Model: crate::nodes::Model, FilenamePrefix: crate::nodes::S
     pub filename_prefix: FilenamePrefix,
 }
 ///Output for [`ModelSave`].
+#[derive(Clone)]
 pub struct ModelSaveOutput {}
 impl<
     Model: crate::nodes::Model,
@@ -313,6 +323,7 @@ pub struct VaeSave<Vae: crate::nodes::Vae, FilenamePrefix: crate::nodes::String>
     pub filename_prefix: FilenamePrefix,
 }
 ///Output for [`VaeSave`].
+#[derive(Clone)]
 pub struct VaeSaveOutput {}
 impl<
     Vae: crate::nodes::Vae,

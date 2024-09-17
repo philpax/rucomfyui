@@ -16,6 +16,7 @@ pub struct ControlNetApply<
     pub strength: Strength,
 }
 ///Output for [`ControlNetApply`].
+#[derive(Clone)]
 pub struct ControlNetApplyOutput {
     ///No documentation.
     pub conditioning: crate::nodes::ConditioningOut,
@@ -64,6 +65,7 @@ pub struct ControlNetApplyAdvanced<
     pub end_percent: EndPercent,
 }
 ///Output for [`ControlNetApplyAdvanced`].
+#[derive(Clone)]
 pub struct ControlNetApplyAdvancedOutput {
     ///No documentation.
     pub positive: crate::nodes::ConditioningOut,
@@ -129,6 +131,7 @@ pub struct ControlNetApplySd3<
     pub end_percent: EndPercent,
 }
 ///Output for [`ControlNetApplySd3`].
+#[derive(Clone)]
 pub struct ControlNetApplySd3Output {
     ///No documentation.
     pub positive: crate::nodes::ConditioningOut,
@@ -178,6 +181,7 @@ pub struct SetUnionControlNetType<
     pub type_: Type,
 }
 ///Output for [`SetUnionControlNetType`].
+#[derive(Clone)]
 pub struct SetUnionControlNetTypeOutput {
     ///No documentation.
     pub control_net: crate::nodes::ControlNetOut,

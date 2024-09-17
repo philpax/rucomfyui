@@ -19,6 +19,7 @@ pub struct ImageScale<
     pub crop: Crop,
 }
 ///Output for [`ImageScale`].
+#[derive(Clone)]
 pub struct ImageScaleOutput {
     ///No documentation.
     pub image: crate::nodes::ImageOut,
@@ -55,6 +56,7 @@ pub struct ImageScaleBy<
     pub scale_by: ScaleBy,
 }
 ///Output for [`ImageScaleBy`].
+#[derive(Clone)]
 pub struct ImageScaleByOutput {
     ///No documentation.
     pub image: crate::nodes::ImageOut,
@@ -89,6 +91,7 @@ pub struct ImageScaleToTotalPixels<
     pub megapixels: Megapixels,
 }
 ///Output for [`ImageScaleToTotalPixels`].
+#[derive(Clone)]
 pub struct ImageScaleToTotalPixelsOutput {
     ///No documentation.
     pub image: crate::nodes::ImageOut,
@@ -120,6 +123,7 @@ pub struct ImageUpscaleWithModel<
     pub image: Image,
 }
 ///Output for [`ImageUpscaleWithModel`].
+#[derive(Clone)]
 pub struct ImageUpscaleWithModelOutput {
     ///No documentation.
     pub image: crate::nodes::ImageOut,

@@ -19,6 +19,7 @@ pub struct LatentCrop<
     pub y: Y,
 }
 ///Output for [`LatentCrop`].
+#[derive(Clone)]
 pub struct LatentCropOutput {
     ///No documentation.
     pub latent: crate::nodes::LatentOut,
@@ -49,6 +50,7 @@ pub struct LatentFlip<Samples: crate::nodes::Latent, FlipMethod: crate::nodes::S
     pub flip_method: FlipMethod,
 }
 ///Output for [`LatentFlip`].
+#[derive(Clone)]
 pub struct LatentFlipOutput {
     ///No documentation.
     pub latent: crate::nodes::LatentOut,
@@ -76,6 +78,7 @@ pub struct LatentRotate<Samples: crate::nodes::Latent, Rotation: crate::nodes::S
     pub rotation: Rotation,
 }
 ///Output for [`LatentRotate`].
+#[derive(Clone)]
 pub struct LatentRotateOutput {
     ///No documentation.
     pub latent: crate::nodes::LatentOut,

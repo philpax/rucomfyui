@@ -28,6 +28,7 @@ pub struct GligenTextBoxApply<
     pub y: Y,
 }
 ///Output for [`GligenTextBoxApply`].
+#[derive(Clone)]
 pub struct GligenTextBoxApplyOutput {
     ///No documentation.
     pub conditioning: crate::nodes::ConditioningOut,

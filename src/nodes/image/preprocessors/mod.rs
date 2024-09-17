@@ -13,6 +13,7 @@ pub struct Canny<
     pub high_threshold: HighThreshold,
 }
 ///Output for [`Canny`].
+#[derive(Clone)]
 pub struct CannyOutput {
     ///No documentation.
     pub image: crate::nodes::ImageOut,

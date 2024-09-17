@@ -7,6 +7,7 @@ pub struct SetLatentNoiseMask<Samples: crate::nodes::Latent, Mask: crate::nodes:
     pub mask: Mask,
 }
 ///Output for [`SetLatentNoiseMask`].
+#[derive(Clone)]
 pub struct SetLatentNoiseMaskOutput {
     ///No documentation.
     pub latent: crate::nodes::LatentOut,
@@ -41,6 +42,7 @@ pub struct VaeEncodeForInpaint<
     pub grow_mask_by: GrowMaskBy,
 }
 ///Output for [`VaeEncodeForInpaint`].
+#[derive(Clone)]
 pub struct VaeEncodeForInpaintOutput {
     ///No documentation.
     pub latent: crate::nodes::LatentOut,

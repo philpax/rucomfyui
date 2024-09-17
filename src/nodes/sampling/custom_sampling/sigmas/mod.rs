@@ -5,6 +5,7 @@ pub struct FlipSigmas<Sigmas: crate::nodes::Sigmas> {
     pub sigmas: Sigmas,
 }
 ///Output for [`FlipSigmas`].
+#[derive(Clone)]
 pub struct FlipSigmasOutput {
     ///No documentation.
     pub sigmas: crate::nodes::SigmasOut,
@@ -29,6 +30,7 @@ pub struct SplitSigmas<Sigmas: crate::nodes::Sigmas, Step: crate::nodes::Int> {
     pub step: Step,
 }
 ///Output for [`SplitSigmas`].
+#[derive(Clone)]
 pub struct SplitSigmasOutput {
     ///No documentation.
     pub high_sigmas: crate::nodes::SigmasOut,
@@ -60,6 +62,7 @@ pub struct SplitSigmasDenoise<
     pub denoise: Denoise,
 }
 ///Output for [`SplitSigmasDenoise`].
+#[derive(Clone)]
 pub struct SplitSigmasDenoiseOutput {
     ///No documentation.
     pub high_sigmas: crate::nodes::SigmasOut,

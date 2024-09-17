@@ -6,6 +6,7 @@ pub struct ClipVisionLoader<ClipName: crate::nodes::String> {
     pub clip_name: ClipName,
 }
 ///Output for [`ClipVisionLoader`].
+#[derive(Clone)]
 pub struct ClipVisionLoaderOutput {
     ///No documentation.
     pub clip_vision: crate::nodes::ClipVisionOut,
@@ -29,6 +30,7 @@ pub struct CheckpointLoaderSimple<CkptName: crate::nodes::String> {
     pub ckpt_name: CkptName,
 }
 ///Output for [`CheckpointLoaderSimple`].
+#[derive(Clone)]
 pub struct CheckpointLoaderSimpleOutput {
     ///The model used for denoising latents.
     pub model: crate::nodes::ModelOut,
@@ -58,6 +60,7 @@ pub struct ControlNetLoader<ControlNetName: crate::nodes::String> {
     pub control_net_name: ControlNetName,
 }
 ///Output for [`ControlNetLoader`].
+#[derive(Clone)]
 pub struct ControlNetLoaderOutput {
     ///No documentation.
     pub control_net: crate::nodes::ControlNetOut,
@@ -86,6 +89,7 @@ pub struct DiffControlNetLoader<
     pub control_net_name: ControlNetName,
 }
 ///Output for [`DiffControlNetLoader`].
+#[derive(Clone)]
 pub struct DiffControlNetLoaderOutput {
     ///No documentation.
     pub control_net: crate::nodes::ControlNetOut,
@@ -111,6 +115,7 @@ pub struct GligenLoader<GligenName: crate::nodes::String> {
     pub gligen_name: GligenName,
 }
 ///Output for [`GligenLoader`].
+#[derive(Clone)]
 pub struct GligenLoaderOutput {
     ///No documentation.
     pub gligen: crate::nodes::GligenOut,
@@ -142,6 +147,7 @@ pub struct HypernetworkLoader<
     pub strength: Strength,
 }
 ///Output for [`HypernetworkLoader`].
+#[derive(Clone)]
 pub struct HypernetworkLoaderOutput {
     ///No documentation.
     pub model: crate::nodes::ModelOut,
@@ -182,6 +188,7 @@ pub struct LoraLoader<
     pub strength_clip: StrengthClip,
 }
 ///Output for [`LoraLoader`].
+#[derive(Clone)]
 pub struct LoraLoaderOutput {
     ///The modified diffusion model.
     pub model: crate::nodes::ModelOut,
@@ -222,6 +229,7 @@ pub struct LoraLoaderModelOnly<
     pub strength_model: StrengthModel,
 }
 ///Output for [`LoraLoaderModelOnly`].
+#[derive(Clone)]
 pub struct LoraLoaderModelOnlyOutput {
     ///The modified diffusion model.
     pub model: crate::nodes::ModelOut,
@@ -248,6 +256,7 @@ pub struct StyleModelLoader<StyleModelName: crate::nodes::String> {
     pub style_model_name: StyleModelName,
 }
 ///Output for [`StyleModelLoader`].
+#[derive(Clone)]
 pub struct StyleModelLoaderOutput {
     ///No documentation.
     pub style_model: crate::nodes::StyleModelOut,
@@ -271,6 +280,7 @@ pub struct UpscaleModelLoader<ModelName: crate::nodes::String> {
     pub model_name: ModelName,
 }
 ///Output for [`UpscaleModelLoader`].
+#[derive(Clone)]
 pub struct UpscaleModelLoaderOutput {
     ///No documentation.
     pub upscale_model: crate::nodes::UpscaleModelOut,
@@ -294,6 +304,7 @@ pub struct VaeLoader<VaeName: crate::nodes::String> {
     pub vae_name: VaeName,
 }
 ///Output for [`VaeLoader`].
+#[derive(Clone)]
 pub struct VaeLoaderOutput {
     ///No documentation.
     pub vae: crate::nodes::VaeOut,
@@ -316,6 +327,7 @@ pub struct UnClipCheckpointLoader<CkptName: crate::nodes::String> {
     pub ckpt_name: CkptName,
 }
 ///Output for [`UnClipCheckpointLoader`].
+#[derive(Clone)]
 pub struct UnClipCheckpointLoaderOutput {
     ///No documentation.
     pub model: crate::nodes::ModelOut,

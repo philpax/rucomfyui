@@ -20,6 +20,7 @@ pub struct EmptyLatentImage<
     pub batch_size: BatchSize,
 }
 ///Output for [`EmptyLatentImage`].
+#[derive(Clone)]
 pub struct EmptyLatentImageOutput {
     ///The empty latent image batch.
     pub latent: crate::nodes::LatentOut,
@@ -60,6 +61,7 @@ pub struct LatentComposite<
     pub feather: Feather,
 }
 ///Output for [`LatentComposite`].
+#[derive(Clone)]
 pub struct LatentCompositeOutput {
     ///No documentation.
     pub latent: crate::nodes::LatentOut,
@@ -105,6 +107,7 @@ pub struct LatentCompositeMasked<
     pub mask: Option<Mask>,
 }
 ///Output for [`LatentCompositeMasked`].
+#[derive(Clone)]
 pub struct LatentCompositeMaskedOutput {
     ///No documentation.
     pub latent: crate::nodes::LatentOut,
@@ -149,6 +152,7 @@ pub struct LatentUpscale<
     pub crop: Crop,
 }
 ///Output for [`LatentUpscale`].
+#[derive(Clone)]
 pub struct LatentUpscaleOutput {
     ///No documentation.
     pub latent: crate::nodes::LatentOut,
@@ -186,6 +190,7 @@ pub struct LatentUpscaleBy<
     pub scale_by: ScaleBy,
 }
 ///Output for [`LatentUpscaleBy`].
+#[derive(Clone)]
 pub struct LatentUpscaleByOutput {
     ///No documentation.
     pub latent: crate::nodes::LatentOut,
@@ -214,6 +219,7 @@ pub struct VaeDecode<Samples: crate::nodes::Latent, Vae: crate::nodes::Vae> {
     pub vae: Vae,
 }
 ///Output for [`VaeDecode`].
+#[derive(Clone)]
 pub struct VaeDecodeOutput {
     ///The decoded image.
     pub image: crate::nodes::ImageOut,
@@ -239,6 +245,7 @@ pub struct VaeEncode<Pixels: crate::nodes::Image, Vae: crate::nodes::Vae> {
     pub vae: Vae,
 }
 ///Output for [`VaeEncode`].
+#[derive(Clone)]
 pub struct VaeEncodeOutput {
     ///No documentation.
     pub latent: crate::nodes::LatentOut,

@@ -13,6 +13,7 @@ pub struct AlignYourStepsScheduler<
     pub denoise: Denoise,
 }
 ///Output for [`AlignYourStepsScheduler`].
+#[derive(Clone)]
 pub struct AlignYourStepsSchedulerOutput {
     ///No documentation.
     pub sigmas: crate::nodes::SigmasOut,
@@ -50,6 +51,7 @@ pub struct BasicScheduler<
     pub denoise: Denoise,
 }
 ///Output for [`BasicScheduler`].
+#[derive(Clone)]
 pub struct BasicSchedulerOutput {
     ///No documentation.
     pub sigmas: crate::nodes::SigmasOut,
@@ -88,6 +90,7 @@ pub struct BetaSamplingScheduler<
     pub beta: Beta,
 }
 ///Output for [`BetaSamplingScheduler`].
+#[derive(Clone)]
 pub struct BetaSamplingSchedulerOutput {
     ///No documentation.
     pub sigmas: crate::nodes::SigmasOut,
@@ -123,6 +126,7 @@ pub struct ExponentialScheduler<
     pub sigma_min: SigmaMin,
 }
 ///Output for [`ExponentialScheduler`].
+#[derive(Clone)]
 pub struct ExponentialSchedulerOutput {
     ///No documentation.
     pub sigmas: crate::nodes::SigmasOut,
@@ -157,6 +161,7 @@ pub struct GitsScheduler<
     pub denoise: Denoise,
 }
 ///Output for [`GitsScheduler`].
+#[derive(Clone)]
 pub struct GitsSchedulerOutput {
     ///No documentation.
     pub sigmas: crate::nodes::SigmasOut,
@@ -194,6 +199,7 @@ pub struct KarrasScheduler<
     pub rho: Rho,
 }
 ///Output for [`KarrasScheduler`].
+#[derive(Clone)]
 pub struct KarrasSchedulerOutput {
     ///No documentation.
     pub sigmas: crate::nodes::SigmasOut,
@@ -232,6 +238,7 @@ pub struct PolyexponentialScheduler<
     pub rho: Rho,
 }
 ///Output for [`PolyexponentialScheduler`].
+#[derive(Clone)]
 pub struct PolyexponentialSchedulerOutput {
     ///No documentation.
     pub sigmas: crate::nodes::SigmasOut,
@@ -267,6 +274,7 @@ pub struct SdTurboScheduler<
     pub denoise: Denoise,
 }
 ///Output for [`SdTurboScheduler`].
+#[derive(Clone)]
 pub struct SdTurboSchedulerOutput {
     ///No documentation.
     pub sigmas: crate::nodes::SigmasOut,
@@ -304,6 +312,7 @@ pub struct VpScheduler<
     pub eps_s: EpsS,
 }
 ///Output for [`VpScheduler`].
+#[derive(Clone)]
 pub struct VpSchedulerOutput {
     ///No documentation.
     pub sigmas: crate::nodes::SigmasOut,

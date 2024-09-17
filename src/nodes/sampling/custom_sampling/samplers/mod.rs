@@ -5,6 +5,7 @@ pub struct KSamplerSelect<SamplerName: crate::nodes::String> {
     pub sampler_name: SamplerName,
 }
 ///Output for [`KSamplerSelect`].
+#[derive(Clone)]
 pub struct KSamplerSelectOutput {
     ///No documentation.
     pub sampler: crate::nodes::SamplerOut,
@@ -57,6 +58,7 @@ pub struct SamplerDpmAdaptative<
     pub s_noise: SNoise,
 }
 ///Output for [`SamplerDpmAdaptative`].
+#[derive(Clone)]
 pub struct SamplerDpmAdaptativeOutput {
     ///No documentation.
     pub sampler: crate::nodes::SamplerOut,
@@ -113,6 +115,7 @@ pub struct SamplerDpmpp2MSde<
     pub noise_device: NoiseDevice,
 }
 ///Output for [`SamplerDpmpp2MSde`].
+#[derive(Clone)]
 pub struct SamplerDpmpp2MSdeOutput {
     ///No documentation.
     pub sampler: crate::nodes::SamplerOut,
@@ -145,6 +148,7 @@ pub struct SamplerDpmpp2SAncestral<
     pub s_noise: SNoise,
 }
 ///Output for [`SamplerDpmpp2SAncestral`].
+#[derive(Clone)]
 pub struct SamplerDpmpp2SAncestralOutput {
     ///No documentation.
     pub sampler: crate::nodes::SamplerOut,
@@ -176,6 +180,7 @@ pub struct SamplerDpmpp3MSde<
     pub noise_device: NoiseDevice,
 }
 ///Output for [`SamplerDpmpp3MSde`].
+#[derive(Clone)]
 pub struct SamplerDpmpp3MSdeOutput {
     ///No documentation.
     pub sampler: crate::nodes::SamplerOut,
@@ -213,6 +218,7 @@ pub struct SamplerDpmppSde<
     pub noise_device: NoiseDevice,
 }
 ///Output for [`SamplerDpmppSde`].
+#[derive(Clone)]
 pub struct SamplerDpmppSdeOutput {
     ///No documentation.
     pub sampler: crate::nodes::SamplerOut,
@@ -242,6 +248,7 @@ pub struct SamplerEulerAncestral<Eta: crate::nodes::Float, SNoise: crate::nodes:
     pub s_noise: SNoise,
 }
 ///Output for [`SamplerEulerAncestral`].
+#[derive(Clone)]
 pub struct SamplerEulerAncestralOutput {
     ///No documentation.
     pub sampler: crate::nodes::SamplerOut,
@@ -270,6 +277,7 @@ pub struct SamplerEulerAncestralCfgpp<
     pub s_noise: SNoise,
 }
 ///Output for [`SamplerEulerAncestralCfgpp`].
+#[derive(Clone)]
 pub struct SamplerEulerAncestralCfgppOutput {
     ///No documentation.
     pub sampler: crate::nodes::SamplerOut,
@@ -301,6 +309,7 @@ pub struct SamplerLcmUpscale<
     pub upscale_method: UpscaleMethod,
 }
 ///Output for [`SamplerLcmUpscale`].
+#[derive(Clone)]
 pub struct SamplerLcmUpscaleOutput {
     ///No documentation.
     pub sampler: crate::nodes::SamplerOut,
@@ -327,6 +336,7 @@ pub struct SamplerLms<Order: crate::nodes::Int> {
     pub order: Order,
 }
 ///Output for [`SamplerLms`].
+#[derive(Clone)]
 pub struct SamplerLmsOutput {
     ///No documentation.
     pub sampler: crate::nodes::SamplerOut,

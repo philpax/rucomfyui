@@ -22,6 +22,7 @@ pub struct EmptyImage<
     pub color: Color,
 }
 ///Output for [`EmptyImage`].
+#[derive(Clone)]
 pub struct EmptyImageOutput {
     ///No documentation.
     pub image: crate::nodes::ImageOut,
@@ -51,6 +52,7 @@ pub struct ImageBatch<Image1: crate::nodes::Image, Image2: crate::nodes::Image> 
     pub image_2: Image2,
 }
 ///Output for [`ImageBatch`].
+#[derive(Clone)]
 pub struct ImageBatchOutput {
     ///No documentation.
     pub image: crate::nodes::ImageOut,
@@ -91,6 +93,7 @@ pub struct ImageCompositeMasked<
     pub mask: Option<Mask>,
 }
 ///Output for [`ImageCompositeMasked`].
+#[derive(Clone)]
 pub struct ImageCompositeMaskedOutput {
     ///No documentation.
     pub image: crate::nodes::ImageOut,
@@ -121,6 +124,7 @@ pub struct ImageInvert<Image: crate::nodes::Image> {
     pub image: Image,
 }
 ///Output for [`ImageInvert`].
+#[derive(Clone)]
 pub struct ImageInvertOutput {
     ///No documentation.
     pub image: crate::nodes::ImageOut,
@@ -160,6 +164,7 @@ pub struct ImagePadForOutpaint<
     pub feathering: Feathering,
 }
 ///Output for [`ImagePadForOutpaint`].
+#[derive(Clone)]
 pub struct ImagePadForOutpaintOutput {
     ///No documentation.
     pub image: crate::nodes::ImageOut,
@@ -193,6 +198,7 @@ pub struct LoadImage<Image: crate::nodes::String> {
     pub image: Image,
 }
 ///Output for [`LoadImage`].
+#[derive(Clone)]
 pub struct LoadImageOutput {
     ///No documentation.
     pub image: crate::nodes::ImageOut,
@@ -218,6 +224,7 @@ pub struct PreviewImage<Images: crate::nodes::Image> {
     pub images: Images,
 }
 ///Output for [`PreviewImage`].
+#[derive(Clone)]
 pub struct PreviewImageOutput {}
 impl<Images: crate::nodes::Image> crate::nodes::TypedNode for PreviewImage<Images> {
     type Output = PreviewImageOutput;
@@ -237,6 +244,7 @@ pub struct SaveImage<Images: crate::nodes::Image, FilenamePrefix: crate::nodes::
     pub filename_prefix: FilenamePrefix,
 }
 ///Output for [`SaveImage`].
+#[derive(Clone)]
 pub struct SaveImageOutput {}
 impl<
     Images: crate::nodes::Image,
@@ -268,6 +276,7 @@ pub struct WebcamCapture<
     pub capture_on_queue: CaptureOnQueue,
 }
 ///Output for [`WebcamCapture`].
+#[derive(Clone)]
 pub struct WebcamCaptureOutput {
     ///No documentation.
     pub image: crate::nodes::ImageOut,

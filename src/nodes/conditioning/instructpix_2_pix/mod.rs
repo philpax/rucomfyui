@@ -16,6 +16,7 @@ pub struct InstructPixToPixConditioning<
     pub pixels: Pixels,
 }
 ///Output for [`InstructPixToPixConditioning`].
+#[derive(Clone)]
 pub struct InstructPixToPixConditioningOutput {
     ///No documentation.
     pub positive: crate::nodes::ConditioningOut,

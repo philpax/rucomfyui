@@ -19,6 +19,7 @@ pub struct InpaintModelConditioning<
     pub mask: Mask,
 }
 ///Output for [`InpaintModelConditioning`].
+#[derive(Clone)]
 pub struct InpaintModelConditioningOutput {
     ///No documentation.
     pub positive: crate::nodes::ConditioningOut,

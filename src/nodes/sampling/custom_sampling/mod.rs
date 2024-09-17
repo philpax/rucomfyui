@@ -36,6 +36,7 @@ pub struct SamplerCustom<
     pub latent_image: LatentImage,
 }
 ///Output for [`SamplerCustom`].
+#[derive(Clone)]
 pub struct SamplerCustomOutput {
     ///No documentation.
     pub output: crate::nodes::LatentOut,
@@ -96,6 +97,7 @@ pub struct SamplerCustomAdvanced<
     pub latent_image: LatentImage,
 }
 ///Output for [`SamplerCustomAdvanced`].
+#[derive(Clone)]
 pub struct SamplerCustomAdvancedOutput {
     ///No documentation.
     pub output: crate::nodes::LatentOut,

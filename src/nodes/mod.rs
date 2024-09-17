@@ -76,6 +76,7 @@ impl Boolean for bool {}
 ///**Audio**
 pub trait Audio: ToTypedValue {}
 ///A node output of type [`Audio`].
+#[derive(Clone, Copy)]
 pub struct AudioOut(pub u32);
 impl ToTypedValue for AudioOut {
     fn to_typed_value(self) -> TypedValue {
@@ -86,6 +87,7 @@ impl Audio for AudioOut {}
 ///**Boolean**
 pub trait Boolean: ToTypedValue {}
 ///A node output of type [`Boolean`].
+#[derive(Clone, Copy)]
 pub struct BooleanOut(pub u32);
 impl ToTypedValue for BooleanOut {
     fn to_typed_value(self) -> TypedValue {
@@ -96,6 +98,7 @@ impl Boolean for BooleanOut {}
 ///**ClipVisionOutput**
 pub trait ClipVisionOutput: ToTypedValue {}
 ///A node output of type [`ClipVisionOutput`].
+#[derive(Clone, Copy)]
 pub struct ClipVisionOutputOut(pub u32);
 impl ToTypedValue for ClipVisionOutputOut {
     fn to_typed_value(self) -> TypedValue {
@@ -106,6 +109,7 @@ impl ClipVisionOutput for ClipVisionOutputOut {}
 ///**ClipVision**
 pub trait ClipVision: ToTypedValue {}
 ///A node output of type [`ClipVision`].
+#[derive(Clone, Copy)]
 pub struct ClipVisionOut(pub u32);
 impl ToTypedValue for ClipVisionOut {
     fn to_typed_value(self) -> TypedValue {
@@ -116,6 +120,7 @@ impl ClipVision for ClipVisionOut {}
 ///**Clip**
 pub trait Clip: ToTypedValue {}
 ///A node output of type [`Clip`].
+#[derive(Clone, Copy)]
 pub struct ClipOut(pub u32);
 impl ToTypedValue for ClipOut {
     fn to_typed_value(self) -> TypedValue {
@@ -126,6 +131,7 @@ impl Clip for ClipOut {}
 ///**Conditioning**
 pub trait Conditioning: ToTypedValue {}
 ///A node output of type [`Conditioning`].
+#[derive(Clone, Copy)]
 pub struct ConditioningOut(pub u32);
 impl ToTypedValue for ConditioningOut {
     fn to_typed_value(self) -> TypedValue {
@@ -136,6 +142,7 @@ impl Conditioning for ConditioningOut {}
 ///**ControlNet**
 pub trait ControlNet: ToTypedValue {}
 ///A node output of type [`ControlNet`].
+#[derive(Clone, Copy)]
 pub struct ControlNetOut(pub u32);
 impl ToTypedValue for ControlNetOut {
     fn to_typed_value(self) -> TypedValue {
@@ -146,6 +153,7 @@ impl ControlNet for ControlNetOut {}
 ///**Float**
 pub trait Float: ToTypedValue {}
 ///A node output of type [`Float`].
+#[derive(Clone, Copy)]
 pub struct FloatOut(pub u32);
 impl ToTypedValue for FloatOut {
     fn to_typed_value(self) -> TypedValue {
@@ -156,6 +164,7 @@ impl Float for FloatOut {}
 ///**Gligen**
 pub trait Gligen: ToTypedValue {}
 ///A node output of type [`Gligen`].
+#[derive(Clone, Copy)]
 pub struct GligenOut(pub u32);
 impl ToTypedValue for GligenOut {
     fn to_typed_value(self) -> TypedValue {
@@ -166,6 +175,7 @@ impl Gligen for GligenOut {}
 ///**Guider**
 pub trait Guider: ToTypedValue {}
 ///A node output of type [`Guider`].
+#[derive(Clone, Copy)]
 pub struct GuiderOut(pub u32);
 impl ToTypedValue for GuiderOut {
     fn to_typed_value(self) -> TypedValue {
@@ -176,6 +186,7 @@ impl Guider for GuiderOut {}
 ///**Image**
 pub trait Image: ToTypedValue {}
 ///A node output of type [`Image`].
+#[derive(Clone, Copy)]
 pub struct ImageOut(pub u32);
 impl ToTypedValue for ImageOut {
     fn to_typed_value(self) -> TypedValue {
@@ -186,6 +197,7 @@ impl Image for ImageOut {}
 ///**InpaintModel**
 pub trait InpaintModel: ToTypedValue {}
 ///A node output of type [`InpaintModel`].
+#[derive(Clone, Copy)]
 pub struct InpaintModelOut(pub u32);
 impl ToTypedValue for InpaintModelOut {
     fn to_typed_value(self) -> TypedValue {
@@ -196,6 +208,7 @@ impl InpaintModel for InpaintModelOut {}
 ///**InpaintPatch**
 pub trait InpaintPatch: ToTypedValue {}
 ///A node output of type [`InpaintPatch`].
+#[derive(Clone, Copy)]
 pub struct InpaintPatchOut(pub u32);
 impl ToTypedValue for InpaintPatchOut {
     fn to_typed_value(self) -> TypedValue {
@@ -206,6 +219,7 @@ impl InpaintPatch for InpaintPatchOut {}
 ///**Int**
 pub trait Int: ToTypedValue {}
 ///A node output of type [`Int`].
+#[derive(Clone, Copy)]
 pub struct IntOut(pub u32);
 impl ToTypedValue for IntOut {
     fn to_typed_value(self) -> TypedValue {
@@ -216,6 +230,7 @@ impl Int for IntOut {}
 ///**Latent**
 pub trait Latent: ToTypedValue {}
 ///A node output of type [`Latent`].
+#[derive(Clone, Copy)]
 pub struct LatentOut(pub u32);
 impl ToTypedValue for LatentOut {
     fn to_typed_value(self) -> TypedValue {
@@ -226,6 +241,7 @@ impl Latent for LatentOut {}
 ///**Mask**
 pub trait Mask: ToTypedValue {}
 ///A node output of type [`Mask`].
+#[derive(Clone, Copy)]
 pub struct MaskOut(pub u32);
 impl ToTypedValue for MaskOut {
     fn to_typed_value(self) -> TypedValue {
@@ -236,6 +252,7 @@ impl Mask for MaskOut {}
 ///**Model**
 pub trait Model: ToTypedValue {}
 ///A node output of type [`Model`].
+#[derive(Clone, Copy)]
 pub struct ModelOut(pub u32);
 impl ToTypedValue for ModelOut {
     fn to_typed_value(self) -> TypedValue {
@@ -246,6 +263,7 @@ impl Model for ModelOut {}
 ///**Noise**
 pub trait Noise: ToTypedValue {}
 ///A node output of type [`Noise`].
+#[derive(Clone, Copy)]
 pub struct NoiseOut(pub u32);
 impl ToTypedValue for NoiseOut {
     fn to_typed_value(self) -> TypedValue {
@@ -256,6 +274,7 @@ impl Noise for NoiseOut {}
 ///**Photomaker**
 pub trait Photomaker: ToTypedValue {}
 ///A node output of type [`Photomaker`].
+#[derive(Clone, Copy)]
 pub struct PhotomakerOut(pub u32);
 impl ToTypedValue for PhotomakerOut {
     fn to_typed_value(self) -> TypedValue {
@@ -266,6 +285,7 @@ impl Photomaker for PhotomakerOut {}
 ///**Sampler**
 pub trait Sampler: ToTypedValue {}
 ///A node output of type [`Sampler`].
+#[derive(Clone, Copy)]
 pub struct SamplerOut(pub u32);
 impl ToTypedValue for SamplerOut {
     fn to_typed_value(self) -> TypedValue {
@@ -276,6 +296,7 @@ impl Sampler for SamplerOut {}
 ///**String**
 pub trait String: ToTypedValue {}
 ///A node output of type [`String`].
+#[derive(Clone, Copy)]
 pub struct StringOut(pub u32);
 impl ToTypedValue for StringOut {
     fn to_typed_value(self) -> TypedValue {
@@ -286,6 +307,7 @@ impl String for StringOut {}
 ///**Sigmas**
 pub trait Sigmas: ToTypedValue {}
 ///A node output of type [`Sigmas`].
+#[derive(Clone, Copy)]
 pub struct SigmasOut(pub u32);
 impl ToTypedValue for SigmasOut {
     fn to_typed_value(self) -> TypedValue {
@@ -296,6 +318,7 @@ impl Sigmas for SigmasOut {}
 ///**StyleModel**
 pub trait StyleModel: ToTypedValue {}
 ///A node output of type [`StyleModel`].
+#[derive(Clone, Copy)]
 pub struct StyleModelOut(pub u32);
 impl ToTypedValue for StyleModelOut {
     fn to_typed_value(self) -> TypedValue {
@@ -306,6 +329,7 @@ impl StyleModel for StyleModelOut {}
 ///**UpscaleModel**
 pub trait UpscaleModel: ToTypedValue {}
 ///A node output of type [`UpscaleModel`].
+#[derive(Clone, Copy)]
 pub struct UpscaleModelOut(pub u32);
 impl ToTypedValue for UpscaleModelOut {
     fn to_typed_value(self) -> TypedValue {
@@ -316,6 +340,7 @@ impl UpscaleModel for UpscaleModelOut {}
 ///**Vae**
 pub trait Vae: ToTypedValue {}
 ///A node output of type [`Vae`].
+#[derive(Clone, Copy)]
 pub struct VaeOut(pub u32);
 impl ToTypedValue for VaeOut {
     fn to_typed_value(self) -> TypedValue {
@@ -326,6 +351,7 @@ impl Vae for VaeOut {}
 ///**Webcam**
 pub trait Webcam: ToTypedValue {}
 ///A node output of type [`Webcam`].
+#[derive(Clone, Copy)]
 pub struct WebcamOut(pub u32);
 impl ToTypedValue for WebcamOut {
     fn to_typed_value(self) -> TypedValue {

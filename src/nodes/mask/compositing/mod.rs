@@ -7,6 +7,7 @@ pub struct JoinImageWithAlpha<Image: crate::nodes::Image, Alpha: crate::nodes::M
     pub alpha: Alpha,
 }
 ///Output for [`JoinImageWithAlpha`].
+#[derive(Clone)]
 pub struct JoinImageWithAlphaOutput {
     ///No documentation.
     pub image: crate::nodes::ImageOut,
@@ -44,6 +45,7 @@ pub struct PorterDuffImageComposite<
     pub mode: Mode,
 }
 ///Output for [`PorterDuffImageComposite`].
+#[derive(Clone)]
 pub struct PorterDuffImageCompositeOutput {
     ///No documentation.
     pub image: crate::nodes::ImageOut,
@@ -76,6 +78,7 @@ pub struct SplitImageWithAlpha<Image: crate::nodes::Image> {
     pub image: Image,
 }
 ///Output for [`SplitImageWithAlpha`].
+#[derive(Clone)]
 pub struct SplitImageWithAlphaOutput {
     ///No documentation.
     pub image: crate::nodes::ImageOut,

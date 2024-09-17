@@ -16,6 +16,7 @@ pub struct ClipTextEncodeFlux<
     pub guidance: Guidance,
 }
 ///Output for [`ClipTextEncodeFlux`].
+#[derive(Clone)]
 pub struct ClipTextEncodeFluxOutput {
     ///No documentation.
     pub conditioning: crate::nodes::ConditioningOut,
@@ -48,6 +49,7 @@ pub struct FluxGuidance<
     pub guidance: Guidance,
 }
 ///Output for [`FluxGuidance`].
+#[derive(Clone)]
 pub struct FluxGuidanceOutput {
     ///No documentation.
     pub conditioning: crate::nodes::ConditioningOut,

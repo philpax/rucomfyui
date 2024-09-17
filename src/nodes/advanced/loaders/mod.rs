@@ -8,6 +8,7 @@ pub struct ClipLoader<ClipName: crate::nodes::String, Type: crate::nodes::String
     pub type_: Type,
 }
 ///Output for [`ClipLoader`].
+#[derive(Clone)]
 pub struct ClipLoaderOutput {
     ///No documentation.
     pub clip: crate::nodes::ClipOut,
@@ -36,6 +37,7 @@ pub struct CheckpointLoader<
     pub ckpt_name: CkptName,
 }
 ///Output for [`CheckpointLoader`].
+#[derive(Clone)]
 pub struct CheckpointLoaderOutput {
     ///No documentation.
     pub model: crate::nodes::ModelOut,
@@ -75,6 +77,7 @@ pub struct DualClipLoader<
     pub type_: Type,
 }
 ///Output for [`DualClipLoader`].
+#[derive(Clone)]
 pub struct DualClipLoaderOutput {
     ///No documentation.
     pub clip: crate::nodes::ClipOut,
@@ -109,6 +112,7 @@ pub struct TripleClipLoader<
     pub clip_name_3: ClipName3,
 }
 ///Output for [`TripleClipLoader`].
+#[derive(Clone)]
 pub struct TripleClipLoaderOutput {
     ///No documentation.
     pub clip: crate::nodes::ClipOut,
@@ -140,6 +144,7 @@ pub struct UnetLoader<
     pub weight_dtype: WeightDtype,
 }
 ///Output for [`UnetLoader`].
+#[derive(Clone)]
 pub struct UnetLoaderOutput {
     ///No documentation.
     pub model: crate::nodes::ModelOut,

@@ -20,6 +20,7 @@ pub struct CropMask<
     pub height: Height,
 }
 ///Output for [`CropMask`].
+#[derive(Clone)]
 pub struct CropMaskOutput {
     ///No documentation.
     pub mask: crate::nodes::MaskOut,
@@ -62,6 +63,7 @@ pub struct FeatherMask<
     pub bottom: Bottom,
 }
 ///Output for [`FeatherMask`].
+#[derive(Clone)]
 pub struct FeatherMaskOutput {
     ///No documentation.
     pub mask: crate::nodes::MaskOut,
@@ -98,6 +100,7 @@ pub struct GrowMask<
     pub tapered_corners: TaperedCorners,
 }
 ///Output for [`GrowMask`].
+#[derive(Clone)]
 pub struct GrowMaskOutput {
     ///No documentation.
     pub mask: crate::nodes::MaskOut,
@@ -126,6 +129,7 @@ pub struct ImageColorToMask<Image: crate::nodes::Image, Color: crate::nodes::Int
     pub color: Color,
 }
 ///Output for [`ImageColorToMask`].
+#[derive(Clone)]
 pub struct ImageColorToMaskOutput {
     ///No documentation.
     pub mask: crate::nodes::MaskOut,
@@ -151,6 +155,7 @@ pub struct ImageToMask<Image: crate::nodes::Image, Channel: crate::nodes::String
     pub channel: Channel,
 }
 ///Output for [`ImageToMask`].
+#[derive(Clone)]
 pub struct ImageToMaskOutput {
     ///No documentation.
     pub mask: crate::nodes::MaskOut,
@@ -174,6 +179,7 @@ pub struct InvertMask<Mask: crate::nodes::Mask> {
     pub mask: Mask,
 }
 ///Output for [`InvertMask`].
+#[derive(Clone)]
 pub struct InvertMaskOutput {
     ///No documentation.
     pub mask: crate::nodes::MaskOut,
@@ -198,6 +204,7 @@ pub struct LoadImageMask<Image: crate::nodes::String, Channel: crate::nodes::Str
     pub channel: Channel,
 }
 ///Output for [`LoadImageMask`].
+#[derive(Clone)]
 pub struct LoadImageMaskOutput {
     ///No documentation.
     pub mask: crate::nodes::MaskOut,
@@ -235,6 +242,7 @@ pub struct MaskComposite<
     pub operation: Operation,
 }
 ///Output for [`MaskComposite`].
+#[derive(Clone)]
 pub struct MaskCompositeOutput {
     ///No documentation.
     pub mask: crate::nodes::MaskOut,
@@ -263,6 +271,7 @@ pub struct MaskToImage<Mask: crate::nodes::Mask> {
     pub mask: Mask,
 }
 ///Output for [`MaskToImage`].
+#[derive(Clone)]
 pub struct MaskToImageOutput {
     ///No documentation.
     pub image: crate::nodes::ImageOut,
@@ -293,6 +302,7 @@ pub struct SolidMask<
     pub height: Height,
 }
 ///Output for [`SolidMask`].
+#[derive(Clone)]
 pub struct SolidMaskOutput {
     ///No documentation.
     pub mask: crate::nodes::MaskOut,
@@ -321,6 +331,7 @@ pub struct ThresholdMask<Mask: crate::nodes::Mask, Value: crate::nodes::Float> {
     pub value: Value,
 }
 ///Output for [`ThresholdMask`].
+#[derive(Clone)]
 pub struct ThresholdMaskOutput {
     ///No documentation.
     pub mask: crate::nodes::MaskOut,

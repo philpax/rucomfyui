@@ -5,6 +5,7 @@ pub struct ImageOnlyCheckpointLoader<CkptName: crate::nodes::String> {
     pub ckpt_name: CkptName,
 }
 ///Output for [`ImageOnlyCheckpointLoader`].
+#[derive(Clone)]
 pub struct ImageOnlyCheckpointLoaderOutput {
     ///No documentation.
     pub model: crate::nodes::ModelOut,

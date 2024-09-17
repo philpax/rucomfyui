@@ -16,6 +16,7 @@ pub struct ImageBlend<
     pub blend_mode: BlendMode,
 }
 ///Output for [`ImageBlend`].
+#[derive(Clone)]
 pub struct ImageBlendOutput {
     ///No documentation.
     pub image: crate::nodes::ImageOut,
@@ -51,6 +52,7 @@ pub struct ImageBlur<
     pub sigma: Sigma,
 }
 ///Output for [`ImageBlur`].
+#[derive(Clone)]
 pub struct ImageBlurOutput {
     ///No documentation.
     pub image: crate::nodes::ImageOut,
@@ -85,6 +87,7 @@ pub struct ImageQuantize<
     pub dither: Dither,
 }
 ///Output for [`ImageQuantize`].
+#[derive(Clone)]
 pub struct ImageQuantizeOutput {
     ///No documentation.
     pub image: crate::nodes::ImageOut,
@@ -122,6 +125,7 @@ pub struct ImageSharpen<
     pub alpha: Alpha,
 }
 ///Output for [`ImageSharpen`].
+#[derive(Clone)]
 pub struct ImageSharpenOutput {
     ///No documentation.
     pub image: crate::nodes::ImageOut,
@@ -157,6 +161,7 @@ pub struct Morphology<
     pub kernel_size: KernelSize,
 }
 ///Output for [`Morphology`].
+#[derive(Clone)]
 pub struct MorphologyOutput {
     ///No documentation.
     pub image: crate::nodes::ImageOut,

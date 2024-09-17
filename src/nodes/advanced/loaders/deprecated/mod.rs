@@ -5,6 +5,7 @@ pub struct DiffusersLoader<ModelPath: crate::nodes::String> {
     pub model_path: ModelPath,
 }
 ///Output for [`DiffusersLoader`].
+#[derive(Clone)]
 pub struct DiffusersLoaderOutput {
     ///No documentation.
     pub model: crate::nodes::ModelOut,

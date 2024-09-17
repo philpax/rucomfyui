@@ -16,6 +16,7 @@ pub struct StableCascadeEmptyLatentImage<
     pub batch_size: BatchSize,
 }
 ///Output for [`StableCascadeEmptyLatentImage`].
+#[derive(Clone)]
 pub struct StableCascadeEmptyLatentImageOutput {
     ///No documentation.
     pub stage_c: crate::nodes::LatentOut,
@@ -55,6 +56,7 @@ pub struct StableCascadeStageCVaeEncode<
     pub compression: Compression,
 }
 ///Output for [`StableCascadeStageCVaeEncode`].
+#[derive(Clone)]
 pub struct StableCascadeStageCVaeEncodeOutput {
     ///No documentation.
     pub stage_c: crate::nodes::LatentOut,

@@ -100,6 +100,7 @@ fn write_category_tree((name, tree): (&str, &CategoryTree), directory: &Path) ->
                     pub trait #name : ToTypedValue {}
 
                     #[doc = #output_doc]
+                    #[derive(Clone, Copy)]
                     pub struct #output_name(pub u32);
                     impl ToTypedValue for #output_name {
                         fn to_typed_value(self) -> TypedValue {
@@ -427,6 +428,7 @@ fn write_node_outputs(
 
     Ok(quote! {
         #[doc = #doc]
+        #[derive(Clone)]
         pub struct #name {
             #(#fields),*
         }

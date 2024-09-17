@@ -10,6 +10,7 @@ pub struct VideoLinearCfgGuidance<
     pub min_cfg: MinCfg,
 }
 ///Output for [`VideoLinearCfgGuidance`].
+#[derive(Clone)]
 pub struct VideoLinearCfgGuidanceOutput {
     ///No documentation.
     pub model: crate::nodes::ModelOut,
@@ -38,6 +39,7 @@ pub struct VideoTriangleCfgGuidance<
     pub min_cfg: MinCfg,
 }
 ///Output for [`VideoTriangleCfgGuidance`].
+#[derive(Clone)]
 pub struct VideoTriangleCfgGuidanceOutput {
     ///No documentation.
     pub model: crate::nodes::ModelOut,

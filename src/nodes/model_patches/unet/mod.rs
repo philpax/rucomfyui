@@ -19,6 +19,7 @@ pub struct FreeU<
     pub s_2: S2,
 }
 ///Output for [`FreeU`].
+#[derive(Clone)]
 pub struct FreeUOutput {
     ///No documentation.
     pub model: crate::nodes::ModelOut,
@@ -61,6 +62,7 @@ pub struct FreeUV2<
     pub s_2: S2,
 }
 ///Output for [`FreeUV2`].
+#[derive(Clone)]
 pub struct FreeUV2Output {
     ///No documentation.
     pub model: crate::nodes::ModelOut,
@@ -103,6 +105,7 @@ pub struct HyperTile<
     pub scale_depth: ScaleDepth,
 }
 ///Output for [`HyperTile`].
+#[derive(Clone)]
 pub struct HyperTileOutput {
     ///No documentation.
     pub model: crate::nodes::ModelOut,
@@ -137,6 +140,7 @@ pub struct PerturbedAttentionGuidance<
     pub scale: Scale,
 }
 ///Output for [`PerturbedAttentionGuidance`].
+#[derive(Clone)]
 pub struct PerturbedAttentionGuidanceOutput {
     ///No documentation.
     pub model: crate::nodes::ModelOut,

@@ -5,6 +5,7 @@ pub struct EmptyLatentAudio<Seconds: crate::nodes::Float> {
     pub seconds: Seconds,
 }
 ///Output for [`EmptyLatentAudio`].
+#[derive(Clone)]
 pub struct EmptyLatentAudioOutput {
     ///No documentation.
     pub latent: crate::nodes::LatentOut,
@@ -30,6 +31,7 @@ pub struct VaeDecodeAudio<Samples: crate::nodes::Latent, Vae: crate::nodes::Vae>
     pub vae: Vae,
 }
 ///Output for [`VaeDecodeAudio`].
+#[derive(Clone)]
 pub struct VaeDecodeAudioOutput {
     ///No documentation.
     pub audio: crate::nodes::AudioOut,
@@ -55,6 +57,7 @@ pub struct VaeEncodeAudio<Audio: crate::nodes::Audio, Vae: crate::nodes::Vae> {
     pub vae: Vae,
 }
 ///Output for [`VaeEncodeAudio`].
+#[derive(Clone)]
 pub struct VaeEncodeAudioOutput {
     ///No documentation.
     pub latent: crate::nodes::LatentOut,

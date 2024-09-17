@@ -5,6 +5,7 @@ pub struct LoadAudio<Audio: crate::nodes::String> {
     pub audio: Audio,
 }
 ///Output for [`LoadAudio`].
+#[derive(Clone)]
 pub struct LoadAudioOutput {
     ///No documentation.
     pub audio: crate::nodes::AudioOut,
@@ -27,6 +28,7 @@ pub struct PreviewAudio<Audio: crate::nodes::Audio> {
     pub audio: Audio,
 }
 ///Output for [`PreviewAudio`].
+#[derive(Clone)]
 pub struct PreviewAudioOutput {}
 impl<Audio: crate::nodes::Audio> crate::nodes::TypedNode for PreviewAudio<Audio> {
     type Output = PreviewAudioOutput;
@@ -46,6 +48,7 @@ pub struct SaveAudio<Audio: crate::nodes::Audio, FilenamePrefix: crate::nodes::S
     pub filename_prefix: FilenamePrefix,
 }
 ///Output for [`SaveAudio`].
+#[derive(Clone)]
 pub struct SaveAudioOutput {}
 impl<
     Audio: crate::nodes::Audio,

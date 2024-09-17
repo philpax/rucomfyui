@@ -25,6 +25,7 @@ pub struct Sv3DConditioning<
     pub elevation: Elevation,
 }
 ///Output for [`Sv3DConditioning`].
+#[derive(Clone)]
 pub struct Sv3DConditioningOutput {
     ///No documentation.
     pub positive: crate::nodes::ConditioningOut,
@@ -85,6 +86,7 @@ pub struct StableZero123Conditioning<
     pub azimuth: Azimuth,
 }
 ///Output for [`StableZero123Conditioning`].
+#[derive(Clone)]
 pub struct StableZero123ConditioningOutput {
     ///No documentation.
     pub positive: crate::nodes::ConditioningOut,
@@ -161,6 +163,7 @@ pub struct StableZero123ConditioningBatched<
     pub azimuth_batch_increment: AzimuthBatchIncrement,
 }
 ///Output for [`StableZero123ConditioningBatched`].
+#[derive(Clone)]
 pub struct StableZero123ConditioningBatchedOutput {
     ///No documentation.
     pub positive: crate::nodes::ConditioningOut,

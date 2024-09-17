@@ -19,6 +19,7 @@ pub struct ImageCrop<
     pub y: Y,
 }
 ///Output for [`ImageCrop`].
+#[derive(Clone)]
 pub struct ImageCropOutput {
     ///No documentation.
     pub image: crate::nodes::ImageOut,
