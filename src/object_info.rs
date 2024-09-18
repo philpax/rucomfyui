@@ -1,4 +1,4 @@
-use std::collections::HashMap;
+use std::collections::{BTreeMap, HashMap};
 
 use serde::{Deserialize, Serialize};
 
@@ -16,7 +16,6 @@ impl Client {
             .await?)
     }
 }
-
 #[derive(Debug, Serialize, Deserialize)]
 /// Object info for a node.
 pub struct Object {
@@ -216,4 +215,55 @@ impl ObjectType {
         Self::Vae,
         Self::Webcam,
     ];
+}
+
+/// A tree of objects based on their categories.
+pub type CategoryTree<'a> = BTreeMap<String, CategoryTreeNode<'a>>;
+
+/// A node in the category tree.
+pub enum CategoryTreeNode<'a> {
+    /// A category in the tree.
+    Category(String, CategoryTree<'a>),
+    /// An object in the tree.
+    Object(&'a Object),
+}
+impl<'a> std::fmt::Debug for CategoryTreeNode<'a> {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            Self::Category(_name, arg0) => f.debug_tuple("Category").field(arg0).finish(),
+            Self::Object(arg0) => f.debug_tuple("Object").field(&arg0.display_name).finish(),
+        }
+    }
+}
+
+/// Builds a tree of objects based on their categories.
+///
+/// Recomended use is with a values iterator over [`Client::object_info`] with whatever filtering
+/// is appropriate for your usecase.
+pub fn categorize_objects<'a>(objects: impl Iterator<Item = &'a Object>) -> CategoryTree<'a> {
+    let mut tree = CategoryTree::new();
+    for object in objects {
+        let categories: Vec<&str> = object.category.split('/').collect();
+        insert_object(&mut tree, &categories, object);
+    }
+
+    fn insert_object<'a>(tree: &mut CategoryTree<'a>, categories: &[&str], object: &'a Object) {
+        if categories.is_empty() {
+            tree.entry(object.name.to_string())
+                .or_insert(CategoryTreeNode::Object(object));
+
+            return;
+        }
+
+        let current_category = categories[0].to_string();
+        let CategoryTreeNode::Category(_, subtree) = tree
+            .entry(current_category.clone())
+            .or_insert_with(|| CategoryTreeNode::Category(current_category, BTreeMap::new()))
+        else {
+            return;
+        };
+        insert_object(subtree, &categories[1..], object);
+    }
+
+    tree
 }

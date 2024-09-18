@@ -1,11 +1,11 @@
-use std::{collections::BTreeMap, path::Path};
+use std::path::Path;
 
 use anyhow::{Context, Result};
 use convert_case::{Case, Casing};
 use proc_macro2::TokenStream;
 use quote::quote;
 
-use rucomfyui::{Object, ObjectInput, ObjectType};
+use rucomfyui::{CategoryTree, CategoryTreeNode, Object, ObjectInput, ObjectType};
 
 #[tokio::main]
 async fn main() {
@@ -19,7 +19,7 @@ async fn run() -> Result<()> {
     let object_info = client.object_info().await?;
 
     let category_tree =
-        build_category_tree(object_info.values().filter(|n| {
+        rucomfyui::categorize_objects(object_info.values().filter(|n| {
             !(n.python_module.starts_with("custom_nodes") || n.category.starts_with("_"))
         }));
 
@@ -51,8 +51,8 @@ fn build_list_of_all_nodes(tree: &CategoryTree, ctx: &[syn::Ident]) -> Result<Ve
                     &ctx.iter().cloned().chain([name]).collect::<Vec<_>>(),
                 )?);
             }
-            CategoryTreeNode::Node(node) => {
-                let name = name_to_ident(&node.name, true)?;
+            CategoryTreeNode::Object(object) => {
+                let name = name_to_ident(&object.name, true)?;
                 output.push(quote! {
                     pub use crate :: nodes :: #(#ctx::)* #name;
                 });
@@ -79,8 +79,8 @@ fn write_category_tree((name, tree): (&str, &CategoryTree), directory: &Path) ->
                     pub mod #key;
                 });
             }
-            CategoryTreeNode::Node(node) => {
-                nodes.push(write_node(node)?);
+            CategoryTreeNode::Object(object) => {
+                nodes.push(write_node(object)?);
             }
         }
     }
@@ -443,43 +443,6 @@ fn name_to_ident(name: &str, pascal_case: bool) -> Result<syn::Ident> {
 
     std::panic::catch_unwind(|| quote::format_ident!("{name}"))
         .map_err(|e| anyhow::anyhow!("Error parsing {name}: {:?}", e.downcast_ref::<&str>()))
-}
-enum CategoryTreeNode<'a> {
-    Category(String, CategoryTree<'a>),
-    Node(&'a Object),
-}
-
-impl<'a> std::fmt::Debug for CategoryTreeNode<'a> {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        match self {
-            Self::Category(_name, arg0) => f.debug_tuple("Category").field(arg0).finish(),
-            Self::Node(arg0) => f.debug_tuple("Node").field(&arg0.display_name).finish(),
-        }
-    }
-}
-
-type CategoryTree<'a> = BTreeMap<String, CategoryTreeNode<'a>>;
-fn build_category_tree<'a>(nodes: impl Iterator<Item = &'a Object>) -> CategoryTree<'a> {
-    let mut tree = CategoryTree::new();
-    for node in nodes {
-        let categories: Vec<&str> = node.category.split('/').collect();
-        insert_node(&mut tree, &categories, node);
-    }
-    tree
-}
-fn insert_node<'a>(tree: &mut CategoryTree<'a>, categories: &[&str], node: &'a Object) {
-    if categories.is_empty() {
-        tree.entry(node.name.to_string())
-            .or_insert(CategoryTreeNode::Node(node));
-    } else {
-        let current_category = categories[0].to_string();
-        let subtree = tree
-            .entry(current_category.clone())
-            .or_insert_with(|| CategoryTreeNode::Category(current_category, BTreeMap::new()));
-        if let CategoryTreeNode::Category(_, subtree) = subtree {
-            insert_node(subtree, &categories[1..], node);
-        }
-    }
 }
 
 fn output_struct_ident(ty: ObjectType) -> syn::Ident {
