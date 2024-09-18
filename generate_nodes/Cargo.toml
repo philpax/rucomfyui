@@ -8,9 +8,13 @@ serde_json = { workspace = true }
 reqwest = { workspace = true }
 serde = { workspace = true }
 tokio = { workspace = true, features = ["full"] }
+
 quote = "1.0.37"
 prettyplease = "0.2.22"
 syn = "2.0.77"
 proc-macro2 = "1.0.86"
 convert_case = "0.6.0"
 anyhow = "1.0.89"
+
+# Yes, we're using the client we're generating files for. Wacky, right?
+rucomfyui = { path = "../" }

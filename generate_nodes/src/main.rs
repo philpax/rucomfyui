@@ -1,13 +1,11 @@
-use std::{
-    collections::{BTreeMap, HashMap},
-    path::Path,
-};
+use std::{collections::BTreeMap, path::Path};
 
 use anyhow::{Context, Result};
 use convert_case::{Case, Casing};
 use proc_macro2::TokenStream;
 use quote::quote;
-use serde::{Deserialize, Serialize};
+
+use rucomfyui::{Object, ObjectInput, ObjectType};
 
 #[tokio::main]
 async fn main() {
@@ -16,8 +14,9 @@ async fn main() {
 
 async fn run() -> Result<()> {
     let url = std::env::args().nth(1).expect("ComfyUI URL not provided");
-    let object_info = reqwest::get(format!("{url}/object_info")).await?;
-    let object_info: HashMap<String, Node> = object_info.json().await?;
+
+    let client = rucomfyui::Client::new(url);
+    let object_info = client.object_info().await?;
 
     let category_tree =
         build_category_tree(object_info.values().filter(|n| {
@@ -87,7 +86,7 @@ fn write_category_tree((name, tree): (&str, &CategoryTree), directory: &Path) ->
     }
 
     let (doc, extra) = if name.is_empty() {
-        let types = NodeType::ALL
+        let types = ObjectType::ALL
             .iter()
             .map(|ty| {
                 let doc = format!("**{ty:?}**");
@@ -225,7 +224,7 @@ fn write_tokenstream_with_formatting(path: &Path, output: TokenStream) -> Result
     Ok(())
 }
 
-fn write_node(node: &Node) -> Result<TokenStream> {
+fn write_node(node: &Object) -> Result<TokenStream> {
     let (inputs_name, processed_inputs, inputs) = write_node_inputs(node)?;
     let outputs = write_node_outputs(node, &inputs_name, processed_inputs)?;
 
@@ -238,16 +237,16 @@ fn write_node(node: &Node) -> Result<TokenStream> {
 struct ProcessedInput<'a> {
     name: &'a str,
     tooltip: Option<&'a str>,
-    ty: NodeType,
+    ty: ObjectType,
     generic_name: syn::Ident,
     generic_ty: syn::Ident,
     optional: bool,
 }
 
-fn write_node_inputs(node: &Node) -> Result<(syn::Ident, Vec<ProcessedInput>, TokenStream)> {
+fn write_node_inputs(node: &Object) -> Result<(syn::Ident, Vec<ProcessedInput>, TokenStream)> {
     fn process_input<'a>(
         name: &'a str,
-        input: &'a Input,
+        input: &'a ObjectInput,
         optional: bool,
     ) -> Option<ProcessedInput<'a>> {
         let ty = input.as_type()?;
@@ -291,7 +290,7 @@ fn write_node_inputs(node: &Node) -> Result<(syn::Ident, Vec<ProcessedInput>, To
             let generic_name = &input.generic_name;
             let ty = &input.generic_ty;
             let default = if input.optional {
-                let output_struct_name = input.ty.output_struct_ident();
+                let output_struct_name = output_struct_ident(input.ty);
                 quote! { = crate :: nodes :: #output_struct_name }
             } else {
                 quote! {}
@@ -342,27 +341,11 @@ fn write_node_inputs(node: &Node) -> Result<(syn::Ident, Vec<ProcessedInput>, To
 }
 
 fn write_node_outputs(
-    node: &Node,
+    node: &Object,
     inputs_name: &syn::Ident,
     processed_inputs: Vec<ProcessedInput<'_>>,
 ) -> Result<TokenStream> {
-    struct ProcessedOutput<'a> {
-        name: &'a str,
-        ty: NodeType,
-        tooltip: Option<&'a str>,
-    }
-
-    let outputs = node
-        .output
-        .iter()
-        .zip(node.output_name.iter())
-        .enumerate()
-        .map(|(i, (ty, name))| ProcessedOutput {
-            name: name.as_str(),
-            ty: *ty,
-            tooltip: node.output_tooltips.get(i).map(|s| s.as_str()),
-        })
-        .collect::<Vec<_>>();
+    let outputs = node.processed_output().collect::<Vec<_>>();
 
     let name = name_to_ident(&format!("{}Output", node.name), true)?;
     let doc = format!("Output for [`{}`].", inputs_name);
@@ -371,7 +354,7 @@ fn write_node_outputs(
         .iter()
         .map(|output| {
             let name = name_to_ident(output.name, false)?;
-            let ty = output.ty.output_struct_ident();
+            let ty = output_struct_ident(output.ty);
             let doc = output.tooltip.unwrap_or("No documentation.");
             Ok(quote! {
                 #[doc = #doc]
@@ -392,7 +375,7 @@ fn write_node_outputs(
             .enumerate()
             .map(|(i, output)| {
                 let name = name_to_ident(output.name, false)?;
-                let ty = output.ty.output_struct_ident();
+                let ty = output_struct_ident(output.ty);
                 let i = i as u32;
                 Ok(quote! {
                     #name: crate :: nodes :: #ty (#i)
@@ -461,29 +444,9 @@ fn name_to_ident(name: &str, pascal_case: bool) -> Result<syn::Ident> {
     std::panic::catch_unwind(|| quote::format_ident!("{name}"))
         .map_err(|e| anyhow::anyhow!("Error parsing {name}: {:?}", e.downcast_ref::<&str>()))
 }
-
-#[derive(Debug, Serialize, Deserialize)]
-struct Node {
-    name: String,
-    display_name: String,
-    description: String,
-    python_module: String,
-    category: String,
-
-    input: InputBundle<HashMap<String, Input>>,
-    input_order: InputBundle<Vec<String>>,
-
-    output: Vec<NodeType>,
-    output_is_list: Vec<bool>,
-    output_name: Vec<String>,
-    output_node: bool,
-    #[serde(default)]
-    output_tooltips: Vec<String>,
-}
-
 enum CategoryTreeNode<'a> {
     Category(String, CategoryTree<'a>),
-    Node(&'a Node),
+    Node(&'a Object),
 }
 
 impl<'a> std::fmt::Debug for CategoryTreeNode<'a> {
@@ -496,7 +459,7 @@ impl<'a> std::fmt::Debug for CategoryTreeNode<'a> {
 }
 
 type CategoryTree<'a> = BTreeMap<String, CategoryTreeNode<'a>>;
-fn build_category_tree<'a>(nodes: impl Iterator<Item = &'a Node>) -> CategoryTree<'a> {
+fn build_category_tree<'a>(nodes: impl Iterator<Item = &'a Object>) -> CategoryTree<'a> {
     let mut tree = CategoryTree::new();
     for node in nodes {
         let categories: Vec<&str> = node.category.split('/').collect();
@@ -504,7 +467,7 @@ fn build_category_tree<'a>(nodes: impl Iterator<Item = &'a Node>) -> CategoryTre
     }
     tree
 }
-fn insert_node<'a>(tree: &mut CategoryTree<'a>, categories: &[&str], node: &'a Node) {
+fn insert_node<'a>(tree: &mut CategoryTree<'a>, categories: &[&str], node: &'a Object) {
     if categories.is_empty() {
         tree.entry(node.name.to_string())
             .or_insert(CategoryTreeNode::Node(node));
@@ -519,119 +482,6 @@ fn insert_node<'a>(tree: &mut CategoryTree<'a>, categories: &[&str], node: &'a N
     }
 }
 
-#[derive(Debug, Serialize, Deserialize)]
-#[serde(untagged)]
-enum Input {
-    InputWithMeta(InputType, InputMeta),
-    Input((InputType,)),
-}
-impl Input {
-    fn as_type(&self) -> Option<NodeType> {
-        match self {
-            Self::InputWithMeta(ty, _) => ty.as_type(),
-            Self::Input(ty) => ty.0.as_type(),
-        }
-    }
-    fn tooltip(&self) -> Option<&str> {
-        match self {
-            Self::InputWithMeta(_, meta) => meta.tooltip.as_deref(),
-            _ => None,
-        }
-    }
-}
-
-#[derive(Debug, Serialize, Deserialize)]
-#[serde(untagged)]
-enum InputType {
-    Array(Vec<String>),
-    Typed(NodeType),
-}
-impl InputType {
-    fn as_type(&self) -> Option<NodeType> {
-        match self {
-            Self::Typed(v) => Some(*v),
-            // HACK: I'm not sure if this is really what we want in the long run,
-            // but we treat array types as strings so they can be specified in
-            // the workflow
-            Self::Array(_) => Some(NodeType::String),
-        }
-    }
-}
-
-#[derive(Debug, Serialize, Deserialize)]
-struct InputBundle<T> {
-    required: T,
-    optional: Option<T>,
-}
-
-#[derive(Debug, Serialize, Deserialize)]
-struct InputMeta {
-    tooltip: Option<String>,
-    #[serde(flatten)]
-    rest: serde_json::Value,
-}
-
-#[derive(Debug, Serialize, Deserialize, Clone, Copy)]
-#[serde(rename_all = "SCREAMING_SNAKE_CASE")]
-enum NodeType {
-    Audio,
-    Boolean,
-    ClipVisionOutput,
-    ClipVision,
-    Clip,
-    Conditioning,
-    ControlNet,
-    Float,
-    Gligen,
-    Guider,
-    Image,
-    InpaintModel,
-    InpaintPatch,
-    Int,
-    Latent,
-    Mask,
-    Model,
-    Noise,
-    Photomaker,
-    Sampler,
-    String,
-    Sigmas,
-    StyleModel,
-    UpscaleModel,
-    Vae,
-    Webcam,
-}
-impl NodeType {
-    const ALL: &[NodeType] = &[
-        Self::Audio,
-        Self::Boolean,
-        Self::ClipVisionOutput,
-        Self::ClipVision,
-        Self::Clip,
-        Self::Conditioning,
-        Self::ControlNet,
-        Self::Float,
-        Self::Gligen,
-        Self::Guider,
-        Self::Image,
-        Self::InpaintModel,
-        Self::InpaintPatch,
-        Self::Int,
-        Self::Latent,
-        Self::Mask,
-        Self::Model,
-        Self::Noise,
-        Self::Photomaker,
-        Self::Sampler,
-        Self::String,
-        Self::Sigmas,
-        Self::StyleModel,
-        Self::UpscaleModel,
-        Self::Vae,
-        Self::Webcam,
-    ];
-
-    fn output_struct_ident(&self) -> syn::Ident {
-        name_to_ident(&format!("{:?}Out", self), true).unwrap()
-    }
+fn output_struct_ident(ty: ObjectType) -> syn::Ident {
+    name_to_ident(&format!("{ty:?}Out"), true).unwrap()
 }

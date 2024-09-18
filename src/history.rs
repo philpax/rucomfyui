@@ -1,4 +1,9 @@
-use super::*;
+use std::collections::HashMap;
+
+use serde::{Deserialize, Serialize};
+
+use crate::{Bytes, Client, Result};
+
 impl Client {
     /// Get the history for this ComfyUI instance.
     ///
@@ -13,6 +18,7 @@ impl Client {
             .await?)
     }
 }
+
 #[derive(Serialize, Deserialize, Debug, Clone)]
 /// History of queued prompts.
 pub struct History {

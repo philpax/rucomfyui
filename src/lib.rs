@@ -1,14 +1,18 @@
 //! Very basic ComfyUI API client for Rust.
 #![deny(missing_docs)]
 
-use std::collections::HashMap;
-
 use reqwest::multipart::{Form, Part};
-use serde::{Deserialize, Serialize};
 use thiserror::Error;
 
 mod history;
+pub use history::*;
+
 mod queue;
+pub use queue::*;
+
+mod object_info;
+pub use object_info::*;
+
 mod workflow;
 pub use workflow::*;
 

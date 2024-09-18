@@ -1,4 +1,8 @@
-use super::*;
+use std::collections::HashMap;
+
+use serde::{Deserialize, Serialize};
+
+use crate::{Bytes, Client, Result, Workflow};
 
 impl Client {
     /// Send a workflow to the ComfyUI API.
