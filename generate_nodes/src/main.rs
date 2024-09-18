@@ -98,12 +98,18 @@ fn write_category_tree((name, tree): (&str, &CategoryTree), directory: &Path) ->
                 Ok(quote! {
                     #[doc = #doc]
                     pub trait #name : ToTypedValue {}
+                    impl ToTypedValue for Box<dyn #name> {
+                        fn to_typed_value(&self) -> TypedValue {
+                            self.as_ref().to_typed_value()
+                        }
+                    }
+                    impl #name for Box<dyn #name> {}
 
                     #[doc = #output_doc]
                     #[derive(Clone, Copy)]
                     pub struct #output_name(pub u32);
                     impl ToTypedValue for #output_name {
-                        fn to_typed_value(self) -> TypedValue {
+                        fn to_typed_value(&self) -> TypedValue {
                             TypedValue::Slot(self.0)
                         }
                     }
@@ -152,39 +158,39 @@ fn write_category_tree((name, tree): (&str, &CategoryTree), directory: &Path) ->
                 /// Converts a value to a typed value for use in a workflow.
                 pub trait ToTypedValue {
                     /// Converts the value to a typed value.
-                    fn to_typed_value(self) -> TypedValue;
+                    fn to_typed_value(&self) -> TypedValue;
                 }
 
                 impl ToTypedValue for std::string::String {
-                    fn to_typed_value(self) -> TypedValue {
-                        TypedValue::String(self)
+                    fn to_typed_value(&self) -> TypedValue {
+                        TypedValue::String(self.clone())
                     }
                 }
                 impl String for std::string::String {}
                 impl<'a> ToTypedValue for &'a str {
-                    fn to_typed_value(self) -> TypedValue {
+                    fn to_typed_value(&self) -> TypedValue {
                         TypedValue::String(self.to_string())
                     }
                 }
                 impl<'a> String for &'a str {}
 
                 impl ToTypedValue for f32 {
-                    fn to_typed_value(self) -> TypedValue {
-                        TypedValue::F32(self)
+                    fn to_typed_value(&self) -> TypedValue {
+                        TypedValue::F32(*self)
                     }
                 }
                 impl Float for f32 {}
 
                 impl ToTypedValue for i32 {
-                    fn to_typed_value(self) -> TypedValue {
-                        TypedValue::I32(self)
+                    fn to_typed_value(&self) -> TypedValue {
+                        TypedValue::I32(*self)
                     }
                 }
                 impl Int for i32 {}
 
                 impl ToTypedValue for bool {
-                    fn to_typed_value(self) -> TypedValue {
-                        TypedValue::Boolean(self)
+                    fn to_typed_value(&self) -> TypedValue {
+                        TypedValue::Boolean(*self)
                     }
                 }
                 impl Boolean for bool {}
