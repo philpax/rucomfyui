@@ -24,6 +24,7 @@ async fn run() -> Result<()> {
         }));
 
     let out_dir = Path::new("src/nodes");
+    let _ = std::fs::remove_dir_all(out_dir);
     std::fs::create_dir_all(out_dir)?;
 
     let all_nodes = build_list_of_all_nodes(&category_tree, &[])?;
