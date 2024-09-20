@@ -1,6 +1,7 @@
 //!`batch` definitions/categories.
 #![allow(unused_imports)]
-use crate::workflow::WorkflowNodeId;
+use std::collections::HashMap;
+use crate::workflow::{WorkflowNodeId, WorkflowInput};
 /// Output types for nodes.
 pub mod out {
     ///Output for [`ImageFromBatch`](super::ImageFromBatch).
@@ -49,6 +50,13 @@ impl<
             },
         }
     }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("image".to_string(), self.image.to_workflow_input());
+        output.insert("batch_index".to_string(), self.batch_index.to_workflow_input());
+        output.insert("length".to_string(), self.length.to_workflow_input());
+        output
+    }
     const NAME: &'static str = "ImageFromBatch";
     const DISPLAY_NAME: &'static str = "ImageFromBatch";
     const DESCRIPTION: &'static str = "";
@@ -77,6 +85,12 @@ impl<
             },
         }
     }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("images".to_string(), self.images.to_workflow_input());
+        output.insert("batch_size".to_string(), self.batch_size.to_workflow_input());
+        output
+    }
     const NAME: &'static str = "RebatchImages";
     const DISPLAY_NAME: &'static str = "Rebatch Images";
     const DESCRIPTION: &'static str = "";
@@ -104,6 +118,12 @@ impl<
                 node_slot: 0u32,
             },
         }
+    }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("image".to_string(), self.image.to_workflow_input());
+        output.insert("amount".to_string(), self.amount.to_workflow_input());
+        output
     }
     const NAME: &'static str = "RepeatImageBatch";
     const DISPLAY_NAME: &'static str = "RepeatImageBatch";

@@ -1,6 +1,7 @@
 //!`audio` definitions/categories.
 #![allow(unused_imports)]
-use crate::workflow::WorkflowNodeId;
+use std::collections::HashMap;
+use crate::workflow::{WorkflowNodeId, WorkflowInput};
 /// Output types for nodes.
 pub mod out {
     ///Output for [`LoadAudio`](super::LoadAudio).
@@ -25,6 +26,11 @@ impl<Audio: crate::nodes::types::String> crate::nodes::TypedNode for LoadAudio<A
             },
         }
     }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("audio".to_string(), self.audio.to_workflow_input());
+        output
+    }
     const NAME: &'static str = "LoadAudio";
     const DISPLAY_NAME: &'static str = "LoadAudio";
     const DESCRIPTION: &'static str = "";
@@ -38,6 +44,11 @@ pub struct PreviewAudio<Audio: crate::nodes::types::Audio> {
 impl<Audio: crate::nodes::types::Audio> crate::nodes::TypedNode for PreviewAudio<Audio> {
     type Output = ();
     fn output(&self, _node_id: WorkflowNodeId) -> Self::Output {}
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("audio".to_string(), self.audio.to_workflow_input());
+        output
+    }
     const NAME: &'static str = "PreviewAudio";
     const DISPLAY_NAME: &'static str = "PreviewAudio";
     const DESCRIPTION: &'static str = "";
@@ -61,6 +72,16 @@ impl<
 > crate::nodes::TypedNode for SaveAudio<Audio, FilenamePrefix> {
     type Output = ();
     fn output(&self, _node_id: WorkflowNodeId) -> Self::Output {}
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("audio".to_string(), self.audio.to_workflow_input());
+        output
+            .insert(
+                "filename_prefix".to_string(),
+                self.filename_prefix.to_workflow_input(),
+            );
+        output
+    }
     const NAME: &'static str = "SaveAudio";
     const DISPLAY_NAME: &'static str = "SaveAudio";
     const DESCRIPTION: &'static str = "";

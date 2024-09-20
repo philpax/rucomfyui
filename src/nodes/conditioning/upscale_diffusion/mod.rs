@@ -1,6 +1,7 @@
 //!`upscale_diffusion` definitions/categories.
 #![allow(unused_imports)]
-use crate::workflow::WorkflowNodeId;
+use std::collections::HashMap;
+use crate::workflow::{WorkflowNodeId, WorkflowInput};
 /// Output types for nodes.
 pub mod out {
     ///Output for [`Sd4XUpscaleConditioning`](super::Sd4XUpscaleConditioning).
@@ -57,6 +58,19 @@ for Sd4XUpscaleConditioning<Images, Positive, Negative, ScaleRatio, NoiseAugment
                 node_slot: 2u32,
             },
         }
+    }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("images".to_string(), self.images.to_workflow_input());
+        output.insert("positive".to_string(), self.positive.to_workflow_input());
+        output.insert("negative".to_string(), self.negative.to_workflow_input());
+        output.insert("scale_ratio".to_string(), self.scale_ratio.to_workflow_input());
+        output
+            .insert(
+                "noise_augmentation".to_string(),
+                self.noise_augmentation.to_workflow_input(),
+            );
+        output
     }
     const NAME: &'static str = "SD_4XUpscale_Conditioning";
     const DISPLAY_NAME: &'static str = "SD_4XUpscale_Conditioning";

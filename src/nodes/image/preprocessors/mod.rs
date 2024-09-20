@@ -1,6 +1,7 @@
 //!`preprocessors` definitions/categories.
 #![allow(unused_imports)]
-use crate::workflow::WorkflowNodeId;
+use std::collections::HashMap;
+use crate::workflow::{WorkflowNodeId, WorkflowInput};
 /// Output types for nodes.
 pub mod out {
     ///Output for [`Canny`](super::Canny).
@@ -36,6 +37,18 @@ impl<
                 node_slot: 0u32,
             },
         }
+    }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("image".to_string(), self.image.to_workflow_input());
+        output
+            .insert("low_threshold".to_string(), self.low_threshold.to_workflow_input());
+        output
+            .insert(
+                "high_threshold".to_string(),
+                self.high_threshold.to_workflow_input(),
+            );
+        output
     }
     const NAME: &'static str = "Canny";
     const DISPLAY_NAME: &'static str = "Canny";

@@ -1,6 +1,7 @@
 //!`stable_cascade` definitions/categories.
 #![allow(unused_imports)]
-use crate::workflow::WorkflowNodeId;
+use std::collections::HashMap;
+use crate::workflow::{WorkflowNodeId, WorkflowInput};
 /// Output types for nodes.
 pub mod out {
     ///Output for [`StableCascadeEmptyLatentImage`](super::StableCascadeEmptyLatentImage).
@@ -56,6 +57,14 @@ for StableCascadeEmptyLatentImage<Width, Height, Compression, BatchSize> {
             },
         }
     }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("width".to_string(), self.width.to_workflow_input());
+        output.insert("height".to_string(), self.height.to_workflow_input());
+        output.insert("compression".to_string(), self.compression.to_workflow_input());
+        output.insert("batch_size".to_string(), self.batch_size.to_workflow_input());
+        output
+    }
     const NAME: &'static str = "StableCascade_EmptyLatentImage";
     const DISPLAY_NAME: &'static str = "StableCascade_EmptyLatentImage";
     const DESCRIPTION: &'static str = "";
@@ -91,6 +100,13 @@ impl<
                 node_slot: 1u32,
             },
         }
+    }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("image".to_string(), self.image.to_workflow_input());
+        output.insert("vae".to_string(), self.vae.to_workflow_input());
+        output.insert("compression".to_string(), self.compression.to_workflow_input());
+        output
     }
     const NAME: &'static str = "StableCascade_StageC_VAEEncode";
     const DISPLAY_NAME: &'static str = "StableCascade_StageC_VAEEncode";

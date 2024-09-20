@@ -1,6 +1,7 @@
 //!`audio` definitions/categories.
 #![allow(unused_imports)]
-use crate::workflow::WorkflowNodeId;
+use std::collections::HashMap;
+use crate::workflow::{WorkflowNodeId, WorkflowInput};
 /// Output types for nodes.
 pub mod out {
     ///Output for [`EmptyLatentAudio`](super::EmptyLatentAudio).
@@ -38,6 +39,11 @@ for EmptyLatentAudio<Seconds> {
             },
         }
     }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("seconds".to_string(), self.seconds.to_workflow_input());
+        output
+    }
     const NAME: &'static str = "EmptyLatentAudio";
     const DISPLAY_NAME: &'static str = "EmptyLatentAudio";
     const DESCRIPTION: &'static str = "";
@@ -66,6 +72,12 @@ impl<
             },
         }
     }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("samples".to_string(), self.samples.to_workflow_input());
+        output.insert("vae".to_string(), self.vae.to_workflow_input());
+        output
+    }
     const NAME: &'static str = "VAEDecodeAudio";
     const DISPLAY_NAME: &'static str = "VAEDecodeAudio";
     const DESCRIPTION: &'static str = "";
@@ -93,6 +105,12 @@ impl<
                 node_slot: 0u32,
             },
         }
+    }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("audio".to_string(), self.audio.to_workflow_input());
+        output.insert("vae".to_string(), self.vae.to_workflow_input());
+        output
     }
     const NAME: &'static str = "VAEEncodeAudio";
     const DISPLAY_NAME: &'static str = "VAEEncodeAudio";

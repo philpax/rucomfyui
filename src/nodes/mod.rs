@@ -10,6 +10,7 @@ pub mod model_patches;
 pub mod sampling;
 pub mod all;
 pub mod types;
+use std::collections::HashMap;
 use crate::workflow::{WorkflowNodeId, WorkflowInput};
 /// Implemented for all typed nodes; provides the node's output and metadata.
 pub trait TypedNode {
@@ -17,6 +18,8 @@ pub trait TypedNode {
     type Output;
     /// Returns the node's output.
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output;
+    /// Returns the inputs for this node after conversion to [`WorkflowInput`].
+    fn inputs(&self) -> HashMap<String, WorkflowInput>;
     /// The name of the node.
     const NAME: &'static str;
     /// The display name of the node.

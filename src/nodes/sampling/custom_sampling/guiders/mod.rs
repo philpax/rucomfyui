@@ -1,6 +1,7 @@
 //!`guiders` definitions/categories.
 #![allow(unused_imports)]
-use crate::workflow::WorkflowNodeId;
+use std::collections::HashMap;
+use crate::workflow::{WorkflowNodeId, WorkflowInput};
 /// Output types for nodes.
 pub mod out {
     ///Output for [`BasicGuider`](super::BasicGuider).
@@ -45,6 +46,12 @@ impl<
             },
         }
     }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("model".to_string(), self.model.to_workflow_input());
+        output.insert("conditioning".to_string(), self.conditioning.to_workflow_input());
+        output
+    }
     const NAME: &'static str = "BasicGuider";
     const DISPLAY_NAME: &'static str = "BasicGuider";
     const DESCRIPTION: &'static str = "";
@@ -80,6 +87,14 @@ impl<
                 node_slot: 0u32,
             },
         }
+    }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("model".to_string(), self.model.to_workflow_input());
+        output.insert("positive".to_string(), self.positive.to_workflow_input());
+        output.insert("negative".to_string(), self.negative.to_workflow_input());
+        output.insert("cfg".to_string(), self.cfg.to_workflow_input());
+        output
     }
     const NAME: &'static str = "CFGGuider";
     const DISPLAY_NAME: &'static str = "CFGGuider";
@@ -125,6 +140,20 @@ for DualCfgGuider<Model, Cond1, Cond2, Negative, CfgConds, CfgCond2Negative> {
                 node_slot: 0u32,
             },
         }
+    }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("model".to_string(), self.model.to_workflow_input());
+        output.insert("cond_1".to_string(), self.cond_1.to_workflow_input());
+        output.insert("cond_2".to_string(), self.cond_2.to_workflow_input());
+        output.insert("negative".to_string(), self.negative.to_workflow_input());
+        output.insert("cfg_conds".to_string(), self.cfg_conds.to_workflow_input());
+        output
+            .insert(
+                "cfg_cond_2_negative".to_string(),
+                self.cfg_cond_2_negative.to_workflow_input(),
+            );
+        output
     }
     const NAME: &'static str = "DualCFGGuider";
     const DISPLAY_NAME: &'static str = "DualCFGGuider";

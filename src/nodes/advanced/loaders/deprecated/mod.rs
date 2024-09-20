@@ -1,6 +1,7 @@
 //!`deprecated` definitions/categories.
 #![allow(unused_imports)]
-use crate::workflow::WorkflowNodeId;
+use std::collections::HashMap;
+use crate::workflow::{WorkflowNodeId, WorkflowInput};
 /// Output types for nodes.
 pub mod out {
     ///Output for [`DiffusersLoader`](super::DiffusersLoader).
@@ -37,6 +38,11 @@ for DiffusersLoader<ModelPath> {
                 node_slot: 2u32,
             },
         }
+    }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("model_path".to_string(), self.model_path.to_workflow_input());
+        output
     }
     const NAME: &'static str = "DiffusersLoader";
     const DISPLAY_NAME: &'static str = "DiffusersLoader";

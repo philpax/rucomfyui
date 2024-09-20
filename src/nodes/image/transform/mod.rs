@@ -1,6 +1,7 @@
 //!`transform` definitions/categories.
 #![allow(unused_imports)]
-use crate::workflow::WorkflowNodeId;
+use std::collections::HashMap;
+use crate::workflow::{WorkflowNodeId, WorkflowInput};
 /// Output types for nodes.
 pub mod out {
     ///Output for [`ImageCrop`](super::ImageCrop).
@@ -44,6 +45,15 @@ impl<
                 node_slot: 0u32,
             },
         }
+    }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("image".to_string(), self.image.to_workflow_input());
+        output.insert("width".to_string(), self.width.to_workflow_input());
+        output.insert("height".to_string(), self.height.to_workflow_input());
+        output.insert("x".to_string(), self.x.to_workflow_input());
+        output.insert("y".to_string(), self.y.to_workflow_input());
+        output
     }
     const NAME: &'static str = "ImageCrop";
     const DISPLAY_NAME: &'static str = "ImageCrop";

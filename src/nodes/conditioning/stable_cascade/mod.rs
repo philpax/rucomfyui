@@ -1,6 +1,7 @@
 //!`stable_cascade` definitions/categories.
 #![allow(unused_imports)]
-use crate::workflow::WorkflowNodeId;
+use std::collections::HashMap;
+use crate::workflow::{WorkflowNodeId, WorkflowInput};
 /// Output types for nodes.
 pub mod out {
     ///Output for [`StableCascadeStageBConditioning`](super::StableCascadeStageBConditioning).
@@ -32,6 +33,12 @@ impl<
                 node_slot: 0u32,
             },
         }
+    }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("conditioning".to_string(), self.conditioning.to_workflow_input());
+        output.insert("stage_c".to_string(), self.stage_c.to_workflow_input());
+        output
     }
     const NAME: &'static str = "StableCascade_StageB_Conditioning";
     const DISPLAY_NAME: &'static str = "StableCascade_StageB_Conditioning";

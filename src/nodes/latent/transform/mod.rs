@@ -1,6 +1,7 @@
 //!`transform` definitions/categories.
 #![allow(unused_imports)]
-use crate::workflow::WorkflowNodeId;
+use std::collections::HashMap;
+use crate::workflow::{WorkflowNodeId, WorkflowInput};
 /// Output types for nodes.
 pub mod out {
     ///Output for [`LatentCrop`](super::LatentCrop).
@@ -57,6 +58,15 @@ impl<
             },
         }
     }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("samples".to_string(), self.samples.to_workflow_input());
+        output.insert("width".to_string(), self.width.to_workflow_input());
+        output.insert("height".to_string(), self.height.to_workflow_input());
+        output.insert("x".to_string(), self.x.to_workflow_input());
+        output.insert("y".to_string(), self.y.to_workflow_input());
+        output
+    }
     const NAME: &'static str = "LatentCrop";
     const DISPLAY_NAME: &'static str = "Crop Latent";
     const DESCRIPTION: &'static str = "";
@@ -85,6 +95,12 @@ impl<
             },
         }
     }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("samples".to_string(), self.samples.to_workflow_input());
+        output.insert("flip_method".to_string(), self.flip_method.to_workflow_input());
+        output
+    }
     const NAME: &'static str = "LatentFlip";
     const DISPLAY_NAME: &'static str = "Flip Latent";
     const DESCRIPTION: &'static str = "";
@@ -112,6 +128,12 @@ impl<
                 node_slot: 0u32,
             },
         }
+    }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("samples".to_string(), self.samples.to_workflow_input());
+        output.insert("rotation".to_string(), self.rotation.to_workflow_input());
+        output
     }
     const NAME: &'static str = "LatentRotate";
     const DISPLAY_NAME: &'static str = "Rotate Latent";

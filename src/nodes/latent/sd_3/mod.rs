@@ -1,6 +1,7 @@
 //!`sd3` definitions/categories.
 #![allow(unused_imports)]
-use crate::workflow::WorkflowNodeId;
+use std::collections::HashMap;
+use crate::workflow::{WorkflowNodeId, WorkflowInput};
 /// Output types for nodes.
 pub mod out {
     ///Output for [`EmptySd3LatentImage`](super::EmptySd3LatentImage).
@@ -36,6 +37,13 @@ impl<
                 node_slot: 0u32,
             },
         }
+    }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("width".to_string(), self.width.to_workflow_input());
+        output.insert("height".to_string(), self.height.to_workflow_input());
+        output.insert("batch_size".to_string(), self.batch_size.to_workflow_input());
+        output
     }
     const NAME: &'static str = "EmptySD3LatentImage";
     const DISPLAY_NAME: &'static str = "EmptySD3LatentImage";

@@ -1,6 +1,7 @@
 //!`postprocessing` definitions/categories.
 #![allow(unused_imports)]
-use crate::workflow::WorkflowNodeId;
+use std::collections::HashMap;
+use crate::workflow::{WorkflowNodeId, WorkflowInput};
 /// Output types for nodes.
 pub mod out {
     ///Output for [`ImageBlend`](super::ImageBlend).
@@ -65,6 +66,14 @@ impl<
             },
         }
     }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("image_1".to_string(), self.image_1.to_workflow_input());
+        output.insert("image_2".to_string(), self.image_2.to_workflow_input());
+        output.insert("blend_factor".to_string(), self.blend_factor.to_workflow_input());
+        output.insert("blend_mode".to_string(), self.blend_mode.to_workflow_input());
+        output
+    }
     const NAME: &'static str = "ImageBlend";
     const DISPLAY_NAME: &'static str = "ImageBlend";
     const DESCRIPTION: &'static str = "";
@@ -97,6 +106,13 @@ impl<
             },
         }
     }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("image".to_string(), self.image.to_workflow_input());
+        output.insert("blur_radius".to_string(), self.blur_radius.to_workflow_input());
+        output.insert("sigma".to_string(), self.sigma.to_workflow_input());
+        output
+    }
     const NAME: &'static str = "ImageBlur";
     const DISPLAY_NAME: &'static str = "ImageBlur";
     const DESCRIPTION: &'static str = "";
@@ -128,6 +144,13 @@ impl<
                 node_slot: 0u32,
             },
         }
+    }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("image".to_string(), self.image.to_workflow_input());
+        output.insert("colors".to_string(), self.colors.to_workflow_input());
+        output.insert("dither".to_string(), self.dither.to_workflow_input());
+        output
     }
     const NAME: &'static str = "ImageQuantize";
     const DISPLAY_NAME: &'static str = "ImageQuantize";
@@ -165,6 +188,18 @@ impl<
             },
         }
     }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("image".to_string(), self.image.to_workflow_input());
+        output
+            .insert(
+                "sharpen_radius".to_string(),
+                self.sharpen_radius.to_workflow_input(),
+            );
+        output.insert("sigma".to_string(), self.sigma.to_workflow_input());
+        output.insert("alpha".to_string(), self.alpha.to_workflow_input());
+        output
+    }
     const NAME: &'static str = "ImageSharpen";
     const DISPLAY_NAME: &'static str = "ImageSharpen";
     const DESCRIPTION: &'static str = "";
@@ -196,6 +231,13 @@ impl<
                 node_slot: 0u32,
             },
         }
+    }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("image".to_string(), self.image.to_workflow_input());
+        output.insert("operation".to_string(), self.operation.to_workflow_input());
+        output.insert("kernel_size".to_string(), self.kernel_size.to_workflow_input());
+        output
     }
     const NAME: &'static str = "Morphology";
     const DISPLAY_NAME: &'static str = "ImageMorphology";

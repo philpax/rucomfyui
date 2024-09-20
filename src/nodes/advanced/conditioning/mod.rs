@@ -1,6 +1,7 @@
 //!`conditioning` definitions/categories.
 #![allow(unused_imports)]
-use crate::workflow::WorkflowNodeId;
+use std::collections::HashMap;
+use crate::workflow::{WorkflowNodeId, WorkflowInput};
 pub mod flux;
 /// Output types for nodes.
 pub mod out {
@@ -68,6 +69,13 @@ impl<
             },
         }
     }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("clip".to_string(), self.clip.to_workflow_input());
+        output.insert("bert".to_string(), self.bert.to_workflow_input());
+        output.insert("mt_5_xl".to_string(), self.mt_5_xl.to_workflow_input());
+        output
+    }
     const NAME: &'static str = "CLIPTextEncodeHunyuanDiT";
     const DISPLAY_NAME: &'static str = "CLIPTextEncodeHunyuanDiT";
     const DESCRIPTION: &'static str = "";
@@ -108,6 +116,16 @@ for ClipTextEncodeSd3<Clip, ClipL, ClipG, T5Xxl, EmptyPadding> {
                 node_slot: 0u32,
             },
         }
+    }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("clip".to_string(), self.clip.to_workflow_input());
+        output.insert("clip_l".to_string(), self.clip_l.to_workflow_input());
+        output.insert("clip_g".to_string(), self.clip_g.to_workflow_input());
+        output.insert("t_5_xxl".to_string(), self.t_5_xxl.to_workflow_input());
+        output
+            .insert("empty_padding".to_string(), self.empty_padding.to_workflow_input());
+        output
     }
     const NAME: &'static str = "CLIPTextEncodeSD3";
     const DISPLAY_NAME: &'static str = "CLIPTextEncodeSD3";
@@ -176,6 +194,20 @@ for ClipTextEncodeSdxl<
             },
         }
     }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("width".to_string(), self.width.to_workflow_input());
+        output.insert("height".to_string(), self.height.to_workflow_input());
+        output.insert("crop_w".to_string(), self.crop_w.to_workflow_input());
+        output.insert("crop_h".to_string(), self.crop_h.to_workflow_input());
+        output.insert("target_width".to_string(), self.target_width.to_workflow_input());
+        output
+            .insert("target_height".to_string(), self.target_height.to_workflow_input());
+        output.insert("text_g".to_string(), self.text_g.to_workflow_input());
+        output.insert("clip".to_string(), self.clip.to_workflow_input());
+        output.insert("text_l".to_string(), self.text_l.to_workflow_input());
+        output
+    }
     const NAME: &'static str = "CLIPTextEncodeSDXL";
     const DISPLAY_NAME: &'static str = "CLIPTextEncodeSDXL";
     const DESCRIPTION: &'static str = "";
@@ -217,6 +249,15 @@ for ClipTextEncodeSdxlRefiner<Ascore, Width, Height, Text, Clip> {
             },
         }
     }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("ascore".to_string(), self.ascore.to_workflow_input());
+        output.insert("width".to_string(), self.width.to_workflow_input());
+        output.insert("height".to_string(), self.height.to_workflow_input());
+        output.insert("text".to_string(), self.text.to_workflow_input());
+        output.insert("clip".to_string(), self.clip.to_workflow_input());
+        output
+    }
     const NAME: &'static str = "CLIPTextEncodeSDXLRefiner";
     const DISPLAY_NAME: &'static str = "CLIPTextEncodeSDXLRefiner";
     const DESCRIPTION: &'static str = "";
@@ -249,6 +290,13 @@ impl<
             },
         }
     }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("conditioning".to_string(), self.conditioning.to_workflow_input());
+        output.insert("start".to_string(), self.start.to_workflow_input());
+        output.insert("end".to_string(), self.end.to_workflow_input());
+        output
+    }
     const NAME: &'static str = "ConditioningSetTimestepRange";
     const DISPLAY_NAME: &'static str = "ConditioningSetTimestepRange";
     const DESCRIPTION: &'static str = "";
@@ -269,6 +317,11 @@ for ConditioningZeroOut<Conditioning> {
                 node_slot: 0u32,
             },
         }
+    }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("conditioning".to_string(), self.conditioning.to_workflow_input());
+        output
     }
     const NAME: &'static str = "ConditioningZeroOut";
     const DISPLAY_NAME: &'static str = "ConditioningZeroOut";

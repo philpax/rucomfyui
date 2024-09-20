@@ -1,6 +1,7 @@
 //!`controlnet` definitions/categories.
 #![allow(unused_imports)]
-use crate::workflow::WorkflowNodeId;
+use std::collections::HashMap;
+use crate::workflow::{WorkflowNodeId, WorkflowInput};
 /// Output types for nodes.
 pub mod out {
     ///Output for [`ControlNetApply`](super::ControlNetApply).
@@ -64,6 +65,14 @@ for ControlNetApply<Conditioning, ControlNet, Image, Strength> {
             },
         }
     }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("conditioning".to_string(), self.conditioning.to_workflow_input());
+        output.insert("control_net".to_string(), self.control_net.to_workflow_input());
+        output.insert("image".to_string(), self.image.to_workflow_input());
+        output.insert("strength".to_string(), self.strength.to_workflow_input());
+        output
+    }
     const NAME: &'static str = "ControlNetApply";
     const DISPLAY_NAME: &'static str = "Apply ControlNet";
     const DESCRIPTION: &'static str = "";
@@ -124,6 +133,18 @@ for ControlNetApplyAdvanced<
                 node_slot: 1u32,
             },
         }
+    }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("positive".to_string(), self.positive.to_workflow_input());
+        output.insert("negative".to_string(), self.negative.to_workflow_input());
+        output.insert("control_net".to_string(), self.control_net.to_workflow_input());
+        output.insert("image".to_string(), self.image.to_workflow_input());
+        output.insert("strength".to_string(), self.strength.to_workflow_input());
+        output
+            .insert("start_percent".to_string(), self.start_percent.to_workflow_input());
+        output.insert("end_percent".to_string(), self.end_percent.to_workflow_input());
+        output
     }
     const NAME: &'static str = "ControlNetApplyAdvanced";
     const DISPLAY_NAME: &'static str = "Apply ControlNet (Advanced)";
@@ -191,6 +212,19 @@ for ControlNetApplySd3<
             },
         }
     }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("positive".to_string(), self.positive.to_workflow_input());
+        output.insert("negative".to_string(), self.negative.to_workflow_input());
+        output.insert("control_net".to_string(), self.control_net.to_workflow_input());
+        output.insert("vae".to_string(), self.vae.to_workflow_input());
+        output.insert("image".to_string(), self.image.to_workflow_input());
+        output.insert("strength".to_string(), self.strength.to_workflow_input());
+        output
+            .insert("start_percent".to_string(), self.start_percent.to_workflow_input());
+        output.insert("end_percent".to_string(), self.end_percent.to_workflow_input());
+        output
+    }
     const NAME: &'static str = "ControlNetApplySD3";
     const DISPLAY_NAME: &'static str = "ControlNetApply SD3 and HunyuanDiT";
     const DESCRIPTION: &'static str = "";
@@ -218,6 +252,12 @@ impl<
                 node_slot: 0u32,
             },
         }
+    }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("control_net".to_string(), self.control_net.to_workflow_input());
+        output.insert("type_".to_string(), self.type_.to_workflow_input());
+        output
     }
     const NAME: &'static str = "SetUnionControlNetType";
     const DISPLAY_NAME: &'static str = "SetUnionControlNetType";

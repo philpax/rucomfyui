@@ -1,6 +1,7 @@
 //!`unet` definitions/categories.
 #![allow(unused_imports)]
-use crate::workflow::WorkflowNodeId;
+use std::collections::HashMap;
+use crate::workflow::{WorkflowNodeId, WorkflowInput};
 /// Output types for nodes.
 pub mod out {
     ///Output for [`FreeU`](super::FreeU).
@@ -63,6 +64,15 @@ impl<
             },
         }
     }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("model".to_string(), self.model.to_workflow_input());
+        output.insert("b_1".to_string(), self.b_1.to_workflow_input());
+        output.insert("b_2".to_string(), self.b_2.to_workflow_input());
+        output.insert("s_1".to_string(), self.s_1.to_workflow_input());
+        output.insert("s_2".to_string(), self.s_2.to_workflow_input());
+        output
+    }
     const NAME: &'static str = "FreeU";
     const DISPLAY_NAME: &'static str = "FreeU";
     const DESCRIPTION: &'static str = "";
@@ -102,6 +112,15 @@ impl<
                 node_slot: 0u32,
             },
         }
+    }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("model".to_string(), self.model.to_workflow_input());
+        output.insert("b_1".to_string(), self.b_1.to_workflow_input());
+        output.insert("b_2".to_string(), self.b_2.to_workflow_input());
+        output.insert("s_1".to_string(), self.s_1.to_workflow_input());
+        output.insert("s_2".to_string(), self.s_2.to_workflow_input());
+        output
     }
     const NAME: &'static str = "FreeU_V2";
     const DISPLAY_NAME: &'static str = "FreeU_V2";
@@ -144,6 +163,15 @@ for HyperTile<Model, TileSize, SwapSize, MaxDepth, ScaleDepth> {
             },
         }
     }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("model".to_string(), self.model.to_workflow_input());
+        output.insert("tile_size".to_string(), self.tile_size.to_workflow_input());
+        output.insert("swap_size".to_string(), self.swap_size.to_workflow_input());
+        output.insert("max_depth".to_string(), self.max_depth.to_workflow_input());
+        output.insert("scale_depth".to_string(), self.scale_depth.to_workflow_input());
+        output
+    }
     const NAME: &'static str = "HyperTile";
     const DISPLAY_NAME: &'static str = "HyperTile";
     const DESCRIPTION: &'static str = "";
@@ -171,6 +199,12 @@ impl<
                 node_slot: 0u32,
             },
         }
+    }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("model".to_string(), self.model.to_workflow_input());
+        output.insert("scale".to_string(), self.scale.to_workflow_input());
+        output
     }
     const NAME: &'static str = "PerturbedAttentionGuidance";
     const DISPLAY_NAME: &'static str = "PerturbedAttentionGuidance";

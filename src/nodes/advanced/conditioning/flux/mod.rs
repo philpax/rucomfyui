@@ -1,6 +1,7 @@
 //!`flux` definitions/categories.
 #![allow(unused_imports)]
-use crate::workflow::WorkflowNodeId;
+use std::collections::HashMap;
+use crate::workflow::{WorkflowNodeId, WorkflowInput};
 /// Output types for nodes.
 pub mod out {
     ///Output for [`ClipTextEncodeFlux`](super::ClipTextEncodeFlux).
@@ -47,6 +48,14 @@ impl<
             },
         }
     }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("clip".to_string(), self.clip.to_workflow_input());
+        output.insert("clip_l".to_string(), self.clip_l.to_workflow_input());
+        output.insert("t_5_xxl".to_string(), self.t_5_xxl.to_workflow_input());
+        output.insert("guidance".to_string(), self.guidance.to_workflow_input());
+        output
+    }
     const NAME: &'static str = "CLIPTextEncodeFlux";
     const DISPLAY_NAME: &'static str = "CLIPTextEncodeFlux";
     const DESCRIPTION: &'static str = "";
@@ -74,6 +83,12 @@ impl<
                 node_slot: 0u32,
             },
         }
+    }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("conditioning".to_string(), self.conditioning.to_workflow_input());
+        output.insert("guidance".to_string(), self.guidance.to_workflow_input());
+        output
     }
     const NAME: &'static str = "FluxGuidance";
     const DISPLAY_NAME: &'static str = "FluxGuidance";

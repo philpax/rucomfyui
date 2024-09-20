@@ -1,6 +1,7 @@
 //!`latent` definitions/categories.
 #![allow(unused_imports)]
-use crate::workflow::WorkflowNodeId;
+use std::collections::HashMap;
+use crate::workflow::{WorkflowNodeId, WorkflowInput};
 pub mod advanced;
 pub mod audio;
 pub mod batch;
@@ -80,6 +81,13 @@ impl<
             },
         }
     }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("width".to_string(), self.width.to_workflow_input());
+        output.insert("height".to_string(), self.height.to_workflow_input());
+        output.insert("batch_size".to_string(), self.batch_size.to_workflow_input());
+        output
+    }
     const NAME: &'static str = "EmptyLatentImage";
     const DISPLAY_NAME: &'static str = "Empty Latent Image";
     const DESCRIPTION: &'static str = "Create a new batch of empty latent images to be denoised via sampling.";
@@ -119,6 +127,15 @@ impl<
                 node_slot: 0u32,
             },
         }
+    }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("samples_to".to_string(), self.samples_to.to_workflow_input());
+        output.insert("samples_from".to_string(), self.samples_from.to_workflow_input());
+        output.insert("x".to_string(), self.x.to_workflow_input());
+        output.insert("y".to_string(), self.y.to_workflow_input());
+        output.insert("feather".to_string(), self.feather.to_workflow_input());
+        output
     }
     const NAME: &'static str = "LatentComposite";
     const DISPLAY_NAME: &'static str = "Latent Composite";
@@ -165,6 +182,19 @@ for LatentCompositeMasked<Destination, Source, X, Y, ResizeSource, Mask> {
             },
         }
     }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("destination".to_string(), self.destination.to_workflow_input());
+        output.insert("source".to_string(), self.source.to_workflow_input());
+        output.insert("x".to_string(), self.x.to_workflow_input());
+        output.insert("y".to_string(), self.y.to_workflow_input());
+        output
+            .insert("resize_source".to_string(), self.resize_source.to_workflow_input());
+        if let Some(v) = &self.mask {
+            output.insert("mask".to_string(), v.to_workflow_input());
+        }
+        output
+    }
     const NAME: &'static str = "LatentCompositeMasked";
     const DISPLAY_NAME: &'static str = "LatentCompositeMasked";
     const DESCRIPTION: &'static str = "";
@@ -206,6 +236,19 @@ for LatentUpscale<Samples, UpscaleMethod, Width, Height, Crop> {
             },
         }
     }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("samples".to_string(), self.samples.to_workflow_input());
+        output
+            .insert(
+                "upscale_method".to_string(),
+                self.upscale_method.to_workflow_input(),
+            );
+        output.insert("width".to_string(), self.width.to_workflow_input());
+        output.insert("height".to_string(), self.height.to_workflow_input());
+        output.insert("crop".to_string(), self.crop.to_workflow_input());
+        output
+    }
     const NAME: &'static str = "LatentUpscale";
     const DISPLAY_NAME: &'static str = "Upscale Latent";
     const DESCRIPTION: &'static str = "";
@@ -238,6 +281,17 @@ impl<
             },
         }
     }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("samples".to_string(), self.samples.to_workflow_input());
+        output
+            .insert(
+                "upscale_method".to_string(),
+                self.upscale_method.to_workflow_input(),
+            );
+        output.insert("scale_by".to_string(), self.scale_by.to_workflow_input());
+        output
+    }
     const NAME: &'static str = "LatentUpscaleBy";
     const DISPLAY_NAME: &'static str = "Upscale Latent By";
     const DESCRIPTION: &'static str = "";
@@ -266,6 +320,12 @@ impl<
             },
         }
     }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("samples".to_string(), self.samples.to_workflow_input());
+        output.insert("vae".to_string(), self.vae.to_workflow_input());
+        output
+    }
     const NAME: &'static str = "VAEDecode";
     const DISPLAY_NAME: &'static str = "VAE Decode";
     const DESCRIPTION: &'static str = "Decodes latent images back into pixel space images.";
@@ -290,6 +350,12 @@ impl<
                 node_slot: 0u32,
             },
         }
+    }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("pixels".to_string(), self.pixels.to_workflow_input());
+        output.insert("vae".to_string(), self.vae.to_workflow_input());
+        output
     }
     const NAME: &'static str = "VAEEncode";
     const DISPLAY_NAME: &'static str = "VAE Encode";

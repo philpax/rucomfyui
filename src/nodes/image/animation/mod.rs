@@ -1,6 +1,7 @@
 //!`animation` definitions/categories.
 #![allow(unused_imports)]
-use crate::workflow::WorkflowNodeId;
+use std::collections::HashMap;
+use crate::workflow::{WorkflowNodeId, WorkflowInput};
 /// Output types for nodes.
 pub mod out {}
 ///**SaveAnimatedPNG**: No description.
@@ -28,6 +29,22 @@ impl<
 for SaveAnimatedPng<Images, FilenamePrefix, Fps, CompressLevel> {
     type Output = ();
     fn output(&self, _node_id: WorkflowNodeId) -> Self::Output {}
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("images".to_string(), self.images.to_workflow_input());
+        output
+            .insert(
+                "filename_prefix".to_string(),
+                self.filename_prefix.to_workflow_input(),
+            );
+        output.insert("fps".to_string(), self.fps.to_workflow_input());
+        output
+            .insert(
+                "compress_level".to_string(),
+                self.compress_level.to_workflow_input(),
+            );
+        output
+    }
     const NAME: &'static str = "SaveAnimatedPNG";
     const DISPLAY_NAME: &'static str = "SaveAnimatedPNG";
     const DESCRIPTION: &'static str = "";
@@ -73,6 +90,20 @@ impl<
 for SaveAnimatedWebp<Images, FilenamePrefix, Fps, Lossless, Quality, Method> {
     type Output = ();
     fn output(&self, _node_id: WorkflowNodeId) -> Self::Output {}
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("images".to_string(), self.images.to_workflow_input());
+        output
+            .insert(
+                "filename_prefix".to_string(),
+                self.filename_prefix.to_workflow_input(),
+            );
+        output.insert("fps".to_string(), self.fps.to_workflow_input());
+        output.insert("lossless".to_string(), self.lossless.to_workflow_input());
+        output.insert("quality".to_string(), self.quality.to_workflow_input());
+        output.insert("method".to_string(), self.method.to_workflow_input());
+        output
+    }
     const NAME: &'static str = "SaveAnimatedWEBP";
     const DISPLAY_NAME: &'static str = "SaveAnimatedWEBP";
     const DESCRIPTION: &'static str = "";

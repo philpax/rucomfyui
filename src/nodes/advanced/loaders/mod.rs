@@ -1,6 +1,7 @@
 //!`loaders` definitions/categories.
 #![allow(unused_imports)]
-use crate::workflow::WorkflowNodeId;
+use std::collections::HashMap;
+use crate::workflow::{WorkflowNodeId, WorkflowInput};
 pub mod deprecated;
 /// Output types for nodes.
 pub mod out {
@@ -62,6 +63,12 @@ impl<
             },
         }
     }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("clip_name".to_string(), self.clip_name.to_workflow_input());
+        output.insert("type_".to_string(), self.type_.to_workflow_input());
+        output
+    }
     const NAME: &'static str = "CLIPLoader";
     const DISPLAY_NAME: &'static str = "Load CLIP";
     const DESCRIPTION: &'static str = "";
@@ -98,6 +105,12 @@ impl<
             },
         }
     }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("config_name".to_string(), self.config_name.to_workflow_input());
+        output.insert("ckpt_name".to_string(), self.ckpt_name.to_workflow_input());
+        output
+    }
     const NAME: &'static str = "CheckpointLoader";
     const DISPLAY_NAME: &'static str = "Load Checkpoint With Config (DEPRECATED)";
     const DESCRIPTION: &'static str = "";
@@ -129,6 +142,13 @@ impl<
                 node_slot: 0u32,
             },
         }
+    }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("clip_name_1".to_string(), self.clip_name_1.to_workflow_input());
+        output.insert("clip_name_2".to_string(), self.clip_name_2.to_workflow_input());
+        output.insert("type_".to_string(), self.type_.to_workflow_input());
+        output
     }
     const NAME: &'static str = "DualCLIPLoader";
     const DISPLAY_NAME: &'static str = "DualCLIPLoader";
@@ -162,6 +182,13 @@ impl<
             },
         }
     }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("clip_name_1".to_string(), self.clip_name_1.to_workflow_input());
+        output.insert("clip_name_2".to_string(), self.clip_name_2.to_workflow_input());
+        output.insert("clip_name_3".to_string(), self.clip_name_3.to_workflow_input());
+        output
+    }
     const NAME: &'static str = "TripleCLIPLoader";
     const DISPLAY_NAME: &'static str = "TripleCLIPLoader";
     const DESCRIPTION: &'static str = "";
@@ -189,6 +216,12 @@ impl<
                 node_slot: 0u32,
             },
         }
+    }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("unet_name".to_string(), self.unet_name.to_workflow_input());
+        output.insert("weight_dtype".to_string(), self.weight_dtype.to_workflow_input());
+        output
     }
     const NAME: &'static str = "UNETLoader";
     const DISPLAY_NAME: &'static str = "Load Diffusion Model";

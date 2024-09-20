@@ -1,6 +1,7 @@
 //!`sampling` definitions/categories.
 #![allow(unused_imports)]
-use crate::workflow::WorkflowNodeId;
+use std::collections::HashMap;
+use crate::workflow::{WorkflowNodeId, WorkflowInput};
 pub mod custom_sampling;
 pub mod video_models;
 /// Output types for nodes.
@@ -84,6 +85,20 @@ for KSampler<
                 node_slot: 0u32,
             },
         }
+    }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("model".to_string(), self.model.to_workflow_input());
+        output.insert("seed".to_string(), self.seed.to_workflow_input());
+        output.insert("steps".to_string(), self.steps.to_workflow_input());
+        output.insert("cfg".to_string(), self.cfg.to_workflow_input());
+        output.insert("sampler_name".to_string(), self.sampler_name.to_workflow_input());
+        output.insert("scheduler".to_string(), self.scheduler.to_workflow_input());
+        output.insert("positive".to_string(), self.positive.to_workflow_input());
+        output.insert("negative".to_string(), self.negative.to_workflow_input());
+        output.insert("latent_image".to_string(), self.latent_image.to_workflow_input());
+        output.insert("denoise".to_string(), self.denoise.to_workflow_input());
+        output
     }
     const NAME: &'static str = "KSampler";
     const DISPLAY_NAME: &'static str = "KSampler";
@@ -171,6 +186,28 @@ for KSamplerAdvanced<
                 node_slot: 0u32,
             },
         }
+    }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("model".to_string(), self.model.to_workflow_input());
+        output.insert("add_noise".to_string(), self.add_noise.to_workflow_input());
+        output.insert("noise_seed".to_string(), self.noise_seed.to_workflow_input());
+        output.insert("steps".to_string(), self.steps.to_workflow_input());
+        output.insert("cfg".to_string(), self.cfg.to_workflow_input());
+        output.insert("sampler_name".to_string(), self.sampler_name.to_workflow_input());
+        output.insert("scheduler".to_string(), self.scheduler.to_workflow_input());
+        output.insert("positive".to_string(), self.positive.to_workflow_input());
+        output.insert("negative".to_string(), self.negative.to_workflow_input());
+        output.insert("latent_image".to_string(), self.latent_image.to_workflow_input());
+        output
+            .insert("start_at_step".to_string(), self.start_at_step.to_workflow_input());
+        output.insert("end_at_step".to_string(), self.end_at_step.to_workflow_input());
+        output
+            .insert(
+                "return_with_leftover_noise".to_string(),
+                self.return_with_leftover_noise.to_workflow_input(),
+            );
+        output
     }
     const NAME: &'static str = "KSamplerAdvanced";
     const DISPLAY_NAME: &'static str = "KSampler (Advanced)";

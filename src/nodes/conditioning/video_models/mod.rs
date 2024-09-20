@@ -1,6 +1,7 @@
 //!`video_models` definitions/categories.
 #![allow(unused_imports)]
-use crate::workflow::WorkflowNodeId;
+use std::collections::HashMap;
+use crate::workflow::{WorkflowNodeId, WorkflowInput};
 /// Output types for nodes.
 pub mod out {
     ///Output for [`SvdImg2VidConditioning`](super::SvdImg2VidConditioning).
@@ -83,6 +84,27 @@ for SvdImg2VidConditioning<
                 node_slot: 2u32,
             },
         }
+    }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("clip_vision".to_string(), self.clip_vision.to_workflow_input());
+        output.insert("init_image".to_string(), self.init_image.to_workflow_input());
+        output.insert("vae".to_string(), self.vae.to_workflow_input());
+        output.insert("width".to_string(), self.width.to_workflow_input());
+        output.insert("height".to_string(), self.height.to_workflow_input());
+        output.insert("video_frames".to_string(), self.video_frames.to_workflow_input());
+        output
+            .insert(
+                "motion_bucket_id".to_string(),
+                self.motion_bucket_id.to_workflow_input(),
+            );
+        output.insert("fps".to_string(), self.fps.to_workflow_input());
+        output
+            .insert(
+                "augmentation_level".to_string(),
+                self.augmentation_level.to_workflow_input(),
+            );
+        output
     }
     const NAME: &'static str = "SVD_img2vid_Conditioning";
     const DISPLAY_NAME: &'static str = "SVD_img2vid_Conditioning";

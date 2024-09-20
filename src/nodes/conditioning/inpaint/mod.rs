@@ -1,6 +1,7 @@
 //!`inpaint` definitions/categories.
 #![allow(unused_imports)]
-use crate::workflow::WorkflowNodeId;
+use std::collections::HashMap;
+use crate::workflow::{WorkflowNodeId, WorkflowInput};
 /// Output types for nodes.
 pub mod out {
     ///Output for [`InpaintModelConditioning`](super::InpaintModelConditioning).
@@ -57,6 +58,15 @@ for InpaintModelConditioning<Positive, Negative, Vae, Pixels, Mask> {
                 node_slot: 2u32,
             },
         }
+    }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("positive".to_string(), self.positive.to_workflow_input());
+        output.insert("negative".to_string(), self.negative.to_workflow_input());
+        output.insert("vae".to_string(), self.vae.to_workflow_input());
+        output.insert("pixels".to_string(), self.pixels.to_workflow_input());
+        output.insert("mask".to_string(), self.mask.to_workflow_input());
+        output
     }
     const NAME: &'static str = "InpaintModelConditioning";
     const DISPLAY_NAME: &'static str = "InpaintModelConditioning";

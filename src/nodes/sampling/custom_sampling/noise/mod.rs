@@ -1,6 +1,7 @@
 //!`noise` definitions/categories.
 #![allow(unused_imports)]
-use crate::workflow::WorkflowNodeId;
+use std::collections::HashMap;
+use crate::workflow::{WorkflowNodeId, WorkflowInput};
 /// Output types for nodes.
 pub mod out {
     ///Output for [`DisableNoise`](super::DisableNoise).
@@ -28,6 +29,9 @@ impl crate::nodes::TypedNode for DisableNoise {
             },
         }
     }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        HashMap::default()
+    }
     const NAME: &'static str = "DisableNoise";
     const DISPLAY_NAME: &'static str = "DisableNoise";
     const DESCRIPTION: &'static str = "";
@@ -48,6 +52,11 @@ for RandomNoise<NoiseSeed> {
                 node_slot: 0u32,
             },
         }
+    }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("noise_seed".to_string(), self.noise_seed.to_workflow_input());
+        output
     }
     const NAME: &'static str = "RandomNoise";
     const DISPLAY_NAME: &'static str = "RandomNoise";

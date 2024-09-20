@@ -1,6 +1,7 @@
 //!`loaders` definitions/categories.
 #![allow(unused_imports)]
-use crate::workflow::WorkflowNodeId;
+use std::collections::HashMap;
+use crate::workflow::{WorkflowNodeId, WorkflowInput};
 pub mod video_models;
 /// Output types for nodes.
 pub mod out {
@@ -105,6 +106,11 @@ for ClipVisionLoader<ClipName> {
             },
         }
     }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("clip_name".to_string(), self.clip_name.to_workflow_input());
+        output
+    }
     const NAME: &'static str = "CLIPVisionLoader";
     const DISPLAY_NAME: &'static str = "Load CLIP Vision";
     const DESCRIPTION: &'static str = "";
@@ -134,6 +140,11 @@ for CheckpointLoaderSimple<CkptName> {
             },
         }
     }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("ckpt_name".to_string(), self.ckpt_name.to_workflow_input());
+        output
+    }
     const NAME: &'static str = "CheckpointLoaderSimple";
     const DISPLAY_NAME: &'static str = "Load Checkpoint";
     const DESCRIPTION: &'static str = "Loads a diffusion model checkpoint, diffusion models are used to denoise latents.";
@@ -154,6 +165,15 @@ for ControlNetLoader<ControlNetName> {
                 node_slot: 0u32,
             },
         }
+    }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output
+            .insert(
+                "control_net_name".to_string(),
+                self.control_net_name.to_workflow_input(),
+            );
+        output
     }
     const NAME: &'static str = "ControlNetLoader";
     const DISPLAY_NAME: &'static str = "Load ControlNet Model";
@@ -183,6 +203,16 @@ impl<
             },
         }
     }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("model".to_string(), self.model.to_workflow_input());
+        output
+            .insert(
+                "control_net_name".to_string(),
+                self.control_net_name.to_workflow_input(),
+            );
+        output
+    }
     const NAME: &'static str = "DiffControlNetLoader";
     const DISPLAY_NAME: &'static str = "Load ControlNet Model (diff)";
     const DESCRIPTION: &'static str = "";
@@ -203,6 +233,11 @@ for GligenLoader<GligenName> {
                 node_slot: 0u32,
             },
         }
+    }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("gligen_name".to_string(), self.gligen_name.to_workflow_input());
+        output
     }
     const NAME: &'static str = "GLIGENLoader";
     const DISPLAY_NAME: &'static str = "GLIGENLoader";
@@ -235,6 +270,17 @@ impl<
                 node_slot: 0u32,
             },
         }
+    }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("model".to_string(), self.model.to_workflow_input());
+        output
+            .insert(
+                "hypernetwork_name".to_string(),
+                self.hypernetwork_name.to_workflow_input(),
+            );
+        output.insert("strength".to_string(), self.strength.to_workflow_input());
+        output
     }
     const NAME: &'static str = "HypernetworkLoader";
     const DISPLAY_NAME: &'static str = "HypernetworkLoader";
@@ -281,6 +327,20 @@ for LoraLoader<Model, Clip, LoraName, StrengthModel, StrengthClip> {
             },
         }
     }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("model".to_string(), self.model.to_workflow_input());
+        output.insert("clip".to_string(), self.clip.to_workflow_input());
+        output.insert("lora_name".to_string(), self.lora_name.to_workflow_input());
+        output
+            .insert(
+                "strength_model".to_string(),
+                self.strength_model.to_workflow_input(),
+            );
+        output
+            .insert("strength_clip".to_string(), self.strength_clip.to_workflow_input());
+        output
+    }
     const NAME: &'static str = "LoraLoader";
     const DISPLAY_NAME: &'static str = "Load LoRA";
     const DESCRIPTION: &'static str = "LoRAs are used to modify diffusion and CLIP models, altering the way in which latents are denoised such as applying styles. Multiple LoRA nodes can be linked together.";
@@ -313,6 +373,17 @@ impl<
             },
         }
     }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("model".to_string(), self.model.to_workflow_input());
+        output.insert("lora_name".to_string(), self.lora_name.to_workflow_input());
+        output
+            .insert(
+                "strength_model".to_string(),
+                self.strength_model.to_workflow_input(),
+            );
+        output
+    }
     const NAME: &'static str = "LoraLoaderModelOnly";
     const DISPLAY_NAME: &'static str = "LoraLoaderModelOnly";
     const DESCRIPTION: &'static str = "LoRAs are used to modify diffusion and CLIP models, altering the way in which latents are denoised such as applying styles. Multiple LoRA nodes can be linked together.";
@@ -333,6 +404,15 @@ for StyleModelLoader<StyleModelName> {
                 node_slot: 0u32,
             },
         }
+    }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output
+            .insert(
+                "style_model_name".to_string(),
+                self.style_model_name.to_workflow_input(),
+            );
+        output
     }
     const NAME: &'static str = "StyleModelLoader";
     const DISPLAY_NAME: &'static str = "Load Style Model";
@@ -355,6 +435,11 @@ for UpscaleModelLoader<ModelName> {
             },
         }
     }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("model_name".to_string(), self.model_name.to_workflow_input());
+        output
+    }
     const NAME: &'static str = "UpscaleModelLoader";
     const DISPLAY_NAME: &'static str = "Load Upscale Model";
     const DESCRIPTION: &'static str = "";
@@ -375,6 +460,11 @@ for VaeLoader<VaeName> {
                 node_slot: 0u32,
             },
         }
+    }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("vae_name".to_string(), self.vae_name.to_workflow_input());
+        output
     }
     const NAME: &'static str = "VAELoader";
     const DISPLAY_NAME: &'static str = "Load VAE";
@@ -408,6 +498,11 @@ for UnClipCheckpointLoader<CkptName> {
                 node_slot: 3u32,
             },
         }
+    }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("ckpt_name".to_string(), self.ckpt_name.to_workflow_input());
+        output
     }
     const NAME: &'static str = "unCLIPCheckpointLoader";
     const DISPLAY_NAME: &'static str = "unCLIPCheckpointLoader";

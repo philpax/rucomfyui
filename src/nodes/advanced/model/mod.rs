@@ -1,6 +1,7 @@
 //!`model` definitions/categories.
 #![allow(unused_imports)]
-use crate::workflow::WorkflowNodeId;
+use std::collections::HashMap;
+use crate::workflow::{WorkflowNodeId, WorkflowInput};
 /// Output types for nodes.
 pub mod out {
     ///Output for [`ModelSamplingAuraFlow`](super::ModelSamplingAuraFlow).
@@ -75,6 +76,12 @@ impl<
             },
         }
     }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("model".to_string(), self.model.to_workflow_input());
+        output.insert("shift".to_string(), self.shift.to_workflow_input());
+        output
+    }
     const NAME: &'static str = "ModelSamplingAuraFlow";
     const DISPLAY_NAME: &'static str = "ModelSamplingAuraFlow";
     const DESCRIPTION: &'static str = "";
@@ -111,6 +118,14 @@ for ModelSamplingContinuousEdm<Model, Sampling, SigmaMax, SigmaMin> {
                 node_slot: 0u32,
             },
         }
+    }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("model".to_string(), self.model.to_workflow_input());
+        output.insert("sampling".to_string(), self.sampling.to_workflow_input());
+        output.insert("sigma_max".to_string(), self.sigma_max.to_workflow_input());
+        output.insert("sigma_min".to_string(), self.sigma_min.to_workflow_input());
+        output
     }
     const NAME: &'static str = "ModelSamplingContinuousEDM";
     const DISPLAY_NAME: &'static str = "ModelSamplingContinuousEDM";
@@ -149,6 +164,14 @@ for ModelSamplingContinuousV<Model, Sampling, SigmaMax, SigmaMin> {
             },
         }
     }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("model".to_string(), self.model.to_workflow_input());
+        output.insert("sampling".to_string(), self.sampling.to_workflow_input());
+        output.insert("sigma_max".to_string(), self.sigma_max.to_workflow_input());
+        output.insert("sigma_min".to_string(), self.sigma_min.to_workflow_input());
+        output
+    }
     const NAME: &'static str = "ModelSamplingContinuousV";
     const DISPLAY_NAME: &'static str = "ModelSamplingContinuousV";
     const DESCRIPTION: &'static str = "";
@@ -180,6 +203,13 @@ impl<
                 node_slot: 0u32,
             },
         }
+    }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("model".to_string(), self.model.to_workflow_input());
+        output.insert("sampling".to_string(), self.sampling.to_workflow_input());
+        output.insert("zsnr".to_string(), self.zsnr.to_workflow_input());
+        output
     }
     const NAME: &'static str = "ModelSamplingDiscrete";
     const DISPLAY_NAME: &'static str = "ModelSamplingDiscrete";
@@ -222,6 +252,15 @@ for ModelSamplingFlux<Model, MaxShift, BaseShift, Width, Height> {
             },
         }
     }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("model".to_string(), self.model.to_workflow_input());
+        output.insert("max_shift".to_string(), self.max_shift.to_workflow_input());
+        output.insert("base_shift".to_string(), self.base_shift.to_workflow_input());
+        output.insert("width".to_string(), self.width.to_workflow_input());
+        output.insert("height".to_string(), self.height.to_workflow_input());
+        output
+    }
     const NAME: &'static str = "ModelSamplingFlux";
     const DISPLAY_NAME: &'static str = "ModelSamplingFlux";
     const DESCRIPTION: &'static str = "";
@@ -249,6 +288,12 @@ impl<
                 node_slot: 0u32,
             },
         }
+    }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("model".to_string(), self.model.to_workflow_input());
+        output.insert("shift".to_string(), self.shift.to_workflow_input());
+        output
     }
     const NAME: &'static str = "ModelSamplingSD3";
     const DISPLAY_NAME: &'static str = "ModelSamplingSD3";
@@ -278,6 +323,12 @@ impl<
             },
         }
     }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("model".to_string(), self.model.to_workflow_input());
+        output.insert("shift".to_string(), self.shift.to_workflow_input());
+        output
+    }
     const NAME: &'static str = "ModelSamplingStableCascade";
     const DISPLAY_NAME: &'static str = "ModelSamplingStableCascade";
     const DESCRIPTION: &'static str = "";
@@ -305,6 +356,12 @@ impl<
                 node_slot: 0u32,
             },
         }
+    }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("model".to_string(), self.model.to_workflow_input());
+        output.insert("multiplier".to_string(), self.multiplier.to_workflow_input());
+        output
     }
     const NAME: &'static str = "RescaleCFG";
     const DISPLAY_NAME: &'static str = "RescaleCFG";

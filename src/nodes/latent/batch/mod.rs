@@ -1,6 +1,7 @@
 //!`batch` definitions/categories.
 #![allow(unused_imports)]
-use crate::workflow::WorkflowNodeId;
+use std::collections::HashMap;
+use crate::workflow::{WorkflowNodeId, WorkflowInput};
 /// Output types for nodes.
 pub mod out {
     ///Output for [`LatentBatch`](super::LatentBatch).
@@ -51,6 +52,12 @@ impl<
             },
         }
     }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("samples_1".to_string(), self.samples_1.to_workflow_input());
+        output.insert("samples_2".to_string(), self.samples_2.to_workflow_input());
+        output
+    }
     const NAME: &'static str = "LatentBatch";
     const DISPLAY_NAME: &'static str = "LatentBatch";
     const DESCRIPTION: &'static str = "";
@@ -83,6 +90,13 @@ impl<
             },
         }
     }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("samples".to_string(), self.samples.to_workflow_input());
+        output.insert("batch_index".to_string(), self.batch_index.to_workflow_input());
+        output.insert("length".to_string(), self.length.to_workflow_input());
+        output
+    }
     const NAME: &'static str = "LatentFromBatch";
     const DISPLAY_NAME: &'static str = "Latent From Batch";
     const DESCRIPTION: &'static str = "";
@@ -111,6 +125,12 @@ impl<
             },
         }
     }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("latents".to_string(), self.latents.to_workflow_input());
+        output.insert("batch_size".to_string(), self.batch_size.to_workflow_input());
+        output
+    }
     const NAME: &'static str = "RebatchLatents";
     const DISPLAY_NAME: &'static str = "Rebatch Latents";
     const DESCRIPTION: &'static str = "";
@@ -138,6 +158,12 @@ impl<
                 node_slot: 0u32,
             },
         }
+    }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("samples".to_string(), self.samples.to_workflow_input());
+        output.insert("amount".to_string(), self.amount.to_workflow_input());
+        output
     }
     const NAME: &'static str = "RepeatLatentBatch";
     const DISPLAY_NAME: &'static str = "Repeat Latent Batch";

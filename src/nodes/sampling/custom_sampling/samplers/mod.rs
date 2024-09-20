@@ -1,6 +1,7 @@
 //!`samplers` definitions/categories.
 #![allow(unused_imports)]
-use crate::workflow::WorkflowNodeId;
+use std::collections::HashMap;
+use crate::workflow::{WorkflowNodeId, WorkflowInput};
 /// Output types for nodes.
 pub mod out {
     ///Output for [`KSamplerSelect`](super::KSamplerSelect).
@@ -80,6 +81,11 @@ for KSamplerSelect<SamplerName> {
             },
         }
     }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("sampler_name".to_string(), self.sampler_name.to_workflow_input());
+        output
+    }
     const NAME: &'static str = "KSamplerSelect";
     const DISPLAY_NAME: &'static str = "KSamplerSelect";
     const DESCRIPTION: &'static str = "";
@@ -152,6 +158,21 @@ for SamplerDpmAdaptative<
             },
         }
     }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("order".to_string(), self.order.to_workflow_input());
+        output.insert("rtol".to_string(), self.rtol.to_workflow_input());
+        output.insert("atol".to_string(), self.atol.to_workflow_input());
+        output.insert("h_init".to_string(), self.h_init.to_workflow_input());
+        output.insert("pcoeff".to_string(), self.pcoeff.to_workflow_input());
+        output.insert("icoeff".to_string(), self.icoeff.to_workflow_input());
+        output.insert("dcoeff".to_string(), self.dcoeff.to_workflow_input());
+        output
+            .insert("accept_safety".to_string(), self.accept_safety.to_workflow_input());
+        output.insert("eta".to_string(), self.eta.to_workflow_input());
+        output.insert("s_noise".to_string(), self.s_noise.to_workflow_input());
+        output
+    }
     const NAME: &'static str = "SamplerDPMAdaptative";
     const DISPLAY_NAME: &'static str = "SamplerDPMAdaptative";
     const DESCRIPTION: &'static str = "";
@@ -188,6 +209,14 @@ impl<
             },
         }
     }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("solver_type".to_string(), self.solver_type.to_workflow_input());
+        output.insert("eta".to_string(), self.eta.to_workflow_input());
+        output.insert("s_noise".to_string(), self.s_noise.to_workflow_input());
+        output.insert("noise_device".to_string(), self.noise_device.to_workflow_input());
+        output
+    }
     const NAME: &'static str = "SamplerDPMPP_2M_SDE";
     const DISPLAY_NAME: &'static str = "SamplerDPMPP_2M_SDE";
     const DESCRIPTION: &'static str = "";
@@ -215,6 +244,12 @@ impl<
                 node_slot: 0u32,
             },
         }
+    }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("eta".to_string(), self.eta.to_workflow_input());
+        output.insert("s_noise".to_string(), self.s_noise.to_workflow_input());
+        output
     }
     const NAME: &'static str = "SamplerDPMPP_2S_Ancestral";
     const DISPLAY_NAME: &'static str = "SamplerDPMPP_2S_Ancestral";
@@ -247,6 +282,13 @@ impl<
                 node_slot: 0u32,
             },
         }
+    }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("eta".to_string(), self.eta.to_workflow_input());
+        output.insert("s_noise".to_string(), self.s_noise.to_workflow_input());
+        output.insert("noise_device".to_string(), self.noise_device.to_workflow_input());
+        output
     }
     const NAME: &'static str = "SamplerDPMPP_3M_SDE";
     const DISPLAY_NAME: &'static str = "SamplerDPMPP_3M_SDE";
@@ -284,6 +326,14 @@ impl<
             },
         }
     }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("eta".to_string(), self.eta.to_workflow_input());
+        output.insert("s_noise".to_string(), self.s_noise.to_workflow_input());
+        output.insert("r".to_string(), self.r.to_workflow_input());
+        output.insert("noise_device".to_string(), self.noise_device.to_workflow_input());
+        output
+    }
     const NAME: &'static str = "SamplerDPMPP_SDE";
     const DISPLAY_NAME: &'static str = "SamplerDPMPP_SDE";
     const DESCRIPTION: &'static str = "";
@@ -312,6 +362,12 @@ impl<
             },
         }
     }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("eta".to_string(), self.eta.to_workflow_input());
+        output.insert("s_noise".to_string(), self.s_noise.to_workflow_input());
+        output
+    }
     const NAME: &'static str = "SamplerEulerAncestral";
     const DISPLAY_NAME: &'static str = "SamplerEulerAncestral";
     const DESCRIPTION: &'static str = "";
@@ -339,6 +395,12 @@ impl<
                 node_slot: 0u32,
             },
         }
+    }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("eta".to_string(), self.eta.to_workflow_input());
+        output.insert("s_noise".to_string(), self.s_noise.to_workflow_input());
+        output
     }
     const NAME: &'static str = "SamplerEulerAncestralCFGPP";
     const DISPLAY_NAME: &'static str = "SamplerEulerAncestralCFG++";
@@ -372,6 +434,17 @@ impl<
             },
         }
     }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("scale_ratio".to_string(), self.scale_ratio.to_workflow_input());
+        output.insert("scale_steps".to_string(), self.scale_steps.to_workflow_input());
+        output
+            .insert(
+                "upscale_method".to_string(),
+                self.upscale_method.to_workflow_input(),
+            );
+        output
+    }
     const NAME: &'static str = "SamplerLCMUpscale";
     const DISPLAY_NAME: &'static str = "SamplerLCMUpscale";
     const DESCRIPTION: &'static str = "";
@@ -391,6 +464,11 @@ impl<Order: crate::nodes::types::Int> crate::nodes::TypedNode for SamplerLms<Ord
                 node_slot: 0u32,
             },
         }
+    }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("order".to_string(), self.order.to_workflow_input());
+        output
     }
     const NAME: &'static str = "SamplerLMS";
     const DISPLAY_NAME: &'static str = "SamplerLMS";

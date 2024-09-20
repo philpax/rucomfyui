@@ -1,6 +1,7 @@
 //!`instructpix2pix` definitions/categories.
 #![allow(unused_imports)]
-use crate::workflow::WorkflowNodeId;
+use std::collections::HashMap;
+use crate::workflow::{WorkflowNodeId, WorkflowInput};
 /// Output types for nodes.
 pub mod out {
     ///Output for [`InstructPixToPixConditioning`](super::InstructPixToPixConditioning).
@@ -53,6 +54,14 @@ for InstructPixToPixConditioning<Positive, Negative, Vae, Pixels> {
                 node_slot: 2u32,
             },
         }
+    }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("positive".to_string(), self.positive.to_workflow_input());
+        output.insert("negative".to_string(), self.negative.to_workflow_input());
+        output.insert("vae".to_string(), self.vae.to_workflow_input());
+        output.insert("pixels".to_string(), self.pixels.to_workflow_input());
+        output
     }
     const NAME: &'static str = "InstructPixToPixConditioning";
     const DISPLAY_NAME: &'static str = "InstructPixToPixConditioning";

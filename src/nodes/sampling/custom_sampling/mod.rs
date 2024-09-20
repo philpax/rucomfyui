@@ -1,6 +1,7 @@
 //!`custom_sampling` definitions/categories.
 #![allow(unused_imports)]
-use crate::workflow::WorkflowNodeId;
+use std::collections::HashMap;
+use crate::workflow::{WorkflowNodeId, WorkflowInput};
 pub mod guiders;
 pub mod noise;
 pub mod samplers;
@@ -91,6 +92,19 @@ for SamplerCustom<
             },
         }
     }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("model".to_string(), self.model.to_workflow_input());
+        output.insert("add_noise".to_string(), self.add_noise.to_workflow_input());
+        output.insert("noise_seed".to_string(), self.noise_seed.to_workflow_input());
+        output.insert("cfg".to_string(), self.cfg.to_workflow_input());
+        output.insert("positive".to_string(), self.positive.to_workflow_input());
+        output.insert("negative".to_string(), self.negative.to_workflow_input());
+        output.insert("sampler".to_string(), self.sampler.to_workflow_input());
+        output.insert("sigmas".to_string(), self.sigmas.to_workflow_input());
+        output.insert("latent_image".to_string(), self.latent_image.to_workflow_input());
+        output
+    }
     const NAME: &'static str = "SamplerCustom";
     const DISPLAY_NAME: &'static str = "SamplerCustom";
     const DESCRIPTION: &'static str = "";
@@ -135,6 +149,15 @@ for SamplerCustomAdvanced<Noise, Guider, Sampler, Sigmas, LatentImage> {
                 node_slot: 1u32,
             },
         }
+    }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("noise".to_string(), self.noise.to_workflow_input());
+        output.insert("guider".to_string(), self.guider.to_workflow_input());
+        output.insert("sampler".to_string(), self.sampler.to_workflow_input());
+        output.insert("sigmas".to_string(), self.sigmas.to_workflow_input());
+        output.insert("latent_image".to_string(), self.latent_image.to_workflow_input());
+        output
     }
     const NAME: &'static str = "SamplerCustomAdvanced";
     const DISPLAY_NAME: &'static str = "SamplerCustomAdvanced";

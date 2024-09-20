@@ -1,6 +1,7 @@
 //!`video_models` definitions/categories.
 #![allow(unused_imports)]
-use crate::workflow::WorkflowNodeId;
+use std::collections::HashMap;
+use crate::workflow::{WorkflowNodeId, WorkflowInput};
 /// Output types for nodes.
 pub mod out {
     ///Output for [`ImageOnlyCheckpointLoader`](super::ImageOnlyCheckpointLoader).
@@ -37,6 +38,11 @@ for ImageOnlyCheckpointLoader<CkptName> {
                 node_slot: 2u32,
             },
         }
+    }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("ckpt_name".to_string(), self.ckpt_name.to_workflow_input());
+        output
     }
     const NAME: &'static str = "ImageOnlyCheckpointLoader";
     const DISPLAY_NAME: &'static str = "Image Only Checkpoint Loader (img2vid model)";

@@ -1,6 +1,7 @@
 //!`sigmas` definitions/categories.
 #![allow(unused_imports)]
-use crate::workflow::WorkflowNodeId;
+use std::collections::HashMap;
+use crate::workflow::{WorkflowNodeId, WorkflowInput};
 /// Output types for nodes.
 pub mod out {
     ///Output for [`FlipSigmas`](super::FlipSigmas).
@@ -42,6 +43,11 @@ for FlipSigmas<Sigmas> {
             },
         }
     }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("sigmas".to_string(), self.sigmas.to_workflow_input());
+        output
+    }
     const NAME: &'static str = "FlipSigmas";
     const DISPLAY_NAME: &'static str = "FlipSigmas";
     const DESCRIPTION: &'static str = "";
@@ -74,6 +80,12 @@ impl<
             },
         }
     }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("sigmas".to_string(), self.sigmas.to_workflow_input());
+        output.insert("step".to_string(), self.step.to_workflow_input());
+        output
+    }
     const NAME: &'static str = "SplitSigmas";
     const DISPLAY_NAME: &'static str = "SplitSigmas";
     const DESCRIPTION: &'static str = "";
@@ -105,6 +117,12 @@ impl<
                 node_slot: 1u32,
             },
         }
+    }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("sigmas".to_string(), self.sigmas.to_workflow_input());
+        output.insert("denoise".to_string(), self.denoise.to_workflow_input());
+        output
     }
     const NAME: &'static str = "SplitSigmasDenoise";
     const DISPLAY_NAME: &'static str = "SplitSigmasDenoise";

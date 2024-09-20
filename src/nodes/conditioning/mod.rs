@@ -1,6 +1,7 @@
 //!`conditioning` definitions/categories.
 #![allow(unused_imports)]
-use crate::workflow::WorkflowNodeId;
+use std::collections::HashMap;
+use crate::workflow::{WorkflowNodeId, WorkflowInput};
 pub mod n_3_d_models;
 pub mod controlnet;
 pub mod gligen;
@@ -102,6 +103,16 @@ impl<
             },
         }
     }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("clip".to_string(), self.clip.to_workflow_input());
+        output
+            .insert(
+                "stop_at_clip_layer".to_string(),
+                self.stop_at_clip_layer.to_workflow_input(),
+            );
+        output
+    }
     const NAME: &'static str = "CLIPSetLastLayer";
     const DISPLAY_NAME: &'static str = "CLIP Set Last Layer";
     const DESCRIPTION: &'static str = "";
@@ -130,6 +141,12 @@ impl<
             },
         }
     }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("text".to_string(), self.text.to_workflow_input());
+        output.insert("clip".to_string(), self.clip.to_workflow_input());
+        output
+    }
     const NAME: &'static str = "CLIPTextEncode";
     const DISPLAY_NAME: &'static str = "CLIP Text Encode (Prompt)";
     const DESCRIPTION: &'static str = "Encodes a text prompt using a CLIP model into an embedding that can be used to guide the diffusion model towards generating specific images.";
@@ -157,6 +174,12 @@ impl<
                 node_slot: 0u32,
             },
         }
+    }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("clip_vision".to_string(), self.clip_vision.to_workflow_input());
+        output.insert("image".to_string(), self.image.to_workflow_input());
+        output
     }
     const NAME: &'static str = "CLIPVisionEncode";
     const DISPLAY_NAME: &'static str = "CLIP Vision Encode";
@@ -191,6 +214,25 @@ for ConditioningAverage<ConditioningTo, ConditioningFrom, ConditioningToStrength
             },
         }
     }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output
+            .insert(
+                "conditioning_to".to_string(),
+                self.conditioning_to.to_workflow_input(),
+            );
+        output
+            .insert(
+                "conditioning_from".to_string(),
+                self.conditioning_from.to_workflow_input(),
+            );
+        output
+            .insert(
+                "conditioning_to_strength".to_string(),
+                self.conditioning_to_strength.to_workflow_input(),
+            );
+        output
+    }
     const NAME: &'static str = "ConditioningAverage";
     const DISPLAY_NAME: &'static str = "ConditioningAverage";
     const DESCRIPTION: &'static str = "";
@@ -219,6 +261,20 @@ impl<
             },
         }
     }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output
+            .insert(
+                "conditioning_1".to_string(),
+                self.conditioning_1.to_workflow_input(),
+            );
+        output
+            .insert(
+                "conditioning_2".to_string(),
+                self.conditioning_2.to_workflow_input(),
+            );
+        output
+    }
     const NAME: &'static str = "ConditioningCombine";
     const DISPLAY_NAME: &'static str = "Conditioning (Combine)";
     const DESCRIPTION: &'static str = "";
@@ -246,6 +302,20 @@ impl<
                 node_slot: 0u32,
             },
         }
+    }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output
+            .insert(
+                "conditioning_to".to_string(),
+                self.conditioning_to.to_workflow_input(),
+            );
+        output
+            .insert(
+                "conditioning_from".to_string(),
+                self.conditioning_from.to_workflow_input(),
+            );
+        output
     }
     const NAME: &'static str = "ConditioningConcat";
     const DISPLAY_NAME: &'static str = "Conditioning (Concat)";
@@ -292,6 +362,16 @@ for ConditioningSetArea<Conditioning, Width, Height, X, Y, Strength> {
             },
         }
     }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("conditioning".to_string(), self.conditioning.to_workflow_input());
+        output.insert("width".to_string(), self.width.to_workflow_input());
+        output.insert("height".to_string(), self.height.to_workflow_input());
+        output.insert("x".to_string(), self.x.to_workflow_input());
+        output.insert("y".to_string(), self.y.to_workflow_input());
+        output.insert("strength".to_string(), self.strength.to_workflow_input());
+        output
+    }
     const NAME: &'static str = "ConditioningSetArea";
     const DISPLAY_NAME: &'static str = "Conditioning (Set Area)";
     const DESCRIPTION: &'static str = "";
@@ -337,6 +417,16 @@ for ConditioningSetAreaPercentage<Conditioning, Width, Height, X, Y, Strength> {
             },
         }
     }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("conditioning".to_string(), self.conditioning.to_workflow_input());
+        output.insert("width".to_string(), self.width.to_workflow_input());
+        output.insert("height".to_string(), self.height.to_workflow_input());
+        output.insert("x".to_string(), self.x.to_workflow_input());
+        output.insert("y".to_string(), self.y.to_workflow_input());
+        output.insert("strength".to_string(), self.strength.to_workflow_input());
+        output
+    }
     const NAME: &'static str = "ConditioningSetAreaPercentage";
     const DISPLAY_NAME: &'static str = "Conditioning (Set Area with Percentage)";
     const DESCRIPTION: &'static str = "";
@@ -364,6 +454,12 @@ impl<
                 node_slot: 0u32,
             },
         }
+    }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("conditioning".to_string(), self.conditioning.to_workflow_input());
+        output.insert("strength".to_string(), self.strength.to_workflow_input());
+        output
     }
     const NAME: &'static str = "ConditioningSetAreaStrength";
     const DISPLAY_NAME: &'static str = "ConditioningSetAreaStrength";
@@ -402,6 +498,15 @@ for ConditioningSetMask<Conditioning, Mask, Strength, SetCondArea> {
             },
         }
     }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("conditioning".to_string(), self.conditioning.to_workflow_input());
+        output.insert("mask".to_string(), self.mask.to_workflow_input());
+        output.insert("strength".to_string(), self.strength.to_workflow_input());
+        output
+            .insert("set_cond_area".to_string(), self.set_cond_area.to_workflow_input());
+        output
+    }
     const NAME: &'static str = "ConditioningSetMask";
     const DISPLAY_NAME: &'static str = "Conditioning (Set Mask)";
     const DESCRIPTION: &'static str = "";
@@ -438,6 +543,22 @@ for UnClipConditioning<Conditioning, ClipVisionOutput, Strength, NoiseAugmentati
                 node_slot: 0u32,
             },
         }
+    }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("conditioning".to_string(), self.conditioning.to_workflow_input());
+        output
+            .insert(
+                "clip_vision_output".to_string(),
+                self.clip_vision_output.to_workflow_input(),
+            );
+        output.insert("strength".to_string(), self.strength.to_workflow_input());
+        output
+            .insert(
+                "noise_augmentation".to_string(),
+                self.noise_augmentation.to_workflow_input(),
+            );
+        output
     }
     const NAME: &'static str = "unCLIPConditioning";
     const DISPLAY_NAME: &'static str = "unCLIPConditioning";

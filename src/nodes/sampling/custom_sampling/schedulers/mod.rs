@@ -1,6 +1,7 @@
 //!`schedulers` definitions/categories.
 #![allow(unused_imports)]
-use crate::workflow::WorkflowNodeId;
+use std::collections::HashMap;
+use crate::workflow::{WorkflowNodeId, WorkflowInput};
 /// Output types for nodes.
 pub mod out {
     ///Output for [`AlignYourStepsScheduler`](super::AlignYourStepsScheduler).
@@ -85,6 +86,13 @@ impl<
             },
         }
     }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("model_type".to_string(), self.model_type.to_workflow_input());
+        output.insert("steps".to_string(), self.steps.to_workflow_input());
+        output.insert("denoise".to_string(), self.denoise.to_workflow_input());
+        output
+    }
     const NAME: &'static str = "AlignYourStepsScheduler";
     const DISPLAY_NAME: &'static str = "AlignYourStepsScheduler";
     const DESCRIPTION: &'static str = "";
@@ -120,6 +128,14 @@ impl<
                 node_slot: 0u32,
             },
         }
+    }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("model".to_string(), self.model.to_workflow_input());
+        output.insert("scheduler".to_string(), self.scheduler.to_workflow_input());
+        output.insert("steps".to_string(), self.steps.to_workflow_input());
+        output.insert("denoise".to_string(), self.denoise.to_workflow_input());
+        output
     }
     const NAME: &'static str = "BasicScheduler";
     const DISPLAY_NAME: &'static str = "BasicScheduler";
@@ -157,6 +173,14 @@ impl<
             },
         }
     }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("model".to_string(), self.model.to_workflow_input());
+        output.insert("steps".to_string(), self.steps.to_workflow_input());
+        output.insert("alpha".to_string(), self.alpha.to_workflow_input());
+        output.insert("beta".to_string(), self.beta.to_workflow_input());
+        output
+    }
     const NAME: &'static str = "BetaSamplingScheduler";
     const DISPLAY_NAME: &'static str = "BetaSamplingScheduler";
     const DESCRIPTION: &'static str = "";
@@ -189,6 +213,13 @@ impl<
             },
         }
     }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("steps".to_string(), self.steps.to_workflow_input());
+        output.insert("sigma_max".to_string(), self.sigma_max.to_workflow_input());
+        output.insert("sigma_min".to_string(), self.sigma_min.to_workflow_input());
+        output
+    }
     const NAME: &'static str = "ExponentialScheduler";
     const DISPLAY_NAME: &'static str = "ExponentialScheduler";
     const DESCRIPTION: &'static str = "";
@@ -220,6 +251,13 @@ impl<
                 node_slot: 0u32,
             },
         }
+    }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("coeff".to_string(), self.coeff.to_workflow_input());
+        output.insert("steps".to_string(), self.steps.to_workflow_input());
+        output.insert("denoise".to_string(), self.denoise.to_workflow_input());
+        output
     }
     const NAME: &'static str = "GITSScheduler";
     const DISPLAY_NAME: &'static str = "GITSScheduler";
@@ -257,6 +295,14 @@ impl<
             },
         }
     }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("steps".to_string(), self.steps.to_workflow_input());
+        output.insert("sigma_max".to_string(), self.sigma_max.to_workflow_input());
+        output.insert("sigma_min".to_string(), self.sigma_min.to_workflow_input());
+        output.insert("rho".to_string(), self.rho.to_workflow_input());
+        output
+    }
     const NAME: &'static str = "KarrasScheduler";
     const DISPLAY_NAME: &'static str = "KarrasScheduler";
     const DESCRIPTION: &'static str = "";
@@ -293,6 +339,14 @@ impl<
             },
         }
     }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("steps".to_string(), self.steps.to_workflow_input());
+        output.insert("sigma_max".to_string(), self.sigma_max.to_workflow_input());
+        output.insert("sigma_min".to_string(), self.sigma_min.to_workflow_input());
+        output.insert("rho".to_string(), self.rho.to_workflow_input());
+        output
+    }
     const NAME: &'static str = "PolyexponentialScheduler";
     const DISPLAY_NAME: &'static str = "PolyexponentialScheduler";
     const DESCRIPTION: &'static str = "";
@@ -324,6 +378,13 @@ impl<
                 node_slot: 0u32,
             },
         }
+    }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("model".to_string(), self.model.to_workflow_input());
+        output.insert("steps".to_string(), self.steps.to_workflow_input());
+        output.insert("denoise".to_string(), self.denoise.to_workflow_input());
+        output
     }
     const NAME: &'static str = "SDTurboScheduler";
     const DISPLAY_NAME: &'static str = "SDTurboScheduler";
@@ -360,6 +421,14 @@ impl<
                 node_slot: 0u32,
             },
         }
+    }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("steps".to_string(), self.steps.to_workflow_input());
+        output.insert("beta_d".to_string(), self.beta_d.to_workflow_input());
+        output.insert("beta_min".to_string(), self.beta_min.to_workflow_input());
+        output.insert("eps_s".to_string(), self.eps_s.to_workflow_input());
+        output
     }
     const NAME: &'static str = "VPScheduler";
     const DISPLAY_NAME: &'static str = "VPScheduler";

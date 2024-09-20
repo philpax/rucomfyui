@@ -1,6 +1,7 @@
 //!`image` definitions/categories.
 #![allow(unused_imports)]
-use crate::workflow::WorkflowNodeId;
+use std::collections::HashMap;
+use crate::workflow::{WorkflowNodeId, WorkflowInput};
 pub mod animation;
 pub mod batch;
 pub mod postprocessing;
@@ -87,6 +88,14 @@ impl<
             },
         }
     }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("width".to_string(), self.width.to_workflow_input());
+        output.insert("height".to_string(), self.height.to_workflow_input());
+        output.insert("batch_size".to_string(), self.batch_size.to_workflow_input());
+        output.insert("color".to_string(), self.color.to_workflow_input());
+        output
+    }
     const NAME: &'static str = "EmptyImage";
     const DISPLAY_NAME: &'static str = "EmptyImage";
     const DESCRIPTION: &'static str = "";
@@ -114,6 +123,12 @@ impl<
                 node_slot: 0u32,
             },
         }
+    }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("image_1".to_string(), self.image_1.to_workflow_input());
+        output.insert("image_2".to_string(), self.image_2.to_workflow_input());
+        output
     }
     const NAME: &'static str = "ImageBatch";
     const DISPLAY_NAME: &'static str = "Batch Images";
@@ -160,6 +175,19 @@ for ImageCompositeMasked<Destination, Source, X, Y, ResizeSource, Mask> {
             },
         }
     }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("destination".to_string(), self.destination.to_workflow_input());
+        output.insert("source".to_string(), self.source.to_workflow_input());
+        output.insert("x".to_string(), self.x.to_workflow_input());
+        output.insert("y".to_string(), self.y.to_workflow_input());
+        output
+            .insert("resize_source".to_string(), self.resize_source.to_workflow_input());
+        if let Some(v) = &self.mask {
+            output.insert("mask".to_string(), v.to_workflow_input());
+        }
+        output
+    }
     const NAME: &'static str = "ImageCompositeMasked";
     const DISPLAY_NAME: &'static str = "ImageCompositeMasked";
     const DESCRIPTION: &'static str = "";
@@ -179,6 +207,11 @@ impl<Image: crate::nodes::types::Image> crate::nodes::TypedNode for ImageInvert<
                 node_slot: 0u32,
             },
         }
+    }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("image".to_string(), self.image.to_workflow_input());
+        output
     }
     const NAME: &'static str = "ImageInvert";
     const DISPLAY_NAME: &'static str = "Invert Image";
@@ -229,6 +262,16 @@ for ImagePadForOutpaint<Image, Left, Top, Right, Bottom, Feathering> {
             },
         }
     }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("image".to_string(), self.image.to_workflow_input());
+        output.insert("left".to_string(), self.left.to_workflow_input());
+        output.insert("top".to_string(), self.top.to_workflow_input());
+        output.insert("right".to_string(), self.right.to_workflow_input());
+        output.insert("bottom".to_string(), self.bottom.to_workflow_input());
+        output.insert("feathering".to_string(), self.feathering.to_workflow_input());
+        output
+    }
     const NAME: &'static str = "ImagePadForOutpaint";
     const DISPLAY_NAME: &'static str = "Pad Image for Outpainting";
     const DESCRIPTION: &'static str = "";
@@ -253,6 +296,11 @@ impl<Image: crate::nodes::types::String> crate::nodes::TypedNode for LoadImage<I
             },
         }
     }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("image".to_string(), self.image.to_workflow_input());
+        output
+    }
     const NAME: &'static str = "LoadImage";
     const DISPLAY_NAME: &'static str = "Load Image";
     const DESCRIPTION: &'static str = "";
@@ -267,6 +315,11 @@ impl<Images: crate::nodes::types::Image> crate::nodes::TypedNode
 for PreviewImage<Images> {
     type Output = ();
     fn output(&self, _node_id: WorkflowNodeId) -> Self::Output {}
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("images".to_string(), self.images.to_workflow_input());
+        output
+    }
     const NAME: &'static str = "PreviewImage";
     const DISPLAY_NAME: &'static str = "Preview Image";
     const DESCRIPTION: &'static str = "Saves the input images to your ComfyUI output directory.";
@@ -290,6 +343,16 @@ impl<
 > crate::nodes::TypedNode for SaveImage<Images, FilenamePrefix> {
     type Output = ();
     fn output(&self, _node_id: WorkflowNodeId) -> Self::Output {}
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("images".to_string(), self.images.to_workflow_input());
+        output
+            .insert(
+                "filename_prefix".to_string(),
+                self.filename_prefix.to_workflow_input(),
+            );
+        output
+    }
     const NAME: &'static str = "SaveImage";
     const DISPLAY_NAME: &'static str = "Save Image";
     const DESCRIPTION: &'static str = "Saves the input images to your ComfyUI output directory.";
@@ -329,6 +392,18 @@ impl<
                 node_slot: 0u32,
             },
         }
+    }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("image".to_string(), self.image.to_workflow_input());
+        output.insert("width".to_string(), self.width.to_workflow_input());
+        output.insert("height".to_string(), self.height.to_workflow_input());
+        output
+            .insert(
+                "capture_on_queue".to_string(),
+                self.capture_on_queue.to_workflow_input(),
+            );
+        output
     }
     const NAME: &'static str = "WebcamCapture";
     const DISPLAY_NAME: &'static str = "Webcam Capture";

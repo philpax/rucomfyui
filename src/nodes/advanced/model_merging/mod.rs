@@ -1,6 +1,7 @@
 //!`model_merging` definitions/categories.
 #![allow(unused_imports)]
-use crate::workflow::WorkflowNodeId;
+use std::collections::HashMap;
+use crate::workflow::{WorkflowNodeId, WorkflowInput};
 pub mod model_specific;
 /// Output types for nodes.
 pub mod out {
@@ -70,6 +71,12 @@ impl<
             },
         }
     }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("clip_1".to_string(), self.clip_1.to_workflow_input());
+        output.insert("clip_2".to_string(), self.clip_2.to_workflow_input());
+        output
+    }
     const NAME: &'static str = "CLIPMergeAdd";
     const DISPLAY_NAME: &'static str = "CLIPMergeAdd";
     const DESCRIPTION: &'static str = "";
@@ -101,6 +108,13 @@ impl<
                 node_slot: 0u32,
             },
         }
+    }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("clip_1".to_string(), self.clip_1.to_workflow_input());
+        output.insert("clip_2".to_string(), self.clip_2.to_workflow_input());
+        output.insert("ratio".to_string(), self.ratio.to_workflow_input());
+        output
     }
     const NAME: &'static str = "CLIPMergeSimple";
     const DISPLAY_NAME: &'static str = "CLIPMergeSimple";
@@ -134,6 +148,13 @@ impl<
             },
         }
     }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("clip_1".to_string(), self.clip_1.to_workflow_input());
+        output.insert("clip_2".to_string(), self.clip_2.to_workflow_input());
+        output.insert("multiplier".to_string(), self.multiplier.to_workflow_input());
+        output
+    }
     const NAME: &'static str = "CLIPMergeSubtract";
     const DISPLAY_NAME: &'static str = "CLIPMergeSubtract";
     const DESCRIPTION: &'static str = "";
@@ -155,6 +176,16 @@ impl<
 > crate::nodes::TypedNode for ClipSave<Clip, FilenamePrefix> {
     type Output = ();
     fn output(&self, _node_id: WorkflowNodeId) -> Self::Output {}
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("clip".to_string(), self.clip.to_workflow_input());
+        output
+            .insert(
+                "filename_prefix".to_string(),
+                self.filename_prefix.to_workflow_input(),
+            );
+        output
+    }
     const NAME: &'static str = "CLIPSave";
     const DISPLAY_NAME: &'static str = "CLIPSave";
     const DESCRIPTION: &'static str = "";
@@ -188,6 +219,18 @@ impl<
 > crate::nodes::TypedNode for CheckpointSave<Model, Clip, Vae, FilenamePrefix> {
     type Output = ();
     fn output(&self, _node_id: WorkflowNodeId) -> Self::Output {}
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("model".to_string(), self.model.to_workflow_input());
+        output.insert("clip".to_string(), self.clip.to_workflow_input());
+        output.insert("vae".to_string(), self.vae.to_workflow_input());
+        output
+            .insert(
+                "filename_prefix".to_string(),
+                self.filename_prefix.to_workflow_input(),
+            );
+        output
+    }
     const NAME: &'static str = "CheckpointSave";
     const DISPLAY_NAME: &'static str = "Save Checkpoint";
     const DESCRIPTION: &'static str = "";
@@ -221,6 +264,12 @@ impl<
                 node_slot: 0u32,
             },
         }
+    }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("model_1".to_string(), self.model_1.to_workflow_input());
+        output.insert("model_2".to_string(), self.model_2.to_workflow_input());
+        output
     }
     const NAME: &'static str = "ModelMergeAdd";
     const DISPLAY_NAME: &'static str = "ModelMergeAdd";
@@ -262,6 +311,15 @@ impl<
             },
         }
     }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("model_1".to_string(), self.model_1.to_workflow_input());
+        output.insert("model_2".to_string(), self.model_2.to_workflow_input());
+        output.insert("input".to_string(), self.input.to_workflow_input());
+        output.insert("middle".to_string(), self.middle.to_workflow_input());
+        output.insert("out".to_string(), self.out.to_workflow_input());
+        output
+    }
     const NAME: &'static str = "ModelMergeBlocks";
     const DISPLAY_NAME: &'static str = "ModelMergeBlocks";
     const DESCRIPTION: &'static str = "";
@@ -293,6 +351,13 @@ impl<
                 node_slot: 0u32,
             },
         }
+    }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("model_1".to_string(), self.model_1.to_workflow_input());
+        output.insert("model_2".to_string(), self.model_2.to_workflow_input());
+        output.insert("ratio".to_string(), self.ratio.to_workflow_input());
+        output
     }
     const NAME: &'static str = "ModelMergeSimple";
     const DISPLAY_NAME: &'static str = "ModelMergeSimple";
@@ -326,6 +391,13 @@ impl<
             },
         }
     }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("model_1".to_string(), self.model_1.to_workflow_input());
+        output.insert("model_2".to_string(), self.model_2.to_workflow_input());
+        output.insert("multiplier".to_string(), self.multiplier.to_workflow_input());
+        output
+    }
     const NAME: &'static str = "ModelMergeSubtract";
     const DISPLAY_NAME: &'static str = "ModelMergeSubtract";
     const DESCRIPTION: &'static str = "";
@@ -347,6 +419,16 @@ impl<
 > crate::nodes::TypedNode for ModelSave<Model, FilenamePrefix> {
     type Output = ();
     fn output(&self, _node_id: WorkflowNodeId) -> Self::Output {}
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("model".to_string(), self.model.to_workflow_input());
+        output
+            .insert(
+                "filename_prefix".to_string(),
+                self.filename_prefix.to_workflow_input(),
+            );
+        output
+    }
     const NAME: &'static str = "ModelSave";
     const DISPLAY_NAME: &'static str = "ModelSave";
     const DESCRIPTION: &'static str = "";
@@ -372,6 +454,16 @@ impl<
 > crate::nodes::TypedNode for VaeSave<Vae, FilenamePrefix> {
     type Output = ();
     fn output(&self, _node_id: WorkflowNodeId) -> Self::Output {}
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("vae".to_string(), self.vae.to_workflow_input());
+        output
+            .insert(
+                "filename_prefix".to_string(),
+                self.filename_prefix.to_workflow_input(),
+            );
+        output
+    }
     const NAME: &'static str = "VAESave";
     const DISPLAY_NAME: &'static str = "VAESave";
     const DESCRIPTION: &'static str = "";

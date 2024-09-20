@@ -142,6 +142,8 @@ fn write_category_tree_root(root: &CategoryTree, directory: &Path) -> Result<()>
         pub mod all;
         pub mod types;
 
+        use std::collections::HashMap;
+
         use crate::workflow::{WorkflowNodeId, WorkflowInput};
 
         /// Implemented for all typed nodes; provides the node's output and metadata.
@@ -150,6 +152,9 @@ fn write_category_tree_root(root: &CategoryTree, directory: &Path) -> Result<()>
             type Output;
             /// Returns the node's output.
             fn output(&self, node_id: WorkflowNodeId) -> Self::Output;
+
+            /// Returns the inputs for this node after conversion to [`WorkflowInput`].
+            fn inputs(&self) -> HashMap<String, WorkflowInput>;
 
             /// The name of the node.
             const NAME: &'static str;
@@ -255,7 +260,9 @@ fn write_category_tree((name, tree): (&str, &CategoryTree), directory: &Path) ->
         #![doc = #doc]
         #![allow(unused_imports)]
 
-        use crate::workflow::WorkflowNodeId;
+        use std::collections::HashMap;
+
+        use crate::workflow::{WorkflowNodeId, WorkflowInput};
 
         #(#modules)*
 
@@ -293,7 +300,7 @@ fn write_node(
 }
 
 struct ProcessedInput<'a> {
-    name: &'a str,
+    name: syn::Ident,
     tooltip: Option<&'a str>,
     ty: ObjectType,
     generic_name: syn::Ident,
@@ -308,7 +315,7 @@ fn node_processed_inputs(node: &Object) -> Result<Vec<ProcessedInput>> {
     ) -> Option<ProcessedInput<'a>> {
         let ty = input.as_type()?;
         Some(ProcessedInput {
-            name,
+            name: util::name_to_ident(name, false).ok()?,
             tooltip: input.tooltip(),
             ty: ty.clone(),
             generic_name: util::name_to_ident(name, true).ok()?,
@@ -367,7 +374,7 @@ fn write_node_struct(
     let fields = processed_inputs
         .iter()
         .map(|input| {
-            let name = util::name_to_ident(input.name, false)?;
+            let name = &input.name;
             let generic_name = &input.generic_name;
             let doc = input.tooltip.unwrap_or("No documentation.");
             let ty = if input.optional {
@@ -476,6 +483,51 @@ fn write_node_trait_impl(
         }
     });
 
+    let input_section = {
+        if processed_inputs.is_empty() {
+            quote! {
+                fn inputs(&self) -> HashMap<String, WorkflowInput> {
+                    HashMap::default()
+                }
+            }
+        } else {
+            let required_workflow_inputs = processed_inputs
+                .iter()
+                .filter(|input| !input.optional)
+                .map(|input| {
+                    let name = &input.name;
+                    let name_str = name.to_string();
+                    Ok(quote! {
+                        output.insert(#name_str.to_string(), self.#name.to_workflow_input());
+                    })
+                })
+                .collect::<Result<Vec<_>>>()?;
+
+            let optional_workflow_inputs = processed_inputs
+                .iter()
+                .filter(|input| input.optional)
+                .map(|input| {
+                    let name = &input.name;
+                    let name_str = name.to_string();
+                    Ok(quote! {
+                        if let Some(v) = &self.#name {
+                            output.insert(#name_str.to_string(), v.to_workflow_input());
+                        }
+                    })
+                })
+                .collect::<Result<Vec<_>>>()?;
+
+            quote! {
+                fn inputs(&self) -> HashMap<String, WorkflowInput> {
+                    let mut output = HashMap::default();
+                    #(#required_workflow_inputs)*
+                    #(#optional_workflow_inputs)*
+                    output
+                }
+            }
+        }
+    };
+
     Ok(quote! {
         impl
             < #(#generic_list),* >
@@ -485,6 +537,7 @@ fn write_node_trait_impl(
             < #(#generic_instantiation_list),* >
         {
             #output_section
+            #input_section
 
             const NAME: &'static str = #node_name;
             const DISPLAY_NAME: &'static str = #display_name;

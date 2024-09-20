@@ -1,6 +1,7 @@
 //!`style_model` definitions/categories.
 #![allow(unused_imports)]
-use crate::workflow::WorkflowNodeId;
+use std::collections::HashMap;
+use crate::workflow::{WorkflowNodeId, WorkflowInput};
 /// Output types for nodes.
 pub mod out {
     ///Output for [`StyleModelApply`](super::StyleModelApply).
@@ -37,6 +38,17 @@ for StyleModelApply<Conditioning, StyleModel, ClipVisionOutput> {
                 node_slot: 0u32,
             },
         }
+    }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("conditioning".to_string(), self.conditioning.to_workflow_input());
+        output.insert("style_model".to_string(), self.style_model.to_workflow_input());
+        output
+            .insert(
+                "clip_vision_output".to_string(),
+                self.clip_vision_output.to_workflow_input(),
+            );
+        output
     }
     const NAME: &'static str = "StyleModelApply";
     const DISPLAY_NAME: &'static str = "Apply Style Model";

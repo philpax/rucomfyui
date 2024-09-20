@@ -1,6 +1,7 @@
 //!`inpaint` definitions/categories.
 #![allow(unused_imports)]
-use crate::workflow::WorkflowNodeId;
+use std::collections::HashMap;
+use crate::workflow::{WorkflowNodeId, WorkflowInput};
 /// Output types for nodes.
 pub mod out {
     ///Output for [`SetLatentNoiseMask`](super::SetLatentNoiseMask).
@@ -39,6 +40,12 @@ impl<
             },
         }
     }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("samples".to_string(), self.samples.to_workflow_input());
+        output.insert("mask".to_string(), self.mask.to_workflow_input());
+        output
+    }
     const NAME: &'static str = "SetLatentNoiseMask";
     const DISPLAY_NAME: &'static str = "Set Latent Noise Mask";
     const DESCRIPTION: &'static str = "";
@@ -74,6 +81,14 @@ impl<
                 node_slot: 0u32,
             },
         }
+    }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("pixels".to_string(), self.pixels.to_workflow_input());
+        output.insert("vae".to_string(), self.vae.to_workflow_input());
+        output.insert("mask".to_string(), self.mask.to_workflow_input());
+        output.insert("grow_mask_by".to_string(), self.grow_mask_by.to_workflow_input());
+        output
     }
     const NAME: &'static str = "VAEEncodeForInpaint";
     const DISPLAY_NAME: &'static str = "VAE Encode (for Inpainting)";

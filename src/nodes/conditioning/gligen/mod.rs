@@ -1,6 +1,7 @@
 //!`gligen` definitions/categories.
 #![allow(unused_imports)]
-use crate::workflow::WorkflowNodeId;
+use std::collections::HashMap;
+use crate::workflow::{WorkflowNodeId, WorkflowInput};
 /// Output types for nodes.
 pub mod out {
     ///Output for [`GligenTextBoxApply`](super::GligenTextBoxApply).
@@ -66,6 +67,26 @@ for GligenTextBoxApply<
                 node_slot: 0u32,
             },
         }
+    }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output
+            .insert(
+                "conditioning_to".to_string(),
+                self.conditioning_to.to_workflow_input(),
+            );
+        output.insert("clip".to_string(), self.clip.to_workflow_input());
+        output
+            .insert(
+                "gligen_textbox_model".to_string(),
+                self.gligen_textbox_model.to_workflow_input(),
+            );
+        output.insert("text".to_string(), self.text.to_workflow_input());
+        output.insert("width".to_string(), self.width.to_workflow_input());
+        output.insert("height".to_string(), self.height.to_workflow_input());
+        output.insert("x".to_string(), self.x.to_workflow_input());
+        output.insert("y".to_string(), self.y.to_workflow_input());
+        output
     }
     const NAME: &'static str = "GLIGENTextBoxApply";
     const DISPLAY_NAME: &'static str = "GLIGENTextBoxApply";

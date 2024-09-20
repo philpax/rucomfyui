@@ -1,6 +1,7 @@
 //!`advanced` definitions/categories.
 #![allow(unused_imports)]
-use crate::workflow::WorkflowNodeId;
+use std::collections::HashMap;
+use crate::workflow::{WorkflowNodeId, WorkflowInput};
 /// Output types for nodes.
 pub mod out {
     ///Output for [`LatentAdd`](super::LatentAdd).
@@ -57,6 +58,12 @@ impl<
             },
         }
     }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("samples_1".to_string(), self.samples_1.to_workflow_input());
+        output.insert("samples_2".to_string(), self.samples_2.to_workflow_input());
+        output
+    }
     const NAME: &'static str = "LatentAdd";
     const DISPLAY_NAME: &'static str = "LatentAdd";
     const DESCRIPTION: &'static str = "";
@@ -84,6 +91,13 @@ impl<
                 node_slot: 0u32,
             },
         }
+    }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("samples".to_string(), self.samples.to_workflow_input());
+        output
+            .insert("seed_behavior".to_string(), self.seed_behavior.to_workflow_input());
+        output
     }
     const NAME: &'static str = "LatentBatchSeedBehavior";
     const DISPLAY_NAME: &'static str = "LatentBatchSeedBehavior";
@@ -117,6 +131,13 @@ impl<
             },
         }
     }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("samples_1".to_string(), self.samples_1.to_workflow_input());
+        output.insert("samples_2".to_string(), self.samples_2.to_workflow_input());
+        output.insert("ratio".to_string(), self.ratio.to_workflow_input());
+        output
+    }
     const NAME: &'static str = "LatentInterpolate";
     const DISPLAY_NAME: &'static str = "LatentInterpolate";
     const DESCRIPTION: &'static str = "";
@@ -145,6 +166,12 @@ impl<
             },
         }
     }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("samples".to_string(), self.samples.to_workflow_input());
+        output.insert("multiplier".to_string(), self.multiplier.to_workflow_input());
+        output
+    }
     const NAME: &'static str = "LatentMultiply";
     const DISPLAY_NAME: &'static str = "LatentMultiply";
     const DESCRIPTION: &'static str = "";
@@ -172,6 +199,12 @@ impl<
                 node_slot: 0u32,
             },
         }
+    }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("samples_1".to_string(), self.samples_1.to_workflow_input());
+        output.insert("samples_2".to_string(), self.samples_2.to_workflow_input());
+        output
     }
     const NAME: &'static str = "LatentSubtract";
     const DISPLAY_NAME: &'static str = "LatentSubtract";

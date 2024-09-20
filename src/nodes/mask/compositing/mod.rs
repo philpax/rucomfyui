@@ -1,6 +1,7 @@
 //!`compositing` definitions/categories.
 #![allow(unused_imports)]
-use crate::workflow::WorkflowNodeId;
+use std::collections::HashMap;
+use crate::workflow::{WorkflowNodeId, WorkflowInput};
 /// Output types for nodes.
 pub mod out {
     ///Output for [`JoinImageWithAlpha`](super::JoinImageWithAlpha).
@@ -49,6 +50,12 @@ impl<
             },
         }
     }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("image".to_string(), self.image.to_workflow_input());
+        output.insert("alpha".to_string(), self.alpha.to_workflow_input());
+        output
+    }
     const NAME: &'static str = "JoinImageWithAlpha";
     const DISPLAY_NAME: &'static str = "Join Image with Alpha";
     const DESCRIPTION: &'static str = "";
@@ -94,6 +101,19 @@ for PorterDuffImageComposite<Source, SourceAlpha, Destination, DestinationAlpha,
             },
         }
     }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("source".to_string(), self.source.to_workflow_input());
+        output.insert("source_alpha".to_string(), self.source_alpha.to_workflow_input());
+        output.insert("destination".to_string(), self.destination.to_workflow_input());
+        output
+            .insert(
+                "destination_alpha".to_string(),
+                self.destination_alpha.to_workflow_input(),
+            );
+        output.insert("mode".to_string(), self.mode.to_workflow_input());
+        output
+    }
     const NAME: &'static str = "PorterDuffImageComposite";
     const DISPLAY_NAME: &'static str = "Porter-Duff Image Composite";
     const DESCRIPTION: &'static str = "";
@@ -118,6 +138,11 @@ for SplitImageWithAlpha<Image> {
                 node_slot: 1u32,
             },
         }
+    }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("image".to_string(), self.image.to_workflow_input());
+        output
     }
     const NAME: &'static str = "SplitImageWithAlpha";
     const DISPLAY_NAME: &'static str = "Split Image with Alpha";

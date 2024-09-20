@@ -1,6 +1,7 @@
 //!`mask` definitions/categories.
 #![allow(unused_imports)]
-use crate::workflow::WorkflowNodeId;
+use std::collections::HashMap;
+use crate::workflow::{WorkflowNodeId, WorkflowInput};
 pub mod compositing;
 /// Output types for nodes.
 pub mod out {
@@ -106,6 +107,15 @@ impl<
             },
         }
     }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("mask".to_string(), self.mask.to_workflow_input());
+        output.insert("x".to_string(), self.x.to_workflow_input());
+        output.insert("y".to_string(), self.y.to_workflow_input());
+        output.insert("width".to_string(), self.width.to_workflow_input());
+        output.insert("height".to_string(), self.height.to_workflow_input());
+        output
+    }
     const NAME: &'static str = "CropMask";
     const DISPLAY_NAME: &'static str = "CropMask";
     const DESCRIPTION: &'static str = "";
@@ -146,6 +156,15 @@ impl<
             },
         }
     }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("mask".to_string(), self.mask.to_workflow_input());
+        output.insert("left".to_string(), self.left.to_workflow_input());
+        output.insert("top".to_string(), self.top.to_workflow_input());
+        output.insert("right".to_string(), self.right.to_workflow_input());
+        output.insert("bottom".to_string(), self.bottom.to_workflow_input());
+        output
+    }
     const NAME: &'static str = "FeatherMask";
     const DISPLAY_NAME: &'static str = "FeatherMask";
     const DESCRIPTION: &'static str = "";
@@ -178,6 +197,17 @@ impl<
             },
         }
     }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("mask".to_string(), self.mask.to_workflow_input());
+        output.insert("expand".to_string(), self.expand.to_workflow_input());
+        output
+            .insert(
+                "tapered_corners".to_string(),
+                self.tapered_corners.to_workflow_input(),
+            );
+        output
+    }
     const NAME: &'static str = "GrowMask";
     const DISPLAY_NAME: &'static str = "GrowMask";
     const DESCRIPTION: &'static str = "";
@@ -205,6 +235,12 @@ impl<
                 node_slot: 0u32,
             },
         }
+    }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("image".to_string(), self.image.to_workflow_input());
+        output.insert("color".to_string(), self.color.to_workflow_input());
+        output
     }
     const NAME: &'static str = "ImageColorToMask";
     const DISPLAY_NAME: &'static str = "ImageColorToMask";
@@ -234,6 +270,12 @@ impl<
             },
         }
     }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("image".to_string(), self.image.to_workflow_input());
+        output.insert("channel".to_string(), self.channel.to_workflow_input());
+        output
+    }
     const NAME: &'static str = "ImageToMask";
     const DISPLAY_NAME: &'static str = "Convert Image to Mask";
     const DESCRIPTION: &'static str = "";
@@ -253,6 +295,11 @@ impl<Mask: crate::nodes::types::Mask> crate::nodes::TypedNode for InvertMask<Mas
                 node_slot: 0u32,
             },
         }
+    }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("mask".to_string(), self.mask.to_workflow_input());
+        output
     }
     const NAME: &'static str = "InvertMask";
     const DISPLAY_NAME: &'static str = "InvertMask";
@@ -281,6 +328,12 @@ impl<
                 node_slot: 0u32,
             },
         }
+    }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("image".to_string(), self.image.to_workflow_input());
+        output.insert("channel".to_string(), self.channel.to_workflow_input());
+        output
     }
     const NAME: &'static str = "LoadImageMask";
     const DISPLAY_NAME: &'static str = "Load Image (as Mask)";
@@ -322,6 +375,15 @@ impl<
             },
         }
     }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("destination".to_string(), self.destination.to_workflow_input());
+        output.insert("source".to_string(), self.source.to_workflow_input());
+        output.insert("x".to_string(), self.x.to_workflow_input());
+        output.insert("y".to_string(), self.y.to_workflow_input());
+        output.insert("operation".to_string(), self.operation.to_workflow_input());
+        output
+    }
     const NAME: &'static str = "MaskComposite";
     const DISPLAY_NAME: &'static str = "MaskComposite";
     const DESCRIPTION: &'static str = "";
@@ -341,6 +403,11 @@ impl<Mask: crate::nodes::types::Mask> crate::nodes::TypedNode for MaskToImage<Ma
                 node_slot: 0u32,
             },
         }
+    }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("mask".to_string(), self.mask.to_workflow_input());
+        output
     }
     const NAME: &'static str = "MaskToImage";
     const DISPLAY_NAME: &'static str = "Convert Mask to Image";
@@ -374,6 +441,13 @@ impl<
             },
         }
     }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("value".to_string(), self.value.to_workflow_input());
+        output.insert("width".to_string(), self.width.to_workflow_input());
+        output.insert("height".to_string(), self.height.to_workflow_input());
+        output
+    }
     const NAME: &'static str = "SolidMask";
     const DISPLAY_NAME: &'static str = "SolidMask";
     const DESCRIPTION: &'static str = "";
@@ -401,6 +475,12 @@ impl<
                 node_slot: 0u32,
             },
         }
+    }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("mask".to_string(), self.mask.to_workflow_input());
+        output.insert("value".to_string(), self.value.to_workflow_input());
+        output
     }
     const NAME: &'static str = "ThresholdMask";
     const DISPLAY_NAME: &'static str = "ThresholdMask";
