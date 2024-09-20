@@ -3,6 +3,7 @@
 use std::collections::HashMap;
 use crate::workflow::{WorkflowNodeId, WorkflowInput};
 ///**GLIGENTextBoxApply**: No description.
+#[derive(Clone)]
 pub struct GligenTextBoxApply<
     ConditioningTo: crate::nodes::types::Conditioning,
     Clip: crate::nodes::types::Clip,
@@ -102,21 +103,18 @@ for GligenTextBoxApply<
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
         output
-            .insert(
-                "conditioning_to".to_string(),
-                self.conditioning_to.to_workflow_input(),
-            );
-        output.insert("clip".to_string(), self.clip.to_workflow_input());
+            .insert("conditioning_to".to_string(), self.conditioning_to.clone().into());
+        output.insert("clip".to_string(), self.clip.clone().into());
         output
             .insert(
                 "gligen_textbox_model".to_string(),
-                self.gligen_textbox_model.to_workflow_input(),
+                self.gligen_textbox_model.clone().into(),
             );
-        output.insert("text".to_string(), self.text.to_workflow_input());
-        output.insert("width".to_string(), self.width.to_workflow_input());
-        output.insert("height".to_string(), self.height.to_workflow_input());
-        output.insert("x".to_string(), self.x.to_workflow_input());
-        output.insert("y".to_string(), self.y.to_workflow_input());
+        output.insert("text".to_string(), self.text.clone().into());
+        output.insert("width".to_string(), self.width.clone().into());
+        output.insert("height".to_string(), self.height.clone().into());
+        output.insert("x".to_string(), self.x.clone().into());
+        output.insert("y".to_string(), self.y.clone().into());
         output
     }
     const NAME: &'static str = "GLIGENTextBoxApply";

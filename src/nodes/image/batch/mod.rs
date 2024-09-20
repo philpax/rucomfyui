@@ -3,6 +3,7 @@
 use std::collections::HashMap;
 use crate::workflow::{WorkflowNodeId, WorkflowInput};
 ///**ImageFromBatch**: No description.
+#[derive(Clone)]
 pub struct ImageFromBatch<
     Image: crate::nodes::types::Image,
     BatchIndex: crate::nodes::types::Int,
@@ -39,9 +40,9 @@ impl<
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
-        output.insert("image".to_string(), self.image.to_workflow_input());
-        output.insert("batch_index".to_string(), self.batch_index.to_workflow_input());
-        output.insert("length".to_string(), self.length.to_workflow_input());
+        output.insert("image".to_string(), self.image.clone().into());
+        output.insert("batch_index".to_string(), self.batch_index.clone().into());
+        output.insert("length".to_string(), self.length.clone().into());
         output
     }
     const NAME: &'static str = "ImageFromBatch";
@@ -50,6 +51,7 @@ impl<
     const CATEGORY: &'static str = "image/batch";
 }
 ///**Rebatch Images**: No description.
+#[derive(Clone)]
 pub struct RebatchImages<
     Images: crate::nodes::types::Image,
     BatchSize: crate::nodes::types::Int,
@@ -81,8 +83,8 @@ impl<
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
-        output.insert("images".to_string(), self.images.to_workflow_input());
-        output.insert("batch_size".to_string(), self.batch_size.to_workflow_input());
+        output.insert("images".to_string(), self.images.clone().into());
+        output.insert("batch_size".to_string(), self.batch_size.clone().into());
         output
     }
     const NAME: &'static str = "RebatchImages";
@@ -91,6 +93,7 @@ impl<
     const CATEGORY: &'static str = "image/batch";
 }
 ///**RepeatImageBatch**: No description.
+#[derive(Clone)]
 pub struct RepeatImageBatch<
     Image: crate::nodes::types::Image,
     Amount: crate::nodes::types::Int,
@@ -122,8 +125,8 @@ impl<
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
-        output.insert("image".to_string(), self.image.to_workflow_input());
-        output.insert("amount".to_string(), self.amount.to_workflow_input());
+        output.insert("image".to_string(), self.image.clone().into());
+        output.insert("amount".to_string(), self.amount.clone().into());
         output
     }
     const NAME: &'static str = "RepeatImageBatch";

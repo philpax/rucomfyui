@@ -3,6 +3,7 @@
 use std::collections::HashMap;
 use crate::workflow::{WorkflowNodeId, WorkflowInput};
 ///**Set Latent Noise Mask**: No description.
+#[derive(Clone)]
 pub struct SetLatentNoiseMask<
     Samples: crate::nodes::types::Latent,
     Mask: crate::nodes::types::Mask,
@@ -34,8 +35,8 @@ impl<
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
-        output.insert("samples".to_string(), self.samples.to_workflow_input());
-        output.insert("mask".to_string(), self.mask.to_workflow_input());
+        output.insert("samples".to_string(), self.samples.clone().into());
+        output.insert("mask".to_string(), self.mask.clone().into());
         output
     }
     const NAME: &'static str = "SetLatentNoiseMask";
@@ -44,6 +45,7 @@ impl<
     const CATEGORY: &'static str = "latent/inpaint";
 }
 ///**VAE Encode (for Inpainting)**: No description.
+#[derive(Clone)]
 pub struct VaeEncodeForInpaint<
     Pixels: crate::nodes::types::Image,
     Vae: crate::nodes::types::Vae,
@@ -90,10 +92,10 @@ impl<
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
-        output.insert("pixels".to_string(), self.pixels.to_workflow_input());
-        output.insert("vae".to_string(), self.vae.to_workflow_input());
-        output.insert("mask".to_string(), self.mask.to_workflow_input());
-        output.insert("grow_mask_by".to_string(), self.grow_mask_by.to_workflow_input());
+        output.insert("pixels".to_string(), self.pixels.clone().into());
+        output.insert("vae".to_string(), self.vae.clone().into());
+        output.insert("mask".to_string(), self.mask.clone().into());
+        output.insert("grow_mask_by".to_string(), self.grow_mask_by.clone().into());
         output
     }
     const NAME: &'static str = "VAEEncodeForInpaint";

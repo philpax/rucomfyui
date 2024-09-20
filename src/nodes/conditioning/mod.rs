@@ -12,6 +12,7 @@ pub mod style_model;
 pub mod upscale_diffusion;
 pub mod video_models;
 ///**CLIP Set Last Layer**: No description.
+#[derive(Clone)]
 pub struct ClipSetLastLayer<
     Clip: crate::nodes::types::Clip,
     StopAtClipLayer: crate::nodes::types::Int,
@@ -43,11 +44,11 @@ impl<
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
-        output.insert("clip".to_string(), self.clip.to_workflow_input());
+        output.insert("clip".to_string(), self.clip.clone().into());
         output
             .insert(
                 "stop_at_clip_layer".to_string(),
-                self.stop_at_clip_layer.to_workflow_input(),
+                self.stop_at_clip_layer.clone().into(),
             );
         output
     }
@@ -57,6 +58,7 @@ impl<
     const CATEGORY: &'static str = "conditioning";
 }
 ///**CLIP Text Encode (Prompt)**: Encodes a text prompt using a CLIP model into an embedding that can be used to guide the diffusion model towards generating specific images.
+#[derive(Clone)]
 pub struct ClipTextEncode<
     Text: crate::nodes::types::String,
     Clip: crate::nodes::types::Clip,
@@ -88,8 +90,8 @@ impl<
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
-        output.insert("text".to_string(), self.text.to_workflow_input());
-        output.insert("clip".to_string(), self.clip.to_workflow_input());
+        output.insert("text".to_string(), self.text.clone().into());
+        output.insert("clip".to_string(), self.clip.clone().into());
         output
     }
     const NAME: &'static str = "CLIPTextEncode";
@@ -98,6 +100,7 @@ impl<
     const CATEGORY: &'static str = "conditioning";
 }
 ///**CLIP Vision Encode**: No description.
+#[derive(Clone)]
 pub struct ClipVisionEncode<
     ClipVision: crate::nodes::types::ClipVision,
     Image: crate::nodes::types::Image,
@@ -129,8 +132,8 @@ impl<
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
-        output.insert("clip_vision".to_string(), self.clip_vision.to_workflow_input());
-        output.insert("image".to_string(), self.image.to_workflow_input());
+        output.insert("clip_vision".to_string(), self.clip_vision.clone().into());
+        output.insert("image".to_string(), self.image.clone().into());
         output
     }
     const NAME: &'static str = "CLIPVisionEncode";
@@ -139,6 +142,7 @@ impl<
     const CATEGORY: &'static str = "conditioning";
 }
 ///**ConditioningAverage**: No description.
+#[derive(Clone)]
 pub struct ConditioningAverage<
     ConditioningTo: crate::nodes::types::Conditioning,
     ConditioningFrom: crate::nodes::types::Conditioning,
@@ -185,19 +189,16 @@ for ConditioningAverage<ConditioningTo, ConditioningFrom, ConditioningToStrength
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
         output
-            .insert(
-                "conditioning_to".to_string(),
-                self.conditioning_to.to_workflow_input(),
-            );
+            .insert("conditioning_to".to_string(), self.conditioning_to.clone().into());
         output
             .insert(
                 "conditioning_from".to_string(),
-                self.conditioning_from.to_workflow_input(),
+                self.conditioning_from.clone().into(),
             );
         output
             .insert(
                 "conditioning_to_strength".to_string(),
-                self.conditioning_to_strength.to_workflow_input(),
+                self.conditioning_to_strength.clone().into(),
             );
         output
     }
@@ -207,6 +208,7 @@ for ConditioningAverage<ConditioningTo, ConditioningFrom, ConditioningToStrength
     const CATEGORY: &'static str = "conditioning";
 }
 ///**Conditioning (Combine)**: No description.
+#[derive(Clone)]
 pub struct ConditioningCombine<
     Conditioning1: crate::nodes::types::Conditioning,
     Conditioning2: crate::nodes::types::Conditioning,
@@ -241,16 +243,8 @@ impl<
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
-        output
-            .insert(
-                "conditioning_1".to_string(),
-                self.conditioning_1.to_workflow_input(),
-            );
-        output
-            .insert(
-                "conditioning_2".to_string(),
-                self.conditioning_2.to_workflow_input(),
-            );
+        output.insert("conditioning_1".to_string(), self.conditioning_1.clone().into());
+        output.insert("conditioning_2".to_string(), self.conditioning_2.clone().into());
         output
     }
     const NAME: &'static str = "ConditioningCombine";
@@ -259,6 +253,7 @@ impl<
     const CATEGORY: &'static str = "conditioning";
 }
 ///**Conditioning (Concat)**: No description.
+#[derive(Clone)]
 pub struct ConditioningConcat<
     ConditioningTo: crate::nodes::types::Conditioning,
     ConditioningFrom: crate::nodes::types::Conditioning,
@@ -297,14 +292,11 @@ impl<
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
         output
-            .insert(
-                "conditioning_to".to_string(),
-                self.conditioning_to.to_workflow_input(),
-            );
+            .insert("conditioning_to".to_string(), self.conditioning_to.clone().into());
         output
             .insert(
                 "conditioning_from".to_string(),
-                self.conditioning_from.to_workflow_input(),
+                self.conditioning_from.clone().into(),
             );
         output
     }
@@ -314,6 +306,7 @@ impl<
     const CATEGORY: &'static str = "conditioning";
 }
 ///**Conditioning (Set Area)**: No description.
+#[derive(Clone)]
 pub struct ConditioningSetArea<
     Conditioning: crate::nodes::types::Conditioning,
     Width: crate::nodes::types::Int,
@@ -380,12 +373,12 @@ for ConditioningSetArea<Conditioning, Width, Height, X, Y, Strength> {
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
-        output.insert("conditioning".to_string(), self.conditioning.to_workflow_input());
-        output.insert("width".to_string(), self.width.to_workflow_input());
-        output.insert("height".to_string(), self.height.to_workflow_input());
-        output.insert("x".to_string(), self.x.to_workflow_input());
-        output.insert("y".to_string(), self.y.to_workflow_input());
-        output.insert("strength".to_string(), self.strength.to_workflow_input());
+        output.insert("conditioning".to_string(), self.conditioning.clone().into());
+        output.insert("width".to_string(), self.width.clone().into());
+        output.insert("height".to_string(), self.height.clone().into());
+        output.insert("x".to_string(), self.x.clone().into());
+        output.insert("y".to_string(), self.y.clone().into());
+        output.insert("strength".to_string(), self.strength.clone().into());
         output
     }
     const NAME: &'static str = "ConditioningSetArea";
@@ -394,6 +387,7 @@ for ConditioningSetArea<Conditioning, Width, Height, X, Y, Strength> {
     const CATEGORY: &'static str = "conditioning";
 }
 ///**Conditioning (Set Area with Percentage)**: No description.
+#[derive(Clone)]
 pub struct ConditioningSetAreaPercentage<
     Conditioning: crate::nodes::types::Conditioning,
     Width: crate::nodes::types::Float,
@@ -460,12 +454,12 @@ for ConditioningSetAreaPercentage<Conditioning, Width, Height, X, Y, Strength> {
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
-        output.insert("conditioning".to_string(), self.conditioning.to_workflow_input());
-        output.insert("width".to_string(), self.width.to_workflow_input());
-        output.insert("height".to_string(), self.height.to_workflow_input());
-        output.insert("x".to_string(), self.x.to_workflow_input());
-        output.insert("y".to_string(), self.y.to_workflow_input());
-        output.insert("strength".to_string(), self.strength.to_workflow_input());
+        output.insert("conditioning".to_string(), self.conditioning.clone().into());
+        output.insert("width".to_string(), self.width.clone().into());
+        output.insert("height".to_string(), self.height.clone().into());
+        output.insert("x".to_string(), self.x.clone().into());
+        output.insert("y".to_string(), self.y.clone().into());
+        output.insert("strength".to_string(), self.strength.clone().into());
         output
     }
     const NAME: &'static str = "ConditioningSetAreaPercentage";
@@ -474,6 +468,7 @@ for ConditioningSetAreaPercentage<Conditioning, Width, Height, X, Y, Strength> {
     const CATEGORY: &'static str = "conditioning";
 }
 ///**ConditioningSetAreaStrength**: No description.
+#[derive(Clone)]
 pub struct ConditioningSetAreaStrength<
     Conditioning: crate::nodes::types::Conditioning,
     Strength: crate::nodes::types::Float,
@@ -505,8 +500,8 @@ impl<
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
-        output.insert("conditioning".to_string(), self.conditioning.to_workflow_input());
-        output.insert("strength".to_string(), self.strength.to_workflow_input());
+        output.insert("conditioning".to_string(), self.conditioning.clone().into());
+        output.insert("strength".to_string(), self.strength.clone().into());
         output
     }
     const NAME: &'static str = "ConditioningSetAreaStrength";
@@ -515,6 +510,7 @@ impl<
     const CATEGORY: &'static str = "conditioning";
 }
 ///**Conditioning (Set Mask)**: No description.
+#[derive(Clone)]
 pub struct ConditioningSetMask<
     Conditioning: crate::nodes::types::Conditioning,
     Mask: crate::nodes::types::Mask,
@@ -567,11 +563,10 @@ for ConditioningSetMask<Conditioning, Mask, Strength, SetCondArea> {
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
-        output.insert("conditioning".to_string(), self.conditioning.to_workflow_input());
-        output.insert("mask".to_string(), self.mask.to_workflow_input());
-        output.insert("strength".to_string(), self.strength.to_workflow_input());
-        output
-            .insert("set_cond_area".to_string(), self.set_cond_area.to_workflow_input());
+        output.insert("conditioning".to_string(), self.conditioning.clone().into());
+        output.insert("mask".to_string(), self.mask.clone().into());
+        output.insert("strength".to_string(), self.strength.clone().into());
+        output.insert("set_cond_area".to_string(), self.set_cond_area.clone().into());
         output
     }
     const NAME: &'static str = "ConditioningSetMask";
@@ -580,6 +575,7 @@ for ConditioningSetMask<Conditioning, Mask, Strength, SetCondArea> {
     const CATEGORY: &'static str = "conditioning";
 }
 ///**unCLIPConditioning**: No description.
+#[derive(Clone)]
 pub struct UnClipConditioning<
     Conditioning: crate::nodes::types::Conditioning,
     ClipVisionOutput: crate::nodes::types::ClipVisionOutput,
@@ -632,17 +628,17 @@ for UnClipConditioning<Conditioning, ClipVisionOutput, Strength, NoiseAugmentati
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
-        output.insert("conditioning".to_string(), self.conditioning.to_workflow_input());
+        output.insert("conditioning".to_string(), self.conditioning.clone().into());
         output
             .insert(
                 "clip_vision_output".to_string(),
-                self.clip_vision_output.to_workflow_input(),
+                self.clip_vision_output.clone().into(),
             );
-        output.insert("strength".to_string(), self.strength.to_workflow_input());
+        output.insert("strength".to_string(), self.strength.clone().into());
         output
             .insert(
                 "noise_augmentation".to_string(),
-                self.noise_augmentation.to_workflow_input(),
+                self.noise_augmentation.clone().into(),
             );
         output
     }

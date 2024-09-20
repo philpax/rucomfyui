@@ -3,6 +3,7 @@
 use std::collections::HashMap;
 use crate::workflow::{WorkflowNodeId, WorkflowInput};
 ///**KSamplerSelect**: No description.
+#[derive(Clone)]
 pub struct KSamplerSelect<SamplerName: crate::nodes::types::String> {
     ///No documentation.
     pub sampler_name: SamplerName,
@@ -24,7 +25,7 @@ for KSamplerSelect<SamplerName> {
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
-        output.insert("sampler_name".to_string(), self.sampler_name.to_workflow_input());
+        output.insert("sampler_name".to_string(), self.sampler_name.clone().into());
         output
     }
     const NAME: &'static str = "KSamplerSelect";
@@ -33,6 +34,7 @@ for KSamplerSelect<SamplerName> {
     const CATEGORY: &'static str = "sampling/custom_sampling/samplers";
 }
 ///**SamplerDPMAdaptative**: No description.
+#[derive(Clone)]
 pub struct SamplerDpmAdaptative<
     Order: crate::nodes::types::Int,
     Rtol: crate::nodes::types::Float,
@@ -149,17 +151,16 @@ for SamplerDpmAdaptative<
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
-        output.insert("order".to_string(), self.order.to_workflow_input());
-        output.insert("rtol".to_string(), self.rtol.to_workflow_input());
-        output.insert("atol".to_string(), self.atol.to_workflow_input());
-        output.insert("h_init".to_string(), self.h_init.to_workflow_input());
-        output.insert("pcoeff".to_string(), self.pcoeff.to_workflow_input());
-        output.insert("icoeff".to_string(), self.icoeff.to_workflow_input());
-        output.insert("dcoeff".to_string(), self.dcoeff.to_workflow_input());
-        output
-            .insert("accept_safety".to_string(), self.accept_safety.to_workflow_input());
-        output.insert("eta".to_string(), self.eta.to_workflow_input());
-        output.insert("s_noise".to_string(), self.s_noise.to_workflow_input());
+        output.insert("order".to_string(), self.order.clone().into());
+        output.insert("rtol".to_string(), self.rtol.clone().into());
+        output.insert("atol".to_string(), self.atol.clone().into());
+        output.insert("h_init".to_string(), self.h_init.clone().into());
+        output.insert("pcoeff".to_string(), self.pcoeff.clone().into());
+        output.insert("icoeff".to_string(), self.icoeff.clone().into());
+        output.insert("dcoeff".to_string(), self.dcoeff.clone().into());
+        output.insert("accept_safety".to_string(), self.accept_safety.clone().into());
+        output.insert("eta".to_string(), self.eta.clone().into());
+        output.insert("s_noise".to_string(), self.s_noise.clone().into());
         output
     }
     const NAME: &'static str = "SamplerDPMAdaptative";
@@ -168,6 +169,7 @@ for SamplerDpmAdaptative<
     const CATEGORY: &'static str = "sampling/custom_sampling/samplers";
 }
 ///**SamplerDPMPP_2M_SDE**: No description.
+#[derive(Clone)]
 pub struct SamplerDpmpp2MSde<
     SolverType: crate::nodes::types::String,
     Eta: crate::nodes::types::Float,
@@ -219,10 +221,10 @@ impl<
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
-        output.insert("solver_type".to_string(), self.solver_type.to_workflow_input());
-        output.insert("eta".to_string(), self.eta.to_workflow_input());
-        output.insert("s_noise".to_string(), self.s_noise.to_workflow_input());
-        output.insert("noise_device".to_string(), self.noise_device.to_workflow_input());
+        output.insert("solver_type".to_string(), self.solver_type.clone().into());
+        output.insert("eta".to_string(), self.eta.clone().into());
+        output.insert("s_noise".to_string(), self.s_noise.clone().into());
+        output.insert("noise_device".to_string(), self.noise_device.clone().into());
         output
     }
     const NAME: &'static str = "SamplerDPMPP_2M_SDE";
@@ -231,6 +233,7 @@ impl<
     const CATEGORY: &'static str = "sampling/custom_sampling/samplers";
 }
 ///**SamplerDPMPP_2S_Ancestral**: No description.
+#[derive(Clone)]
 pub struct SamplerDpmpp2SAncestral<
     Eta: crate::nodes::types::Float,
     SNoise: crate::nodes::types::Float,
@@ -262,8 +265,8 @@ impl<
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
-        output.insert("eta".to_string(), self.eta.to_workflow_input());
-        output.insert("s_noise".to_string(), self.s_noise.to_workflow_input());
+        output.insert("eta".to_string(), self.eta.clone().into());
+        output.insert("s_noise".to_string(), self.s_noise.clone().into());
         output
     }
     const NAME: &'static str = "SamplerDPMPP_2S_Ancestral";
@@ -272,6 +275,7 @@ impl<
     const CATEGORY: &'static str = "sampling/custom_sampling/samplers";
 }
 ///**SamplerDPMPP_3M_SDE**: No description.
+#[derive(Clone)]
 pub struct SamplerDpmpp3MSde<
     Eta: crate::nodes::types::Float,
     SNoise: crate::nodes::types::Float,
@@ -308,9 +312,9 @@ impl<
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
-        output.insert("eta".to_string(), self.eta.to_workflow_input());
-        output.insert("s_noise".to_string(), self.s_noise.to_workflow_input());
-        output.insert("noise_device".to_string(), self.noise_device.to_workflow_input());
+        output.insert("eta".to_string(), self.eta.clone().into());
+        output.insert("s_noise".to_string(), self.s_noise.clone().into());
+        output.insert("noise_device".to_string(), self.noise_device.clone().into());
         output
     }
     const NAME: &'static str = "SamplerDPMPP_3M_SDE";
@@ -319,6 +323,7 @@ impl<
     const CATEGORY: &'static str = "sampling/custom_sampling/samplers";
 }
 ///**SamplerDPMPP_SDE**: No description.
+#[derive(Clone)]
 pub struct SamplerDpmppSde<
     Eta: crate::nodes::types::Float,
     SNoise: crate::nodes::types::Float,
@@ -365,10 +370,10 @@ impl<
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
-        output.insert("eta".to_string(), self.eta.to_workflow_input());
-        output.insert("s_noise".to_string(), self.s_noise.to_workflow_input());
-        output.insert("r".to_string(), self.r.to_workflow_input());
-        output.insert("noise_device".to_string(), self.noise_device.to_workflow_input());
+        output.insert("eta".to_string(), self.eta.clone().into());
+        output.insert("s_noise".to_string(), self.s_noise.clone().into());
+        output.insert("r".to_string(), self.r.clone().into());
+        output.insert("noise_device".to_string(), self.noise_device.clone().into());
         output
     }
     const NAME: &'static str = "SamplerDPMPP_SDE";
@@ -377,6 +382,7 @@ impl<
     const CATEGORY: &'static str = "sampling/custom_sampling/samplers";
 }
 ///**SamplerEulerAncestral**: No description.
+#[derive(Clone)]
 pub struct SamplerEulerAncestral<
     Eta: crate::nodes::types::Float,
     SNoise: crate::nodes::types::Float,
@@ -408,8 +414,8 @@ impl<
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
-        output.insert("eta".to_string(), self.eta.to_workflow_input());
-        output.insert("s_noise".to_string(), self.s_noise.to_workflow_input());
+        output.insert("eta".to_string(), self.eta.clone().into());
+        output.insert("s_noise".to_string(), self.s_noise.clone().into());
         output
     }
     const NAME: &'static str = "SamplerEulerAncestral";
@@ -418,6 +424,7 @@ impl<
     const CATEGORY: &'static str = "sampling/custom_sampling/samplers";
 }
 ///**SamplerEulerAncestralCFG++**: No description.
+#[derive(Clone)]
 pub struct SamplerEulerAncestralCfgpp<
     Eta: crate::nodes::types::Float,
     SNoise: crate::nodes::types::Float,
@@ -449,8 +456,8 @@ impl<
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
-        output.insert("eta".to_string(), self.eta.to_workflow_input());
-        output.insert("s_noise".to_string(), self.s_noise.to_workflow_input());
+        output.insert("eta".to_string(), self.eta.clone().into());
+        output.insert("s_noise".to_string(), self.s_noise.clone().into());
         output
     }
     const NAME: &'static str = "SamplerEulerAncestralCFGPP";
@@ -459,6 +466,7 @@ impl<
     const CATEGORY: &'static str = "sampling/custom_sampling/samplers";
 }
 ///**SamplerLCMUpscale**: No description.
+#[derive(Clone)]
 pub struct SamplerLcmUpscale<
     ScaleRatio: crate::nodes::types::Float,
     ScaleSteps: crate::nodes::types::Int,
@@ -503,13 +511,9 @@ impl<
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
-        output.insert("scale_ratio".to_string(), self.scale_ratio.to_workflow_input());
-        output.insert("scale_steps".to_string(), self.scale_steps.to_workflow_input());
-        output
-            .insert(
-                "upscale_method".to_string(),
-                self.upscale_method.to_workflow_input(),
-            );
+        output.insert("scale_ratio".to_string(), self.scale_ratio.clone().into());
+        output.insert("scale_steps".to_string(), self.scale_steps.clone().into());
+        output.insert("upscale_method".to_string(), self.upscale_method.clone().into());
         output
     }
     const NAME: &'static str = "SamplerLCMUpscale";
@@ -518,6 +522,7 @@ impl<
     const CATEGORY: &'static str = "sampling/custom_sampling/samplers";
 }
 ///**SamplerLMS**: No description.
+#[derive(Clone)]
 pub struct SamplerLms<Order: crate::nodes::types::Int> {
     ///No documentation.
     pub order: Order,
@@ -538,7 +543,7 @@ impl<Order: crate::nodes::types::Int> crate::nodes::TypedNode for SamplerLms<Ord
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
-        output.insert("order".to_string(), self.order.to_workflow_input());
+        output.insert("order".to_string(), self.order.clone().into());
         output
     }
     const NAME: &'static str = "SamplerLMS";

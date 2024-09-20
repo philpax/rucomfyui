@@ -3,6 +3,7 @@
 use std::collections::HashMap;
 use crate::workflow::{WorkflowNodeId, WorkflowInput};
 ///**DisableNoise**: No description.
+#[derive(Clone)]
 pub struct DisableNoise {}
 impl DisableNoise {
     /// Create a new node.
@@ -27,6 +28,7 @@ impl crate::nodes::TypedNode for DisableNoise {
     const CATEGORY: &'static str = "sampling/custom_sampling/noise";
 }
 ///**RandomNoise**: No description.
+#[derive(Clone)]
 pub struct RandomNoise<NoiseSeed: crate::nodes::types::Int> {
     ///No documentation.
     pub noise_seed: NoiseSeed,
@@ -48,7 +50,7 @@ for RandomNoise<NoiseSeed> {
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
-        output.insert("noise_seed".to_string(), self.noise_seed.to_workflow_input());
+        output.insert("noise_seed".to_string(), self.noise_seed.clone().into());
         output
     }
     const NAME: &'static str = "RandomNoise";

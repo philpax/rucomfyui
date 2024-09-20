@@ -3,6 +3,7 @@
 use std::collections::HashMap;
 use crate::workflow::{WorkflowNodeId, WorkflowInput};
 ///**ImageBlend**: No description.
+#[derive(Clone)]
 pub struct ImageBlend<
     Image1: crate::nodes::types::Image,
     Image2: crate::nodes::types::Image,
@@ -54,10 +55,10 @@ impl<
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
-        output.insert("image1".to_string(), self.image_1.to_workflow_input());
-        output.insert("image2".to_string(), self.image_2.to_workflow_input());
-        output.insert("blend_factor".to_string(), self.blend_factor.to_workflow_input());
-        output.insert("blend_mode".to_string(), self.blend_mode.to_workflow_input());
+        output.insert("image1".to_string(), self.image_1.clone().into());
+        output.insert("image2".to_string(), self.image_2.clone().into());
+        output.insert("blend_factor".to_string(), self.blend_factor.clone().into());
+        output.insert("blend_mode".to_string(), self.blend_mode.clone().into());
         output
     }
     const NAME: &'static str = "ImageBlend";
@@ -66,6 +67,7 @@ impl<
     const CATEGORY: &'static str = "image/postprocessing";
 }
 ///**ImageBlur**: No description.
+#[derive(Clone)]
 pub struct ImageBlur<
     Image: crate::nodes::types::Image,
     BlurRadius: crate::nodes::types::Int,
@@ -102,9 +104,9 @@ impl<
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
-        output.insert("image".to_string(), self.image.to_workflow_input());
-        output.insert("blur_radius".to_string(), self.blur_radius.to_workflow_input());
-        output.insert("sigma".to_string(), self.sigma.to_workflow_input());
+        output.insert("image".to_string(), self.image.clone().into());
+        output.insert("blur_radius".to_string(), self.blur_radius.clone().into());
+        output.insert("sigma".to_string(), self.sigma.clone().into());
         output
     }
     const NAME: &'static str = "ImageBlur";
@@ -113,6 +115,7 @@ impl<
     const CATEGORY: &'static str = "image/postprocessing";
 }
 ///**ImageQuantize**: No description.
+#[derive(Clone)]
 pub struct ImageQuantize<
     Image: crate::nodes::types::Image,
     Colors: crate::nodes::types::Int,
@@ -149,9 +152,9 @@ impl<
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
-        output.insert("image".to_string(), self.image.to_workflow_input());
-        output.insert("colors".to_string(), self.colors.to_workflow_input());
-        output.insert("dither".to_string(), self.dither.to_workflow_input());
+        output.insert("image".to_string(), self.image.clone().into());
+        output.insert("colors".to_string(), self.colors.clone().into());
+        output.insert("dither".to_string(), self.dither.clone().into());
         output
     }
     const NAME: &'static str = "ImageQuantize";
@@ -160,6 +163,7 @@ impl<
     const CATEGORY: &'static str = "image/postprocessing";
 }
 ///**ImageSharpen**: No description.
+#[derive(Clone)]
 pub struct ImageSharpen<
     Image: crate::nodes::types::Image,
     SharpenRadius: crate::nodes::types::Int,
@@ -211,14 +215,10 @@ impl<
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
-        output.insert("image".to_string(), self.image.to_workflow_input());
-        output
-            .insert(
-                "sharpen_radius".to_string(),
-                self.sharpen_radius.to_workflow_input(),
-            );
-        output.insert("sigma".to_string(), self.sigma.to_workflow_input());
-        output.insert("alpha".to_string(), self.alpha.to_workflow_input());
+        output.insert("image".to_string(), self.image.clone().into());
+        output.insert("sharpen_radius".to_string(), self.sharpen_radius.clone().into());
+        output.insert("sigma".to_string(), self.sigma.clone().into());
+        output.insert("alpha".to_string(), self.alpha.clone().into());
         output
     }
     const NAME: &'static str = "ImageSharpen";
@@ -227,6 +227,7 @@ impl<
     const CATEGORY: &'static str = "image/postprocessing";
 }
 ///**ImageMorphology**: No description.
+#[derive(Clone)]
 pub struct Morphology<
     Image: crate::nodes::types::Image,
     Operation: crate::nodes::types::String,
@@ -267,9 +268,9 @@ impl<
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
-        output.insert("image".to_string(), self.image.to_workflow_input());
-        output.insert("operation".to_string(), self.operation.to_workflow_input());
-        output.insert("kernel_size".to_string(), self.kernel_size.to_workflow_input());
+        output.insert("image".to_string(), self.image.clone().into());
+        output.insert("operation".to_string(), self.operation.clone().into());
+        output.insert("kernel_size".to_string(), self.kernel_size.clone().into());
         output
     }
     const NAME: &'static str = "Morphology";

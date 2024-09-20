@@ -4,6 +4,7 @@ use std::collections::HashMap;
 use crate::workflow::{WorkflowNodeId, WorkflowInput};
 pub mod model_specific;
 ///**CLIPMergeAdd**: No description.
+#[derive(Clone)]
 pub struct ClipMergeAdd<
     Clip1: crate::nodes::types::Clip,
     Clip2: crate::nodes::types::Clip,
@@ -35,8 +36,8 @@ impl<
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
-        output.insert("clip1".to_string(), self.clip_1.to_workflow_input());
-        output.insert("clip2".to_string(), self.clip_2.to_workflow_input());
+        output.insert("clip1".to_string(), self.clip_1.clone().into());
+        output.insert("clip2".to_string(), self.clip_2.clone().into());
         output
     }
     const NAME: &'static str = "CLIPMergeAdd";
@@ -45,6 +46,7 @@ impl<
     const CATEGORY: &'static str = "advanced/model_merging";
 }
 ///**CLIPMergeSimple**: No description.
+#[derive(Clone)]
 pub struct ClipMergeSimple<
     Clip1: crate::nodes::types::Clip,
     Clip2: crate::nodes::types::Clip,
@@ -81,9 +83,9 @@ impl<
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
-        output.insert("clip1".to_string(), self.clip_1.to_workflow_input());
-        output.insert("clip2".to_string(), self.clip_2.to_workflow_input());
-        output.insert("ratio".to_string(), self.ratio.to_workflow_input());
+        output.insert("clip1".to_string(), self.clip_1.clone().into());
+        output.insert("clip2".to_string(), self.clip_2.clone().into());
+        output.insert("ratio".to_string(), self.ratio.clone().into());
         output
     }
     const NAME: &'static str = "CLIPMergeSimple";
@@ -92,6 +94,7 @@ impl<
     const CATEGORY: &'static str = "advanced/model_merging";
 }
 ///**CLIPMergeSubtract**: No description.
+#[derive(Clone)]
 pub struct ClipMergeSubtract<
     Clip1: crate::nodes::types::Clip,
     Clip2: crate::nodes::types::Clip,
@@ -128,9 +131,9 @@ impl<
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
-        output.insert("clip1".to_string(), self.clip_1.to_workflow_input());
-        output.insert("clip2".to_string(), self.clip_2.to_workflow_input());
-        output.insert("multiplier".to_string(), self.multiplier.to_workflow_input());
+        output.insert("clip1".to_string(), self.clip_1.clone().into());
+        output.insert("clip2".to_string(), self.clip_2.clone().into());
+        output.insert("multiplier".to_string(), self.multiplier.clone().into());
         output
     }
     const NAME: &'static str = "CLIPMergeSubtract";
@@ -139,6 +142,7 @@ impl<
     const CATEGORY: &'static str = "advanced/model_merging";
 }
 ///**CLIPSave**: No description.
+#[derive(Clone)]
 pub struct ClipSave<
     Clip: crate::nodes::types::Clip,
     FilenamePrefix: crate::nodes::types::String,
@@ -167,12 +171,9 @@ impl<
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
-        output.insert("clip".to_string(), self.clip.to_workflow_input());
+        output.insert("clip".to_string(), self.clip.clone().into());
         output
-            .insert(
-                "filename_prefix".to_string(),
-                self.filename_prefix.to_workflow_input(),
-            );
+            .insert("filename_prefix".to_string(), self.filename_prefix.clone().into());
         output
     }
     const NAME: &'static str = "CLIPSave";
@@ -185,6 +186,7 @@ impl<
     FilenamePrefix: crate::nodes::types::String,
 > crate::nodes::TypedOutputNode for ClipSave<Clip, FilenamePrefix> {}
 ///**Save Checkpoint**: No description.
+#[derive(Clone)]
 pub struct CheckpointSave<
     Model: crate::nodes::types::Model,
     Clip: crate::nodes::types::Clip,
@@ -233,14 +235,11 @@ impl<
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
-        output.insert("model".to_string(), self.model.to_workflow_input());
-        output.insert("clip".to_string(), self.clip.to_workflow_input());
-        output.insert("vae".to_string(), self.vae.to_workflow_input());
+        output.insert("model".to_string(), self.model.clone().into());
+        output.insert("clip".to_string(), self.clip.clone().into());
+        output.insert("vae".to_string(), self.vae.clone().into());
         output
-            .insert(
-                "filename_prefix".to_string(),
-                self.filename_prefix.to_workflow_input(),
-            );
+            .insert("filename_prefix".to_string(), self.filename_prefix.clone().into());
         output
     }
     const NAME: &'static str = "CheckpointSave";
@@ -255,6 +254,7 @@ impl<
     FilenamePrefix: crate::nodes::types::String,
 > crate::nodes::TypedOutputNode for CheckpointSave<Model, Clip, Vae, FilenamePrefix> {}
 ///**ModelMergeAdd**: No description.
+#[derive(Clone)]
 pub struct ModelMergeAdd<
     Model1: crate::nodes::types::Model,
     Model2: crate::nodes::types::Model,
@@ -286,8 +286,8 @@ impl<
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
-        output.insert("model1".to_string(), self.model_1.to_workflow_input());
-        output.insert("model2".to_string(), self.model_2.to_workflow_input());
+        output.insert("model1".to_string(), self.model_1.clone().into());
+        output.insert("model2".to_string(), self.model_2.clone().into());
         output
     }
     const NAME: &'static str = "ModelMergeAdd";
@@ -296,6 +296,7 @@ impl<
     const CATEGORY: &'static str = "advanced/model_merging";
 }
 ///**ModelMergeBlocks**: No description.
+#[derive(Clone)]
 pub struct ModelMergeBlocks<
     Model1: crate::nodes::types::Model,
     Model2: crate::nodes::types::Model,
@@ -354,11 +355,11 @@ impl<
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
-        output.insert("model1".to_string(), self.model_1.to_workflow_input());
-        output.insert("model2".to_string(), self.model_2.to_workflow_input());
-        output.insert("input".to_string(), self.input.to_workflow_input());
-        output.insert("middle".to_string(), self.middle.to_workflow_input());
-        output.insert("out".to_string(), self.out.to_workflow_input());
+        output.insert("model1".to_string(), self.model_1.clone().into());
+        output.insert("model2".to_string(), self.model_2.clone().into());
+        output.insert("input".to_string(), self.input.clone().into());
+        output.insert("middle".to_string(), self.middle.clone().into());
+        output.insert("out".to_string(), self.out.clone().into());
         output
     }
     const NAME: &'static str = "ModelMergeBlocks";
@@ -367,6 +368,7 @@ impl<
     const CATEGORY: &'static str = "advanced/model_merging";
 }
 ///**ModelMergeSimple**: No description.
+#[derive(Clone)]
 pub struct ModelMergeSimple<
     Model1: crate::nodes::types::Model,
     Model2: crate::nodes::types::Model,
@@ -403,9 +405,9 @@ impl<
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
-        output.insert("model1".to_string(), self.model_1.to_workflow_input());
-        output.insert("model2".to_string(), self.model_2.to_workflow_input());
-        output.insert("ratio".to_string(), self.ratio.to_workflow_input());
+        output.insert("model1".to_string(), self.model_1.clone().into());
+        output.insert("model2".to_string(), self.model_2.clone().into());
+        output.insert("ratio".to_string(), self.ratio.clone().into());
         output
     }
     const NAME: &'static str = "ModelMergeSimple";
@@ -414,6 +416,7 @@ impl<
     const CATEGORY: &'static str = "advanced/model_merging";
 }
 ///**ModelMergeSubtract**: No description.
+#[derive(Clone)]
 pub struct ModelMergeSubtract<
     Model1: crate::nodes::types::Model,
     Model2: crate::nodes::types::Model,
@@ -454,9 +457,9 @@ impl<
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
-        output.insert("model1".to_string(), self.model_1.to_workflow_input());
-        output.insert("model2".to_string(), self.model_2.to_workflow_input());
-        output.insert("multiplier".to_string(), self.multiplier.to_workflow_input());
+        output.insert("model1".to_string(), self.model_1.clone().into());
+        output.insert("model2".to_string(), self.model_2.clone().into());
+        output.insert("multiplier".to_string(), self.multiplier.clone().into());
         output
     }
     const NAME: &'static str = "ModelMergeSubtract";
@@ -465,6 +468,7 @@ impl<
     const CATEGORY: &'static str = "advanced/model_merging";
 }
 ///**ModelSave**: No description.
+#[derive(Clone)]
 pub struct ModelSave<
     Model: crate::nodes::types::Model,
     FilenamePrefix: crate::nodes::types::String,
@@ -493,12 +497,9 @@ impl<
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
-        output.insert("model".to_string(), self.model.to_workflow_input());
+        output.insert("model".to_string(), self.model.clone().into());
         output
-            .insert(
-                "filename_prefix".to_string(),
-                self.filename_prefix.to_workflow_input(),
-            );
+            .insert("filename_prefix".to_string(), self.filename_prefix.clone().into());
         output
     }
     const NAME: &'static str = "ModelSave";
@@ -511,6 +512,7 @@ impl<
     FilenamePrefix: crate::nodes::types::String,
 > crate::nodes::TypedOutputNode for ModelSave<Model, FilenamePrefix> {}
 ///**VAESave**: No description.
+#[derive(Clone)]
 pub struct VaeSave<
     Vae: crate::nodes::types::Vae,
     FilenamePrefix: crate::nodes::types::String,
@@ -539,12 +541,9 @@ impl<
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
-        output.insert("vae".to_string(), self.vae.to_workflow_input());
+        output.insert("vae".to_string(), self.vae.clone().into());
         output
-            .insert(
-                "filename_prefix".to_string(),
-                self.filename_prefix.to_workflow_input(),
-            );
+            .insert("filename_prefix".to_string(), self.filename_prefix.clone().into());
         output
     }
     const NAME: &'static str = "VAESave";

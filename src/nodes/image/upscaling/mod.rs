@@ -3,6 +3,7 @@
 use std::collections::HashMap;
 use crate::workflow::{WorkflowNodeId, WorkflowInput};
 ///**Upscale Image**: No description.
+#[derive(Clone)]
 pub struct ImageScale<
     Image: crate::nodes::types::Image,
     UpscaleMethod: crate::nodes::types::String,
@@ -61,15 +62,11 @@ impl<
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
-        output.insert("image".to_string(), self.image.to_workflow_input());
-        output
-            .insert(
-                "upscale_method".to_string(),
-                self.upscale_method.to_workflow_input(),
-            );
-        output.insert("width".to_string(), self.width.to_workflow_input());
-        output.insert("height".to_string(), self.height.to_workflow_input());
-        output.insert("crop".to_string(), self.crop.to_workflow_input());
+        output.insert("image".to_string(), self.image.clone().into());
+        output.insert("upscale_method".to_string(), self.upscale_method.clone().into());
+        output.insert("width".to_string(), self.width.clone().into());
+        output.insert("height".to_string(), self.height.clone().into());
+        output.insert("crop".to_string(), self.crop.clone().into());
         output
     }
     const NAME: &'static str = "ImageScale";
@@ -78,6 +75,7 @@ impl<
     const CATEGORY: &'static str = "image/upscaling";
 }
 ///**Upscale Image By**: No description.
+#[derive(Clone)]
 pub struct ImageScaleBy<
     Image: crate::nodes::types::Image,
     UpscaleMethod: crate::nodes::types::String,
@@ -118,13 +116,9 @@ impl<
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
-        output.insert("image".to_string(), self.image.to_workflow_input());
-        output
-            .insert(
-                "upscale_method".to_string(),
-                self.upscale_method.to_workflow_input(),
-            );
-        output.insert("scale_by".to_string(), self.scale_by.to_workflow_input());
+        output.insert("image".to_string(), self.image.clone().into());
+        output.insert("upscale_method".to_string(), self.upscale_method.clone().into());
+        output.insert("scale_by".to_string(), self.scale_by.clone().into());
         output
     }
     const NAME: &'static str = "ImageScaleBy";
@@ -133,6 +127,7 @@ impl<
     const CATEGORY: &'static str = "image/upscaling";
 }
 ///**ImageScaleToTotalPixels**: No description.
+#[derive(Clone)]
 pub struct ImageScaleToTotalPixels<
     Image: crate::nodes::types::Image,
     UpscaleMethod: crate::nodes::types::String,
@@ -177,13 +172,9 @@ impl<
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
-        output.insert("image".to_string(), self.image.to_workflow_input());
-        output
-            .insert(
-                "upscale_method".to_string(),
-                self.upscale_method.to_workflow_input(),
-            );
-        output.insert("megapixels".to_string(), self.megapixels.to_workflow_input());
+        output.insert("image".to_string(), self.image.clone().into());
+        output.insert("upscale_method".to_string(), self.upscale_method.clone().into());
+        output.insert("megapixels".to_string(), self.megapixels.clone().into());
         output
     }
     const NAME: &'static str = "ImageScaleToTotalPixels";
@@ -192,6 +183,7 @@ impl<
     const CATEGORY: &'static str = "image/upscaling";
 }
 ///**Upscale Image (using Model)**: No description.
+#[derive(Clone)]
 pub struct ImageUpscaleWithModel<
     UpscaleModel: crate::nodes::types::UpscaleModel,
     Image: crate::nodes::types::Image,
@@ -223,9 +215,8 @@ impl<
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
-        output
-            .insert("upscale_model".to_string(), self.upscale_model.to_workflow_input());
-        output.insert("image".to_string(), self.image.to_workflow_input());
+        output.insert("upscale_model".to_string(), self.upscale_model.clone().into());
+        output.insert("image".to_string(), self.image.clone().into());
         output
     }
     const NAME: &'static str = "ImageUpscaleWithModel";

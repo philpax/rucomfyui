@@ -3,6 +3,7 @@
 use std::collections::HashMap;
 use crate::workflow::{WorkflowNodeId, WorkflowInput};
 ///**Crop Latent**: No description.
+#[derive(Clone)]
 pub struct LatentCrop<
     Samples: crate::nodes::types::Latent,
     Width: crate::nodes::types::Int,
@@ -55,11 +56,11 @@ impl<
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
-        output.insert("samples".to_string(), self.samples.to_workflow_input());
-        output.insert("width".to_string(), self.width.to_workflow_input());
-        output.insert("height".to_string(), self.height.to_workflow_input());
-        output.insert("x".to_string(), self.x.to_workflow_input());
-        output.insert("y".to_string(), self.y.to_workflow_input());
+        output.insert("samples".to_string(), self.samples.clone().into());
+        output.insert("width".to_string(), self.width.clone().into());
+        output.insert("height".to_string(), self.height.clone().into());
+        output.insert("x".to_string(), self.x.clone().into());
+        output.insert("y".to_string(), self.y.clone().into());
         output
     }
     const NAME: &'static str = "LatentCrop";
@@ -68,6 +69,7 @@ impl<
     const CATEGORY: &'static str = "latent/transform";
 }
 ///**Flip Latent**: No description.
+#[derive(Clone)]
 pub struct LatentFlip<
     Samples: crate::nodes::types::Latent,
     FlipMethod: crate::nodes::types::String,
@@ -99,8 +101,8 @@ impl<
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
-        output.insert("samples".to_string(), self.samples.to_workflow_input());
-        output.insert("flip_method".to_string(), self.flip_method.to_workflow_input());
+        output.insert("samples".to_string(), self.samples.clone().into());
+        output.insert("flip_method".to_string(), self.flip_method.clone().into());
         output
     }
     const NAME: &'static str = "LatentFlip";
@@ -109,6 +111,7 @@ impl<
     const CATEGORY: &'static str = "latent/transform";
 }
 ///**Rotate Latent**: No description.
+#[derive(Clone)]
 pub struct LatentRotate<
     Samples: crate::nodes::types::Latent,
     Rotation: crate::nodes::types::String,
@@ -140,8 +143,8 @@ impl<
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
-        output.insert("samples".to_string(), self.samples.to_workflow_input());
-        output.insert("rotation".to_string(), self.rotation.to_workflow_input());
+        output.insert("samples".to_string(), self.samples.clone().into());
+        output.insert("rotation".to_string(), self.rotation.clone().into());
         output
     }
     const NAME: &'static str = "LatentRotate";

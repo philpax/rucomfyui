@@ -3,6 +3,7 @@
 use std::collections::HashMap;
 use crate::workflow::{WorkflowNodeId, WorkflowInput};
 ///**ModelSamplingAuraFlow**: No description.
+#[derive(Clone)]
 pub struct ModelSamplingAuraFlow<
     Model: crate::nodes::types::Model,
     Shift: crate::nodes::types::Float,
@@ -34,8 +35,8 @@ impl<
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
-        output.insert("model".to_string(), self.model.to_workflow_input());
-        output.insert("shift".to_string(), self.shift.to_workflow_input());
+        output.insert("model".to_string(), self.model.clone().into());
+        output.insert("shift".to_string(), self.shift.clone().into());
         output
     }
     const NAME: &'static str = "ModelSamplingAuraFlow";
@@ -44,6 +45,7 @@ impl<
     const CATEGORY: &'static str = "advanced/model";
 }
 ///**ModelSamplingContinuousEDM**: No description.
+#[derive(Clone)]
 pub struct ModelSamplingContinuousEdm<
     Model: crate::nodes::types::Model,
     Sampling: crate::nodes::types::String,
@@ -96,10 +98,10 @@ for ModelSamplingContinuousEdm<Model, Sampling, SigmaMax, SigmaMin> {
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
-        output.insert("model".to_string(), self.model.to_workflow_input());
-        output.insert("sampling".to_string(), self.sampling.to_workflow_input());
-        output.insert("sigma_max".to_string(), self.sigma_max.to_workflow_input());
-        output.insert("sigma_min".to_string(), self.sigma_min.to_workflow_input());
+        output.insert("model".to_string(), self.model.clone().into());
+        output.insert("sampling".to_string(), self.sampling.clone().into());
+        output.insert("sigma_max".to_string(), self.sigma_max.clone().into());
+        output.insert("sigma_min".to_string(), self.sigma_min.clone().into());
         output
     }
     const NAME: &'static str = "ModelSamplingContinuousEDM";
@@ -108,6 +110,7 @@ for ModelSamplingContinuousEdm<Model, Sampling, SigmaMax, SigmaMin> {
     const CATEGORY: &'static str = "advanced/model";
 }
 ///**ModelSamplingContinuousV**: No description.
+#[derive(Clone)]
 pub struct ModelSamplingContinuousV<
     Model: crate::nodes::types::Model,
     Sampling: crate::nodes::types::String,
@@ -160,10 +163,10 @@ for ModelSamplingContinuousV<Model, Sampling, SigmaMax, SigmaMin> {
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
-        output.insert("model".to_string(), self.model.to_workflow_input());
-        output.insert("sampling".to_string(), self.sampling.to_workflow_input());
-        output.insert("sigma_max".to_string(), self.sigma_max.to_workflow_input());
-        output.insert("sigma_min".to_string(), self.sigma_min.to_workflow_input());
+        output.insert("model".to_string(), self.model.clone().into());
+        output.insert("sampling".to_string(), self.sampling.clone().into());
+        output.insert("sigma_max".to_string(), self.sigma_max.clone().into());
+        output.insert("sigma_min".to_string(), self.sigma_min.clone().into());
         output
     }
     const NAME: &'static str = "ModelSamplingContinuousV";
@@ -172,6 +175,7 @@ for ModelSamplingContinuousV<Model, Sampling, SigmaMax, SigmaMin> {
     const CATEGORY: &'static str = "advanced/model";
 }
 ///**ModelSamplingDiscrete**: No description.
+#[derive(Clone)]
 pub struct ModelSamplingDiscrete<
     Model: crate::nodes::types::Model,
     Sampling: crate::nodes::types::String,
@@ -208,9 +212,9 @@ impl<
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
-        output.insert("model".to_string(), self.model.to_workflow_input());
-        output.insert("sampling".to_string(), self.sampling.to_workflow_input());
-        output.insert("zsnr".to_string(), self.zsnr.to_workflow_input());
+        output.insert("model".to_string(), self.model.clone().into());
+        output.insert("sampling".to_string(), self.sampling.clone().into());
+        output.insert("zsnr".to_string(), self.zsnr.clone().into());
         output
     }
     const NAME: &'static str = "ModelSamplingDiscrete";
@@ -219,6 +223,7 @@ impl<
     const CATEGORY: &'static str = "advanced/model";
 }
 ///**ModelSamplingFlux**: No description.
+#[derive(Clone)]
 pub struct ModelSamplingFlux<
     Model: crate::nodes::types::Model,
     MaxShift: crate::nodes::types::Float,
@@ -278,11 +283,11 @@ for ModelSamplingFlux<Model, MaxShift, BaseShift, Width, Height> {
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
-        output.insert("model".to_string(), self.model.to_workflow_input());
-        output.insert("max_shift".to_string(), self.max_shift.to_workflow_input());
-        output.insert("base_shift".to_string(), self.base_shift.to_workflow_input());
-        output.insert("width".to_string(), self.width.to_workflow_input());
-        output.insert("height".to_string(), self.height.to_workflow_input());
+        output.insert("model".to_string(), self.model.clone().into());
+        output.insert("max_shift".to_string(), self.max_shift.clone().into());
+        output.insert("base_shift".to_string(), self.base_shift.clone().into());
+        output.insert("width".to_string(), self.width.clone().into());
+        output.insert("height".to_string(), self.height.clone().into());
         output
     }
     const NAME: &'static str = "ModelSamplingFlux";
@@ -291,6 +296,7 @@ for ModelSamplingFlux<Model, MaxShift, BaseShift, Width, Height> {
     const CATEGORY: &'static str = "advanced/model";
 }
 ///**ModelSamplingSD3**: No description.
+#[derive(Clone)]
 pub struct ModelSamplingSd3<
     Model: crate::nodes::types::Model,
     Shift: crate::nodes::types::Float,
@@ -322,8 +328,8 @@ impl<
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
-        output.insert("model".to_string(), self.model.to_workflow_input());
-        output.insert("shift".to_string(), self.shift.to_workflow_input());
+        output.insert("model".to_string(), self.model.clone().into());
+        output.insert("shift".to_string(), self.shift.clone().into());
         output
     }
     const NAME: &'static str = "ModelSamplingSD3";
@@ -332,6 +338,7 @@ impl<
     const CATEGORY: &'static str = "advanced/model";
 }
 ///**ModelSamplingStableCascade**: No description.
+#[derive(Clone)]
 pub struct ModelSamplingStableCascade<
     Model: crate::nodes::types::Model,
     Shift: crate::nodes::types::Float,
@@ -363,8 +370,8 @@ impl<
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
-        output.insert("model".to_string(), self.model.to_workflow_input());
-        output.insert("shift".to_string(), self.shift.to_workflow_input());
+        output.insert("model".to_string(), self.model.clone().into());
+        output.insert("shift".to_string(), self.shift.clone().into());
         output
     }
     const NAME: &'static str = "ModelSamplingStableCascade";
@@ -373,6 +380,7 @@ impl<
     const CATEGORY: &'static str = "advanced/model";
 }
 ///**RescaleCFG**: No description.
+#[derive(Clone)]
 pub struct RescaleCfg<
     Model: crate::nodes::types::Model,
     Multiplier: crate::nodes::types::Float,
@@ -404,8 +412,8 @@ impl<
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
-        output.insert("model".to_string(), self.model.to_workflow_input());
-        output.insert("multiplier".to_string(), self.multiplier.to_workflow_input());
+        output.insert("model".to_string(), self.model.clone().into());
+        output.insert("multiplier".to_string(), self.multiplier.clone().into());
         output
     }
     const NAME: &'static str = "RescaleCFG";

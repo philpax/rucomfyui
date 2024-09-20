@@ -22,6 +22,7 @@ pub mod out {
     }
 }
 ///**StableCascade_EmptyLatentImage**: No description.
+#[derive(Clone)]
 pub struct StableCascadeEmptyLatentImage<
     Width: crate::nodes::types::Int,
     Height: crate::nodes::types::Int,
@@ -80,10 +81,10 @@ for StableCascadeEmptyLatentImage<Width, Height, Compression, BatchSize> {
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
-        output.insert("width".to_string(), self.width.to_workflow_input());
-        output.insert("height".to_string(), self.height.to_workflow_input());
-        output.insert("compression".to_string(), self.compression.to_workflow_input());
-        output.insert("batch_size".to_string(), self.batch_size.to_workflow_input());
+        output.insert("width".to_string(), self.width.clone().into());
+        output.insert("height".to_string(), self.height.clone().into());
+        output.insert("compression".to_string(), self.compression.clone().into());
+        output.insert("batch_size".to_string(), self.batch_size.clone().into());
         output
     }
     const NAME: &'static str = "StableCascade_EmptyLatentImage";
@@ -92,6 +93,7 @@ for StableCascadeEmptyLatentImage<Width, Height, Compression, BatchSize> {
     const CATEGORY: &'static str = "latent/stable_cascade";
 }
 ///**StableCascade_StageC_VAEEncode**: No description.
+#[derive(Clone)]
 pub struct StableCascadeStageCVaeEncode<
     Image: crate::nodes::types::Image,
     Vae: crate::nodes::types::Vae,
@@ -134,9 +136,9 @@ impl<
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
-        output.insert("image".to_string(), self.image.to_workflow_input());
-        output.insert("vae".to_string(), self.vae.to_workflow_input());
-        output.insert("compression".to_string(), self.compression.to_workflow_input());
+        output.insert("image".to_string(), self.image.clone().into());
+        output.insert("vae".to_string(), self.vae.clone().into());
+        output.insert("compression".to_string(), self.compression.clone().into());
         output
     }
     const NAME: &'static str = "StableCascade_StageC_VAEEncode";

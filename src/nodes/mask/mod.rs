@@ -4,6 +4,7 @@ use std::collections::HashMap;
 use crate::workflow::{WorkflowNodeId, WorkflowInput};
 pub mod compositing;
 ///**CropMask**: No description.
+#[derive(Clone)]
 pub struct CropMask<
     Mask: crate::nodes::types::Mask,
     X: crate::nodes::types::Int,
@@ -50,11 +51,11 @@ impl<
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
-        output.insert("mask".to_string(), self.mask.to_workflow_input());
-        output.insert("x".to_string(), self.x.to_workflow_input());
-        output.insert("y".to_string(), self.y.to_workflow_input());
-        output.insert("width".to_string(), self.width.to_workflow_input());
-        output.insert("height".to_string(), self.height.to_workflow_input());
+        output.insert("mask".to_string(), self.mask.clone().into());
+        output.insert("x".to_string(), self.x.clone().into());
+        output.insert("y".to_string(), self.y.clone().into());
+        output.insert("width".to_string(), self.width.clone().into());
+        output.insert("height".to_string(), self.height.clone().into());
         output
     }
     const NAME: &'static str = "CropMask";
@@ -63,6 +64,7 @@ impl<
     const CATEGORY: &'static str = "mask";
 }
 ///**FeatherMask**: No description.
+#[derive(Clone)]
 pub struct FeatherMask<
     Mask: crate::nodes::types::Mask,
     Left: crate::nodes::types::Int,
@@ -115,11 +117,11 @@ impl<
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
-        output.insert("mask".to_string(), self.mask.to_workflow_input());
-        output.insert("left".to_string(), self.left.to_workflow_input());
-        output.insert("top".to_string(), self.top.to_workflow_input());
-        output.insert("right".to_string(), self.right.to_workflow_input());
-        output.insert("bottom".to_string(), self.bottom.to_workflow_input());
+        output.insert("mask".to_string(), self.mask.clone().into());
+        output.insert("left".to_string(), self.left.clone().into());
+        output.insert("top".to_string(), self.top.clone().into());
+        output.insert("right".to_string(), self.right.clone().into());
+        output.insert("bottom".to_string(), self.bottom.clone().into());
         output
     }
     const NAME: &'static str = "FeatherMask";
@@ -128,6 +130,7 @@ impl<
     const CATEGORY: &'static str = "mask";
 }
 ///**GrowMask**: No description.
+#[derive(Clone)]
 pub struct GrowMask<
     Mask: crate::nodes::types::Mask,
     Expand: crate::nodes::types::Int,
@@ -168,13 +171,10 @@ impl<
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
-        output.insert("mask".to_string(), self.mask.to_workflow_input());
-        output.insert("expand".to_string(), self.expand.to_workflow_input());
+        output.insert("mask".to_string(), self.mask.clone().into());
+        output.insert("expand".to_string(), self.expand.clone().into());
         output
-            .insert(
-                "tapered_corners".to_string(),
-                self.tapered_corners.to_workflow_input(),
-            );
+            .insert("tapered_corners".to_string(), self.tapered_corners.clone().into());
         output
     }
     const NAME: &'static str = "GrowMask";
@@ -183,6 +183,7 @@ impl<
     const CATEGORY: &'static str = "mask";
 }
 ///**ImageColorToMask**: No description.
+#[derive(Clone)]
 pub struct ImageColorToMask<
     Image: crate::nodes::types::Image,
     Color: crate::nodes::types::Int,
@@ -214,8 +215,8 @@ impl<
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
-        output.insert("image".to_string(), self.image.to_workflow_input());
-        output.insert("color".to_string(), self.color.to_workflow_input());
+        output.insert("image".to_string(), self.image.clone().into());
+        output.insert("color".to_string(), self.color.clone().into());
         output
     }
     const NAME: &'static str = "ImageColorToMask";
@@ -224,6 +225,7 @@ impl<
     const CATEGORY: &'static str = "mask";
 }
 ///**Convert Image to Mask**: No description.
+#[derive(Clone)]
 pub struct ImageToMask<
     Image: crate::nodes::types::Image,
     Channel: crate::nodes::types::String,
@@ -255,8 +257,8 @@ impl<
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
-        output.insert("image".to_string(), self.image.to_workflow_input());
-        output.insert("channel".to_string(), self.channel.to_workflow_input());
+        output.insert("image".to_string(), self.image.clone().into());
+        output.insert("channel".to_string(), self.channel.clone().into());
         output
     }
     const NAME: &'static str = "ImageToMask";
@@ -265,6 +267,7 @@ impl<
     const CATEGORY: &'static str = "mask";
 }
 ///**InvertMask**: No description.
+#[derive(Clone)]
 pub struct InvertMask<Mask: crate::nodes::types::Mask> {
     ///No documentation.
     pub mask: Mask,
@@ -285,7 +288,7 @@ impl<Mask: crate::nodes::types::Mask> crate::nodes::TypedNode for InvertMask<Mas
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
-        output.insert("mask".to_string(), self.mask.to_workflow_input());
+        output.insert("mask".to_string(), self.mask.clone().into());
         output
     }
     const NAME: &'static str = "InvertMask";
@@ -294,6 +297,7 @@ impl<Mask: crate::nodes::types::Mask> crate::nodes::TypedNode for InvertMask<Mas
     const CATEGORY: &'static str = "mask";
 }
 ///**Load Image (as Mask)**: No description.
+#[derive(Clone)]
 pub struct LoadImageMask<
     Image: crate::nodes::types::String,
     Channel: crate::nodes::types::String,
@@ -325,8 +329,8 @@ impl<
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
-        output.insert("image".to_string(), self.image.to_workflow_input());
-        output.insert("channel".to_string(), self.channel.to_workflow_input());
+        output.insert("image".to_string(), self.image.clone().into());
+        output.insert("channel".to_string(), self.channel.clone().into());
         output
     }
     const NAME: &'static str = "LoadImageMask";
@@ -335,6 +339,7 @@ impl<
     const CATEGORY: &'static str = "mask";
 }
 ///**MaskComposite**: No description.
+#[derive(Clone)]
 pub struct MaskComposite<
     Destination: crate::nodes::types::Mask,
     Source: crate::nodes::types::Mask,
@@ -393,11 +398,11 @@ impl<
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
-        output.insert("destination".to_string(), self.destination.to_workflow_input());
-        output.insert("source".to_string(), self.source.to_workflow_input());
-        output.insert("x".to_string(), self.x.to_workflow_input());
-        output.insert("y".to_string(), self.y.to_workflow_input());
-        output.insert("operation".to_string(), self.operation.to_workflow_input());
+        output.insert("destination".to_string(), self.destination.clone().into());
+        output.insert("source".to_string(), self.source.clone().into());
+        output.insert("x".to_string(), self.x.clone().into());
+        output.insert("y".to_string(), self.y.clone().into());
+        output.insert("operation".to_string(), self.operation.clone().into());
         output
     }
     const NAME: &'static str = "MaskComposite";
@@ -406,6 +411,7 @@ impl<
     const CATEGORY: &'static str = "mask";
 }
 ///**Convert Mask to Image**: No description.
+#[derive(Clone)]
 pub struct MaskToImage<Mask: crate::nodes::types::Mask> {
     ///No documentation.
     pub mask: Mask,
@@ -426,7 +432,7 @@ impl<Mask: crate::nodes::types::Mask> crate::nodes::TypedNode for MaskToImage<Ma
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
-        output.insert("mask".to_string(), self.mask.to_workflow_input());
+        output.insert("mask".to_string(), self.mask.clone().into());
         output
     }
     const NAME: &'static str = "MaskToImage";
@@ -435,6 +441,7 @@ impl<Mask: crate::nodes::types::Mask> crate::nodes::TypedNode for MaskToImage<Ma
     const CATEGORY: &'static str = "mask";
 }
 ///**SolidMask**: No description.
+#[derive(Clone)]
 pub struct SolidMask<
     Value: crate::nodes::types::Float,
     Width: crate::nodes::types::Int,
@@ -471,9 +478,9 @@ impl<
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
-        output.insert("value".to_string(), self.value.to_workflow_input());
-        output.insert("width".to_string(), self.width.to_workflow_input());
-        output.insert("height".to_string(), self.height.to_workflow_input());
+        output.insert("value".to_string(), self.value.clone().into());
+        output.insert("width".to_string(), self.width.clone().into());
+        output.insert("height".to_string(), self.height.clone().into());
         output
     }
     const NAME: &'static str = "SolidMask";
@@ -482,6 +489,7 @@ impl<
     const CATEGORY: &'static str = "mask";
 }
 ///**ThresholdMask**: No description.
+#[derive(Clone)]
 pub struct ThresholdMask<
     Mask: crate::nodes::types::Mask,
     Value: crate::nodes::types::Float,
@@ -513,8 +521,8 @@ impl<
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
-        output.insert("mask".to_string(), self.mask.to_workflow_input());
-        output.insert("value".to_string(), self.value.to_workflow_input());
+        output.insert("mask".to_string(), self.mask.clone().into());
+        output.insert("value".to_string(), self.value.clone().into());
         output
     }
     const NAME: &'static str = "ThresholdMask";

@@ -3,6 +3,7 @@
 use std::collections::HashMap;
 use crate::workflow::{WorkflowNodeId, WorkflowInput};
 ///**Apply Style Model**: No description.
+#[derive(Clone)]
 pub struct StyleModelApply<
     Conditioning: crate::nodes::types::Conditioning,
     StyleModel: crate::nodes::types::StyleModel,
@@ -48,12 +49,12 @@ for StyleModelApply<Conditioning, StyleModel, ClipVisionOutput> {
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
-        output.insert("conditioning".to_string(), self.conditioning.to_workflow_input());
-        output.insert("style_model".to_string(), self.style_model.to_workflow_input());
+        output.insert("conditioning".to_string(), self.conditioning.clone().into());
+        output.insert("style_model".to_string(), self.style_model.clone().into());
         output
             .insert(
                 "clip_vision_output".to_string(),
-                self.clip_vision_output.to_workflow_input(),
+                self.clip_vision_output.clone().into(),
             );
         output
     }

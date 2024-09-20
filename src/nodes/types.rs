@@ -1,13 +1,7 @@
 //! Definitions for all ComfyUI types.
-use crate::{nodes::ToWorkflowInput, workflow::{WorkflowInput, WorkflowNodeId}};
+use crate::workflow::{WorkflowInput, WorkflowNodeId};
 ///A value of ComfyUI type `AUDIO`.
-pub trait Audio: ToWorkflowInput {}
-impl ToWorkflowInput for Box<dyn Audio> {
-    fn to_workflow_input(&self) -> WorkflowInput {
-        self.as_ref().to_workflow_input()
-    }
-}
-impl Audio for Box<dyn Audio> {}
+pub trait Audio: Clone + Into<WorkflowInput> {}
 ///A node output of type [`Audio`].
 #[derive(Clone, Copy)]
 pub struct AudioOut {
@@ -22,20 +16,14 @@ impl AudioOut {
         Self { node_id, node_slot }
     }
 }
-impl ToWorkflowInput for AudioOut {
-    fn to_workflow_input(&self) -> WorkflowInput {
-        self.node_id.to_input_with_slot(self.node_slot)
+impl From<AudioOut> for WorkflowInput {
+    fn from(value: AudioOut) -> Self {
+        value.node_id.to_input_with_slot(value.node_slot)
     }
 }
 impl Audio for AudioOut {}
 ///A value of ComfyUI type `BOOLEAN`.
-pub trait Boolean: ToWorkflowInput {}
-impl ToWorkflowInput for Box<dyn Boolean> {
-    fn to_workflow_input(&self) -> WorkflowInput {
-        self.as_ref().to_workflow_input()
-    }
-}
-impl Boolean for Box<dyn Boolean> {}
+pub trait Boolean: Clone + Into<WorkflowInput> {}
 ///A node output of type [`Boolean`].
 #[derive(Clone, Copy)]
 pub struct BooleanOut {
@@ -50,20 +38,14 @@ impl BooleanOut {
         Self { node_id, node_slot }
     }
 }
-impl ToWorkflowInput for BooleanOut {
-    fn to_workflow_input(&self) -> WorkflowInput {
-        self.node_id.to_input_with_slot(self.node_slot)
+impl From<BooleanOut> for WorkflowInput {
+    fn from(value: BooleanOut) -> Self {
+        value.node_id.to_input_with_slot(value.node_slot)
     }
 }
 impl Boolean for BooleanOut {}
 ///A value of ComfyUI type `CLIP_VISION_OUTPUT`.
-pub trait ClipVisionOutput: ToWorkflowInput {}
-impl ToWorkflowInput for Box<dyn ClipVisionOutput> {
-    fn to_workflow_input(&self) -> WorkflowInput {
-        self.as_ref().to_workflow_input()
-    }
-}
-impl ClipVisionOutput for Box<dyn ClipVisionOutput> {}
+pub trait ClipVisionOutput: Clone + Into<WorkflowInput> {}
 ///A node output of type [`ClipVisionOutput`].
 #[derive(Clone, Copy)]
 pub struct ClipVisionOutputOut {
@@ -78,20 +60,14 @@ impl ClipVisionOutputOut {
         Self { node_id, node_slot }
     }
 }
-impl ToWorkflowInput for ClipVisionOutputOut {
-    fn to_workflow_input(&self) -> WorkflowInput {
-        self.node_id.to_input_with_slot(self.node_slot)
+impl From<ClipVisionOutputOut> for WorkflowInput {
+    fn from(value: ClipVisionOutputOut) -> Self {
+        value.node_id.to_input_with_slot(value.node_slot)
     }
 }
 impl ClipVisionOutput for ClipVisionOutputOut {}
 ///A value of ComfyUI type `CLIP_VISION`.
-pub trait ClipVision: ToWorkflowInput {}
-impl ToWorkflowInput for Box<dyn ClipVision> {
-    fn to_workflow_input(&self) -> WorkflowInput {
-        self.as_ref().to_workflow_input()
-    }
-}
-impl ClipVision for Box<dyn ClipVision> {}
+pub trait ClipVision: Clone + Into<WorkflowInput> {}
 ///A node output of type [`ClipVision`].
 #[derive(Clone, Copy)]
 pub struct ClipVisionOut {
@@ -106,20 +82,14 @@ impl ClipVisionOut {
         Self { node_id, node_slot }
     }
 }
-impl ToWorkflowInput for ClipVisionOut {
-    fn to_workflow_input(&self) -> WorkflowInput {
-        self.node_id.to_input_with_slot(self.node_slot)
+impl From<ClipVisionOut> for WorkflowInput {
+    fn from(value: ClipVisionOut) -> Self {
+        value.node_id.to_input_with_slot(value.node_slot)
     }
 }
 impl ClipVision for ClipVisionOut {}
 ///A value of ComfyUI type `CLIP`.
-pub trait Clip: ToWorkflowInput {}
-impl ToWorkflowInput for Box<dyn Clip> {
-    fn to_workflow_input(&self) -> WorkflowInput {
-        self.as_ref().to_workflow_input()
-    }
-}
-impl Clip for Box<dyn Clip> {}
+pub trait Clip: Clone + Into<WorkflowInput> {}
 ///A node output of type [`Clip`].
 #[derive(Clone, Copy)]
 pub struct ClipOut {
@@ -134,20 +104,14 @@ impl ClipOut {
         Self { node_id, node_slot }
     }
 }
-impl ToWorkflowInput for ClipOut {
-    fn to_workflow_input(&self) -> WorkflowInput {
-        self.node_id.to_input_with_slot(self.node_slot)
+impl From<ClipOut> for WorkflowInput {
+    fn from(value: ClipOut) -> Self {
+        value.node_id.to_input_with_slot(value.node_slot)
     }
 }
 impl Clip for ClipOut {}
 ///A value of ComfyUI type `CONDITIONING`.
-pub trait Conditioning: ToWorkflowInput {}
-impl ToWorkflowInput for Box<dyn Conditioning> {
-    fn to_workflow_input(&self) -> WorkflowInput {
-        self.as_ref().to_workflow_input()
-    }
-}
-impl Conditioning for Box<dyn Conditioning> {}
+pub trait Conditioning: Clone + Into<WorkflowInput> {}
 ///A node output of type [`Conditioning`].
 #[derive(Clone, Copy)]
 pub struct ConditioningOut {
@@ -162,20 +126,14 @@ impl ConditioningOut {
         Self { node_id, node_slot }
     }
 }
-impl ToWorkflowInput for ConditioningOut {
-    fn to_workflow_input(&self) -> WorkflowInput {
-        self.node_id.to_input_with_slot(self.node_slot)
+impl From<ConditioningOut> for WorkflowInput {
+    fn from(value: ConditioningOut) -> Self {
+        value.node_id.to_input_with_slot(value.node_slot)
     }
 }
 impl Conditioning for ConditioningOut {}
 ///A value of ComfyUI type `CONTROL_NET`.
-pub trait ControlNet: ToWorkflowInput {}
-impl ToWorkflowInput for Box<dyn ControlNet> {
-    fn to_workflow_input(&self) -> WorkflowInput {
-        self.as_ref().to_workflow_input()
-    }
-}
-impl ControlNet for Box<dyn ControlNet> {}
+pub trait ControlNet: Clone + Into<WorkflowInput> {}
 ///A node output of type [`ControlNet`].
 #[derive(Clone, Copy)]
 pub struct ControlNetOut {
@@ -190,20 +148,14 @@ impl ControlNetOut {
         Self { node_id, node_slot }
     }
 }
-impl ToWorkflowInput for ControlNetOut {
-    fn to_workflow_input(&self) -> WorkflowInput {
-        self.node_id.to_input_with_slot(self.node_slot)
+impl From<ControlNetOut> for WorkflowInput {
+    fn from(value: ControlNetOut) -> Self {
+        value.node_id.to_input_with_slot(value.node_slot)
     }
 }
 impl ControlNet for ControlNetOut {}
 ///A value of ComfyUI type `FLOAT`.
-pub trait Float: ToWorkflowInput {}
-impl ToWorkflowInput for Box<dyn Float> {
-    fn to_workflow_input(&self) -> WorkflowInput {
-        self.as_ref().to_workflow_input()
-    }
-}
-impl Float for Box<dyn Float> {}
+pub trait Float: Clone + Into<WorkflowInput> {}
 ///A node output of type [`Float`].
 #[derive(Clone, Copy)]
 pub struct FloatOut {
@@ -218,20 +170,14 @@ impl FloatOut {
         Self { node_id, node_slot }
     }
 }
-impl ToWorkflowInput for FloatOut {
-    fn to_workflow_input(&self) -> WorkflowInput {
-        self.node_id.to_input_with_slot(self.node_slot)
+impl From<FloatOut> for WorkflowInput {
+    fn from(value: FloatOut) -> Self {
+        value.node_id.to_input_with_slot(value.node_slot)
     }
 }
 impl Float for FloatOut {}
 ///A value of ComfyUI type `GLIGEN`.
-pub trait Gligen: ToWorkflowInput {}
-impl ToWorkflowInput for Box<dyn Gligen> {
-    fn to_workflow_input(&self) -> WorkflowInput {
-        self.as_ref().to_workflow_input()
-    }
-}
-impl Gligen for Box<dyn Gligen> {}
+pub trait Gligen: Clone + Into<WorkflowInput> {}
 ///A node output of type [`Gligen`].
 #[derive(Clone, Copy)]
 pub struct GligenOut {
@@ -246,20 +192,14 @@ impl GligenOut {
         Self { node_id, node_slot }
     }
 }
-impl ToWorkflowInput for GligenOut {
-    fn to_workflow_input(&self) -> WorkflowInput {
-        self.node_id.to_input_with_slot(self.node_slot)
+impl From<GligenOut> for WorkflowInput {
+    fn from(value: GligenOut) -> Self {
+        value.node_id.to_input_with_slot(value.node_slot)
     }
 }
 impl Gligen for GligenOut {}
 ///A value of ComfyUI type `GUIDER`.
-pub trait Guider: ToWorkflowInput {}
-impl ToWorkflowInput for Box<dyn Guider> {
-    fn to_workflow_input(&self) -> WorkflowInput {
-        self.as_ref().to_workflow_input()
-    }
-}
-impl Guider for Box<dyn Guider> {}
+pub trait Guider: Clone + Into<WorkflowInput> {}
 ///A node output of type [`Guider`].
 #[derive(Clone, Copy)]
 pub struct GuiderOut {
@@ -274,20 +214,14 @@ impl GuiderOut {
         Self { node_id, node_slot }
     }
 }
-impl ToWorkflowInput for GuiderOut {
-    fn to_workflow_input(&self) -> WorkflowInput {
-        self.node_id.to_input_with_slot(self.node_slot)
+impl From<GuiderOut> for WorkflowInput {
+    fn from(value: GuiderOut) -> Self {
+        value.node_id.to_input_with_slot(value.node_slot)
     }
 }
 impl Guider for GuiderOut {}
 ///A value of ComfyUI type `IMAGE`.
-pub trait Image: ToWorkflowInput {}
-impl ToWorkflowInput for Box<dyn Image> {
-    fn to_workflow_input(&self) -> WorkflowInput {
-        self.as_ref().to_workflow_input()
-    }
-}
-impl Image for Box<dyn Image> {}
+pub trait Image: Clone + Into<WorkflowInput> {}
 ///A node output of type [`Image`].
 #[derive(Clone, Copy)]
 pub struct ImageOut {
@@ -302,20 +236,14 @@ impl ImageOut {
         Self { node_id, node_slot }
     }
 }
-impl ToWorkflowInput for ImageOut {
-    fn to_workflow_input(&self) -> WorkflowInput {
-        self.node_id.to_input_with_slot(self.node_slot)
+impl From<ImageOut> for WorkflowInput {
+    fn from(value: ImageOut) -> Self {
+        value.node_id.to_input_with_slot(value.node_slot)
     }
 }
 impl Image for ImageOut {}
 ///A value of ComfyUI type `INPAINT_MODEL`.
-pub trait InpaintModel: ToWorkflowInput {}
-impl ToWorkflowInput for Box<dyn InpaintModel> {
-    fn to_workflow_input(&self) -> WorkflowInput {
-        self.as_ref().to_workflow_input()
-    }
-}
-impl InpaintModel for Box<dyn InpaintModel> {}
+pub trait InpaintModel: Clone + Into<WorkflowInput> {}
 ///A node output of type [`InpaintModel`].
 #[derive(Clone, Copy)]
 pub struct InpaintModelOut {
@@ -330,20 +258,14 @@ impl InpaintModelOut {
         Self { node_id, node_slot }
     }
 }
-impl ToWorkflowInput for InpaintModelOut {
-    fn to_workflow_input(&self) -> WorkflowInput {
-        self.node_id.to_input_with_slot(self.node_slot)
+impl From<InpaintModelOut> for WorkflowInput {
+    fn from(value: InpaintModelOut) -> Self {
+        value.node_id.to_input_with_slot(value.node_slot)
     }
 }
 impl InpaintModel for InpaintModelOut {}
 ///A value of ComfyUI type `INPAINT_PATCH`.
-pub trait InpaintPatch: ToWorkflowInput {}
-impl ToWorkflowInput for Box<dyn InpaintPatch> {
-    fn to_workflow_input(&self) -> WorkflowInput {
-        self.as_ref().to_workflow_input()
-    }
-}
-impl InpaintPatch for Box<dyn InpaintPatch> {}
+pub trait InpaintPatch: Clone + Into<WorkflowInput> {}
 ///A node output of type [`InpaintPatch`].
 #[derive(Clone, Copy)]
 pub struct InpaintPatchOut {
@@ -358,20 +280,14 @@ impl InpaintPatchOut {
         Self { node_id, node_slot }
     }
 }
-impl ToWorkflowInput for InpaintPatchOut {
-    fn to_workflow_input(&self) -> WorkflowInput {
-        self.node_id.to_input_with_slot(self.node_slot)
+impl From<InpaintPatchOut> for WorkflowInput {
+    fn from(value: InpaintPatchOut) -> Self {
+        value.node_id.to_input_with_slot(value.node_slot)
     }
 }
 impl InpaintPatch for InpaintPatchOut {}
 ///A value of ComfyUI type `INT`.
-pub trait Int: ToWorkflowInput {}
-impl ToWorkflowInput for Box<dyn Int> {
-    fn to_workflow_input(&self) -> WorkflowInput {
-        self.as_ref().to_workflow_input()
-    }
-}
-impl Int for Box<dyn Int> {}
+pub trait Int: Clone + Into<WorkflowInput> {}
 ///A node output of type [`Int`].
 #[derive(Clone, Copy)]
 pub struct IntOut {
@@ -386,20 +302,14 @@ impl IntOut {
         Self { node_id, node_slot }
     }
 }
-impl ToWorkflowInput for IntOut {
-    fn to_workflow_input(&self) -> WorkflowInput {
-        self.node_id.to_input_with_slot(self.node_slot)
+impl From<IntOut> for WorkflowInput {
+    fn from(value: IntOut) -> Self {
+        value.node_id.to_input_with_slot(value.node_slot)
     }
 }
 impl Int for IntOut {}
 ///A value of ComfyUI type `LATENT`.
-pub trait Latent: ToWorkflowInput {}
-impl ToWorkflowInput for Box<dyn Latent> {
-    fn to_workflow_input(&self) -> WorkflowInput {
-        self.as_ref().to_workflow_input()
-    }
-}
-impl Latent for Box<dyn Latent> {}
+pub trait Latent: Clone + Into<WorkflowInput> {}
 ///A node output of type [`Latent`].
 #[derive(Clone, Copy)]
 pub struct LatentOut {
@@ -414,20 +324,14 @@ impl LatentOut {
         Self { node_id, node_slot }
     }
 }
-impl ToWorkflowInput for LatentOut {
-    fn to_workflow_input(&self) -> WorkflowInput {
-        self.node_id.to_input_with_slot(self.node_slot)
+impl From<LatentOut> for WorkflowInput {
+    fn from(value: LatentOut) -> Self {
+        value.node_id.to_input_with_slot(value.node_slot)
     }
 }
 impl Latent for LatentOut {}
 ///A value of ComfyUI type `MASK`.
-pub trait Mask: ToWorkflowInput {}
-impl ToWorkflowInput for Box<dyn Mask> {
-    fn to_workflow_input(&self) -> WorkflowInput {
-        self.as_ref().to_workflow_input()
-    }
-}
-impl Mask for Box<dyn Mask> {}
+pub trait Mask: Clone + Into<WorkflowInput> {}
 ///A node output of type [`Mask`].
 #[derive(Clone, Copy)]
 pub struct MaskOut {
@@ -442,20 +346,14 @@ impl MaskOut {
         Self { node_id, node_slot }
     }
 }
-impl ToWorkflowInput for MaskOut {
-    fn to_workflow_input(&self) -> WorkflowInput {
-        self.node_id.to_input_with_slot(self.node_slot)
+impl From<MaskOut> for WorkflowInput {
+    fn from(value: MaskOut) -> Self {
+        value.node_id.to_input_with_slot(value.node_slot)
     }
 }
 impl Mask for MaskOut {}
 ///A value of ComfyUI type `MODEL`.
-pub trait Model: ToWorkflowInput {}
-impl ToWorkflowInput for Box<dyn Model> {
-    fn to_workflow_input(&self) -> WorkflowInput {
-        self.as_ref().to_workflow_input()
-    }
-}
-impl Model for Box<dyn Model> {}
+pub trait Model: Clone + Into<WorkflowInput> {}
 ///A node output of type [`Model`].
 #[derive(Clone, Copy)]
 pub struct ModelOut {
@@ -470,20 +368,14 @@ impl ModelOut {
         Self { node_id, node_slot }
     }
 }
-impl ToWorkflowInput for ModelOut {
-    fn to_workflow_input(&self) -> WorkflowInput {
-        self.node_id.to_input_with_slot(self.node_slot)
+impl From<ModelOut> for WorkflowInput {
+    fn from(value: ModelOut) -> Self {
+        value.node_id.to_input_with_slot(value.node_slot)
     }
 }
 impl Model for ModelOut {}
 ///A value of ComfyUI type `NOISE`.
-pub trait Noise: ToWorkflowInput {}
-impl ToWorkflowInput for Box<dyn Noise> {
-    fn to_workflow_input(&self) -> WorkflowInput {
-        self.as_ref().to_workflow_input()
-    }
-}
-impl Noise for Box<dyn Noise> {}
+pub trait Noise: Clone + Into<WorkflowInput> {}
 ///A node output of type [`Noise`].
 #[derive(Clone, Copy)]
 pub struct NoiseOut {
@@ -498,20 +390,14 @@ impl NoiseOut {
         Self { node_id, node_slot }
     }
 }
-impl ToWorkflowInput for NoiseOut {
-    fn to_workflow_input(&self) -> WorkflowInput {
-        self.node_id.to_input_with_slot(self.node_slot)
+impl From<NoiseOut> for WorkflowInput {
+    fn from(value: NoiseOut) -> Self {
+        value.node_id.to_input_with_slot(value.node_slot)
     }
 }
 impl Noise for NoiseOut {}
 ///A value of ComfyUI type `PHOTOMAKER`.
-pub trait Photomaker: ToWorkflowInput {}
-impl ToWorkflowInput for Box<dyn Photomaker> {
-    fn to_workflow_input(&self) -> WorkflowInput {
-        self.as_ref().to_workflow_input()
-    }
-}
-impl Photomaker for Box<dyn Photomaker> {}
+pub trait Photomaker: Clone + Into<WorkflowInput> {}
 ///A node output of type [`Photomaker`].
 #[derive(Clone, Copy)]
 pub struct PhotomakerOut {
@@ -526,20 +412,14 @@ impl PhotomakerOut {
         Self { node_id, node_slot }
     }
 }
-impl ToWorkflowInput for PhotomakerOut {
-    fn to_workflow_input(&self) -> WorkflowInput {
-        self.node_id.to_input_with_slot(self.node_slot)
+impl From<PhotomakerOut> for WorkflowInput {
+    fn from(value: PhotomakerOut) -> Self {
+        value.node_id.to_input_with_slot(value.node_slot)
     }
 }
 impl Photomaker for PhotomakerOut {}
 ///A value of ComfyUI type `SAMPLER`.
-pub trait Sampler: ToWorkflowInput {}
-impl ToWorkflowInput for Box<dyn Sampler> {
-    fn to_workflow_input(&self) -> WorkflowInput {
-        self.as_ref().to_workflow_input()
-    }
-}
-impl Sampler for Box<dyn Sampler> {}
+pub trait Sampler: Clone + Into<WorkflowInput> {}
 ///A node output of type [`Sampler`].
 #[derive(Clone, Copy)]
 pub struct SamplerOut {
@@ -554,20 +434,14 @@ impl SamplerOut {
         Self { node_id, node_slot }
     }
 }
-impl ToWorkflowInput for SamplerOut {
-    fn to_workflow_input(&self) -> WorkflowInput {
-        self.node_id.to_input_with_slot(self.node_slot)
+impl From<SamplerOut> for WorkflowInput {
+    fn from(value: SamplerOut) -> Self {
+        value.node_id.to_input_with_slot(value.node_slot)
     }
 }
 impl Sampler for SamplerOut {}
 ///A value of ComfyUI type `STRING`.
-pub trait String: ToWorkflowInput {}
-impl ToWorkflowInput for Box<dyn String> {
-    fn to_workflow_input(&self) -> WorkflowInput {
-        self.as_ref().to_workflow_input()
-    }
-}
-impl String for Box<dyn String> {}
+pub trait String: Clone + Into<WorkflowInput> {}
 ///A node output of type [`String`].
 #[derive(Clone, Copy)]
 pub struct StringOut {
@@ -582,20 +456,14 @@ impl StringOut {
         Self { node_id, node_slot }
     }
 }
-impl ToWorkflowInput for StringOut {
-    fn to_workflow_input(&self) -> WorkflowInput {
-        self.node_id.to_input_with_slot(self.node_slot)
+impl From<StringOut> for WorkflowInput {
+    fn from(value: StringOut) -> Self {
+        value.node_id.to_input_with_slot(value.node_slot)
     }
 }
 impl String for StringOut {}
 ///A value of ComfyUI type `SIGMAS`.
-pub trait Sigmas: ToWorkflowInput {}
-impl ToWorkflowInput for Box<dyn Sigmas> {
-    fn to_workflow_input(&self) -> WorkflowInput {
-        self.as_ref().to_workflow_input()
-    }
-}
-impl Sigmas for Box<dyn Sigmas> {}
+pub trait Sigmas: Clone + Into<WorkflowInput> {}
 ///A node output of type [`Sigmas`].
 #[derive(Clone, Copy)]
 pub struct SigmasOut {
@@ -610,20 +478,14 @@ impl SigmasOut {
         Self { node_id, node_slot }
     }
 }
-impl ToWorkflowInput for SigmasOut {
-    fn to_workflow_input(&self) -> WorkflowInput {
-        self.node_id.to_input_with_slot(self.node_slot)
+impl From<SigmasOut> for WorkflowInput {
+    fn from(value: SigmasOut) -> Self {
+        value.node_id.to_input_with_slot(value.node_slot)
     }
 }
 impl Sigmas for SigmasOut {}
 ///A value of ComfyUI type `STYLE_MODEL`.
-pub trait StyleModel: ToWorkflowInput {}
-impl ToWorkflowInput for Box<dyn StyleModel> {
-    fn to_workflow_input(&self) -> WorkflowInput {
-        self.as_ref().to_workflow_input()
-    }
-}
-impl StyleModel for Box<dyn StyleModel> {}
+pub trait StyleModel: Clone + Into<WorkflowInput> {}
 ///A node output of type [`StyleModel`].
 #[derive(Clone, Copy)]
 pub struct StyleModelOut {
@@ -638,20 +500,14 @@ impl StyleModelOut {
         Self { node_id, node_slot }
     }
 }
-impl ToWorkflowInput for StyleModelOut {
-    fn to_workflow_input(&self) -> WorkflowInput {
-        self.node_id.to_input_with_slot(self.node_slot)
+impl From<StyleModelOut> for WorkflowInput {
+    fn from(value: StyleModelOut) -> Self {
+        value.node_id.to_input_with_slot(value.node_slot)
     }
 }
 impl StyleModel for StyleModelOut {}
 ///A value of ComfyUI type `UPSCALE_MODEL`.
-pub trait UpscaleModel: ToWorkflowInput {}
-impl ToWorkflowInput for Box<dyn UpscaleModel> {
-    fn to_workflow_input(&self) -> WorkflowInput {
-        self.as_ref().to_workflow_input()
-    }
-}
-impl UpscaleModel for Box<dyn UpscaleModel> {}
+pub trait UpscaleModel: Clone + Into<WorkflowInput> {}
 ///A node output of type [`UpscaleModel`].
 #[derive(Clone, Copy)]
 pub struct UpscaleModelOut {
@@ -666,20 +522,14 @@ impl UpscaleModelOut {
         Self { node_id, node_slot }
     }
 }
-impl ToWorkflowInput for UpscaleModelOut {
-    fn to_workflow_input(&self) -> WorkflowInput {
-        self.node_id.to_input_with_slot(self.node_slot)
+impl From<UpscaleModelOut> for WorkflowInput {
+    fn from(value: UpscaleModelOut) -> Self {
+        value.node_id.to_input_with_slot(value.node_slot)
     }
 }
 impl UpscaleModel for UpscaleModelOut {}
 ///A value of ComfyUI type `VAE`.
-pub trait Vae: ToWorkflowInput {}
-impl ToWorkflowInput for Box<dyn Vae> {
-    fn to_workflow_input(&self) -> WorkflowInput {
-        self.as_ref().to_workflow_input()
-    }
-}
-impl Vae for Box<dyn Vae> {}
+pub trait Vae: Clone + Into<WorkflowInput> {}
 ///A node output of type [`Vae`].
 #[derive(Clone, Copy)]
 pub struct VaeOut {
@@ -694,20 +544,14 @@ impl VaeOut {
         Self { node_id, node_slot }
     }
 }
-impl ToWorkflowInput for VaeOut {
-    fn to_workflow_input(&self) -> WorkflowInput {
-        self.node_id.to_input_with_slot(self.node_slot)
+impl From<VaeOut> for WorkflowInput {
+    fn from(value: VaeOut) -> Self {
+        value.node_id.to_input_with_slot(value.node_slot)
     }
 }
 impl Vae for VaeOut {}
 ///A value of ComfyUI type `WEBCAM`.
-pub trait Webcam: ToWorkflowInput {}
-impl ToWorkflowInput for Box<dyn Webcam> {
-    fn to_workflow_input(&self) -> WorkflowInput {
-        self.as_ref().to_workflow_input()
-    }
-}
-impl Webcam for Box<dyn Webcam> {}
+pub trait Webcam: Clone + Into<WorkflowInput> {}
 ///A node output of type [`Webcam`].
 #[derive(Clone, Copy)]
 pub struct WebcamOut {
@@ -722,9 +566,14 @@ impl WebcamOut {
         Self { node_id, node_slot }
     }
 }
-impl ToWorkflowInput for WebcamOut {
-    fn to_workflow_input(&self) -> WorkflowInput {
-        self.node_id.to_input_with_slot(self.node_slot)
+impl From<WebcamOut> for WorkflowInput {
+    fn from(value: WebcamOut) -> Self {
+        value.node_id.to_input_with_slot(value.node_slot)
     }
 }
 impl Webcam for WebcamOut {}
+impl String for std::string::String {}
+impl<'a> String for &'a str {}
+impl Float for f32 {}
+impl Int for i32 {}
+impl Boolean for bool {}

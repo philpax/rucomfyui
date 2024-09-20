@@ -3,6 +3,7 @@
 use std::collections::HashMap;
 use crate::workflow::{WorkflowNodeId, WorkflowInput};
 ///**AlignYourStepsScheduler**: No description.
+#[derive(Clone)]
 pub struct AlignYourStepsScheduler<
     ModelType: crate::nodes::types::String,
     Steps: crate::nodes::types::Int,
@@ -39,9 +40,9 @@ impl<
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
-        output.insert("model_type".to_string(), self.model_type.to_workflow_input());
-        output.insert("steps".to_string(), self.steps.to_workflow_input());
-        output.insert("denoise".to_string(), self.denoise.to_workflow_input());
+        output.insert("model_type".to_string(), self.model_type.clone().into());
+        output.insert("steps".to_string(), self.steps.clone().into());
+        output.insert("denoise".to_string(), self.denoise.clone().into());
         output
     }
     const NAME: &'static str = "AlignYourStepsScheduler";
@@ -50,6 +51,7 @@ impl<
     const CATEGORY: &'static str = "sampling/custom_sampling/schedulers";
 }
 ///**BasicScheduler**: No description.
+#[derive(Clone)]
 pub struct BasicScheduler<
     Model: crate::nodes::types::Model,
     Scheduler: crate::nodes::types::String,
@@ -101,10 +103,10 @@ impl<
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
-        output.insert("model".to_string(), self.model.to_workflow_input());
-        output.insert("scheduler".to_string(), self.scheduler.to_workflow_input());
-        output.insert("steps".to_string(), self.steps.to_workflow_input());
-        output.insert("denoise".to_string(), self.denoise.to_workflow_input());
+        output.insert("model".to_string(), self.model.clone().into());
+        output.insert("scheduler".to_string(), self.scheduler.clone().into());
+        output.insert("steps".to_string(), self.steps.clone().into());
+        output.insert("denoise".to_string(), self.denoise.clone().into());
         output
     }
     const NAME: &'static str = "BasicScheduler";
@@ -113,6 +115,7 @@ impl<
     const CATEGORY: &'static str = "sampling/custom_sampling/schedulers";
 }
 ///**BetaSamplingScheduler**: No description.
+#[derive(Clone)]
 pub struct BetaSamplingScheduler<
     Model: crate::nodes::types::Model,
     Steps: crate::nodes::types::Int,
@@ -154,10 +157,10 @@ impl<
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
-        output.insert("model".to_string(), self.model.to_workflow_input());
-        output.insert("steps".to_string(), self.steps.to_workflow_input());
-        output.insert("alpha".to_string(), self.alpha.to_workflow_input());
-        output.insert("beta".to_string(), self.beta.to_workflow_input());
+        output.insert("model".to_string(), self.model.clone().into());
+        output.insert("steps".to_string(), self.steps.clone().into());
+        output.insert("alpha".to_string(), self.alpha.clone().into());
+        output.insert("beta".to_string(), self.beta.clone().into());
         output
     }
     const NAME: &'static str = "BetaSamplingScheduler";
@@ -166,6 +169,7 @@ impl<
     const CATEGORY: &'static str = "sampling/custom_sampling/schedulers";
 }
 ///**ExponentialScheduler**: No description.
+#[derive(Clone)]
 pub struct ExponentialScheduler<
     Steps: crate::nodes::types::Int,
     SigmaMax: crate::nodes::types::Float,
@@ -206,9 +210,9 @@ impl<
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
-        output.insert("steps".to_string(), self.steps.to_workflow_input());
-        output.insert("sigma_max".to_string(), self.sigma_max.to_workflow_input());
-        output.insert("sigma_min".to_string(), self.sigma_min.to_workflow_input());
+        output.insert("steps".to_string(), self.steps.clone().into());
+        output.insert("sigma_max".to_string(), self.sigma_max.clone().into());
+        output.insert("sigma_min".to_string(), self.sigma_min.clone().into());
         output
     }
     const NAME: &'static str = "ExponentialScheduler";
@@ -217,6 +221,7 @@ impl<
     const CATEGORY: &'static str = "sampling/custom_sampling/schedulers";
 }
 ///**GITSScheduler**: No description.
+#[derive(Clone)]
 pub struct GitsScheduler<
     Coeff: crate::nodes::types::Float,
     Steps: crate::nodes::types::Int,
@@ -253,9 +258,9 @@ impl<
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
-        output.insert("coeff".to_string(), self.coeff.to_workflow_input());
-        output.insert("steps".to_string(), self.steps.to_workflow_input());
-        output.insert("denoise".to_string(), self.denoise.to_workflow_input());
+        output.insert("coeff".to_string(), self.coeff.clone().into());
+        output.insert("steps".to_string(), self.steps.clone().into());
+        output.insert("denoise".to_string(), self.denoise.clone().into());
         output
     }
     const NAME: &'static str = "GITSScheduler";
@@ -264,6 +269,7 @@ impl<
     const CATEGORY: &'static str = "sampling/custom_sampling/schedulers";
 }
 ///**KarrasScheduler**: No description.
+#[derive(Clone)]
 pub struct KarrasScheduler<
     Steps: crate::nodes::types::Int,
     SigmaMax: crate::nodes::types::Float,
@@ -315,10 +321,10 @@ impl<
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
-        output.insert("steps".to_string(), self.steps.to_workflow_input());
-        output.insert("sigma_max".to_string(), self.sigma_max.to_workflow_input());
-        output.insert("sigma_min".to_string(), self.sigma_min.to_workflow_input());
-        output.insert("rho".to_string(), self.rho.to_workflow_input());
+        output.insert("steps".to_string(), self.steps.clone().into());
+        output.insert("sigma_max".to_string(), self.sigma_max.clone().into());
+        output.insert("sigma_min".to_string(), self.sigma_min.clone().into());
+        output.insert("rho".to_string(), self.rho.clone().into());
         output
     }
     const NAME: &'static str = "KarrasScheduler";
@@ -327,6 +333,7 @@ impl<
     const CATEGORY: &'static str = "sampling/custom_sampling/schedulers";
 }
 ///**PolyexponentialScheduler**: No description.
+#[derive(Clone)]
 pub struct PolyexponentialScheduler<
     Steps: crate::nodes::types::Int,
     SigmaMax: crate::nodes::types::Float,
@@ -378,10 +385,10 @@ impl<
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
-        output.insert("steps".to_string(), self.steps.to_workflow_input());
-        output.insert("sigma_max".to_string(), self.sigma_max.to_workflow_input());
-        output.insert("sigma_min".to_string(), self.sigma_min.to_workflow_input());
-        output.insert("rho".to_string(), self.rho.to_workflow_input());
+        output.insert("steps".to_string(), self.steps.clone().into());
+        output.insert("sigma_max".to_string(), self.sigma_max.clone().into());
+        output.insert("sigma_min".to_string(), self.sigma_min.clone().into());
+        output.insert("rho".to_string(), self.rho.clone().into());
         output
     }
     const NAME: &'static str = "PolyexponentialScheduler";
@@ -390,6 +397,7 @@ impl<
     const CATEGORY: &'static str = "sampling/custom_sampling/schedulers";
 }
 ///**SDTurboScheduler**: No description.
+#[derive(Clone)]
 pub struct SdTurboScheduler<
     Model: crate::nodes::types::Model,
     Steps: crate::nodes::types::Int,
@@ -426,9 +434,9 @@ impl<
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
-        output.insert("model".to_string(), self.model.to_workflow_input());
-        output.insert("steps".to_string(), self.steps.to_workflow_input());
-        output.insert("denoise".to_string(), self.denoise.to_workflow_input());
+        output.insert("model".to_string(), self.model.clone().into());
+        output.insert("steps".to_string(), self.steps.clone().into());
+        output.insert("denoise".to_string(), self.denoise.clone().into());
         output
     }
     const NAME: &'static str = "SDTurboScheduler";
@@ -437,6 +445,7 @@ impl<
     const CATEGORY: &'static str = "sampling/custom_sampling/schedulers";
 }
 ///**VPScheduler**: No description.
+#[derive(Clone)]
 pub struct VpScheduler<
     Steps: crate::nodes::types::Int,
     BetaD: crate::nodes::types::Float,
@@ -483,10 +492,10 @@ impl<
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
-        output.insert("steps".to_string(), self.steps.to_workflow_input());
-        output.insert("beta_d".to_string(), self.beta_d.to_workflow_input());
-        output.insert("beta_min".to_string(), self.beta_min.to_workflow_input());
-        output.insert("eps_s".to_string(), self.eps_s.to_workflow_input());
+        output.insert("steps".to_string(), self.steps.clone().into());
+        output.insert("beta_d".to_string(), self.beta_d.clone().into());
+        output.insert("beta_min".to_string(), self.beta_min.clone().into());
+        output.insert("eps_s".to_string(), self.eps_s.clone().into());
         output
     }
     const NAME: &'static str = "VPScheduler";

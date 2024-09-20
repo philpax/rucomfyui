@@ -27,6 +27,7 @@ pub mod out {
     }
 }
 ///**SamplerCustom**: No description.
+#[derive(Clone)]
 pub struct SamplerCustom<
     Model: crate::nodes::types::Model,
     AddNoise: crate::nodes::types::Boolean,
@@ -140,15 +141,15 @@ for SamplerCustom<
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
-        output.insert("model".to_string(), self.model.to_workflow_input());
-        output.insert("add_noise".to_string(), self.add_noise.to_workflow_input());
-        output.insert("noise_seed".to_string(), self.noise_seed.to_workflow_input());
-        output.insert("cfg".to_string(), self.cfg.to_workflow_input());
-        output.insert("positive".to_string(), self.positive.to_workflow_input());
-        output.insert("negative".to_string(), self.negative.to_workflow_input());
-        output.insert("sampler".to_string(), self.sampler.to_workflow_input());
-        output.insert("sigmas".to_string(), self.sigmas.to_workflow_input());
-        output.insert("latent_image".to_string(), self.latent_image.to_workflow_input());
+        output.insert("model".to_string(), self.model.clone().into());
+        output.insert("add_noise".to_string(), self.add_noise.clone().into());
+        output.insert("noise_seed".to_string(), self.noise_seed.clone().into());
+        output.insert("cfg".to_string(), self.cfg.clone().into());
+        output.insert("positive".to_string(), self.positive.clone().into());
+        output.insert("negative".to_string(), self.negative.clone().into());
+        output.insert("sampler".to_string(), self.sampler.clone().into());
+        output.insert("sigmas".to_string(), self.sigmas.clone().into());
+        output.insert("latent_image".to_string(), self.latent_image.clone().into());
         output
     }
     const NAME: &'static str = "SamplerCustom";
@@ -157,6 +158,7 @@ for SamplerCustom<
     const CATEGORY: &'static str = "sampling/custom_sampling";
 }
 ///**SamplerCustomAdvanced**: No description.
+#[derive(Clone)]
 pub struct SamplerCustomAdvanced<
     Noise: crate::nodes::types::Noise,
     Guider: crate::nodes::types::Guider,
@@ -222,11 +224,11 @@ for SamplerCustomAdvanced<Noise, Guider, Sampler, Sigmas, LatentImage> {
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
-        output.insert("noise".to_string(), self.noise.to_workflow_input());
-        output.insert("guider".to_string(), self.guider.to_workflow_input());
-        output.insert("sampler".to_string(), self.sampler.to_workflow_input());
-        output.insert("sigmas".to_string(), self.sigmas.to_workflow_input());
-        output.insert("latent_image".to_string(), self.latent_image.to_workflow_input());
+        output.insert("noise".to_string(), self.noise.clone().into());
+        output.insert("guider".to_string(), self.guider.clone().into());
+        output.insert("sampler".to_string(), self.sampler.clone().into());
+        output.insert("sigmas".to_string(), self.sigmas.clone().into());
+        output.insert("latent_image".to_string(), self.latent_image.clone().into());
         output
     }
     const NAME: &'static str = "SamplerCustomAdvanced";

@@ -4,6 +4,7 @@ use std::collections::HashMap;
 use crate::workflow::{WorkflowNodeId, WorkflowInput};
 pub mod flux;
 ///**CLIPTextEncodeHunyuanDiT**: No description.
+#[derive(Clone)]
 pub struct ClipTextEncodeHunyuanDiT<
     Clip: crate::nodes::types::Clip,
     Bert: crate::nodes::types::String,
@@ -40,9 +41,9 @@ impl<
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
-        output.insert("clip".to_string(), self.clip.to_workflow_input());
-        output.insert("bert".to_string(), self.bert.to_workflow_input());
-        output.insert("mt5xl".to_string(), self.mt_5_xl.to_workflow_input());
+        output.insert("clip".to_string(), self.clip.clone().into());
+        output.insert("bert".to_string(), self.bert.clone().into());
+        output.insert("mt5xl".to_string(), self.mt_5_xl.clone().into());
         output
     }
     const NAME: &'static str = "CLIPTextEncodeHunyuanDiT";
@@ -51,6 +52,7 @@ impl<
     const CATEGORY: &'static str = "advanced/conditioning";
 }
 ///**CLIPTextEncodeSD3**: No description.
+#[derive(Clone)]
 pub struct ClipTextEncodeSd3<
     Clip: crate::nodes::types::Clip,
     ClipL: crate::nodes::types::String,
@@ -110,12 +112,11 @@ for ClipTextEncodeSd3<Clip, ClipL, ClipG, T5Xxl, EmptyPadding> {
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
-        output.insert("clip".to_string(), self.clip.to_workflow_input());
-        output.insert("clip_l".to_string(), self.clip_l.to_workflow_input());
-        output.insert("clip_g".to_string(), self.clip_g.to_workflow_input());
-        output.insert("t5xxl".to_string(), self.t_5_xxl.to_workflow_input());
-        output
-            .insert("empty_padding".to_string(), self.empty_padding.to_workflow_input());
+        output.insert("clip".to_string(), self.clip.clone().into());
+        output.insert("clip_l".to_string(), self.clip_l.clone().into());
+        output.insert("clip_g".to_string(), self.clip_g.clone().into());
+        output.insert("t5xxl".to_string(), self.t_5_xxl.clone().into());
+        output.insert("empty_padding".to_string(), self.empty_padding.clone().into());
         output
     }
     const NAME: &'static str = "CLIPTextEncodeSD3";
@@ -124,6 +125,7 @@ for ClipTextEncodeSd3<Clip, ClipL, ClipG, T5Xxl, EmptyPadding> {
     const CATEGORY: &'static str = "advanced/conditioning";
 }
 ///**CLIPTextEncodeSDXL**: No description.
+#[derive(Clone)]
 pub struct ClipTextEncodeSdxl<
     Width: crate::nodes::types::Int,
     Height: crate::nodes::types::Int,
@@ -231,16 +233,15 @@ for ClipTextEncodeSdxl<
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
-        output.insert("width".to_string(), self.width.to_workflow_input());
-        output.insert("height".to_string(), self.height.to_workflow_input());
-        output.insert("crop_w".to_string(), self.crop_w.to_workflow_input());
-        output.insert("crop_h".to_string(), self.crop_h.to_workflow_input());
-        output.insert("target_width".to_string(), self.target_width.to_workflow_input());
-        output
-            .insert("target_height".to_string(), self.target_height.to_workflow_input());
-        output.insert("text_g".to_string(), self.text_g.to_workflow_input());
-        output.insert("clip".to_string(), self.clip.to_workflow_input());
-        output.insert("text_l".to_string(), self.text_l.to_workflow_input());
+        output.insert("width".to_string(), self.width.clone().into());
+        output.insert("height".to_string(), self.height.clone().into());
+        output.insert("crop_w".to_string(), self.crop_w.clone().into());
+        output.insert("crop_h".to_string(), self.crop_h.clone().into());
+        output.insert("target_width".to_string(), self.target_width.clone().into());
+        output.insert("target_height".to_string(), self.target_height.clone().into());
+        output.insert("text_g".to_string(), self.text_g.clone().into());
+        output.insert("clip".to_string(), self.clip.clone().into());
+        output.insert("text_l".to_string(), self.text_l.clone().into());
         output
     }
     const NAME: &'static str = "CLIPTextEncodeSDXL";
@@ -249,6 +250,7 @@ for ClipTextEncodeSdxl<
     const CATEGORY: &'static str = "advanced/conditioning";
 }
 ///**CLIPTextEncodeSDXLRefiner**: No description.
+#[derive(Clone)]
 pub struct ClipTextEncodeSdxlRefiner<
     Ascore: crate::nodes::types::Float,
     Width: crate::nodes::types::Int,
@@ -308,11 +310,11 @@ for ClipTextEncodeSdxlRefiner<Ascore, Width, Height, Text, Clip> {
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
-        output.insert("ascore".to_string(), self.ascore.to_workflow_input());
-        output.insert("width".to_string(), self.width.to_workflow_input());
-        output.insert("height".to_string(), self.height.to_workflow_input());
-        output.insert("text".to_string(), self.text.to_workflow_input());
-        output.insert("clip".to_string(), self.clip.to_workflow_input());
+        output.insert("ascore".to_string(), self.ascore.clone().into());
+        output.insert("width".to_string(), self.width.clone().into());
+        output.insert("height".to_string(), self.height.clone().into());
+        output.insert("text".to_string(), self.text.clone().into());
+        output.insert("clip".to_string(), self.clip.clone().into());
         output
     }
     const NAME: &'static str = "CLIPTextEncodeSDXLRefiner";
@@ -321,6 +323,7 @@ for ClipTextEncodeSdxlRefiner<Ascore, Width, Height, Text, Clip> {
     const CATEGORY: &'static str = "advanced/conditioning";
 }
 ///**ConditioningSetTimestepRange**: No description.
+#[derive(Clone)]
 pub struct ConditioningSetTimestepRange<
     Conditioning: crate::nodes::types::Conditioning,
     Start: crate::nodes::types::Float,
@@ -357,9 +360,9 @@ impl<
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
-        output.insert("conditioning".to_string(), self.conditioning.to_workflow_input());
-        output.insert("start".to_string(), self.start.to_workflow_input());
-        output.insert("end".to_string(), self.end.to_workflow_input());
+        output.insert("conditioning".to_string(), self.conditioning.clone().into());
+        output.insert("start".to_string(), self.start.clone().into());
+        output.insert("end".to_string(), self.end.clone().into());
         output
     }
     const NAME: &'static str = "ConditioningSetTimestepRange";
@@ -368,6 +371,7 @@ impl<
     const CATEGORY: &'static str = "advanced/conditioning";
 }
 ///**ConditioningZeroOut**: No description.
+#[derive(Clone)]
 pub struct ConditioningZeroOut<Conditioning: crate::nodes::types::Conditioning> {
     ///No documentation.
     pub conditioning: Conditioning,
@@ -389,7 +393,7 @@ for ConditioningZeroOut<Conditioning> {
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
-        output.insert("conditioning".to_string(), self.conditioning.to_workflow_input());
+        output.insert("conditioning".to_string(), self.conditioning.clone().into());
         output
     }
     const NAME: &'static str = "ConditioningZeroOut";

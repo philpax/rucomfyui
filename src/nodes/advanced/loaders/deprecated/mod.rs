@@ -16,6 +16,7 @@ pub mod out {
     }
 }
 ///**DiffusersLoader**: No description.
+#[derive(Clone)]
 pub struct DiffusersLoader<ModelPath: crate::nodes::types::String> {
     ///No documentation.
     pub model_path: ModelPath,
@@ -47,7 +48,7 @@ for DiffusersLoader<ModelPath> {
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
-        output.insert("model_path".to_string(), self.model_path.to_workflow_input());
+        output.insert("model_path".to_string(), self.model_path.clone().into());
         output
     }
     const NAME: &'static str = "DiffusersLoader";

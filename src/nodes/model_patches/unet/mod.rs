@@ -3,6 +3,7 @@
 use std::collections::HashMap;
 use crate::workflow::{WorkflowNodeId, WorkflowInput};
 ///**FreeU**: No description.
+#[derive(Clone)]
 pub struct FreeU<
     Model: crate::nodes::types::Model,
     B1: crate::nodes::types::Float,
@@ -49,11 +50,11 @@ impl<
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
-        output.insert("model".to_string(), self.model.to_workflow_input());
-        output.insert("b1".to_string(), self.b_1.to_workflow_input());
-        output.insert("b2".to_string(), self.b_2.to_workflow_input());
-        output.insert("s1".to_string(), self.s_1.to_workflow_input());
-        output.insert("s2".to_string(), self.s_2.to_workflow_input());
+        output.insert("model".to_string(), self.model.clone().into());
+        output.insert("b1".to_string(), self.b_1.clone().into());
+        output.insert("b2".to_string(), self.b_2.clone().into());
+        output.insert("s1".to_string(), self.s_1.clone().into());
+        output.insert("s2".to_string(), self.s_2.clone().into());
         output
     }
     const NAME: &'static str = "FreeU";
@@ -62,6 +63,7 @@ impl<
     const CATEGORY: &'static str = "model_patches/unet";
 }
 ///**FreeU_V2**: No description.
+#[derive(Clone)]
 pub struct FreeUV2<
     Model: crate::nodes::types::Model,
     B1: crate::nodes::types::Float,
@@ -108,11 +110,11 @@ impl<
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
-        output.insert("model".to_string(), self.model.to_workflow_input());
-        output.insert("b1".to_string(), self.b_1.to_workflow_input());
-        output.insert("b2".to_string(), self.b_2.to_workflow_input());
-        output.insert("s1".to_string(), self.s_1.to_workflow_input());
-        output.insert("s2".to_string(), self.s_2.to_workflow_input());
+        output.insert("model".to_string(), self.model.clone().into());
+        output.insert("b1".to_string(), self.b_1.clone().into());
+        output.insert("b2".to_string(), self.b_2.clone().into());
+        output.insert("s1".to_string(), self.s_1.clone().into());
+        output.insert("s2".to_string(), self.s_2.clone().into());
         output
     }
     const NAME: &'static str = "FreeU_V2";
@@ -121,6 +123,7 @@ impl<
     const CATEGORY: &'static str = "model_patches/unet";
 }
 ///**HyperTile**: No description.
+#[derive(Clone)]
 pub struct HyperTile<
     Model: crate::nodes::types::Model,
     TileSize: crate::nodes::types::Int,
@@ -180,11 +183,11 @@ for HyperTile<Model, TileSize, SwapSize, MaxDepth, ScaleDepth> {
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
-        output.insert("model".to_string(), self.model.to_workflow_input());
-        output.insert("tile_size".to_string(), self.tile_size.to_workflow_input());
-        output.insert("swap_size".to_string(), self.swap_size.to_workflow_input());
-        output.insert("max_depth".to_string(), self.max_depth.to_workflow_input());
-        output.insert("scale_depth".to_string(), self.scale_depth.to_workflow_input());
+        output.insert("model".to_string(), self.model.clone().into());
+        output.insert("tile_size".to_string(), self.tile_size.clone().into());
+        output.insert("swap_size".to_string(), self.swap_size.clone().into());
+        output.insert("max_depth".to_string(), self.max_depth.clone().into());
+        output.insert("scale_depth".to_string(), self.scale_depth.clone().into());
         output
     }
     const NAME: &'static str = "HyperTile";
@@ -193,6 +196,7 @@ for HyperTile<Model, TileSize, SwapSize, MaxDepth, ScaleDepth> {
     const CATEGORY: &'static str = "model_patches/unet";
 }
 ///**PerturbedAttentionGuidance**: No description.
+#[derive(Clone)]
 pub struct PerturbedAttentionGuidance<
     Model: crate::nodes::types::Model,
     Scale: crate::nodes::types::Float,
@@ -224,8 +228,8 @@ impl<
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
-        output.insert("model".to_string(), self.model.to_workflow_input());
-        output.insert("scale".to_string(), self.scale.to_workflow_input());
+        output.insert("model".to_string(), self.model.clone().into());
+        output.insert("scale".to_string(), self.scale.clone().into());
         output
     }
     const NAME: &'static str = "PerturbedAttentionGuidance";

@@ -22,6 +22,7 @@ pub mod out {
     }
 }
 ///**Apply ControlNet**: No description.
+#[derive(Clone)]
 pub struct ControlNetApply<
     Conditioning: crate::nodes::types::Conditioning,
     ControlNet: crate::nodes::types::ControlNet,
@@ -74,10 +75,10 @@ for ControlNetApply<Conditioning, ControlNet, Image, Strength> {
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
-        output.insert("conditioning".to_string(), self.conditioning.to_workflow_input());
-        output.insert("control_net".to_string(), self.control_net.to_workflow_input());
-        output.insert("image".to_string(), self.image.to_workflow_input());
-        output.insert("strength".to_string(), self.strength.to_workflow_input());
+        output.insert("conditioning".to_string(), self.conditioning.clone().into());
+        output.insert("control_net".to_string(), self.control_net.clone().into());
+        output.insert("image".to_string(), self.image.clone().into());
+        output.insert("strength".to_string(), self.strength.clone().into());
         output
     }
     const NAME: &'static str = "ControlNetApply";
@@ -86,6 +87,7 @@ for ControlNetApply<Conditioning, ControlNet, Image, Strength> {
     const CATEGORY: &'static str = "conditioning/controlnet";
 }
 ///**Apply ControlNet (Advanced)**: No description.
+#[derive(Clone)]
 pub struct ControlNetApplyAdvanced<
     Positive: crate::nodes::types::Conditioning,
     Negative: crate::nodes::types::Conditioning,
@@ -181,14 +183,13 @@ for ControlNetApplyAdvanced<
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
-        output.insert("positive".to_string(), self.positive.to_workflow_input());
-        output.insert("negative".to_string(), self.negative.to_workflow_input());
-        output.insert("control_net".to_string(), self.control_net.to_workflow_input());
-        output.insert("image".to_string(), self.image.to_workflow_input());
-        output.insert("strength".to_string(), self.strength.to_workflow_input());
-        output
-            .insert("start_percent".to_string(), self.start_percent.to_workflow_input());
-        output.insert("end_percent".to_string(), self.end_percent.to_workflow_input());
+        output.insert("positive".to_string(), self.positive.clone().into());
+        output.insert("negative".to_string(), self.negative.clone().into());
+        output.insert("control_net".to_string(), self.control_net.clone().into());
+        output.insert("image".to_string(), self.image.clone().into());
+        output.insert("strength".to_string(), self.strength.clone().into());
+        output.insert("start_percent".to_string(), self.start_percent.clone().into());
+        output.insert("end_percent".to_string(), self.end_percent.clone().into());
         output
     }
     const NAME: &'static str = "ControlNetApplyAdvanced";
@@ -197,6 +198,7 @@ for ControlNetApplyAdvanced<
     const CATEGORY: &'static str = "conditioning/controlnet";
 }
 ///**ControlNetApply SD3 and HunyuanDiT**: No description.
+#[derive(Clone)]
 pub struct ControlNetApplySd3<
     Positive: crate::nodes::types::Conditioning,
     Negative: crate::nodes::types::Conditioning,
@@ -301,15 +303,14 @@ for ControlNetApplySd3<
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
-        output.insert("positive".to_string(), self.positive.to_workflow_input());
-        output.insert("negative".to_string(), self.negative.to_workflow_input());
-        output.insert("control_net".to_string(), self.control_net.to_workflow_input());
-        output.insert("vae".to_string(), self.vae.to_workflow_input());
-        output.insert("image".to_string(), self.image.to_workflow_input());
-        output.insert("strength".to_string(), self.strength.to_workflow_input());
-        output
-            .insert("start_percent".to_string(), self.start_percent.to_workflow_input());
-        output.insert("end_percent".to_string(), self.end_percent.to_workflow_input());
+        output.insert("positive".to_string(), self.positive.clone().into());
+        output.insert("negative".to_string(), self.negative.clone().into());
+        output.insert("control_net".to_string(), self.control_net.clone().into());
+        output.insert("vae".to_string(), self.vae.clone().into());
+        output.insert("image".to_string(), self.image.clone().into());
+        output.insert("strength".to_string(), self.strength.clone().into());
+        output.insert("start_percent".to_string(), self.start_percent.clone().into());
+        output.insert("end_percent".to_string(), self.end_percent.clone().into());
         output
     }
     const NAME: &'static str = "ControlNetApplySD3";
@@ -318,6 +319,7 @@ for ControlNetApplySd3<
     const CATEGORY: &'static str = "conditioning/controlnet";
 }
 ///**SetUnionControlNetType**: No description.
+#[derive(Clone)]
 pub struct SetUnionControlNetType<
     ControlNet: crate::nodes::types::ControlNet,
     Type: crate::nodes::types::String,
@@ -349,8 +351,8 @@ impl<
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
-        output.insert("control_net".to_string(), self.control_net.to_workflow_input());
-        output.insert("type".to_string(), self.type_.to_workflow_input());
+        output.insert("control_net".to_string(), self.control_net.clone().into());
+        output.insert("type".to_string(), self.type_.clone().into());
         output
     }
     const NAME: &'static str = "SetUnionControlNetType";

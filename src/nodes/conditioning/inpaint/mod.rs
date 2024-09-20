@@ -16,6 +16,7 @@ pub mod out {
     }
 }
 ///**InpaintModelConditioning**: No description.
+#[derive(Clone)]
 pub struct InpaintModelConditioning<
     Positive: crate::nodes::types::Conditioning,
     Negative: crate::nodes::types::Conditioning,
@@ -85,11 +86,11 @@ for InpaintModelConditioning<Positive, Negative, Vae, Pixels, Mask> {
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
-        output.insert("positive".to_string(), self.positive.to_workflow_input());
-        output.insert("negative".to_string(), self.negative.to_workflow_input());
-        output.insert("vae".to_string(), self.vae.to_workflow_input());
-        output.insert("pixels".to_string(), self.pixels.to_workflow_input());
-        output.insert("mask".to_string(), self.mask.to_workflow_input());
+        output.insert("positive".to_string(), self.positive.clone().into());
+        output.insert("negative".to_string(), self.negative.clone().into());
+        output.insert("vae".to_string(), self.vae.clone().into());
+        output.insert("pixels".to_string(), self.pixels.clone().into());
+        output.insert("mask".to_string(), self.mask.clone().into());
         output
     }
     const NAME: &'static str = "InpaintModelConditioning";

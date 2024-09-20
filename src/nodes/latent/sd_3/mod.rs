@@ -3,6 +3,7 @@
 use std::collections::HashMap;
 use crate::workflow::{WorkflowNodeId, WorkflowInput};
 ///**EmptySD3LatentImage**: No description.
+#[derive(Clone)]
 pub struct EmptySd3LatentImage<
     Width: crate::nodes::types::Int,
     Height: crate::nodes::types::Int,
@@ -39,9 +40,9 @@ impl<
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
-        output.insert("width".to_string(), self.width.to_workflow_input());
-        output.insert("height".to_string(), self.height.to_workflow_input());
-        output.insert("batch_size".to_string(), self.batch_size.to_workflow_input());
+        output.insert("width".to_string(), self.width.clone().into());
+        output.insert("height".to_string(), self.height.clone().into());
+        output.insert("batch_size".to_string(), self.batch_size.clone().into());
         output
     }
     const NAME: &'static str = "EmptySD3LatentImage";

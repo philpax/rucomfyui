@@ -3,6 +3,7 @@
 use std::collections::HashMap;
 use crate::workflow::{WorkflowNodeId, WorkflowInput};
 ///**LatentBatch**: No description.
+#[derive(Clone)]
 pub struct LatentBatch<
     Samples1: crate::nodes::types::Latent,
     Samples2: crate::nodes::types::Latent,
@@ -34,8 +35,8 @@ impl<
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
-        output.insert("samples1".to_string(), self.samples_1.to_workflow_input());
-        output.insert("samples2".to_string(), self.samples_2.to_workflow_input());
+        output.insert("samples1".to_string(), self.samples_1.clone().into());
+        output.insert("samples2".to_string(), self.samples_2.clone().into());
         output
     }
     const NAME: &'static str = "LatentBatch";
@@ -44,6 +45,7 @@ impl<
     const CATEGORY: &'static str = "latent/batch";
 }
 ///**Latent From Batch**: No description.
+#[derive(Clone)]
 pub struct LatentFromBatch<
     Samples: crate::nodes::types::Latent,
     BatchIndex: crate::nodes::types::Int,
@@ -84,9 +86,9 @@ impl<
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
-        output.insert("samples".to_string(), self.samples.to_workflow_input());
-        output.insert("batch_index".to_string(), self.batch_index.to_workflow_input());
-        output.insert("length".to_string(), self.length.to_workflow_input());
+        output.insert("samples".to_string(), self.samples.clone().into());
+        output.insert("batch_index".to_string(), self.batch_index.clone().into());
+        output.insert("length".to_string(), self.length.clone().into());
         output
     }
     const NAME: &'static str = "LatentFromBatch";
@@ -95,6 +97,7 @@ impl<
     const CATEGORY: &'static str = "latent/batch";
 }
 ///**Rebatch Latents**: No description.
+#[derive(Clone)]
 pub struct RebatchLatents<
     Latents: crate::nodes::types::Latent,
     BatchSize: crate::nodes::types::Int,
@@ -126,8 +129,8 @@ impl<
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
-        output.insert("latents".to_string(), self.latents.to_workflow_input());
-        output.insert("batch_size".to_string(), self.batch_size.to_workflow_input());
+        output.insert("latents".to_string(), self.latents.clone().into());
+        output.insert("batch_size".to_string(), self.batch_size.clone().into());
         output
     }
     const NAME: &'static str = "RebatchLatents";
@@ -136,6 +139,7 @@ impl<
     const CATEGORY: &'static str = "latent/batch";
 }
 ///**Repeat Latent Batch**: No description.
+#[derive(Clone)]
 pub struct RepeatLatentBatch<
     Samples: crate::nodes::types::Latent,
     Amount: crate::nodes::types::Int,
@@ -167,8 +171,8 @@ impl<
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
-        output.insert("samples".to_string(), self.samples.to_workflow_input());
-        output.insert("amount".to_string(), self.amount.to_workflow_input());
+        output.insert("samples".to_string(), self.samples.clone().into());
+        output.insert("amount".to_string(), self.amount.clone().into());
         output
     }
     const NAME: &'static str = "RepeatLatentBatch";

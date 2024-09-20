@@ -3,6 +3,7 @@
 use std::collections::HashMap;
 use crate::workflow::{WorkflowNodeId, WorkflowInput};
 ///**Canny**: No description.
+#[derive(Clone)]
 pub struct Canny<
     Image: crate::nodes::types::Image,
     LowThreshold: crate::nodes::types::Float,
@@ -47,14 +48,9 @@ impl<
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
-        output.insert("image".to_string(), self.image.to_workflow_input());
-        output
-            .insert("low_threshold".to_string(), self.low_threshold.to_workflow_input());
-        output
-            .insert(
-                "high_threshold".to_string(),
-                self.high_threshold.to_workflow_input(),
-            );
+        output.insert("image".to_string(), self.image.clone().into());
+        output.insert("low_threshold".to_string(), self.low_threshold.clone().into());
+        output.insert("high_threshold".to_string(), self.high_threshold.clone().into());
         output
     }
     const NAME: &'static str = "Canny";

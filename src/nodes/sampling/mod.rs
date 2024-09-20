@@ -5,6 +5,7 @@ use crate::workflow::{WorkflowNodeId, WorkflowInput};
 pub mod custom_sampling;
 pub mod video_models;
 ///**KSampler**: Uses the provided model, positive and negative conditioning to denoise the latent image.
+#[derive(Clone)]
 pub struct KSampler<
     Model: crate::nodes::types::Model,
     Seed: crate::nodes::types::Int,
@@ -121,16 +122,16 @@ for KSampler<
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
-        output.insert("model".to_string(), self.model.to_workflow_input());
-        output.insert("seed".to_string(), self.seed.to_workflow_input());
-        output.insert("steps".to_string(), self.steps.to_workflow_input());
-        output.insert("cfg".to_string(), self.cfg.to_workflow_input());
-        output.insert("sampler_name".to_string(), self.sampler_name.to_workflow_input());
-        output.insert("scheduler".to_string(), self.scheduler.to_workflow_input());
-        output.insert("positive".to_string(), self.positive.to_workflow_input());
-        output.insert("negative".to_string(), self.negative.to_workflow_input());
-        output.insert("latent_image".to_string(), self.latent_image.to_workflow_input());
-        output.insert("denoise".to_string(), self.denoise.to_workflow_input());
+        output.insert("model".to_string(), self.model.clone().into());
+        output.insert("seed".to_string(), self.seed.clone().into());
+        output.insert("steps".to_string(), self.steps.clone().into());
+        output.insert("cfg".to_string(), self.cfg.clone().into());
+        output.insert("sampler_name".to_string(), self.sampler_name.clone().into());
+        output.insert("scheduler".to_string(), self.scheduler.clone().into());
+        output.insert("positive".to_string(), self.positive.clone().into());
+        output.insert("negative".to_string(), self.negative.clone().into());
+        output.insert("latent_image".to_string(), self.latent_image.clone().into());
+        output.insert("denoise".to_string(), self.denoise.clone().into());
         output
     }
     const NAME: &'static str = "KSampler";
@@ -139,6 +140,7 @@ for KSampler<
     const CATEGORY: &'static str = "sampling";
 }
 ///**KSampler (Advanced)**: No description.
+#[derive(Clone)]
 pub struct KSamplerAdvanced<
     Model: crate::nodes::types::Model,
     AddNoise: crate::nodes::types::String,
@@ -282,23 +284,22 @@ for KSamplerAdvanced<
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
-        output.insert("model".to_string(), self.model.to_workflow_input());
-        output.insert("add_noise".to_string(), self.add_noise.to_workflow_input());
-        output.insert("noise_seed".to_string(), self.noise_seed.to_workflow_input());
-        output.insert("steps".to_string(), self.steps.to_workflow_input());
-        output.insert("cfg".to_string(), self.cfg.to_workflow_input());
-        output.insert("sampler_name".to_string(), self.sampler_name.to_workflow_input());
-        output.insert("scheduler".to_string(), self.scheduler.to_workflow_input());
-        output.insert("positive".to_string(), self.positive.to_workflow_input());
-        output.insert("negative".to_string(), self.negative.to_workflow_input());
-        output.insert("latent_image".to_string(), self.latent_image.to_workflow_input());
-        output
-            .insert("start_at_step".to_string(), self.start_at_step.to_workflow_input());
-        output.insert("end_at_step".to_string(), self.end_at_step.to_workflow_input());
+        output.insert("model".to_string(), self.model.clone().into());
+        output.insert("add_noise".to_string(), self.add_noise.clone().into());
+        output.insert("noise_seed".to_string(), self.noise_seed.clone().into());
+        output.insert("steps".to_string(), self.steps.clone().into());
+        output.insert("cfg".to_string(), self.cfg.clone().into());
+        output.insert("sampler_name".to_string(), self.sampler_name.clone().into());
+        output.insert("scheduler".to_string(), self.scheduler.clone().into());
+        output.insert("positive".to_string(), self.positive.clone().into());
+        output.insert("negative".to_string(), self.negative.clone().into());
+        output.insert("latent_image".to_string(), self.latent_image.clone().into());
+        output.insert("start_at_step".to_string(), self.start_at_step.clone().into());
+        output.insert("end_at_step".to_string(), self.end_at_step.clone().into());
         output
             .insert(
                 "return_with_leftover_noise".to_string(),
-                self.return_with_leftover_noise.to_workflow_input(),
+                self.return_with_leftover_noise.clone().into(),
             );
         output
     }

@@ -3,6 +3,7 @@
 use std::collections::HashMap;
 use crate::workflow::{WorkflowNodeId, WorkflowInput};
 ///**VideoLinearCFGGuidance**: No description.
+#[derive(Clone)]
 pub struct VideoLinearCfgGuidance<
     Model: crate::nodes::types::Model,
     MinCfg: crate::nodes::types::Float,
@@ -34,8 +35,8 @@ impl<
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
-        output.insert("model".to_string(), self.model.to_workflow_input());
-        output.insert("min_cfg".to_string(), self.min_cfg.to_workflow_input());
+        output.insert("model".to_string(), self.model.clone().into());
+        output.insert("min_cfg".to_string(), self.min_cfg.clone().into());
         output
     }
     const NAME: &'static str = "VideoLinearCFGGuidance";
@@ -44,6 +45,7 @@ impl<
     const CATEGORY: &'static str = "sampling/video_models";
 }
 ///**VideoTriangleCFGGuidance**: No description.
+#[derive(Clone)]
 pub struct VideoTriangleCfgGuidance<
     Model: crate::nodes::types::Model,
     MinCfg: crate::nodes::types::Float,
@@ -75,8 +77,8 @@ impl<
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
-        output.insert("model".to_string(), self.model.to_workflow_input());
-        output.insert("min_cfg".to_string(), self.min_cfg.to_workflow_input());
+        output.insert("model".to_string(), self.model.clone().into());
+        output.insert("min_cfg".to_string(), self.min_cfg.clone().into());
         output
     }
     const NAME: &'static str = "VideoTriangleCFGGuidance";

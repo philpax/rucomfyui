@@ -3,6 +3,7 @@
 use std::collections::HashMap;
 use crate::workflow::{WorkflowNodeId, WorkflowInput};
 ///**LoadAudio**: No description.
+#[derive(Clone)]
 pub struct LoadAudio<Audio: crate::nodes::types::String> {
     ///No documentation.
     pub audio: Audio,
@@ -23,7 +24,7 @@ impl<Audio: crate::nodes::types::String> crate::nodes::TypedNode for LoadAudio<A
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
-        output.insert("audio".to_string(), self.audio.to_workflow_input());
+        output.insert("audio".to_string(), self.audio.clone().into());
         output
     }
     const NAME: &'static str = "LoadAudio";
@@ -32,6 +33,7 @@ impl<Audio: crate::nodes::types::String> crate::nodes::TypedNode for LoadAudio<A
     const CATEGORY: &'static str = "audio";
 }
 ///**PreviewAudio**: No description.
+#[derive(Clone)]
 pub struct PreviewAudio<Audio: crate::nodes::types::Audio> {
     ///No documentation.
     pub audio: Audio,
@@ -49,7 +51,7 @@ impl<Audio: crate::nodes::types::Audio> crate::nodes::TypedNode for PreviewAudio
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
-        output.insert("audio".to_string(), self.audio.to_workflow_input());
+        output.insert("audio".to_string(), self.audio.clone().into());
         output
     }
     const NAME: &'static str = "PreviewAudio";
@@ -60,6 +62,7 @@ impl<Audio: crate::nodes::types::Audio> crate::nodes::TypedNode for PreviewAudio
 impl<Audio: crate::nodes::types::Audio> crate::nodes::TypedOutputNode
 for PreviewAudio<Audio> {}
 ///**SaveAudio**: No description.
+#[derive(Clone)]
 pub struct SaveAudio<
     Audio: crate::nodes::types::Audio,
     FilenamePrefix: crate::nodes::types::String,
@@ -88,12 +91,9 @@ impl<
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
-        output.insert("audio".to_string(), self.audio.to_workflow_input());
+        output.insert("audio".to_string(), self.audio.clone().into());
         output
-            .insert(
-                "filename_prefix".to_string(),
-                self.filename_prefix.to_workflow_input(),
-            );
+            .insert("filename_prefix".to_string(), self.filename_prefix.clone().into());
         output
     }
     const NAME: &'static str = "SaveAudio";

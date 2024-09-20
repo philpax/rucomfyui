@@ -28,6 +28,7 @@ pub mod out {
     }
 }
 ///**EmptyImage**: No description.
+#[derive(Clone)]
 pub struct EmptyImage<
     Width: crate::nodes::types::Int,
     Height: crate::nodes::types::Int,
@@ -79,10 +80,10 @@ impl<
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
-        output.insert("width".to_string(), self.width.to_workflow_input());
-        output.insert("height".to_string(), self.height.to_workflow_input());
-        output.insert("batch_size".to_string(), self.batch_size.to_workflow_input());
-        output.insert("color".to_string(), self.color.to_workflow_input());
+        output.insert("width".to_string(), self.width.clone().into());
+        output.insert("height".to_string(), self.height.clone().into());
+        output.insert("batch_size".to_string(), self.batch_size.clone().into());
+        output.insert("color".to_string(), self.color.clone().into());
         output
     }
     const NAME: &'static str = "EmptyImage";
@@ -91,6 +92,7 @@ impl<
     const CATEGORY: &'static str = "image";
 }
 ///**Batch Images**: No description.
+#[derive(Clone)]
 pub struct ImageBatch<
     Image1: crate::nodes::types::Image,
     Image2: crate::nodes::types::Image,
@@ -122,8 +124,8 @@ impl<
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
-        output.insert("image1".to_string(), self.image_1.to_workflow_input());
-        output.insert("image2".to_string(), self.image_2.to_workflow_input());
+        output.insert("image1".to_string(), self.image_1.clone().into());
+        output.insert("image2".to_string(), self.image_2.clone().into());
         output
     }
     const NAME: &'static str = "ImageBatch";
@@ -132,6 +134,7 @@ impl<
     const CATEGORY: &'static str = "image";
 }
 ///**ImageCompositeMasked**: No description.
+#[derive(Clone)]
 pub struct ImageCompositeMasked<
     Destination: crate::nodes::types::Image,
     Source: crate::nodes::types::Image,
@@ -198,14 +201,13 @@ for ImageCompositeMasked<Destination, Source, X, Y, ResizeSource, Mask> {
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
-        output.insert("destination".to_string(), self.destination.to_workflow_input());
-        output.insert("source".to_string(), self.source.to_workflow_input());
-        output.insert("x".to_string(), self.x.to_workflow_input());
-        output.insert("y".to_string(), self.y.to_workflow_input());
-        output
-            .insert("resize_source".to_string(), self.resize_source.to_workflow_input());
+        output.insert("destination".to_string(), self.destination.clone().into());
+        output.insert("source".to_string(), self.source.clone().into());
+        output.insert("x".to_string(), self.x.clone().into());
+        output.insert("y".to_string(), self.y.clone().into());
+        output.insert("resize_source".to_string(), self.resize_source.clone().into());
         if let Some(v) = &self.mask {
-            output.insert("mask".to_string(), v.to_workflow_input());
+            output.insert("mask".to_string(), v.clone().into());
         }
         output
     }
@@ -215,6 +217,7 @@ for ImageCompositeMasked<Destination, Source, X, Y, ResizeSource, Mask> {
     const CATEGORY: &'static str = "image";
 }
 ///**Invert Image**: No description.
+#[derive(Clone)]
 pub struct ImageInvert<Image: crate::nodes::types::Image> {
     ///No documentation.
     pub image: Image,
@@ -235,7 +238,7 @@ impl<Image: crate::nodes::types::Image> crate::nodes::TypedNode for ImageInvert<
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
-        output.insert("image".to_string(), self.image.to_workflow_input());
+        output.insert("image".to_string(), self.image.clone().into());
         output
     }
     const NAME: &'static str = "ImageInvert";
@@ -244,6 +247,7 @@ impl<Image: crate::nodes::types::Image> crate::nodes::TypedNode for ImageInvert<
     const CATEGORY: &'static str = "image";
 }
 ///**Pad Image for Outpainting**: No description.
+#[derive(Clone)]
 pub struct ImagePadForOutpaint<
     Image: crate::nodes::types::Image,
     Left: crate::nodes::types::Int,
@@ -316,12 +320,12 @@ for ImagePadForOutpaint<Image, Left, Top, Right, Bottom, Feathering> {
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
-        output.insert("image".to_string(), self.image.to_workflow_input());
-        output.insert("left".to_string(), self.left.to_workflow_input());
-        output.insert("top".to_string(), self.top.to_workflow_input());
-        output.insert("right".to_string(), self.right.to_workflow_input());
-        output.insert("bottom".to_string(), self.bottom.to_workflow_input());
-        output.insert("feathering".to_string(), self.feathering.to_workflow_input());
+        output.insert("image".to_string(), self.image.clone().into());
+        output.insert("left".to_string(), self.left.clone().into());
+        output.insert("top".to_string(), self.top.clone().into());
+        output.insert("right".to_string(), self.right.clone().into());
+        output.insert("bottom".to_string(), self.bottom.clone().into());
+        output.insert("feathering".to_string(), self.feathering.clone().into());
         output
     }
     const NAME: &'static str = "ImagePadForOutpaint";
@@ -330,6 +334,7 @@ for ImagePadForOutpaint<Image, Left, Top, Right, Bottom, Feathering> {
     const CATEGORY: &'static str = "image";
 }
 ///**Load Image**: No description.
+#[derive(Clone)]
 pub struct LoadImage<Image: crate::nodes::types::String> {
     ///No documentation.
     pub image: Image,
@@ -356,7 +361,7 @@ impl<Image: crate::nodes::types::String> crate::nodes::TypedNode for LoadImage<I
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
-        output.insert("image".to_string(), self.image.to_workflow_input());
+        output.insert("image".to_string(), self.image.clone().into());
         output
     }
     const NAME: &'static str = "LoadImage";
@@ -365,6 +370,7 @@ impl<Image: crate::nodes::types::String> crate::nodes::TypedNode for LoadImage<I
     const CATEGORY: &'static str = "image";
 }
 ///**Preview Image**: Saves the input images to your ComfyUI output directory.
+#[derive(Clone)]
 pub struct PreviewImage<Images: crate::nodes::types::Image> {
     ///No documentation.
     pub images: Images,
@@ -383,7 +389,7 @@ for PreviewImage<Images> {
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
-        output.insert("images".to_string(), self.images.to_workflow_input());
+        output.insert("images".to_string(), self.images.clone().into());
         output
     }
     const NAME: &'static str = "PreviewImage";
@@ -394,6 +400,7 @@ for PreviewImage<Images> {
 impl<Images: crate::nodes::types::Image> crate::nodes::TypedOutputNode
 for PreviewImage<Images> {}
 ///**Save Image**: Saves the input images to your ComfyUI output directory.
+#[derive(Clone)]
 pub struct SaveImage<
     Images: crate::nodes::types::Image,
     FilenamePrefix: crate::nodes::types::String,
@@ -422,12 +429,9 @@ impl<
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
-        output.insert("images".to_string(), self.images.to_workflow_input());
+        output.insert("images".to_string(), self.images.clone().into());
         output
-            .insert(
-                "filename_prefix".to_string(),
-                self.filename_prefix.to_workflow_input(),
-            );
+            .insert("filename_prefix".to_string(), self.filename_prefix.clone().into());
         output
     }
     const NAME: &'static str = "SaveImage";
@@ -440,6 +444,7 @@ impl<
     FilenamePrefix: crate::nodes::types::String,
 > crate::nodes::TypedOutputNode for SaveImage<Images, FilenamePrefix> {}
 ///**Webcam Capture**: No description.
+#[derive(Clone)]
 pub struct WebcamCapture<
     Image: crate::nodes::types::Webcam,
     Width: crate::nodes::types::Int,
@@ -491,13 +496,13 @@ impl<
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
-        output.insert("image".to_string(), self.image.to_workflow_input());
-        output.insert("width".to_string(), self.width.to_workflow_input());
-        output.insert("height".to_string(), self.height.to_workflow_input());
+        output.insert("image".to_string(), self.image.clone().into());
+        output.insert("width".to_string(), self.width.clone().into());
+        output.insert("height".to_string(), self.height.clone().into());
         output
             .insert(
                 "capture_on_queue".to_string(),
-                self.capture_on_queue.to_workflow_input(),
+                self.capture_on_queue.clone().into(),
             );
         output
     }

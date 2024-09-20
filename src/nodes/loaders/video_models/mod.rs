@@ -16,6 +16,7 @@ pub mod out {
     }
 }
 ///**Image Only Checkpoint Loader (img2vid model)**: No description.
+#[derive(Clone)]
 pub struct ImageOnlyCheckpointLoader<CkptName: crate::nodes::types::String> {
     ///No documentation.
     pub ckpt_name: CkptName,
@@ -47,7 +48,7 @@ for ImageOnlyCheckpointLoader<CkptName> {
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
-        output.insert("ckpt_name".to_string(), self.ckpt_name.to_workflow_input());
+        output.insert("ckpt_name".to_string(), self.ckpt_name.clone().into());
         output
     }
     const NAME: &'static str = "ImageOnlyCheckpointLoader";

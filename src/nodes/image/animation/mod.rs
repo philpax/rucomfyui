@@ -3,6 +3,7 @@
 use std::collections::HashMap;
 use crate::workflow::{WorkflowNodeId, WorkflowInput};
 ///**SaveAnimatedPNG**: No description.
+#[derive(Clone)]
 pub struct SaveAnimatedPng<
     Images: crate::nodes::types::Image,
     FilenamePrefix: crate::nodes::types::String,
@@ -52,18 +53,11 @@ for SaveAnimatedPng<Images, FilenamePrefix, Fps, CompressLevel> {
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
-        output.insert("images".to_string(), self.images.to_workflow_input());
+        output.insert("images".to_string(), self.images.clone().into());
         output
-            .insert(
-                "filename_prefix".to_string(),
-                self.filename_prefix.to_workflow_input(),
-            );
-        output.insert("fps".to_string(), self.fps.to_workflow_input());
-        output
-            .insert(
-                "compress_level".to_string(),
-                self.compress_level.to_workflow_input(),
-            );
+            .insert("filename_prefix".to_string(), self.filename_prefix.clone().into());
+        output.insert("fps".to_string(), self.fps.clone().into());
+        output.insert("compress_level".to_string(), self.compress_level.clone().into());
         output
     }
     const NAME: &'static str = "SaveAnimatedPNG";
@@ -79,6 +73,7 @@ impl<
 > crate::nodes::TypedOutputNode
 for SaveAnimatedPng<Images, FilenamePrefix, Fps, CompressLevel> {}
 ///**SaveAnimatedWEBP**: No description.
+#[derive(Clone)]
 pub struct SaveAnimatedWebp<
     Images: crate::nodes::types::Image,
     FilenamePrefix: crate::nodes::types::String,
@@ -142,16 +137,13 @@ for SaveAnimatedWebp<Images, FilenamePrefix, Fps, Lossless, Quality, Method> {
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
-        output.insert("images".to_string(), self.images.to_workflow_input());
+        output.insert("images".to_string(), self.images.clone().into());
         output
-            .insert(
-                "filename_prefix".to_string(),
-                self.filename_prefix.to_workflow_input(),
-            );
-        output.insert("fps".to_string(), self.fps.to_workflow_input());
-        output.insert("lossless".to_string(), self.lossless.to_workflow_input());
-        output.insert("quality".to_string(), self.quality.to_workflow_input());
-        output.insert("method".to_string(), self.method.to_workflow_input());
+            .insert("filename_prefix".to_string(), self.filename_prefix.clone().into());
+        output.insert("fps".to_string(), self.fps.clone().into());
+        output.insert("lossless".to_string(), self.lossless.clone().into());
+        output.insert("quality".to_string(), self.quality.clone().into());
+        output.insert("method".to_string(), self.method.clone().into());
         output
     }
     const NAME: &'static str = "SaveAnimatedWEBP";

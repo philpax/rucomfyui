@@ -10,6 +10,7 @@ pub mod sd_3;
 pub mod stable_cascade;
 pub mod transform;
 ///**Empty Latent Image**: Create a new batch of empty latent images to be denoised via sampling.
+#[derive(Clone)]
 pub struct EmptyLatentImage<
     Width: crate::nodes::types::Int,
     Height: crate::nodes::types::Int,
@@ -46,9 +47,9 @@ impl<
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
-        output.insert("width".to_string(), self.width.to_workflow_input());
-        output.insert("height".to_string(), self.height.to_workflow_input());
-        output.insert("batch_size".to_string(), self.batch_size.to_workflow_input());
+        output.insert("width".to_string(), self.width.clone().into());
+        output.insert("height".to_string(), self.height.clone().into());
+        output.insert("batch_size".to_string(), self.batch_size.clone().into());
         output
     }
     const NAME: &'static str = "EmptyLatentImage";
@@ -57,6 +58,7 @@ impl<
     const CATEGORY: &'static str = "latent";
 }
 ///**Latent Composite**: No description.
+#[derive(Clone)]
 pub struct LatentComposite<
     SamplesTo: crate::nodes::types::Latent,
     SamplesFrom: crate::nodes::types::Latent,
@@ -115,11 +117,11 @@ impl<
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
-        output.insert("samples_to".to_string(), self.samples_to.to_workflow_input());
-        output.insert("samples_from".to_string(), self.samples_from.to_workflow_input());
-        output.insert("x".to_string(), self.x.to_workflow_input());
-        output.insert("y".to_string(), self.y.to_workflow_input());
-        output.insert("feather".to_string(), self.feather.to_workflow_input());
+        output.insert("samples_to".to_string(), self.samples_to.clone().into());
+        output.insert("samples_from".to_string(), self.samples_from.clone().into());
+        output.insert("x".to_string(), self.x.clone().into());
+        output.insert("y".to_string(), self.y.clone().into());
+        output.insert("feather".to_string(), self.feather.clone().into());
         output
     }
     const NAME: &'static str = "LatentComposite";
@@ -128,6 +130,7 @@ impl<
     const CATEGORY: &'static str = "latent";
 }
 ///**LatentCompositeMasked**: No description.
+#[derive(Clone)]
 pub struct LatentCompositeMasked<
     Destination: crate::nodes::types::Latent,
     Source: crate::nodes::types::Latent,
@@ -194,14 +197,13 @@ for LatentCompositeMasked<Destination, Source, X, Y, ResizeSource, Mask> {
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
-        output.insert("destination".to_string(), self.destination.to_workflow_input());
-        output.insert("source".to_string(), self.source.to_workflow_input());
-        output.insert("x".to_string(), self.x.to_workflow_input());
-        output.insert("y".to_string(), self.y.to_workflow_input());
-        output
-            .insert("resize_source".to_string(), self.resize_source.to_workflow_input());
+        output.insert("destination".to_string(), self.destination.clone().into());
+        output.insert("source".to_string(), self.source.clone().into());
+        output.insert("x".to_string(), self.x.clone().into());
+        output.insert("y".to_string(), self.y.clone().into());
+        output.insert("resize_source".to_string(), self.resize_source.clone().into());
         if let Some(v) = &self.mask {
-            output.insert("mask".to_string(), v.to_workflow_input());
+            output.insert("mask".to_string(), v.clone().into());
         }
         output
     }
@@ -211,6 +213,7 @@ for LatentCompositeMasked<Destination, Source, X, Y, ResizeSource, Mask> {
     const CATEGORY: &'static str = "latent";
 }
 ///**Upscale Latent**: No description.
+#[derive(Clone)]
 pub struct LatentUpscale<
     Samples: crate::nodes::types::Latent,
     UpscaleMethod: crate::nodes::types::String,
@@ -270,15 +273,11 @@ for LatentUpscale<Samples, UpscaleMethod, Width, Height, Crop> {
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
-        output.insert("samples".to_string(), self.samples.to_workflow_input());
-        output
-            .insert(
-                "upscale_method".to_string(),
-                self.upscale_method.to_workflow_input(),
-            );
-        output.insert("width".to_string(), self.width.to_workflow_input());
-        output.insert("height".to_string(), self.height.to_workflow_input());
-        output.insert("crop".to_string(), self.crop.to_workflow_input());
+        output.insert("samples".to_string(), self.samples.clone().into());
+        output.insert("upscale_method".to_string(), self.upscale_method.clone().into());
+        output.insert("width".to_string(), self.width.clone().into());
+        output.insert("height".to_string(), self.height.clone().into());
+        output.insert("crop".to_string(), self.crop.clone().into());
         output
     }
     const NAME: &'static str = "LatentUpscale";
@@ -287,6 +286,7 @@ for LatentUpscale<Samples, UpscaleMethod, Width, Height, Crop> {
     const CATEGORY: &'static str = "latent";
 }
 ///**Upscale Latent By**: No description.
+#[derive(Clone)]
 pub struct LatentUpscaleBy<
     Samples: crate::nodes::types::Latent,
     UpscaleMethod: crate::nodes::types::String,
@@ -331,13 +331,9 @@ impl<
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
-        output.insert("samples".to_string(), self.samples.to_workflow_input());
-        output
-            .insert(
-                "upscale_method".to_string(),
-                self.upscale_method.to_workflow_input(),
-            );
-        output.insert("scale_by".to_string(), self.scale_by.to_workflow_input());
+        output.insert("samples".to_string(), self.samples.clone().into());
+        output.insert("upscale_method".to_string(), self.upscale_method.clone().into());
+        output.insert("scale_by".to_string(), self.scale_by.clone().into());
         output
     }
     const NAME: &'static str = "LatentUpscaleBy";
@@ -346,6 +342,7 @@ impl<
     const CATEGORY: &'static str = "latent";
 }
 ///**VAE Decode**: Decodes latent images back into pixel space images.
+#[derive(Clone)]
 pub struct VaeDecode<
     Samples: crate::nodes::types::Latent,
     Vae: crate::nodes::types::Vae,
@@ -377,8 +374,8 @@ impl<
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
-        output.insert("samples".to_string(), self.samples.to_workflow_input());
-        output.insert("vae".to_string(), self.vae.to_workflow_input());
+        output.insert("samples".to_string(), self.samples.clone().into());
+        output.insert("vae".to_string(), self.vae.clone().into());
         output
     }
     const NAME: &'static str = "VAEDecode";
@@ -387,6 +384,7 @@ impl<
     const CATEGORY: &'static str = "latent";
 }
 ///**VAE Encode**: No description.
+#[derive(Clone)]
 pub struct VaeEncode<Pixels: crate::nodes::types::Image, Vae: crate::nodes::types::Vae> {
     ///No documentation.
     pub pixels: Pixels,
@@ -415,8 +413,8 @@ impl<
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
-        output.insert("pixels".to_string(), self.pixels.to_workflow_input());
-        output.insert("vae".to_string(), self.vae.to_workflow_input());
+        output.insert("pixels".to_string(), self.pixels.clone().into());
+        output.insert("vae".to_string(), self.vae.clone().into());
         output
     }
     const NAME: &'static str = "VAEEncode";

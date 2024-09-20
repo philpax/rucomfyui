@@ -3,6 +3,7 @@
 use std::collections::HashMap;
 use crate::workflow::{WorkflowNodeId, WorkflowInput};
 ///**BasicGuider**: No description.
+#[derive(Clone)]
 pub struct BasicGuider<
     Model: crate::nodes::types::Model,
     Conditioning: crate::nodes::types::Conditioning,
@@ -34,8 +35,8 @@ impl<
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
-        output.insert("model".to_string(), self.model.to_workflow_input());
-        output.insert("conditioning".to_string(), self.conditioning.to_workflow_input());
+        output.insert("model".to_string(), self.model.clone().into());
+        output.insert("conditioning".to_string(), self.conditioning.clone().into());
         output
     }
     const NAME: &'static str = "BasicGuider";
@@ -44,6 +45,7 @@ impl<
     const CATEGORY: &'static str = "sampling/custom_sampling/guiders";
 }
 ///**CFGGuider**: No description.
+#[derive(Clone)]
 pub struct CfgGuider<
     Model: crate::nodes::types::Model,
     Positive: crate::nodes::types::Conditioning,
@@ -90,10 +92,10 @@ impl<
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
-        output.insert("model".to_string(), self.model.to_workflow_input());
-        output.insert("positive".to_string(), self.positive.to_workflow_input());
-        output.insert("negative".to_string(), self.negative.to_workflow_input());
-        output.insert("cfg".to_string(), self.cfg.to_workflow_input());
+        output.insert("model".to_string(), self.model.clone().into());
+        output.insert("positive".to_string(), self.positive.clone().into());
+        output.insert("negative".to_string(), self.negative.clone().into());
+        output.insert("cfg".to_string(), self.cfg.clone().into());
         output
     }
     const NAME: &'static str = "CFGGuider";
@@ -102,6 +104,7 @@ impl<
     const CATEGORY: &'static str = "sampling/custom_sampling/guiders";
 }
 ///**DualCFGGuider**: No description.
+#[derive(Clone)]
 pub struct DualCfgGuider<
     Model: crate::nodes::types::Model,
     Cond1: crate::nodes::types::Conditioning,
@@ -168,15 +171,15 @@ for DualCfgGuider<Model, Cond1, Cond2, Negative, CfgConds, CfgCond2Negative> {
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
-        output.insert("model".to_string(), self.model.to_workflow_input());
-        output.insert("cond1".to_string(), self.cond_1.to_workflow_input());
-        output.insert("cond2".to_string(), self.cond_2.to_workflow_input());
-        output.insert("negative".to_string(), self.negative.to_workflow_input());
-        output.insert("cfg_conds".to_string(), self.cfg_conds.to_workflow_input());
+        output.insert("model".to_string(), self.model.clone().into());
+        output.insert("cond1".to_string(), self.cond_1.clone().into());
+        output.insert("cond2".to_string(), self.cond_2.clone().into());
+        output.insert("negative".to_string(), self.negative.clone().into());
+        output.insert("cfg_conds".to_string(), self.cfg_conds.clone().into());
         output
             .insert(
                 "cfg_cond2_negative".to_string(),
-                self.cfg_cond_2_negative.to_workflow_input(),
+                self.cfg_cond_2_negative.clone().into(),
             );
         output
     }

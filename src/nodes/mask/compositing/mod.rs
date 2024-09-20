@@ -22,6 +22,7 @@ pub mod out {
     }
 }
 ///**Join Image with Alpha**: No description.
+#[derive(Clone)]
 pub struct JoinImageWithAlpha<
     Image: crate::nodes::types::Image,
     Alpha: crate::nodes::types::Mask,
@@ -53,8 +54,8 @@ impl<
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
-        output.insert("image".to_string(), self.image.to_workflow_input());
-        output.insert("alpha".to_string(), self.alpha.to_workflow_input());
+        output.insert("image".to_string(), self.image.clone().into());
+        output.insert("alpha".to_string(), self.alpha.clone().into());
         output
     }
     const NAME: &'static str = "JoinImageWithAlpha";
@@ -63,6 +64,7 @@ impl<
     const CATEGORY: &'static str = "mask/compositing";
 }
 ///**Porter-Duff Image Composite**: No description.
+#[derive(Clone)]
 pub struct PorterDuffImageComposite<
     Source: crate::nodes::types::Image,
     SourceAlpha: crate::nodes::types::Mask,
@@ -128,15 +130,15 @@ for PorterDuffImageComposite<Source, SourceAlpha, Destination, DestinationAlpha,
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
-        output.insert("source".to_string(), self.source.to_workflow_input());
-        output.insert("source_alpha".to_string(), self.source_alpha.to_workflow_input());
-        output.insert("destination".to_string(), self.destination.to_workflow_input());
+        output.insert("source".to_string(), self.source.clone().into());
+        output.insert("source_alpha".to_string(), self.source_alpha.clone().into());
+        output.insert("destination".to_string(), self.destination.clone().into());
         output
             .insert(
                 "destination_alpha".to_string(),
-                self.destination_alpha.to_workflow_input(),
+                self.destination_alpha.clone().into(),
             );
-        output.insert("mode".to_string(), self.mode.to_workflow_input());
+        output.insert("mode".to_string(), self.mode.clone().into());
         output
     }
     const NAME: &'static str = "PorterDuffImageComposite";
@@ -145,6 +147,7 @@ for PorterDuffImageComposite<Source, SourceAlpha, Destination, DestinationAlpha,
     const CATEGORY: &'static str = "mask/compositing";
 }
 ///**Split Image with Alpha**: No description.
+#[derive(Clone)]
 pub struct SplitImageWithAlpha<Image: crate::nodes::types::Image> {
     ///No documentation.
     pub image: Image,
@@ -172,7 +175,7 @@ for SplitImageWithAlpha<Image> {
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
-        output.insert("image".to_string(), self.image.to_workflow_input());
+        output.insert("image".to_string(), self.image.clone().into());
         output
     }
     const NAME: &'static str = "SplitImageWithAlpha";

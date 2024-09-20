@@ -3,6 +3,7 @@
 use std::collections::HashMap;
 use crate::workflow::{WorkflowNodeId, WorkflowInput};
 ///**CLIPTextEncodeFlux**: No description.
+#[derive(Clone)]
 pub struct ClipTextEncodeFlux<
     Clip: crate::nodes::types::Clip,
     ClipL: crate::nodes::types::String,
@@ -49,10 +50,10 @@ impl<
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
-        output.insert("clip".to_string(), self.clip.to_workflow_input());
-        output.insert("clip_l".to_string(), self.clip_l.to_workflow_input());
-        output.insert("t5xxl".to_string(), self.t_5_xxl.to_workflow_input());
-        output.insert("guidance".to_string(), self.guidance.to_workflow_input());
+        output.insert("clip".to_string(), self.clip.clone().into());
+        output.insert("clip_l".to_string(), self.clip_l.clone().into());
+        output.insert("t5xxl".to_string(), self.t_5_xxl.clone().into());
+        output.insert("guidance".to_string(), self.guidance.clone().into());
         output
     }
     const NAME: &'static str = "CLIPTextEncodeFlux";
@@ -61,6 +62,7 @@ impl<
     const CATEGORY: &'static str = "advanced/conditioning/flux";
 }
 ///**FluxGuidance**: No description.
+#[derive(Clone)]
 pub struct FluxGuidance<
     Conditioning: crate::nodes::types::Conditioning,
     Guidance: crate::nodes::types::Float,
@@ -92,8 +94,8 @@ impl<
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
-        output.insert("conditioning".to_string(), self.conditioning.to_workflow_input());
-        output.insert("guidance".to_string(), self.guidance.to_workflow_input());
+        output.insert("conditioning".to_string(), self.conditioning.clone().into());
+        output.insert("guidance".to_string(), self.guidance.clone().into());
         output
     }
     const NAME: &'static str = "FluxGuidance";

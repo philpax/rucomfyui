@@ -37,6 +37,7 @@ pub mod out {
     }
 }
 ///**Load CLIP Vision**: No description.
+#[derive(Clone)]
 pub struct ClipVisionLoader<ClipName: crate::nodes::types::String> {
     ///No documentation.
     pub clip_name: ClipName,
@@ -58,7 +59,7 @@ for ClipVisionLoader<ClipName> {
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
-        output.insert("clip_name".to_string(), self.clip_name.to_workflow_input());
+        output.insert("clip_name".to_string(), self.clip_name.clone().into());
         output
     }
     const NAME: &'static str = "CLIPVisionLoader";
@@ -67,6 +68,7 @@ for ClipVisionLoader<ClipName> {
     const CATEGORY: &'static str = "loaders";
 }
 ///**Load Checkpoint**: Loads a diffusion model checkpoint, diffusion models are used to denoise latents.
+#[derive(Clone)]
 pub struct CheckpointLoaderSimple<CkptName: crate::nodes::types::String> {
     ///The name of the checkpoint (model) to load.
     pub ckpt_name: CkptName,
@@ -98,7 +100,7 @@ for CheckpointLoaderSimple<CkptName> {
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
-        output.insert("ckpt_name".to_string(), self.ckpt_name.to_workflow_input());
+        output.insert("ckpt_name".to_string(), self.ckpt_name.clone().into());
         output
     }
     const NAME: &'static str = "CheckpointLoaderSimple";
@@ -107,6 +109,7 @@ for CheckpointLoaderSimple<CkptName> {
     const CATEGORY: &'static str = "loaders";
 }
 ///**Load ControlNet Model**: No description.
+#[derive(Clone)]
 pub struct ControlNetLoader<ControlNetName: crate::nodes::types::String> {
     ///No documentation.
     pub control_net_name: ControlNetName,
@@ -131,7 +134,7 @@ for ControlNetLoader<ControlNetName> {
         output
             .insert(
                 "control_net_name".to_string(),
-                self.control_net_name.to_workflow_input(),
+                self.control_net_name.clone().into(),
             );
         output
     }
@@ -141,6 +144,7 @@ for ControlNetLoader<ControlNetName> {
     const CATEGORY: &'static str = "loaders";
 }
 ///**Load ControlNet Model (diff)**: No description.
+#[derive(Clone)]
 pub struct DiffControlNetLoader<
     Model: crate::nodes::types::Model,
     ControlNetName: crate::nodes::types::String,
@@ -172,11 +176,11 @@ impl<
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
-        output.insert("model".to_string(), self.model.to_workflow_input());
+        output.insert("model".to_string(), self.model.clone().into());
         output
             .insert(
                 "control_net_name".to_string(),
-                self.control_net_name.to_workflow_input(),
+                self.control_net_name.clone().into(),
             );
         output
     }
@@ -186,6 +190,7 @@ impl<
     const CATEGORY: &'static str = "loaders";
 }
 ///**GLIGENLoader**: No description.
+#[derive(Clone)]
 pub struct GligenLoader<GligenName: crate::nodes::types::String> {
     ///No documentation.
     pub gligen_name: GligenName,
@@ -207,7 +212,7 @@ for GligenLoader<GligenName> {
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
-        output.insert("gligen_name".to_string(), self.gligen_name.to_workflow_input());
+        output.insert("gligen_name".to_string(), self.gligen_name.clone().into());
         output
     }
     const NAME: &'static str = "GLIGENLoader";
@@ -216,6 +221,7 @@ for GligenLoader<GligenName> {
     const CATEGORY: &'static str = "loaders";
 }
 ///**HypernetworkLoader**: No description.
+#[derive(Clone)]
 pub struct HypernetworkLoader<
     Model: crate::nodes::types::Model,
     HypernetworkName: crate::nodes::types::String,
@@ -260,13 +266,13 @@ impl<
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
-        output.insert("model".to_string(), self.model.to_workflow_input());
+        output.insert("model".to_string(), self.model.clone().into());
         output
             .insert(
                 "hypernetwork_name".to_string(),
-                self.hypernetwork_name.to_workflow_input(),
+                self.hypernetwork_name.clone().into(),
             );
-        output.insert("strength".to_string(), self.strength.to_workflow_input());
+        output.insert("strength".to_string(), self.strength.clone().into());
         output
     }
     const NAME: &'static str = "HypernetworkLoader";
@@ -275,6 +281,7 @@ impl<
     const CATEGORY: &'static str = "loaders";
 }
 ///**Load LoRA**: LoRAs are used to modify diffusion and CLIP models, altering the way in which latents are denoised such as applying styles. Multiple LoRA nodes can be linked together.
+#[derive(Clone)]
 pub struct LoraLoader<
     Model: crate::nodes::types::Model,
     Clip: crate::nodes::types::Clip,
@@ -340,16 +347,11 @@ for LoraLoader<Model, Clip, LoraName, StrengthModel, StrengthClip> {
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
-        output.insert("model".to_string(), self.model.to_workflow_input());
-        output.insert("clip".to_string(), self.clip.to_workflow_input());
-        output.insert("lora_name".to_string(), self.lora_name.to_workflow_input());
-        output
-            .insert(
-                "strength_model".to_string(),
-                self.strength_model.to_workflow_input(),
-            );
-        output
-            .insert("strength_clip".to_string(), self.strength_clip.to_workflow_input());
+        output.insert("model".to_string(), self.model.clone().into());
+        output.insert("clip".to_string(), self.clip.clone().into());
+        output.insert("lora_name".to_string(), self.lora_name.clone().into());
+        output.insert("strength_model".to_string(), self.strength_model.clone().into());
+        output.insert("strength_clip".to_string(), self.strength_clip.clone().into());
         output
     }
     const NAME: &'static str = "LoraLoader";
@@ -358,6 +360,7 @@ for LoraLoader<Model, Clip, LoraName, StrengthModel, StrengthClip> {
     const CATEGORY: &'static str = "loaders";
 }
 ///**LoraLoaderModelOnly**: LoRAs are used to modify diffusion and CLIP models, altering the way in which latents are denoised such as applying styles. Multiple LoRA nodes can be linked together.
+#[derive(Clone)]
 pub struct LoraLoaderModelOnly<
     Model: crate::nodes::types::Model,
     LoraName: crate::nodes::types::String,
@@ -402,13 +405,9 @@ impl<
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
-        output.insert("model".to_string(), self.model.to_workflow_input());
-        output.insert("lora_name".to_string(), self.lora_name.to_workflow_input());
-        output
-            .insert(
-                "strength_model".to_string(),
-                self.strength_model.to_workflow_input(),
-            );
+        output.insert("model".to_string(), self.model.clone().into());
+        output.insert("lora_name".to_string(), self.lora_name.clone().into());
+        output.insert("strength_model".to_string(), self.strength_model.clone().into());
         output
     }
     const NAME: &'static str = "LoraLoaderModelOnly";
@@ -417,6 +416,7 @@ impl<
     const CATEGORY: &'static str = "loaders";
 }
 ///**Load Style Model**: No description.
+#[derive(Clone)]
 pub struct StyleModelLoader<StyleModelName: crate::nodes::types::String> {
     ///No documentation.
     pub style_model_name: StyleModelName,
@@ -441,7 +441,7 @@ for StyleModelLoader<StyleModelName> {
         output
             .insert(
                 "style_model_name".to_string(),
-                self.style_model_name.to_workflow_input(),
+                self.style_model_name.clone().into(),
             );
         output
     }
@@ -451,6 +451,7 @@ for StyleModelLoader<StyleModelName> {
     const CATEGORY: &'static str = "loaders";
 }
 ///**Load Upscale Model**: No description.
+#[derive(Clone)]
 pub struct UpscaleModelLoader<ModelName: crate::nodes::types::String> {
     ///No documentation.
     pub model_name: ModelName,
@@ -472,7 +473,7 @@ for UpscaleModelLoader<ModelName> {
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
-        output.insert("model_name".to_string(), self.model_name.to_workflow_input());
+        output.insert("model_name".to_string(), self.model_name.clone().into());
         output
     }
     const NAME: &'static str = "UpscaleModelLoader";
@@ -481,6 +482,7 @@ for UpscaleModelLoader<ModelName> {
     const CATEGORY: &'static str = "loaders";
 }
 ///**Load VAE**: No description.
+#[derive(Clone)]
 pub struct VaeLoader<VaeName: crate::nodes::types::String> {
     ///No documentation.
     pub vae_name: VaeName,
@@ -502,7 +504,7 @@ for VaeLoader<VaeName> {
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
-        output.insert("vae_name".to_string(), self.vae_name.to_workflow_input());
+        output.insert("vae_name".to_string(), self.vae_name.clone().into());
         output
     }
     const NAME: &'static str = "VAELoader";
@@ -511,6 +513,7 @@ for VaeLoader<VaeName> {
     const CATEGORY: &'static str = "loaders";
 }
 ///**unCLIPCheckpointLoader**: No description.
+#[derive(Clone)]
 pub struct UnClipCheckpointLoader<CkptName: crate::nodes::types::String> {
     ///No documentation.
     pub ckpt_name: CkptName,
@@ -546,7 +549,7 @@ for UnClipCheckpointLoader<CkptName> {
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
-        output.insert("ckpt_name".to_string(), self.ckpt_name.to_workflow_input());
+        output.insert("ckpt_name".to_string(), self.ckpt_name.clone().into());
         output
     }
     const NAME: &'static str = "unCLIPCheckpointLoader";

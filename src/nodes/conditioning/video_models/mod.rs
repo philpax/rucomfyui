@@ -16,6 +16,7 @@ pub mod out {
     }
 }
 ///**SVD_img2vid_Conditioning**: No description.
+#[derive(Clone)]
 pub struct SvdImg2VidConditioning<
     ClipVision: crate::nodes::types::ClipVision,
     InitImage: crate::nodes::types::Image,
@@ -133,22 +134,22 @@ for SvdImg2VidConditioning<
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
-        output.insert("clip_vision".to_string(), self.clip_vision.to_workflow_input());
-        output.insert("init_image".to_string(), self.init_image.to_workflow_input());
-        output.insert("vae".to_string(), self.vae.to_workflow_input());
-        output.insert("width".to_string(), self.width.to_workflow_input());
-        output.insert("height".to_string(), self.height.to_workflow_input());
-        output.insert("video_frames".to_string(), self.video_frames.to_workflow_input());
+        output.insert("clip_vision".to_string(), self.clip_vision.clone().into());
+        output.insert("init_image".to_string(), self.init_image.clone().into());
+        output.insert("vae".to_string(), self.vae.clone().into());
+        output.insert("width".to_string(), self.width.clone().into());
+        output.insert("height".to_string(), self.height.clone().into());
+        output.insert("video_frames".to_string(), self.video_frames.clone().into());
         output
             .insert(
                 "motion_bucket_id".to_string(),
-                self.motion_bucket_id.to_workflow_input(),
+                self.motion_bucket_id.clone().into(),
             );
-        output.insert("fps".to_string(), self.fps.to_workflow_input());
+        output.insert("fps".to_string(), self.fps.clone().into());
         output
             .insert(
                 "augmentation_level".to_string(),
-                self.augmentation_level.to_workflow_input(),
+                self.augmentation_level.clone().into(),
             );
         output
     }

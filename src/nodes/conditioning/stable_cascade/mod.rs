@@ -3,6 +3,7 @@
 use std::collections::HashMap;
 use crate::workflow::{WorkflowNodeId, WorkflowInput};
 ///**StableCascade_StageB_Conditioning**: No description.
+#[derive(Clone)]
 pub struct StableCascadeStageBConditioning<
     Conditioning: crate::nodes::types::Conditioning,
     StageC: crate::nodes::types::Latent,
@@ -34,8 +35,8 @@ impl<
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
-        output.insert("conditioning".to_string(), self.conditioning.to_workflow_input());
-        output.insert("stage_c".to_string(), self.stage_c.to_workflow_input());
+        output.insert("conditioning".to_string(), self.conditioning.clone().into());
+        output.insert("stage_c".to_string(), self.stage_c.clone().into());
         output
     }
     const NAME: &'static str = "StableCascade_StageB_Conditioning";

@@ -36,6 +36,7 @@ pub mod out {
     }
 }
 ///**SV3D_Conditioning**: No description.
+#[derive(Clone)]
 pub struct Sv3DConditioning<
     ClipVision: crate::nodes::types::ClipVision,
     InitImage: crate::nodes::types::Image,
@@ -119,13 +120,13 @@ for Sv3DConditioning<ClipVision, InitImage, Vae, Width, Height, VideoFrames, Ele
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
-        output.insert("clip_vision".to_string(), self.clip_vision.to_workflow_input());
-        output.insert("init_image".to_string(), self.init_image.to_workflow_input());
-        output.insert("vae".to_string(), self.vae.to_workflow_input());
-        output.insert("width".to_string(), self.width.to_workflow_input());
-        output.insert("height".to_string(), self.height.to_workflow_input());
-        output.insert("video_frames".to_string(), self.video_frames.to_workflow_input());
-        output.insert("elevation".to_string(), self.elevation.to_workflow_input());
+        output.insert("clip_vision".to_string(), self.clip_vision.clone().into());
+        output.insert("init_image".to_string(), self.init_image.clone().into());
+        output.insert("vae".to_string(), self.vae.clone().into());
+        output.insert("width".to_string(), self.width.clone().into());
+        output.insert("height".to_string(), self.height.clone().into());
+        output.insert("video_frames".to_string(), self.video_frames.clone().into());
+        output.insert("elevation".to_string(), self.elevation.clone().into());
         output
     }
     const NAME: &'static str = "SV3D_Conditioning";
@@ -134,6 +135,7 @@ for Sv3DConditioning<ClipVision, InitImage, Vae, Width, Height, VideoFrames, Ele
     const CATEGORY: &'static str = "conditioning/3d_models";
 }
 ///**StableZero123_Conditioning**: No description.
+#[derive(Clone)]
 pub struct StableZero123Conditioning<
     ClipVision: crate::nodes::types::ClipVision,
     InitImage: crate::nodes::types::Image,
@@ -242,14 +244,14 @@ for StableZero123Conditioning<
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
-        output.insert("clip_vision".to_string(), self.clip_vision.to_workflow_input());
-        output.insert("init_image".to_string(), self.init_image.to_workflow_input());
-        output.insert("vae".to_string(), self.vae.to_workflow_input());
-        output.insert("width".to_string(), self.width.to_workflow_input());
-        output.insert("height".to_string(), self.height.to_workflow_input());
-        output.insert("batch_size".to_string(), self.batch_size.to_workflow_input());
-        output.insert("elevation".to_string(), self.elevation.to_workflow_input());
-        output.insert("azimuth".to_string(), self.azimuth.to_workflow_input());
+        output.insert("clip_vision".to_string(), self.clip_vision.clone().into());
+        output.insert("init_image".to_string(), self.init_image.clone().into());
+        output.insert("vae".to_string(), self.vae.clone().into());
+        output.insert("width".to_string(), self.width.clone().into());
+        output.insert("height".to_string(), self.height.clone().into());
+        output.insert("batch_size".to_string(), self.batch_size.clone().into());
+        output.insert("elevation".to_string(), self.elevation.clone().into());
+        output.insert("azimuth".to_string(), self.azimuth.clone().into());
         output
     }
     const NAME: &'static str = "StableZero123_Conditioning";
@@ -258,6 +260,7 @@ for StableZero123Conditioning<
     const CATEGORY: &'static str = "conditioning/3d_models";
 }
 ///**StableZero123_Conditioning_Batched**: No description.
+#[derive(Clone)]
 pub struct StableZero123ConditioningBatched<
     ClipVision: crate::nodes::types::ClipVision,
     InitImage: crate::nodes::types::Image,
@@ -384,23 +387,23 @@ for StableZero123ConditioningBatched<
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
-        output.insert("clip_vision".to_string(), self.clip_vision.to_workflow_input());
-        output.insert("init_image".to_string(), self.init_image.to_workflow_input());
-        output.insert("vae".to_string(), self.vae.to_workflow_input());
-        output.insert("width".to_string(), self.width.to_workflow_input());
-        output.insert("height".to_string(), self.height.to_workflow_input());
-        output.insert("batch_size".to_string(), self.batch_size.to_workflow_input());
-        output.insert("elevation".to_string(), self.elevation.to_workflow_input());
-        output.insert("azimuth".to_string(), self.azimuth.to_workflow_input());
+        output.insert("clip_vision".to_string(), self.clip_vision.clone().into());
+        output.insert("init_image".to_string(), self.init_image.clone().into());
+        output.insert("vae".to_string(), self.vae.clone().into());
+        output.insert("width".to_string(), self.width.clone().into());
+        output.insert("height".to_string(), self.height.clone().into());
+        output.insert("batch_size".to_string(), self.batch_size.clone().into());
+        output.insert("elevation".to_string(), self.elevation.clone().into());
+        output.insert("azimuth".to_string(), self.azimuth.clone().into());
         output
             .insert(
                 "elevation_batch_increment".to_string(),
-                self.elevation_batch_increment.to_workflow_input(),
+                self.elevation_batch_increment.clone().into(),
             );
         output
             .insert(
                 "azimuth_batch_increment".to_string(),
-                self.azimuth_batch_increment.to_workflow_input(),
+                self.azimuth_batch_increment.clone().into(),
             );
         output
     }

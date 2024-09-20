@@ -3,6 +3,7 @@
 use std::collections::HashMap;
 use crate::workflow::{WorkflowNodeId, WorkflowInput};
 ///**EmptyLatentAudio**: No description.
+#[derive(Clone)]
 pub struct EmptyLatentAudio<Seconds: crate::nodes::types::Float> {
     ///No documentation.
     pub seconds: Seconds,
@@ -24,7 +25,7 @@ for EmptyLatentAudio<Seconds> {
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
-        output.insert("seconds".to_string(), self.seconds.to_workflow_input());
+        output.insert("seconds".to_string(), self.seconds.clone().into());
         output
     }
     const NAME: &'static str = "EmptyLatentAudio";
@@ -33,6 +34,7 @@ for EmptyLatentAudio<Seconds> {
     const CATEGORY: &'static str = "latent/audio";
 }
 ///**VAEDecodeAudio**: No description.
+#[derive(Clone)]
 pub struct VaeDecodeAudio<
     Samples: crate::nodes::types::Latent,
     Vae: crate::nodes::types::Vae,
@@ -64,8 +66,8 @@ impl<
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
-        output.insert("samples".to_string(), self.samples.to_workflow_input());
-        output.insert("vae".to_string(), self.vae.to_workflow_input());
+        output.insert("samples".to_string(), self.samples.clone().into());
+        output.insert("vae".to_string(), self.vae.clone().into());
         output
     }
     const NAME: &'static str = "VAEDecodeAudio";
@@ -74,6 +76,7 @@ impl<
     const CATEGORY: &'static str = "latent/audio";
 }
 ///**VAEEncodeAudio**: No description.
+#[derive(Clone)]
 pub struct VaeEncodeAudio<
     Audio: crate::nodes::types::Audio,
     Vae: crate::nodes::types::Vae,
@@ -105,8 +108,8 @@ impl<
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
-        output.insert("audio".to_string(), self.audio.to_workflow_input());
-        output.insert("vae".to_string(), self.vae.to_workflow_input());
+        output.insert("audio".to_string(), self.audio.clone().into());
+        output.insert("vae".to_string(), self.vae.clone().into());
         output
     }
     const NAME: &'static str = "VAEEncodeAudio";

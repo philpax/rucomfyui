@@ -17,6 +17,7 @@ pub mod out {
     }
 }
 ///**Load CLIP**: No description.
+#[derive(Clone)]
 pub struct ClipLoader<
     ClipName: crate::nodes::types::String,
     Type: crate::nodes::types::String,
@@ -48,8 +49,8 @@ impl<
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
-        output.insert("clip_name".to_string(), self.clip_name.to_workflow_input());
-        output.insert("type".to_string(), self.type_.to_workflow_input());
+        output.insert("clip_name".to_string(), self.clip_name.clone().into());
+        output.insert("type".to_string(), self.type_.clone().into());
         output
     }
     const NAME: &'static str = "CLIPLoader";
@@ -58,6 +59,7 @@ impl<
     const CATEGORY: &'static str = "advanced/loaders";
 }
 ///**Load Checkpoint With Config (DEPRECATED)**: No description.
+#[derive(Clone)]
 pub struct CheckpointLoader<
     ConfigName: crate::nodes::types::String,
     CkptName: crate::nodes::types::String,
@@ -99,8 +101,8 @@ impl<
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
-        output.insert("config_name".to_string(), self.config_name.to_workflow_input());
-        output.insert("ckpt_name".to_string(), self.ckpt_name.to_workflow_input());
+        output.insert("config_name".to_string(), self.config_name.clone().into());
+        output.insert("ckpt_name".to_string(), self.ckpt_name.clone().into());
         output
     }
     const NAME: &'static str = "CheckpointLoader";
@@ -109,6 +111,7 @@ impl<
     const CATEGORY: &'static str = "advanced/loaders";
 }
 ///**DualCLIPLoader**: No description.
+#[derive(Clone)]
 pub struct DualClipLoader<
     ClipName1: crate::nodes::types::String,
     ClipName2: crate::nodes::types::String,
@@ -149,9 +152,9 @@ impl<
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
-        output.insert("clip_name1".to_string(), self.clip_name_1.to_workflow_input());
-        output.insert("clip_name2".to_string(), self.clip_name_2.to_workflow_input());
-        output.insert("type".to_string(), self.type_.to_workflow_input());
+        output.insert("clip_name1".to_string(), self.clip_name_1.clone().into());
+        output.insert("clip_name2".to_string(), self.clip_name_2.clone().into());
+        output.insert("type".to_string(), self.type_.clone().into());
         output
     }
     const NAME: &'static str = "DualCLIPLoader";
@@ -160,6 +163,7 @@ impl<
     const CATEGORY: &'static str = "advanced/loaders";
 }
 ///**TripleCLIPLoader**: No description.
+#[derive(Clone)]
 pub struct TripleClipLoader<
     ClipName1: crate::nodes::types::String,
     ClipName2: crate::nodes::types::String,
@@ -204,9 +208,9 @@ impl<
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
-        output.insert("clip_name1".to_string(), self.clip_name_1.to_workflow_input());
-        output.insert("clip_name2".to_string(), self.clip_name_2.to_workflow_input());
-        output.insert("clip_name3".to_string(), self.clip_name_3.to_workflow_input());
+        output.insert("clip_name1".to_string(), self.clip_name_1.clone().into());
+        output.insert("clip_name2".to_string(), self.clip_name_2.clone().into());
+        output.insert("clip_name3".to_string(), self.clip_name_3.clone().into());
         output
     }
     const NAME: &'static str = "TripleCLIPLoader";
@@ -215,6 +219,7 @@ impl<
     const CATEGORY: &'static str = "advanced/loaders";
 }
 ///**Load Diffusion Model**: No description.
+#[derive(Clone)]
 pub struct UnetLoader<
     UnetName: crate::nodes::types::String,
     WeightDtype: crate::nodes::types::String,
@@ -246,8 +251,8 @@ impl<
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
-        output.insert("unet_name".to_string(), self.unet_name.to_workflow_input());
-        output.insert("weight_dtype".to_string(), self.weight_dtype.to_workflow_input());
+        output.insert("unet_name".to_string(), self.unet_name.clone().into());
+        output.insert("weight_dtype".to_string(), self.weight_dtype.clone().into());
         output
     }
     const NAME: &'static str = "UNETLoader";

@@ -16,6 +16,7 @@ pub mod out {
     }
 }
 ///**SD_4XUpscale_Conditioning**: No description.
+#[derive(Clone)]
 pub struct Sd4XUpscaleConditioning<
     Images: crate::nodes::types::Image,
     Positive: crate::nodes::types::Conditioning,
@@ -85,14 +86,14 @@ for Sd4XUpscaleConditioning<Images, Positive, Negative, ScaleRatio, NoiseAugment
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
-        output.insert("images".to_string(), self.images.to_workflow_input());
-        output.insert("positive".to_string(), self.positive.to_workflow_input());
-        output.insert("negative".to_string(), self.negative.to_workflow_input());
-        output.insert("scale_ratio".to_string(), self.scale_ratio.to_workflow_input());
+        output.insert("images".to_string(), self.images.clone().into());
+        output.insert("positive".to_string(), self.positive.clone().into());
+        output.insert("negative".to_string(), self.negative.clone().into());
+        output.insert("scale_ratio".to_string(), self.scale_ratio.clone().into());
         output
             .insert(
                 "noise_augmentation".to_string(),
-                self.noise_augmentation.to_workflow_input(),
+                self.noise_augmentation.clone().into(),
             );
         output
     }

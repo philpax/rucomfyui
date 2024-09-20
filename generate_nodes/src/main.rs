@@ -85,13 +85,7 @@ fn type_module_definitions() -> Result<TokenStream> {
             let output_name = util::object_type_struct_ident(&ty);
             Ok(quote! {
                 #[doc = #doc]
-                pub trait #name : ToWorkflowInput {}
-                impl ToWorkflowInput for Box<dyn #name> {
-                    fn to_workflow_input(&self) -> WorkflowInput {
-                        self.as_ref().to_workflow_input()
-                    }
-                }
-                impl #name for Box<dyn #name> {}
+                pub trait #name : Clone + Into<WorkflowInput> {}
 
                 #[doc = #output_doc]
                 #[derive(Clone, Copy)]
@@ -107,9 +101,9 @@ fn type_module_definitions() -> Result<TokenStream> {
                         Self { node_id, node_slot }
                     }
                 }
-                impl ToWorkflowInput for #output_name {
-                    fn to_workflow_input(&self) -> WorkflowInput {
-                        self.node_id.to_input_with_slot(self.node_slot)
+                impl From<#output_name> for WorkflowInput {
+                    fn from(value: #output_name) -> Self {
+                        value.node_id.to_input_with_slot(value.node_slot)
                     }
                 }
                 impl #name for #output_name {}
@@ -119,9 +113,15 @@ fn type_module_definitions() -> Result<TokenStream> {
 
     Ok(quote! {
         //! Definitions for all ComfyUI types.
-        use crate::{nodes::ToWorkflowInput, workflow::{WorkflowInput, WorkflowNodeId}};
+        use crate::workflow::{WorkflowInput, WorkflowNodeId};
 
         #(#types)*
+
+        impl String for std::string::String {}
+        impl<'a> String for &'a str {}
+        impl Float for f32 {}
+        impl Int for i32 {}
+        impl Boolean for bool {}
     })
 }
 
@@ -153,7 +153,7 @@ fn write_category_tree_root(root: &CategoryTree, directory: &Path) -> Result<()>
         use crate::workflow::{WorkflowNodeId, WorkflowInput};
 
         /// Implemented for all typed nodes; provides the node's output and metadata.
-        pub trait TypedNode {
+        pub trait TypedNode: Clone {
             /// The type of the node's output.
             type Output;
             /// Returns the node's output.
@@ -174,46 +174,6 @@ fn write_category_tree_root(root: &CategoryTree, directory: &Path) -> Result<()>
 
         /// Implemented for all output nodes (i.e. nodes at which a workflow terminates).
         pub trait TypedOutputNode {}
-
-        /// Converts a value to a workflow input.
-        pub trait ToWorkflowInput {
-            /// Converts the value to a workflow input.
-            fn to_workflow_input(&self) -> WorkflowInput;
-        }
-
-        impl ToWorkflowInput for std::string::String {
-            fn to_workflow_input(&self) -> WorkflowInput {
-                WorkflowInput::String(self.clone())
-            }
-        }
-        impl types :: String for std::string::String {}
-        impl<'a> ToWorkflowInput for &'a str {
-            fn to_workflow_input(&self) -> WorkflowInput {
-                WorkflowInput::String(self.to_string())
-            }
-        }
-        impl<'a> types :: String for &'a str {}
-
-        impl ToWorkflowInput for f32 {
-            fn to_workflow_input(&self) -> WorkflowInput {
-                WorkflowInput::F32(*self)
-            }
-        }
-        impl types :: Float for f32 {}
-
-        impl ToWorkflowInput for i32 {
-            fn to_workflow_input(&self) -> WorkflowInput {
-                WorkflowInput::I32(*self)
-            }
-        }
-        impl types :: Int for i32 {}
-
-        impl ToWorkflowInput for bool {
-            fn to_workflow_input(&self) -> WorkflowInput {
-                WorkflowInput::Boolean(*self)
-            }
-        }
-        impl types :: Boolean for bool {}
     };
     let path = directory.join("mod.rs");
     util::write_tokenstream(&path, output)?;
@@ -451,6 +411,7 @@ fn write_node_struct(
 
     quote! {
         #[doc = #doc]
+        #[derive(Clone)]
         pub struct #struct_name < #(#input_generics),* > {
             #(#fields),*
         }
@@ -568,12 +529,12 @@ fn write_node_trait_impl(
                 if input.optional {
                     quote! {
                         if let Some(v) = &self.#name {
-                            output.insert(#original_name.to_string(), v.to_workflow_input());
+                            output.insert(#original_name.to_string(), v.clone().into());
                         }
                     }
                 } else {
                     quote! {
-                        output.insert(#original_name.to_string(), self.#name.to_workflow_input());
+                        output.insert(#original_name.to_string(), self.#name.clone().into());
                     }
                 }
             });

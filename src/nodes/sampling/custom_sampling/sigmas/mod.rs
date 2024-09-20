@@ -22,6 +22,7 @@ pub mod out {
     }
 }
 ///**FlipSigmas**: No description.
+#[derive(Clone)]
 pub struct FlipSigmas<Sigmas: crate::nodes::types::Sigmas> {
     ///No documentation.
     pub sigmas: Sigmas,
@@ -43,7 +44,7 @@ for FlipSigmas<Sigmas> {
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
-        output.insert("sigmas".to_string(), self.sigmas.to_workflow_input());
+        output.insert("sigmas".to_string(), self.sigmas.clone().into());
         output
     }
     const NAME: &'static str = "FlipSigmas";
@@ -52,6 +53,7 @@ for FlipSigmas<Sigmas> {
     const CATEGORY: &'static str = "sampling/custom_sampling/sigmas";
 }
 ///**SplitSigmas**: No description.
+#[derive(Clone)]
 pub struct SplitSigmas<
     Sigmas: crate::nodes::types::Sigmas,
     Step: crate::nodes::types::Int,
@@ -89,8 +91,8 @@ impl<
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
-        output.insert("sigmas".to_string(), self.sigmas.to_workflow_input());
-        output.insert("step".to_string(), self.step.to_workflow_input());
+        output.insert("sigmas".to_string(), self.sigmas.clone().into());
+        output.insert("step".to_string(), self.step.clone().into());
         output
     }
     const NAME: &'static str = "SplitSigmas";
@@ -99,6 +101,7 @@ impl<
     const CATEGORY: &'static str = "sampling/custom_sampling/sigmas";
 }
 ///**SplitSigmasDenoise**: No description.
+#[derive(Clone)]
 pub struct SplitSigmasDenoise<
     Sigmas: crate::nodes::types::Sigmas,
     Denoise: crate::nodes::types::Float,
@@ -136,8 +139,8 @@ impl<
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
-        output.insert("sigmas".to_string(), self.sigmas.to_workflow_input());
-        output.insert("denoise".to_string(), self.denoise.to_workflow_input());
+        output.insert("sigmas".to_string(), self.sigmas.clone().into());
+        output.insert("denoise".to_string(), self.denoise.clone().into());
         output
     }
     const NAME: &'static str = "SplitSigmasDenoise";

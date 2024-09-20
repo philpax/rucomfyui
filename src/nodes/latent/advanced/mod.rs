@@ -3,6 +3,7 @@
 use std::collections::HashMap;
 use crate::workflow::{WorkflowNodeId, WorkflowInput};
 ///**LatentAdd**: No description.
+#[derive(Clone)]
 pub struct LatentAdd<
     Samples1: crate::nodes::types::Latent,
     Samples2: crate::nodes::types::Latent,
@@ -34,8 +35,8 @@ impl<
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
-        output.insert("samples1".to_string(), self.samples_1.to_workflow_input());
-        output.insert("samples2".to_string(), self.samples_2.to_workflow_input());
+        output.insert("samples1".to_string(), self.samples_1.clone().into());
+        output.insert("samples2".to_string(), self.samples_2.clone().into());
         output
     }
     const NAME: &'static str = "LatentAdd";
@@ -44,6 +45,7 @@ impl<
     const CATEGORY: &'static str = "latent/advanced";
 }
 ///**LatentBatchSeedBehavior**: No description.
+#[derive(Clone)]
 pub struct LatentBatchSeedBehavior<
     Samples: crate::nodes::types::Latent,
     SeedBehavior: crate::nodes::types::String,
@@ -75,9 +77,8 @@ impl<
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
-        output.insert("samples".to_string(), self.samples.to_workflow_input());
-        output
-            .insert("seed_behavior".to_string(), self.seed_behavior.to_workflow_input());
+        output.insert("samples".to_string(), self.samples.clone().into());
+        output.insert("seed_behavior".to_string(), self.seed_behavior.clone().into());
         output
     }
     const NAME: &'static str = "LatentBatchSeedBehavior";
@@ -86,6 +87,7 @@ impl<
     const CATEGORY: &'static str = "latent/advanced";
 }
 ///**LatentInterpolate**: No description.
+#[derive(Clone)]
 pub struct LatentInterpolate<
     Samples1: crate::nodes::types::Latent,
     Samples2: crate::nodes::types::Latent,
@@ -126,9 +128,9 @@ impl<
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
-        output.insert("samples1".to_string(), self.samples_1.to_workflow_input());
-        output.insert("samples2".to_string(), self.samples_2.to_workflow_input());
-        output.insert("ratio".to_string(), self.ratio.to_workflow_input());
+        output.insert("samples1".to_string(), self.samples_1.clone().into());
+        output.insert("samples2".to_string(), self.samples_2.clone().into());
+        output.insert("ratio".to_string(), self.ratio.clone().into());
         output
     }
     const NAME: &'static str = "LatentInterpolate";
@@ -137,6 +139,7 @@ impl<
     const CATEGORY: &'static str = "latent/advanced";
 }
 ///**LatentMultiply**: No description.
+#[derive(Clone)]
 pub struct LatentMultiply<
     Samples: crate::nodes::types::Latent,
     Multiplier: crate::nodes::types::Float,
@@ -168,8 +171,8 @@ impl<
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
-        output.insert("samples".to_string(), self.samples.to_workflow_input());
-        output.insert("multiplier".to_string(), self.multiplier.to_workflow_input());
+        output.insert("samples".to_string(), self.samples.clone().into());
+        output.insert("multiplier".to_string(), self.multiplier.clone().into());
         output
     }
     const NAME: &'static str = "LatentMultiply";
@@ -178,6 +181,7 @@ impl<
     const CATEGORY: &'static str = "latent/advanced";
 }
 ///**LatentSubtract**: No description.
+#[derive(Clone)]
 pub struct LatentSubtract<
     Samples1: crate::nodes::types::Latent,
     Samples2: crate::nodes::types::Latent,
@@ -209,8 +213,8 @@ impl<
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
-        output.insert("samples1".to_string(), self.samples_1.to_workflow_input());
-        output.insert("samples2".to_string(), self.samples_2.to_workflow_input());
+        output.insert("samples1".to_string(), self.samples_1.clone().into());
+        output.insert("samples2".to_string(), self.samples_2.clone().into());
         output
     }
     const NAME: &'static str = "LatentSubtract";
