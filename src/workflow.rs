@@ -49,7 +49,7 @@ impl From<WorkflowGraph> for Workflow {
 }
 impl WorkflowGraph {
     /// Add a node to the workflow.
-    pub fn add(&self, node: impl Into<WorkflowNode>) -> WorkflowNodeId {
+    pub fn add_dynamic(&self, node: impl Into<WorkflowNode>) -> WorkflowNodeId {
         let id = WorkflowNodeId(self.last_node.borrow().0 + 1);
         self.workflow.borrow_mut().0.insert(id, node.into());
         self.last_node.replace(id);
@@ -58,8 +58,8 @@ impl WorkflowGraph {
 
     #[cfg(feature = "typed_nodes")]
     /// Add a typed node to the workflow.
-    pub fn add_typed<T: TypedNode>(&self, node: T) -> T::Output {
-        let node_id = self.add(WorkflowNode {
+    pub fn add<T: TypedNode>(&self, node: T) -> T::Output {
+        let node_id = self.add_dynamic(WorkflowNode {
             inputs: node.inputs(),
             class_type: T::NAME.to_string(),
             meta: Some(WorkflowMeta::new(T::DISPLAY_NAME)),
