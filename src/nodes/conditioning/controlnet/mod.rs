@@ -1,5 +1,5 @@
 //!`controlnet` definitions/categories.
-#![allow(unused_imports)]
+#![allow(unused_imports, clippy::too_many_arguments, clippy::new_without_default)]
 use std::collections::HashMap;
 use crate::workflow::{WorkflowNodeId, WorkflowInput};
 /// Output types for nodes.
@@ -36,6 +36,27 @@ pub struct ControlNetApply<
     pub image: Image,
     ///No documentation.
     pub strength: Strength,
+}
+impl<
+    Conditioning: crate::nodes::types::Conditioning,
+    ControlNet: crate::nodes::types::ControlNet,
+    Image: crate::nodes::types::Image,
+    Strength: crate::nodes::types::Float,
+> ControlNetApply<Conditioning, ControlNet, Image, Strength> {
+    /// Create a new node.
+    pub fn new(
+        conditioning: Conditioning,
+        control_net: ControlNet,
+        image: Image,
+        strength: Strength,
+    ) -> Self {
+        Self {
+            conditioning,
+            control_net,
+            image,
+            strength,
+        }
+    }
 }
 impl<
     Conditioning: crate::nodes::types::Conditioning,
@@ -88,6 +109,44 @@ pub struct ControlNetApplyAdvanced<
     pub start_percent: StartPercent,
     ///No documentation.
     pub end_percent: EndPercent,
+}
+impl<
+    Positive: crate::nodes::types::Conditioning,
+    Negative: crate::nodes::types::Conditioning,
+    ControlNet: crate::nodes::types::ControlNet,
+    Image: crate::nodes::types::Image,
+    Strength: crate::nodes::types::Float,
+    StartPercent: crate::nodes::types::Float,
+    EndPercent: crate::nodes::types::Float,
+> ControlNetApplyAdvanced<
+    Positive,
+    Negative,
+    ControlNet,
+    Image,
+    Strength,
+    StartPercent,
+    EndPercent,
+> {
+    /// Create a new node.
+    pub fn new(
+        positive: Positive,
+        negative: Negative,
+        control_net: ControlNet,
+        image: Image,
+        strength: Strength,
+        start_percent: StartPercent,
+        end_percent: EndPercent,
+    ) -> Self {
+        Self {
+            positive,
+            negative,
+            control_net,
+            image,
+            strength,
+            start_percent,
+            end_percent,
+        }
+    }
 }
 impl<
     Positive: crate::nodes::types::Conditioning,
@@ -174,6 +233,48 @@ impl<
     Strength: crate::nodes::types::Float,
     StartPercent: crate::nodes::types::Float,
     EndPercent: crate::nodes::types::Float,
+> ControlNetApplySd3<
+    Positive,
+    Negative,
+    ControlNet,
+    Vae,
+    Image,
+    Strength,
+    StartPercent,
+    EndPercent,
+> {
+    /// Create a new node.
+    pub fn new(
+        positive: Positive,
+        negative: Negative,
+        control_net: ControlNet,
+        vae: Vae,
+        image: Image,
+        strength: Strength,
+        start_percent: StartPercent,
+        end_percent: EndPercent,
+    ) -> Self {
+        Self {
+            positive,
+            negative,
+            control_net,
+            vae,
+            image,
+            strength,
+            start_percent,
+            end_percent,
+        }
+    }
+}
+impl<
+    Positive: crate::nodes::types::Conditioning,
+    Negative: crate::nodes::types::Conditioning,
+    ControlNet: crate::nodes::types::ControlNet,
+    Vae: crate::nodes::types::Vae,
+    Image: crate::nodes::types::Image,
+    Strength: crate::nodes::types::Float,
+    StartPercent: crate::nodes::types::Float,
+    EndPercent: crate::nodes::types::Float,
 > crate::nodes::TypedNode
 for ControlNetApplySd3<
     Positive,
@@ -225,6 +326,15 @@ pub struct SetUnionControlNetType<
     pub control_net: ControlNet,
     ///No documentation.
     pub type_: Type,
+}
+impl<
+    ControlNet: crate::nodes::types::ControlNet,
+    Type: crate::nodes::types::String,
+> SetUnionControlNetType<ControlNet, Type> {
+    /// Create a new node.
+    pub fn new(control_net: ControlNet, type_: Type) -> Self {
+        Self { control_net, type_ }
+    }
 }
 impl<
     ControlNet: crate::nodes::types::ControlNet,

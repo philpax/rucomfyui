@@ -1,5 +1,5 @@
 //!`instructpix2pix` definitions/categories.
-#![allow(unused_imports)]
+#![allow(unused_imports, clippy::too_many_arguments, clippy::new_without_default)]
 use std::collections::HashMap;
 use crate::workflow::{WorkflowNodeId, WorkflowInput};
 /// Output types for nodes.
@@ -30,6 +30,27 @@ pub struct InstructPixToPixConditioning<
     pub vae: Vae,
     ///No documentation.
     pub pixels: Pixels,
+}
+impl<
+    Positive: crate::nodes::types::Conditioning,
+    Negative: crate::nodes::types::Conditioning,
+    Vae: crate::nodes::types::Vae,
+    Pixels: crate::nodes::types::Image,
+> InstructPixToPixConditioning<Positive, Negative, Vae, Pixels> {
+    /// Create a new node.
+    pub fn new(
+        positive: Positive,
+        negative: Negative,
+        vae: Vae,
+        pixels: Pixels,
+    ) -> Self {
+        Self {
+            positive,
+            negative,
+            vae,
+            pixels,
+        }
+    }
 }
 impl<
     Positive: crate::nodes::types::Conditioning,

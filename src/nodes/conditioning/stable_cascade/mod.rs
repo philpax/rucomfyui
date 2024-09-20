@@ -1,5 +1,5 @@
 //!`stable_cascade` definitions/categories.
-#![allow(unused_imports)]
+#![allow(unused_imports, clippy::too_many_arguments, clippy::new_without_default)]
 use std::collections::HashMap;
 use crate::workflow::{WorkflowNodeId, WorkflowInput};
 ///**StableCascade_StageB_Conditioning**: No description.
@@ -11,6 +11,15 @@ pub struct StableCascadeStageBConditioning<
     pub conditioning: Conditioning,
     ///No documentation.
     pub stage_c: StageC,
+}
+impl<
+    Conditioning: crate::nodes::types::Conditioning,
+    StageC: crate::nodes::types::Latent,
+> StableCascadeStageBConditioning<Conditioning, StageC> {
+    /// Create a new node.
+    pub fn new(conditioning: Conditioning, stage_c: StageC) -> Self {
+        Self { conditioning, stage_c }
+    }
 }
 impl<
     Conditioning: crate::nodes::types::Conditioning,

@@ -1,5 +1,5 @@
 //!`style_model` definitions/categories.
-#![allow(unused_imports)]
+#![allow(unused_imports, clippy::too_many_arguments, clippy::new_without_default)]
 use std::collections::HashMap;
 use crate::workflow::{WorkflowNodeId, WorkflowInput};
 ///**Apply Style Model**: No description.
@@ -14,6 +14,24 @@ pub struct StyleModelApply<
     pub style_model: StyleModel,
     ///No documentation.
     pub clip_vision_output: ClipVisionOutput,
+}
+impl<
+    Conditioning: crate::nodes::types::Conditioning,
+    StyleModel: crate::nodes::types::StyleModel,
+    ClipVisionOutput: crate::nodes::types::ClipVisionOutput,
+> StyleModelApply<Conditioning, StyleModel, ClipVisionOutput> {
+    /// Create a new node.
+    pub fn new(
+        conditioning: Conditioning,
+        style_model: StyleModel,
+        clip_vision_output: ClipVisionOutput,
+    ) -> Self {
+        Self {
+            conditioning,
+            style_model,
+            clip_vision_output,
+        }
+    }
 }
 impl<
     Conditioning: crate::nodes::types::Conditioning,

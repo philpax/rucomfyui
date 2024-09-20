@@ -1,5 +1,5 @@
 //!`sampling` definitions/categories.
-#![allow(unused_imports)]
+#![allow(unused_imports, clippy::too_many_arguments, clippy::new_without_default)]
 use std::collections::HashMap;
 use crate::workflow::{WorkflowNodeId, WorkflowInput};
 pub mod custom_sampling;
@@ -37,6 +37,56 @@ pub struct KSampler<
     pub latent_image: LatentImage,
     ///The amount of denoising applied, lower values will maintain the structure of the initial image allowing for image to image sampling.
     pub denoise: Denoise,
+}
+impl<
+    Model: crate::nodes::types::Model,
+    Seed: crate::nodes::types::Int,
+    Steps: crate::nodes::types::Int,
+    Cfg: crate::nodes::types::Float,
+    SamplerName: crate::nodes::types::String,
+    Scheduler: crate::nodes::types::String,
+    Positive: crate::nodes::types::Conditioning,
+    Negative: crate::nodes::types::Conditioning,
+    LatentImage: crate::nodes::types::Latent,
+    Denoise: crate::nodes::types::Float,
+> KSampler<
+    Model,
+    Seed,
+    Steps,
+    Cfg,
+    SamplerName,
+    Scheduler,
+    Positive,
+    Negative,
+    LatentImage,
+    Denoise,
+> {
+    /// Create a new node.
+    pub fn new(
+        model: Model,
+        seed: Seed,
+        steps: Steps,
+        cfg: Cfg,
+        sampler_name: SamplerName,
+        scheduler: Scheduler,
+        positive: Positive,
+        negative: Negative,
+        latent_image: LatentImage,
+        denoise: Denoise,
+    ) -> Self {
+        Self {
+            model,
+            seed,
+            steps,
+            cfg,
+            sampler_name,
+            scheduler,
+            positive,
+            negative,
+            latent_image,
+            denoise,
+        }
+    }
 }
 impl<
     Model: crate::nodes::types::Model,
@@ -130,6 +180,68 @@ pub struct KSamplerAdvanced<
     pub end_at_step: EndAtStep,
     ///No documentation.
     pub return_with_leftover_noise: ReturnWithLeftoverNoise,
+}
+impl<
+    Model: crate::nodes::types::Model,
+    AddNoise: crate::nodes::types::String,
+    NoiseSeed: crate::nodes::types::Int,
+    Steps: crate::nodes::types::Int,
+    Cfg: crate::nodes::types::Float,
+    SamplerName: crate::nodes::types::String,
+    Scheduler: crate::nodes::types::String,
+    Positive: crate::nodes::types::Conditioning,
+    Negative: crate::nodes::types::Conditioning,
+    LatentImage: crate::nodes::types::Latent,
+    StartAtStep: crate::nodes::types::Int,
+    EndAtStep: crate::nodes::types::Int,
+    ReturnWithLeftoverNoise: crate::nodes::types::String,
+> KSamplerAdvanced<
+    Model,
+    AddNoise,
+    NoiseSeed,
+    Steps,
+    Cfg,
+    SamplerName,
+    Scheduler,
+    Positive,
+    Negative,
+    LatentImage,
+    StartAtStep,
+    EndAtStep,
+    ReturnWithLeftoverNoise,
+> {
+    /// Create a new node.
+    pub fn new(
+        model: Model,
+        add_noise: AddNoise,
+        noise_seed: NoiseSeed,
+        steps: Steps,
+        cfg: Cfg,
+        sampler_name: SamplerName,
+        scheduler: Scheduler,
+        positive: Positive,
+        negative: Negative,
+        latent_image: LatentImage,
+        start_at_step: StartAtStep,
+        end_at_step: EndAtStep,
+        return_with_leftover_noise: ReturnWithLeftoverNoise,
+    ) -> Self {
+        Self {
+            model,
+            add_noise,
+            noise_seed,
+            steps,
+            cfg,
+            sampler_name,
+            scheduler,
+            positive,
+            negative,
+            latent_image,
+            start_at_step,
+            end_at_step,
+            return_with_leftover_noise,
+        }
+    }
 }
 impl<
     Model: crate::nodes::types::Model,

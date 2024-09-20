@@ -1,5 +1,5 @@
 //!`guiders` definitions/categories.
-#![allow(unused_imports)]
+#![allow(unused_imports, clippy::too_many_arguments, clippy::new_without_default)]
 use std::collections::HashMap;
 use crate::workflow::{WorkflowNodeId, WorkflowInput};
 ///**BasicGuider**: No description.
@@ -11,6 +11,15 @@ pub struct BasicGuider<
     pub model: Model,
     ///No documentation.
     pub conditioning: Conditioning,
+}
+impl<
+    Model: crate::nodes::types::Model,
+    Conditioning: crate::nodes::types::Conditioning,
+> BasicGuider<Model, Conditioning> {
+    /// Create a new node.
+    pub fn new(model: Model, conditioning: Conditioning) -> Self {
+        Self { model, conditioning }
+    }
 }
 impl<
     Model: crate::nodes::types::Model,
@@ -49,6 +58,22 @@ pub struct CfgGuider<
     pub negative: Negative,
     ///No documentation.
     pub cfg: Cfg,
+}
+impl<
+    Model: crate::nodes::types::Model,
+    Positive: crate::nodes::types::Conditioning,
+    Negative: crate::nodes::types::Conditioning,
+    Cfg: crate::nodes::types::Float,
+> CfgGuider<Model, Positive, Negative, Cfg> {
+    /// Create a new node.
+    pub fn new(model: Model, positive: Positive, negative: Negative, cfg: Cfg) -> Self {
+        Self {
+            model,
+            positive,
+            negative,
+            cfg,
+        }
+    }
 }
 impl<
     Model: crate::nodes::types::Model,
@@ -97,6 +122,33 @@ pub struct DualCfgGuider<
     pub cfg_conds: CfgConds,
     ///No documentation.
     pub cfg_cond_2_negative: CfgCond2Negative,
+}
+impl<
+    Model: crate::nodes::types::Model,
+    Cond1: crate::nodes::types::Conditioning,
+    Cond2: crate::nodes::types::Conditioning,
+    Negative: crate::nodes::types::Conditioning,
+    CfgConds: crate::nodes::types::Float,
+    CfgCond2Negative: crate::nodes::types::Float,
+> DualCfgGuider<Model, Cond1, Cond2, Negative, CfgConds, CfgCond2Negative> {
+    /// Create a new node.
+    pub fn new(
+        model: Model,
+        cond_1: Cond1,
+        cond_2: Cond2,
+        negative: Negative,
+        cfg_conds: CfgConds,
+        cfg_cond_2_negative: CfgCond2Negative,
+    ) -> Self {
+        Self {
+            model,
+            cond_1,
+            cond_2,
+            negative,
+            cfg_conds,
+            cfg_cond_2_negative,
+        }
+    }
 }
 impl<
     Model: crate::nodes::types::Model,

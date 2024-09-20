@@ -1,5 +1,5 @@
 //!`schedulers` definitions/categories.
-#![allow(unused_imports)]
+#![allow(unused_imports, clippy::too_many_arguments, clippy::new_without_default)]
 use std::collections::HashMap;
 use crate::workflow::{WorkflowNodeId, WorkflowInput};
 ///**AlignYourStepsScheduler**: No description.
@@ -14,6 +14,16 @@ pub struct AlignYourStepsScheduler<
     pub steps: Steps,
     ///No documentation.
     pub denoise: Denoise,
+}
+impl<
+    ModelType: crate::nodes::types::String,
+    Steps: crate::nodes::types::Int,
+    Denoise: crate::nodes::types::Float,
+> AlignYourStepsScheduler<ModelType, Steps, Denoise> {
+    /// Create a new node.
+    pub fn new(model_type: ModelType, steps: Steps, denoise: Denoise) -> Self {
+        Self { model_type, steps, denoise }
+    }
 }
 impl<
     ModelType: crate::nodes::types::String,
@@ -54,6 +64,27 @@ pub struct BasicScheduler<
     pub steps: Steps,
     ///No documentation.
     pub denoise: Denoise,
+}
+impl<
+    Model: crate::nodes::types::Model,
+    Scheduler: crate::nodes::types::String,
+    Steps: crate::nodes::types::Int,
+    Denoise: crate::nodes::types::Float,
+> BasicScheduler<Model, Scheduler, Steps, Denoise> {
+    /// Create a new node.
+    pub fn new(
+        model: Model,
+        scheduler: Scheduler,
+        steps: Steps,
+        denoise: Denoise,
+    ) -> Self {
+        Self {
+            model,
+            scheduler,
+            steps,
+            denoise,
+        }
+    }
 }
 impl<
     Model: crate::nodes::types::Model,
@@ -102,6 +133,17 @@ impl<
     Steps: crate::nodes::types::Int,
     Alpha: crate::nodes::types::Float,
     Beta: crate::nodes::types::Float,
+> BetaSamplingScheduler<Model, Steps, Alpha, Beta> {
+    /// Create a new node.
+    pub fn new(model: Model, steps: Steps, alpha: Alpha, beta: Beta) -> Self {
+        Self { model, steps, alpha, beta }
+    }
+}
+impl<
+    Model: crate::nodes::types::Model,
+    Steps: crate::nodes::types::Int,
+    Alpha: crate::nodes::types::Float,
+    Beta: crate::nodes::types::Float,
 > crate::nodes::TypedNode for BetaSamplingScheduler<Model, Steps, Alpha, Beta> {
     type Output = crate::nodes::types::SigmasOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
@@ -135,6 +177,20 @@ pub struct ExponentialScheduler<
     pub sigma_max: SigmaMax,
     ///No documentation.
     pub sigma_min: SigmaMin,
+}
+impl<
+    Steps: crate::nodes::types::Int,
+    SigmaMax: crate::nodes::types::Float,
+    SigmaMin: crate::nodes::types::Float,
+> ExponentialScheduler<Steps, SigmaMax, SigmaMin> {
+    /// Create a new node.
+    pub fn new(steps: Steps, sigma_max: SigmaMax, sigma_min: SigmaMin) -> Self {
+        Self {
+            steps,
+            sigma_max,
+            sigma_min,
+        }
+    }
 }
 impl<
     Steps: crate::nodes::types::Int,
@@ -177,6 +233,16 @@ impl<
     Coeff: crate::nodes::types::Float,
     Steps: crate::nodes::types::Int,
     Denoise: crate::nodes::types::Float,
+> GitsScheduler<Coeff, Steps, Denoise> {
+    /// Create a new node.
+    pub fn new(coeff: Coeff, steps: Steps, denoise: Denoise) -> Self {
+        Self { coeff, steps, denoise }
+    }
+}
+impl<
+    Coeff: crate::nodes::types::Float,
+    Steps: crate::nodes::types::Int,
+    Denoise: crate::nodes::types::Float,
 > crate::nodes::TypedNode for GitsScheduler<Coeff, Steps, Denoise> {
     type Output = crate::nodes::types::SigmasOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
@@ -212,6 +278,27 @@ pub struct KarrasScheduler<
     pub sigma_min: SigmaMin,
     ///No documentation.
     pub rho: Rho,
+}
+impl<
+    Steps: crate::nodes::types::Int,
+    SigmaMax: crate::nodes::types::Float,
+    SigmaMin: crate::nodes::types::Float,
+    Rho: crate::nodes::types::Float,
+> KarrasScheduler<Steps, SigmaMax, SigmaMin, Rho> {
+    /// Create a new node.
+    pub fn new(
+        steps: Steps,
+        sigma_max: SigmaMax,
+        sigma_min: SigmaMin,
+        rho: Rho,
+    ) -> Self {
+        Self {
+            steps,
+            sigma_max,
+            sigma_min,
+            rho,
+        }
+    }
 }
 impl<
     Steps: crate::nodes::types::Int,
@@ -260,6 +347,27 @@ impl<
     SigmaMax: crate::nodes::types::Float,
     SigmaMin: crate::nodes::types::Float,
     Rho: crate::nodes::types::Float,
+> PolyexponentialScheduler<Steps, SigmaMax, SigmaMin, Rho> {
+    /// Create a new node.
+    pub fn new(
+        steps: Steps,
+        sigma_max: SigmaMax,
+        sigma_min: SigmaMin,
+        rho: Rho,
+    ) -> Self {
+        Self {
+            steps,
+            sigma_max,
+            sigma_min,
+            rho,
+        }
+    }
+}
+impl<
+    Steps: crate::nodes::types::Int,
+    SigmaMax: crate::nodes::types::Float,
+    SigmaMin: crate::nodes::types::Float,
+    Rho: crate::nodes::types::Float,
 > crate::nodes::TypedNode for PolyexponentialScheduler<Steps, SigmaMax, SigmaMin, Rho> {
     type Output = crate::nodes::types::SigmasOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
@@ -293,6 +401,16 @@ pub struct SdTurboScheduler<
     pub steps: Steps,
     ///No documentation.
     pub denoise: Denoise,
+}
+impl<
+    Model: crate::nodes::types::Model,
+    Steps: crate::nodes::types::Int,
+    Denoise: crate::nodes::types::Float,
+> SdTurboScheduler<Model, Steps, Denoise> {
+    /// Create a new node.
+    pub fn new(model: Model, steps: Steps, denoise: Denoise) -> Self {
+        Self { model, steps, denoise }
+    }
 }
 impl<
     Model: crate::nodes::types::Model,
@@ -333,6 +451,22 @@ pub struct VpScheduler<
     pub beta_min: BetaMin,
     ///No documentation.
     pub eps_s: EpsS,
+}
+impl<
+    Steps: crate::nodes::types::Int,
+    BetaD: crate::nodes::types::Float,
+    BetaMin: crate::nodes::types::Float,
+    EpsS: crate::nodes::types::Float,
+> VpScheduler<Steps, BetaD, BetaMin, EpsS> {
+    /// Create a new node.
+    pub fn new(steps: Steps, beta_d: BetaD, beta_min: BetaMin, eps_s: EpsS) -> Self {
+        Self {
+            steps,
+            beta_d,
+            beta_min,
+            eps_s,
+        }
+    }
 }
 impl<
     Steps: crate::nodes::types::Int,

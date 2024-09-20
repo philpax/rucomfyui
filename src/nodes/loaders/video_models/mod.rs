@@ -1,5 +1,5 @@
 //!`video_models` definitions/categories.
-#![allow(unused_imports)]
+#![allow(unused_imports, clippy::too_many_arguments, clippy::new_without_default)]
 use std::collections::HashMap;
 use crate::workflow::{WorkflowNodeId, WorkflowInput};
 /// Output types for nodes.
@@ -19,6 +19,12 @@ pub mod out {
 pub struct ImageOnlyCheckpointLoader<CkptName: crate::nodes::types::String> {
     ///No documentation.
     pub ckpt_name: CkptName,
+}
+impl<CkptName: crate::nodes::types::String> ImageOnlyCheckpointLoader<CkptName> {
+    /// Create a new node.
+    pub fn new(ckpt_name: CkptName) -> Self {
+        Self { ckpt_name }
+    }
 }
 impl<CkptName: crate::nodes::types::String> crate::nodes::TypedNode
 for ImageOnlyCheckpointLoader<CkptName> {

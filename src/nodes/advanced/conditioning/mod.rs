@@ -1,5 +1,5 @@
 //!`conditioning` definitions/categories.
-#![allow(unused_imports)]
+#![allow(unused_imports, clippy::too_many_arguments, clippy::new_without_default)]
 use std::collections::HashMap;
 use crate::workflow::{WorkflowNodeId, WorkflowInput};
 pub mod flux;
@@ -15,6 +15,16 @@ pub struct ClipTextEncodeHunyuanDiT<
     pub bert: Bert,
     ///No documentation.
     pub mt_5_xl: Mt5Xl,
+}
+impl<
+    Clip: crate::nodes::types::Clip,
+    Bert: crate::nodes::types::String,
+    Mt5Xl: crate::nodes::types::String,
+> ClipTextEncodeHunyuanDiT<Clip, Bert, Mt5Xl> {
+    /// Create a new node.
+    pub fn new(clip: Clip, bert: Bert, mt_5_xl: Mt5Xl) -> Self {
+        Self { clip, bert, mt_5_xl }
+    }
 }
 impl<
     Clip: crate::nodes::types::Clip,
@@ -58,6 +68,30 @@ pub struct ClipTextEncodeSd3<
     pub t_5_xxl: T5Xxl,
     ///No documentation.
     pub empty_padding: EmptyPadding,
+}
+impl<
+    Clip: crate::nodes::types::Clip,
+    ClipL: crate::nodes::types::String,
+    ClipG: crate::nodes::types::String,
+    T5Xxl: crate::nodes::types::String,
+    EmptyPadding: crate::nodes::types::String,
+> ClipTextEncodeSd3<Clip, ClipL, ClipG, T5Xxl, EmptyPadding> {
+    /// Create a new node.
+    pub fn new(
+        clip: Clip,
+        clip_l: ClipL,
+        clip_g: ClipG,
+        t_5_xxl: T5Xxl,
+        empty_padding: EmptyPadding,
+    ) -> Self {
+        Self {
+            clip,
+            clip_l,
+            clip_g,
+            t_5_xxl,
+            empty_padding,
+        }
+    }
 }
 impl<
     Clip: crate::nodes::types::Clip,
@@ -119,6 +153,52 @@ pub struct ClipTextEncodeSdxl<
     pub clip: Clip,
     ///No documentation.
     pub text_l: TextL,
+}
+impl<
+    Width: crate::nodes::types::Int,
+    Height: crate::nodes::types::Int,
+    CropW: crate::nodes::types::Int,
+    CropH: crate::nodes::types::Int,
+    TargetWidth: crate::nodes::types::Int,
+    TargetHeight: crate::nodes::types::Int,
+    TextG: crate::nodes::types::String,
+    Clip: crate::nodes::types::Clip,
+    TextL: crate::nodes::types::String,
+> ClipTextEncodeSdxl<
+    Width,
+    Height,
+    CropW,
+    CropH,
+    TargetWidth,
+    TargetHeight,
+    TextG,
+    Clip,
+    TextL,
+> {
+    /// Create a new node.
+    pub fn new(
+        width: Width,
+        height: Height,
+        crop_w: CropW,
+        crop_h: CropH,
+        target_width: TargetWidth,
+        target_height: TargetHeight,
+        text_g: TextG,
+        clip: Clip,
+        text_l: TextL,
+    ) -> Self {
+        Self {
+            width,
+            height,
+            crop_w,
+            crop_h,
+            target_width,
+            target_height,
+            text_g,
+            clip,
+            text_l,
+        }
+    }
 }
 impl<
     Width: crate::nodes::types::Int,
@@ -193,6 +273,30 @@ impl<
     Height: crate::nodes::types::Int,
     Text: crate::nodes::types::String,
     Clip: crate::nodes::types::Clip,
+> ClipTextEncodeSdxlRefiner<Ascore, Width, Height, Text, Clip> {
+    /// Create a new node.
+    pub fn new(
+        ascore: Ascore,
+        width: Width,
+        height: Height,
+        text: Text,
+        clip: Clip,
+    ) -> Self {
+        Self {
+            ascore,
+            width,
+            height,
+            text,
+            clip,
+        }
+    }
+}
+impl<
+    Ascore: crate::nodes::types::Float,
+    Width: crate::nodes::types::Int,
+    Height: crate::nodes::types::Int,
+    Text: crate::nodes::types::String,
+    Clip: crate::nodes::types::Clip,
 > crate::nodes::TypedNode
 for ClipTextEncodeSdxlRefiner<Ascore, Width, Height, Text, Clip> {
     type Output = crate::nodes::types::ConditioningOut;
@@ -233,6 +337,16 @@ impl<
     Conditioning: crate::nodes::types::Conditioning,
     Start: crate::nodes::types::Float,
     End: crate::nodes::types::Float,
+> ConditioningSetTimestepRange<Conditioning, Start, End> {
+    /// Create a new node.
+    pub fn new(conditioning: Conditioning, start: Start, end: End) -> Self {
+        Self { conditioning, start, end }
+    }
+}
+impl<
+    Conditioning: crate::nodes::types::Conditioning,
+    Start: crate::nodes::types::Float,
+    End: crate::nodes::types::Float,
 > crate::nodes::TypedNode for ConditioningSetTimestepRange<Conditioning, Start, End> {
     type Output = crate::nodes::types::ConditioningOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
@@ -257,6 +371,12 @@ impl<
 pub struct ConditioningZeroOut<Conditioning: crate::nodes::types::Conditioning> {
     ///No documentation.
     pub conditioning: Conditioning,
+}
+impl<Conditioning: crate::nodes::types::Conditioning> ConditioningZeroOut<Conditioning> {
+    /// Create a new node.
+    pub fn new(conditioning: Conditioning) -> Self {
+        Self { conditioning }
+    }
 }
 impl<Conditioning: crate::nodes::types::Conditioning> crate::nodes::TypedNode
 for ConditioningZeroOut<Conditioning> {

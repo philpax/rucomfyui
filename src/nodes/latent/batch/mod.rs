@@ -1,5 +1,5 @@
 //!`batch` definitions/categories.
-#![allow(unused_imports)]
+#![allow(unused_imports, clippy::too_many_arguments, clippy::new_without_default)]
 use std::collections::HashMap;
 use crate::workflow::{WorkflowNodeId, WorkflowInput};
 ///**LatentBatch**: No description.
@@ -11,6 +11,15 @@ pub struct LatentBatch<
     pub samples_1: Samples1,
     ///No documentation.
     pub samples_2: Samples2,
+}
+impl<
+    Samples1: crate::nodes::types::Latent,
+    Samples2: crate::nodes::types::Latent,
+> LatentBatch<Samples1, Samples2> {
+    /// Create a new node.
+    pub fn new(samples_1: Samples1, samples_2: Samples2) -> Self {
+        Self { samples_1, samples_2 }
+    }
 }
 impl<
     Samples1: crate::nodes::types::Latent,
@@ -51,6 +60,20 @@ impl<
     Samples: crate::nodes::types::Latent,
     BatchIndex: crate::nodes::types::Int,
     Length: crate::nodes::types::Int,
+> LatentFromBatch<Samples, BatchIndex, Length> {
+    /// Create a new node.
+    pub fn new(samples: Samples, batch_index: BatchIndex, length: Length) -> Self {
+        Self {
+            samples,
+            batch_index,
+            length,
+        }
+    }
+}
+impl<
+    Samples: crate::nodes::types::Latent,
+    BatchIndex: crate::nodes::types::Int,
+    Length: crate::nodes::types::Int,
 > crate::nodes::TypedNode for LatentFromBatch<Samples, BatchIndex, Length> {
     type Output = crate::nodes::types::LatentOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
@@ -84,6 +107,15 @@ pub struct RebatchLatents<
 impl<
     Latents: crate::nodes::types::Latent,
     BatchSize: crate::nodes::types::Int,
+> RebatchLatents<Latents, BatchSize> {
+    /// Create a new node.
+    pub fn new(latents: Latents, batch_size: BatchSize) -> Self {
+        Self { latents, batch_size }
+    }
+}
+impl<
+    Latents: crate::nodes::types::Latent,
+    BatchSize: crate::nodes::types::Int,
 > crate::nodes::TypedNode for RebatchLatents<Latents, BatchSize> {
     type Output = crate::nodes::types::LatentOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
@@ -112,6 +144,15 @@ pub struct RepeatLatentBatch<
     pub samples: Samples,
     ///No documentation.
     pub amount: Amount,
+}
+impl<
+    Samples: crate::nodes::types::Latent,
+    Amount: crate::nodes::types::Int,
+> RepeatLatentBatch<Samples, Amount> {
+    /// Create a new node.
+    pub fn new(samples: Samples, amount: Amount) -> Self {
+        Self { samples, amount }
+    }
 }
 impl<
     Samples: crate::nodes::types::Latent,

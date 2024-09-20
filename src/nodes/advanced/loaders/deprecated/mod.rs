@@ -1,5 +1,5 @@
 //!`deprecated` definitions/categories.
-#![allow(unused_imports)]
+#![allow(unused_imports, clippy::too_many_arguments, clippy::new_without_default)]
 use std::collections::HashMap;
 use crate::workflow::{WorkflowNodeId, WorkflowInput};
 /// Output types for nodes.
@@ -19,6 +19,12 @@ pub mod out {
 pub struct DiffusersLoader<ModelPath: crate::nodes::types::String> {
     ///No documentation.
     pub model_path: ModelPath,
+}
+impl<ModelPath: crate::nodes::types::String> DiffusersLoader<ModelPath> {
+    /// Create a new node.
+    pub fn new(model_path: ModelPath) -> Self {
+        Self { model_path }
+    }
 }
 impl<ModelPath: crate::nodes::types::String> crate::nodes::TypedNode
 for DiffusersLoader<ModelPath> {

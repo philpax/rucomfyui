@@ -1,5 +1,5 @@
 //!`flux` definitions/categories.
-#![allow(unused_imports)]
+#![allow(unused_imports, clippy::too_many_arguments, clippy::new_without_default)]
 use std::collections::HashMap;
 use crate::workflow::{WorkflowNodeId, WorkflowInput};
 ///**CLIPTextEncodeFlux**: No description.
@@ -17,6 +17,22 @@ pub struct ClipTextEncodeFlux<
     pub t_5_xxl: T5Xxl,
     ///No documentation.
     pub guidance: Guidance,
+}
+impl<
+    Clip: crate::nodes::types::Clip,
+    ClipL: crate::nodes::types::String,
+    T5Xxl: crate::nodes::types::String,
+    Guidance: crate::nodes::types::Float,
+> ClipTextEncodeFlux<Clip, ClipL, T5Xxl, Guidance> {
+    /// Create a new node.
+    pub fn new(clip: Clip, clip_l: ClipL, t_5_xxl: T5Xxl, guidance: Guidance) -> Self {
+        Self {
+            clip,
+            clip_l,
+            t_5_xxl,
+            guidance,
+        }
+    }
 }
 impl<
     Clip: crate::nodes::types::Clip,
@@ -53,6 +69,15 @@ pub struct FluxGuidance<
     pub conditioning: Conditioning,
     ///No documentation.
     pub guidance: Guidance,
+}
+impl<
+    Conditioning: crate::nodes::types::Conditioning,
+    Guidance: crate::nodes::types::Float,
+> FluxGuidance<Conditioning, Guidance> {
+    /// Create a new node.
+    pub fn new(conditioning: Conditioning, guidance: Guidance) -> Self {
+        Self { conditioning, guidance }
+    }
 }
 impl<
     Conditioning: crate::nodes::types::Conditioning,

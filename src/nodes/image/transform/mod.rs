@@ -1,5 +1,5 @@
 //!`transform` definitions/categories.
-#![allow(unused_imports)]
+#![allow(unused_imports, clippy::too_many_arguments, clippy::new_without_default)]
 use std::collections::HashMap;
 use crate::workflow::{WorkflowNodeId, WorkflowInput};
 ///**ImageCrop**: No description.
@@ -20,6 +20,18 @@ pub struct ImageCrop<
     pub x: X,
     ///No documentation.
     pub y: Y,
+}
+impl<
+    Image: crate::nodes::types::Image,
+    Width: crate::nodes::types::Int,
+    Height: crate::nodes::types::Int,
+    X: crate::nodes::types::Int,
+    Y: crate::nodes::types::Int,
+> ImageCrop<Image, Width, Height, X, Y> {
+    /// Create a new node.
+    pub fn new(image: Image, width: Width, height: Height, x: X, y: Y) -> Self {
+        Self { image, width, height, x, y }
+    }
 }
 impl<
     Image: crate::nodes::types::Image,

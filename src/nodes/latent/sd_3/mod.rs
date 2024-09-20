@@ -1,5 +1,5 @@
 //!`sd3` definitions/categories.
-#![allow(unused_imports)]
+#![allow(unused_imports, clippy::too_many_arguments, clippy::new_without_default)]
 use std::collections::HashMap;
 use crate::workflow::{WorkflowNodeId, WorkflowInput};
 ///**EmptySD3LatentImage**: No description.
@@ -14,6 +14,16 @@ pub struct EmptySd3LatentImage<
     pub height: Height,
     ///No documentation.
     pub batch_size: BatchSize,
+}
+impl<
+    Width: crate::nodes::types::Int,
+    Height: crate::nodes::types::Int,
+    BatchSize: crate::nodes::types::Int,
+> EmptySd3LatentImage<Width, Height, BatchSize> {
+    /// Create a new node.
+    pub fn new(width: Width, height: Height, batch_size: BatchSize) -> Self {
+        Self { width, height, batch_size }
+    }
 }
 impl<
     Width: crate::nodes::types::Int,

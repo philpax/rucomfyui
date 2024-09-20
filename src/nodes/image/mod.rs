@@ -1,5 +1,5 @@
 //!`image` definitions/categories.
-#![allow(unused_imports)]
+#![allow(unused_imports, clippy::too_many_arguments, clippy::new_without_default)]
 use std::collections::HashMap;
 use crate::workflow::{WorkflowNodeId, WorkflowInput};
 pub mod animation;
@@ -48,6 +48,27 @@ impl<
     Height: crate::nodes::types::Int,
     BatchSize: crate::nodes::types::Int,
     Color: crate::nodes::types::Int,
+> EmptyImage<Width, Height, BatchSize, Color> {
+    /// Create a new node.
+    pub fn new(
+        width: Width,
+        height: Height,
+        batch_size: BatchSize,
+        color: Color,
+    ) -> Self {
+        Self {
+            width,
+            height,
+            batch_size,
+            color,
+        }
+    }
+}
+impl<
+    Width: crate::nodes::types::Int,
+    Height: crate::nodes::types::Int,
+    BatchSize: crate::nodes::types::Int,
+    Color: crate::nodes::types::Int,
 > crate::nodes::TypedNode for EmptyImage<Width, Height, BatchSize, Color> {
     type Output = crate::nodes::types::ImageOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
@@ -78,6 +99,15 @@ pub struct ImageBatch<
     pub image_1: Image1,
     ///No documentation.
     pub image_2: Image2,
+}
+impl<
+    Image1: crate::nodes::types::Image,
+    Image2: crate::nodes::types::Image,
+> ImageBatch<Image1, Image2> {
+    /// Create a new node.
+    pub fn new(image_1: Image1, image_2: Image2) -> Self {
+        Self { image_1, image_2 }
+    }
 }
 impl<
     Image1: crate::nodes::types::Image,
@@ -130,6 +160,33 @@ impl<
     Y: crate::nodes::types::Int,
     ResizeSource: crate::nodes::types::Boolean,
     Mask: crate::nodes::types::Mask,
+> ImageCompositeMasked<Destination, Source, X, Y, ResizeSource, Mask> {
+    /// Create a new node.
+    pub fn new(
+        destination: Destination,
+        source: Source,
+        x: X,
+        y: Y,
+        resize_source: ResizeSource,
+        mask: Option<Mask>,
+    ) -> Self {
+        Self {
+            destination,
+            source,
+            x,
+            y,
+            resize_source,
+            mask,
+        }
+    }
+}
+impl<
+    Destination: crate::nodes::types::Image,
+    Source: crate::nodes::types::Image,
+    X: crate::nodes::types::Int,
+    Y: crate::nodes::types::Int,
+    ResizeSource: crate::nodes::types::Boolean,
+    Mask: crate::nodes::types::Mask,
 > crate::nodes::TypedNode
 for ImageCompositeMasked<Destination, Source, X, Y, ResizeSource, Mask> {
     type Output = crate::nodes::types::ImageOut;
@@ -161,6 +218,12 @@ for ImageCompositeMasked<Destination, Source, X, Y, ResizeSource, Mask> {
 pub struct ImageInvert<Image: crate::nodes::types::Image> {
     ///No documentation.
     pub image: Image,
+}
+impl<Image: crate::nodes::types::Image> ImageInvert<Image> {
+    /// Create a new node.
+    pub fn new(image: Image) -> Self {
+        Self { image }
+    }
 }
 impl<Image: crate::nodes::types::Image> crate::nodes::TypedNode for ImageInvert<Image> {
     type Output = crate::nodes::types::ImageOut;
@@ -209,6 +272,33 @@ impl<
     Right: crate::nodes::types::Int,
     Bottom: crate::nodes::types::Int,
     Feathering: crate::nodes::types::Int,
+> ImagePadForOutpaint<Image, Left, Top, Right, Bottom, Feathering> {
+    /// Create a new node.
+    pub fn new(
+        image: Image,
+        left: Left,
+        top: Top,
+        right: Right,
+        bottom: Bottom,
+        feathering: Feathering,
+    ) -> Self {
+        Self {
+            image,
+            left,
+            top,
+            right,
+            bottom,
+            feathering,
+        }
+    }
+}
+impl<
+    Image: crate::nodes::types::Image,
+    Left: crate::nodes::types::Int,
+    Top: crate::nodes::types::Int,
+    Right: crate::nodes::types::Int,
+    Bottom: crate::nodes::types::Int,
+    Feathering: crate::nodes::types::Int,
 > crate::nodes::TypedNode
 for ImagePadForOutpaint<Image, Left, Top, Right, Bottom, Feathering> {
     type Output = out::ImagePadForOutpaintOutput;
@@ -244,6 +334,12 @@ pub struct LoadImage<Image: crate::nodes::types::String> {
     ///No documentation.
     pub image: Image,
 }
+impl<Image: crate::nodes::types::String> LoadImage<Image> {
+    /// Create a new node.
+    pub fn new(image: Image) -> Self {
+        Self { image }
+    }
+}
 impl<Image: crate::nodes::types::String> crate::nodes::TypedNode for LoadImage<Image> {
     type Output = out::LoadImageOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
@@ -273,6 +369,12 @@ pub struct PreviewImage<Images: crate::nodes::types::Image> {
     ///No documentation.
     pub images: Images,
 }
+impl<Images: crate::nodes::types::Image> PreviewImage<Images> {
+    /// Create a new node.
+    pub fn new(images: Images) -> Self {
+        Self { images }
+    }
+}
 impl<Images: crate::nodes::types::Image> crate::nodes::TypedNode
 for PreviewImage<Images> {
     type Output = WorkflowNodeId;
@@ -300,6 +402,15 @@ pub struct SaveImage<
     pub images: Images,
     ///The prefix for the file to save. This may include formatting information such as %date:yyyy-MM-dd% or %Empty Latent Image.width% to include values from nodes.
     pub filename_prefix: FilenamePrefix,
+}
+impl<
+    Images: crate::nodes::types::Image,
+    FilenamePrefix: crate::nodes::types::String,
+> SaveImage<Images, FilenamePrefix> {
+    /// Create a new node.
+    pub fn new(images: Images, filename_prefix: FilenamePrefix) -> Self {
+        Self { images, filename_prefix }
+    }
 }
 impl<
     Images: crate::nodes::types::Image,
@@ -343,6 +454,27 @@ pub struct WebcamCapture<
     pub height: Height,
     ///No documentation.
     pub capture_on_queue: CaptureOnQueue,
+}
+impl<
+    Image: crate::nodes::types::Webcam,
+    Width: crate::nodes::types::Int,
+    Height: crate::nodes::types::Int,
+    CaptureOnQueue: crate::nodes::types::Boolean,
+> WebcamCapture<Image, Width, Height, CaptureOnQueue> {
+    /// Create a new node.
+    pub fn new(
+        image: Image,
+        width: Width,
+        height: Height,
+        capture_on_queue: CaptureOnQueue,
+    ) -> Self {
+        Self {
+            image,
+            width,
+            height,
+            capture_on_queue,
+        }
+    }
 }
 impl<
     Image: crate::nodes::types::Webcam,

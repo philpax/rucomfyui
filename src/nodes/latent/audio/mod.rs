@@ -1,11 +1,17 @@
 //!`audio` definitions/categories.
-#![allow(unused_imports)]
+#![allow(unused_imports, clippy::too_many_arguments, clippy::new_without_default)]
 use std::collections::HashMap;
 use crate::workflow::{WorkflowNodeId, WorkflowInput};
 ///**EmptyLatentAudio**: No description.
 pub struct EmptyLatentAudio<Seconds: crate::nodes::types::Float> {
     ///No documentation.
     pub seconds: Seconds,
+}
+impl<Seconds: crate::nodes::types::Float> EmptyLatentAudio<Seconds> {
+    /// Create a new node.
+    pub fn new(seconds: Seconds) -> Self {
+        Self { seconds }
+    }
 }
 impl<Seconds: crate::nodes::types::Float> crate::nodes::TypedNode
 for EmptyLatentAudio<Seconds> {
@@ -39,6 +45,15 @@ pub struct VaeDecodeAudio<
 impl<
     Samples: crate::nodes::types::Latent,
     Vae: crate::nodes::types::Vae,
+> VaeDecodeAudio<Samples, Vae> {
+    /// Create a new node.
+    pub fn new(samples: Samples, vae: Vae) -> Self {
+        Self { samples, vae }
+    }
+}
+impl<
+    Samples: crate::nodes::types::Latent,
+    Vae: crate::nodes::types::Vae,
 > crate::nodes::TypedNode for VaeDecodeAudio<Samples, Vae> {
     type Output = crate::nodes::types::AudioOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
@@ -67,6 +82,15 @@ pub struct VaeEncodeAudio<
     pub audio: Audio,
     ///No documentation.
     pub vae: Vae,
+}
+impl<
+    Audio: crate::nodes::types::Audio,
+    Vae: crate::nodes::types::Vae,
+> VaeEncodeAudio<Audio, Vae> {
+    /// Create a new node.
+    pub fn new(audio: Audio, vae: Vae) -> Self {
+        Self { audio, vae }
+    }
 }
 impl<
     Audio: crate::nodes::types::Audio,

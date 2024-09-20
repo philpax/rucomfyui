@@ -1,5 +1,5 @@
 //!`model` definitions/categories.
-#![allow(unused_imports)]
+#![allow(unused_imports, clippy::too_many_arguments, clippy::new_without_default)]
 use std::collections::HashMap;
 use crate::workflow::{WorkflowNodeId, WorkflowInput};
 ///**ModelSamplingAuraFlow**: No description.
@@ -11,6 +11,15 @@ pub struct ModelSamplingAuraFlow<
     pub model: Model,
     ///No documentation.
     pub shift: Shift,
+}
+impl<
+    Model: crate::nodes::types::Model,
+    Shift: crate::nodes::types::Float,
+> ModelSamplingAuraFlow<Model, Shift> {
+    /// Create a new node.
+    pub fn new(model: Model, shift: Shift) -> Self {
+        Self { model, shift }
+    }
 }
 impl<
     Model: crate::nodes::types::Model,
@@ -49,6 +58,27 @@ pub struct ModelSamplingContinuousEdm<
     pub sigma_max: SigmaMax,
     ///No documentation.
     pub sigma_min: SigmaMin,
+}
+impl<
+    Model: crate::nodes::types::Model,
+    Sampling: crate::nodes::types::String,
+    SigmaMax: crate::nodes::types::Float,
+    SigmaMin: crate::nodes::types::Float,
+> ModelSamplingContinuousEdm<Model, Sampling, SigmaMax, SigmaMin> {
+    /// Create a new node.
+    pub fn new(
+        model: Model,
+        sampling: Sampling,
+        sigma_max: SigmaMax,
+        sigma_min: SigmaMin,
+    ) -> Self {
+        Self {
+            model,
+            sampling,
+            sigma_max,
+            sigma_min,
+        }
+    }
 }
 impl<
     Model: crate::nodes::types::Model,
@@ -98,6 +128,27 @@ impl<
     Sampling: crate::nodes::types::String,
     SigmaMax: crate::nodes::types::Float,
     SigmaMin: crate::nodes::types::Float,
+> ModelSamplingContinuousV<Model, Sampling, SigmaMax, SigmaMin> {
+    /// Create a new node.
+    pub fn new(
+        model: Model,
+        sampling: Sampling,
+        sigma_max: SigmaMax,
+        sigma_min: SigmaMin,
+    ) -> Self {
+        Self {
+            model,
+            sampling,
+            sigma_max,
+            sigma_min,
+        }
+    }
+}
+impl<
+    Model: crate::nodes::types::Model,
+    Sampling: crate::nodes::types::String,
+    SigmaMax: crate::nodes::types::Float,
+    SigmaMin: crate::nodes::types::Float,
 > crate::nodes::TypedNode
 for ModelSamplingContinuousV<Model, Sampling, SigmaMax, SigmaMin> {
     type Output = crate::nodes::types::ModelOut;
@@ -132,6 +183,16 @@ pub struct ModelSamplingDiscrete<
     pub sampling: Sampling,
     ///No documentation.
     pub zsnr: Zsnr,
+}
+impl<
+    Model: crate::nodes::types::Model,
+    Sampling: crate::nodes::types::String,
+    Zsnr: crate::nodes::types::Boolean,
+> ModelSamplingDiscrete<Model, Sampling, Zsnr> {
+    /// Create a new node.
+    pub fn new(model: Model, sampling: Sampling, zsnr: Zsnr) -> Self {
+        Self { model, sampling, zsnr }
+    }
 }
 impl<
     Model: crate::nodes::types::Model,
@@ -182,6 +243,30 @@ impl<
     BaseShift: crate::nodes::types::Float,
     Width: crate::nodes::types::Int,
     Height: crate::nodes::types::Int,
+> ModelSamplingFlux<Model, MaxShift, BaseShift, Width, Height> {
+    /// Create a new node.
+    pub fn new(
+        model: Model,
+        max_shift: MaxShift,
+        base_shift: BaseShift,
+        width: Width,
+        height: Height,
+    ) -> Self {
+        Self {
+            model,
+            max_shift,
+            base_shift,
+            width,
+            height,
+        }
+    }
+}
+impl<
+    Model: crate::nodes::types::Model,
+    MaxShift: crate::nodes::types::Float,
+    BaseShift: crate::nodes::types::Float,
+    Width: crate::nodes::types::Int,
+    Height: crate::nodes::types::Int,
 > crate::nodes::TypedNode
 for ModelSamplingFlux<Model, MaxShift, BaseShift, Width, Height> {
     type Output = crate::nodes::types::ModelOut;
@@ -218,6 +303,15 @@ pub struct ModelSamplingSd3<
 impl<
     Model: crate::nodes::types::Model,
     Shift: crate::nodes::types::Float,
+> ModelSamplingSd3<Model, Shift> {
+    /// Create a new node.
+    pub fn new(model: Model, shift: Shift) -> Self {
+        Self { model, shift }
+    }
+}
+impl<
+    Model: crate::nodes::types::Model,
+    Shift: crate::nodes::types::Float,
 > crate::nodes::TypedNode for ModelSamplingSd3<Model, Shift> {
     type Output = crate::nodes::types::ModelOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
@@ -250,6 +344,15 @@ pub struct ModelSamplingStableCascade<
 impl<
     Model: crate::nodes::types::Model,
     Shift: crate::nodes::types::Float,
+> ModelSamplingStableCascade<Model, Shift> {
+    /// Create a new node.
+    pub fn new(model: Model, shift: Shift) -> Self {
+        Self { model, shift }
+    }
+}
+impl<
+    Model: crate::nodes::types::Model,
+    Shift: crate::nodes::types::Float,
 > crate::nodes::TypedNode for ModelSamplingStableCascade<Model, Shift> {
     type Output = crate::nodes::types::ModelOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
@@ -278,6 +381,15 @@ pub struct RescaleCfg<
     pub model: Model,
     ///No documentation.
     pub multiplier: Multiplier,
+}
+impl<
+    Model: crate::nodes::types::Model,
+    Multiplier: crate::nodes::types::Float,
+> RescaleCfg<Model, Multiplier> {
+    /// Create a new node.
+    pub fn new(model: Model, multiplier: Multiplier) -> Self {
+        Self { model, multiplier }
+    }
 }
 impl<
     Model: crate::nodes::types::Model,

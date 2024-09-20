@@ -1,5 +1,5 @@
 //!`conditioning` definitions/categories.
-#![allow(unused_imports)]
+#![allow(unused_imports, clippy::too_many_arguments, clippy::new_without_default)]
 use std::collections::HashMap;
 use crate::workflow::{WorkflowNodeId, WorkflowInput};
 pub mod n_3_d_models;
@@ -20,6 +20,15 @@ pub struct ClipSetLastLayer<
     pub clip: Clip,
     ///No documentation.
     pub stop_at_clip_layer: StopAtClipLayer,
+}
+impl<
+    Clip: crate::nodes::types::Clip,
+    StopAtClipLayer: crate::nodes::types::Int,
+> ClipSetLastLayer<Clip, StopAtClipLayer> {
+    /// Create a new node.
+    pub fn new(clip: Clip, stop_at_clip_layer: StopAtClipLayer) -> Self {
+        Self { clip, stop_at_clip_layer }
+    }
 }
 impl<
     Clip: crate::nodes::types::Clip,
@@ -60,6 +69,15 @@ pub struct ClipTextEncode<
 impl<
     Text: crate::nodes::types::String,
     Clip: crate::nodes::types::Clip,
+> ClipTextEncode<Text, Clip> {
+    /// Create a new node.
+    pub fn new(text: Text, clip: Clip) -> Self {
+        Self { text, clip }
+    }
+}
+impl<
+    Text: crate::nodes::types::String,
+    Clip: crate::nodes::types::Clip,
 > crate::nodes::TypedNode for ClipTextEncode<Text, Clip> {
     type Output = crate::nodes::types::ConditioningOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
@@ -88,6 +106,15 @@ pub struct ClipVisionEncode<
     pub clip_vision: ClipVision,
     ///No documentation.
     pub image: Image,
+}
+impl<
+    ClipVision: crate::nodes::types::ClipVision,
+    Image: crate::nodes::types::Image,
+> ClipVisionEncode<ClipVision, Image> {
+    /// Create a new node.
+    pub fn new(clip_vision: ClipVision, image: Image) -> Self {
+        Self { clip_vision, image }
+    }
 }
 impl<
     ClipVision: crate::nodes::types::ClipVision,
@@ -123,6 +150,24 @@ pub struct ConditioningAverage<
     pub conditioning_from: ConditioningFrom,
     ///No documentation.
     pub conditioning_to_strength: ConditioningToStrength,
+}
+impl<
+    ConditioningTo: crate::nodes::types::Conditioning,
+    ConditioningFrom: crate::nodes::types::Conditioning,
+    ConditioningToStrength: crate::nodes::types::Float,
+> ConditioningAverage<ConditioningTo, ConditioningFrom, ConditioningToStrength> {
+    /// Create a new node.
+    pub fn new(
+        conditioning_to: ConditioningTo,
+        conditioning_from: ConditioningFrom,
+        conditioning_to_strength: ConditioningToStrength,
+    ) -> Self {
+        Self {
+            conditioning_to,
+            conditioning_from,
+            conditioning_to_strength,
+        }
+    }
 }
 impl<
     ConditioningTo: crate::nodes::types::Conditioning,
@@ -174,6 +219,18 @@ pub struct ConditioningCombine<
 impl<
     Conditioning1: crate::nodes::types::Conditioning,
     Conditioning2: crate::nodes::types::Conditioning,
+> ConditioningCombine<Conditioning1, Conditioning2> {
+    /// Create a new node.
+    pub fn new(conditioning_1: Conditioning1, conditioning_2: Conditioning2) -> Self {
+        Self {
+            conditioning_1,
+            conditioning_2,
+        }
+    }
+}
+impl<
+    Conditioning1: crate::nodes::types::Conditioning,
+    Conditioning2: crate::nodes::types::Conditioning,
 > crate::nodes::TypedNode for ConditioningCombine<Conditioning1, Conditioning2> {
     type Output = crate::nodes::types::ConditioningOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
@@ -210,6 +267,21 @@ pub struct ConditioningConcat<
     pub conditioning_to: ConditioningTo,
     ///No documentation.
     pub conditioning_from: ConditioningFrom,
+}
+impl<
+    ConditioningTo: crate::nodes::types::Conditioning,
+    ConditioningFrom: crate::nodes::types::Conditioning,
+> ConditioningConcat<ConditioningTo, ConditioningFrom> {
+    /// Create a new node.
+    pub fn new(
+        conditioning_to: ConditioningTo,
+        conditioning_from: ConditioningFrom,
+    ) -> Self {
+        Self {
+            conditioning_to,
+            conditioning_from,
+        }
+    }
 }
 impl<
     ConditioningTo: crate::nodes::types::Conditioning,
@@ -262,6 +334,33 @@ pub struct ConditioningSetArea<
     pub y: Y,
     ///No documentation.
     pub strength: Strength,
+}
+impl<
+    Conditioning: crate::nodes::types::Conditioning,
+    Width: crate::nodes::types::Int,
+    Height: crate::nodes::types::Int,
+    X: crate::nodes::types::Int,
+    Y: crate::nodes::types::Int,
+    Strength: crate::nodes::types::Float,
+> ConditioningSetArea<Conditioning, Width, Height, X, Y, Strength> {
+    /// Create a new node.
+    pub fn new(
+        conditioning: Conditioning,
+        width: Width,
+        height: Height,
+        x: X,
+        y: Y,
+        strength: Strength,
+    ) -> Self {
+        Self {
+            conditioning,
+            width,
+            height,
+            x,
+            y,
+            strength,
+        }
+    }
 }
 impl<
     Conditioning: crate::nodes::types::Conditioning,
@@ -323,6 +422,33 @@ impl<
     X: crate::nodes::types::Float,
     Y: crate::nodes::types::Float,
     Strength: crate::nodes::types::Float,
+> ConditioningSetAreaPercentage<Conditioning, Width, Height, X, Y, Strength> {
+    /// Create a new node.
+    pub fn new(
+        conditioning: Conditioning,
+        width: Width,
+        height: Height,
+        x: X,
+        y: Y,
+        strength: Strength,
+    ) -> Self {
+        Self {
+            conditioning,
+            width,
+            height,
+            x,
+            y,
+            strength,
+        }
+    }
+}
+impl<
+    Conditioning: crate::nodes::types::Conditioning,
+    Width: crate::nodes::types::Float,
+    Height: crate::nodes::types::Float,
+    X: crate::nodes::types::Float,
+    Y: crate::nodes::types::Float,
+    Strength: crate::nodes::types::Float,
 > crate::nodes::TypedNode
 for ConditioningSetAreaPercentage<Conditioning, Width, Height, X, Y, Strength> {
     type Output = crate::nodes::types::ConditioningOut;
@@ -356,6 +482,15 @@ pub struct ConditioningSetAreaStrength<
     pub conditioning: Conditioning,
     ///No documentation.
     pub strength: Strength,
+}
+impl<
+    Conditioning: crate::nodes::types::Conditioning,
+    Strength: crate::nodes::types::Float,
+> ConditioningSetAreaStrength<Conditioning, Strength> {
+    /// Create a new node.
+    pub fn new(conditioning: Conditioning, strength: Strength) -> Self {
+        Self { conditioning, strength }
+    }
 }
 impl<
     Conditioning: crate::nodes::types::Conditioning,
@@ -400,6 +535,27 @@ impl<
     Mask: crate::nodes::types::Mask,
     Strength: crate::nodes::types::Float,
     SetCondArea: crate::nodes::types::String,
+> ConditioningSetMask<Conditioning, Mask, Strength, SetCondArea> {
+    /// Create a new node.
+    pub fn new(
+        conditioning: Conditioning,
+        mask: Mask,
+        strength: Strength,
+        set_cond_area: SetCondArea,
+    ) -> Self {
+        Self {
+            conditioning,
+            mask,
+            strength,
+            set_cond_area,
+        }
+    }
+}
+impl<
+    Conditioning: crate::nodes::types::Conditioning,
+    Mask: crate::nodes::types::Mask,
+    Strength: crate::nodes::types::Float,
+    SetCondArea: crate::nodes::types::String,
 > crate::nodes::TypedNode
 for ConditioningSetMask<Conditioning, Mask, Strength, SetCondArea> {
     type Output = crate::nodes::types::ConditioningOut;
@@ -438,6 +594,27 @@ pub struct UnClipConditioning<
     pub strength: Strength,
     ///No documentation.
     pub noise_augmentation: NoiseAugmentation,
+}
+impl<
+    Conditioning: crate::nodes::types::Conditioning,
+    ClipVisionOutput: crate::nodes::types::ClipVisionOutput,
+    Strength: crate::nodes::types::Float,
+    NoiseAugmentation: crate::nodes::types::Float,
+> UnClipConditioning<Conditioning, ClipVisionOutput, Strength, NoiseAugmentation> {
+    /// Create a new node.
+    pub fn new(
+        conditioning: Conditioning,
+        clip_vision_output: ClipVisionOutput,
+        strength: Strength,
+        noise_augmentation: NoiseAugmentation,
+    ) -> Self {
+        Self {
+            conditioning,
+            clip_vision_output,
+            strength,
+            noise_augmentation,
+        }
+    }
 }
 impl<
     Conditioning: crate::nodes::types::Conditioning,

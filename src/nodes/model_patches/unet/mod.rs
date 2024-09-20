@@ -1,5 +1,5 @@
 //!`unet` definitions/categories.
-#![allow(unused_imports)]
+#![allow(unused_imports, clippy::too_many_arguments, clippy::new_without_default)]
 use std::collections::HashMap;
 use crate::workflow::{WorkflowNodeId, WorkflowInput};
 ///**FreeU**: No description.
@@ -20,6 +20,18 @@ pub struct FreeU<
     pub s_1: S1,
     ///No documentation.
     pub s_2: S2,
+}
+impl<
+    Model: crate::nodes::types::Model,
+    B1: crate::nodes::types::Float,
+    B2: crate::nodes::types::Float,
+    S1: crate::nodes::types::Float,
+    S2: crate::nodes::types::Float,
+> FreeU<Model, B1, B2, S1, S2> {
+    /// Create a new node.
+    pub fn new(model: Model, b_1: B1, b_2: B2, s_1: S1, s_2: S2) -> Self {
+        Self { model, b_1, b_2, s_1, s_2 }
+    }
 }
 impl<
     Model: crate::nodes::types::Model,
@@ -74,6 +86,18 @@ impl<
     B2: crate::nodes::types::Float,
     S1: crate::nodes::types::Float,
     S2: crate::nodes::types::Float,
+> FreeUV2<Model, B1, B2, S1, S2> {
+    /// Create a new node.
+    pub fn new(model: Model, b_1: B1, b_2: B2, s_1: S1, s_2: S2) -> Self {
+        Self { model, b_1, b_2, s_1, s_2 }
+    }
+}
+impl<
+    Model: crate::nodes::types::Model,
+    B1: crate::nodes::types::Float,
+    B2: crate::nodes::types::Float,
+    S1: crate::nodes::types::Float,
+    S2: crate::nodes::types::Float,
 > crate::nodes::TypedNode for FreeUV2<Model, B1, B2, S1, S2> {
     type Output = crate::nodes::types::ModelOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
@@ -121,6 +145,30 @@ impl<
     SwapSize: crate::nodes::types::Int,
     MaxDepth: crate::nodes::types::Int,
     ScaleDepth: crate::nodes::types::Boolean,
+> HyperTile<Model, TileSize, SwapSize, MaxDepth, ScaleDepth> {
+    /// Create a new node.
+    pub fn new(
+        model: Model,
+        tile_size: TileSize,
+        swap_size: SwapSize,
+        max_depth: MaxDepth,
+        scale_depth: ScaleDepth,
+    ) -> Self {
+        Self {
+            model,
+            tile_size,
+            swap_size,
+            max_depth,
+            scale_depth,
+        }
+    }
+}
+impl<
+    Model: crate::nodes::types::Model,
+    TileSize: crate::nodes::types::Int,
+    SwapSize: crate::nodes::types::Int,
+    MaxDepth: crate::nodes::types::Int,
+    ScaleDepth: crate::nodes::types::Boolean,
 > crate::nodes::TypedNode
 for HyperTile<Model, TileSize, SwapSize, MaxDepth, ScaleDepth> {
     type Output = crate::nodes::types::ModelOut;
@@ -153,6 +201,15 @@ pub struct PerturbedAttentionGuidance<
     pub model: Model,
     ///No documentation.
     pub scale: Scale,
+}
+impl<
+    Model: crate::nodes::types::Model,
+    Scale: crate::nodes::types::Float,
+> PerturbedAttentionGuidance<Model, Scale> {
+    /// Create a new node.
+    pub fn new(model: Model, scale: Scale) -> Self {
+        Self { model, scale }
+    }
 }
 impl<
     Model: crate::nodes::types::Model,

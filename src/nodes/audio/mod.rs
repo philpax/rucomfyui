@@ -1,11 +1,17 @@
 //!`audio` definitions/categories.
-#![allow(unused_imports)]
+#![allow(unused_imports, clippy::too_many_arguments, clippy::new_without_default)]
 use std::collections::HashMap;
 use crate::workflow::{WorkflowNodeId, WorkflowInput};
 ///**LoadAudio**: No description.
 pub struct LoadAudio<Audio: crate::nodes::types::String> {
     ///No documentation.
     pub audio: Audio,
+}
+impl<Audio: crate::nodes::types::String> LoadAudio<Audio> {
+    /// Create a new node.
+    pub fn new(audio: Audio) -> Self {
+        Self { audio }
+    }
 }
 impl<Audio: crate::nodes::types::String> crate::nodes::TypedNode for LoadAudio<Audio> {
     type Output = crate::nodes::types::AudioOut;
@@ -29,6 +35,12 @@ impl<Audio: crate::nodes::types::String> crate::nodes::TypedNode for LoadAudio<A
 pub struct PreviewAudio<Audio: crate::nodes::types::Audio> {
     ///No documentation.
     pub audio: Audio,
+}
+impl<Audio: crate::nodes::types::Audio> PreviewAudio<Audio> {
+    /// Create a new node.
+    pub fn new(audio: Audio) -> Self {
+        Self { audio }
+    }
 }
 impl<Audio: crate::nodes::types::Audio> crate::nodes::TypedNode for PreviewAudio<Audio> {
     type Output = WorkflowNodeId;
@@ -56,6 +68,15 @@ pub struct SaveAudio<
     pub audio: Audio,
     ///No documentation.
     pub filename_prefix: FilenamePrefix,
+}
+impl<
+    Audio: crate::nodes::types::Audio,
+    FilenamePrefix: crate::nodes::types::String,
+> SaveAudio<Audio, FilenamePrefix> {
+    /// Create a new node.
+    pub fn new(audio: Audio, filename_prefix: FilenamePrefix) -> Self {
+        Self { audio, filename_prefix }
+    }
 }
 impl<
     Audio: crate::nodes::types::Audio,

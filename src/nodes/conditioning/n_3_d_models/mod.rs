@@ -1,5 +1,5 @@
 //!`3d_models` definitions/categories.
-#![allow(unused_imports)]
+#![allow(unused_imports, clippy::too_many_arguments, clippy::new_without_default)]
 use std::collections::HashMap;
 use crate::workflow::{WorkflowNodeId, WorkflowInput};
 /// Output types for nodes.
@@ -59,6 +59,36 @@ pub struct Sv3DConditioning<
     pub video_frames: VideoFrames,
     ///No documentation.
     pub elevation: Elevation,
+}
+impl<
+    ClipVision: crate::nodes::types::ClipVision,
+    InitImage: crate::nodes::types::Image,
+    Vae: crate::nodes::types::Vae,
+    Width: crate::nodes::types::Int,
+    Height: crate::nodes::types::Int,
+    VideoFrames: crate::nodes::types::Int,
+    Elevation: crate::nodes::types::Float,
+> Sv3DConditioning<ClipVision, InitImage, Vae, Width, Height, VideoFrames, Elevation> {
+    /// Create a new node.
+    pub fn new(
+        clip_vision: ClipVision,
+        init_image: InitImage,
+        vae: Vae,
+        width: Width,
+        height: Height,
+        video_frames: VideoFrames,
+        elevation: Elevation,
+    ) -> Self {
+        Self {
+            clip_vision,
+            init_image,
+            vae,
+            width,
+            height,
+            video_frames,
+            elevation,
+        }
+    }
 }
 impl<
     ClipVision: crate::nodes::types::ClipVision,
@@ -130,6 +160,48 @@ pub struct StableZero123Conditioning<
     pub elevation: Elevation,
     ///No documentation.
     pub azimuth: Azimuth,
+}
+impl<
+    ClipVision: crate::nodes::types::ClipVision,
+    InitImage: crate::nodes::types::Image,
+    Vae: crate::nodes::types::Vae,
+    Width: crate::nodes::types::Int,
+    Height: crate::nodes::types::Int,
+    BatchSize: crate::nodes::types::Int,
+    Elevation: crate::nodes::types::Float,
+    Azimuth: crate::nodes::types::Float,
+> StableZero123Conditioning<
+    ClipVision,
+    InitImage,
+    Vae,
+    Width,
+    Height,
+    BatchSize,
+    Elevation,
+    Azimuth,
+> {
+    /// Create a new node.
+    pub fn new(
+        clip_vision: ClipVision,
+        init_image: InitImage,
+        vae: Vae,
+        width: Width,
+        height: Height,
+        batch_size: BatchSize,
+        elevation: Elevation,
+        azimuth: Azimuth,
+    ) -> Self {
+        Self {
+            clip_vision,
+            init_image,
+            vae,
+            width,
+            height,
+            batch_size,
+            elevation,
+            azimuth,
+        }
+    }
 }
 impl<
     ClipVision: crate::nodes::types::ClipVision,
@@ -218,6 +290,56 @@ pub struct StableZero123ConditioningBatched<
     pub elevation_batch_increment: ElevationBatchIncrement,
     ///No documentation.
     pub azimuth_batch_increment: AzimuthBatchIncrement,
+}
+impl<
+    ClipVision: crate::nodes::types::ClipVision,
+    InitImage: crate::nodes::types::Image,
+    Vae: crate::nodes::types::Vae,
+    Width: crate::nodes::types::Int,
+    Height: crate::nodes::types::Int,
+    BatchSize: crate::nodes::types::Int,
+    Elevation: crate::nodes::types::Float,
+    Azimuth: crate::nodes::types::Float,
+    ElevationBatchIncrement: crate::nodes::types::Float,
+    AzimuthBatchIncrement: crate::nodes::types::Float,
+> StableZero123ConditioningBatched<
+    ClipVision,
+    InitImage,
+    Vae,
+    Width,
+    Height,
+    BatchSize,
+    Elevation,
+    Azimuth,
+    ElevationBatchIncrement,
+    AzimuthBatchIncrement,
+> {
+    /// Create a new node.
+    pub fn new(
+        clip_vision: ClipVision,
+        init_image: InitImage,
+        vae: Vae,
+        width: Width,
+        height: Height,
+        batch_size: BatchSize,
+        elevation: Elevation,
+        azimuth: Azimuth,
+        elevation_batch_increment: ElevationBatchIncrement,
+        azimuth_batch_increment: AzimuthBatchIncrement,
+    ) -> Self {
+        Self {
+            clip_vision,
+            init_image,
+            vae,
+            width,
+            height,
+            batch_size,
+            elevation,
+            azimuth,
+            elevation_batch_increment,
+            azimuth_batch_increment,
+        }
+    }
 }
 impl<
     ClipVision: crate::nodes::types::ClipVision,

@@ -1,5 +1,5 @@
 //!`transform` definitions/categories.
-#![allow(unused_imports)]
+#![allow(unused_imports, clippy::too_many_arguments, clippy::new_without_default)]
 use std::collections::HashMap;
 use crate::workflow::{WorkflowNodeId, WorkflowInput};
 ///**Crop Latent**: No description.
@@ -20,6 +20,24 @@ pub struct LatentCrop<
     pub x: X,
     ///No documentation.
     pub y: Y,
+}
+impl<
+    Samples: crate::nodes::types::Latent,
+    Width: crate::nodes::types::Int,
+    Height: crate::nodes::types::Int,
+    X: crate::nodes::types::Int,
+    Y: crate::nodes::types::Int,
+> LatentCrop<Samples, Width, Height, X, Y> {
+    /// Create a new node.
+    pub fn new(samples: Samples, width: Width, height: Height, x: X, y: Y) -> Self {
+        Self {
+            samples,
+            width,
+            height,
+            x,
+            y,
+        }
+    }
 }
 impl<
     Samples: crate::nodes::types::Latent,
@@ -62,6 +80,15 @@ pub struct LatentFlip<
 impl<
     Samples: crate::nodes::types::Latent,
     FlipMethod: crate::nodes::types::String,
+> LatentFlip<Samples, FlipMethod> {
+    /// Create a new node.
+    pub fn new(samples: Samples, flip_method: FlipMethod) -> Self {
+        Self { samples, flip_method }
+    }
+}
+impl<
+    Samples: crate::nodes::types::Latent,
+    FlipMethod: crate::nodes::types::String,
 > crate::nodes::TypedNode for LatentFlip<Samples, FlipMethod> {
     type Output = crate::nodes::types::LatentOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
@@ -90,6 +117,15 @@ pub struct LatentRotate<
     pub samples: Samples,
     ///No documentation.
     pub rotation: Rotation,
+}
+impl<
+    Samples: crate::nodes::types::Latent,
+    Rotation: crate::nodes::types::String,
+> LatentRotate<Samples, Rotation> {
+    /// Create a new node.
+    pub fn new(samples: Samples, rotation: Rotation) -> Self {
+        Self { samples, rotation }
+    }
 }
 impl<
     Samples: crate::nodes::types::Latent,

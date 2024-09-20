@@ -1,5 +1,5 @@
 //!`postprocessing` definitions/categories.
-#![allow(unused_imports)]
+#![allow(unused_imports, clippy::too_many_arguments, clippy::new_without_default)]
 use std::collections::HashMap;
 use crate::workflow::{WorkflowNodeId, WorkflowInput};
 ///**ImageBlend**: No description.
@@ -17,6 +17,27 @@ pub struct ImageBlend<
     pub blend_factor: BlendFactor,
     ///No documentation.
     pub blend_mode: BlendMode,
+}
+impl<
+    Image1: crate::nodes::types::Image,
+    Image2: crate::nodes::types::Image,
+    BlendFactor: crate::nodes::types::Float,
+    BlendMode: crate::nodes::types::String,
+> ImageBlend<Image1, Image2, BlendFactor, BlendMode> {
+    /// Create a new node.
+    pub fn new(
+        image_1: Image1,
+        image_2: Image2,
+        blend_factor: BlendFactor,
+        blend_mode: BlendMode,
+    ) -> Self {
+        Self {
+            image_1,
+            image_2,
+            blend_factor,
+            blend_mode,
+        }
+    }
 }
 impl<
     Image1: crate::nodes::types::Image,
@@ -61,6 +82,16 @@ impl<
     Image: crate::nodes::types::Image,
     BlurRadius: crate::nodes::types::Int,
     Sigma: crate::nodes::types::Float,
+> ImageBlur<Image, BlurRadius, Sigma> {
+    /// Create a new node.
+    pub fn new(image: Image, blur_radius: BlurRadius, sigma: Sigma) -> Self {
+        Self { image, blur_radius, sigma }
+    }
+}
+impl<
+    Image: crate::nodes::types::Image,
+    BlurRadius: crate::nodes::types::Int,
+    Sigma: crate::nodes::types::Float,
 > crate::nodes::TypedNode for ImageBlur<Image, BlurRadius, Sigma> {
     type Output = crate::nodes::types::ImageOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
@@ -93,6 +124,16 @@ pub struct ImageQuantize<
     pub colors: Colors,
     ///No documentation.
     pub dither: Dither,
+}
+impl<
+    Image: crate::nodes::types::Image,
+    Colors: crate::nodes::types::Int,
+    Dither: crate::nodes::types::String,
+> ImageQuantize<Image, Colors, Dither> {
+    /// Create a new node.
+    pub fn new(image: Image, colors: Colors, dither: Dither) -> Self {
+        Self { image, colors, dither }
+    }
 }
 impl<
     Image: crate::nodes::types::Image,
@@ -139,6 +180,27 @@ impl<
     SharpenRadius: crate::nodes::types::Int,
     Sigma: crate::nodes::types::Float,
     Alpha: crate::nodes::types::Float,
+> ImageSharpen<Image, SharpenRadius, Sigma, Alpha> {
+    /// Create a new node.
+    pub fn new(
+        image: Image,
+        sharpen_radius: SharpenRadius,
+        sigma: Sigma,
+        alpha: Alpha,
+    ) -> Self {
+        Self {
+            image,
+            sharpen_radius,
+            sigma,
+            alpha,
+        }
+    }
+}
+impl<
+    Image: crate::nodes::types::Image,
+    SharpenRadius: crate::nodes::types::Int,
+    Sigma: crate::nodes::types::Float,
+    Alpha: crate::nodes::types::Float,
 > crate::nodes::TypedNode for ImageSharpen<Image, SharpenRadius, Sigma, Alpha> {
     type Output = crate::nodes::types::ImageOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
@@ -176,6 +238,20 @@ pub struct Morphology<
     pub operation: Operation,
     ///No documentation.
     pub kernel_size: KernelSize,
+}
+impl<
+    Image: crate::nodes::types::Image,
+    Operation: crate::nodes::types::String,
+    KernelSize: crate::nodes::types::Int,
+> Morphology<Image, Operation, KernelSize> {
+    /// Create a new node.
+    pub fn new(image: Image, operation: Operation, kernel_size: KernelSize) -> Self {
+        Self {
+            image,
+            operation,
+            kernel_size,
+        }
+    }
 }
 impl<
     Image: crate::nodes::types::Image,

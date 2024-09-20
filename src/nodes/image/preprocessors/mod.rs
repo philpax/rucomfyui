@@ -1,5 +1,5 @@
 //!`preprocessors` definitions/categories.
-#![allow(unused_imports)]
+#![allow(unused_imports, clippy::too_many_arguments, clippy::new_without_default)]
 use std::collections::HashMap;
 use crate::workflow::{WorkflowNodeId, WorkflowInput};
 ///**Canny**: No description.
@@ -14,6 +14,24 @@ pub struct Canny<
     pub low_threshold: LowThreshold,
     ///No documentation.
     pub high_threshold: HighThreshold,
+}
+impl<
+    Image: crate::nodes::types::Image,
+    LowThreshold: crate::nodes::types::Float,
+    HighThreshold: crate::nodes::types::Float,
+> Canny<Image, LowThreshold, HighThreshold> {
+    /// Create a new node.
+    pub fn new(
+        image: Image,
+        low_threshold: LowThreshold,
+        high_threshold: HighThreshold,
+    ) -> Self {
+        Self {
+            image,
+            low_threshold,
+            high_threshold,
+        }
+    }
 }
 impl<
     Image: crate::nodes::types::Image,

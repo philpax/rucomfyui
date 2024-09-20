@@ -1,5 +1,5 @@
 //!`latent` definitions/categories.
-#![allow(unused_imports)]
+#![allow(unused_imports, clippy::too_many_arguments, clippy::new_without_default)]
 use std::collections::HashMap;
 use crate::workflow::{WorkflowNodeId, WorkflowInput};
 pub mod advanced;
@@ -21,6 +21,16 @@ pub struct EmptyLatentImage<
     pub height: Height,
     ///The number of latent images in the batch.
     pub batch_size: BatchSize,
+}
+impl<
+    Width: crate::nodes::types::Int,
+    Height: crate::nodes::types::Int,
+    BatchSize: crate::nodes::types::Int,
+> EmptyLatentImage<Width, Height, BatchSize> {
+    /// Create a new node.
+    pub fn new(width: Width, height: Height, batch_size: BatchSize) -> Self {
+        Self { width, height, batch_size }
+    }
 }
 impl<
     Width: crate::nodes::types::Int,
@@ -71,6 +81,30 @@ impl<
     X: crate::nodes::types::Int,
     Y: crate::nodes::types::Int,
     Feather: crate::nodes::types::Int,
+> LatentComposite<SamplesTo, SamplesFrom, X, Y, Feather> {
+    /// Create a new node.
+    pub fn new(
+        samples_to: SamplesTo,
+        samples_from: SamplesFrom,
+        x: X,
+        y: Y,
+        feather: Feather,
+    ) -> Self {
+        Self {
+            samples_to,
+            samples_from,
+            x,
+            y,
+            feather,
+        }
+    }
+}
+impl<
+    SamplesTo: crate::nodes::types::Latent,
+    SamplesFrom: crate::nodes::types::Latent,
+    X: crate::nodes::types::Int,
+    Y: crate::nodes::types::Int,
+    Feather: crate::nodes::types::Int,
 > crate::nodes::TypedNode for LatentComposite<SamplesTo, SamplesFrom, X, Y, Feather> {
     type Output = crate::nodes::types::LatentOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
@@ -114,6 +148,33 @@ pub struct LatentCompositeMasked<
     pub resize_source: ResizeSource,
     ///No documentation.
     pub mask: Option<Mask>,
+}
+impl<
+    Destination: crate::nodes::types::Latent,
+    Source: crate::nodes::types::Latent,
+    X: crate::nodes::types::Int,
+    Y: crate::nodes::types::Int,
+    ResizeSource: crate::nodes::types::Boolean,
+    Mask: crate::nodes::types::Mask,
+> LatentCompositeMasked<Destination, Source, X, Y, ResizeSource, Mask> {
+    /// Create a new node.
+    pub fn new(
+        destination: Destination,
+        source: Source,
+        x: X,
+        y: Y,
+        resize_source: ResizeSource,
+        mask: Option<Mask>,
+    ) -> Self {
+        Self {
+            destination,
+            source,
+            x,
+            y,
+            resize_source,
+            mask,
+        }
+    }
 }
 impl<
     Destination: crate::nodes::types::Latent,
@@ -174,6 +235,30 @@ impl<
     Width: crate::nodes::types::Int,
     Height: crate::nodes::types::Int,
     Crop: crate::nodes::types::String,
+> LatentUpscale<Samples, UpscaleMethod, Width, Height, Crop> {
+    /// Create a new node.
+    pub fn new(
+        samples: Samples,
+        upscale_method: UpscaleMethod,
+        width: Width,
+        height: Height,
+        crop: Crop,
+    ) -> Self {
+        Self {
+            samples,
+            upscale_method,
+            width,
+            height,
+            crop,
+        }
+    }
+}
+impl<
+    Samples: crate::nodes::types::Latent,
+    UpscaleMethod: crate::nodes::types::String,
+    Width: crate::nodes::types::Int,
+    Height: crate::nodes::types::Int,
+    Crop: crate::nodes::types::String,
 > crate::nodes::TypedNode
 for LatentUpscale<Samples, UpscaleMethod, Width, Height, Crop> {
     type Output = crate::nodes::types::LatentOut;
@@ -218,6 +303,24 @@ impl<
     Samples: crate::nodes::types::Latent,
     UpscaleMethod: crate::nodes::types::String,
     ScaleBy: crate::nodes::types::Float,
+> LatentUpscaleBy<Samples, UpscaleMethod, ScaleBy> {
+    /// Create a new node.
+    pub fn new(
+        samples: Samples,
+        upscale_method: UpscaleMethod,
+        scale_by: ScaleBy,
+    ) -> Self {
+        Self {
+            samples,
+            upscale_method,
+            scale_by,
+        }
+    }
+}
+impl<
+    Samples: crate::nodes::types::Latent,
+    UpscaleMethod: crate::nodes::types::String,
+    ScaleBy: crate::nodes::types::Float,
 > crate::nodes::TypedNode for LatentUpscaleBy<Samples, UpscaleMethod, ScaleBy> {
     type Output = crate::nodes::types::LatentOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
@@ -255,6 +358,15 @@ pub struct VaeDecode<
 impl<
     Samples: crate::nodes::types::Latent,
     Vae: crate::nodes::types::Vae,
+> VaeDecode<Samples, Vae> {
+    /// Create a new node.
+    pub fn new(samples: Samples, vae: Vae) -> Self {
+        Self { samples, vae }
+    }
+}
+impl<
+    Samples: crate::nodes::types::Latent,
+    Vae: crate::nodes::types::Vae,
 > crate::nodes::TypedNode for VaeDecode<Samples, Vae> {
     type Output = crate::nodes::types::ImageOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
@@ -280,6 +392,15 @@ pub struct VaeEncode<Pixels: crate::nodes::types::Image, Vae: crate::nodes::type
     pub pixels: Pixels,
     ///No documentation.
     pub vae: Vae,
+}
+impl<
+    Pixels: crate::nodes::types::Image,
+    Vae: crate::nodes::types::Vae,
+> VaeEncode<Pixels, Vae> {
+    /// Create a new node.
+    pub fn new(pixels: Pixels, vae: Vae) -> Self {
+        Self { pixels, vae }
+    }
 }
 impl<
     Pixels: crate::nodes::types::Image,

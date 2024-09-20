@@ -1,5 +1,5 @@
 //!`custom_sampling` definitions/categories.
-#![allow(unused_imports)]
+#![allow(unused_imports, clippy::too_many_arguments, clippy::new_without_default)]
 use std::collections::HashMap;
 use crate::workflow::{WorkflowNodeId, WorkflowInput};
 pub mod guiders;
@@ -56,6 +56,52 @@ pub struct SamplerCustom<
     pub sigmas: Sigmas,
     ///No documentation.
     pub latent_image: LatentImage,
+}
+impl<
+    Model: crate::nodes::types::Model,
+    AddNoise: crate::nodes::types::Boolean,
+    NoiseSeed: crate::nodes::types::Int,
+    Cfg: crate::nodes::types::Float,
+    Positive: crate::nodes::types::Conditioning,
+    Negative: crate::nodes::types::Conditioning,
+    Sampler: crate::nodes::types::Sampler,
+    Sigmas: crate::nodes::types::Sigmas,
+    LatentImage: crate::nodes::types::Latent,
+> SamplerCustom<
+    Model,
+    AddNoise,
+    NoiseSeed,
+    Cfg,
+    Positive,
+    Negative,
+    Sampler,
+    Sigmas,
+    LatentImage,
+> {
+    /// Create a new node.
+    pub fn new(
+        model: Model,
+        add_noise: AddNoise,
+        noise_seed: NoiseSeed,
+        cfg: Cfg,
+        positive: Positive,
+        negative: Negative,
+        sampler: Sampler,
+        sigmas: Sigmas,
+        latent_image: LatentImage,
+    ) -> Self {
+        Self {
+            model,
+            add_noise,
+            noise_seed,
+            cfg,
+            positive,
+            negative,
+            sampler,
+            sigmas,
+            latent_image,
+        }
+    }
 }
 impl<
     Model: crate::nodes::types::Model,
@@ -128,6 +174,30 @@ pub struct SamplerCustomAdvanced<
     pub sigmas: Sigmas,
     ///No documentation.
     pub latent_image: LatentImage,
+}
+impl<
+    Noise: crate::nodes::types::Noise,
+    Guider: crate::nodes::types::Guider,
+    Sampler: crate::nodes::types::Sampler,
+    Sigmas: crate::nodes::types::Sigmas,
+    LatentImage: crate::nodes::types::Latent,
+> SamplerCustomAdvanced<Noise, Guider, Sampler, Sigmas, LatentImage> {
+    /// Create a new node.
+    pub fn new(
+        noise: Noise,
+        guider: Guider,
+        sampler: Sampler,
+        sigmas: Sigmas,
+        latent_image: LatentImage,
+    ) -> Self {
+        Self {
+            noise,
+            guider,
+            sampler,
+            sigmas,
+            latent_image,
+        }
+    }
 }
 impl<
     Noise: crate::nodes::types::Noise,

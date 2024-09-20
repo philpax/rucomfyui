@@ -1,5 +1,5 @@
 //!`inpaint` definitions/categories.
-#![allow(unused_imports)]
+#![allow(unused_imports, clippy::too_many_arguments, clippy::new_without_default)]
 use std::collections::HashMap;
 use crate::workflow::{WorkflowNodeId, WorkflowInput};
 /// Output types for nodes.
@@ -33,6 +33,30 @@ pub struct InpaintModelConditioning<
     pub pixels: Pixels,
     ///No documentation.
     pub mask: Mask,
+}
+impl<
+    Positive: crate::nodes::types::Conditioning,
+    Negative: crate::nodes::types::Conditioning,
+    Vae: crate::nodes::types::Vae,
+    Pixels: crate::nodes::types::Image,
+    Mask: crate::nodes::types::Mask,
+> InpaintModelConditioning<Positive, Negative, Vae, Pixels, Mask> {
+    /// Create a new node.
+    pub fn new(
+        positive: Positive,
+        negative: Negative,
+        vae: Vae,
+        pixels: Pixels,
+        mask: Mask,
+    ) -> Self {
+        Self {
+            positive,
+            negative,
+            vae,
+            pixels,
+            mask,
+        }
+    }
 }
 impl<
     Positive: crate::nodes::types::Conditioning,

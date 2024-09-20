@@ -1,5 +1,5 @@
 //!`loaders` definitions/categories.
-#![allow(unused_imports)]
+#![allow(unused_imports, clippy::too_many_arguments, clippy::new_without_default)]
 use std::collections::HashMap;
 use crate::workflow::{WorkflowNodeId, WorkflowInput};
 pub mod video_models;
@@ -41,6 +41,12 @@ pub struct ClipVisionLoader<ClipName: crate::nodes::types::String> {
     ///No documentation.
     pub clip_name: ClipName,
 }
+impl<ClipName: crate::nodes::types::String> ClipVisionLoader<ClipName> {
+    /// Create a new node.
+    pub fn new(clip_name: ClipName) -> Self {
+        Self { clip_name }
+    }
+}
 impl<ClipName: crate::nodes::types::String> crate::nodes::TypedNode
 for ClipVisionLoader<ClipName> {
     type Output = crate::nodes::types::ClipVisionOut;
@@ -64,6 +70,12 @@ for ClipVisionLoader<ClipName> {
 pub struct CheckpointLoaderSimple<CkptName: crate::nodes::types::String> {
     ///The name of the checkpoint (model) to load.
     pub ckpt_name: CkptName,
+}
+impl<CkptName: crate::nodes::types::String> CheckpointLoaderSimple<CkptName> {
+    /// Create a new node.
+    pub fn new(ckpt_name: CkptName) -> Self {
+        Self { ckpt_name }
+    }
 }
 impl<CkptName: crate::nodes::types::String> crate::nodes::TypedNode
 for CheckpointLoaderSimple<CkptName> {
@@ -98,6 +110,12 @@ for CheckpointLoaderSimple<CkptName> {
 pub struct ControlNetLoader<ControlNetName: crate::nodes::types::String> {
     ///No documentation.
     pub control_net_name: ControlNetName,
+}
+impl<ControlNetName: crate::nodes::types::String> ControlNetLoader<ControlNetName> {
+    /// Create a new node.
+    pub fn new(control_net_name: ControlNetName) -> Self {
+        Self { control_net_name }
+    }
 }
 impl<ControlNetName: crate::nodes::types::String> crate::nodes::TypedNode
 for ControlNetLoader<ControlNetName> {
@@ -135,6 +153,15 @@ pub struct DiffControlNetLoader<
 impl<
     Model: crate::nodes::types::Model,
     ControlNetName: crate::nodes::types::String,
+> DiffControlNetLoader<Model, ControlNetName> {
+    /// Create a new node.
+    pub fn new(model: Model, control_net_name: ControlNetName) -> Self {
+        Self { model, control_net_name }
+    }
+}
+impl<
+    Model: crate::nodes::types::Model,
+    ControlNetName: crate::nodes::types::String,
 > crate::nodes::TypedNode for DiffControlNetLoader<Model, ControlNetName> {
     type Output = crate::nodes::types::ControlNetOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
@@ -162,6 +189,12 @@ impl<
 pub struct GligenLoader<GligenName: crate::nodes::types::String> {
     ///No documentation.
     pub gligen_name: GligenName,
+}
+impl<GligenName: crate::nodes::types::String> GligenLoader<GligenName> {
+    /// Create a new node.
+    pub fn new(gligen_name: GligenName) -> Self {
+        Self { gligen_name }
+    }
 }
 impl<GligenName: crate::nodes::types::String> crate::nodes::TypedNode
 for GligenLoader<GligenName> {
@@ -194,6 +227,24 @@ pub struct HypernetworkLoader<
     pub hypernetwork_name: HypernetworkName,
     ///No documentation.
     pub strength: Strength,
+}
+impl<
+    Model: crate::nodes::types::Model,
+    HypernetworkName: crate::nodes::types::String,
+    Strength: crate::nodes::types::Float,
+> HypernetworkLoader<Model, HypernetworkName, Strength> {
+    /// Create a new node.
+    pub fn new(
+        model: Model,
+        hypernetwork_name: HypernetworkName,
+        strength: Strength,
+    ) -> Self {
+        Self {
+            model,
+            hypernetwork_name,
+            strength,
+        }
+    }
 }
 impl<
     Model: crate::nodes::types::Model,
@@ -241,6 +292,30 @@ pub struct LoraLoader<
     pub strength_model: StrengthModel,
     ///How strongly to modify the CLIP model. This value can be negative.
     pub strength_clip: StrengthClip,
+}
+impl<
+    Model: crate::nodes::types::Model,
+    Clip: crate::nodes::types::Clip,
+    LoraName: crate::nodes::types::String,
+    StrengthModel: crate::nodes::types::Float,
+    StrengthClip: crate::nodes::types::Float,
+> LoraLoader<Model, Clip, LoraName, StrengthModel, StrengthClip> {
+    /// Create a new node.
+    pub fn new(
+        model: Model,
+        clip: Clip,
+        lora_name: LoraName,
+        strength_model: StrengthModel,
+        strength_clip: StrengthClip,
+    ) -> Self {
+        Self {
+            model,
+            clip,
+            lora_name,
+            strength_model,
+            strength_clip,
+        }
+    }
 }
 impl<
     Model: crate::nodes::types::Model,
@@ -299,6 +374,24 @@ impl<
     Model: crate::nodes::types::Model,
     LoraName: crate::nodes::types::String,
     StrengthModel: crate::nodes::types::Float,
+> LoraLoaderModelOnly<Model, LoraName, StrengthModel> {
+    /// Create a new node.
+    pub fn new(
+        model: Model,
+        lora_name: LoraName,
+        strength_model: StrengthModel,
+    ) -> Self {
+        Self {
+            model,
+            lora_name,
+            strength_model,
+        }
+    }
+}
+impl<
+    Model: crate::nodes::types::Model,
+    LoraName: crate::nodes::types::String,
+    StrengthModel: crate::nodes::types::Float,
 > crate::nodes::TypedNode for LoraLoaderModelOnly<Model, LoraName, StrengthModel> {
     type Output = crate::nodes::types::ModelOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
@@ -328,6 +421,12 @@ pub struct StyleModelLoader<StyleModelName: crate::nodes::types::String> {
     ///No documentation.
     pub style_model_name: StyleModelName,
 }
+impl<StyleModelName: crate::nodes::types::String> StyleModelLoader<StyleModelName> {
+    /// Create a new node.
+    pub fn new(style_model_name: StyleModelName) -> Self {
+        Self { style_model_name }
+    }
+}
 impl<StyleModelName: crate::nodes::types::String> crate::nodes::TypedNode
 for StyleModelLoader<StyleModelName> {
     type Output = crate::nodes::types::StyleModelOut;
@@ -356,6 +455,12 @@ pub struct UpscaleModelLoader<ModelName: crate::nodes::types::String> {
     ///No documentation.
     pub model_name: ModelName,
 }
+impl<ModelName: crate::nodes::types::String> UpscaleModelLoader<ModelName> {
+    /// Create a new node.
+    pub fn new(model_name: ModelName) -> Self {
+        Self { model_name }
+    }
+}
 impl<ModelName: crate::nodes::types::String> crate::nodes::TypedNode
 for UpscaleModelLoader<ModelName> {
     type Output = crate::nodes::types::UpscaleModelOut;
@@ -380,6 +485,12 @@ pub struct VaeLoader<VaeName: crate::nodes::types::String> {
     ///No documentation.
     pub vae_name: VaeName,
 }
+impl<VaeName: crate::nodes::types::String> VaeLoader<VaeName> {
+    /// Create a new node.
+    pub fn new(vae_name: VaeName) -> Self {
+        Self { vae_name }
+    }
+}
 impl<VaeName: crate::nodes::types::String> crate::nodes::TypedNode
 for VaeLoader<VaeName> {
     type Output = crate::nodes::types::VaeOut;
@@ -403,6 +514,12 @@ for VaeLoader<VaeName> {
 pub struct UnClipCheckpointLoader<CkptName: crate::nodes::types::String> {
     ///No documentation.
     pub ckpt_name: CkptName,
+}
+impl<CkptName: crate::nodes::types::String> UnClipCheckpointLoader<CkptName> {
+    /// Create a new node.
+    pub fn new(ckpt_name: CkptName) -> Self {
+        Self { ckpt_name }
+    }
 }
 impl<CkptName: crate::nodes::types::String> crate::nodes::TypedNode
 for UnClipCheckpointLoader<CkptName> {

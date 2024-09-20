@@ -1,11 +1,17 @@
 //!`samplers` definitions/categories.
-#![allow(unused_imports)]
+#![allow(unused_imports, clippy::too_many_arguments, clippy::new_without_default)]
 use std::collections::HashMap;
 use crate::workflow::{WorkflowNodeId, WorkflowInput};
 ///**KSamplerSelect**: No description.
 pub struct KSamplerSelect<SamplerName: crate::nodes::types::String> {
     ///No documentation.
     pub sampler_name: SamplerName,
+}
+impl<SamplerName: crate::nodes::types::String> KSamplerSelect<SamplerName> {
+    /// Create a new node.
+    pub fn new(sampler_name: SamplerName) -> Self {
+        Self { sampler_name }
+    }
 }
 impl<SamplerName: crate::nodes::types::String> crate::nodes::TypedNode
 for KSamplerSelect<SamplerName> {
@@ -59,6 +65,56 @@ pub struct SamplerDpmAdaptative<
     pub eta: Eta,
     ///No documentation.
     pub s_noise: SNoise,
+}
+impl<
+    Order: crate::nodes::types::Int,
+    Rtol: crate::nodes::types::Float,
+    Atol: crate::nodes::types::Float,
+    HInit: crate::nodes::types::Float,
+    Pcoeff: crate::nodes::types::Float,
+    Icoeff: crate::nodes::types::Float,
+    Dcoeff: crate::nodes::types::Float,
+    AcceptSafety: crate::nodes::types::Float,
+    Eta: crate::nodes::types::Float,
+    SNoise: crate::nodes::types::Float,
+> SamplerDpmAdaptative<
+    Order,
+    Rtol,
+    Atol,
+    HInit,
+    Pcoeff,
+    Icoeff,
+    Dcoeff,
+    AcceptSafety,
+    Eta,
+    SNoise,
+> {
+    /// Create a new node.
+    pub fn new(
+        order: Order,
+        rtol: Rtol,
+        atol: Atol,
+        h_init: HInit,
+        pcoeff: Pcoeff,
+        icoeff: Icoeff,
+        dcoeff: Dcoeff,
+        accept_safety: AcceptSafety,
+        eta: Eta,
+        s_noise: SNoise,
+    ) -> Self {
+        Self {
+            order,
+            rtol,
+            atol,
+            h_init,
+            pcoeff,
+            icoeff,
+            dcoeff,
+            accept_safety,
+            eta,
+            s_noise,
+        }
+    }
 }
 impl<
     Order: crate::nodes::types::Int,
@@ -132,6 +188,27 @@ impl<
     Eta: crate::nodes::types::Float,
     SNoise: crate::nodes::types::Float,
     NoiseDevice: crate::nodes::types::String,
+> SamplerDpmpp2MSde<SolverType, Eta, SNoise, NoiseDevice> {
+    /// Create a new node.
+    pub fn new(
+        solver_type: SolverType,
+        eta: Eta,
+        s_noise: SNoise,
+        noise_device: NoiseDevice,
+    ) -> Self {
+        Self {
+            solver_type,
+            eta,
+            s_noise,
+            noise_device,
+        }
+    }
+}
+impl<
+    SolverType: crate::nodes::types::String,
+    Eta: crate::nodes::types::Float,
+    SNoise: crate::nodes::types::Float,
+    NoiseDevice: crate::nodes::types::String,
 > crate::nodes::TypedNode for SamplerDpmpp2MSde<SolverType, Eta, SNoise, NoiseDevice> {
     type Output = crate::nodes::types::SamplerOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
@@ -162,6 +239,15 @@ pub struct SamplerDpmpp2SAncestral<
     pub eta: Eta,
     ///No documentation.
     pub s_noise: SNoise,
+}
+impl<
+    Eta: crate::nodes::types::Float,
+    SNoise: crate::nodes::types::Float,
+> SamplerDpmpp2SAncestral<Eta, SNoise> {
+    /// Create a new node.
+    pub fn new(eta: Eta, s_noise: SNoise) -> Self {
+        Self { eta, s_noise }
+    }
 }
 impl<
     Eta: crate::nodes::types::Float,
@@ -197,6 +283,16 @@ pub struct SamplerDpmpp3MSde<
     pub s_noise: SNoise,
     ///No documentation.
     pub noise_device: NoiseDevice,
+}
+impl<
+    Eta: crate::nodes::types::Float,
+    SNoise: crate::nodes::types::Float,
+    NoiseDevice: crate::nodes::types::String,
+> SamplerDpmpp3MSde<Eta, SNoise, NoiseDevice> {
+    /// Create a new node.
+    pub fn new(eta: Eta, s_noise: SNoise, noise_device: NoiseDevice) -> Self {
+        Self { eta, s_noise, noise_device }
+    }
 }
 impl<
     Eta: crate::nodes::types::Float,
@@ -243,6 +339,22 @@ impl<
     SNoise: crate::nodes::types::Float,
     R: crate::nodes::types::Float,
     NoiseDevice: crate::nodes::types::String,
+> SamplerDpmppSde<Eta, SNoise, R, NoiseDevice> {
+    /// Create a new node.
+    pub fn new(eta: Eta, s_noise: SNoise, r: R, noise_device: NoiseDevice) -> Self {
+        Self {
+            eta,
+            s_noise,
+            r,
+            noise_device,
+        }
+    }
+}
+impl<
+    Eta: crate::nodes::types::Float,
+    SNoise: crate::nodes::types::Float,
+    R: crate::nodes::types::Float,
+    NoiseDevice: crate::nodes::types::String,
 > crate::nodes::TypedNode for SamplerDpmppSde<Eta, SNoise, R, NoiseDevice> {
     type Output = crate::nodes::types::SamplerOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
@@ -277,6 +389,15 @@ pub struct SamplerEulerAncestral<
 impl<
     Eta: crate::nodes::types::Float,
     SNoise: crate::nodes::types::Float,
+> SamplerEulerAncestral<Eta, SNoise> {
+    /// Create a new node.
+    pub fn new(eta: Eta, s_noise: SNoise) -> Self {
+        Self { eta, s_noise }
+    }
+}
+impl<
+    Eta: crate::nodes::types::Float,
+    SNoise: crate::nodes::types::Float,
 > crate::nodes::TypedNode for SamplerEulerAncestral<Eta, SNoise> {
     type Output = crate::nodes::types::SamplerOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
@@ -305,6 +426,15 @@ pub struct SamplerEulerAncestralCfgpp<
     pub eta: Eta,
     ///No documentation.
     pub s_noise: SNoise,
+}
+impl<
+    Eta: crate::nodes::types::Float,
+    SNoise: crate::nodes::types::Float,
+> SamplerEulerAncestralCfgpp<Eta, SNoise> {
+    /// Create a new node.
+    pub fn new(eta: Eta, s_noise: SNoise) -> Self {
+        Self { eta, s_noise }
+    }
 }
 impl<
     Eta: crate::nodes::types::Float,
@@ -345,6 +475,24 @@ impl<
     ScaleRatio: crate::nodes::types::Float,
     ScaleSteps: crate::nodes::types::Int,
     UpscaleMethod: crate::nodes::types::String,
+> SamplerLcmUpscale<ScaleRatio, ScaleSteps, UpscaleMethod> {
+    /// Create a new node.
+    pub fn new(
+        scale_ratio: ScaleRatio,
+        scale_steps: ScaleSteps,
+        upscale_method: UpscaleMethod,
+    ) -> Self {
+        Self {
+            scale_ratio,
+            scale_steps,
+            upscale_method,
+        }
+    }
+}
+impl<
+    ScaleRatio: crate::nodes::types::Float,
+    ScaleSteps: crate::nodes::types::Int,
+    UpscaleMethod: crate::nodes::types::String,
 > crate::nodes::TypedNode for SamplerLcmUpscale<ScaleRatio, ScaleSteps, UpscaleMethod> {
     type Output = crate::nodes::types::SamplerOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
@@ -373,6 +521,12 @@ impl<
 pub struct SamplerLms<Order: crate::nodes::types::Int> {
     ///No documentation.
     pub order: Order,
+}
+impl<Order: crate::nodes::types::Int> SamplerLms<Order> {
+    /// Create a new node.
+    pub fn new(order: Order) -> Self {
+        Self { order }
+    }
 }
 impl<Order: crate::nodes::types::Int> crate::nodes::TypedNode for SamplerLms<Order> {
     type Output = crate::nodes::types::SamplerOut;

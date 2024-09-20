@@ -273,7 +273,7 @@ fn write_category_tree((name, tree): (&str, &CategoryTree), directory: &Path) ->
 
     let output = quote! {
         #![doc = #doc]
-        #![allow(unused_imports)]
+        #![allow(unused_imports, clippy::too_many_arguments, clippy::new_without_default)]
 
         use std::collections::HashMap;
 
@@ -297,7 +297,7 @@ fn write_node(
 ) -> Result<TokenStream> {
     let processed_inputs = node_processed_inputs(node)?;
 
-    let node_struct = write_node_struct(node, struct_name, &processed_inputs)?;
+    let node_struct = write_node_struct(node, struct_name, &processed_inputs);
     let trait_impl = write_node_trait_impl(
         node,
         &struct_name,
@@ -367,7 +367,7 @@ fn write_node_struct(
     node: &Object,
     struct_name: &syn::Ident,
     processed_inputs: &[ProcessedInput<'_>],
-) -> Result<TokenStream> {
+) -> TokenStream {
     let input_generics = processed_inputs
         .iter()
         .map(|input| {
@@ -379,31 +379,43 @@ fn write_node_struct(
             } else {
                 quote! {}
             };
-            Ok(quote! {
-                #generic_name: crate :: nodes :: types :: #ty #default
-            })
+            quote! {
+                #generic_name : crate :: nodes :: types :: #ty #default
+            }
         })
-        .collect::<Result<Vec<_>>>()?;
+        .collect::<Vec<_>>();
 
-    let fields = processed_inputs
-        .iter()
-        .map(|input| {
-            let name = &input.name;
-            let generic_name = &input.generic_name;
-            let doc = input.tooltip.unwrap_or("No documentation.");
-            let ty = if input.optional {
-                quote! {
-                    Option<#generic_name>
-                }
-            } else {
-                quote! { #generic_name }
-            };
-            Ok(quote! {
-                #[doc = #doc]
-                pub #name: #ty
-            })
-        })
-        .collect::<Result<Vec<_>>>()?;
+    let input_generics_no_defaults = processed_inputs.iter().map(|input| {
+        let generic_name = &input.generic_name;
+        let ty = &input.generic_ty;
+        quote! {
+            #generic_name : crate :: nodes :: types :: #ty
+        }
+    });
+
+    let input_generics_instantiation = processed_inputs.iter().map(|input| {
+        let generic_name = &input.generic_name;
+        quote! {
+            #generic_name
+        }
+    });
+
+    let fields = processed_inputs.iter().map(|input| {
+        let name = &input.name;
+        let generic_name = &input.generic_name;
+        let doc = input.tooltip.unwrap_or("No documentation.");
+        let ty = if input.optional {
+            quote! {
+                Option<#generic_name>
+            }
+        } else {
+            quote! { #generic_name }
+        };
+        quote! {
+            #[doc = #doc]
+            pub #name: #ty
+        }
+    });
 
     let doc = format!(
         "**{}**: {}",
@@ -415,12 +427,42 @@ fn write_node_struct(
         }
     );
 
-    Ok(quote! {
+    let new_arguments = processed_inputs.iter().map(|input| {
+        let name = &input.name;
+        let generic_name = &input.generic_name;
+        let ty = if input.optional {
+            quote! {
+                Option<#generic_name>
+            }
+        } else {
+            quote! { #generic_name }
+        };
+        quote! {
+            #name: #ty
+        }
+    });
+
+    let self_fields = processed_inputs.iter().map(|input| {
+        let name = &input.name;
+        quote! {
+            #name
+        }
+    });
+
+    quote! {
         #[doc = #doc]
         pub struct #struct_name < #(#input_generics),* > {
             #(#fields),*
         }
-    })
+        impl < #(#input_generics_no_defaults),* > #struct_name < #(#input_generics_instantiation),* > {
+            /// Create a new node.
+            pub fn new( #(#new_arguments),* ) -> Self {
+                Self {
+                    #(#self_fields),*
+                }
+            }
+        }
+    }
 }
 
 fn write_node_trait_impl(

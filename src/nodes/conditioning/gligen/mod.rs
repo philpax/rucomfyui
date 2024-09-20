@@ -1,5 +1,5 @@
 //!`gligen` definitions/categories.
-#![allow(unused_imports)]
+#![allow(unused_imports, clippy::too_many_arguments, clippy::new_without_default)]
 use std::collections::HashMap;
 use crate::workflow::{WorkflowNodeId, WorkflowInput};
 ///**GLIGENTextBoxApply**: No description.
@@ -29,6 +29,48 @@ pub struct GligenTextBoxApply<
     pub x: X,
     ///No documentation.
     pub y: Y,
+}
+impl<
+    ConditioningTo: crate::nodes::types::Conditioning,
+    Clip: crate::nodes::types::Clip,
+    GligenTextboxModel: crate::nodes::types::Gligen,
+    Text: crate::nodes::types::String,
+    Width: crate::nodes::types::Int,
+    Height: crate::nodes::types::Int,
+    X: crate::nodes::types::Int,
+    Y: crate::nodes::types::Int,
+> GligenTextBoxApply<
+    ConditioningTo,
+    Clip,
+    GligenTextboxModel,
+    Text,
+    Width,
+    Height,
+    X,
+    Y,
+> {
+    /// Create a new node.
+    pub fn new(
+        conditioning_to: ConditioningTo,
+        clip: Clip,
+        gligen_textbox_model: GligenTextboxModel,
+        text: Text,
+        width: Width,
+        height: Height,
+        x: X,
+        y: Y,
+    ) -> Self {
+        Self {
+            conditioning_to,
+            clip,
+            gligen_textbox_model,
+            text,
+            width,
+            height,
+            x,
+            y,
+        }
+    }
 }
 impl<
     ConditioningTo: crate::nodes::types::Conditioning,

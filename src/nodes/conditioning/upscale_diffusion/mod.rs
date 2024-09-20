@@ -1,5 +1,5 @@
 //!`upscale_diffusion` definitions/categories.
-#![allow(unused_imports)]
+#![allow(unused_imports, clippy::too_many_arguments, clippy::new_without_default)]
 use std::collections::HashMap;
 use crate::workflow::{WorkflowNodeId, WorkflowInput};
 /// Output types for nodes.
@@ -33,6 +33,30 @@ pub struct Sd4XUpscaleConditioning<
     pub scale_ratio: ScaleRatio,
     ///No documentation.
     pub noise_augmentation: NoiseAugmentation,
+}
+impl<
+    Images: crate::nodes::types::Image,
+    Positive: crate::nodes::types::Conditioning,
+    Negative: crate::nodes::types::Conditioning,
+    ScaleRatio: crate::nodes::types::Float,
+    NoiseAugmentation: crate::nodes::types::Float,
+> Sd4XUpscaleConditioning<Images, Positive, Negative, ScaleRatio, NoiseAugmentation> {
+    /// Create a new node.
+    pub fn new(
+        images: Images,
+        positive: Positive,
+        negative: Negative,
+        scale_ratio: ScaleRatio,
+        noise_augmentation: NoiseAugmentation,
+    ) -> Self {
+        Self {
+            images,
+            positive,
+            negative,
+            scale_ratio,
+            noise_augmentation,
+        }
+    }
 }
 impl<
     Images: crate::nodes::types::Image,

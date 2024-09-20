@@ -1,5 +1,5 @@
 //!`upscaling` definitions/categories.
-#![allow(unused_imports)]
+#![allow(unused_imports, clippy::too_many_arguments, clippy::new_without_default)]
 use std::collections::HashMap;
 use crate::workflow::{WorkflowNodeId, WorkflowInput};
 ///**Upscale Image**: No description.
@@ -20,6 +20,30 @@ pub struct ImageScale<
     pub height: Height,
     ///No documentation.
     pub crop: Crop,
+}
+impl<
+    Image: crate::nodes::types::Image,
+    UpscaleMethod: crate::nodes::types::String,
+    Width: crate::nodes::types::Int,
+    Height: crate::nodes::types::Int,
+    Crop: crate::nodes::types::String,
+> ImageScale<Image, UpscaleMethod, Width, Height, Crop> {
+    /// Create a new node.
+    pub fn new(
+        image: Image,
+        upscale_method: UpscaleMethod,
+        width: Width,
+        height: Height,
+        crop: Crop,
+    ) -> Self {
+        Self {
+            image,
+            upscale_method,
+            width,
+            height,
+            crop,
+        }
+    }
 }
 impl<
     Image: crate::nodes::types::Image,
@@ -70,6 +94,20 @@ impl<
     Image: crate::nodes::types::Image,
     UpscaleMethod: crate::nodes::types::String,
     ScaleBy: crate::nodes::types::Float,
+> ImageScaleBy<Image, UpscaleMethod, ScaleBy> {
+    /// Create a new node.
+    pub fn new(image: Image, upscale_method: UpscaleMethod, scale_by: ScaleBy) -> Self {
+        Self {
+            image,
+            upscale_method,
+            scale_by,
+        }
+    }
+}
+impl<
+    Image: crate::nodes::types::Image,
+    UpscaleMethod: crate::nodes::types::String,
+    ScaleBy: crate::nodes::types::Float,
 > crate::nodes::TypedNode for ImageScaleBy<Image, UpscaleMethod, ScaleBy> {
     type Output = crate::nodes::types::ImageOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
@@ -111,6 +149,24 @@ impl<
     Image: crate::nodes::types::Image,
     UpscaleMethod: crate::nodes::types::String,
     Megapixels: crate::nodes::types::Float,
+> ImageScaleToTotalPixels<Image, UpscaleMethod, Megapixels> {
+    /// Create a new node.
+    pub fn new(
+        image: Image,
+        upscale_method: UpscaleMethod,
+        megapixels: Megapixels,
+    ) -> Self {
+        Self {
+            image,
+            upscale_method,
+            megapixels,
+        }
+    }
+}
+impl<
+    Image: crate::nodes::types::Image,
+    UpscaleMethod: crate::nodes::types::String,
+    Megapixels: crate::nodes::types::Float,
 > crate::nodes::TypedNode for ImageScaleToTotalPixels<Image, UpscaleMethod, Megapixels> {
     type Output = crate::nodes::types::ImageOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
@@ -144,6 +200,15 @@ pub struct ImageUpscaleWithModel<
     pub upscale_model: UpscaleModel,
     ///No documentation.
     pub image: Image,
+}
+impl<
+    UpscaleModel: crate::nodes::types::UpscaleModel,
+    Image: crate::nodes::types::Image,
+> ImageUpscaleWithModel<UpscaleModel, Image> {
+    /// Create a new node.
+    pub fn new(upscale_model: UpscaleModel, image: Image) -> Self {
+        Self { upscale_model, image }
+    }
 }
 impl<
     UpscaleModel: crate::nodes::types::UpscaleModel,

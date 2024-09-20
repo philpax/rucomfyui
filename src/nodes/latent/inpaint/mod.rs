@@ -1,5 +1,5 @@
 //!`inpaint` definitions/categories.
-#![allow(unused_imports)]
+#![allow(unused_imports, clippy::too_many_arguments, clippy::new_without_default)]
 use std::collections::HashMap;
 use crate::workflow::{WorkflowNodeId, WorkflowInput};
 ///**Set Latent Noise Mask**: No description.
@@ -11,6 +11,15 @@ pub struct SetLatentNoiseMask<
     pub samples: Samples,
     ///No documentation.
     pub mask: Mask,
+}
+impl<
+    Samples: crate::nodes::types::Latent,
+    Mask: crate::nodes::types::Mask,
+> SetLatentNoiseMask<Samples, Mask> {
+    /// Create a new node.
+    pub fn new(samples: Samples, mask: Mask) -> Self {
+        Self { samples, mask }
+    }
 }
 impl<
     Samples: crate::nodes::types::Latent,
@@ -49,6 +58,22 @@ pub struct VaeEncodeForInpaint<
     pub mask: Mask,
     ///No documentation.
     pub grow_mask_by: GrowMaskBy,
+}
+impl<
+    Pixels: crate::nodes::types::Image,
+    Vae: crate::nodes::types::Vae,
+    Mask: crate::nodes::types::Mask,
+    GrowMaskBy: crate::nodes::types::Int,
+> VaeEncodeForInpaint<Pixels, Vae, Mask, GrowMaskBy> {
+    /// Create a new node.
+    pub fn new(pixels: Pixels, vae: Vae, mask: Mask, grow_mask_by: GrowMaskBy) -> Self {
+        Self {
+            pixels,
+            vae,
+            mask,
+            grow_mask_by,
+        }
+    }
 }
 impl<
     Pixels: crate::nodes::types::Image,

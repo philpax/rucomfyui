@@ -1,5 +1,5 @@
 //!`model_merging` definitions/categories.
-#![allow(unused_imports)]
+#![allow(unused_imports, clippy::too_many_arguments, clippy::new_without_default)]
 use std::collections::HashMap;
 use crate::workflow::{WorkflowNodeId, WorkflowInput};
 pub mod model_specific;
@@ -12,6 +12,15 @@ pub struct ClipMergeAdd<
     pub clip_1: Clip1,
     ///No documentation.
     pub clip_2: Clip2,
+}
+impl<
+    Clip1: crate::nodes::types::Clip,
+    Clip2: crate::nodes::types::Clip,
+> ClipMergeAdd<Clip1, Clip2> {
+    /// Create a new node.
+    pub fn new(clip_1: Clip1, clip_2: Clip2) -> Self {
+        Self { clip_1, clip_2 }
+    }
 }
 impl<
     Clip1: crate::nodes::types::Clip,
@@ -47,6 +56,16 @@ pub struct ClipMergeSimple<
     pub clip_2: Clip2,
     ///No documentation.
     pub ratio: Ratio,
+}
+impl<
+    Clip1: crate::nodes::types::Clip,
+    Clip2: crate::nodes::types::Clip,
+    Ratio: crate::nodes::types::Float,
+> ClipMergeSimple<Clip1, Clip2, Ratio> {
+    /// Create a new node.
+    pub fn new(clip_1: Clip1, clip_2: Clip2, ratio: Ratio) -> Self {
+        Self { clip_1, clip_2, ratio }
+    }
 }
 impl<
     Clip1: crate::nodes::types::Clip,
@@ -89,6 +108,16 @@ impl<
     Clip1: crate::nodes::types::Clip,
     Clip2: crate::nodes::types::Clip,
     Multiplier: crate::nodes::types::Float,
+> ClipMergeSubtract<Clip1, Clip2, Multiplier> {
+    /// Create a new node.
+    pub fn new(clip_1: Clip1, clip_2: Clip2, multiplier: Multiplier) -> Self {
+        Self { clip_1, clip_2, multiplier }
+    }
+}
+impl<
+    Clip1: crate::nodes::types::Clip,
+    Clip2: crate::nodes::types::Clip,
+    Multiplier: crate::nodes::types::Float,
 > crate::nodes::TypedNode for ClipMergeSubtract<Clip1, Clip2, Multiplier> {
     type Output = crate::nodes::types::ClipOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
@@ -118,6 +147,15 @@ pub struct ClipSave<
     pub clip: Clip,
     ///No documentation.
     pub filename_prefix: FilenamePrefix,
+}
+impl<
+    Clip: crate::nodes::types::Clip,
+    FilenamePrefix: crate::nodes::types::String,
+> ClipSave<Clip, FilenamePrefix> {
+    /// Create a new node.
+    pub fn new(clip: Clip, filename_prefix: FilenamePrefix) -> Self {
+        Self { clip, filename_prefix }
+    }
 }
 impl<
     Clip: crate::nodes::types::Clip,
@@ -167,6 +205,27 @@ impl<
     Clip: crate::nodes::types::Clip,
     Vae: crate::nodes::types::Vae,
     FilenamePrefix: crate::nodes::types::String,
+> CheckpointSave<Model, Clip, Vae, FilenamePrefix> {
+    /// Create a new node.
+    pub fn new(
+        model: Model,
+        clip: Clip,
+        vae: Vae,
+        filename_prefix: FilenamePrefix,
+    ) -> Self {
+        Self {
+            model,
+            clip,
+            vae,
+            filename_prefix,
+        }
+    }
+}
+impl<
+    Model: crate::nodes::types::Model,
+    Clip: crate::nodes::types::Clip,
+    Vae: crate::nodes::types::Vae,
+    FilenamePrefix: crate::nodes::types::String,
 > crate::nodes::TypedNode for CheckpointSave<Model, Clip, Vae, FilenamePrefix> {
     type Output = WorkflowNodeId;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
@@ -204,6 +263,15 @@ pub struct ModelMergeAdd<
     pub model_1: Model1,
     ///No documentation.
     pub model_2: Model2,
+}
+impl<
+    Model1: crate::nodes::types::Model,
+    Model2: crate::nodes::types::Model,
+> ModelMergeAdd<Model1, Model2> {
+    /// Create a new node.
+    pub fn new(model_1: Model1, model_2: Model2) -> Self {
+        Self { model_1, model_2 }
+    }
 }
 impl<
     Model1: crate::nodes::types::Model,
@@ -252,6 +320,30 @@ impl<
     Input: crate::nodes::types::Float,
     Middle: crate::nodes::types::Float,
     Out: crate::nodes::types::Float,
+> ModelMergeBlocks<Model1, Model2, Input, Middle, Out> {
+    /// Create a new node.
+    pub fn new(
+        model_1: Model1,
+        model_2: Model2,
+        input: Input,
+        middle: Middle,
+        out: Out,
+    ) -> Self {
+        Self {
+            model_1,
+            model_2,
+            input,
+            middle,
+            out,
+        }
+    }
+}
+impl<
+    Model1: crate::nodes::types::Model,
+    Model2: crate::nodes::types::Model,
+    Input: crate::nodes::types::Float,
+    Middle: crate::nodes::types::Float,
+    Out: crate::nodes::types::Float,
 > crate::nodes::TypedNode for ModelMergeBlocks<Model1, Model2, Input, Middle, Out> {
     type Output = crate::nodes::types::ModelOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
@@ -286,6 +378,16 @@ pub struct ModelMergeSimple<
     pub model_2: Model2,
     ///No documentation.
     pub ratio: Ratio,
+}
+impl<
+    Model1: crate::nodes::types::Model,
+    Model2: crate::nodes::types::Model,
+    Ratio: crate::nodes::types::Float,
+> ModelMergeSimple<Model1, Model2, Ratio> {
+    /// Create a new node.
+    pub fn new(model_1: Model1, model_2: Model2, ratio: Ratio) -> Self {
+        Self { model_1, model_2, ratio }
+    }
 }
 impl<
     Model1: crate::nodes::types::Model,
@@ -328,6 +430,20 @@ impl<
     Model1: crate::nodes::types::Model,
     Model2: crate::nodes::types::Model,
     Multiplier: crate::nodes::types::Float,
+> ModelMergeSubtract<Model1, Model2, Multiplier> {
+    /// Create a new node.
+    pub fn new(model_1: Model1, model_2: Model2, multiplier: Multiplier) -> Self {
+        Self {
+            model_1,
+            model_2,
+            multiplier,
+        }
+    }
+}
+impl<
+    Model1: crate::nodes::types::Model,
+    Model2: crate::nodes::types::Model,
+    Multiplier: crate::nodes::types::Float,
 > crate::nodes::TypedNode for ModelMergeSubtract<Model1, Model2, Multiplier> {
     type Output = crate::nodes::types::ModelOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
@@ -357,6 +473,15 @@ pub struct ModelSave<
     pub model: Model,
     ///No documentation.
     pub filename_prefix: FilenamePrefix,
+}
+impl<
+    Model: crate::nodes::types::Model,
+    FilenamePrefix: crate::nodes::types::String,
+> ModelSave<Model, FilenamePrefix> {
+    /// Create a new node.
+    pub fn new(model: Model, filename_prefix: FilenamePrefix) -> Self {
+        Self { model, filename_prefix }
+    }
 }
 impl<
     Model: crate::nodes::types::Model,
@@ -394,6 +519,15 @@ pub struct VaeSave<
     pub vae: Vae,
     ///No documentation.
     pub filename_prefix: FilenamePrefix,
+}
+impl<
+    Vae: crate::nodes::types::Vae,
+    FilenamePrefix: crate::nodes::types::String,
+> VaeSave<Vae, FilenamePrefix> {
+    /// Create a new node.
+    pub fn new(vae: Vae, filename_prefix: FilenamePrefix) -> Self {
+        Self { vae, filename_prefix }
+    }
 }
 impl<
     Vae: crate::nodes::types::Vae,

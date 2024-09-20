@@ -1,5 +1,5 @@
 //!`compositing` definitions/categories.
-#![allow(unused_imports)]
+#![allow(unused_imports, clippy::too_many_arguments, clippy::new_without_default)]
 use std::collections::HashMap;
 use crate::workflow::{WorkflowNodeId, WorkflowInput};
 /// Output types for nodes.
@@ -30,6 +30,15 @@ pub struct JoinImageWithAlpha<
     pub image: Image,
     ///No documentation.
     pub alpha: Alpha,
+}
+impl<
+    Image: crate::nodes::types::Image,
+    Alpha: crate::nodes::types::Mask,
+> JoinImageWithAlpha<Image, Alpha> {
+    /// Create a new node.
+    pub fn new(image: Image, alpha: Alpha) -> Self {
+        Self { image, alpha }
+    }
 }
 impl<
     Image: crate::nodes::types::Image,
@@ -78,6 +87,30 @@ impl<
     Destination: crate::nodes::types::Image,
     DestinationAlpha: crate::nodes::types::Mask,
     Mode: crate::nodes::types::String,
+> PorterDuffImageComposite<Source, SourceAlpha, Destination, DestinationAlpha, Mode> {
+    /// Create a new node.
+    pub fn new(
+        source: Source,
+        source_alpha: SourceAlpha,
+        destination: Destination,
+        destination_alpha: DestinationAlpha,
+        mode: Mode,
+    ) -> Self {
+        Self {
+            source,
+            source_alpha,
+            destination,
+            destination_alpha,
+            mode,
+        }
+    }
+}
+impl<
+    Source: crate::nodes::types::Image,
+    SourceAlpha: crate::nodes::types::Mask,
+    Destination: crate::nodes::types::Image,
+    DestinationAlpha: crate::nodes::types::Mask,
+    Mode: crate::nodes::types::String,
 > crate::nodes::TypedNode
 for PorterDuffImageComposite<Source, SourceAlpha, Destination, DestinationAlpha, Mode> {
     type Output = out::PorterDuffImageCompositeOutput;
@@ -115,6 +148,12 @@ for PorterDuffImageComposite<Source, SourceAlpha, Destination, DestinationAlpha,
 pub struct SplitImageWithAlpha<Image: crate::nodes::types::Image> {
     ///No documentation.
     pub image: Image,
+}
+impl<Image: crate::nodes::types::Image> SplitImageWithAlpha<Image> {
+    /// Create a new node.
+    pub fn new(image: Image) -> Self {
+        Self { image }
+    }
 }
 impl<Image: crate::nodes::types::Image> crate::nodes::TypedNode
 for SplitImageWithAlpha<Image> {

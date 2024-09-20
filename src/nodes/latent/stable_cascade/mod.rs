@@ -1,5 +1,5 @@
 //!`stable_cascade` definitions/categories.
-#![allow(unused_imports)]
+#![allow(unused_imports, clippy::too_many_arguments, clippy::new_without_default)]
 use std::collections::HashMap;
 use crate::workflow::{WorkflowNodeId, WorkflowInput};
 /// Output types for nodes.
@@ -36,6 +36,27 @@ pub struct StableCascadeEmptyLatentImage<
     pub compression: Compression,
     ///No documentation.
     pub batch_size: BatchSize,
+}
+impl<
+    Width: crate::nodes::types::Int,
+    Height: crate::nodes::types::Int,
+    Compression: crate::nodes::types::Int,
+    BatchSize: crate::nodes::types::Int,
+> StableCascadeEmptyLatentImage<Width, Height, Compression, BatchSize> {
+    /// Create a new node.
+    pub fn new(
+        width: Width,
+        height: Height,
+        compression: Compression,
+        batch_size: BatchSize,
+    ) -> Self {
+        Self {
+            width,
+            height,
+            compression,
+            batch_size,
+        }
+    }
 }
 impl<
     Width: crate::nodes::types::Int,
@@ -82,6 +103,16 @@ pub struct StableCascadeStageCVaeEncode<
     pub vae: Vae,
     ///No documentation.
     pub compression: Compression,
+}
+impl<
+    Image: crate::nodes::types::Image,
+    Vae: crate::nodes::types::Vae,
+    Compression: crate::nodes::types::Int,
+> StableCascadeStageCVaeEncode<Image, Vae, Compression> {
+    /// Create a new node.
+    pub fn new(image: Image, vae: Vae, compression: Compression) -> Self {
+        Self { image, vae, compression }
+    }
 }
 impl<
     Image: crate::nodes::types::Image,

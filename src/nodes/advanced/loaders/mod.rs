@@ -1,5 +1,5 @@
 //!`loaders` definitions/categories.
-#![allow(unused_imports)]
+#![allow(unused_imports, clippy::too_many_arguments, clippy::new_without_default)]
 use std::collections::HashMap;
 use crate::workflow::{WorkflowNodeId, WorkflowInput};
 pub mod deprecated;
@@ -25,6 +25,15 @@ pub struct ClipLoader<
     pub clip_name: ClipName,
     ///No documentation.
     pub type_: Type,
+}
+impl<
+    ClipName: crate::nodes::types::String,
+    Type: crate::nodes::types::String,
+> ClipLoader<ClipName, Type> {
+    /// Create a new node.
+    pub fn new(clip_name: ClipName, type_: Type) -> Self {
+        Self { clip_name, type_ }
+    }
 }
 impl<
     ClipName: crate::nodes::types::String,
@@ -57,6 +66,15 @@ pub struct CheckpointLoader<
     pub config_name: ConfigName,
     ///No documentation.
     pub ckpt_name: CkptName,
+}
+impl<
+    ConfigName: crate::nodes::types::String,
+    CkptName: crate::nodes::types::String,
+> CheckpointLoader<ConfigName, CkptName> {
+    /// Create a new node.
+    pub fn new(config_name: ConfigName, ckpt_name: CkptName) -> Self {
+        Self { config_name, ckpt_name }
+    }
 }
 impl<
     ConfigName: crate::nodes::types::String,
@@ -107,6 +125,20 @@ impl<
     ClipName1: crate::nodes::types::String,
     ClipName2: crate::nodes::types::String,
     Type: crate::nodes::types::String,
+> DualClipLoader<ClipName1, ClipName2, Type> {
+    /// Create a new node.
+    pub fn new(clip_name_1: ClipName1, clip_name_2: ClipName2, type_: Type) -> Self {
+        Self {
+            clip_name_1,
+            clip_name_2,
+            type_,
+        }
+    }
+}
+impl<
+    ClipName1: crate::nodes::types::String,
+    ClipName2: crate::nodes::types::String,
+    Type: crate::nodes::types::String,
 > crate::nodes::TypedNode for DualClipLoader<ClipName1, ClipName2, Type> {
     type Output = crate::nodes::types::ClipOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
@@ -144,6 +176,24 @@ impl<
     ClipName1: crate::nodes::types::String,
     ClipName2: crate::nodes::types::String,
     ClipName3: crate::nodes::types::String,
+> TripleClipLoader<ClipName1, ClipName2, ClipName3> {
+    /// Create a new node.
+    pub fn new(
+        clip_name_1: ClipName1,
+        clip_name_2: ClipName2,
+        clip_name_3: ClipName3,
+    ) -> Self {
+        Self {
+            clip_name_1,
+            clip_name_2,
+            clip_name_3,
+        }
+    }
+}
+impl<
+    ClipName1: crate::nodes::types::String,
+    ClipName2: crate::nodes::types::String,
+    ClipName3: crate::nodes::types::String,
 > crate::nodes::TypedNode for TripleClipLoader<ClipName1, ClipName2, ClipName3> {
     type Output = crate::nodes::types::ClipOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
@@ -173,6 +223,15 @@ pub struct UnetLoader<
     pub unet_name: UnetName,
     ///No documentation.
     pub weight_dtype: WeightDtype,
+}
+impl<
+    UnetName: crate::nodes::types::String,
+    WeightDtype: crate::nodes::types::String,
+> UnetLoader<UnetName, WeightDtype> {
+    /// Create a new node.
+    pub fn new(unet_name: UnetName, weight_dtype: WeightDtype) -> Self {
+        Self { unet_name, weight_dtype }
+    }
 }
 impl<
     UnetName: crate::nodes::types::String,

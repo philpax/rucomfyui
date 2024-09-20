@@ -1,5 +1,5 @@
 //!`sigmas` definitions/categories.
-#![allow(unused_imports)]
+#![allow(unused_imports, clippy::too_many_arguments, clippy::new_without_default)]
 use std::collections::HashMap;
 use crate::workflow::{WorkflowNodeId, WorkflowInput};
 /// Output types for nodes.
@@ -25,6 +25,12 @@ pub mod out {
 pub struct FlipSigmas<Sigmas: crate::nodes::types::Sigmas> {
     ///No documentation.
     pub sigmas: Sigmas,
+}
+impl<Sigmas: crate::nodes::types::Sigmas> FlipSigmas<Sigmas> {
+    /// Create a new node.
+    pub fn new(sigmas: Sigmas) -> Self {
+        Self { sigmas }
+    }
 }
 impl<Sigmas: crate::nodes::types::Sigmas> crate::nodes::TypedNode
 for FlipSigmas<Sigmas> {
@@ -54,6 +60,15 @@ pub struct SplitSigmas<
     pub sigmas: Sigmas,
     ///No documentation.
     pub step: Step,
+}
+impl<
+    Sigmas: crate::nodes::types::Sigmas,
+    Step: crate::nodes::types::Int,
+> SplitSigmas<Sigmas, Step> {
+    /// Create a new node.
+    pub fn new(sigmas: Sigmas, step: Step) -> Self {
+        Self { sigmas, step }
+    }
 }
 impl<
     Sigmas: crate::nodes::types::Sigmas,
@@ -92,6 +107,15 @@ pub struct SplitSigmasDenoise<
     pub sigmas: Sigmas,
     ///No documentation.
     pub denoise: Denoise,
+}
+impl<
+    Sigmas: crate::nodes::types::Sigmas,
+    Denoise: crate::nodes::types::Float,
+> SplitSigmasDenoise<Sigmas, Denoise> {
+    /// Create a new node.
+    pub fn new(sigmas: Sigmas, denoise: Denoise) -> Self {
+        Self { sigmas, denoise }
+    }
 }
 impl<
     Sigmas: crate::nodes::types::Sigmas,

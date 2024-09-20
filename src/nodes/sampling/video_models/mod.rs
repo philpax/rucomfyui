@@ -1,5 +1,5 @@
 //!`video_models` definitions/categories.
-#![allow(unused_imports)]
+#![allow(unused_imports, clippy::too_many_arguments, clippy::new_without_default)]
 use std::collections::HashMap;
 use crate::workflow::{WorkflowNodeId, WorkflowInput};
 ///**VideoLinearCFGGuidance**: No description.
@@ -11,6 +11,15 @@ pub struct VideoLinearCfgGuidance<
     pub model: Model,
     ///No documentation.
     pub min_cfg: MinCfg,
+}
+impl<
+    Model: crate::nodes::types::Model,
+    MinCfg: crate::nodes::types::Float,
+> VideoLinearCfgGuidance<Model, MinCfg> {
+    /// Create a new node.
+    pub fn new(model: Model, min_cfg: MinCfg) -> Self {
+        Self { model, min_cfg }
+    }
 }
 impl<
     Model: crate::nodes::types::Model,
@@ -43,6 +52,15 @@ pub struct VideoTriangleCfgGuidance<
     pub model: Model,
     ///No documentation.
     pub min_cfg: MinCfg,
+}
+impl<
+    Model: crate::nodes::types::Model,
+    MinCfg: crate::nodes::types::Float,
+> VideoTriangleCfgGuidance<Model, MinCfg> {
+    /// Create a new node.
+    pub fn new(model: Model, min_cfg: MinCfg) -> Self {
+        Self { model, min_cfg }
+    }
 }
 impl<
     Model: crate::nodes::types::Model,

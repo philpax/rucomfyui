@@ -1,9 +1,15 @@
 //!`noise` definitions/categories.
-#![allow(unused_imports)]
+#![allow(unused_imports, clippy::too_many_arguments, clippy::new_without_default)]
 use std::collections::HashMap;
 use crate::workflow::{WorkflowNodeId, WorkflowInput};
 ///**DisableNoise**: No description.
 pub struct DisableNoise {}
+impl DisableNoise {
+    /// Create a new node.
+    pub fn new() -> Self {
+        Self {}
+    }
+}
 impl crate::nodes::TypedNode for DisableNoise {
     type Output = crate::nodes::types::NoiseOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
@@ -24,6 +30,12 @@ impl crate::nodes::TypedNode for DisableNoise {
 pub struct RandomNoise<NoiseSeed: crate::nodes::types::Int> {
     ///No documentation.
     pub noise_seed: NoiseSeed,
+}
+impl<NoiseSeed: crate::nodes::types::Int> RandomNoise<NoiseSeed> {
+    /// Create a new node.
+    pub fn new(noise_seed: NoiseSeed) -> Self {
+        Self { noise_seed }
+    }
 }
 impl<NoiseSeed: crate::nodes::types::Int> crate::nodes::TypedNode
 for RandomNoise<NoiseSeed> {

@@ -1,5 +1,5 @@
 //!`video_models` definitions/categories.
-#![allow(unused_imports)]
+#![allow(unused_imports, clippy::too_many_arguments, clippy::new_without_default)]
 use std::collections::HashMap;
 use crate::workflow::{WorkflowNodeId, WorkflowInput};
 /// Output types for nodes.
@@ -45,6 +45,52 @@ pub struct SvdImg2VidConditioning<
     pub fps: Fps,
     ///No documentation.
     pub augmentation_level: AugmentationLevel,
+}
+impl<
+    ClipVision: crate::nodes::types::ClipVision,
+    InitImage: crate::nodes::types::Image,
+    Vae: crate::nodes::types::Vae,
+    Width: crate::nodes::types::Int,
+    Height: crate::nodes::types::Int,
+    VideoFrames: crate::nodes::types::Int,
+    MotionBucketId: crate::nodes::types::Int,
+    Fps: crate::nodes::types::Int,
+    AugmentationLevel: crate::nodes::types::Float,
+> SvdImg2VidConditioning<
+    ClipVision,
+    InitImage,
+    Vae,
+    Width,
+    Height,
+    VideoFrames,
+    MotionBucketId,
+    Fps,
+    AugmentationLevel,
+> {
+    /// Create a new node.
+    pub fn new(
+        clip_vision: ClipVision,
+        init_image: InitImage,
+        vae: Vae,
+        width: Width,
+        height: Height,
+        video_frames: VideoFrames,
+        motion_bucket_id: MotionBucketId,
+        fps: Fps,
+        augmentation_level: AugmentationLevel,
+    ) -> Self {
+        Self {
+            clip_vision,
+            init_image,
+            vae,
+            width,
+            height,
+            video_frames,
+            motion_bucket_id,
+            fps,
+            augmentation_level,
+        }
+    }
 }
 impl<
     ClipVision: crate::nodes::types::ClipVision,
