@@ -101,6 +101,12 @@ fn type_module_definitions() -> Result<TokenStream> {
                     /// The node's output slot.
                     pub node_slot: u32,
                 }
+                impl #output_name {
+                    /// Create an output from a dynamic node. Use carefully.
+                    pub fn from_dynamic(node_id: WorkflowNodeId, node_slot: u32) -> Self {
+                        Self { node_id, node_slot }
+                    }
+                }
                 impl ToWorkflowInput for #output_name {
                     fn to_workflow_input(&self) -> WorkflowInput {
                         WorkflowInput::Slot(self.node_id.to_string(), self.node_slot)
