@@ -471,10 +471,12 @@ fn write_node_trait_impl(
         }
     } else {
         // Output nodes terminate the workflow and do not produce any
-        // output, so we return an empty tuple.
+        // output, so we return just the node ID.
         quote! {
-            type Output = ();
-            fn output(&self, _node_id: WorkflowNodeId) -> Self::Output {}
+            type Output = WorkflowNodeId;
+            fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
+                node_id
+            }
         }
     };
 

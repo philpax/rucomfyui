@@ -42,8 +42,10 @@ pub struct PreviewAudio<Audio: crate::nodes::types::Audio> {
     pub audio: Audio,
 }
 impl<Audio: crate::nodes::types::Audio> crate::nodes::TypedNode for PreviewAudio<Audio> {
-    type Output = ();
-    fn output(&self, _node_id: WorkflowNodeId) -> Self::Output {}
+    type Output = WorkflowNodeId;
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
+        node_id
+    }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
         output.insert("audio".to_string(), self.audio.to_workflow_input());
@@ -70,8 +72,10 @@ impl<
     Audio: crate::nodes::types::Audio,
     FilenamePrefix: crate::nodes::types::String,
 > crate::nodes::TypedNode for SaveAudio<Audio, FilenamePrefix> {
-    type Output = ();
-    fn output(&self, _node_id: WorkflowNodeId) -> Self::Output {}
+    type Output = WorkflowNodeId;
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
+        node_id
+    }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
         output.insert("audio".to_string(), self.audio.to_workflow_input());

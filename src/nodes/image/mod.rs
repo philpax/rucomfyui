@@ -313,8 +313,10 @@ pub struct PreviewImage<Images: crate::nodes::types::Image> {
 }
 impl<Images: crate::nodes::types::Image> crate::nodes::TypedNode
 for PreviewImage<Images> {
-    type Output = ();
-    fn output(&self, _node_id: WorkflowNodeId) -> Self::Output {}
+    type Output = WorkflowNodeId;
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
+        node_id
+    }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
         output.insert("images".to_string(), self.images.to_workflow_input());
@@ -341,8 +343,10 @@ impl<
     Images: crate::nodes::types::Image,
     FilenamePrefix: crate::nodes::types::String,
 > crate::nodes::TypedNode for SaveImage<Images, FilenamePrefix> {
-    type Output = ();
-    fn output(&self, _node_id: WorkflowNodeId) -> Self::Output {}
+    type Output = WorkflowNodeId;
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
+        node_id
+    }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
         output.insert("images".to_string(), self.images.to_workflow_input());

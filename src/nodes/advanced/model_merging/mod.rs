@@ -174,8 +174,10 @@ impl<
     Clip: crate::nodes::types::Clip,
     FilenamePrefix: crate::nodes::types::String,
 > crate::nodes::TypedNode for ClipSave<Clip, FilenamePrefix> {
-    type Output = ();
-    fn output(&self, _node_id: WorkflowNodeId) -> Self::Output {}
+    type Output = WorkflowNodeId;
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
+        node_id
+    }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
         output.insert("clip".to_string(), self.clip.to_workflow_input());
@@ -217,8 +219,10 @@ impl<
     Vae: crate::nodes::types::Vae,
     FilenamePrefix: crate::nodes::types::String,
 > crate::nodes::TypedNode for CheckpointSave<Model, Clip, Vae, FilenamePrefix> {
-    type Output = ();
-    fn output(&self, _node_id: WorkflowNodeId) -> Self::Output {}
+    type Output = WorkflowNodeId;
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
+        node_id
+    }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
         output.insert("model".to_string(), self.model.to_workflow_input());
@@ -417,8 +421,10 @@ impl<
     Model: crate::nodes::types::Model,
     FilenamePrefix: crate::nodes::types::String,
 > crate::nodes::TypedNode for ModelSave<Model, FilenamePrefix> {
-    type Output = ();
-    fn output(&self, _node_id: WorkflowNodeId) -> Self::Output {}
+    type Output = WorkflowNodeId;
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
+        node_id
+    }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
         output.insert("model".to_string(), self.model.to_workflow_input());
@@ -452,8 +458,10 @@ impl<
     Vae: crate::nodes::types::Vae,
     FilenamePrefix: crate::nodes::types::String,
 > crate::nodes::TypedNode for VaeSave<Vae, FilenamePrefix> {
-    type Output = ();
-    fn output(&self, _node_id: WorkflowNodeId) -> Self::Output {}
+    type Output = WorkflowNodeId;
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
+        node_id
+    }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
         output.insert("vae".to_string(), self.vae.to_workflow_input());
