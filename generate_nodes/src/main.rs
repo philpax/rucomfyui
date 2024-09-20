@@ -254,7 +254,7 @@ fn write_node_inputs(node: &Object) -> Result<(syn::Ident, Vec<ProcessedInput>, 
         Some(ProcessedInput {
             name,
             tooltip: input.tooltip(),
-            ty,
+            ty: ty.clone(),
             generic_name: name_to_ident(name, true).ok()?,
             generic_ty: name_to_ident(&format!("{:?}", ty), true).ok()?,
             optional,
@@ -291,7 +291,7 @@ fn write_node_inputs(node: &Object) -> Result<(syn::Ident, Vec<ProcessedInput>, 
             let generic_name = &input.generic_name;
             let ty = &input.generic_ty;
             let default = if input.optional {
-                let output_struct_name = output_struct_ident(input.ty);
+                let output_struct_name = output_struct_ident(input.ty.clone());
                 quote! { = crate :: nodes :: #output_struct_name }
             } else {
                 quote! {}
@@ -355,7 +355,7 @@ fn write_node_outputs(
         .iter()
         .map(|output| {
             let name = name_to_ident(output.name, false)?;
-            let ty = output_struct_ident(output.ty);
+            let ty = output_struct_ident(output.ty.clone());
             let doc = output.tooltip.unwrap_or("No documentation.");
             Ok(quote! {
                 #[doc = #doc]
@@ -376,7 +376,7 @@ fn write_node_outputs(
             .enumerate()
             .map(|(i, output)| {
                 let name = name_to_ident(output.name, false)?;
-                let ty = output_struct_ident(output.ty);
+                let ty = output_struct_ident(output.ty.clone());
                 let i = i as u32;
                 Ok(quote! {
                     #name: crate :: nodes :: #ty (#i)

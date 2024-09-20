@@ -56,7 +56,7 @@ impl Object {
             .zip(self.output_name.iter())
             .enumerate()
             .map(|(idx, ((ty, is_list), name))| ObjectProcessedOutput {
-                ty: *ty,
+                ty: ty.clone(),
                 is_list: *is_list,
                 name: name.as_str(),
                 tooltip: self.output_tooltips.get(idx).map(|s| s.as_str()),
@@ -89,7 +89,7 @@ pub enum ObjectInput {
 }
 impl ObjectInput {
     /// The type of the input.
-    pub fn as_type(&self) -> Option<ObjectType> {
+    pub fn as_type(&self) -> Option<&ObjectType> {
         match self {
             Self::InputWithMeta(ty, _) => ty.as_type(),
             Self::Input(ty) => ty.0.as_type(),
@@ -123,13 +123,13 @@ impl ObjectInputType {
     /// code can still pass values in. If you need to differentiate between array
     /// types and other types, you can check for the array type and handle it
     /// appropriately.
-    pub fn as_type(&self) -> Option<ObjectType> {
+    pub fn as_type(&self) -> Option<&ObjectType> {
         match self {
-            Self::Typed(v) => Some(*v),
+            Self::Typed(v) => Some(v),
             // HACK: I'm not sure if this is really what we want in the long run,
             // but we treat array types as strings so they can be specified in
             // the workflow
-            Self::Array(_) => Some(ObjectType::String),
+            Self::Array(_) => Some(&ObjectType::String),
         }
     }
 }
@@ -153,7 +153,7 @@ pub struct ObjectInputMeta {
     pub rest: serde_json::Value,
 }
 
-#[derive(Debug, Serialize, Deserialize, Clone, Copy)]
+#[derive(Debug, Serialize, Deserialize, Clone)]
 #[serde(rename_all = "SCREAMING_SNAKE_CASE")]
 /// Type of an object.
 #[allow(missing_docs)]
@@ -184,9 +184,13 @@ pub enum ObjectType {
     UpscaleModel,
     Vae,
     Webcam,
+    #[serde(untagged)]
+    Other(String),
 }
 impl ObjectType {
-    /// All object types.
+    /// All object types excluding [`ObjectType::Other`].
+    ///
+    /// This should include all standard ComfyUI types.
     pub const ALL: &[ObjectType] = &[
         Self::Audio,
         Self::Boolean,
@@ -238,7 +242,7 @@ impl<'a> std::fmt::Debug for CategoryTreeNode<'a> {
 
 /// Builds a tree of objects based on their categories.
 ///
-/// Recomended use is with a values iterator over [`Client::object_info`] with whatever filtering
+/// Recommended use is with a values iterator over [`Client::object_info`] with whatever filtering
 /// is appropriate for your usecase.
 pub fn categorize_objects<'a>(objects: impl Iterator<Item = &'a Object>) -> CategoryTree<'a> {
     let mut tree = CategoryTree::new();
