@@ -1,4 +1,4 @@
-//!animation
+//!`animation` definitions/categories.
 #![allow(unused_imports)]
 use crate::WorkflowNodeId;
 ///**SaveAnimatedPNG**

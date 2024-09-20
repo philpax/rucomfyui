@@ -1,4 +1,4 @@
-//!model_merging
+//!`model_merging` definitions/categories.
 #![allow(unused_imports)]
 use crate::WorkflowNodeId;
 pub mod model_specific;
@@ -22,7 +22,7 @@ for ClipMergeAdd<Clip1, Clip2> {
         Self::Output {
             clip: crate::nodes::ClipOut {
                 node_id,
-                slot: 0u32,
+                node_slot: 0u32,
             },
         }
     }
@@ -60,7 +60,7 @@ impl<
         Self::Output {
             clip: crate::nodes::ClipOut {
                 node_id,
-                slot: 0u32,
+                node_slot: 0u32,
             },
         }
     }
@@ -98,7 +98,7 @@ impl<
         Self::Output {
             clip: crate::nodes::ClipOut {
                 node_id,
-                slot: 0u32,
+                node_slot: 0u32,
             },
         }
     }
@@ -184,7 +184,7 @@ for ModelMergeAdd<Model1, Model2> {
         Self::Output {
             model: crate::nodes::ModelOut {
                 node_id,
-                slot: 0u32,
+                node_slot: 0u32,
             },
         }
     }
@@ -230,7 +230,7 @@ impl<
         Self::Output {
             model: crate::nodes::ModelOut {
                 node_id,
-                slot: 0u32,
+                node_slot: 0u32,
             },
         }
     }
@@ -268,7 +268,7 @@ impl<
         Self::Output {
             model: crate::nodes::ModelOut {
                 node_id,
-                slot: 0u32,
+                node_slot: 0u32,
             },
         }
     }
@@ -306,7 +306,7 @@ impl<
         Self::Output {
             model: crate::nodes::ModelOut {
                 node_id,
-                slot: 0u32,
+                node_slot: 0u32,
             },
         }
     }

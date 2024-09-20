@@ -1,4 +1,4 @@
-//!batch
+//!`batch` definitions/categories.
 #![allow(unused_imports)]
 use crate::WorkflowNodeId;
 ///**LatentBatch**
@@ -23,7 +23,7 @@ impl<
         Self::Output {
             latent: crate::nodes::LatentOut {
                 node_id,
-                slot: 0u32,
+                node_slot: 0u32,
             },
         }
     }
@@ -61,7 +61,7 @@ impl<
         Self::Output {
             latent: crate::nodes::LatentOut {
                 node_id,
-                slot: 0u32,
+                node_slot: 0u32,
             },
         }
     }
@@ -90,7 +90,7 @@ for RebatchLatents<Latents, BatchSize> {
         Self::Output {
             latent: crate::nodes::LatentOut {
                 node_id,
-                slot: 0u32,
+                node_slot: 0u32,
             },
         }
     }
@@ -119,7 +119,7 @@ for RepeatLatentBatch<Samples, Amount> {
         Self::Output {
             latent: crate::nodes::LatentOut {
                 node_id,
-                slot: 0u32,
+                node_slot: 0u32,
             },
         }
     }

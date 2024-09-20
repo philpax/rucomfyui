@@ -1,4 +1,4 @@
-//!samplers
+//!`samplers` definitions/categories.
 #![allow(unused_imports)]
 use crate::WorkflowNodeId;
 ///**KSamplerSelect**
@@ -19,7 +19,7 @@ for KSamplerSelect<SamplerName> {
         Self::Output {
             sampler: crate::nodes::SamplerOut {
                 node_id,
-                slot: 0u32,
+                node_slot: 0u32,
             },
         }
     }
@@ -97,7 +97,7 @@ for SamplerDpmAdaptative<
         Self::Output {
             sampler: crate::nodes::SamplerOut {
                 node_id,
-                slot: 0u32,
+                node_slot: 0u32,
             },
         }
     }
@@ -139,7 +139,7 @@ impl<
         Self::Output {
             sampler: crate::nodes::SamplerOut {
                 node_id,
-                slot: 0u32,
+                node_slot: 0u32,
             },
         }
     }
@@ -171,7 +171,7 @@ for SamplerDpmpp2SAncestral<Eta, SNoise> {
         Self::Output {
             sampler: crate::nodes::SamplerOut {
                 node_id,
-                slot: 0u32,
+                node_slot: 0u32,
             },
         }
     }
@@ -209,7 +209,7 @@ impl<
         Self::Output {
             sampler: crate::nodes::SamplerOut {
                 node_id,
-                slot: 0u32,
+                node_slot: 0u32,
             },
         }
     }
@@ -251,7 +251,7 @@ impl<
         Self::Output {
             sampler: crate::nodes::SamplerOut {
                 node_id,
-                slot: 0u32,
+                node_slot: 0u32,
             },
         }
     }
@@ -280,7 +280,7 @@ for SamplerEulerAncestral<Eta, SNoise> {
         Self::Output {
             sampler: crate::nodes::SamplerOut {
                 node_id,
-                slot: 0u32,
+                node_slot: 0u32,
             },
         }
     }
@@ -312,7 +312,7 @@ for SamplerEulerAncestralCfgpp<Eta, SNoise> {
         Self::Output {
             sampler: crate::nodes::SamplerOut {
                 node_id,
-                slot: 0u32,
+                node_slot: 0u32,
             },
         }
     }
@@ -350,7 +350,7 @@ impl<
         Self::Output {
             sampler: crate::nodes::SamplerOut {
                 node_id,
-                slot: 0u32,
+                node_slot: 0u32,
             },
         }
     }
@@ -376,7 +376,7 @@ impl<Order: crate::nodes::Int> crate::nodes::TypedNode for SamplerLms<Order> {
         Self::Output {
             sampler: crate::nodes::SamplerOut {
                 node_id,
-                slot: 0u32,
+                node_slot: 0u32,
             },
         }
     }

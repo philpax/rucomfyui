@@ -1,4 +1,4 @@
-//!style_model
+//!`style_model` definitions/categories.
 #![allow(unused_imports)]
 use crate::WorkflowNodeId;
 ///**Apply Style Model**
@@ -31,7 +31,7 @@ for StyleModelApply<Conditioning, StyleModel, ClipVisionOutput> {
         Self::Output {
             conditioning: crate::nodes::ConditioningOut {
                 node_id,
-                slot: 0u32,
+                node_slot: 0u32,
             },
         }
     }

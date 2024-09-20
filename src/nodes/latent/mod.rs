@@ -1,4 +1,4 @@
-//!latent
+//!`latent` definitions/categories.
 #![allow(unused_imports)]
 use crate::WorkflowNodeId;
 pub mod advanced;
@@ -37,7 +37,7 @@ impl<
         Self::Output {
             latent: crate::nodes::LatentOut {
                 node_id,
-                slot: 0u32,
+                node_slot: 0u32,
             },
         }
     }
@@ -83,7 +83,7 @@ impl<
         Self::Output {
             latent: crate::nodes::LatentOut {
                 node_id,
-                slot: 0u32,
+                node_slot: 0u32,
             },
         }
     }
@@ -134,7 +134,7 @@ for LatentCompositeMasked<Destination, Source, X, Y, ResizeSource, Mask> {
         Self::Output {
             latent: crate::nodes::LatentOut {
                 node_id,
-                slot: 0u32,
+                node_slot: 0u32,
             },
         }
     }
@@ -181,7 +181,7 @@ for LatentUpscale<Samples, UpscaleMethod, Width, Height, Crop> {
         Self::Output {
             latent: crate::nodes::LatentOut {
                 node_id,
-                slot: 0u32,
+                node_slot: 0u32,
             },
         }
     }
@@ -219,7 +219,7 @@ impl<
         Self::Output {
             latent: crate::nodes::LatentOut {
                 node_id,
-                slot: 0u32,
+                node_slot: 0u32,
             },
         }
     }
@@ -248,7 +248,7 @@ for VaeDecode<Samples, Vae> {
         Self::Output {
             image: crate::nodes::ImageOut {
                 node_id,
-                slot: 0u32,
+                node_slot: 0u32,
             },
         }
     }
@@ -277,7 +277,7 @@ for VaeEncode<Pixels, Vae> {
         Self::Output {
             latent: crate::nodes::LatentOut {
                 node_id,
-                slot: 0u32,
+                node_slot: 0u32,
             },
         }
     }

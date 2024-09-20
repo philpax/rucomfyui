@@ -1,4 +1,4 @@
-//!upscaling
+//!`upscaling` definitions/categories.
 #![allow(unused_imports)]
 use crate::WorkflowNodeId;
 ///**Upscale Image**
@@ -38,7 +38,7 @@ impl<
         Self::Output {
             image: crate::nodes::ImageOut {
                 node_id,
-                slot: 0u32,
+                node_slot: 0u32,
             },
         }
     }
@@ -76,7 +76,7 @@ impl<
         Self::Output {
             image: crate::nodes::ImageOut {
                 node_id,
-                slot: 0u32,
+                node_slot: 0u32,
             },
         }
     }
@@ -114,7 +114,7 @@ impl<
         Self::Output {
             image: crate::nodes::ImageOut {
                 node_id,
-                slot: 0u32,
+                node_slot: 0u32,
             },
         }
     }
@@ -148,7 +148,7 @@ impl<
         Self::Output {
             image: crate::nodes::ImageOut {
                 node_id,
-                slot: 0u32,
+                node_slot: 0u32,
             },
         }
     }

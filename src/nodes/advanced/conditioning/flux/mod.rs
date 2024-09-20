@@ -1,4 +1,4 @@
-//!flux
+//!`flux` definitions/categories.
 #![allow(unused_imports)]
 use crate::WorkflowNodeId;
 ///**CLIPTextEncodeFlux**
@@ -34,7 +34,7 @@ impl<
         Self::Output {
             conditioning: crate::nodes::ConditioningOut {
                 node_id,
-                slot: 0u32,
+                node_slot: 0u32,
             },
         }
     }
@@ -68,7 +68,7 @@ impl<
         Self::Output {
             conditioning: crate::nodes::ConditioningOut {
                 node_id,
-                slot: 0u32,
+                node_slot: 0u32,
             },
         }
     }

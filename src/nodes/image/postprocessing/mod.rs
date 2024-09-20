@@ -1,4 +1,4 @@
-//!postprocessing
+//!`postprocessing` definitions/categories.
 #![allow(unused_imports)]
 use crate::WorkflowNodeId;
 ///**ImageBlend**
@@ -34,7 +34,7 @@ impl<
         Self::Output {
             image: crate::nodes::ImageOut {
                 node_id,
-                slot: 0u32,
+                node_slot: 0u32,
             },
         }
     }
@@ -72,7 +72,7 @@ impl<
         Self::Output {
             image: crate::nodes::ImageOut {
                 node_id,
-                slot: 0u32,
+                node_slot: 0u32,
             },
         }
     }
@@ -110,7 +110,7 @@ impl<
         Self::Output {
             image: crate::nodes::ImageOut {
                 node_id,
-                slot: 0u32,
+                node_slot: 0u32,
             },
         }
     }
@@ -152,7 +152,7 @@ impl<
         Self::Output {
             image: crate::nodes::ImageOut {
                 node_id,
-                slot: 0u32,
+                node_slot: 0u32,
             },
         }
     }
@@ -190,7 +190,7 @@ impl<
         Self::Output {
             image: crate::nodes::ImageOut {
                 node_id,
-                slot: 0u32,
+                node_slot: 0u32,
             },
         }
     }

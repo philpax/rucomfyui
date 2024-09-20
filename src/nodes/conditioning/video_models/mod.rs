@@ -1,4 +1,4 @@
-//!video_models
+//!`video_models` definitions/categories.
 #![allow(unused_imports)]
 use crate::WorkflowNodeId;
 ///**SVD_img2vid_Conditioning**
@@ -69,15 +69,15 @@ for SvdImg2VidConditioning<
         Self::Output {
             positive: crate::nodes::ConditioningOut {
                 node_id,
-                slot: 0u32,
+                node_slot: 0u32,
             },
             negative: crate::nodes::ConditioningOut {
                 node_id,
-                slot: 1u32,
+                node_slot: 1u32,
             },
             latent: crate::nodes::LatentOut {
                 node_id,
-                slot: 2u32,
+                node_slot: 2u32,
             },
         }
     }

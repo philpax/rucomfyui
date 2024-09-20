@@ -1,4 +1,4 @@
-//!loaders
+//!`loaders` definitions/categories.
 #![allow(unused_imports)]
 use crate::WorkflowNodeId;
 pub mod deprecated;
@@ -22,7 +22,7 @@ for ClipLoader<ClipName, Type> {
         Self::Output {
             clip: crate::nodes::ClipOut {
                 node_id,
-                slot: 0u32,
+                node_slot: 0u32,
             },
         }
     }
@@ -60,15 +60,15 @@ impl<
         Self::Output {
             model: crate::nodes::ModelOut {
                 node_id,
-                slot: 0u32,
+                node_slot: 0u32,
             },
             clip: crate::nodes::ClipOut {
                 node_id,
-                slot: 1u32,
+                node_slot: 1u32,
             },
             vae: crate::nodes::VaeOut {
                 node_id,
-                slot: 2u32,
+                node_slot: 2u32,
             },
         }
     }
@@ -106,7 +106,7 @@ impl<
         Self::Output {
             clip: crate::nodes::ClipOut {
                 node_id,
-                slot: 0u32,
+                node_slot: 0u32,
             },
         }
     }
@@ -144,7 +144,7 @@ impl<
         Self::Output {
             clip: crate::nodes::ClipOut {
                 node_id,
-                slot: 0u32,
+                node_slot: 0u32,
             },
         }
     }
@@ -178,7 +178,7 @@ impl<
         Self::Output {
             model: crate::nodes::ModelOut {
                 node_id,
-                slot: 0u32,
+                node_slot: 0u32,
             },
         }
     }

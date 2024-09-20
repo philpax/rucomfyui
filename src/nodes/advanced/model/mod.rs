@@ -1,4 +1,4 @@
-//!model
+//!`model` definitions/categories.
 #![allow(unused_imports)]
 use crate::WorkflowNodeId;
 ///**ModelSamplingAuraFlow**
@@ -24,7 +24,7 @@ for ModelSamplingAuraFlow<Model, Shift> {
         Self::Output {
             model: crate::nodes::ModelOut {
                 node_id,
-                slot: 0u32,
+                node_slot: 0u32,
             },
         }
     }
@@ -67,7 +67,7 @@ for ModelSamplingContinuousEdm<Model, Sampling, SigmaMax, SigmaMin> {
         Self::Output {
             model: crate::nodes::ModelOut {
                 node_id,
-                slot: 0u32,
+                node_slot: 0u32,
             },
         }
     }
@@ -110,7 +110,7 @@ for ModelSamplingContinuousV<Model, Sampling, SigmaMax, SigmaMin> {
         Self::Output {
             model: crate::nodes::ModelOut {
                 node_id,
-                slot: 0u32,
+                node_slot: 0u32,
             },
         }
     }
@@ -148,7 +148,7 @@ impl<
         Self::Output {
             model: crate::nodes::ModelOut {
                 node_id,
-                slot: 0u32,
+                node_slot: 0u32,
             },
         }
     }
@@ -195,7 +195,7 @@ for ModelSamplingFlux<Model, MaxShift, BaseShift, Width, Height> {
         Self::Output {
             model: crate::nodes::ModelOut {
                 node_id,
-                slot: 0u32,
+                node_slot: 0u32,
             },
         }
     }
@@ -224,7 +224,7 @@ for ModelSamplingSd3<Model, Shift> {
         Self::Output {
             model: crate::nodes::ModelOut {
                 node_id,
-                slot: 0u32,
+                node_slot: 0u32,
             },
         }
     }
@@ -256,7 +256,7 @@ for ModelSamplingStableCascade<Model, Shift> {
         Self::Output {
             model: crate::nodes::ModelOut {
                 node_id,
-                slot: 0u32,
+                node_slot: 0u32,
             },
         }
     }
@@ -285,7 +285,7 @@ for RescaleCfg<Model, Multiplier> {
         Self::Output {
             model: crate::nodes::ModelOut {
                 node_id,
-                slot: 0u32,
+                node_slot: 0u32,
             },
         }
     }

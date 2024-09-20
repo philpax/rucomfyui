@@ -1,4 +1,4 @@
-//!compositing
+//!`compositing` definitions/categories.
 #![allow(unused_imports)]
 use crate::WorkflowNodeId;
 ///**Join Image with Alpha**
@@ -21,7 +21,7 @@ for JoinImageWithAlpha<Image, Alpha> {
         Self::Output {
             image: crate::nodes::ImageOut {
                 node_id,
-                slot: 0u32,
+                node_slot: 0u32,
             },
         }
     }
@@ -70,11 +70,11 @@ for PorterDuffImageComposite<Source, SourceAlpha, Destination, DestinationAlpha,
         Self::Output {
             image: crate::nodes::ImageOut {
                 node_id,
-                slot: 0u32,
+                node_slot: 0u32,
             },
             mask: crate::nodes::MaskOut {
                 node_id,
-                slot: 1u32,
+                node_slot: 1u32,
             },
         }
     }
@@ -102,11 +102,11 @@ impl<Image: crate::nodes::Image> crate::nodes::TypedNode for SplitImageWithAlpha
         Self::Output {
             image: crate::nodes::ImageOut {
                 node_id,
-                slot: 0u32,
+                node_slot: 0u32,
             },
             mask: crate::nodes::MaskOut {
                 node_id,
-                slot: 1u32,
+                node_slot: 1u32,
             },
         }
     }

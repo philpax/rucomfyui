@@ -1,4 +1,4 @@
-//!image
+//!`image` definitions/categories.
 #![allow(unused_imports)]
 use crate::WorkflowNodeId;
 pub mod animation;
@@ -40,7 +40,7 @@ impl<
         Self::Output {
             image: crate::nodes::ImageOut {
                 node_id,
-                slot: 0u32,
+                node_slot: 0u32,
             },
         }
     }
@@ -69,7 +69,7 @@ for ImageBatch<Image1, Image2> {
         Self::Output {
             image: crate::nodes::ImageOut {
                 node_id,
-                slot: 0u32,
+                node_slot: 0u32,
             },
         }
     }
@@ -120,7 +120,7 @@ for ImageCompositeMasked<Destination, Source, X, Y, ResizeSource, Mask> {
         Self::Output {
             image: crate::nodes::ImageOut {
                 node_id,
-                slot: 0u32,
+                node_slot: 0u32,
             },
         }
     }
@@ -146,7 +146,7 @@ impl<Image: crate::nodes::Image> crate::nodes::TypedNode for ImageInvert<Image> 
         Self::Output {
             image: crate::nodes::ImageOut {
                 node_id,
-                slot: 0u32,
+                node_slot: 0u32,
             },
         }
     }
@@ -199,11 +199,11 @@ for ImagePadForOutpaint<Image, Left, Top, Right, Bottom, Feathering> {
         Self::Output {
             image: crate::nodes::ImageOut {
                 node_id,
-                slot: 0u32,
+                node_slot: 0u32,
             },
             mask: crate::nodes::MaskOut {
                 node_id,
-                slot: 1u32,
+                node_slot: 1u32,
             },
         }
     }
@@ -231,11 +231,11 @@ impl<Image: crate::nodes::String> crate::nodes::TypedNode for LoadImage<Image> {
         Self::Output {
             image: crate::nodes::ImageOut {
                 node_id,
-                slot: 0u32,
+                node_slot: 0u32,
             },
             mask: crate::nodes::MaskOut {
                 node_id,
-                slot: 1u32,
+                node_slot: 1u32,
             },
         }
     }
@@ -314,7 +314,7 @@ impl<
         Self::Output {
             image: crate::nodes::ImageOut {
                 node_id,
-                slot: 0u32,
+                node_slot: 0u32,
             },
         }
     }

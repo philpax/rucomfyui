@@ -1,4 +1,4 @@
-//!noise
+//!`noise` definitions/categories.
 #![allow(unused_imports)]
 use crate::WorkflowNodeId;
 ///**DisableNoise**
@@ -15,7 +15,7 @@ impl crate::nodes::TypedNode for DisableNoise {
         Self::Output {
             noise: crate::nodes::NoiseOut {
                 node_id,
-                slot: 0u32,
+                node_slot: 0u32,
             },
         }
     }
@@ -41,7 +41,7 @@ impl<NoiseSeed: crate::nodes::Int> crate::nodes::TypedNode for RandomNoise<Noise
         Self::Output {
             noise: crate::nodes::NoiseOut {
                 node_id,
-                slot: 0u32,
+                node_slot: 0u32,
             },
         }
     }

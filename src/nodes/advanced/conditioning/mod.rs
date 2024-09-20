@@ -1,4 +1,4 @@
-//!conditioning
+//!`conditioning` definitions/categories.
 #![allow(unused_imports)]
 use crate::WorkflowNodeId;
 pub mod flux;
@@ -31,7 +31,7 @@ impl<
         Self::Output {
             conditioning: crate::nodes::ConditioningOut {
                 node_id,
-                slot: 0u32,
+                node_slot: 0u32,
             },
         }
     }
@@ -78,7 +78,7 @@ for ClipTextEncodeSd3<Clip, ClipL, ClipG, T5Xxl, EmptyPadding> {
         Self::Output {
             conditioning: crate::nodes::ConditioningOut {
                 node_id,
-                slot: 0u32,
+                node_slot: 0u32,
             },
         }
     }
@@ -151,7 +151,7 @@ for ClipTextEncodeSdxl<
         Self::Output {
             conditioning: crate::nodes::ConditioningOut {
                 node_id,
-                slot: 0u32,
+                node_slot: 0u32,
             },
         }
     }
@@ -198,7 +198,7 @@ for ClipTextEncodeSdxlRefiner<Ascore, Width, Height, Text, Clip> {
         Self::Output {
             conditioning: crate::nodes::ConditioningOut {
                 node_id,
-                slot: 0u32,
+                node_slot: 0u32,
             },
         }
     }
@@ -236,7 +236,7 @@ impl<
         Self::Output {
             conditioning: crate::nodes::ConditioningOut {
                 node_id,
-                slot: 0u32,
+                node_slot: 0u32,
             },
         }
     }
@@ -263,7 +263,7 @@ for ConditioningZeroOut<Conditioning> {
         Self::Output {
             conditioning: crate::nodes::ConditioningOut {
                 node_id,
-                slot: 0u32,
+                node_slot: 0u32,
             },
         }
     }

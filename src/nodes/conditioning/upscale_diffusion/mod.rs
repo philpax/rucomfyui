@@ -1,4 +1,4 @@
-//!upscale_diffusion
+//!`upscale_diffusion` definitions/categories.
 #![allow(unused_imports)]
 use crate::WorkflowNodeId;
 ///**SD_4XUpscale_Conditioning**
@@ -43,15 +43,15 @@ for Sd4XUpscaleConditioning<Images, Positive, Negative, ScaleRatio, NoiseAugment
         Self::Output {
             positive: crate::nodes::ConditioningOut {
                 node_id,
-                slot: 0u32,
+                node_slot: 0u32,
             },
             negative: crate::nodes::ConditioningOut {
                 node_id,
-                slot: 1u32,
+                node_slot: 1u32,
             },
             latent: crate::nodes::LatentOut {
                 node_id,
-                slot: 2u32,
+                node_slot: 2u32,
             },
         }
     }

@@ -12,7 +12,7 @@ tokio = { version = "1.40.0", features = ["time"] }
 name = "rucomfyui"
 version = "0.1.0"
 edition = "2021"
-description = "Very basic API client for ComfyUI"
+description = "A Rust client for ComfyUI, with an emphasis on type safety and ergonomy."
 authors = ["Philpax <me@philpax.me>"]
 license = "MIT"
 

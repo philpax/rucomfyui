@@ -1,4 +1,4 @@
-//!audio
+//!`audio` definitions/categories.
 #![allow(unused_imports)]
 use crate::WorkflowNodeId;
 ///**LoadAudio**
@@ -18,7 +18,7 @@ impl<Audio: crate::nodes::String> crate::nodes::TypedNode for LoadAudio<Audio> {
         Self::Output {
             audio: crate::nodes::AudioOut {
                 node_id,
-                slot: 0u32,
+                node_slot: 0u32,
             },
         }
     }

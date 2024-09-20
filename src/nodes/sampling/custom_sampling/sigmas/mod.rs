@@ -1,4 +1,4 @@
-//!sigmas
+//!`sigmas` definitions/categories.
 #![allow(unused_imports)]
 use crate::WorkflowNodeId;
 ///**FlipSigmas**
@@ -18,7 +18,7 @@ impl<Sigmas: crate::nodes::Sigmas> crate::nodes::TypedNode for FlipSigmas<Sigmas
         Self::Output {
             sigmas: crate::nodes::SigmasOut {
                 node_id,
-                slot: 0u32,
+                node_slot: 0u32,
             },
         }
     }
@@ -49,11 +49,11 @@ for SplitSigmas<Sigmas, Step> {
         Self::Output {
             high_sigmas: crate::nodes::SigmasOut {
                 node_id,
-                slot: 0u32,
+                node_slot: 0u32,
             },
             low_sigmas: crate::nodes::SigmasOut {
                 node_id,
-                slot: 1u32,
+                node_slot: 1u32,
             },
         }
     }
@@ -87,11 +87,11 @@ for SplitSigmasDenoise<Sigmas, Denoise> {
         Self::Output {
             high_sigmas: crate::nodes::SigmasOut {
                 node_id,
-                slot: 0u32,
+                node_slot: 0u32,
             },
             low_sigmas: crate::nodes::SigmasOut {
                 node_id,
-                slot: 1u32,
+                node_slot: 1u32,
             },
         }
     }

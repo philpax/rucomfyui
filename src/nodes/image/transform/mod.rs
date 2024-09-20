@@ -1,4 +1,4 @@
-//!transform
+//!`transform` definitions/categories.
 #![allow(unused_imports)]
 use crate::WorkflowNodeId;
 ///**ImageCrop**
@@ -38,7 +38,7 @@ impl<
         Self::Output {
             image: crate::nodes::ImageOut {
                 node_id,
-                slot: 0u32,
+                node_slot: 0u32,
             },
         }
     }

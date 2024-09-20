@@ -1,4 +1,4 @@
-//!stable_cascade
+//!`stable_cascade` definitions/categories.
 #![allow(unused_imports)]
 use crate::WorkflowNodeId;
 ///**StableCascade_StageB_Conditioning**
@@ -26,7 +26,7 @@ impl<
         Self::Output {
             conditioning: crate::nodes::ConditioningOut {
                 node_id,
-                slot: 0u32,
+                node_slot: 0u32,
             },
         }
     }

@@ -1,4 +1,4 @@
-//!batch
+//!`batch` definitions/categories.
 #![allow(unused_imports)]
 use crate::WorkflowNodeId;
 ///**ImageFromBatch**
@@ -30,7 +30,7 @@ impl<
         Self::Output {
             image: crate::nodes::ImageOut {
                 node_id,
-                slot: 0u32,
+                node_slot: 0u32,
             },
         }
     }
@@ -59,7 +59,7 @@ for RebatchImages<Images, BatchSize> {
         Self::Output {
             image: crate::nodes::ImageOut {
                 node_id,
-                slot: 0u32,
+                node_slot: 0u32,
             },
         }
     }
@@ -88,7 +88,7 @@ for RepeatImageBatch<Image, Amount> {
         Self::Output {
             image: crate::nodes::ImageOut {
                 node_id,
-                slot: 0u32,
+                node_slot: 0u32,
             },
         }
     }

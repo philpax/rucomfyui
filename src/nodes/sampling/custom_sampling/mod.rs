@@ -1,4 +1,4 @@
-//!custom_sampling
+//!`custom_sampling` definitions/categories.
 #![allow(unused_imports)]
 use crate::WorkflowNodeId;
 pub mod guiders;
@@ -72,11 +72,11 @@ for SamplerCustom<
         Self::Output {
             output: crate::nodes::LatentOut {
                 node_id,
-                slot: 0u32,
+                node_slot: 0u32,
             },
             denoised_output: crate::nodes::LatentOut {
                 node_id,
-                slot: 1u32,
+                node_slot: 1u32,
             },
         }
     }
@@ -125,11 +125,11 @@ for SamplerCustomAdvanced<Noise, Guider, Sampler, Sigmas, LatentImage> {
         Self::Output {
             output: crate::nodes::LatentOut {
                 node_id,
-                slot: 0u32,
+                node_slot: 0u32,
             },
             denoised_output: crate::nodes::LatentOut {
                 node_id,
-                slot: 1u32,
+                node_slot: 1u32,
             },
         }
     }

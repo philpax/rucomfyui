@@ -1,4 +1,4 @@
-//!stable_cascade
+//!`stable_cascade` definitions/categories.
 #![allow(unused_imports)]
 use crate::WorkflowNodeId;
 ///**StableCascade_EmptyLatentImage**
@@ -37,11 +37,11 @@ for StableCascadeEmptyLatentImage<Width, Height, Compression, BatchSize> {
         Self::Output {
             stage_c: crate::nodes::LatentOut {
                 node_id,
-                slot: 0u32,
+                node_slot: 0u32,
             },
             stage_b: crate::nodes::LatentOut {
                 node_id,
-                slot: 1u32,
+                node_slot: 1u32,
             },
         }
     }
@@ -81,11 +81,11 @@ impl<
         Self::Output {
             stage_c: crate::nodes::LatentOut {
                 node_id,
-                slot: 0u32,
+                node_slot: 0u32,
             },
             stage_b: crate::nodes::LatentOut {
                 node_id,
-                slot: 1u32,
+                node_slot: 1u32,
             },
         }
     }

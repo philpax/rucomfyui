@@ -1,4 +1,4 @@
-//!advanced
+//!`advanced` definitions/categories.
 #![allow(unused_imports)]
 use crate::WorkflowNodeId;
 ///**LatentAdd**
@@ -23,7 +23,7 @@ impl<
         Self::Output {
             latent: crate::nodes::LatentOut {
                 node_id,
-                slot: 0u32,
+                node_slot: 0u32,
             },
         }
     }
@@ -57,7 +57,7 @@ impl<
         Self::Output {
             latent: crate::nodes::LatentOut {
                 node_id,
-                slot: 0u32,
+                node_slot: 0u32,
             },
         }
     }
@@ -95,7 +95,7 @@ impl<
         Self::Output {
             latent: crate::nodes::LatentOut {
                 node_id,
-                slot: 0u32,
+                node_slot: 0u32,
             },
         }
     }
@@ -129,7 +129,7 @@ impl<
         Self::Output {
             latent: crate::nodes::LatentOut {
                 node_id,
-                slot: 0u32,
+                node_slot: 0u32,
             },
         }
     }
@@ -163,7 +163,7 @@ impl<
         Self::Output {
             latent: crate::nodes::LatentOut {
                 node_id,
-                slot: 0u32,
+                node_slot: 0u32,
             },
         }
     }

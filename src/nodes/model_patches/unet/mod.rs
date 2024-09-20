@@ -1,4 +1,4 @@
-//!unet
+//!`unet` definitions/categories.
 #![allow(unused_imports)]
 use crate::WorkflowNodeId;
 ///**FreeU**
@@ -38,7 +38,7 @@ impl<
         Self::Output {
             model: crate::nodes::ModelOut {
                 node_id,
-                slot: 0u32,
+                node_slot: 0u32,
             },
         }
     }
@@ -84,7 +84,7 @@ impl<
         Self::Output {
             model: crate::nodes::ModelOut {
                 node_id,
-                slot: 0u32,
+                node_slot: 0u32,
             },
         }
     }
@@ -131,7 +131,7 @@ for HyperTile<Model, TileSize, SwapSize, MaxDepth, ScaleDepth> {
         Self::Output {
             model: crate::nodes::ModelOut {
                 node_id,
-                slot: 0u32,
+                node_slot: 0u32,
             },
         }
     }
@@ -163,7 +163,7 @@ for PerturbedAttentionGuidance<Model, Scale> {
         Self::Output {
             model: crate::nodes::ModelOut {
                 node_id,
-                slot: 0u32,
+                node_slot: 0u32,
             },
         }
     }

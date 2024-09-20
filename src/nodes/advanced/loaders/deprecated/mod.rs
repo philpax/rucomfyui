@@ -1,4 +1,4 @@
-//!deprecated
+//!`deprecated` definitions/categories.
 #![allow(unused_imports)]
 use crate::WorkflowNodeId;
 ///**DiffusersLoader**
@@ -23,15 +23,15 @@ for DiffusersLoader<ModelPath> {
         Self::Output {
             model: crate::nodes::ModelOut {
                 node_id,
-                slot: 0u32,
+                node_slot: 0u32,
             },
             clip: crate::nodes::ClipOut {
                 node_id,
-                slot: 1u32,
+                node_slot: 1u32,
             },
             vae: crate::nodes::VaeOut {
                 node_id,
-                slot: 2u32,
+                node_slot: 2u32,
             },
         }
     }

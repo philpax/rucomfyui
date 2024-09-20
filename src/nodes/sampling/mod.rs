@@ -1,4 +1,4 @@
-//!sampling
+//!`sampling` definitions/categories.
 #![allow(unused_imports)]
 use crate::WorkflowNodeId;
 pub mod custom_sampling;
@@ -72,7 +72,7 @@ for KSampler<
         Self::Output {
             latent: crate::nodes::LatentOut {
                 node_id,
-                slot: 0u32,
+                node_slot: 0u32,
             },
         }
     }
@@ -165,7 +165,7 @@ for KSamplerAdvanced<
         Self::Output {
             latent: crate::nodes::LatentOut {
                 node_id,
-                slot: 0u32,
+                node_slot: 0u32,
             },
         }
     }

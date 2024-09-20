@@ -1,4 +1,4 @@
-//!audio
+//!`audio` definitions/categories.
 #![allow(unused_imports)]
 use crate::WorkflowNodeId;
 ///**EmptyLatentAudio**
@@ -19,7 +19,7 @@ for EmptyLatentAudio<Seconds> {
         Self::Output {
             latent: crate::nodes::LatentOut {
                 node_id,
-                slot: 0u32,
+                node_slot: 0u32,
             },
         }
     }
@@ -48,7 +48,7 @@ for VaeDecodeAudio<Samples, Vae> {
         Self::Output {
             audio: crate::nodes::AudioOut {
                 node_id,
-                slot: 0u32,
+                node_slot: 0u32,
             },
         }
     }
@@ -77,7 +77,7 @@ for VaeEncodeAudio<Audio, Vae> {
         Self::Output {
             latent: crate::nodes::LatentOut {
                 node_id,
-                slot: 0u32,
+                node_slot: 0u32,
             },
         }
     }

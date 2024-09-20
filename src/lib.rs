@@ -1,4 +1,4 @@
-//! Very basic ComfyUI API client for Rust.
+//! A Rust client for ComfyUI, with an emphasis on type safety and ergonomy.
 #![deny(missing_docs)]
 
 use reqwest::multipart::{Form, Part};

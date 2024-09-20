@@ -1,4 +1,4 @@
-//!sd3
+//!`sd3` definitions/categories.
 #![allow(unused_imports)]
 use crate::WorkflowNodeId;
 ///**EmptySD3LatentImage**
@@ -30,7 +30,7 @@ impl<
         Self::Output {
             latent: crate::nodes::LatentOut {
                 node_id,
-                slot: 0u32,
+                node_slot: 0u32,
             },
         }
     }

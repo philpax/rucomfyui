@@ -1,4 +1,4 @@
-//!video_models
+//!`video_models` definitions/categories.
 #![allow(unused_imports)]
 use crate::WorkflowNodeId;
 ///**Image Only Checkpoint Loader (img2vid model)**
@@ -23,15 +23,15 @@ for ImageOnlyCheckpointLoader<CkptName> {
         Self::Output {
             model: crate::nodes::ModelOut {
                 node_id,
-                slot: 0u32,
+                node_slot: 0u32,
             },
             clip_vision: crate::nodes::ClipVisionOut {
                 node_id,
-                slot: 1u32,
+                node_slot: 1u32,
             },
             vae: crate::nodes::VaeOut {
                 node_id,
-                slot: 2u32,
+                node_slot: 2u32,
             },
         }
     }

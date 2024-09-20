@@ -1,4 +1,4 @@
-//!model_specific
+//!`model_specific` definitions/categories.
 #![allow(unused_imports)]
 use crate::WorkflowNodeId;
 ///**ModelMergeFlux1**
@@ -345,7 +345,7 @@ for ModelMergeFlux1<
         Self::Output {
             model: crate::nodes::ModelOut {
                 node_id,
-                slot: 0u32,
+                node_slot: 0u32,
             },
         }
     }
@@ -533,7 +533,7 @@ for ModelMergeSd1<
         Self::Output {
             model: crate::nodes::ModelOut {
                 node_id,
-                slot: 0u32,
+                node_slot: 0u32,
             },
         }
     }
@@ -721,7 +721,7 @@ for ModelMergeSd2<
         Self::Output {
             model: crate::nodes::ModelOut {
                 node_id,
-                slot: 0u32,
+                node_slot: 0u32,
             },
         }
     }
@@ -909,7 +909,7 @@ for ModelMergeSd32B<
         Self::Output {
             model: crate::nodes::ModelOut {
                 node_id,
-                slot: 0u32,
+                node_slot: 0u32,
             },
         }
     }
@@ -1067,7 +1067,7 @@ for ModelMergeSdxl<
         Self::Output {
             model: crate::nodes::ModelOut {
                 node_id,
-                slot: 0u32,
+                node_slot: 0u32,
             },
         }
     }

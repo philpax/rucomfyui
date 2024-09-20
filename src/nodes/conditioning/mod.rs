@@ -1,4 +1,4 @@
-//!conditioning
+//!`conditioning` definitions/categories.
 #![allow(unused_imports)]
 use crate::WorkflowNodeId;
 pub mod n_3_d_models;
@@ -35,7 +35,7 @@ impl<
         Self::Output {
             clip: crate::nodes::ClipOut {
                 node_id,
-                slot: 0u32,
+                node_slot: 0u32,
             },
         }
     }
@@ -64,7 +64,7 @@ for ClipTextEncode<Text, Clip> {
         Self::Output {
             conditioning: crate::nodes::ConditioningOut {
                 node_id,
-                slot: 0u32,
+                node_slot: 0u32,
             },
         }
     }
@@ -98,7 +98,7 @@ impl<
         Self::Output {
             clip_vision_output: crate::nodes::ClipVisionOutputOut {
                 node_id,
-                slot: 0u32,
+                node_slot: 0u32,
             },
         }
     }
@@ -137,7 +137,7 @@ for ConditioningAverage<ConditioningTo, ConditioningFrom, ConditioningToStrength
         Self::Output {
             conditioning: crate::nodes::ConditioningOut {
                 node_id,
-                slot: 0u32,
+                node_slot: 0u32,
             },
         }
     }
@@ -171,7 +171,7 @@ impl<
         Self::Output {
             conditioning: crate::nodes::ConditioningOut {
                 node_id,
-                slot: 0u32,
+                node_slot: 0u32,
             },
         }
     }
@@ -205,7 +205,7 @@ impl<
         Self::Output {
             conditioning: crate::nodes::ConditioningOut {
                 node_id,
-                slot: 0u32,
+                node_slot: 0u32,
             },
         }
     }
@@ -256,7 +256,7 @@ for ConditioningSetArea<Conditioning, Width, Height, X, Y, Strength> {
         Self::Output {
             conditioning: crate::nodes::ConditioningOut {
                 node_id,
-                slot: 0u32,
+                node_slot: 0u32,
             },
         }
     }
@@ -307,7 +307,7 @@ for ConditioningSetAreaPercentage<Conditioning, Width, Height, X, Y, Strength> {
         Self::Output {
             conditioning: crate::nodes::ConditioningOut {
                 node_id,
-                slot: 0u32,
+                node_slot: 0u32,
             },
         }
     }
@@ -341,7 +341,7 @@ impl<
         Self::Output {
             conditioning: crate::nodes::ConditioningOut {
                 node_id,
-                slot: 0u32,
+                node_slot: 0u32,
             },
         }
     }
@@ -384,7 +384,7 @@ for ConditioningSetMask<Conditioning, Mask, Strength, SetCondArea> {
         Self::Output {
             conditioning: crate::nodes::ConditioningOut {
                 node_id,
-                slot: 0u32,
+                node_slot: 0u32,
             },
         }
     }
@@ -427,7 +427,7 @@ for UnClipConditioning<Conditioning, ClipVisionOutput, Strength, NoiseAugmentati
         Self::Output {
             conditioning: crate::nodes::ConditioningOut {
                 node_id,
-                slot: 0u32,
+                node_slot: 0u32,
             },
         }
     }

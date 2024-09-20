@@ -22,6 +22,7 @@ impl FromIterator<(u32, WorkflowNode)> for Workflow {
 }
 
 /// A workflow graph constructs a [`Workflow`] by adding nodes to it.
+///
 /// The [`Workflow`] can be retrieved using the [`Into`] implementation or through the [`AsRef`] implementation.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq, Default)]
 pub struct WorkflowGraph {

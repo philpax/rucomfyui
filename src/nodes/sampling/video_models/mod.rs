@@ -1,4 +1,4 @@
-//!video_models
+//!`video_models` definitions/categories.
 #![allow(unused_imports)]
 use crate::WorkflowNodeId;
 ///**VideoLinearCFGGuidance**
@@ -24,7 +24,7 @@ for VideoLinearCfgGuidance<Model, MinCfg> {
         Self::Output {
             model: crate::nodes::ModelOut {
                 node_id,
-                slot: 0u32,
+                node_slot: 0u32,
             },
         }
     }
@@ -56,7 +56,7 @@ for VideoTriangleCfgGuidance<Model, MinCfg> {
         Self::Output {
             model: crate::nodes::ModelOut {
                 node_id,
-                slot: 0u32,
+                node_slot: 0u32,
             },
         }
     }

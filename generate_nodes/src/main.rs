@@ -67,6 +67,16 @@ fn build_list_of_all_nodes(tree: &CategoryTree, ctx: &[syn::Ident]) -> Result<Ve
 fn write_category_tree((name, tree): (&str, &CategoryTree), directory: &Path) -> Result<()> {
     std::fs::create_dir(directory).ok();
 
+    let (doc, extra) = if name.is_empty() {
+        (
+            "Typed node definitions for ComfyUI that provide a type-safe abstraction over the API."
+                .to_string(),
+            root_module_definitions()?,
+        )
+    } else {
+        (format!("`{name}` definitions/categories."), quote! {})
+    };
+
     let mut modules = vec![];
     let mut nodes = vec![];
 
@@ -86,115 +96,6 @@ fn write_category_tree((name, tree): (&str, &CategoryTree), directory: &Path) ->
         }
     }
 
-    let (doc, extra) = if name.is_empty() {
-        let types = ObjectType::ALL
-            .iter()
-            .map(|ty| {
-                let doc = format!("**{ty:?}**");
-                let name = name_to_ident(&format!("{ty:?}"), true)?;
-
-                let output_doc = format!("A node output of type [`{ty:?}`].");
-                let output_name = object_type_struct_ident(&ty);
-                Ok(quote! {
-                    #[doc = #doc]
-                    pub trait #name : ToWorkflowInput {}
-                    impl ToWorkflowInput for Box<dyn #name> {
-                        fn to_workflow_input(&self) -> WorkflowInput {
-                            self.as_ref().to_workflow_input()
-                        }
-                    }
-                    impl #name for Box<dyn #name> {}
-
-                    #[doc = #output_doc]
-                    #[derive(Clone, Copy)]
-                    pub struct #output_name {
-                        node_id: WorkflowNodeId,
-                        slot: u32,
-                    }
-                    impl ToWorkflowInput for #output_name {
-                        fn to_workflow_input(&self) -> WorkflowInput {
-                            WorkflowInput::Slot(self.node_id.to_string(), self.slot)
-                        }
-                    }
-                    impl #name for #output_name {}
-                })
-            })
-            .collect::<Result<Vec<_>>>()?;
-
-        (
-            "Root module".to_string(),
-            quote! {
-                pub mod all;
-
-                use crate::WorkflowInput;
-
-                /// Implemented for all typed nodes. Provides the node's output and metadata.
-                pub trait TypedNode {
-                    /// The type of the node's output.
-                    type Output;
-                    /// Returns the node's output.
-                    fn output(&self, node_id: WorkflowNodeId) -> Self::Output;
-
-                    /// The name of the node.
-                    const NAME: &'static str;
-                    /// The display name of the node.
-                    const DISPLAY_NAME: &'static str;
-                    /// The description of the node.
-                    const DESCRIPTION: &'static str;
-                    /// The category of the node.
-                    const CATEGORY: &'static str;
-                }
-
-                /// Implemented for all output nodes (i.e. nodes at which a workflow terminates)
-                pub trait TypedOutputNode {}
-
-                /// Converts a value to a workflow input.
-                pub trait ToWorkflowInput {
-                    /// Converts the value to a workflow input.
-                    fn to_workflow_input(&self) -> WorkflowInput;
-                }
-
-                impl ToWorkflowInput for std::string::String {
-                    fn to_workflow_input(&self) -> WorkflowInput {
-                        WorkflowInput::String(self.clone())
-                    }
-                }
-                impl String for std::string::String {}
-                impl<'a> ToWorkflowInput for &'a str {
-                    fn to_workflow_input(&self) -> WorkflowInput {
-                        WorkflowInput::String(self.to_string())
-                    }
-                }
-                impl<'a> String for &'a str {}
-
-                impl ToWorkflowInput for f32 {
-                    fn to_workflow_input(&self) -> WorkflowInput {
-                        WorkflowInput::F32(*self)
-                    }
-                }
-                impl Float for f32 {}
-
-                impl ToWorkflowInput for i32 {
-                    fn to_workflow_input(&self) -> WorkflowInput {
-                        WorkflowInput::I32(*self)
-                    }
-                }
-                impl Int for i32 {}
-
-                impl ToWorkflowInput for bool {
-                    fn to_workflow_input(&self) -> WorkflowInput {
-                        WorkflowInput::Boolean(*self)
-                    }
-                }
-                impl Boolean for bool {}
-
-                #(#types)*
-            },
-        )
-    } else {
-        (name.to_string(), quote! {})
-    };
-
     let output = quote! {
         #![doc = #doc]
         #![allow(unused_imports)]
@@ -208,6 +109,113 @@ fn write_category_tree((name, tree): (&str, &CategoryTree), directory: &Path) ->
     let path = directory.join("mod.rs");
     write_tokenstream_with_formatting(&path, output)?;
     Ok(())
+}
+
+fn root_module_definitions() -> Result<TokenStream> {
+    let types = ObjectType::ALL
+        .iter()
+        .map(|ty| {
+            let recased_ty = format!("{ty:?}").to_case(Case::ScreamingSnake);
+            let doc = format!("A value of ComfyUI type `{recased_ty}`.");
+            let name = name_to_ident(&format!("{ty:?}"), true)?;
+
+            let output_doc = format!("A node output of type [`{ty:?}`].");
+            let output_name = object_type_struct_ident(&ty);
+            Ok(quote! {
+                #[doc = #doc]
+                pub trait #name : ToWorkflowInput {}
+                impl ToWorkflowInput for Box<dyn #name> {
+                    fn to_workflow_input(&self) -> WorkflowInput {
+                        self.as_ref().to_workflow_input()
+                    }
+                }
+                impl #name for Box<dyn #name> {}
+
+                #[doc = #output_doc]
+                #[derive(Clone, Copy)]
+                pub struct #output_name {
+                    /// The ID of the node that produced the output.
+                    pub node_id: WorkflowNodeId,
+                    /// The node's output slot.
+                    pub node_slot: u32,
+                }
+                impl ToWorkflowInput for #output_name {
+                    fn to_workflow_input(&self) -> WorkflowInput {
+                        WorkflowInput::Slot(self.node_id.to_string(), self.node_slot)
+                    }
+                }
+                impl #name for #output_name {}
+            })
+        })
+        .collect::<Result<Vec<_>>>()?;
+
+    Ok(quote! {
+        pub mod all;
+
+        use crate::WorkflowInput;
+
+        /// Implemented for all typed nodes; provides the node's output and metadata.
+        pub trait TypedNode {
+            /// The type of the node's output.
+            type Output;
+            /// Returns the node's output.
+            fn output(&self, node_id: WorkflowNodeId) -> Self::Output;
+
+            /// The name of the node.
+            const NAME: &'static str;
+            /// The display name of the node.
+            const DISPLAY_NAME: &'static str;
+            /// The description of the node.
+            const DESCRIPTION: &'static str;
+            /// The category of the node.
+            const CATEGORY: &'static str;
+        }
+
+        /// Implemented for all output nodes (i.e. nodes at which a workflow terminates).
+        pub trait TypedOutputNode {}
+
+        /// Converts a value to a workflow input.
+        pub trait ToWorkflowInput {
+            /// Converts the value to a workflow input.
+            fn to_workflow_input(&self) -> WorkflowInput;
+        }
+
+        impl ToWorkflowInput for std::string::String {
+            fn to_workflow_input(&self) -> WorkflowInput {
+                WorkflowInput::String(self.clone())
+            }
+        }
+        impl String for std::string::String {}
+        impl<'a> ToWorkflowInput for &'a str {
+            fn to_workflow_input(&self) -> WorkflowInput {
+                WorkflowInput::String(self.to_string())
+            }
+        }
+        impl<'a> String for &'a str {}
+
+        impl ToWorkflowInput for f32 {
+            fn to_workflow_input(&self) -> WorkflowInput {
+                WorkflowInput::F32(*self)
+            }
+        }
+        impl Float for f32 {}
+
+        impl ToWorkflowInput for i32 {
+            fn to_workflow_input(&self) -> WorkflowInput {
+                WorkflowInput::I32(*self)
+            }
+        }
+        impl Int for i32 {}
+
+        impl ToWorkflowInput for bool {
+            fn to_workflow_input(&self) -> WorkflowInput {
+                WorkflowInput::Boolean(*self)
+            }
+        }
+        impl Boolean for bool {}
+
+        #(#types)*
+    })
 }
 
 fn write_tokenstream_with_formatting(path: &Path, output: TokenStream) -> Result<()> {
@@ -415,7 +423,7 @@ fn write_node_outputs(
                 let ty = object_type_struct_ident(&output.ty);
                 let i = i as u32;
                 Ok(quote! {
-                    #name: crate :: nodes :: #ty { node_id, slot: #i }
+                    #name: crate :: nodes :: #ty { node_id, node_slot: #i }
                 })
             })
             .collect::<Result<Vec<_>>>()?;

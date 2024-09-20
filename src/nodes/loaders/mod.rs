@@ -1,4 +1,4 @@
-//!loaders
+//!`loaders` definitions/categories.
 #![allow(unused_imports)]
 use crate::WorkflowNodeId;
 pub mod video_models;
@@ -20,7 +20,7 @@ for ClipVisionLoader<ClipName> {
         Self::Output {
             clip_vision: crate::nodes::ClipVisionOut {
                 node_id,
-                slot: 0u32,
+                node_slot: 0u32,
             },
         }
     }
@@ -51,15 +51,15 @@ for CheckpointLoaderSimple<CkptName> {
         Self::Output {
             model: crate::nodes::ModelOut {
                 node_id,
-                slot: 0u32,
+                node_slot: 0u32,
             },
             clip: crate::nodes::ClipOut {
                 node_id,
-                slot: 1u32,
+                node_slot: 1u32,
             },
             vae: crate::nodes::VaeOut {
                 node_id,
-                slot: 2u32,
+                node_slot: 2u32,
             },
         }
     }
@@ -86,7 +86,7 @@ for ControlNetLoader<ControlNetName> {
         Self::Output {
             control_net: crate::nodes::ControlNetOut {
                 node_id,
-                slot: 0u32,
+                node_slot: 0u32,
             },
         }
     }
@@ -120,7 +120,7 @@ impl<
         Self::Output {
             control_net: crate::nodes::ControlNetOut {
                 node_id,
-                slot: 0u32,
+                node_slot: 0u32,
             },
         }
     }
@@ -147,7 +147,7 @@ for GligenLoader<GligenName> {
         Self::Output {
             gligen: crate::nodes::GligenOut {
                 node_id,
-                slot: 0u32,
+                node_slot: 0u32,
             },
         }
     }
@@ -185,7 +185,7 @@ impl<
         Self::Output {
             model: crate::nodes::ModelOut {
                 node_id,
-                slot: 0u32,
+                node_slot: 0u32,
             },
         }
     }
@@ -234,11 +234,11 @@ for LoraLoader<Model, Clip, LoraName, StrengthModel, StrengthClip> {
         Self::Output {
             model: crate::nodes::ModelOut {
                 node_id,
-                slot: 0u32,
+                node_slot: 0u32,
             },
             clip: crate::nodes::ClipOut {
                 node_id,
-                slot: 1u32,
+                node_slot: 1u32,
             },
         }
     }
@@ -276,7 +276,7 @@ impl<
         Self::Output {
             model: crate::nodes::ModelOut {
                 node_id,
-                slot: 0u32,
+                node_slot: 0u32,
             },
         }
     }
@@ -303,7 +303,7 @@ for StyleModelLoader<StyleModelName> {
         Self::Output {
             style_model: crate::nodes::StyleModelOut {
                 node_id,
-                slot: 0u32,
+                node_slot: 0u32,
             },
         }
     }
@@ -330,7 +330,7 @@ for UpscaleModelLoader<ModelName> {
         Self::Output {
             upscale_model: crate::nodes::UpscaleModelOut {
                 node_id,
-                slot: 0u32,
+                node_slot: 0u32,
             },
         }
     }
@@ -356,7 +356,7 @@ impl<VaeName: crate::nodes::String> crate::nodes::TypedNode for VaeLoader<VaeNam
         Self::Output {
             vae: crate::nodes::VaeOut {
                 node_id,
-                slot: 0u32,
+                node_slot: 0u32,
             },
         }
     }
@@ -389,19 +389,19 @@ for UnClipCheckpointLoader<CkptName> {
         Self::Output {
             model: crate::nodes::ModelOut {
                 node_id,
-                slot: 0u32,
+                node_slot: 0u32,
             },
             clip: crate::nodes::ClipOut {
                 node_id,
-                slot: 1u32,
+                node_slot: 1u32,
             },
             vae: crate::nodes::VaeOut {
                 node_id,
-                slot: 2u32,
+                node_slot: 2u32,
             },
             clip_vision: crate::nodes::ClipVisionOut {
                 node_id,
-                slot: 3u32,
+                node_slot: 3u32,
             },
         }
     }

@@ -1,4 +1,4 @@
-//!controlnet
+//!`controlnet` definitions/categories.
 #![allow(unused_imports)]
 use crate::WorkflowNodeId;
 ///**Apply ControlNet**
@@ -35,7 +35,7 @@ for ControlNetApply<Conditioning, ControlNet, Image, Strength> {
         Self::Output {
             conditioning: crate::nodes::ConditioningOut {
                 node_id,
-                slot: 0u32,
+                node_slot: 0u32,
             },
         }
     }
@@ -100,11 +100,11 @@ for ControlNetApplyAdvanced<
         Self::Output {
             positive: crate::nodes::ConditioningOut {
                 node_id,
-                slot: 0u32,
+                node_slot: 0u32,
             },
             negative: crate::nodes::ConditioningOut {
                 node_id,
-                slot: 1u32,
+                node_slot: 1u32,
             },
         }
     }
@@ -174,11 +174,11 @@ for ControlNetApplySd3<
         Self::Output {
             positive: crate::nodes::ConditioningOut {
                 node_id,
-                slot: 0u32,
+                node_slot: 0u32,
             },
             negative: crate::nodes::ConditioningOut {
                 node_id,
-                slot: 1u32,
+                node_slot: 1u32,
             },
         }
     }
@@ -212,7 +212,7 @@ impl<
         Self::Output {
             control_net: crate::nodes::ControlNetOut {
                 node_id,
-                slot: 0u32,
+                node_slot: 0u32,
             },
         }
     }

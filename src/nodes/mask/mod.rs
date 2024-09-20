@@ -1,4 +1,4 @@
-//!mask
+//!`mask` definitions/categories.
 #![allow(unused_imports)]
 use crate::WorkflowNodeId;
 pub mod compositing;
@@ -39,7 +39,7 @@ impl<
         Self::Output {
             mask: crate::nodes::MaskOut {
                 node_id,
-                slot: 0u32,
+                node_slot: 0u32,
             },
         }
     }
@@ -85,7 +85,7 @@ impl<
         Self::Output {
             mask: crate::nodes::MaskOut {
                 node_id,
-                slot: 0u32,
+                node_slot: 0u32,
             },
         }
     }
@@ -123,7 +123,7 @@ impl<
         Self::Output {
             mask: crate::nodes::MaskOut {
                 node_id,
-                slot: 0u32,
+                node_slot: 0u32,
             },
         }
     }
@@ -152,7 +152,7 @@ for ImageColorToMask<Image, Color> {
         Self::Output {
             mask: crate::nodes::MaskOut {
                 node_id,
-                slot: 0u32,
+                node_slot: 0u32,
             },
         }
     }
@@ -181,7 +181,7 @@ for ImageToMask<Image, Channel> {
         Self::Output {
             mask: crate::nodes::MaskOut {
                 node_id,
-                slot: 0u32,
+                node_slot: 0u32,
             },
         }
     }
@@ -207,7 +207,7 @@ impl<Mask: crate::nodes::Mask> crate::nodes::TypedNode for InvertMask<Mask> {
         Self::Output {
             mask: crate::nodes::MaskOut {
                 node_id,
-                slot: 0u32,
+                node_slot: 0u32,
             },
         }
     }
@@ -236,7 +236,7 @@ for LoadImageMask<Image, Channel> {
         Self::Output {
             mask: crate::nodes::MaskOut {
                 node_id,
-                slot: 0u32,
+                node_slot: 0u32,
             },
         }
     }
@@ -282,7 +282,7 @@ impl<
         Self::Output {
             mask: crate::nodes::MaskOut {
                 node_id,
-                slot: 0u32,
+                node_slot: 0u32,
             },
         }
     }
@@ -308,7 +308,7 @@ impl<Mask: crate::nodes::Mask> crate::nodes::TypedNode for MaskToImage<Mask> {
         Self::Output {
             image: crate::nodes::ImageOut {
                 node_id,
-                slot: 0u32,
+                node_slot: 0u32,
             },
         }
     }
@@ -346,7 +346,7 @@ impl<
         Self::Output {
             mask: crate::nodes::MaskOut {
                 node_id,
-                slot: 0u32,
+                node_slot: 0u32,
             },
         }
     }
@@ -375,7 +375,7 @@ for ThresholdMask<Mask, Value> {
         Self::Output {
             mask: crate::nodes::MaskOut {
                 node_id,
-                slot: 0u32,
+                node_slot: 0u32,
             },
         }
     }

@@ -1,4 +1,4 @@
-//!guiders
+//!`guiders` definitions/categories.
 #![allow(unused_imports)]
 use crate::WorkflowNodeId;
 ///**BasicGuider**
@@ -26,7 +26,7 @@ impl<
         Self::Output {
             guider: crate::nodes::GuiderOut {
                 node_id,
-                slot: 0u32,
+                node_slot: 0u32,
             },
         }
     }
@@ -68,7 +68,7 @@ impl<
         Self::Output {
             guider: crate::nodes::GuiderOut {
                 node_id,
-                slot: 0u32,
+                node_slot: 0u32,
             },
         }
     }
@@ -119,7 +119,7 @@ for DualCfgGuider<Model, Cond1, Cond2, Negative, CfgConds, CfgCond2Negative> {
         Self::Output {
             guider: crate::nodes::GuiderOut {
                 node_id,
-                slot: 0u32,
+                node_slot: 0u32,
             },
         }
     }
