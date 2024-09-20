@@ -16,6 +16,7 @@ pub use object_info::*;
 mod workflow;
 pub use workflow::*;
 
+#[cfg(feature = "typed_nodes")]
 pub mod nodes;
 
 #[derive(Error, Debug)]
