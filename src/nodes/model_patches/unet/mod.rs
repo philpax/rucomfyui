@@ -67,10 +67,10 @@ impl<
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
         output.insert("model".to_string(), self.model.to_workflow_input());
-        output.insert("b_1".to_string(), self.b_1.to_workflow_input());
-        output.insert("b_2".to_string(), self.b_2.to_workflow_input());
-        output.insert("s_1".to_string(), self.s_1.to_workflow_input());
-        output.insert("s_2".to_string(), self.s_2.to_workflow_input());
+        output.insert("b1".to_string(), self.b_1.to_workflow_input());
+        output.insert("b2".to_string(), self.b_2.to_workflow_input());
+        output.insert("s1".to_string(), self.s_1.to_workflow_input());
+        output.insert("s2".to_string(), self.s_2.to_workflow_input());
         output
     }
     const NAME: &'static str = "FreeU";
@@ -116,10 +116,10 @@ impl<
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
         output.insert("model".to_string(), self.model.to_workflow_input());
-        output.insert("b_1".to_string(), self.b_1.to_workflow_input());
-        output.insert("b_2".to_string(), self.b_2.to_workflow_input());
-        output.insert("s_1".to_string(), self.s_1.to_workflow_input());
-        output.insert("s_2".to_string(), self.s_2.to_workflow_input());
+        output.insert("b1".to_string(), self.b_1.to_workflow_input());
+        output.insert("b2".to_string(), self.b_2.to_workflow_input());
+        output.insert("s1".to_string(), self.s_1.to_workflow_input());
+        output.insert("s2".to_string(), self.s_2.to_workflow_input());
         output
     }
     const NAME: &'static str = "FreeU_V2";

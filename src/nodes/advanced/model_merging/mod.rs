@@ -73,8 +73,8 @@ impl<
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
-        output.insert("clip_1".to_string(), self.clip_1.to_workflow_input());
-        output.insert("clip_2".to_string(), self.clip_2.to_workflow_input());
+        output.insert("clip1".to_string(), self.clip_1.to_workflow_input());
+        output.insert("clip2".to_string(), self.clip_2.to_workflow_input());
         output
     }
     const NAME: &'static str = "CLIPMergeAdd";
@@ -111,8 +111,8 @@ impl<
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
-        output.insert("clip_1".to_string(), self.clip_1.to_workflow_input());
-        output.insert("clip_2".to_string(), self.clip_2.to_workflow_input());
+        output.insert("clip1".to_string(), self.clip_1.to_workflow_input());
+        output.insert("clip2".to_string(), self.clip_2.to_workflow_input());
         output.insert("ratio".to_string(), self.ratio.to_workflow_input());
         output
     }
@@ -150,8 +150,8 @@ impl<
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
-        output.insert("clip_1".to_string(), self.clip_1.to_workflow_input());
-        output.insert("clip_2".to_string(), self.clip_2.to_workflow_input());
+        output.insert("clip1".to_string(), self.clip_1.to_workflow_input());
+        output.insert("clip2".to_string(), self.clip_2.to_workflow_input());
         output.insert("multiplier".to_string(), self.multiplier.to_workflow_input());
         output
     }
@@ -271,8 +271,8 @@ impl<
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
-        output.insert("model_1".to_string(), self.model_1.to_workflow_input());
-        output.insert("model_2".to_string(), self.model_2.to_workflow_input());
+        output.insert("model1".to_string(), self.model_1.to_workflow_input());
+        output.insert("model2".to_string(), self.model_2.to_workflow_input());
         output
     }
     const NAME: &'static str = "ModelMergeAdd";
@@ -317,8 +317,8 @@ impl<
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
-        output.insert("model_1".to_string(), self.model_1.to_workflow_input());
-        output.insert("model_2".to_string(), self.model_2.to_workflow_input());
+        output.insert("model1".to_string(), self.model_1.to_workflow_input());
+        output.insert("model2".to_string(), self.model_2.to_workflow_input());
         output.insert("input".to_string(), self.input.to_workflow_input());
         output.insert("middle".to_string(), self.middle.to_workflow_input());
         output.insert("out".to_string(), self.out.to_workflow_input());
@@ -358,8 +358,8 @@ impl<
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
-        output.insert("model_1".to_string(), self.model_1.to_workflow_input());
-        output.insert("model_2".to_string(), self.model_2.to_workflow_input());
+        output.insert("model1".to_string(), self.model_1.to_workflow_input());
+        output.insert("model2".to_string(), self.model_2.to_workflow_input());
         output.insert("ratio".to_string(), self.ratio.to_workflow_input());
         output
     }
@@ -397,8 +397,8 @@ impl<
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
-        output.insert("model_1".to_string(), self.model_1.to_workflow_input());
-        output.insert("model_2".to_string(), self.model_2.to_workflow_input());
+        output.insert("model1".to_string(), self.model_1.to_workflow_input());
+        output.insert("model2".to_string(), self.model_2.to_workflow_input());
         output.insert("multiplier".to_string(), self.multiplier.to_workflow_input());
         output
     }

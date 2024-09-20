@@ -126,8 +126,8 @@ impl<
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
-        output.insert("image_1".to_string(), self.image_1.to_workflow_input());
-        output.insert("image_2".to_string(), self.image_2.to_workflow_input());
+        output.insert("image1".to_string(), self.image_1.to_workflow_input());
+        output.insert("image2".to_string(), self.image_2.to_workflow_input());
         output
     }
     const NAME: &'static str = "ImageBatch";

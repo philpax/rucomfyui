@@ -54,8 +54,8 @@ impl<
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
-        output.insert("samples_1".to_string(), self.samples_1.to_workflow_input());
-        output.insert("samples_2".to_string(), self.samples_2.to_workflow_input());
+        output.insert("samples1".to_string(), self.samples_1.to_workflow_input());
+        output.insert("samples2".to_string(), self.samples_2.to_workflow_input());
         output
     }
     const NAME: &'static str = "LatentBatch";

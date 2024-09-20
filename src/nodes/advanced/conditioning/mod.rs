@@ -73,7 +73,7 @@ impl<
         let mut output = HashMap::default();
         output.insert("clip".to_string(), self.clip.to_workflow_input());
         output.insert("bert".to_string(), self.bert.to_workflow_input());
-        output.insert("mt_5_xl".to_string(), self.mt_5_xl.to_workflow_input());
+        output.insert("mt5xl".to_string(), self.mt_5_xl.to_workflow_input());
         output
     }
     const NAME: &'static str = "CLIPTextEncodeHunyuanDiT";
@@ -122,7 +122,7 @@ for ClipTextEncodeSd3<Clip, ClipL, ClipG, T5Xxl, EmptyPadding> {
         output.insert("clip".to_string(), self.clip.to_workflow_input());
         output.insert("clip_l".to_string(), self.clip_l.to_workflow_input());
         output.insert("clip_g".to_string(), self.clip_g.to_workflow_input());
-        output.insert("t_5_xxl".to_string(), self.t_5_xxl.to_workflow_input());
+        output.insert("t5xxl".to_string(), self.t_5_xxl.to_workflow_input());
         output
             .insert("empty_padding".to_string(), self.empty_padding.to_workflow_input());
         output

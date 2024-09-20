@@ -68,8 +68,8 @@ impl<
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
-        output.insert("image_1".to_string(), self.image_1.to_workflow_input());
-        output.insert("image_2".to_string(), self.image_2.to_workflow_input());
+        output.insert("image1".to_string(), self.image_1.to_workflow_input());
+        output.insert("image2".to_string(), self.image_2.to_workflow_input());
         output.insert("blend_factor".to_string(), self.blend_factor.to_workflow_input());
         output.insert("blend_mode".to_string(), self.blend_mode.to_workflow_input());
         output

@@ -256,7 +256,7 @@ impl<
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
         output.insert("control_net".to_string(), self.control_net.to_workflow_input());
-        output.insert("type_".to_string(), self.type_.to_workflow_input());
+        output.insert("type".to_string(), self.type_.to_workflow_input());
         output
     }
     const NAME: &'static str = "SetUnionControlNetType";

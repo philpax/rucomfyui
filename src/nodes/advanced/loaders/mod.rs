@@ -66,7 +66,7 @@ impl<
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
         output.insert("clip_name".to_string(), self.clip_name.to_workflow_input());
-        output.insert("type_".to_string(), self.type_.to_workflow_input());
+        output.insert("type".to_string(), self.type_.to_workflow_input());
         output
     }
     const NAME: &'static str = "CLIPLoader";
@@ -145,9 +145,9 @@ impl<
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
-        output.insert("clip_name_1".to_string(), self.clip_name_1.to_workflow_input());
-        output.insert("clip_name_2".to_string(), self.clip_name_2.to_workflow_input());
-        output.insert("type_".to_string(), self.type_.to_workflow_input());
+        output.insert("clip_name1".to_string(), self.clip_name_1.to_workflow_input());
+        output.insert("clip_name2".to_string(), self.clip_name_2.to_workflow_input());
+        output.insert("type".to_string(), self.type_.to_workflow_input());
         output
     }
     const NAME: &'static str = "DualCLIPLoader";
@@ -184,9 +184,9 @@ impl<
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
-        output.insert("clip_name_1".to_string(), self.clip_name_1.to_workflow_input());
-        output.insert("clip_name_2".to_string(), self.clip_name_2.to_workflow_input());
-        output.insert("clip_name_3".to_string(), self.clip_name_3.to_workflow_input());
+        output.insert("clip_name1".to_string(), self.clip_name_1.to_workflow_input());
+        output.insert("clip_name2".to_string(), self.clip_name_2.to_workflow_input());
+        output.insert("clip_name3".to_string(), self.clip_name_3.to_workflow_input());
         output
     }
     const NAME: &'static str = "TripleCLIPLoader";

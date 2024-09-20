@@ -144,13 +144,13 @@ for DualCfgGuider<Model, Cond1, Cond2, Negative, CfgConds, CfgCond2Negative> {
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
         output.insert("model".to_string(), self.model.to_workflow_input());
-        output.insert("cond_1".to_string(), self.cond_1.to_workflow_input());
-        output.insert("cond_2".to_string(), self.cond_2.to_workflow_input());
+        output.insert("cond1".to_string(), self.cond_1.to_workflow_input());
+        output.insert("cond2".to_string(), self.cond_2.to_workflow_input());
         output.insert("negative".to_string(), self.negative.to_workflow_input());
         output.insert("cfg_conds".to_string(), self.cfg_conds.to_workflow_input());
         output
             .insert(
-                "cfg_cond_2_negative".to_string(),
+                "cfg_cond2_negative".to_string(),
                 self.cfg_cond_2_negative.to_workflow_input(),
             );
         output

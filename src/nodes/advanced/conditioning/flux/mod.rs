@@ -52,7 +52,7 @@ impl<
         let mut output = HashMap::default();
         output.insert("clip".to_string(), self.clip.to_workflow_input());
         output.insert("clip_l".to_string(), self.clip_l.to_workflow_input());
-        output.insert("t_5_xxl".to_string(), self.t_5_xxl.to_workflow_input());
+        output.insert("t5xxl".to_string(), self.t_5_xxl.to_workflow_input());
         output.insert("guidance".to_string(), self.guidance.to_workflow_input());
         output
     }

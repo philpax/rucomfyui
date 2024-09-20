@@ -312,6 +312,7 @@ fn write_node(
 }
 
 struct ProcessedInput<'a> {
+    original_name: &'a str,
     name: syn::Ident,
     tooltip: Option<&'a str>,
     ty: ObjectType,
@@ -327,6 +328,7 @@ fn node_processed_inputs(node: &Object) -> Result<Vec<ProcessedInput>> {
     ) -> Option<ProcessedInput<'a>> {
         let ty = input.as_type()?;
         Some(ProcessedInput {
+            original_name: name,
             name: util::name_to_ident(name, false).ok()?,
             tooltip: input.tooltip(),
             ty: ty.clone(),
@@ -505,37 +507,26 @@ fn write_node_trait_impl(
                 }
             }
         } else {
-            let required_workflow_inputs = processed_inputs
-                .iter()
-                .filter(|input| !input.optional)
-                .map(|input| {
-                    let name = &input.name;
-                    let name_str = name.to_string();
-                    Ok(quote! {
-                        output.insert(#name_str.to_string(), self.#name.to_workflow_input());
-                    })
-                })
-                .collect::<Result<Vec<_>>>()?;
-
-            let optional_workflow_inputs = processed_inputs
-                .iter()
-                .filter(|input| input.optional)
-                .map(|input| {
-                    let name = &input.name;
-                    let name_str = name.to_string();
-                    Ok(quote! {
+            let workflow_inputs = processed_inputs.iter().map(|input| {
+                let original_name = input.original_name;
+                let name = &input.name;
+                if input.optional {
+                    quote! {
                         if let Some(v) = &self.#name {
-                            output.insert(#name_str.to_string(), v.to_workflow_input());
+                            output.insert(#original_name.to_string(), v.to_workflow_input());
                         }
-                    })
-                })
-                .collect::<Result<Vec<_>>>()?;
+                    }
+                } else {
+                    quote! {
+                        output.insert(#original_name.to_string(), self.#name.to_workflow_input());
+                    }
+                }
+            });
 
             quote! {
                 fn inputs(&self) -> HashMap<String, WorkflowInput> {
                     let mut output = HashMap::default();
-                    #(#required_workflow_inputs)*
-                    #(#optional_workflow_inputs)*
+                    #(#workflow_inputs)*
                     output
                 }
             }

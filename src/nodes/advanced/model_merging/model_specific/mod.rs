@@ -379,299 +379,299 @@ for ModelMergeFlux1<
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
-        output.insert("model_1".to_string(), self.model_1.to_workflow_input());
-        output.insert("model_2".to_string(), self.model_2.to_workflow_input());
-        output.insert("img_in".to_string(), self.img_in.to_workflow_input());
-        output.insert("time_in".to_string(), self.time_in.to_workflow_input());
+        output.insert("model1".to_string(), self.model_1.to_workflow_input());
+        output.insert("model2".to_string(), self.model_2.to_workflow_input());
+        output.insert("img_in.".to_string(), self.img_in.to_workflow_input());
+        output.insert("time_in.".to_string(), self.time_in.to_workflow_input());
         output.insert("guidance_in".to_string(), self.guidance_in.to_workflow_input());
-        output.insert("vector_in".to_string(), self.vector_in.to_workflow_input());
-        output.insert("txt_in".to_string(), self.txt_in.to_workflow_input());
+        output.insert("vector_in.".to_string(), self.vector_in.to_workflow_input());
+        output.insert("txt_in.".to_string(), self.txt_in.to_workflow_input());
         output
             .insert(
-                "double_blocks_0".to_string(),
+                "double_blocks.0.".to_string(),
                 self.double_blocks_0.to_workflow_input(),
             );
         output
             .insert(
-                "double_blocks_1".to_string(),
+                "double_blocks.1.".to_string(),
                 self.double_blocks_1.to_workflow_input(),
             );
         output
             .insert(
-                "double_blocks_2".to_string(),
+                "double_blocks.2.".to_string(),
                 self.double_blocks_2.to_workflow_input(),
             );
         output
             .insert(
-                "double_blocks_3".to_string(),
+                "double_blocks.3.".to_string(),
                 self.double_blocks_3.to_workflow_input(),
             );
         output
             .insert(
-                "double_blocks_4".to_string(),
+                "double_blocks.4.".to_string(),
                 self.double_blocks_4.to_workflow_input(),
             );
         output
             .insert(
-                "double_blocks_5".to_string(),
+                "double_blocks.5.".to_string(),
                 self.double_blocks_5.to_workflow_input(),
             );
         output
             .insert(
-                "double_blocks_6".to_string(),
+                "double_blocks.6.".to_string(),
                 self.double_blocks_6.to_workflow_input(),
             );
         output
             .insert(
-                "double_blocks_7".to_string(),
+                "double_blocks.7.".to_string(),
                 self.double_blocks_7.to_workflow_input(),
             );
         output
             .insert(
-                "double_blocks_8".to_string(),
+                "double_blocks.8.".to_string(),
                 self.double_blocks_8.to_workflow_input(),
             );
         output
             .insert(
-                "double_blocks_9".to_string(),
+                "double_blocks.9.".to_string(),
                 self.double_blocks_9.to_workflow_input(),
             );
         output
             .insert(
-                "double_blocks_10".to_string(),
+                "double_blocks.10.".to_string(),
                 self.double_blocks_10.to_workflow_input(),
             );
         output
             .insert(
-                "double_blocks_11".to_string(),
+                "double_blocks.11.".to_string(),
                 self.double_blocks_11.to_workflow_input(),
             );
         output
             .insert(
-                "double_blocks_12".to_string(),
+                "double_blocks.12.".to_string(),
                 self.double_blocks_12.to_workflow_input(),
             );
         output
             .insert(
-                "double_blocks_13".to_string(),
+                "double_blocks.13.".to_string(),
                 self.double_blocks_13.to_workflow_input(),
             );
         output
             .insert(
-                "double_blocks_14".to_string(),
+                "double_blocks.14.".to_string(),
                 self.double_blocks_14.to_workflow_input(),
             );
         output
             .insert(
-                "double_blocks_15".to_string(),
+                "double_blocks.15.".to_string(),
                 self.double_blocks_15.to_workflow_input(),
             );
         output
             .insert(
-                "double_blocks_16".to_string(),
+                "double_blocks.16.".to_string(),
                 self.double_blocks_16.to_workflow_input(),
             );
         output
             .insert(
-                "double_blocks_17".to_string(),
+                "double_blocks.17.".to_string(),
                 self.double_blocks_17.to_workflow_input(),
             );
         output
             .insert(
-                "double_blocks_18".to_string(),
+                "double_blocks.18.".to_string(),
                 self.double_blocks_18.to_workflow_input(),
             );
         output
             .insert(
-                "single_blocks_0".to_string(),
+                "single_blocks.0.".to_string(),
                 self.single_blocks_0.to_workflow_input(),
             );
         output
             .insert(
-                "single_blocks_1".to_string(),
+                "single_blocks.1.".to_string(),
                 self.single_blocks_1.to_workflow_input(),
             );
         output
             .insert(
-                "single_blocks_2".to_string(),
+                "single_blocks.2.".to_string(),
                 self.single_blocks_2.to_workflow_input(),
             );
         output
             .insert(
-                "single_blocks_3".to_string(),
+                "single_blocks.3.".to_string(),
                 self.single_blocks_3.to_workflow_input(),
             );
         output
             .insert(
-                "single_blocks_4".to_string(),
+                "single_blocks.4.".to_string(),
                 self.single_blocks_4.to_workflow_input(),
             );
         output
             .insert(
-                "single_blocks_5".to_string(),
+                "single_blocks.5.".to_string(),
                 self.single_blocks_5.to_workflow_input(),
             );
         output
             .insert(
-                "single_blocks_6".to_string(),
+                "single_blocks.6.".to_string(),
                 self.single_blocks_6.to_workflow_input(),
             );
         output
             .insert(
-                "single_blocks_7".to_string(),
+                "single_blocks.7.".to_string(),
                 self.single_blocks_7.to_workflow_input(),
             );
         output
             .insert(
-                "single_blocks_8".to_string(),
+                "single_blocks.8.".to_string(),
                 self.single_blocks_8.to_workflow_input(),
             );
         output
             .insert(
-                "single_blocks_9".to_string(),
+                "single_blocks.9.".to_string(),
                 self.single_blocks_9.to_workflow_input(),
             );
         output
             .insert(
-                "single_blocks_10".to_string(),
+                "single_blocks.10.".to_string(),
                 self.single_blocks_10.to_workflow_input(),
             );
         output
             .insert(
-                "single_blocks_11".to_string(),
+                "single_blocks.11.".to_string(),
                 self.single_blocks_11.to_workflow_input(),
             );
         output
             .insert(
-                "single_blocks_12".to_string(),
+                "single_blocks.12.".to_string(),
                 self.single_blocks_12.to_workflow_input(),
             );
         output
             .insert(
-                "single_blocks_13".to_string(),
+                "single_blocks.13.".to_string(),
                 self.single_blocks_13.to_workflow_input(),
             );
         output
             .insert(
-                "single_blocks_14".to_string(),
+                "single_blocks.14.".to_string(),
                 self.single_blocks_14.to_workflow_input(),
             );
         output
             .insert(
-                "single_blocks_15".to_string(),
+                "single_blocks.15.".to_string(),
                 self.single_blocks_15.to_workflow_input(),
             );
         output
             .insert(
-                "single_blocks_16".to_string(),
+                "single_blocks.16.".to_string(),
                 self.single_blocks_16.to_workflow_input(),
             );
         output
             .insert(
-                "single_blocks_17".to_string(),
+                "single_blocks.17.".to_string(),
                 self.single_blocks_17.to_workflow_input(),
             );
         output
             .insert(
-                "single_blocks_18".to_string(),
+                "single_blocks.18.".to_string(),
                 self.single_blocks_18.to_workflow_input(),
             );
         output
             .insert(
-                "single_blocks_19".to_string(),
+                "single_blocks.19.".to_string(),
                 self.single_blocks_19.to_workflow_input(),
             );
         output
             .insert(
-                "single_blocks_20".to_string(),
+                "single_blocks.20.".to_string(),
                 self.single_blocks_20.to_workflow_input(),
             );
         output
             .insert(
-                "single_blocks_21".to_string(),
+                "single_blocks.21.".to_string(),
                 self.single_blocks_21.to_workflow_input(),
             );
         output
             .insert(
-                "single_blocks_22".to_string(),
+                "single_blocks.22.".to_string(),
                 self.single_blocks_22.to_workflow_input(),
             );
         output
             .insert(
-                "single_blocks_23".to_string(),
+                "single_blocks.23.".to_string(),
                 self.single_blocks_23.to_workflow_input(),
             );
         output
             .insert(
-                "single_blocks_24".to_string(),
+                "single_blocks.24.".to_string(),
                 self.single_blocks_24.to_workflow_input(),
             );
         output
             .insert(
-                "single_blocks_25".to_string(),
+                "single_blocks.25.".to_string(),
                 self.single_blocks_25.to_workflow_input(),
             );
         output
             .insert(
-                "single_blocks_26".to_string(),
+                "single_blocks.26.".to_string(),
                 self.single_blocks_26.to_workflow_input(),
             );
         output
             .insert(
-                "single_blocks_27".to_string(),
+                "single_blocks.27.".to_string(),
                 self.single_blocks_27.to_workflow_input(),
             );
         output
             .insert(
-                "single_blocks_28".to_string(),
+                "single_blocks.28.".to_string(),
                 self.single_blocks_28.to_workflow_input(),
             );
         output
             .insert(
-                "single_blocks_29".to_string(),
+                "single_blocks.29.".to_string(),
                 self.single_blocks_29.to_workflow_input(),
             );
         output
             .insert(
-                "single_blocks_30".to_string(),
+                "single_blocks.30.".to_string(),
                 self.single_blocks_30.to_workflow_input(),
             );
         output
             .insert(
-                "single_blocks_31".to_string(),
+                "single_blocks.31.".to_string(),
                 self.single_blocks_31.to_workflow_input(),
             );
         output
             .insert(
-                "single_blocks_32".to_string(),
+                "single_blocks.32.".to_string(),
                 self.single_blocks_32.to_workflow_input(),
             );
         output
             .insert(
-                "single_blocks_33".to_string(),
+                "single_blocks.33.".to_string(),
                 self.single_blocks_33.to_workflow_input(),
             );
         output
             .insert(
-                "single_blocks_34".to_string(),
+                "single_blocks.34.".to_string(),
                 self.single_blocks_34.to_workflow_input(),
             );
         output
             .insert(
-                "single_blocks_35".to_string(),
+                "single_blocks.35.".to_string(),
                 self.single_blocks_35.to_workflow_input(),
             );
         output
             .insert(
-                "single_blocks_36".to_string(),
+                "single_blocks.36.".to_string(),
                 self.single_blocks_36.to_workflow_input(),
             );
         output
             .insert(
-                "single_blocks_37".to_string(),
+                "single_blocks.37.".to_string(),
                 self.single_blocks_37.to_workflow_input(),
             );
-        output.insert("final_layer".to_string(), self.final_layer.to_workflow_input());
+        output.insert("final_layer.".to_string(), self.final_layer.to_workflow_input());
         output
     }
     const NAME: &'static str = "ModelMergeFlux1";
@@ -858,146 +858,146 @@ for ModelMergeSd1<
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
-        output.insert("model_1".to_string(), self.model_1.to_workflow_input());
-        output.insert("model_2".to_string(), self.model_2.to_workflow_input());
-        output.insert("time_embed".to_string(), self.time_embed.to_workflow_input());
-        output.insert("label_emb".to_string(), self.label_emb.to_workflow_input());
+        output.insert("model1".to_string(), self.model_1.to_workflow_input());
+        output.insert("model2".to_string(), self.model_2.to_workflow_input());
+        output.insert("time_embed.".to_string(), self.time_embed.to_workflow_input());
+        output.insert("label_emb.".to_string(), self.label_emb.to_workflow_input());
         output
             .insert(
-                "input_blocks_0".to_string(),
+                "input_blocks.0.".to_string(),
                 self.input_blocks_0.to_workflow_input(),
             );
         output
             .insert(
-                "input_blocks_1".to_string(),
+                "input_blocks.1.".to_string(),
                 self.input_blocks_1.to_workflow_input(),
             );
         output
             .insert(
-                "input_blocks_2".to_string(),
+                "input_blocks.2.".to_string(),
                 self.input_blocks_2.to_workflow_input(),
             );
         output
             .insert(
-                "input_blocks_3".to_string(),
+                "input_blocks.3.".to_string(),
                 self.input_blocks_3.to_workflow_input(),
             );
         output
             .insert(
-                "input_blocks_4".to_string(),
+                "input_blocks.4.".to_string(),
                 self.input_blocks_4.to_workflow_input(),
             );
         output
             .insert(
-                "input_blocks_5".to_string(),
+                "input_blocks.5.".to_string(),
                 self.input_blocks_5.to_workflow_input(),
             );
         output
             .insert(
-                "input_blocks_6".to_string(),
+                "input_blocks.6.".to_string(),
                 self.input_blocks_6.to_workflow_input(),
             );
         output
             .insert(
-                "input_blocks_7".to_string(),
+                "input_blocks.7.".to_string(),
                 self.input_blocks_7.to_workflow_input(),
             );
         output
             .insert(
-                "input_blocks_8".to_string(),
+                "input_blocks.8.".to_string(),
                 self.input_blocks_8.to_workflow_input(),
             );
         output
             .insert(
-                "input_blocks_9".to_string(),
+                "input_blocks.9.".to_string(),
                 self.input_blocks_9.to_workflow_input(),
             );
         output
             .insert(
-                "input_blocks_10".to_string(),
+                "input_blocks.10.".to_string(),
                 self.input_blocks_10.to_workflow_input(),
             );
         output
             .insert(
-                "input_blocks_11".to_string(),
+                "input_blocks.11.".to_string(),
                 self.input_blocks_11.to_workflow_input(),
             );
         output
             .insert(
-                "middle_block_0".to_string(),
+                "middle_block.0.".to_string(),
                 self.middle_block_0.to_workflow_input(),
             );
         output
             .insert(
-                "middle_block_1".to_string(),
+                "middle_block.1.".to_string(),
                 self.middle_block_1.to_workflow_input(),
             );
         output
             .insert(
-                "middle_block_2".to_string(),
+                "middle_block.2.".to_string(),
                 self.middle_block_2.to_workflow_input(),
             );
         output
             .insert(
-                "output_blocks_0".to_string(),
+                "output_blocks.0.".to_string(),
                 self.output_blocks_0.to_workflow_input(),
             );
         output
             .insert(
-                "output_blocks_1".to_string(),
+                "output_blocks.1.".to_string(),
                 self.output_blocks_1.to_workflow_input(),
             );
         output
             .insert(
-                "output_blocks_2".to_string(),
+                "output_blocks.2.".to_string(),
                 self.output_blocks_2.to_workflow_input(),
             );
         output
             .insert(
-                "output_blocks_3".to_string(),
+                "output_blocks.3.".to_string(),
                 self.output_blocks_3.to_workflow_input(),
             );
         output
             .insert(
-                "output_blocks_4".to_string(),
+                "output_blocks.4.".to_string(),
                 self.output_blocks_4.to_workflow_input(),
             );
         output
             .insert(
-                "output_blocks_5".to_string(),
+                "output_blocks.5.".to_string(),
                 self.output_blocks_5.to_workflow_input(),
             );
         output
             .insert(
-                "output_blocks_6".to_string(),
+                "output_blocks.6.".to_string(),
                 self.output_blocks_6.to_workflow_input(),
             );
         output
             .insert(
-                "output_blocks_7".to_string(),
+                "output_blocks.7.".to_string(),
                 self.output_blocks_7.to_workflow_input(),
             );
         output
             .insert(
-                "output_blocks_8".to_string(),
+                "output_blocks.8.".to_string(),
                 self.output_blocks_8.to_workflow_input(),
             );
         output
             .insert(
-                "output_blocks_9".to_string(),
+                "output_blocks.9.".to_string(),
                 self.output_blocks_9.to_workflow_input(),
             );
         output
             .insert(
-                "output_blocks_10".to_string(),
+                "output_blocks.10.".to_string(),
                 self.output_blocks_10.to_workflow_input(),
             );
         output
             .insert(
-                "output_blocks_11".to_string(),
+                "output_blocks.11.".to_string(),
                 self.output_blocks_11.to_workflow_input(),
             );
-        output.insert("out".to_string(), self.out.to_workflow_input());
+        output.insert("out.".to_string(), self.out.to_workflow_input());
         output
     }
     const NAME: &'static str = "ModelMergeSD1";
@@ -1184,146 +1184,146 @@ for ModelMergeSd2<
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
-        output.insert("model_1".to_string(), self.model_1.to_workflow_input());
-        output.insert("model_2".to_string(), self.model_2.to_workflow_input());
-        output.insert("time_embed".to_string(), self.time_embed.to_workflow_input());
-        output.insert("label_emb".to_string(), self.label_emb.to_workflow_input());
+        output.insert("model1".to_string(), self.model_1.to_workflow_input());
+        output.insert("model2".to_string(), self.model_2.to_workflow_input());
+        output.insert("time_embed.".to_string(), self.time_embed.to_workflow_input());
+        output.insert("label_emb.".to_string(), self.label_emb.to_workflow_input());
         output
             .insert(
-                "input_blocks_0".to_string(),
+                "input_blocks.0.".to_string(),
                 self.input_blocks_0.to_workflow_input(),
             );
         output
             .insert(
-                "input_blocks_1".to_string(),
+                "input_blocks.1.".to_string(),
                 self.input_blocks_1.to_workflow_input(),
             );
         output
             .insert(
-                "input_blocks_2".to_string(),
+                "input_blocks.2.".to_string(),
                 self.input_blocks_2.to_workflow_input(),
             );
         output
             .insert(
-                "input_blocks_3".to_string(),
+                "input_blocks.3.".to_string(),
                 self.input_blocks_3.to_workflow_input(),
             );
         output
             .insert(
-                "input_blocks_4".to_string(),
+                "input_blocks.4.".to_string(),
                 self.input_blocks_4.to_workflow_input(),
             );
         output
             .insert(
-                "input_blocks_5".to_string(),
+                "input_blocks.5.".to_string(),
                 self.input_blocks_5.to_workflow_input(),
             );
         output
             .insert(
-                "input_blocks_6".to_string(),
+                "input_blocks.6.".to_string(),
                 self.input_blocks_6.to_workflow_input(),
             );
         output
             .insert(
-                "input_blocks_7".to_string(),
+                "input_blocks.7.".to_string(),
                 self.input_blocks_7.to_workflow_input(),
             );
         output
             .insert(
-                "input_blocks_8".to_string(),
+                "input_blocks.8.".to_string(),
                 self.input_blocks_8.to_workflow_input(),
             );
         output
             .insert(
-                "input_blocks_9".to_string(),
+                "input_blocks.9.".to_string(),
                 self.input_blocks_9.to_workflow_input(),
             );
         output
             .insert(
-                "input_blocks_10".to_string(),
+                "input_blocks.10.".to_string(),
                 self.input_blocks_10.to_workflow_input(),
             );
         output
             .insert(
-                "input_blocks_11".to_string(),
+                "input_blocks.11.".to_string(),
                 self.input_blocks_11.to_workflow_input(),
             );
         output
             .insert(
-                "middle_block_0".to_string(),
+                "middle_block.0.".to_string(),
                 self.middle_block_0.to_workflow_input(),
             );
         output
             .insert(
-                "middle_block_1".to_string(),
+                "middle_block.1.".to_string(),
                 self.middle_block_1.to_workflow_input(),
             );
         output
             .insert(
-                "middle_block_2".to_string(),
+                "middle_block.2.".to_string(),
                 self.middle_block_2.to_workflow_input(),
             );
         output
             .insert(
-                "output_blocks_0".to_string(),
+                "output_blocks.0.".to_string(),
                 self.output_blocks_0.to_workflow_input(),
             );
         output
             .insert(
-                "output_blocks_1".to_string(),
+                "output_blocks.1.".to_string(),
                 self.output_blocks_1.to_workflow_input(),
             );
         output
             .insert(
-                "output_blocks_2".to_string(),
+                "output_blocks.2.".to_string(),
                 self.output_blocks_2.to_workflow_input(),
             );
         output
             .insert(
-                "output_blocks_3".to_string(),
+                "output_blocks.3.".to_string(),
                 self.output_blocks_3.to_workflow_input(),
             );
         output
             .insert(
-                "output_blocks_4".to_string(),
+                "output_blocks.4.".to_string(),
                 self.output_blocks_4.to_workflow_input(),
             );
         output
             .insert(
-                "output_blocks_5".to_string(),
+                "output_blocks.5.".to_string(),
                 self.output_blocks_5.to_workflow_input(),
             );
         output
             .insert(
-                "output_blocks_6".to_string(),
+                "output_blocks.6.".to_string(),
                 self.output_blocks_6.to_workflow_input(),
             );
         output
             .insert(
-                "output_blocks_7".to_string(),
+                "output_blocks.7.".to_string(),
                 self.output_blocks_7.to_workflow_input(),
             );
         output
             .insert(
-                "output_blocks_8".to_string(),
+                "output_blocks.8.".to_string(),
                 self.output_blocks_8.to_workflow_input(),
             );
         output
             .insert(
-                "output_blocks_9".to_string(),
+                "output_blocks.9.".to_string(),
                 self.output_blocks_9.to_workflow_input(),
             );
         output
             .insert(
-                "output_blocks_10".to_string(),
+                "output_blocks.10.".to_string(),
                 self.output_blocks_10.to_workflow_input(),
             );
         output
             .insert(
-                "output_blocks_11".to_string(),
+                "output_blocks.11.".to_string(),
                 self.output_blocks_11.to_workflow_input(),
             );
-        output.insert("out".to_string(), self.out.to_workflow_input());
+        output.insert("out.".to_string(), self.out.to_workflow_input());
         output
     }
     const NAME: &'static str = "ModelMergeSD2";
@@ -1510,138 +1510,138 @@ for ModelMergeSd32B<
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
-        output.insert("model_1".to_string(), self.model_1.to_workflow_input());
-        output.insert("model_2".to_string(), self.model_2.to_workflow_input());
-        output.insert("pos_embed".to_string(), self.pos_embed.to_workflow_input());
-        output.insert("x_embedder".to_string(), self.x_embedder.to_workflow_input());
+        output.insert("model1".to_string(), self.model_1.to_workflow_input());
+        output.insert("model2".to_string(), self.model_2.to_workflow_input());
+        output.insert("pos_embed.".to_string(), self.pos_embed.to_workflow_input());
+        output.insert("x_embedder.".to_string(), self.x_embedder.to_workflow_input());
         output
             .insert(
-                "context_embedder".to_string(),
+                "context_embedder.".to_string(),
                 self.context_embedder.to_workflow_input(),
             );
-        output.insert("y_embedder".to_string(), self.y_embedder.to_workflow_input());
-        output.insert("t_embedder".to_string(), self.t_embedder.to_workflow_input());
+        output.insert("y_embedder.".to_string(), self.y_embedder.to_workflow_input());
+        output.insert("t_embedder.".to_string(), self.t_embedder.to_workflow_input());
         output
             .insert(
-                "joint_blocks_0".to_string(),
+                "joint_blocks.0.".to_string(),
                 self.joint_blocks_0.to_workflow_input(),
             );
         output
             .insert(
-                "joint_blocks_1".to_string(),
+                "joint_blocks.1.".to_string(),
                 self.joint_blocks_1.to_workflow_input(),
             );
         output
             .insert(
-                "joint_blocks_2".to_string(),
+                "joint_blocks.2.".to_string(),
                 self.joint_blocks_2.to_workflow_input(),
             );
         output
             .insert(
-                "joint_blocks_3".to_string(),
+                "joint_blocks.3.".to_string(),
                 self.joint_blocks_3.to_workflow_input(),
             );
         output
             .insert(
-                "joint_blocks_4".to_string(),
+                "joint_blocks.4.".to_string(),
                 self.joint_blocks_4.to_workflow_input(),
             );
         output
             .insert(
-                "joint_blocks_5".to_string(),
+                "joint_blocks.5.".to_string(),
                 self.joint_blocks_5.to_workflow_input(),
             );
         output
             .insert(
-                "joint_blocks_6".to_string(),
+                "joint_blocks.6.".to_string(),
                 self.joint_blocks_6.to_workflow_input(),
             );
         output
             .insert(
-                "joint_blocks_7".to_string(),
+                "joint_blocks.7.".to_string(),
                 self.joint_blocks_7.to_workflow_input(),
             );
         output
             .insert(
-                "joint_blocks_8".to_string(),
+                "joint_blocks.8.".to_string(),
                 self.joint_blocks_8.to_workflow_input(),
             );
         output
             .insert(
-                "joint_blocks_9".to_string(),
+                "joint_blocks.9.".to_string(),
                 self.joint_blocks_9.to_workflow_input(),
             );
         output
             .insert(
-                "joint_blocks_10".to_string(),
+                "joint_blocks.10.".to_string(),
                 self.joint_blocks_10.to_workflow_input(),
             );
         output
             .insert(
-                "joint_blocks_11".to_string(),
+                "joint_blocks.11.".to_string(),
                 self.joint_blocks_11.to_workflow_input(),
             );
         output
             .insert(
-                "joint_blocks_12".to_string(),
+                "joint_blocks.12.".to_string(),
                 self.joint_blocks_12.to_workflow_input(),
             );
         output
             .insert(
-                "joint_blocks_13".to_string(),
+                "joint_blocks.13.".to_string(),
                 self.joint_blocks_13.to_workflow_input(),
             );
         output
             .insert(
-                "joint_blocks_14".to_string(),
+                "joint_blocks.14.".to_string(),
                 self.joint_blocks_14.to_workflow_input(),
             );
         output
             .insert(
-                "joint_blocks_15".to_string(),
+                "joint_blocks.15.".to_string(),
                 self.joint_blocks_15.to_workflow_input(),
             );
         output
             .insert(
-                "joint_blocks_16".to_string(),
+                "joint_blocks.16.".to_string(),
                 self.joint_blocks_16.to_workflow_input(),
             );
         output
             .insert(
-                "joint_blocks_17".to_string(),
+                "joint_blocks.17.".to_string(),
                 self.joint_blocks_17.to_workflow_input(),
             );
         output
             .insert(
-                "joint_blocks_18".to_string(),
+                "joint_blocks.18.".to_string(),
                 self.joint_blocks_18.to_workflow_input(),
             );
         output
             .insert(
-                "joint_blocks_19".to_string(),
+                "joint_blocks.19.".to_string(),
                 self.joint_blocks_19.to_workflow_input(),
             );
         output
             .insert(
-                "joint_blocks_20".to_string(),
+                "joint_blocks.20.".to_string(),
                 self.joint_blocks_20.to_workflow_input(),
             );
         output
             .insert(
-                "joint_blocks_21".to_string(),
+                "joint_blocks.21.".to_string(),
                 self.joint_blocks_21.to_workflow_input(),
             );
         output
             .insert(
-                "joint_blocks_22".to_string(),
+                "joint_blocks.22.".to_string(),
                 self.joint_blocks_22.to_workflow_input(),
             );
         output
             .insert(
-                "joint_blocks_23".to_string(),
+                "joint_blocks.23.".to_string(),
                 self.joint_blocks_23.to_workflow_input(),
             );
-        output.insert("final_layer".to_string(), self.final_layer.to_workflow_input());
+        output.insert("final_layer.".to_string(), self.final_layer.to_workflow_input());
         output
     }
     const NAME: &'static str = "ModelMergeSD3_2B";
@@ -1798,116 +1798,116 @@ for ModelMergeSdxl<
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
-        output.insert("model_1".to_string(), self.model_1.to_workflow_input());
-        output.insert("model_2".to_string(), self.model_2.to_workflow_input());
-        output.insert("time_embed".to_string(), self.time_embed.to_workflow_input());
-        output.insert("label_emb".to_string(), self.label_emb.to_workflow_input());
+        output.insert("model1".to_string(), self.model_1.to_workflow_input());
+        output.insert("model2".to_string(), self.model_2.to_workflow_input());
+        output.insert("time_embed.".to_string(), self.time_embed.to_workflow_input());
+        output.insert("label_emb.".to_string(), self.label_emb.to_workflow_input());
         output
             .insert(
-                "input_blocks_0".to_string(),
+                "input_blocks.0".to_string(),
                 self.input_blocks_0.to_workflow_input(),
             );
         output
             .insert(
-                "input_blocks_1".to_string(),
+                "input_blocks.1".to_string(),
                 self.input_blocks_1.to_workflow_input(),
             );
         output
             .insert(
-                "input_blocks_2".to_string(),
+                "input_blocks.2".to_string(),
                 self.input_blocks_2.to_workflow_input(),
             );
         output
             .insert(
-                "input_blocks_3".to_string(),
+                "input_blocks.3".to_string(),
                 self.input_blocks_3.to_workflow_input(),
             );
         output
             .insert(
-                "input_blocks_4".to_string(),
+                "input_blocks.4".to_string(),
                 self.input_blocks_4.to_workflow_input(),
             );
         output
             .insert(
-                "input_blocks_5".to_string(),
+                "input_blocks.5".to_string(),
                 self.input_blocks_5.to_workflow_input(),
             );
         output
             .insert(
-                "input_blocks_6".to_string(),
+                "input_blocks.6".to_string(),
                 self.input_blocks_6.to_workflow_input(),
             );
         output
             .insert(
-                "input_blocks_7".to_string(),
+                "input_blocks.7".to_string(),
                 self.input_blocks_7.to_workflow_input(),
             );
         output
             .insert(
-                "input_blocks_8".to_string(),
+                "input_blocks.8".to_string(),
                 self.input_blocks_8.to_workflow_input(),
             );
         output
             .insert(
-                "middle_block_0".to_string(),
+                "middle_block.0".to_string(),
                 self.middle_block_0.to_workflow_input(),
             );
         output
             .insert(
-                "middle_block_1".to_string(),
+                "middle_block.1".to_string(),
                 self.middle_block_1.to_workflow_input(),
             );
         output
             .insert(
-                "middle_block_2".to_string(),
+                "middle_block.2".to_string(),
                 self.middle_block_2.to_workflow_input(),
             );
         output
             .insert(
-                "output_blocks_0".to_string(),
+                "output_blocks.0".to_string(),
                 self.output_blocks_0.to_workflow_input(),
             );
         output
             .insert(
-                "output_blocks_1".to_string(),
+                "output_blocks.1".to_string(),
                 self.output_blocks_1.to_workflow_input(),
             );
         output
             .insert(
-                "output_blocks_2".to_string(),
+                "output_blocks.2".to_string(),
                 self.output_blocks_2.to_workflow_input(),
             );
         output
             .insert(
-                "output_blocks_3".to_string(),
+                "output_blocks.3".to_string(),
                 self.output_blocks_3.to_workflow_input(),
             );
         output
             .insert(
-                "output_blocks_4".to_string(),
+                "output_blocks.4".to_string(),
                 self.output_blocks_4.to_workflow_input(),
             );
         output
             .insert(
-                "output_blocks_5".to_string(),
+                "output_blocks.5".to_string(),
                 self.output_blocks_5.to_workflow_input(),
             );
         output
             .insert(
-                "output_blocks_6".to_string(),
+                "output_blocks.6".to_string(),
                 self.output_blocks_6.to_workflow_input(),
             );
         output
             .insert(
-                "output_blocks_7".to_string(),
+                "output_blocks.7".to_string(),
                 self.output_blocks_7.to_workflow_input(),
             );
         output
             .insert(
-                "output_blocks_8".to_string(),
+                "output_blocks.8".to_string(),
                 self.output_blocks_8.to_workflow_input(),
             );
-        output.insert("out".to_string(), self.out.to_workflow_input());
+        output.insert("out.".to_string(), self.out.to_workflow_input());
         output
     }
     const NAME: &'static str = "ModelMergeSDXL";
