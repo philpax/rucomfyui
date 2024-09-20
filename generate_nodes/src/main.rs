@@ -28,7 +28,7 @@ async fn run() -> Result<()> {
     std::fs::create_dir_all(out_dir)?;
 
     // Write all categories and nodes.
-    write_category_tree(("", &category_tree), out_dir).context("root")?;
+    write_category_tree_root(&category_tree, out_dir).context("root")?;
 
     // Write type-definitions module.
     write_tokenstream_with_formatting(&out_dir.join("types.rs"), type_module_definitions()?)?;
@@ -70,23 +70,10 @@ fn build_list_of_all_nodes(tree: &CategoryTree, ctx: &[syn::Ident]) -> Result<Ve
     Ok(output)
 }
 
-fn write_category_tree((name, tree): (&str, &CategoryTree), directory: &Path) -> Result<()> {
-    std::fs::create_dir(directory).ok();
-
-    let (doc, extra) = if name.is_empty() {
-        (
-            "Typed node definitions for ComfyUI that provide a type-safe abstraction over the API."
-                .to_string(),
-            root_module_definitions()?,
-        )
-    } else {
-        (format!("`{name}` definitions/categories."), quote! {})
-    };
-
+fn write_category_tree_root(root: &CategoryTree, directory: &Path) -> Result<()> {
     let mut modules = vec![];
-    let mut nodes = vec![];
 
-    for (key, node) in tree {
+    for (key, node) in root {
         match node {
             CategoryTreeNode::Category(name, tree) => {
                 let key = name_to_ident(key, false)?;
@@ -96,33 +83,17 @@ fn write_category_tree((name, tree): (&str, &CategoryTree), directory: &Path) ->
                     pub mod #key;
                 });
             }
-            CategoryTreeNode::Object(object) => {
-                nodes.push(write_node(object)?);
-            }
+            CategoryTreeNode::Object(_) => unreachable!("There should be no top-level nodes."),
         }
     }
 
     let output = quote! {
-        #![doc = #doc]
-        #![allow(unused_imports)]
-
-        use crate::WorkflowNodeId;
-
+        //! Typed node definitions for ComfyUI that provide a type-safe abstraction over the API.
         #(#modules)*
-        #(#nodes)*
-        #extra
-    };
-    let path = directory.join("mod.rs");
-    write_tokenstream_with_formatting(&path, output)?;
-    Ok(())
-}
-
-fn root_module_definitions() -> Result<TokenStream> {
-    Ok(quote! {
         pub mod all;
         pub mod types;
 
-        use crate::WorkflowInput;
+        use crate::{WorkflowNodeId, WorkflowInput};
 
         /// Implemented for all typed nodes; provides the node's output and metadata.
         pub trait TypedNode {
@@ -183,7 +154,48 @@ fn root_module_definitions() -> Result<TokenStream> {
             }
         }
         impl types :: Boolean for bool {}
-    })
+    };
+    let path = directory.join("mod.rs");
+    write_tokenstream_with_formatting(&path, output)?;
+    Ok(())
+}
+
+fn write_category_tree((name, tree): (&str, &CategoryTree), directory: &Path) -> Result<()> {
+    std::fs::create_dir(directory).ok();
+
+    let doc = format!("`{name}` definitions/categories.");
+
+    let mut modules = vec![];
+    let mut nodes = vec![];
+
+    for (key, node) in tree {
+        match node {
+            CategoryTreeNode::Category(name, tree) => {
+                let key = name_to_ident(key, false)?;
+                write_category_tree((name, tree), &directory.join(key.to_string()))
+                    .context(name.clone())?;
+                modules.push(quote! {
+                    pub mod #key;
+                });
+            }
+            CategoryTreeNode::Object(object) => {
+                nodes.push(write_node(object)?);
+            }
+        }
+    }
+
+    let output = quote! {
+        #![doc = #doc]
+        #![allow(unused_imports)]
+
+        use crate::WorkflowNodeId;
+
+        #(#modules)*
+        #(#nodes)*
+    };
+    let path = directory.join("mod.rs");
+    write_tokenstream_with_formatting(&path, output)?;
+    Ok(())
 }
 
 fn type_module_definitions() -> Result<TokenStream> {

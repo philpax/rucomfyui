@@ -1,6 +1,4 @@
-//!Typed node definitions for ComfyUI that provide a type-safe abstraction over the API.
-#![allow(unused_imports)]
-use crate::WorkflowNodeId;
+//! Typed node definitions for ComfyUI that provide a type-safe abstraction over the API.
 pub mod advanced;
 pub mod audio;
 pub mod conditioning;
@@ -12,7 +10,7 @@ pub mod model_patches;
 pub mod sampling;
 pub mod all;
 pub mod types;
-use crate::WorkflowInput;
+use crate::{WorkflowNodeId, WorkflowInput};
 /// Implemented for all typed nodes; provides the node's output and metadata.
 pub trait TypedNode {
     /// The type of the node's output.
