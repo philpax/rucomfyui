@@ -249,19 +249,16 @@ pub struct PreviewImage<Images: crate::nodes::Image> {
     ///No documentation.
     pub images: Images,
 }
-///Output for [`PreviewImage`].
-#[derive(Clone)]
-pub struct PreviewImageOutput {}
 impl<Images: crate::nodes::Image> crate::nodes::TypedNode for PreviewImage<Images> {
-    type Output = PreviewImageOutput;
-    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
-        Self::Output {}
-    }
+    type Output = ();
+    fn output(&self, _node_id: WorkflowNodeId) -> Self::Output {}
     const NAME: &'static str = "PreviewImage";
     const DISPLAY_NAME: &'static str = "Preview Image";
     const DESCRIPTION: &'static str = "Saves the input images to your ComfyUI output directory.";
     const CATEGORY: &'static str = "image";
 }
+impl<Images: crate::nodes::Image> crate::nodes::TypedOutputNode
+for PreviewImage<Images> {}
 #[doc = "**Save Image**\n\nSaves the input images to your ComfyUI output directory."]
 pub struct SaveImage<Images: crate::nodes::Image, FilenamePrefix: crate::nodes::String> {
     ///The images to save.
@@ -269,22 +266,21 @@ pub struct SaveImage<Images: crate::nodes::Image, FilenamePrefix: crate::nodes::
     ///The prefix for the file to save. This may include formatting information such as %date:yyyy-MM-dd% or %Empty Latent Image.width% to include values from nodes.
     pub filename_prefix: FilenamePrefix,
 }
-///Output for [`SaveImage`].
-#[derive(Clone)]
-pub struct SaveImageOutput {}
 impl<
     Images: crate::nodes::Image,
     FilenamePrefix: crate::nodes::String,
 > crate::nodes::TypedNode for SaveImage<Images, FilenamePrefix> {
-    type Output = SaveImageOutput;
-    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
-        Self::Output {}
-    }
+    type Output = ();
+    fn output(&self, _node_id: WorkflowNodeId) -> Self::Output {}
     const NAME: &'static str = "SaveImage";
     const DISPLAY_NAME: &'static str = "Save Image";
     const DESCRIPTION: &'static str = "Saves the input images to your ComfyUI output directory.";
     const CATEGORY: &'static str = "image";
 }
+impl<
+    Images: crate::nodes::Image,
+    FilenamePrefix: crate::nodes::String,
+> crate::nodes::TypedOutputNode for SaveImage<Images, FilenamePrefix> {}
 ///**Webcam Capture**
 pub struct WebcamCapture<
     Image: crate::nodes::Webcam,

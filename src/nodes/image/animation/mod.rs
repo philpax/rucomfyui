@@ -17,9 +17,6 @@ pub struct SaveAnimatedPng<
     ///No documentation.
     pub compress_level: CompressLevel,
 }
-///Output for [`SaveAnimatedPng`].
-#[derive(Clone)]
-pub struct SaveAnimatedPngOutput {}
 impl<
     Images: crate::nodes::Image,
     FilenamePrefix: crate::nodes::String,
@@ -27,15 +24,20 @@ impl<
     CompressLevel: crate::nodes::Int,
 > crate::nodes::TypedNode
 for SaveAnimatedPng<Images, FilenamePrefix, Fps, CompressLevel> {
-    type Output = SaveAnimatedPngOutput;
-    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
-        Self::Output {}
-    }
+    type Output = ();
+    fn output(&self, _node_id: WorkflowNodeId) -> Self::Output {}
     const NAME: &'static str = "SaveAnimatedPNG";
     const DISPLAY_NAME: &'static str = "SaveAnimatedPNG";
     const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "image/animation";
 }
+impl<
+    Images: crate::nodes::Image,
+    FilenamePrefix: crate::nodes::String,
+    Fps: crate::nodes::Float,
+    CompressLevel: crate::nodes::Int,
+> crate::nodes::TypedOutputNode
+for SaveAnimatedPng<Images, FilenamePrefix, Fps, CompressLevel> {}
 ///**SaveAnimatedWEBP**
 pub struct SaveAnimatedWebp<
     Images: crate::nodes::Image,
@@ -58,9 +60,6 @@ pub struct SaveAnimatedWebp<
     ///No documentation.
     pub method: Method,
 }
-///Output for [`SaveAnimatedWebp`].
-#[derive(Clone)]
-pub struct SaveAnimatedWebpOutput {}
 impl<
     Images: crate::nodes::Image,
     FilenamePrefix: crate::nodes::String,
@@ -70,12 +69,19 @@ impl<
     Method: crate::nodes::String,
 > crate::nodes::TypedNode
 for SaveAnimatedWebp<Images, FilenamePrefix, Fps, Lossless, Quality, Method> {
-    type Output = SaveAnimatedWebpOutput;
-    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
-        Self::Output {}
-    }
+    type Output = ();
+    fn output(&self, _node_id: WorkflowNodeId) -> Self::Output {}
     const NAME: &'static str = "SaveAnimatedWEBP";
     const DISPLAY_NAME: &'static str = "SaveAnimatedWEBP";
     const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "image/animation";
 }
+impl<
+    Images: crate::nodes::Image,
+    FilenamePrefix: crate::nodes::String,
+    Fps: crate::nodes::Float,
+    Lossless: crate::nodes::Boolean,
+    Quality: crate::nodes::Int,
+    Method: crate::nodes::String,
+> crate::nodes::TypedOutputNode
+for SaveAnimatedWebp<Images, FilenamePrefix, Fps, Lossless, Quality, Method> {}

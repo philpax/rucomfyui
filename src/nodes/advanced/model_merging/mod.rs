@@ -114,22 +114,21 @@ pub struct ClipSave<Clip: crate::nodes::Clip, FilenamePrefix: crate::nodes::Stri
     ///No documentation.
     pub filename_prefix: FilenamePrefix,
 }
-///Output for [`ClipSave`].
-#[derive(Clone)]
-pub struct ClipSaveOutput {}
 impl<
     Clip: crate::nodes::Clip,
     FilenamePrefix: crate::nodes::String,
 > crate::nodes::TypedNode for ClipSave<Clip, FilenamePrefix> {
-    type Output = ClipSaveOutput;
-    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
-        Self::Output {}
-    }
+    type Output = ();
+    fn output(&self, _node_id: WorkflowNodeId) -> Self::Output {}
     const NAME: &'static str = "CLIPSave";
     const DISPLAY_NAME: &'static str = "CLIPSave";
     const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "advanced/model_merging";
 }
+impl<
+    Clip: crate::nodes::Clip,
+    FilenamePrefix: crate::nodes::String,
+> crate::nodes::TypedOutputNode for ClipSave<Clip, FilenamePrefix> {}
 ///**Save Checkpoint**
 pub struct CheckpointSave<
     Model: crate::nodes::Model,
@@ -146,24 +145,25 @@ pub struct CheckpointSave<
     ///No documentation.
     pub filename_prefix: FilenamePrefix,
 }
-///Output for [`CheckpointSave`].
-#[derive(Clone)]
-pub struct CheckpointSaveOutput {}
 impl<
     Model: crate::nodes::Model,
     Clip: crate::nodes::Clip,
     Vae: crate::nodes::Vae,
     FilenamePrefix: crate::nodes::String,
 > crate::nodes::TypedNode for CheckpointSave<Model, Clip, Vae, FilenamePrefix> {
-    type Output = CheckpointSaveOutput;
-    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
-        Self::Output {}
-    }
+    type Output = ();
+    fn output(&self, _node_id: WorkflowNodeId) -> Self::Output {}
     const NAME: &'static str = "CheckpointSave";
     const DISPLAY_NAME: &'static str = "Save Checkpoint";
     const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "advanced/model_merging";
 }
+impl<
+    Model: crate::nodes::Model,
+    Clip: crate::nodes::Clip,
+    Vae: crate::nodes::Vae,
+    FilenamePrefix: crate::nodes::String,
+> crate::nodes::TypedOutputNode for CheckpointSave<Model, Clip, Vae, FilenamePrefix> {}
 ///**ModelMergeAdd**
 pub struct ModelMergeAdd<Model1: crate::nodes::Model, Model2: crate::nodes::Model> {
     ///No documentation.
@@ -322,22 +322,21 @@ pub struct ModelSave<Model: crate::nodes::Model, FilenamePrefix: crate::nodes::S
     ///No documentation.
     pub filename_prefix: FilenamePrefix,
 }
-///Output for [`ModelSave`].
-#[derive(Clone)]
-pub struct ModelSaveOutput {}
 impl<
     Model: crate::nodes::Model,
     FilenamePrefix: crate::nodes::String,
 > crate::nodes::TypedNode for ModelSave<Model, FilenamePrefix> {
-    type Output = ModelSaveOutput;
-    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
-        Self::Output {}
-    }
+    type Output = ();
+    fn output(&self, _node_id: WorkflowNodeId) -> Self::Output {}
     const NAME: &'static str = "ModelSave";
     const DISPLAY_NAME: &'static str = "ModelSave";
     const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "advanced/model_merging";
 }
+impl<
+    Model: crate::nodes::Model,
+    FilenamePrefix: crate::nodes::String,
+> crate::nodes::TypedOutputNode for ModelSave<Model, FilenamePrefix> {}
 ///**VAESave**
 pub struct VaeSave<Vae: crate::nodes::Vae, FilenamePrefix: crate::nodes::String> {
     ///No documentation.
@@ -345,19 +344,18 @@ pub struct VaeSave<Vae: crate::nodes::Vae, FilenamePrefix: crate::nodes::String>
     ///No documentation.
     pub filename_prefix: FilenamePrefix,
 }
-///Output for [`VaeSave`].
-#[derive(Clone)]
-pub struct VaeSaveOutput {}
 impl<
     Vae: crate::nodes::Vae,
     FilenamePrefix: crate::nodes::String,
 > crate::nodes::TypedNode for VaeSave<Vae, FilenamePrefix> {
-    type Output = VaeSaveOutput;
-    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
-        Self::Output {}
-    }
+    type Output = ();
+    fn output(&self, _node_id: WorkflowNodeId) -> Self::Output {}
     const NAME: &'static str = "VAESave";
     const DISPLAY_NAME: &'static str = "VAESave";
     const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "advanced/model_merging";
 }
+impl<
+    Vae: crate::nodes::Vae,
+    FilenamePrefix: crate::nodes::String,
+> crate::nodes::TypedOutputNode for VaeSave<Vae, FilenamePrefix> {}

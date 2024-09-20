@@ -27,6 +27,8 @@ pub trait TypedNode {
     /// The category of the node.
     const CATEGORY: &'static str;
 }
+/// Implemented for all output nodes (i.e. nodes at which a workflow terminates)
+pub trait TypedOutputNode {}
 /// Converts a value to a workflow input.
 pub trait ToWorkflowInput {
     /// Converts the value to a workflow input.

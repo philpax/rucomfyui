@@ -145,6 +145,9 @@ fn write_category_tree((name, tree): (&str, &CategoryTree), directory: &Path) ->
                     const CATEGORY: &'static str;
                 }
 
+                /// Implemented for all output nodes (i.e. nodes at which a workflow terminates)
+                pub trait TypedOutputNode {}
+
                 /// Converts a value to a workflow input.
                 pub trait ToWorkflowInput {
                     /// Converts the value to a workflow input.
@@ -340,6 +343,49 @@ fn write_node_outputs(
     inputs_name: &syn::Ident,
     processed_inputs: Vec<ProcessedInput<'_>>,
 ) -> Result<TokenStream> {
+    let node_name = node.name.as_str();
+    let display_name = node.display_name.as_str();
+    let description = node.description.as_str();
+    let category = node.category.as_str();
+
+    let generic_list = processed_inputs
+        .iter()
+        .map(|input| {
+            let generic_name = &input.generic_name;
+            let generic_ty = &input.generic_ty;
+            quote! {
+                #generic_name: crate :: nodes :: #generic_ty
+            }
+        })
+        .collect::<Vec<_>>();
+
+    let generic_instantiation_list = processed_inputs
+        .iter()
+        .map(|input| {
+            let generic_name = &input.generic_name;
+            quote! {
+                #generic_name
+            }
+        })
+        .collect::<Vec<_>>();
+
+    if node.output_node {
+        // Output nodes terminate the workflow and do not produce any
+        // output, so we return an empty tuple.
+        return Ok(quote! {
+            impl < #(#generic_list),* > crate :: nodes :: TypedNode for #inputs_name < #(#generic_instantiation_list),* >  {
+                type Output = ();
+                fn output(&self, _node_id: WorkflowNodeId) -> Self::Output {}
+
+                const NAME: &'static str = #node_name;
+                const DISPLAY_NAME: &'static str = #display_name;
+                const DESCRIPTION: &'static str = #description;
+                const CATEGORY: &'static str = #category;
+            }
+            impl < #(#generic_list),* > crate :: nodes :: TypedOutputNode for #inputs_name < #(#generic_instantiation_list),* > {}
+        });
+    }
+
     let outputs = node.processed_output().collect::<Vec<_>>();
 
     let name = name_to_ident(&format!("{}Output", node.name), true)?;
@@ -360,10 +406,6 @@ fn write_node_outputs(
 
     let typed_node = {
         let outputs_name = name.clone();
-        let node_name = node.name.as_str();
-        let display_name = node.display_name.as_str();
-        let description = node.description.as_str();
-        let category = node.category.as_str();
 
         let fields = outputs
             .iter()
@@ -377,21 +419,6 @@ fn write_node_outputs(
                 })
             })
             .collect::<Result<Vec<_>>>()?;
-
-        let generic_list = processed_inputs.iter().map(|input| {
-            let generic_name = &input.generic_name;
-            let generic_ty = &input.generic_ty;
-            quote! {
-                #generic_name: crate :: nodes :: #generic_ty
-            }
-        });
-
-        let generic_instantiation_list = processed_inputs.iter().map(|input| {
-            let generic_name = &input.generic_name;
-            quote! {
-                #generic_name
-            }
-        });
 
         quote! {
             impl < #(#generic_list),* > crate :: nodes :: TypedNode for #inputs_name < #(#generic_instantiation_list),* >  {

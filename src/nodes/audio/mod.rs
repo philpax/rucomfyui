@@ -32,19 +32,15 @@ pub struct PreviewAudio<Audio: crate::nodes::Audio> {
     ///No documentation.
     pub audio: Audio,
 }
-///Output for [`PreviewAudio`].
-#[derive(Clone)]
-pub struct PreviewAudioOutput {}
 impl<Audio: crate::nodes::Audio> crate::nodes::TypedNode for PreviewAudio<Audio> {
-    type Output = PreviewAudioOutput;
-    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
-        Self::Output {}
-    }
+    type Output = ();
+    fn output(&self, _node_id: WorkflowNodeId) -> Self::Output {}
     const NAME: &'static str = "PreviewAudio";
     const DISPLAY_NAME: &'static str = "PreviewAudio";
     const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "audio";
 }
+impl<Audio: crate::nodes::Audio> crate::nodes::TypedOutputNode for PreviewAudio<Audio> {}
 ///**SaveAudio**
 pub struct SaveAudio<Audio: crate::nodes::Audio, FilenamePrefix: crate::nodes::String> {
     ///No documentation.
@@ -52,19 +48,18 @@ pub struct SaveAudio<Audio: crate::nodes::Audio, FilenamePrefix: crate::nodes::S
     ///No documentation.
     pub filename_prefix: FilenamePrefix,
 }
-///Output for [`SaveAudio`].
-#[derive(Clone)]
-pub struct SaveAudioOutput {}
 impl<
     Audio: crate::nodes::Audio,
     FilenamePrefix: crate::nodes::String,
 > crate::nodes::TypedNode for SaveAudio<Audio, FilenamePrefix> {
-    type Output = SaveAudioOutput;
-    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
-        Self::Output {}
-    }
+    type Output = ();
+    fn output(&self, _node_id: WorkflowNodeId) -> Self::Output {}
     const NAME: &'static str = "SaveAudio";
     const DISPLAY_NAME: &'static str = "SaveAudio";
     const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "audio";
 }
+impl<
+    Audio: crate::nodes::Audio,
+    FilenamePrefix: crate::nodes::String,
+> crate::nodes::TypedOutputNode for SaveAudio<Audio, FilenamePrefix> {}
