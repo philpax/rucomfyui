@@ -1,6 +1,6 @@
 //! Workflow graphs for ComfyUI.
 
-use std::collections::HashMap;
+use std::{collections::HashMap, fmt::Display, str::FromStr};
 
 use serde::{Deserialize, Serialize};
 
@@ -12,16 +12,16 @@ use crate::nodes::TypedNode;
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq, Default)]
 pub struct Workflow(
     /// The nodes in the workflow.
-    pub HashMap<u32, WorkflowNode>,
+    pub HashMap<WorkflowNodeId, WorkflowNode>,
 );
 impl Workflow {
     /// Create a new workflow.
-    pub fn new(nodes: impl IntoIterator<Item = (u32, WorkflowNode)>) -> Self {
-        Self(HashMap::from_iter(nodes))
+    pub fn new(nodes: impl IntoIterator<Item = (WorkflowNodeId, WorkflowNode)>) -> Self {
+        Self::from_iter(nodes)
     }
 }
-impl FromIterator<(u32, WorkflowNode)> for Workflow {
-    fn from_iter<T: IntoIterator<Item = (u32, WorkflowNode)>>(iter: T) -> Self {
+impl FromIterator<(WorkflowNodeId, WorkflowNode)> for Workflow {
+    fn from_iter<T: IntoIterator<Item = (WorkflowNodeId, WorkflowNode)>>(iter: T) -> Self {
         Self(HashMap::from_iter(iter))
     }
 }
@@ -49,7 +49,7 @@ impl AsRef<Workflow> for WorkflowGraph {
 impl WorkflowGraph {
     /// Add a node to the workflow.
     pub fn add(&mut self, node: impl Into<WorkflowNode>) -> WorkflowNodeId {
-        let id = self.last_node + 1;
+        let id = WorkflowNodeId(self.last_node.0 + 1);
         self.workflow.0.insert(id, node.into());
         self.last_node = id;
         id
@@ -68,7 +68,27 @@ impl WorkflowGraph {
 }
 
 /// A workflow node ID.
-pub type WorkflowNodeId = u32;
+#[derive(Debug, Serialize, Deserialize, Copy, Clone, PartialEq, Eq, Hash, Default)]
+#[repr(transparent)]
+#[serde(transparent)]
+pub struct WorkflowNodeId(pub u32);
+impl WorkflowNodeId {
+    /// Convert to a [`WorkflowInput`] with a slot.
+    pub fn to_input_with_slot(self, slot: u32) -> WorkflowInput {
+        WorkflowInput::slot(self, slot)
+    }
+}
+impl Display for WorkflowNodeId {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "{}", self.0)
+    }
+}
+impl FromStr for WorkflowNodeId {
+    type Err = std::num::ParseIntError;
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        Ok(Self(s.parse()?))
+    }
+}
 
 /// A node in the workflow.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]

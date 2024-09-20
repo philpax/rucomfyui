@@ -109,7 +109,7 @@ fn type_module_definitions() -> Result<TokenStream> {
                 }
                 impl ToWorkflowInput for #output_name {
                     fn to_workflow_input(&self) -> WorkflowInput {
-                        WorkflowInput::Slot(self.node_id.to_string(), self.node_slot)
+                        self.node_id.to_input_with_slot(self.node_slot)
                     }
                 }
                 impl #name for #output_name {}

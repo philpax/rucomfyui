@@ -24,7 +24,7 @@ impl AudioOut {
 }
 impl ToWorkflowInput for AudioOut {
     fn to_workflow_input(&self) -> WorkflowInput {
-        WorkflowInput::Slot(self.node_id.to_string(), self.node_slot)
+        self.node_id.to_input_with_slot(self.node_slot)
     }
 }
 impl Audio for AudioOut {}
@@ -52,7 +52,7 @@ impl BooleanOut {
 }
 impl ToWorkflowInput for BooleanOut {
     fn to_workflow_input(&self) -> WorkflowInput {
-        WorkflowInput::Slot(self.node_id.to_string(), self.node_slot)
+        self.node_id.to_input_with_slot(self.node_slot)
     }
 }
 impl Boolean for BooleanOut {}
@@ -80,7 +80,7 @@ impl ClipVisionOutputOut {
 }
 impl ToWorkflowInput for ClipVisionOutputOut {
     fn to_workflow_input(&self) -> WorkflowInput {
-        WorkflowInput::Slot(self.node_id.to_string(), self.node_slot)
+        self.node_id.to_input_with_slot(self.node_slot)
     }
 }
 impl ClipVisionOutput for ClipVisionOutputOut {}
@@ -108,7 +108,7 @@ impl ClipVisionOut {
 }
 impl ToWorkflowInput for ClipVisionOut {
     fn to_workflow_input(&self) -> WorkflowInput {
-        WorkflowInput::Slot(self.node_id.to_string(), self.node_slot)
+        self.node_id.to_input_with_slot(self.node_slot)
     }
 }
 impl ClipVision for ClipVisionOut {}
@@ -136,7 +136,7 @@ impl ClipOut {
 }
 impl ToWorkflowInput for ClipOut {
     fn to_workflow_input(&self) -> WorkflowInput {
-        WorkflowInput::Slot(self.node_id.to_string(), self.node_slot)
+        self.node_id.to_input_with_slot(self.node_slot)
     }
 }
 impl Clip for ClipOut {}
@@ -164,7 +164,7 @@ impl ConditioningOut {
 }
 impl ToWorkflowInput for ConditioningOut {
     fn to_workflow_input(&self) -> WorkflowInput {
-        WorkflowInput::Slot(self.node_id.to_string(), self.node_slot)
+        self.node_id.to_input_with_slot(self.node_slot)
     }
 }
 impl Conditioning for ConditioningOut {}
@@ -192,7 +192,7 @@ impl ControlNetOut {
 }
 impl ToWorkflowInput for ControlNetOut {
     fn to_workflow_input(&self) -> WorkflowInput {
-        WorkflowInput::Slot(self.node_id.to_string(), self.node_slot)
+        self.node_id.to_input_with_slot(self.node_slot)
     }
 }
 impl ControlNet for ControlNetOut {}
@@ -220,7 +220,7 @@ impl FloatOut {
 }
 impl ToWorkflowInput for FloatOut {
     fn to_workflow_input(&self) -> WorkflowInput {
-        WorkflowInput::Slot(self.node_id.to_string(), self.node_slot)
+        self.node_id.to_input_with_slot(self.node_slot)
     }
 }
 impl Float for FloatOut {}
@@ -248,7 +248,7 @@ impl GligenOut {
 }
 impl ToWorkflowInput for GligenOut {
     fn to_workflow_input(&self) -> WorkflowInput {
-        WorkflowInput::Slot(self.node_id.to_string(), self.node_slot)
+        self.node_id.to_input_with_slot(self.node_slot)
     }
 }
 impl Gligen for GligenOut {}
@@ -276,7 +276,7 @@ impl GuiderOut {
 }
 impl ToWorkflowInput for GuiderOut {
     fn to_workflow_input(&self) -> WorkflowInput {
-        WorkflowInput::Slot(self.node_id.to_string(), self.node_slot)
+        self.node_id.to_input_with_slot(self.node_slot)
     }
 }
 impl Guider for GuiderOut {}
@@ -304,7 +304,7 @@ impl ImageOut {
 }
 impl ToWorkflowInput for ImageOut {
     fn to_workflow_input(&self) -> WorkflowInput {
-        WorkflowInput::Slot(self.node_id.to_string(), self.node_slot)
+        self.node_id.to_input_with_slot(self.node_slot)
     }
 }
 impl Image for ImageOut {}
@@ -332,7 +332,7 @@ impl InpaintModelOut {
 }
 impl ToWorkflowInput for InpaintModelOut {
     fn to_workflow_input(&self) -> WorkflowInput {
-        WorkflowInput::Slot(self.node_id.to_string(), self.node_slot)
+        self.node_id.to_input_with_slot(self.node_slot)
     }
 }
 impl InpaintModel for InpaintModelOut {}
@@ -360,7 +360,7 @@ impl InpaintPatchOut {
 }
 impl ToWorkflowInput for InpaintPatchOut {
     fn to_workflow_input(&self) -> WorkflowInput {
-        WorkflowInput::Slot(self.node_id.to_string(), self.node_slot)
+        self.node_id.to_input_with_slot(self.node_slot)
     }
 }
 impl InpaintPatch for InpaintPatchOut {}
@@ -388,7 +388,7 @@ impl IntOut {
 }
 impl ToWorkflowInput for IntOut {
     fn to_workflow_input(&self) -> WorkflowInput {
-        WorkflowInput::Slot(self.node_id.to_string(), self.node_slot)
+        self.node_id.to_input_with_slot(self.node_slot)
     }
 }
 impl Int for IntOut {}
@@ -416,7 +416,7 @@ impl LatentOut {
 }
 impl ToWorkflowInput for LatentOut {
     fn to_workflow_input(&self) -> WorkflowInput {
-        WorkflowInput::Slot(self.node_id.to_string(), self.node_slot)
+        self.node_id.to_input_with_slot(self.node_slot)
     }
 }
 impl Latent for LatentOut {}
@@ -444,7 +444,7 @@ impl MaskOut {
 }
 impl ToWorkflowInput for MaskOut {
     fn to_workflow_input(&self) -> WorkflowInput {
-        WorkflowInput::Slot(self.node_id.to_string(), self.node_slot)
+        self.node_id.to_input_with_slot(self.node_slot)
     }
 }
 impl Mask for MaskOut {}
@@ -472,7 +472,7 @@ impl ModelOut {
 }
 impl ToWorkflowInput for ModelOut {
     fn to_workflow_input(&self) -> WorkflowInput {
-        WorkflowInput::Slot(self.node_id.to_string(), self.node_slot)
+        self.node_id.to_input_with_slot(self.node_slot)
     }
 }
 impl Model for ModelOut {}
@@ -500,7 +500,7 @@ impl NoiseOut {
 }
 impl ToWorkflowInput for NoiseOut {
     fn to_workflow_input(&self) -> WorkflowInput {
-        WorkflowInput::Slot(self.node_id.to_string(), self.node_slot)
+        self.node_id.to_input_with_slot(self.node_slot)
     }
 }
 impl Noise for NoiseOut {}
@@ -528,7 +528,7 @@ impl PhotomakerOut {
 }
 impl ToWorkflowInput for PhotomakerOut {
     fn to_workflow_input(&self) -> WorkflowInput {
-        WorkflowInput::Slot(self.node_id.to_string(), self.node_slot)
+        self.node_id.to_input_with_slot(self.node_slot)
     }
 }
 impl Photomaker for PhotomakerOut {}
@@ -556,7 +556,7 @@ impl SamplerOut {
 }
 impl ToWorkflowInput for SamplerOut {
     fn to_workflow_input(&self) -> WorkflowInput {
-        WorkflowInput::Slot(self.node_id.to_string(), self.node_slot)
+        self.node_id.to_input_with_slot(self.node_slot)
     }
 }
 impl Sampler for SamplerOut {}
@@ -584,7 +584,7 @@ impl StringOut {
 }
 impl ToWorkflowInput for StringOut {
     fn to_workflow_input(&self) -> WorkflowInput {
-        WorkflowInput::Slot(self.node_id.to_string(), self.node_slot)
+        self.node_id.to_input_with_slot(self.node_slot)
     }
 }
 impl String for StringOut {}
@@ -612,7 +612,7 @@ impl SigmasOut {
 }
 impl ToWorkflowInput for SigmasOut {
     fn to_workflow_input(&self) -> WorkflowInput {
-        WorkflowInput::Slot(self.node_id.to_string(), self.node_slot)
+        self.node_id.to_input_with_slot(self.node_slot)
     }
 }
 impl Sigmas for SigmasOut {}
@@ -640,7 +640,7 @@ impl StyleModelOut {
 }
 impl ToWorkflowInput for StyleModelOut {
     fn to_workflow_input(&self) -> WorkflowInput {
-        WorkflowInput::Slot(self.node_id.to_string(), self.node_slot)
+        self.node_id.to_input_with_slot(self.node_slot)
     }
 }
 impl StyleModel for StyleModelOut {}
@@ -668,7 +668,7 @@ impl UpscaleModelOut {
 }
 impl ToWorkflowInput for UpscaleModelOut {
     fn to_workflow_input(&self) -> WorkflowInput {
-        WorkflowInput::Slot(self.node_id.to_string(), self.node_slot)
+        self.node_id.to_input_with_slot(self.node_slot)
     }
 }
 impl UpscaleModel for UpscaleModelOut {}
@@ -696,7 +696,7 @@ impl VaeOut {
 }
 impl ToWorkflowInput for VaeOut {
     fn to_workflow_input(&self) -> WorkflowInput {
-        WorkflowInput::Slot(self.node_id.to_string(), self.node_slot)
+        self.node_id.to_input_with_slot(self.node_slot)
     }
 }
 impl Vae for VaeOut {}
@@ -724,7 +724,7 @@ impl WebcamOut {
 }
 impl ToWorkflowInput for WebcamOut {
     fn to_workflow_input(&self) -> WorkflowInput {
-        WorkflowInput::Slot(self.node_id.to_string(), self.node_slot)
+        self.node_id.to_input_with_slot(self.node_slot)
     }
 }
 impl Webcam for WebcamOut {}

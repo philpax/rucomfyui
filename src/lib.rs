@@ -20,6 +20,9 @@ pub enum ClientError {
     #[error("reqwest error: {0}")]
     /// Reqwest error.
     Reqwest(#[from] reqwest::Error),
+    #[error("parse error: {0}")]
+    /// Parse int error.
+    ParseInt(#[from] std::num::ParseIntError),
 }
 /// Result type for the client.
 pub type Result<T> = std::result::Result<T, ClientError>;
