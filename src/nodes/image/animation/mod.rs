@@ -2,8 +2,6 @@
 #![allow(unused_imports)]
 use std::collections::HashMap;
 use crate::workflow::{WorkflowNodeId, WorkflowInput};
-/// Output types for nodes.
-pub mod out {}
 ///**SaveAnimatedPNG**: No description.
 pub struct SaveAnimatedPng<
     Images: crate::nodes::types::Image,

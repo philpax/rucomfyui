@@ -256,6 +256,15 @@ fn write_category_tree((name, tree): (&str, &CategoryTree), directory: &Path) ->
         }
     }
 
+    let out_section = (!node_outputs.is_empty()).then(|| {
+        quote! {
+            /// Output types for nodes.
+            pub mod out {
+                #(#node_outputs)*
+            }
+        }
+    });
+
     let output = quote! {
         #![doc = #doc]
         #![allow(unused_imports)]
@@ -266,10 +275,7 @@ fn write_category_tree((name, tree): (&str, &CategoryTree), directory: &Path) ->
 
         #(#modules)*
 
-        /// Output types for nodes.
-        pub mod out {
-            #(#node_outputs)*
-        }
+        #out_section
 
         #(#nodes)*
     };
