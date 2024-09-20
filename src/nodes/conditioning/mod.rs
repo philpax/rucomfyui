@@ -79,7 +79,7 @@ pub mod out {
         pub conditioning: crate::nodes::types::ConditioningOut,
     }
 }
-///**CLIP Set Last Layer**
+///**CLIP Set Last Layer**: No description.
 pub struct ClipSetLastLayer<
     Clip: crate::nodes::types::Clip,
     StopAtClipLayer: crate::nodes::types::Int,
@@ -135,7 +135,7 @@ impl<
     const DESCRIPTION: &'static str = "Encodes a text prompt using a CLIP model into an embedding that can be used to guide the diffusion model towards generating specific images.";
     const CATEGORY: &'static str = "conditioning";
 }
-///**CLIP Vision Encode**
+///**CLIP Vision Encode**: No description.
 pub struct ClipVisionEncode<
     ClipVision: crate::nodes::types::ClipVision,
     Image: crate::nodes::types::Image,
@@ -163,7 +163,7 @@ impl<
     const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "conditioning";
 }
-///**ConditioningAverage**
+///**ConditioningAverage**: No description.
 pub struct ConditioningAverage<
     ConditioningTo: crate::nodes::types::Conditioning,
     ConditioningFrom: crate::nodes::types::Conditioning,
@@ -196,7 +196,7 @@ for ConditioningAverage<ConditioningTo, ConditioningFrom, ConditioningToStrength
     const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "conditioning";
 }
-///**Conditioning (Combine)**
+///**Conditioning (Combine)**: No description.
 pub struct ConditioningCombine<
     Conditioning1: crate::nodes::types::Conditioning,
     Conditioning2: crate::nodes::types::Conditioning,
@@ -224,7 +224,7 @@ impl<
     const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "conditioning";
 }
-///**Conditioning (Concat)**
+///**Conditioning (Concat)**: No description.
 pub struct ConditioningConcat<
     ConditioningTo: crate::nodes::types::Conditioning,
     ConditioningFrom: crate::nodes::types::Conditioning,
@@ -252,7 +252,7 @@ impl<
     const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "conditioning";
 }
-///**Conditioning (Set Area)**
+///**Conditioning (Set Area)**: No description.
 pub struct ConditioningSetArea<
     Conditioning: crate::nodes::types::Conditioning,
     Width: crate::nodes::types::Int,
@@ -297,7 +297,7 @@ for ConditioningSetArea<Conditioning, Width, Height, X, Y, Strength> {
     const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "conditioning";
 }
-///**Conditioning (Set Area with Percentage)**
+///**Conditioning (Set Area with Percentage)**: No description.
 pub struct ConditioningSetAreaPercentage<
     Conditioning: crate::nodes::types::Conditioning,
     Width: crate::nodes::types::Float,
@@ -342,7 +342,7 @@ for ConditioningSetAreaPercentage<Conditioning, Width, Height, X, Y, Strength> {
     const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "conditioning";
 }
-///**ConditioningSetAreaStrength**
+///**ConditioningSetAreaStrength**: No description.
 pub struct ConditioningSetAreaStrength<
     Conditioning: crate::nodes::types::Conditioning,
     Strength: crate::nodes::types::Float,
@@ -370,7 +370,7 @@ impl<
     const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "conditioning";
 }
-///**Conditioning (Set Mask)**
+///**Conditioning (Set Mask)**: No description.
 pub struct ConditioningSetMask<
     Conditioning: crate::nodes::types::Conditioning,
     Mask: crate::nodes::types::Mask,
@@ -407,7 +407,7 @@ for ConditioningSetMask<Conditioning, Mask, Strength, SetCondArea> {
     const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "conditioning";
 }
-///**unCLIPConditioning**
+///**unCLIPConditioning**: No description.
 pub struct UnClipConditioning<
     Conditioning: crate::nodes::types::Conditioning,
     ClipVisionOutput: crate::nodes::types::ClipVisionOutput,

@@ -14,7 +14,7 @@ pub mod out {
         pub latent: crate::nodes::types::LatentOut,
     }
 }
-///**InpaintModelConditioning**
+///**InpaintModelConditioning**: No description.
 pub struct InpaintModelConditioning<
     Positive: crate::nodes::types::Conditioning,
     Negative: crate::nodes::types::Conditioning,

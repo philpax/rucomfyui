@@ -10,7 +10,7 @@ pub mod out {
         pub audio: crate::nodes::types::AudioOut,
     }
 }
-///**LoadAudio**
+///**LoadAudio**: No description.
 pub struct LoadAudio<Audio: crate::nodes::types::String> {
     ///No documentation.
     pub audio: Audio,
@@ -30,7 +30,7 @@ impl<Audio: crate::nodes::types::String> crate::nodes::TypedNode for LoadAudio<A
     const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "audio";
 }
-///**PreviewAudio**
+///**PreviewAudio**: No description.
 pub struct PreviewAudio<Audio: crate::nodes::types::Audio> {
     ///No documentation.
     pub audio: Audio,
@@ -45,7 +45,7 @@ impl<Audio: crate::nodes::types::Audio> crate::nodes::TypedNode for PreviewAudio
 }
 impl<Audio: crate::nodes::types::Audio> crate::nodes::TypedOutputNode
 for PreviewAudio<Audio> {}
-///**SaveAudio**
+///**SaveAudio**: No description.
 pub struct SaveAudio<
     Audio: crate::nodes::types::Audio,
     FilenamePrefix: crate::nodes::types::String,

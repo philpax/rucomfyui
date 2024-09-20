@@ -58,7 +58,7 @@ pub mod out {
         pub sigmas: crate::nodes::types::SigmasOut,
     }
 }
-///**AlignYourStepsScheduler**
+///**AlignYourStepsScheduler**: No description.
 pub struct AlignYourStepsScheduler<
     ModelType: crate::nodes::types::String,
     Steps: crate::nodes::types::Int,
@@ -90,7 +90,7 @@ impl<
     const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "sampling/custom_sampling/schedulers";
 }
-///**BasicScheduler**
+///**BasicScheduler**: No description.
 pub struct BasicScheduler<
     Model: crate::nodes::types::Model,
     Scheduler: crate::nodes::types::String,
@@ -126,7 +126,7 @@ impl<
     const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "sampling/custom_sampling/schedulers";
 }
-///**BetaSamplingScheduler**
+///**BetaSamplingScheduler**: No description.
 pub struct BetaSamplingScheduler<
     Model: crate::nodes::types::Model,
     Steps: crate::nodes::types::Int,
@@ -162,7 +162,7 @@ impl<
     const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "sampling/custom_sampling/schedulers";
 }
-///**ExponentialScheduler**
+///**ExponentialScheduler**: No description.
 pub struct ExponentialScheduler<
     Steps: crate::nodes::types::Int,
     SigmaMax: crate::nodes::types::Float,
@@ -194,7 +194,7 @@ impl<
     const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "sampling/custom_sampling/schedulers";
 }
-///**GITSScheduler**
+///**GITSScheduler**: No description.
 pub struct GitsScheduler<
     Coeff: crate::nodes::types::Float,
     Steps: crate::nodes::types::Int,
@@ -226,7 +226,7 @@ impl<
     const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "sampling/custom_sampling/schedulers";
 }
-///**KarrasScheduler**
+///**KarrasScheduler**: No description.
 pub struct KarrasScheduler<
     Steps: crate::nodes::types::Int,
     SigmaMax: crate::nodes::types::Float,
@@ -262,7 +262,7 @@ impl<
     const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "sampling/custom_sampling/schedulers";
 }
-///**PolyexponentialScheduler**
+///**PolyexponentialScheduler**: No description.
 pub struct PolyexponentialScheduler<
     Steps: crate::nodes::types::Int,
     SigmaMax: crate::nodes::types::Float,
@@ -298,7 +298,7 @@ impl<
     const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "sampling/custom_sampling/schedulers";
 }
-///**SDTurboScheduler**
+///**SDTurboScheduler**: No description.
 pub struct SdTurboScheduler<
     Model: crate::nodes::types::Model,
     Steps: crate::nodes::types::Int,
@@ -330,7 +330,7 @@ impl<
     const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "sampling/custom_sampling/schedulers";
 }
-///**VPScheduler**
+///**VPScheduler**: No description.
 pub struct VpScheduler<
     Steps: crate::nodes::types::Int,
     BetaD: crate::nodes::types::Float,

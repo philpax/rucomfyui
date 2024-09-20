@@ -64,7 +64,7 @@ pub mod out {
         pub sampler: crate::nodes::types::SamplerOut,
     }
 }
-///**KSamplerSelect**
+///**KSamplerSelect**: No description.
 pub struct KSamplerSelect<SamplerName: crate::nodes::types::String> {
     ///No documentation.
     pub sampler_name: SamplerName,
@@ -85,7 +85,7 @@ for KSamplerSelect<SamplerName> {
     const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "sampling/custom_sampling/samplers";
 }
-///**SamplerDPMAdaptative**
+///**SamplerDPMAdaptative**: No description.
 pub struct SamplerDpmAdaptative<
     Order: crate::nodes::types::Int,
     Rtol: crate::nodes::types::Float,
@@ -157,7 +157,7 @@ for SamplerDpmAdaptative<
     const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "sampling/custom_sampling/samplers";
 }
-///**SamplerDPMPP_2M_SDE**
+///**SamplerDPMPP_2M_SDE**: No description.
 pub struct SamplerDpmpp2MSde<
     SolverType: crate::nodes::types::String,
     Eta: crate::nodes::types::Float,
@@ -193,7 +193,7 @@ impl<
     const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "sampling/custom_sampling/samplers";
 }
-///**SamplerDPMPP_2S_Ancestral**
+///**SamplerDPMPP_2S_Ancestral**: No description.
 pub struct SamplerDpmpp2SAncestral<
     Eta: crate::nodes::types::Float,
     SNoise: crate::nodes::types::Float,
@@ -221,7 +221,7 @@ impl<
     const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "sampling/custom_sampling/samplers";
 }
-///**SamplerDPMPP_3M_SDE**
+///**SamplerDPMPP_3M_SDE**: No description.
 pub struct SamplerDpmpp3MSde<
     Eta: crate::nodes::types::Float,
     SNoise: crate::nodes::types::Float,
@@ -253,7 +253,7 @@ impl<
     const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "sampling/custom_sampling/samplers";
 }
-///**SamplerDPMPP_SDE**
+///**SamplerDPMPP_SDE**: No description.
 pub struct SamplerDpmppSde<
     Eta: crate::nodes::types::Float,
     SNoise: crate::nodes::types::Float,
@@ -289,7 +289,7 @@ impl<
     const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "sampling/custom_sampling/samplers";
 }
-///**SamplerEulerAncestral**
+///**SamplerEulerAncestral**: No description.
 pub struct SamplerEulerAncestral<
     Eta: crate::nodes::types::Float,
     SNoise: crate::nodes::types::Float,
@@ -317,7 +317,7 @@ impl<
     const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "sampling/custom_sampling/samplers";
 }
-///**SamplerEulerAncestralCFG++**
+///**SamplerEulerAncestralCFG++**: No description.
 pub struct SamplerEulerAncestralCfgpp<
     Eta: crate::nodes::types::Float,
     SNoise: crate::nodes::types::Float,
@@ -345,7 +345,7 @@ impl<
     const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "sampling/custom_sampling/samplers";
 }
-///**SamplerLCMUpscale**
+///**SamplerLCMUpscale**: No description.
 pub struct SamplerLcmUpscale<
     ScaleRatio: crate::nodes::types::Float,
     ScaleSteps: crate::nodes::types::Int,
@@ -377,7 +377,7 @@ impl<
     const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "sampling/custom_sampling/samplers";
 }
-///**SamplerLMS**
+///**SamplerLMS**: No description.
 pub struct SamplerLms<Order: crate::nodes::types::Int> {
     ///No documentation.
     pub order: Order,

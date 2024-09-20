@@ -16,7 +16,7 @@ pub mod out {
         pub latent: crate::nodes::types::LatentOut,
     }
 }
-///**Set Latent Noise Mask**
+///**Set Latent Noise Mask**: No description.
 pub struct SetLatentNoiseMask<
     Samples: crate::nodes::types::Latent,
     Mask: crate::nodes::types::Mask,
@@ -44,7 +44,7 @@ impl<
     const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "latent/inpaint";
 }
-///**VAE Encode (for Inpainting)**
+///**VAE Encode (for Inpainting)**: No description.
 pub struct VaeEncodeForInpaint<
     Pixels: crate::nodes::types::Image,
     Vae: crate::nodes::types::Vae,

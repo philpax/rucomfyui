@@ -22,7 +22,7 @@ pub mod out {
         pub guider: crate::nodes::types::GuiderOut,
     }
 }
-///**BasicGuider**
+///**BasicGuider**: No description.
 pub struct BasicGuider<
     Model: crate::nodes::types::Model,
     Conditioning: crate::nodes::types::Conditioning,
@@ -50,7 +50,7 @@ impl<
     const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "sampling/custom_sampling/guiders";
 }
-///**CFGGuider**
+///**CFGGuider**: No description.
 pub struct CfgGuider<
     Model: crate::nodes::types::Model,
     Positive: crate::nodes::types::Conditioning,
@@ -86,7 +86,7 @@ impl<
     const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "sampling/custom_sampling/guiders";
 }
-///**DualCFGGuider**
+///**DualCFGGuider**: No description.
 pub struct DualCfgGuider<
     Model: crate::nodes::types::Model,
     Cond1: crate::nodes::types::Conditioning,

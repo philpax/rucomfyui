@@ -85,7 +85,7 @@ impl<
     const DESCRIPTION: &'static str = "Create a new batch of empty latent images to be denoised via sampling.";
     const CATEGORY: &'static str = "latent";
 }
-///**Latent Composite**
+///**Latent Composite**: No description.
 pub struct LatentComposite<
     SamplesTo: crate::nodes::types::Latent,
     SamplesFrom: crate::nodes::types::Latent,
@@ -125,7 +125,7 @@ impl<
     const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "latent";
 }
-///**LatentCompositeMasked**
+///**LatentCompositeMasked**: No description.
 pub struct LatentCompositeMasked<
     Destination: crate::nodes::types::Latent,
     Source: crate::nodes::types::Latent,
@@ -170,7 +170,7 @@ for LatentCompositeMasked<Destination, Source, X, Y, ResizeSource, Mask> {
     const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "latent";
 }
-///**Upscale Latent**
+///**Upscale Latent**: No description.
 pub struct LatentUpscale<
     Samples: crate::nodes::types::Latent,
     UpscaleMethod: crate::nodes::types::String,
@@ -211,7 +211,7 @@ for LatentUpscale<Samples, UpscaleMethod, Width, Height, Crop> {
     const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "latent";
 }
-///**Upscale Latent By**
+///**Upscale Latent By**: No description.
 pub struct LatentUpscaleBy<
     Samples: crate::nodes::types::Latent,
     UpscaleMethod: crate::nodes::types::String,
@@ -271,7 +271,7 @@ impl<
     const DESCRIPTION: &'static str = "Decodes latent images back into pixel space images.";
     const CATEGORY: &'static str = "latent";
 }
-///**VAE Encode**
+///**VAE Encode**: No description.
 pub struct VaeEncode<Pixels: crate::nodes::types::Image, Vae: crate::nodes::types::Vae> {
     ///No documentation.
     pub pixels: Pixels,

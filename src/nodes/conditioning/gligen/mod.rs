@@ -10,7 +10,7 @@ pub mod out {
         pub conditioning: crate::nodes::types::ConditioningOut,
     }
 }
-///**GLIGENTextBoxApply**
+///**GLIGENTextBoxApply**: No description.
 pub struct GligenTextBoxApply<
     ConditioningTo: crate::nodes::types::Conditioning,
     Clip: crate::nodes::types::Clip,

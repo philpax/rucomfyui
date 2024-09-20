@@ -89,7 +89,7 @@ pub mod out {
         pub clip_vision: crate::nodes::types::ClipVisionOut,
     }
 }
-///**Load CLIP Vision**
+///**Load CLIP Vision**: No description.
 pub struct ClipVisionLoader<ClipName: crate::nodes::types::String> {
     ///No documentation.
     pub clip_name: ClipName,
@@ -139,7 +139,7 @@ for CheckpointLoaderSimple<CkptName> {
     const DESCRIPTION: &'static str = "Loads a diffusion model checkpoint, diffusion models are used to denoise latents.";
     const CATEGORY: &'static str = "loaders";
 }
-///**Load ControlNet Model**
+///**Load ControlNet Model**: No description.
 pub struct ControlNetLoader<ControlNetName: crate::nodes::types::String> {
     ///No documentation.
     pub control_net_name: ControlNetName,
@@ -160,7 +160,7 @@ for ControlNetLoader<ControlNetName> {
     const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "loaders";
 }
-///**Load ControlNet Model (diff)**
+///**Load ControlNet Model (diff)**: No description.
 pub struct DiffControlNetLoader<
     Model: crate::nodes::types::Model,
     ControlNetName: crate::nodes::types::String,
@@ -188,7 +188,7 @@ impl<
     const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "loaders";
 }
-///**GLIGENLoader**
+///**GLIGENLoader**: No description.
 pub struct GligenLoader<GligenName: crate::nodes::types::String> {
     ///No documentation.
     pub gligen_name: GligenName,
@@ -209,7 +209,7 @@ for GligenLoader<GligenName> {
     const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "loaders";
 }
-///**HypernetworkLoader**
+///**HypernetworkLoader**: No description.
 pub struct HypernetworkLoader<
     Model: crate::nodes::types::Model,
     HypernetworkName: crate::nodes::types::String,
@@ -318,7 +318,7 @@ impl<
     const DESCRIPTION: &'static str = "LoRAs are used to modify diffusion and CLIP models, altering the way in which latents are denoised such as applying styles. Multiple LoRA nodes can be linked together.";
     const CATEGORY: &'static str = "loaders";
 }
-///**Load Style Model**
+///**Load Style Model**: No description.
 pub struct StyleModelLoader<StyleModelName: crate::nodes::types::String> {
     ///No documentation.
     pub style_model_name: StyleModelName,
@@ -339,7 +339,7 @@ for StyleModelLoader<StyleModelName> {
     const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "loaders";
 }
-///**Load Upscale Model**
+///**Load Upscale Model**: No description.
 pub struct UpscaleModelLoader<ModelName: crate::nodes::types::String> {
     ///No documentation.
     pub model_name: ModelName,
@@ -360,7 +360,7 @@ for UpscaleModelLoader<ModelName> {
     const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "loaders";
 }
-///**Load VAE**
+///**Load VAE**: No description.
 pub struct VaeLoader<VaeName: crate::nodes::types::String> {
     ///No documentation.
     pub vae_name: VaeName,
@@ -381,7 +381,7 @@ for VaeLoader<VaeName> {
     const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "loaders";
 }
-///**unCLIPCheckpointLoader**
+///**unCLIPCheckpointLoader**: No description.
 pub struct UnClipCheckpointLoader<CkptName: crate::nodes::types::String> {
     ///No documentation.
     pub ckpt_name: CkptName,

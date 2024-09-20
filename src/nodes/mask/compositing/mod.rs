@@ -26,7 +26,7 @@ pub mod out {
         pub mask: crate::nodes::types::MaskOut,
     }
 }
-///**Join Image with Alpha**
+///**Join Image with Alpha**: No description.
 pub struct JoinImageWithAlpha<
     Image: crate::nodes::types::Image,
     Alpha: crate::nodes::types::Mask,
@@ -54,7 +54,7 @@ impl<
     const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "mask/compositing";
 }
-///**Porter-Duff Image Composite**
+///**Porter-Duff Image Composite**: No description.
 pub struct PorterDuffImageComposite<
     Source: crate::nodes::types::Image,
     SourceAlpha: crate::nodes::types::Mask,
@@ -99,7 +99,7 @@ for PorterDuffImageComposite<Source, SourceAlpha, Destination, DestinationAlpha,
     const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "mask/compositing";
 }
-///**Split Image with Alpha**
+///**Split Image with Alpha**: No description.
 pub struct SplitImageWithAlpha<Image: crate::nodes::types::Image> {
     ///No documentation.
     pub image: Image,

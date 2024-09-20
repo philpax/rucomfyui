@@ -384,11 +384,15 @@ fn write_node_struct(
         })
         .collect::<Result<Vec<_>>>()?;
 
-    let mut doc = format!("**{}**", node.display_name);
-    if !node.description.is_empty() {
-        doc.push_str(": ");
-        doc.push_str(&node.description);
-    }
+    let doc = format!(
+        "**{}**: {}",
+        node.display_name,
+        if node.description.is_empty() {
+            "No description."
+        } else {
+            &node.description
+        }
+    );
 
     Ok(quote! {
         #[doc = #doc]

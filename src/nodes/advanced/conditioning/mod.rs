@@ -41,7 +41,7 @@ pub mod out {
         pub conditioning: crate::nodes::types::ConditioningOut,
     }
 }
-///**CLIPTextEncodeHunyuanDiT**
+///**CLIPTextEncodeHunyuanDiT**: No description.
 pub struct ClipTextEncodeHunyuanDiT<
     Clip: crate::nodes::types::Clip,
     Bert: crate::nodes::types::String,
@@ -73,7 +73,7 @@ impl<
     const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "advanced/conditioning";
 }
-///**CLIPTextEncodeSD3**
+///**CLIPTextEncodeSD3**: No description.
 pub struct ClipTextEncodeSd3<
     Clip: crate::nodes::types::Clip,
     ClipL: crate::nodes::types::String,
@@ -114,7 +114,7 @@ for ClipTextEncodeSd3<Clip, ClipL, ClipG, T5Xxl, EmptyPadding> {
     const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "advanced/conditioning";
 }
-///**CLIPTextEncodeSDXL**
+///**CLIPTextEncodeSDXL**: No description.
 pub struct ClipTextEncodeSdxl<
     Width: crate::nodes::types::Int,
     Height: crate::nodes::types::Int,
@@ -181,7 +181,7 @@ for ClipTextEncodeSdxl<
     const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "advanced/conditioning";
 }
-///**CLIPTextEncodeSDXLRefiner**
+///**CLIPTextEncodeSDXLRefiner**: No description.
 pub struct ClipTextEncodeSdxlRefiner<
     Ascore: crate::nodes::types::Float,
     Width: crate::nodes::types::Int,
@@ -222,7 +222,7 @@ for ClipTextEncodeSdxlRefiner<Ascore, Width, Height, Text, Clip> {
     const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "advanced/conditioning";
 }
-///**ConditioningSetTimestepRange**
+///**ConditioningSetTimestepRange**: No description.
 pub struct ConditioningSetTimestepRange<
     Conditioning: crate::nodes::types::Conditioning,
     Start: crate::nodes::types::Float,
@@ -254,7 +254,7 @@ impl<
     const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "advanced/conditioning";
 }
-///**ConditioningZeroOut**
+///**ConditioningZeroOut**: No description.
 pub struct ConditioningZeroOut<Conditioning: crate::nodes::types::Conditioning> {
     ///No documentation.
     pub conditioning: Conditioning,

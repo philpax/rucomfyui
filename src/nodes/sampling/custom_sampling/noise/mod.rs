@@ -16,7 +16,7 @@ pub mod out {
         pub noise: crate::nodes::types::NoiseOut,
     }
 }
-///**DisableNoise**
+///**DisableNoise**: No description.
 pub struct DisableNoise {}
 impl crate::nodes::TypedNode for DisableNoise {
     type Output = out::DisableNoiseOutput;
@@ -33,7 +33,7 @@ impl crate::nodes::TypedNode for DisableNoise {
     const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "sampling/custom_sampling/noise";
 }
-///**RandomNoise**
+///**RandomNoise**: No description.
 pub struct RandomNoise<NoiseSeed: crate::nodes::types::Int> {
     ///No documentation.
     pub noise_seed: NoiseSeed,

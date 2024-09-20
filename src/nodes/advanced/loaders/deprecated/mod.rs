@@ -14,7 +14,7 @@ pub mod out {
         pub vae: crate::nodes::types::VaeOut,
     }
 }
-///**DiffusersLoader**
+///**DiffusersLoader**: No description.
 pub struct DiffusersLoader<ModelPath: crate::nodes::types::String> {
     ///No documentation.
     pub model_path: ModelPath,

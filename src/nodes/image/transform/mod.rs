@@ -10,7 +10,7 @@ pub mod out {
         pub image: crate::nodes::types::ImageOut,
     }
 }
-///**ImageCrop**
+///**ImageCrop**: No description.
 pub struct ImageCrop<
     Image: crate::nodes::types::Image,
     Width: crate::nodes::types::Int,

@@ -14,7 +14,7 @@ pub mod out {
         pub latent: crate::nodes::types::LatentOut,
     }
 }
-///**InstructPixToPixConditioning**
+///**InstructPixToPixConditioning**: No description.
 pub struct InstructPixToPixConditioning<
     Positive: crate::nodes::types::Conditioning,
     Negative: crate::nodes::types::Conditioning,

@@ -52,7 +52,7 @@ pub mod out {
         pub model: crate::nodes::types::ModelOut,
     }
 }
-///**ModelSamplingAuraFlow**
+///**ModelSamplingAuraFlow**: No description.
 pub struct ModelSamplingAuraFlow<
     Model: crate::nodes::types::Model,
     Shift: crate::nodes::types::Float,
@@ -80,7 +80,7 @@ impl<
     const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "advanced/model";
 }
-///**ModelSamplingContinuousEDM**
+///**ModelSamplingContinuousEDM**: No description.
 pub struct ModelSamplingContinuousEdm<
     Model: crate::nodes::types::Model,
     Sampling: crate::nodes::types::String,
@@ -117,7 +117,7 @@ for ModelSamplingContinuousEdm<Model, Sampling, SigmaMax, SigmaMin> {
     const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "advanced/model";
 }
-///**ModelSamplingContinuousV**
+///**ModelSamplingContinuousV**: No description.
 pub struct ModelSamplingContinuousV<
     Model: crate::nodes::types::Model,
     Sampling: crate::nodes::types::String,
@@ -154,7 +154,7 @@ for ModelSamplingContinuousV<Model, Sampling, SigmaMax, SigmaMin> {
     const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "advanced/model";
 }
-///**ModelSamplingDiscrete**
+///**ModelSamplingDiscrete**: No description.
 pub struct ModelSamplingDiscrete<
     Model: crate::nodes::types::Model,
     Sampling: crate::nodes::types::String,
@@ -186,7 +186,7 @@ impl<
     const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "advanced/model";
 }
-///**ModelSamplingFlux**
+///**ModelSamplingFlux**: No description.
 pub struct ModelSamplingFlux<
     Model: crate::nodes::types::Model,
     MaxShift: crate::nodes::types::Float,
@@ -227,7 +227,7 @@ for ModelSamplingFlux<Model, MaxShift, BaseShift, Width, Height> {
     const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "advanced/model";
 }
-///**ModelSamplingSD3**
+///**ModelSamplingSD3**: No description.
 pub struct ModelSamplingSd3<
     Model: crate::nodes::types::Model,
     Shift: crate::nodes::types::Float,
@@ -255,7 +255,7 @@ impl<
     const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "advanced/model";
 }
-///**ModelSamplingStableCascade**
+///**ModelSamplingStableCascade**: No description.
 pub struct ModelSamplingStableCascade<
     Model: crate::nodes::types::Model,
     Shift: crate::nodes::types::Float,
@@ -283,7 +283,7 @@ impl<
     const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "advanced/model";
 }
-///**RescaleCFG**
+///**RescaleCFG**: No description.
 pub struct RescaleCfg<
     Model: crate::nodes::types::Model,
     Multiplier: crate::nodes::types::Float,

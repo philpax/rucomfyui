@@ -20,7 +20,7 @@ pub mod out {
         pub stage_b: crate::nodes::types::LatentOut,
     }
 }
-///**StableCascade_EmptyLatentImage**
+///**StableCascade_EmptyLatentImage**: No description.
 pub struct StableCascadeEmptyLatentImage<
     Width: crate::nodes::types::Int,
     Height: crate::nodes::types::Int,
@@ -61,7 +61,7 @@ for StableCascadeEmptyLatentImage<Width, Height, Compression, BatchSize> {
     const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "latent/stable_cascade";
 }
-///**StableCascade_StageC_VAEEncode**
+///**StableCascade_StageC_VAEEncode**: No description.
 pub struct StableCascadeStageCVaeEncode<
     Image: crate::nodes::types::Image,
     Vae: crate::nodes::types::Vae,

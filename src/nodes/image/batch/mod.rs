@@ -22,7 +22,7 @@ pub mod out {
         pub image: crate::nodes::types::ImageOut,
     }
 }
-///**ImageFromBatch**
+///**ImageFromBatch**: No description.
 pub struct ImageFromBatch<
     Image: crate::nodes::types::Image,
     BatchIndex: crate::nodes::types::Int,
@@ -54,7 +54,7 @@ impl<
     const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "image/batch";
 }
-///**Rebatch Images**
+///**Rebatch Images**: No description.
 pub struct RebatchImages<
     Images: crate::nodes::types::Image,
     BatchSize: crate::nodes::types::Int,
@@ -82,7 +82,7 @@ impl<
     const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "image/batch";
 }
-///**RepeatImageBatch**
+///**RepeatImageBatch**: No description.
 pub struct RepeatImageBatch<
     Image: crate::nodes::types::Image,
     Amount: crate::nodes::types::Int,

@@ -3,7 +3,7 @@
 use crate::WorkflowNodeId;
 /// Output types for nodes.
 pub mod out {}
-///**SaveAnimatedPNG**
+///**SaveAnimatedPNG**: No description.
 pub struct SaveAnimatedPng<
     Images: crate::nodes::types::Image,
     FilenamePrefix: crate::nodes::types::String,
@@ -40,7 +40,7 @@ impl<
     CompressLevel: crate::nodes::types::Int,
 > crate::nodes::TypedOutputNode
 for SaveAnimatedPng<Images, FilenamePrefix, Fps, CompressLevel> {}
-///**SaveAnimatedWEBP**
+///**SaveAnimatedWEBP**: No description.
 pub struct SaveAnimatedWebp<
     Images: crate::nodes::types::Image,
     FilenamePrefix: crate::nodes::types::String,

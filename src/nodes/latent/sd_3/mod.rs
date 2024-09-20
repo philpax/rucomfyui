@@ -10,7 +10,7 @@ pub mod out {
         pub latent: crate::nodes::types::LatentOut,
     }
 }
-///**EmptySD3LatentImage**
+///**EmptySD3LatentImage**: No description.
 pub struct EmptySd3LatentImage<
     Width: crate::nodes::types::Int,
     Height: crate::nodes::types::Int,

@@ -28,7 +28,7 @@ pub mod out {
         pub image: crate::nodes::types::ImageOut,
     }
 }
-///**Upscale Image**
+///**Upscale Image**: No description.
 pub struct ImageScale<
     Image: crate::nodes::types::Image,
     UpscaleMethod: crate::nodes::types::String,
@@ -68,7 +68,7 @@ impl<
     const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "image/upscaling";
 }
-///**Upscale Image By**
+///**Upscale Image By**: No description.
 pub struct ImageScaleBy<
     Image: crate::nodes::types::Image,
     UpscaleMethod: crate::nodes::types::String,
@@ -100,7 +100,7 @@ impl<
     const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "image/upscaling";
 }
-///**ImageScaleToTotalPixels**
+///**ImageScaleToTotalPixels**: No description.
 pub struct ImageScaleToTotalPixels<
     Image: crate::nodes::types::Image,
     UpscaleMethod: crate::nodes::types::String,
@@ -132,7 +132,7 @@ impl<
     const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "image/upscaling";
 }
-///**Upscale Image (using Model)**
+///**Upscale Image (using Model)**: No description.
 pub struct ImageUpscaleWithModel<
     UpscaleModel: crate::nodes::types::UpscaleModel,
     Image: crate::nodes::types::Image,

@@ -10,7 +10,7 @@ pub mod out {
         pub conditioning: crate::nodes::types::ConditioningOut,
     }
 }
-///**StableCascade_StageB_Conditioning**
+///**StableCascade_StageB_Conditioning**: No description.
 pub struct StableCascadeStageBConditioning<
     Conditioning: crate::nodes::types::Conditioning,
     StageC: crate::nodes::types::Latent,

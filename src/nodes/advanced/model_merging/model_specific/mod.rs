@@ -34,7 +34,7 @@ pub mod out {
         pub model: crate::nodes::types::ModelOut,
     }
 }
-///**ModelMergeFlux1**
+///**ModelMergeFlux1**: No description.
 pub struct ModelMergeFlux1<
     Model1: crate::nodes::types::Model,
     Model2: crate::nodes::types::Model,
@@ -381,7 +381,7 @@ for ModelMergeFlux1<
     const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "advanced/model_merging/model_specific";
 }
-///**ModelMergeSD1**
+///**ModelMergeSD1**: No description.
 pub struct ModelMergeSd1<
     Model1: crate::nodes::types::Model,
     Model2: crate::nodes::types::Model,
@@ -563,7 +563,7 @@ for ModelMergeSd1<
     const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "advanced/model_merging/model_specific";
 }
-///**ModelMergeSD2**
+///**ModelMergeSD2**: No description.
 pub struct ModelMergeSd2<
     Model1: crate::nodes::types::Model,
     Model2: crate::nodes::types::Model,
@@ -745,7 +745,7 @@ for ModelMergeSd2<
     const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "advanced/model_merging/model_specific";
 }
-///**ModelMergeSD3_2B**
+///**ModelMergeSD3_2B**: No description.
 pub struct ModelMergeSd32B<
     Model1: crate::nodes::types::Model,
     Model2: crate::nodes::types::Model,
@@ -927,7 +927,7 @@ for ModelMergeSd32B<
     const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "advanced/model_merging/model_specific";
 }
-///**ModelMergeSDXL**
+///**ModelMergeSDXL**: No description.
 pub struct ModelMergeSdxl<
     Model1: crate::nodes::types::Model,
     Model2: crate::nodes::types::Model,

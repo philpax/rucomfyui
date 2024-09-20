@@ -34,7 +34,7 @@ pub mod out {
         pub latent: crate::nodes::types::LatentOut,
     }
 }
-///**LatentAdd**
+///**LatentAdd**: No description.
 pub struct LatentAdd<
     Samples1: crate::nodes::types::Latent,
     Samples2: crate::nodes::types::Latent,
@@ -62,7 +62,7 @@ impl<
     const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "latent/advanced";
 }
-///**LatentBatchSeedBehavior**
+///**LatentBatchSeedBehavior**: No description.
 pub struct LatentBatchSeedBehavior<
     Samples: crate::nodes::types::Latent,
     SeedBehavior: crate::nodes::types::String,
@@ -90,7 +90,7 @@ impl<
     const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "latent/advanced";
 }
-///**LatentInterpolate**
+///**LatentInterpolate**: No description.
 pub struct LatentInterpolate<
     Samples1: crate::nodes::types::Latent,
     Samples2: crate::nodes::types::Latent,
@@ -122,7 +122,7 @@ impl<
     const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "latent/advanced";
 }
-///**LatentMultiply**
+///**LatentMultiply**: No description.
 pub struct LatentMultiply<
     Samples: crate::nodes::types::Latent,
     Multiplier: crate::nodes::types::Float,
@@ -150,7 +150,7 @@ impl<
     const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "latent/advanced";
 }
-///**LatentSubtract**
+///**LatentSubtract**: No description.
 pub struct LatentSubtract<
     Samples1: crate::nodes::types::Latent,
     Samples2: crate::nodes::types::Latent,

@@ -10,7 +10,7 @@ pub mod out {
         pub conditioning: crate::nodes::types::ConditioningOut,
     }
 }
-///**Apply Style Model**
+///**Apply Style Model**: No description.
 pub struct StyleModelApply<
     Conditioning: crate::nodes::types::Conditioning,
     StyleModel: crate::nodes::types::StyleModel,

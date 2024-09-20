@@ -14,7 +14,7 @@ pub mod out {
         pub latent: crate::nodes::types::LatentOut,
     }
 }
-///**SVD_img2vid_Conditioning**
+///**SVD_img2vid_Conditioning**: No description.
 pub struct SvdImg2VidConditioning<
     ClipVision: crate::nodes::types::ClipVision,
     InitImage: crate::nodes::types::Image,

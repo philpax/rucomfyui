@@ -22,7 +22,7 @@ pub mod out {
         pub latent: crate::nodes::types::LatentOut,
     }
 }
-///**Crop Latent**
+///**Crop Latent**: No description.
 pub struct LatentCrop<
     Samples: crate::nodes::types::Latent,
     Width: crate::nodes::types::Int,
@@ -62,7 +62,7 @@ impl<
     const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "latent/transform";
 }
-///**Flip Latent**
+///**Flip Latent**: No description.
 pub struct LatentFlip<
     Samples: crate::nodes::types::Latent,
     FlipMethod: crate::nodes::types::String,
@@ -90,7 +90,7 @@ impl<
     const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "latent/transform";
 }
-///**Rotate Latent**
+///**Rotate Latent**: No description.
 pub struct LatentRotate<
     Samples: crate::nodes::types::Latent,
     Rotation: crate::nodes::types::String,

@@ -90,7 +90,7 @@ for KSampler<
     const DESCRIPTION: &'static str = "Uses the provided model, positive and negative conditioning to denoise the latent image.";
     const CATEGORY: &'static str = "sampling";
 }
-///**KSampler (Advanced)**
+///**KSampler (Advanced)**: No description.
 pub struct KSamplerAdvanced<
     Model: crate::nodes::types::Model,
     AddNoise: crate::nodes::types::String,

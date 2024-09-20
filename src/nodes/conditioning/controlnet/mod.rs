@@ -32,7 +32,7 @@ pub mod out {
         pub control_net: crate::nodes::types::ControlNetOut,
     }
 }
-///**Apply ControlNet**
+///**Apply ControlNet**: No description.
 pub struct ControlNetApply<
     Conditioning: crate::nodes::types::Conditioning,
     ControlNet: crate::nodes::types::ControlNet,
@@ -69,7 +69,7 @@ for ControlNetApply<Conditioning, ControlNet, Image, Strength> {
     const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "conditioning/controlnet";
 }
-///**Apply ControlNet (Advanced)**
+///**Apply ControlNet (Advanced)**: No description.
 pub struct ControlNetApplyAdvanced<
     Positive: crate::nodes::types::Conditioning,
     Negative: crate::nodes::types::Conditioning,
@@ -130,7 +130,7 @@ for ControlNetApplyAdvanced<
     const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "conditioning/controlnet";
 }
-///**ControlNetApply SD3 and HunyuanDiT**
+///**ControlNetApply SD3 and HunyuanDiT**: No description.
 pub struct ControlNetApplySd3<
     Positive: crate::nodes::types::Conditioning,
     Negative: crate::nodes::types::Conditioning,
@@ -196,7 +196,7 @@ for ControlNetApplySd3<
     const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "conditioning/controlnet";
 }
-///**SetUnionControlNetType**
+///**SetUnionControlNetType**: No description.
 pub struct SetUnionControlNetType<
     ControlNet: crate::nodes::types::ControlNet,
     Type: crate::nodes::types::String,

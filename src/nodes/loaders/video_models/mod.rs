@@ -14,7 +14,7 @@ pub mod out {
         pub vae: crate::nodes::types::VaeOut,
     }
 }
-///**Image Only Checkpoint Loader (img2vid model)**
+///**Image Only Checkpoint Loader (img2vid model)**: No description.
 pub struct ImageOnlyCheckpointLoader<CkptName: crate::nodes::types::String> {
     ///No documentation.
     pub ckpt_name: CkptName,

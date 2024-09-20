@@ -26,7 +26,7 @@ pub mod out {
         pub low_sigmas: crate::nodes::types::SigmasOut,
     }
 }
-///**FlipSigmas**
+///**FlipSigmas**: No description.
 pub struct FlipSigmas<Sigmas: crate::nodes::types::Sigmas> {
     ///No documentation.
     pub sigmas: Sigmas,
@@ -47,7 +47,7 @@ for FlipSigmas<Sigmas> {
     const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "sampling/custom_sampling/sigmas";
 }
-///**SplitSigmas**
+///**SplitSigmas**: No description.
 pub struct SplitSigmas<
     Sigmas: crate::nodes::types::Sigmas,
     Step: crate::nodes::types::Int,
@@ -79,7 +79,7 @@ impl<
     const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "sampling/custom_sampling/sigmas";
 }
-///**SplitSigmasDenoise**
+///**SplitSigmasDenoise**: No description.
 pub struct SplitSigmasDenoise<
     Sigmas: crate::nodes::types::Sigmas,
     Denoise: crate::nodes::types::Float,

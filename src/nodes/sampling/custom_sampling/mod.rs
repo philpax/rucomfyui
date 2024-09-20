@@ -25,7 +25,7 @@ pub mod out {
         pub denoised_output: crate::nodes::types::LatentOut,
     }
 }
-///**SamplerCustom**
+///**SamplerCustom**: No description.
 pub struct SamplerCustom<
     Model: crate::nodes::types::Model,
     AddNoise: crate::nodes::types::Boolean,
@@ -96,7 +96,7 @@ for SamplerCustom<
     const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "sampling/custom_sampling";
 }
-///**SamplerCustomAdvanced**
+///**SamplerCustomAdvanced**: No description.
 pub struct SamplerCustomAdvanced<
     Noise: crate::nodes::types::Noise,
     Guider: crate::nodes::types::Guider,

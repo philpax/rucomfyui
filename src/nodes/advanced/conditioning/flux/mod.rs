@@ -16,7 +16,7 @@ pub mod out {
         pub conditioning: crate::nodes::types::ConditioningOut,
     }
 }
-///**CLIPTextEncodeFlux**
+///**CLIPTextEncodeFlux**: No description.
 pub struct ClipTextEncodeFlux<
     Clip: crate::nodes::types::Clip,
     ClipL: crate::nodes::types::String,
@@ -52,7 +52,7 @@ impl<
     const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "advanced/conditioning/flux";
 }
-///**FluxGuidance**
+///**FluxGuidance**: No description.
 pub struct FluxGuidance<
     Conditioning: crate::nodes::types::Conditioning,
     Guidance: crate::nodes::types::Float,

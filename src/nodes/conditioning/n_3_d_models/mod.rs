@@ -34,7 +34,7 @@ pub mod out {
         pub latent: crate::nodes::types::LatentOut,
     }
 }
-///**SV3D_Conditioning**
+///**SV3D_Conditioning**: No description.
 pub struct Sv3DConditioning<
     ClipVision: crate::nodes::types::ClipVision,
     InitImage: crate::nodes::types::Image,
@@ -91,7 +91,7 @@ for Sv3DConditioning<ClipVision, InitImage, Vae, Width, Height, VideoFrames, Ele
     const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "conditioning/3d_models";
 }
-///**StableZero123_Conditioning**
+///**StableZero123_Conditioning**: No description.
 pub struct StableZero123Conditioning<
     ClipVision: crate::nodes::types::ClipVision,
     InitImage: crate::nodes::types::Image,
@@ -161,7 +161,7 @@ for StableZero123Conditioning<
     const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "conditioning/3d_models";
 }
-///**StableZero123_Conditioning_Batched**
+///**StableZero123_Conditioning_Batched**: No description.
 pub struct StableZero123ConditioningBatched<
     ClipVision: crate::nodes::types::ClipVision,
     InitImage: crate::nodes::types::Image,

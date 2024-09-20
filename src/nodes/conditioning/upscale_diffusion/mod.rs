@@ -14,7 +14,7 @@ pub mod out {
         pub latent: crate::nodes::types::LatentOut,
     }
 }
-///**SD_4XUpscale_Conditioning**
+///**SD_4XUpscale_Conditioning**: No description.
 pub struct Sd4XUpscaleConditioning<
     Images: crate::nodes::types::Image,
     Positive: crate::nodes::types::Conditioning,

@@ -39,7 +39,7 @@ pub mod out {
         pub model: crate::nodes::types::ModelOut,
     }
 }
-///**Load CLIP**
+///**Load CLIP**: No description.
 pub struct ClipLoader<
     ClipName: crate::nodes::types::String,
     Type: crate::nodes::types::String,
@@ -67,7 +67,7 @@ impl<
     const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "advanced/loaders";
 }
-///**Load Checkpoint With Config (DEPRECATED)**
+///**Load Checkpoint With Config (DEPRECATED)**: No description.
 pub struct CheckpointLoader<
     ConfigName: crate::nodes::types::String,
     CkptName: crate::nodes::types::String,
@@ -103,7 +103,7 @@ impl<
     const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "advanced/loaders";
 }
-///**DualCLIPLoader**
+///**DualCLIPLoader**: No description.
 pub struct DualClipLoader<
     ClipName1: crate::nodes::types::String,
     ClipName2: crate::nodes::types::String,
@@ -135,7 +135,7 @@ impl<
     const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "advanced/loaders";
 }
-///**TripleCLIPLoader**
+///**TripleCLIPLoader**: No description.
 pub struct TripleClipLoader<
     ClipName1: crate::nodes::types::String,
     ClipName2: crate::nodes::types::String,
@@ -167,7 +167,7 @@ impl<
     const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "advanced/loaders";
 }
-///**Load Diffusion Model**
+///**Load Diffusion Model**: No description.
 pub struct UnetLoader<
     UnetName: crate::nodes::types::String,
     WeightDtype: crate::nodes::types::String,

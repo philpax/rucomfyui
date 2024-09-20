@@ -34,7 +34,7 @@ pub mod out {
         pub image: crate::nodes::types::ImageOut,
     }
 }
-///**ImageBlend**
+///**ImageBlend**: No description.
 pub struct ImageBlend<
     Image1: crate::nodes::types::Image,
     Image2: crate::nodes::types::Image,
@@ -70,7 +70,7 @@ impl<
     const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "image/postprocessing";
 }
-///**ImageBlur**
+///**ImageBlur**: No description.
 pub struct ImageBlur<
     Image: crate::nodes::types::Image,
     BlurRadius: crate::nodes::types::Int,
@@ -102,7 +102,7 @@ impl<
     const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "image/postprocessing";
 }
-///**ImageQuantize**
+///**ImageQuantize**: No description.
 pub struct ImageQuantize<
     Image: crate::nodes::types::Image,
     Colors: crate::nodes::types::Int,
@@ -134,7 +134,7 @@ impl<
     const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "image/postprocessing";
 }
-///**ImageSharpen**
+///**ImageSharpen**: No description.
 pub struct ImageSharpen<
     Image: crate::nodes::types::Image,
     SharpenRadius: crate::nodes::types::Int,
@@ -170,7 +170,7 @@ impl<
     const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "image/postprocessing";
 }
-///**ImageMorphology**
+///**ImageMorphology**: No description.
 pub struct Morphology<
     Image: crate::nodes::types::Image,
     Operation: crate::nodes::types::String,

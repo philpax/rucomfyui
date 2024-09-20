@@ -22,7 +22,7 @@ pub mod out {
         pub latent: crate::nodes::types::LatentOut,
     }
 }
-///**EmptyLatentAudio**
+///**EmptyLatentAudio**: No description.
 pub struct EmptyLatentAudio<Seconds: crate::nodes::types::Float> {
     ///No documentation.
     pub seconds: Seconds,
@@ -43,7 +43,7 @@ for EmptyLatentAudio<Seconds> {
     const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "latent/audio";
 }
-///**VAEDecodeAudio**
+///**VAEDecodeAudio**: No description.
 pub struct VaeDecodeAudio<
     Samples: crate::nodes::types::Latent,
     Vae: crate::nodes::types::Vae,
@@ -71,7 +71,7 @@ impl<
     const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "latent/audio";
 }
-///**VAEEncodeAudio**
+///**VAEEncodeAudio**: No description.
 pub struct VaeEncodeAudio<
     Audio: crate::nodes::types::Audio,
     Vae: crate::nodes::types::Vae,

@@ -56,7 +56,7 @@ pub mod out {
         pub image: crate::nodes::types::ImageOut,
     }
 }
-///**EmptyImage**
+///**EmptyImage**: No description.
 pub struct EmptyImage<
     Width: crate::nodes::types::Int,
     Height: crate::nodes::types::Int,
@@ -92,7 +92,7 @@ impl<
     const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "image";
 }
-///**Batch Images**
+///**Batch Images**: No description.
 pub struct ImageBatch<
     Image1: crate::nodes::types::Image,
     Image2: crate::nodes::types::Image,
@@ -120,7 +120,7 @@ impl<
     const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "image";
 }
-///**ImageCompositeMasked**
+///**ImageCompositeMasked**: No description.
 pub struct ImageCompositeMasked<
     Destination: crate::nodes::types::Image,
     Source: crate::nodes::types::Image,
@@ -165,7 +165,7 @@ for ImageCompositeMasked<Destination, Source, X, Y, ResizeSource, Mask> {
     const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "image";
 }
-///**Invert Image**
+///**Invert Image**: No description.
 pub struct ImageInvert<Image: crate::nodes::types::Image> {
     ///No documentation.
     pub image: Image,
@@ -185,7 +185,7 @@ impl<Image: crate::nodes::types::Image> crate::nodes::TypedNode for ImageInvert<
     const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "image";
 }
-///**Pad Image for Outpainting**
+///**Pad Image for Outpainting**: No description.
 pub struct ImagePadForOutpaint<
     Image: crate::nodes::types::Image,
     Left: crate::nodes::types::Int,
@@ -234,7 +234,7 @@ for ImagePadForOutpaint<Image, Left, Top, Right, Bottom, Feathering> {
     const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "image";
 }
-///**Load Image**
+///**Load Image**: No description.
 pub struct LoadImage<Image: crate::nodes::types::String> {
     ///No documentation.
     pub image: Image,
@@ -299,7 +299,7 @@ impl<
     Images: crate::nodes::types::Image,
     FilenamePrefix: crate::nodes::types::String,
 > crate::nodes::TypedOutputNode for SaveImage<Images, FilenamePrefix> {}
-///**Webcam Capture**
+///**Webcam Capture**: No description.
 pub struct WebcamCapture<
     Image: crate::nodes::types::Webcam,
     Width: crate::nodes::types::Int,

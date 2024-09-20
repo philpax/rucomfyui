@@ -28,7 +28,7 @@ pub mod out {
         pub model: crate::nodes::types::ModelOut,
     }
 }
-///**FreeU**
+///**FreeU**: No description.
 pub struct FreeU<
     Model: crate::nodes::types::Model,
     B1: crate::nodes::types::Float,
@@ -68,7 +68,7 @@ impl<
     const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "model_patches/unet";
 }
-///**FreeU_V2**
+///**FreeU_V2**: No description.
 pub struct FreeUV2<
     Model: crate::nodes::types::Model,
     B1: crate::nodes::types::Float,
@@ -108,7 +108,7 @@ impl<
     const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "model_patches/unet";
 }
-///**HyperTile**
+///**HyperTile**: No description.
 pub struct HyperTile<
     Model: crate::nodes::types::Model,
     TileSize: crate::nodes::types::Int,
@@ -149,7 +149,7 @@ for HyperTile<Model, TileSize, SwapSize, MaxDepth, ScaleDepth> {
     const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "model_patches/unet";
 }
-///**PerturbedAttentionGuidance**
+///**PerturbedAttentionGuidance**: No description.
 pub struct PerturbedAttentionGuidance<
     Model: crate::nodes::types::Model,
     Scale: crate::nodes::types::Float,

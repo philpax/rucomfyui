@@ -16,7 +16,7 @@ pub mod out {
         pub model: crate::nodes::types::ModelOut,
     }
 }
-///**VideoLinearCFGGuidance**
+///**VideoLinearCFGGuidance**: No description.
 pub struct VideoLinearCfgGuidance<
     Model: crate::nodes::types::Model,
     MinCfg: crate::nodes::types::Float,
@@ -44,7 +44,7 @@ impl<
     const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "sampling/video_models";
 }
-///**VideoTriangleCFGGuidance**
+///**VideoTriangleCFGGuidance**: No description.
 pub struct VideoTriangleCfgGuidance<
     Model: crate::nodes::types::Model,
     MinCfg: crate::nodes::types::Float,

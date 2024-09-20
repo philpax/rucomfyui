@@ -47,7 +47,7 @@ pub mod out {
         pub model: crate::nodes::types::ModelOut,
     }
 }
-///**CLIPMergeAdd**
+///**CLIPMergeAdd**: No description.
 pub struct ClipMergeAdd<
     Clip1: crate::nodes::types::Clip,
     Clip2: crate::nodes::types::Clip,
@@ -75,7 +75,7 @@ impl<
     const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "advanced/model_merging";
 }
-///**CLIPMergeSimple**
+///**CLIPMergeSimple**: No description.
 pub struct ClipMergeSimple<
     Clip1: crate::nodes::types::Clip,
     Clip2: crate::nodes::types::Clip,
@@ -107,7 +107,7 @@ impl<
     const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "advanced/model_merging";
 }
-///**CLIPMergeSubtract**
+///**CLIPMergeSubtract**: No description.
 pub struct ClipMergeSubtract<
     Clip1: crate::nodes::types::Clip,
     Clip2: crate::nodes::types::Clip,
@@ -139,7 +139,7 @@ impl<
     const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "advanced/model_merging";
 }
-///**CLIPSave**
+///**CLIPSave**: No description.
 pub struct ClipSave<
     Clip: crate::nodes::types::Clip,
     FilenamePrefix: crate::nodes::types::String,
@@ -164,7 +164,7 @@ impl<
     Clip: crate::nodes::types::Clip,
     FilenamePrefix: crate::nodes::types::String,
 > crate::nodes::TypedOutputNode for ClipSave<Clip, FilenamePrefix> {}
-///**Save Checkpoint**
+///**Save Checkpoint**: No description.
 pub struct CheckpointSave<
     Model: crate::nodes::types::Model,
     Clip: crate::nodes::types::Clip,
@@ -199,7 +199,7 @@ impl<
     Vae: crate::nodes::types::Vae,
     FilenamePrefix: crate::nodes::types::String,
 > crate::nodes::TypedOutputNode for CheckpointSave<Model, Clip, Vae, FilenamePrefix> {}
-///**ModelMergeAdd**
+///**ModelMergeAdd**: No description.
 pub struct ModelMergeAdd<
     Model1: crate::nodes::types::Model,
     Model2: crate::nodes::types::Model,
@@ -227,7 +227,7 @@ impl<
     const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "advanced/model_merging";
 }
-///**ModelMergeBlocks**
+///**ModelMergeBlocks**: No description.
 pub struct ModelMergeBlocks<
     Model1: crate::nodes::types::Model,
     Model2: crate::nodes::types::Model,
@@ -267,7 +267,7 @@ impl<
     const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "advanced/model_merging";
 }
-///**ModelMergeSimple**
+///**ModelMergeSimple**: No description.
 pub struct ModelMergeSimple<
     Model1: crate::nodes::types::Model,
     Model2: crate::nodes::types::Model,
@@ -299,7 +299,7 @@ impl<
     const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "advanced/model_merging";
 }
-///**ModelMergeSubtract**
+///**ModelMergeSubtract**: No description.
 pub struct ModelMergeSubtract<
     Model1: crate::nodes::types::Model,
     Model2: crate::nodes::types::Model,
@@ -331,7 +331,7 @@ impl<
     const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "advanced/model_merging";
 }
-///**ModelSave**
+///**ModelSave**: No description.
 pub struct ModelSave<
     Model: crate::nodes::types::Model,
     FilenamePrefix: crate::nodes::types::String,
@@ -356,7 +356,7 @@ impl<
     Model: crate::nodes::types::Model,
     FilenamePrefix: crate::nodes::types::String,
 > crate::nodes::TypedOutputNode for ModelSave<Model, FilenamePrefix> {}
-///**VAESave**
+///**VAESave**: No description.
 pub struct VaeSave<
     Vae: crate::nodes::types::Vae,
     FilenamePrefix: crate::nodes::types::String,

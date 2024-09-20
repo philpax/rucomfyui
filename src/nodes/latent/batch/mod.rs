@@ -28,7 +28,7 @@ pub mod out {
         pub latent: crate::nodes::types::LatentOut,
     }
 }
-///**LatentBatch**
+///**LatentBatch**: No description.
 pub struct LatentBatch<
     Samples1: crate::nodes::types::Latent,
     Samples2: crate::nodes::types::Latent,
@@ -56,7 +56,7 @@ impl<
     const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "latent/batch";
 }
-///**Latent From Batch**
+///**Latent From Batch**: No description.
 pub struct LatentFromBatch<
     Samples: crate::nodes::types::Latent,
     BatchIndex: crate::nodes::types::Int,
@@ -88,7 +88,7 @@ impl<
     const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "latent/batch";
 }
-///**Rebatch Latents**
+///**Rebatch Latents**: No description.
 pub struct RebatchLatents<
     Latents: crate::nodes::types::Latent,
     BatchSize: crate::nodes::types::Int,
@@ -116,7 +116,7 @@ impl<
     const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "latent/batch";
 }
-///**Repeat Latent Batch**
+///**Repeat Latent Batch**: No description.
 pub struct RepeatLatentBatch<
     Samples: crate::nodes::types::Latent,
     Amount: crate::nodes::types::Int,

@@ -10,7 +10,7 @@ pub mod out {
         pub image: crate::nodes::types::ImageOut,
     }
 }
-///**Canny**
+///**Canny**: No description.
 pub struct Canny<
     Image: crate::nodes::types::Image,
     LowThreshold: crate::nodes::types::Float,

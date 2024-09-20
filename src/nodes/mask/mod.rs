@@ -71,7 +71,7 @@ pub mod out {
         pub mask: crate::nodes::types::MaskOut,
     }
 }
-///**CropMask**
+///**CropMask**: No description.
 pub struct CropMask<
     Mask: crate::nodes::types::Mask,
     X: crate::nodes::types::Int,
@@ -111,7 +111,7 @@ impl<
     const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "mask";
 }
-///**FeatherMask**
+///**FeatherMask**: No description.
 pub struct FeatherMask<
     Mask: crate::nodes::types::Mask,
     Left: crate::nodes::types::Int,
@@ -151,7 +151,7 @@ impl<
     const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "mask";
 }
-///**GrowMask**
+///**GrowMask**: No description.
 pub struct GrowMask<
     Mask: crate::nodes::types::Mask,
     Expand: crate::nodes::types::Int,
@@ -183,7 +183,7 @@ impl<
     const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "mask";
 }
-///**ImageColorToMask**
+///**ImageColorToMask**: No description.
 pub struct ImageColorToMask<
     Image: crate::nodes::types::Image,
     Color: crate::nodes::types::Int,
@@ -211,7 +211,7 @@ impl<
     const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "mask";
 }
-///**Convert Image to Mask**
+///**Convert Image to Mask**: No description.
 pub struct ImageToMask<
     Image: crate::nodes::types::Image,
     Channel: crate::nodes::types::String,
@@ -239,7 +239,7 @@ impl<
     const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "mask";
 }
-///**InvertMask**
+///**InvertMask**: No description.
 pub struct InvertMask<Mask: crate::nodes::types::Mask> {
     ///No documentation.
     pub mask: Mask,
@@ -259,7 +259,7 @@ impl<Mask: crate::nodes::types::Mask> crate::nodes::TypedNode for InvertMask<Mas
     const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "mask";
 }
-///**Load Image (as Mask)**
+///**Load Image (as Mask)**: No description.
 pub struct LoadImageMask<
     Image: crate::nodes::types::String,
     Channel: crate::nodes::types::String,
@@ -287,7 +287,7 @@ impl<
     const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "mask";
 }
-///**MaskComposite**
+///**MaskComposite**: No description.
 pub struct MaskComposite<
     Destination: crate::nodes::types::Mask,
     Source: crate::nodes::types::Mask,
@@ -327,7 +327,7 @@ impl<
     const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "mask";
 }
-///**Convert Mask to Image**
+///**Convert Mask to Image**: No description.
 pub struct MaskToImage<Mask: crate::nodes::types::Mask> {
     ///No documentation.
     pub mask: Mask,
@@ -347,7 +347,7 @@ impl<Mask: crate::nodes::types::Mask> crate::nodes::TypedNode for MaskToImage<Ma
     const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "mask";
 }
-///**SolidMask**
+///**SolidMask**: No description.
 pub struct SolidMask<
     Value: crate::nodes::types::Float,
     Width: crate::nodes::types::Int,
@@ -379,7 +379,7 @@ impl<
     const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "mask";
 }
-///**ThresholdMask**
+///**ThresholdMask**: No description.
 pub struct ThresholdMask<
     Mask: crate::nodes::types::Mask,
     Value: crate::nodes::types::Float,
