@@ -5,6 +5,8 @@ use convert_case::{Case, Casing};
 use proc_macro2::TokenStream;
 use quote::quote;
 
+mod util;
+
 use rucomfyui::{CategoryTree, CategoryTreeNode, Object, ObjectInput, ObjectType};
 
 #[tokio::main]
@@ -31,43 +33,48 @@ async fn run() -> Result<()> {
     write_category_tree_root(&category_tree, out_dir).context("root")?;
 
     // Write type-definitions module.
-    write_tokenstream_with_formatting(&out_dir.join("types.rs"), type_module_definitions()?)?;
+    util::write_tokenstream(&out_dir.join("types.rs"), type_module_definitions()?)?;
 
     // Write all-nodes module.
-    let all_nodes = build_list_of_all_nodes(&category_tree, &[])?;
-    write_tokenstream_with_formatting(
-        &out_dir.join("all.rs"),
-        quote! {
-            //! Helper module to import all nodes at once.
-            #(#all_nodes)*
-        },
-    )?;
+    util::write_tokenstream(&out_dir.join("all.rs"), all_nodes(&category_tree, &[])?)?;
 
     Ok(())
 }
 
-fn build_list_of_all_nodes(tree: &CategoryTree, ctx: &[syn::Ident]) -> Result<Vec<TokenStream>> {
-    let mut output = vec![];
-
-    for node in tree.values() {
-        match node {
-            CategoryTreeNode::Category(name, tree) => {
-                let name = name_to_ident(name, false)?;
-                output.extend(build_list_of_all_nodes(
-                    tree,
-                    &ctx.iter().cloned().chain([name]).collect::<Vec<_>>(),
-                )?);
-            }
-            CategoryTreeNode::Object(object) => {
-                let name = name_to_ident(&object.name, true)?;
-                output.push(quote! {
-                    pub use crate :: nodes :: #(#ctx::)* #name;
-                });
+fn all_nodes(tree: &CategoryTree, ctx: &[syn::Ident]) -> Result<TokenStream> {
+    fn generate_node_stmts(
+        tree: &CategoryTree,
+        ctx: &[syn::Ident],
+        statements: &mut Vec<TokenStream>,
+    ) -> Result<()> {
+        for node in tree.values() {
+            match node {
+                CategoryTreeNode::Category(name, tree) => {
+                    let name = util::name_to_ident(name, false)?;
+                    generate_node_stmts(
+                        tree,
+                        &ctx.iter().cloned().chain([name]).collect::<Vec<_>>(),
+                        statements,
+                    )?;
+                }
+                CategoryTreeNode::Object(object) => {
+                    let name = util::name_to_ident(&object.name, true)?;
+                    statements.push(quote! {
+                        pub use crate :: nodes :: #(#ctx::)* #name;
+                    });
+                }
             }
         }
+
+        Ok(())
     }
 
-    Ok(output)
+    let mut nodes = vec![];
+    generate_node_stmts(tree, ctx, &mut nodes)?;
+    Ok(quote! {
+        //! Helper module to import all nodes at once.
+        #(#nodes)*
+    })
 }
 
 fn write_category_tree_root(root: &CategoryTree, directory: &Path) -> Result<()> {
@@ -76,7 +83,7 @@ fn write_category_tree_root(root: &CategoryTree, directory: &Path) -> Result<()>
     for (key, node) in root {
         match node {
             CategoryTreeNode::Category(name, tree) => {
-                let key = name_to_ident(key, false)?;
+                let key = util::name_to_ident(key, false)?;
                 write_category_tree((name, tree), &directory.join(key.to_string()))
                     .context(name.clone())?;
                 modules.push(quote! {
@@ -156,7 +163,7 @@ fn write_category_tree_root(root: &CategoryTree, directory: &Path) -> Result<()>
         impl types :: Boolean for bool {}
     };
     let path = directory.join("mod.rs");
-    write_tokenstream_with_formatting(&path, output)?;
+    util::write_tokenstream(&path, output)?;
     Ok(())
 }
 
@@ -171,7 +178,7 @@ fn write_category_tree((name, tree): (&str, &CategoryTree), directory: &Path) ->
     for (key, node) in tree {
         match node {
             CategoryTreeNode::Category(name, tree) => {
-                let key = name_to_ident(key, false)?;
+                let key = util::name_to_ident(key, false)?;
                 write_category_tree((name, tree), &directory.join(key.to_string()))
                     .context(name.clone())?;
                 modules.push(quote! {
@@ -194,7 +201,7 @@ fn write_category_tree((name, tree): (&str, &CategoryTree), directory: &Path) ->
         #(#nodes)*
     };
     let path = directory.join("mod.rs");
-    write_tokenstream_with_formatting(&path, output)?;
+    util::write_tokenstream(&path, output)?;
     Ok(())
 }
 
@@ -204,10 +211,10 @@ fn type_module_definitions() -> Result<TokenStream> {
         .map(|ty| {
             let recased_ty = format!("{ty:?}").to_case(Case::ScreamingSnake);
             let doc = format!("A value of ComfyUI type `{recased_ty}`.");
-            let name = name_to_ident(&format!("{ty:?}"), true)?;
+            let name = util::name_to_ident(&format!("{ty:?}"), true)?;
 
             let output_doc = format!("A node output of type [`{ty:?}`].");
-            let output_name = object_type_struct_ident(&ty);
+            let output_name = util::object_type_struct_ident(&ty);
             Ok(quote! {
                 #[doc = #doc]
                 pub trait #name : ToWorkflowInput {}
@@ -245,18 +252,6 @@ fn type_module_definitions() -> Result<TokenStream> {
     })
 }
 
-fn write_tokenstream_with_formatting(path: &Path, output: TokenStream) -> Result<()> {
-    let output = match syn::parse2::<syn::File>(output.clone()) {
-        Ok(file) => prettyplease::unparse(&file),
-        Err(e) => {
-            println!("Error parsing output for {path:?}: {e}");
-            output.to_string()
-        }
-    };
-    std::fs::write(path, output)?;
-    Ok(())
-}
-
 fn write_node(node: &Object) -> Result<TokenStream> {
     let (inputs_name, processed_inputs, inputs) = write_node_inputs(node)?;
     let outputs = write_node_outputs(node, &inputs_name, processed_inputs)?;
@@ -287,8 +282,8 @@ fn write_node_inputs(node: &Object) -> Result<(syn::Ident, Vec<ProcessedInput>, 
             name,
             tooltip: input.tooltip(),
             ty: ty.clone(),
-            generic_name: name_to_ident(name, true).ok()?,
-            generic_ty: name_to_ident(&format!("{:?}", ty), true).ok()?,
+            generic_name: util::name_to_ident(name, true).ok()?,
+            generic_ty: util::name_to_ident(&format!("{:?}", ty), true).ok()?,
             optional,
         })
     }
@@ -323,7 +318,7 @@ fn write_node_inputs(node: &Object) -> Result<(syn::Ident, Vec<ProcessedInput>, 
             let generic_name = &input.generic_name;
             let ty = &input.generic_ty;
             let default = if input.optional {
-                let output_struct_name = object_type_struct_ident(&input.ty);
+                let output_struct_name = util::object_type_struct_ident(&input.ty);
                 quote! { = crate :: nodes :: types :: #output_struct_name }
             } else {
                 quote! {}
@@ -337,7 +332,7 @@ fn write_node_inputs(node: &Object) -> Result<(syn::Ident, Vec<ProcessedInput>, 
     let fields = processed_inputs
         .iter()
         .map(|input| {
-            let name = name_to_ident(input.name, false)?;
+            let name = util::name_to_ident(input.name, false)?;
             let generic_name = &input.generic_name;
             let doc = input.tooltip.unwrap_or("No documentation.");
             let ty = if input.optional {
@@ -354,7 +349,7 @@ fn write_node_inputs(node: &Object) -> Result<(syn::Ident, Vec<ProcessedInput>, 
         })
         .collect::<Result<Vec<_>>>()?;
 
-    let name = name_to_ident(&node.name, true)?;
+    let name = util::name_to_ident(&node.name, true)?;
     let mut doc = format!("**{}**", node.display_name);
     if !node.description.is_empty() {
         doc.push_str("\n\n");
@@ -423,14 +418,14 @@ fn write_node_outputs(
 
     let outputs = node.processed_output().collect::<Vec<_>>();
 
-    let name = name_to_ident(&format!("{}Output", node.name), true)?;
+    let name = util::name_to_ident(&format!("{}Output", node.name), true)?;
     let doc = format!("Output for [`{}`].", inputs_name);
 
     let fields = outputs
         .iter()
         .map(|output| {
-            let name = name_to_ident(output.name, false)?;
-            let ty = object_type_struct_ident(&output.ty);
+            let name = util::name_to_ident(output.name, false)?;
+            let ty = util::object_type_struct_ident(&output.ty);
             let doc = output.tooltip.unwrap_or("No documentation.");
             Ok(quote! {
                 #[doc = #doc]
@@ -446,8 +441,8 @@ fn write_node_outputs(
             .iter()
             .enumerate()
             .map(|(i, output)| {
-                let name = name_to_ident(output.name, false)?;
-                let ty = object_type_struct_ident(&output.ty);
+                let name = util::name_to_ident(output.name, false)?;
+                let ty = util::object_type_struct_ident(&output.ty);
                 let i = i as u32;
                 Ok(quote! {
                     #name: crate :: nodes :: types :: #ty { node_id, node_slot: #i }
@@ -480,28 +475,4 @@ fn write_node_outputs(
         }
         #typed_node
     })
-}
-
-fn name_to_ident(name: &str, pascal_case: bool) -> Result<syn::Ident> {
-    let mut name = name.replace(".", "_");
-    if name.starts_with(char::is_numeric) {
-        name = format!("n{name}");
-    }
-
-    if pascal_case {
-        name = name.to_case(Case::UpperCamel);
-    } else {
-        name = name.to_case(Case::Snake);
-    }
-
-    if name == "type" {
-        name = "type_".to_string();
-    }
-
-    std::panic::catch_unwind(|| quote::format_ident!("{name}"))
-        .map_err(|e| anyhow::anyhow!("Error parsing {name}: {:?}", e.downcast_ref::<&str>()))
-}
-
-fn object_type_struct_ident(ty: &ObjectType) -> syn::Ident {
-    name_to_ident(&format!("{ty:?}Out"), true).unwrap()
 }
