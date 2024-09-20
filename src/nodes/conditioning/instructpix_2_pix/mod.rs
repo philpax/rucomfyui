@@ -1,6 +1,6 @@
 //!`instructpix2pix` definitions/categories.
 #![allow(unused_imports)]
-use crate::WorkflowNodeId;
+use crate::workflow::WorkflowNodeId;
 /// Output types for nodes.
 pub mod out {
     ///Output for [`InstructPixToPixConditioning`](super::InstructPixToPixConditioning).

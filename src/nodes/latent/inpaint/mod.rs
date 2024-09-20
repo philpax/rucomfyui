@@ -1,6 +1,6 @@
 //!`inpaint` definitions/categories.
 #![allow(unused_imports)]
-use crate::WorkflowNodeId;
+use crate::workflow::WorkflowNodeId;
 /// Output types for nodes.
 pub mod out {
     ///Output for [`SetLatentNoiseMask`](super::SetLatentNoiseMask).

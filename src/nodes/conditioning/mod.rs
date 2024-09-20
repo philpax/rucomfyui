@@ -1,6 +1,6 @@
 //!`conditioning` definitions/categories.
 #![allow(unused_imports)]
-use crate::WorkflowNodeId;
+use crate::workflow::WorkflowNodeId;
 pub mod n_3_d_models;
 pub mod controlnet;
 pub mod gligen;

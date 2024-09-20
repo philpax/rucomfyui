@@ -1,6 +1,6 @@
 //!`latent` definitions/categories.
 #![allow(unused_imports)]
-use crate::WorkflowNodeId;
+use crate::workflow::WorkflowNodeId;
 pub mod advanced;
 pub mod audio;
 pub mod batch;

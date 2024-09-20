@@ -3,7 +3,7 @@ use std::path::Path;
 use anyhow::Result;
 use convert_case::{Case, Casing};
 use proc_macro2::TokenStream;
-use rucomfyui::ObjectType;
+use rucomfyui::object_info::ObjectType;
 
 /// Writes the given [`TokenStream`] to the path with [`prettyplease`] formatting.
 pub fn write_tokenstream(path: &Path, output: TokenStream) -> Result<()> {

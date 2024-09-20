@@ -1,6 +1,6 @@
 //!`loaders` definitions/categories.
 #![allow(unused_imports)]
-use crate::WorkflowNodeId;
+use crate::workflow::WorkflowNodeId;
 pub mod deprecated;
 /// Output types for nodes.
 pub mod out {

@@ -1,3 +1,5 @@
+//! Queuing workflows to ComfyUI.
+
 use std::collections::HashMap;
 
 use serde::{Deserialize, Serialize};
@@ -6,7 +8,7 @@ use crate::{Bytes, Client, Result, Workflow};
 
 impl Client {
     /// Send a workflow to the ComfyUI API.
-    pub async fn queue(&self, workflow: impl AsRef<Workflow>) -> Result<PromptQueueResult> {
+    pub async fn queue(&self, workflow: impl AsRef<Workflow>) -> Result<QueueResult> {
         let payload = serde_json::json!({
             "prompt": workflow.as_ref(),
         });
@@ -49,9 +51,10 @@ impl Client {
         Ok(output)
     }
 }
+
 #[derive(Serialize, Deserialize, Debug)]
 /// Result of the queueing of a prompt.
-pub struct PromptQueueResult {
+pub struct QueueResult {
     /// Node errors.
     node_errors: serde_json::Value,
     /// Number.

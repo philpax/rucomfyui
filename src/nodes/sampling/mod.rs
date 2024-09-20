@@ -1,6 +1,6 @@
 //!`sampling` definitions/categories.
 #![allow(unused_imports)]
-use crate::WorkflowNodeId;
+use crate::workflow::WorkflowNodeId;
 pub mod custom_sampling;
 pub mod video_models;
 /// Output types for nodes.

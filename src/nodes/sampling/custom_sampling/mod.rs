@@ -1,6 +1,6 @@
 //!`custom_sampling` definitions/categories.
 #![allow(unused_imports)]
-use crate::WorkflowNodeId;
+use crate::workflow::WorkflowNodeId;
 pub mod guiders;
 pub mod noise;
 pub mod samplers;

@@ -7,7 +7,7 @@ use quote::quote;
 
 mod util;
 
-use rucomfyui::{CategoryTree, CategoryTreeNode, Object, ObjectInput, ObjectType};
+use rucomfyui::object_info::{CategoryTree, CategoryTreeNode, Object, ObjectInput, ObjectType};
 
 #[tokio::main]
 async fn main() {
@@ -21,7 +21,7 @@ async fn run() -> Result<()> {
     let object_info = client.object_info().await?;
 
     let category_tree =
-        rucomfyui::categorize_objects(object_info.values().filter(|n| {
+        rucomfyui::object_info::categorize(object_info.values().filter(|n| {
             !(n.python_module.starts_with("custom_nodes") || n.category.starts_with("_"))
         }));
 
@@ -113,7 +113,7 @@ fn type_module_definitions() -> Result<TokenStream> {
 
     Ok(quote! {
         //! Definitions for all ComfyUI types.
-        use crate::{nodes::ToWorkflowInput, WorkflowInput, WorkflowNodeId};
+        use crate::{nodes::ToWorkflowInput, workflow::{WorkflowInput, WorkflowNodeId}};
 
         #(#types)*
     })
@@ -142,7 +142,7 @@ fn write_category_tree_root(root: &CategoryTree, directory: &Path) -> Result<()>
         pub mod all;
         pub mod types;
 
-        use crate::{WorkflowNodeId, WorkflowInput};
+        use crate::workflow::{WorkflowNodeId, WorkflowInput};
 
         /// Implemented for all typed nodes; provides the node's output and metadata.
         pub trait TypedNode {
@@ -255,7 +255,7 @@ fn write_category_tree((name, tree): (&str, &CategoryTree), directory: &Path) ->
         #![doc = #doc]
         #![allow(unused_imports)]
 
-        use crate::WorkflowNodeId;
+        use crate::workflow::WorkflowNodeId;
 
         #(#modules)*
 

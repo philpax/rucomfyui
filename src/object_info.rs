@@ -1,3 +1,5 @@
+//! Information about the objects (nodes, inputs, outputs, etc.) in ComfyUI.
+
 use std::collections::{BTreeMap, HashMap};
 
 use serde::{Deserialize, Serialize};
@@ -244,7 +246,7 @@ impl<'a> std::fmt::Debug for CategoryTreeNode<'a> {
 ///
 /// Recommended use is with a values iterator over [`Client::object_info`] with whatever filtering
 /// is appropriate for your usecase.
-pub fn categorize_objects<'a>(objects: impl Iterator<Item = &'a Object>) -> CategoryTree<'a> {
+pub fn categorize<'a>(objects: impl Iterator<Item = &'a Object>) -> CategoryTree<'a> {
     let mut tree = CategoryTree::new();
     for object in objects {
         let categories: Vec<&str> = object.category.split('/').collect();

@@ -4,17 +4,12 @@
 use reqwest::multipart::{Form, Part};
 use thiserror::Error;
 
-mod history;
-pub use history::*;
+pub mod history;
+pub mod object_info;
+pub mod queue;
+pub mod workflow;
 
-mod queue;
-pub use queue::*;
-
-mod object_info;
-pub use object_info::*;
-
-mod workflow;
-pub use workflow::*;
+pub use workflow::{Workflow, WorkflowGraph};
 
 #[cfg(feature = "typed_nodes")]
 pub mod nodes;
@@ -28,7 +23,8 @@ pub enum ClientError {
 }
 /// Result type for the client.
 pub type Result<T> = std::result::Result<T, ClientError>;
-/// Bytes type for the client.
+
+/// An alias around `Vec<u8>` for raw bytes.
 pub type Bytes = Vec<u8>;
 
 /// Client for the ComfyUI API.

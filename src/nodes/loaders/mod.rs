@@ -1,6 +1,6 @@
 //!`loaders` definitions/categories.
 #![allow(unused_imports)]
-use crate::WorkflowNodeId;
+use crate::workflow::WorkflowNodeId;
 pub mod video_models;
 /// Output types for nodes.
 pub mod out {

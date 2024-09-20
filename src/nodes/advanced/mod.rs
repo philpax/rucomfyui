@@ -1,6 +1,6 @@
 //!`advanced` definitions/categories.
 #![allow(unused_imports)]
-use crate::WorkflowNodeId;
+use crate::workflow::WorkflowNodeId;
 pub mod conditioning;
 pub mod loaders;
 pub mod model;

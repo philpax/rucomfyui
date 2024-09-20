@@ -1,3 +1,5 @@
+//! History of queued prompts.
+
 use std::collections::HashMap;
 
 use serde::{Deserialize, Serialize};

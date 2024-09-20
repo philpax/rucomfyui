@@ -1,6 +1,6 @@
 //!`conditioning` definitions/categories.
 #![allow(unused_imports)]
-use crate::WorkflowNodeId;
+use crate::workflow::WorkflowNodeId;
 pub mod flux;
 /// Output types for nodes.
 pub mod out {

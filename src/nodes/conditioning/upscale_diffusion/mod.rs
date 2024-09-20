@@ -1,6 +1,6 @@
 //!`upscale_diffusion` definitions/categories.
 #![allow(unused_imports)]
-use crate::WorkflowNodeId;
+use crate::workflow::WorkflowNodeId;
 /// Output types for nodes.
 pub mod out {
     ///Output for [`Sd4XUpscaleConditioning`](super::Sd4XUpscaleConditioning).

@@ -10,7 +10,7 @@ pub mod model_patches;
 pub mod sampling;
 pub mod all;
 pub mod types;
-use crate::{WorkflowNodeId, WorkflowInput};
+use crate::workflow::{WorkflowNodeId, WorkflowInput};
 /// Implemented for all typed nodes; provides the node's output and metadata.
 pub trait TypedNode {
     /// The type of the node's output.

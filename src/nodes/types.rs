@@ -1,5 +1,5 @@
 //! Definitions for all ComfyUI types.
-use crate::{nodes::ToWorkflowInput, WorkflowInput, WorkflowNodeId};
+use crate::{nodes::ToWorkflowInput, workflow::{WorkflowInput, WorkflowNodeId}};
 ///A value of ComfyUI type `AUDIO`.
 pub trait Audio: ToWorkflowInput {}
 impl ToWorkflowInput for Box<dyn Audio> {
