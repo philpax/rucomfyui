@@ -4,11 +4,11 @@ use crate::WorkflowNodeId;
 pub mod compositing;
 ///**CropMask**
 pub struct CropMask<
-    Mask: crate::nodes::Mask,
-    X: crate::nodes::Int,
-    Y: crate::nodes::Int,
-    Width: crate::nodes::Int,
-    Height: crate::nodes::Int,
+    Mask: crate::nodes::types::Mask,
+    X: crate::nodes::types::Int,
+    Y: crate::nodes::types::Int,
+    Width: crate::nodes::types::Int,
+    Height: crate::nodes::types::Int,
 > {
     ///No documentation.
     pub mask: Mask,
@@ -25,19 +25,19 @@ pub struct CropMask<
 #[derive(Clone)]
 pub struct CropMaskOutput {
     ///No documentation.
-    pub mask: crate::nodes::MaskOut,
+    pub mask: crate::nodes::types::MaskOut,
 }
 impl<
-    Mask: crate::nodes::Mask,
-    X: crate::nodes::Int,
-    Y: crate::nodes::Int,
-    Width: crate::nodes::Int,
-    Height: crate::nodes::Int,
+    Mask: crate::nodes::types::Mask,
+    X: crate::nodes::types::Int,
+    Y: crate::nodes::types::Int,
+    Width: crate::nodes::types::Int,
+    Height: crate::nodes::types::Int,
 > crate::nodes::TypedNode for CropMask<Mask, X, Y, Width, Height> {
     type Output = CropMaskOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            mask: crate::nodes::MaskOut {
+            mask: crate::nodes::types::MaskOut {
                 node_id,
                 node_slot: 0u32,
             },
@@ -50,11 +50,11 @@ impl<
 }
 ///**FeatherMask**
 pub struct FeatherMask<
-    Mask: crate::nodes::Mask,
-    Left: crate::nodes::Int,
-    Top: crate::nodes::Int,
-    Right: crate::nodes::Int,
-    Bottom: crate::nodes::Int,
+    Mask: crate::nodes::types::Mask,
+    Left: crate::nodes::types::Int,
+    Top: crate::nodes::types::Int,
+    Right: crate::nodes::types::Int,
+    Bottom: crate::nodes::types::Int,
 > {
     ///No documentation.
     pub mask: Mask,
@@ -71,19 +71,19 @@ pub struct FeatherMask<
 #[derive(Clone)]
 pub struct FeatherMaskOutput {
     ///No documentation.
-    pub mask: crate::nodes::MaskOut,
+    pub mask: crate::nodes::types::MaskOut,
 }
 impl<
-    Mask: crate::nodes::Mask,
-    Left: crate::nodes::Int,
-    Top: crate::nodes::Int,
-    Right: crate::nodes::Int,
-    Bottom: crate::nodes::Int,
+    Mask: crate::nodes::types::Mask,
+    Left: crate::nodes::types::Int,
+    Top: crate::nodes::types::Int,
+    Right: crate::nodes::types::Int,
+    Bottom: crate::nodes::types::Int,
 > crate::nodes::TypedNode for FeatherMask<Mask, Left, Top, Right, Bottom> {
     type Output = FeatherMaskOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            mask: crate::nodes::MaskOut {
+            mask: crate::nodes::types::MaskOut {
                 node_id,
                 node_slot: 0u32,
             },
@@ -96,9 +96,9 @@ impl<
 }
 ///**GrowMask**
 pub struct GrowMask<
-    Mask: crate::nodes::Mask,
-    Expand: crate::nodes::Int,
-    TaperedCorners: crate::nodes::Boolean,
+    Mask: crate::nodes::types::Mask,
+    Expand: crate::nodes::types::Int,
+    TaperedCorners: crate::nodes::types::Boolean,
 > {
     ///No documentation.
     pub mask: Mask,
@@ -111,17 +111,17 @@ pub struct GrowMask<
 #[derive(Clone)]
 pub struct GrowMaskOutput {
     ///No documentation.
-    pub mask: crate::nodes::MaskOut,
+    pub mask: crate::nodes::types::MaskOut,
 }
 impl<
-    Mask: crate::nodes::Mask,
-    Expand: crate::nodes::Int,
-    TaperedCorners: crate::nodes::Boolean,
+    Mask: crate::nodes::types::Mask,
+    Expand: crate::nodes::types::Int,
+    TaperedCorners: crate::nodes::types::Boolean,
 > crate::nodes::TypedNode for GrowMask<Mask, Expand, TaperedCorners> {
     type Output = GrowMaskOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            mask: crate::nodes::MaskOut {
+            mask: crate::nodes::types::MaskOut {
                 node_id,
                 node_slot: 0u32,
             },
@@ -133,7 +133,10 @@ impl<
     const CATEGORY: &'static str = "mask";
 }
 ///**ImageColorToMask**
-pub struct ImageColorToMask<Image: crate::nodes::Image, Color: crate::nodes::Int> {
+pub struct ImageColorToMask<
+    Image: crate::nodes::types::Image,
+    Color: crate::nodes::types::Int,
+> {
     ///No documentation.
     pub image: Image,
     ///No documentation.
@@ -143,14 +146,16 @@ pub struct ImageColorToMask<Image: crate::nodes::Image, Color: crate::nodes::Int
 #[derive(Clone)]
 pub struct ImageColorToMaskOutput {
     ///No documentation.
-    pub mask: crate::nodes::MaskOut,
+    pub mask: crate::nodes::types::MaskOut,
 }
-impl<Image: crate::nodes::Image, Color: crate::nodes::Int> crate::nodes::TypedNode
-for ImageColorToMask<Image, Color> {
+impl<
+    Image: crate::nodes::types::Image,
+    Color: crate::nodes::types::Int,
+> crate::nodes::TypedNode for ImageColorToMask<Image, Color> {
     type Output = ImageColorToMaskOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            mask: crate::nodes::MaskOut {
+            mask: crate::nodes::types::MaskOut {
                 node_id,
                 node_slot: 0u32,
             },
@@ -162,7 +167,10 @@ for ImageColorToMask<Image, Color> {
     const CATEGORY: &'static str = "mask";
 }
 ///**Convert Image to Mask**
-pub struct ImageToMask<Image: crate::nodes::Image, Channel: crate::nodes::String> {
+pub struct ImageToMask<
+    Image: crate::nodes::types::Image,
+    Channel: crate::nodes::types::String,
+> {
     ///No documentation.
     pub image: Image,
     ///No documentation.
@@ -172,14 +180,16 @@ pub struct ImageToMask<Image: crate::nodes::Image, Channel: crate::nodes::String
 #[derive(Clone)]
 pub struct ImageToMaskOutput {
     ///No documentation.
-    pub mask: crate::nodes::MaskOut,
+    pub mask: crate::nodes::types::MaskOut,
 }
-impl<Image: crate::nodes::Image, Channel: crate::nodes::String> crate::nodes::TypedNode
-for ImageToMask<Image, Channel> {
+impl<
+    Image: crate::nodes::types::Image,
+    Channel: crate::nodes::types::String,
+> crate::nodes::TypedNode for ImageToMask<Image, Channel> {
     type Output = ImageToMaskOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            mask: crate::nodes::MaskOut {
+            mask: crate::nodes::types::MaskOut {
                 node_id,
                 node_slot: 0u32,
             },
@@ -191,7 +201,7 @@ for ImageToMask<Image, Channel> {
     const CATEGORY: &'static str = "mask";
 }
 ///**InvertMask**
-pub struct InvertMask<Mask: crate::nodes::Mask> {
+pub struct InvertMask<Mask: crate::nodes::types::Mask> {
     ///No documentation.
     pub mask: Mask,
 }
@@ -199,13 +209,13 @@ pub struct InvertMask<Mask: crate::nodes::Mask> {
 #[derive(Clone)]
 pub struct InvertMaskOutput {
     ///No documentation.
-    pub mask: crate::nodes::MaskOut,
+    pub mask: crate::nodes::types::MaskOut,
 }
-impl<Mask: crate::nodes::Mask> crate::nodes::TypedNode for InvertMask<Mask> {
+impl<Mask: crate::nodes::types::Mask> crate::nodes::TypedNode for InvertMask<Mask> {
     type Output = InvertMaskOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            mask: crate::nodes::MaskOut {
+            mask: crate::nodes::types::MaskOut {
                 node_id,
                 node_slot: 0u32,
             },
@@ -217,7 +227,10 @@ impl<Mask: crate::nodes::Mask> crate::nodes::TypedNode for InvertMask<Mask> {
     const CATEGORY: &'static str = "mask";
 }
 ///**Load Image (as Mask)**
-pub struct LoadImageMask<Image: crate::nodes::String, Channel: crate::nodes::String> {
+pub struct LoadImageMask<
+    Image: crate::nodes::types::String,
+    Channel: crate::nodes::types::String,
+> {
     ///No documentation.
     pub image: Image,
     ///No documentation.
@@ -227,14 +240,16 @@ pub struct LoadImageMask<Image: crate::nodes::String, Channel: crate::nodes::Str
 #[derive(Clone)]
 pub struct LoadImageMaskOutput {
     ///No documentation.
-    pub mask: crate::nodes::MaskOut,
+    pub mask: crate::nodes::types::MaskOut,
 }
-impl<Image: crate::nodes::String, Channel: crate::nodes::String> crate::nodes::TypedNode
-for LoadImageMask<Image, Channel> {
+impl<
+    Image: crate::nodes::types::String,
+    Channel: crate::nodes::types::String,
+> crate::nodes::TypedNode for LoadImageMask<Image, Channel> {
     type Output = LoadImageMaskOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            mask: crate::nodes::MaskOut {
+            mask: crate::nodes::types::MaskOut {
                 node_id,
                 node_slot: 0u32,
             },
@@ -247,11 +262,11 @@ for LoadImageMask<Image, Channel> {
 }
 ///**MaskComposite**
 pub struct MaskComposite<
-    Destination: crate::nodes::Mask,
-    Source: crate::nodes::Mask,
-    X: crate::nodes::Int,
-    Y: crate::nodes::Int,
-    Operation: crate::nodes::String,
+    Destination: crate::nodes::types::Mask,
+    Source: crate::nodes::types::Mask,
+    X: crate::nodes::types::Int,
+    Y: crate::nodes::types::Int,
+    Operation: crate::nodes::types::String,
 > {
     ///No documentation.
     pub destination: Destination,
@@ -268,19 +283,19 @@ pub struct MaskComposite<
 #[derive(Clone)]
 pub struct MaskCompositeOutput {
     ///No documentation.
-    pub mask: crate::nodes::MaskOut,
+    pub mask: crate::nodes::types::MaskOut,
 }
 impl<
-    Destination: crate::nodes::Mask,
-    Source: crate::nodes::Mask,
-    X: crate::nodes::Int,
-    Y: crate::nodes::Int,
-    Operation: crate::nodes::String,
+    Destination: crate::nodes::types::Mask,
+    Source: crate::nodes::types::Mask,
+    X: crate::nodes::types::Int,
+    Y: crate::nodes::types::Int,
+    Operation: crate::nodes::types::String,
 > crate::nodes::TypedNode for MaskComposite<Destination, Source, X, Y, Operation> {
     type Output = MaskCompositeOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            mask: crate::nodes::MaskOut {
+            mask: crate::nodes::types::MaskOut {
                 node_id,
                 node_slot: 0u32,
             },
@@ -292,7 +307,7 @@ impl<
     const CATEGORY: &'static str = "mask";
 }
 ///**Convert Mask to Image**
-pub struct MaskToImage<Mask: crate::nodes::Mask> {
+pub struct MaskToImage<Mask: crate::nodes::types::Mask> {
     ///No documentation.
     pub mask: Mask,
 }
@@ -300,13 +315,13 @@ pub struct MaskToImage<Mask: crate::nodes::Mask> {
 #[derive(Clone)]
 pub struct MaskToImageOutput {
     ///No documentation.
-    pub image: crate::nodes::ImageOut,
+    pub image: crate::nodes::types::ImageOut,
 }
-impl<Mask: crate::nodes::Mask> crate::nodes::TypedNode for MaskToImage<Mask> {
+impl<Mask: crate::nodes::types::Mask> crate::nodes::TypedNode for MaskToImage<Mask> {
     type Output = MaskToImageOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            image: crate::nodes::ImageOut {
+            image: crate::nodes::types::ImageOut {
                 node_id,
                 node_slot: 0u32,
             },
@@ -319,9 +334,9 @@ impl<Mask: crate::nodes::Mask> crate::nodes::TypedNode for MaskToImage<Mask> {
 }
 ///**SolidMask**
 pub struct SolidMask<
-    Value: crate::nodes::Float,
-    Width: crate::nodes::Int,
-    Height: crate::nodes::Int,
+    Value: crate::nodes::types::Float,
+    Width: crate::nodes::types::Int,
+    Height: crate::nodes::types::Int,
 > {
     ///No documentation.
     pub value: Value,
@@ -334,17 +349,17 @@ pub struct SolidMask<
 #[derive(Clone)]
 pub struct SolidMaskOutput {
     ///No documentation.
-    pub mask: crate::nodes::MaskOut,
+    pub mask: crate::nodes::types::MaskOut,
 }
 impl<
-    Value: crate::nodes::Float,
-    Width: crate::nodes::Int,
-    Height: crate::nodes::Int,
+    Value: crate::nodes::types::Float,
+    Width: crate::nodes::types::Int,
+    Height: crate::nodes::types::Int,
 > crate::nodes::TypedNode for SolidMask<Value, Width, Height> {
     type Output = SolidMaskOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            mask: crate::nodes::MaskOut {
+            mask: crate::nodes::types::MaskOut {
                 node_id,
                 node_slot: 0u32,
             },
@@ -356,7 +371,10 @@ impl<
     const CATEGORY: &'static str = "mask";
 }
 ///**ThresholdMask**
-pub struct ThresholdMask<Mask: crate::nodes::Mask, Value: crate::nodes::Float> {
+pub struct ThresholdMask<
+    Mask: crate::nodes::types::Mask,
+    Value: crate::nodes::types::Float,
+> {
     ///No documentation.
     pub mask: Mask,
     ///No documentation.
@@ -366,14 +384,16 @@ pub struct ThresholdMask<Mask: crate::nodes::Mask, Value: crate::nodes::Float> {
 #[derive(Clone)]
 pub struct ThresholdMaskOutput {
     ///No documentation.
-    pub mask: crate::nodes::MaskOut,
+    pub mask: crate::nodes::types::MaskOut,
 }
-impl<Mask: crate::nodes::Mask, Value: crate::nodes::Float> crate::nodes::TypedNode
-for ThresholdMask<Mask, Value> {
+impl<
+    Mask: crate::nodes::types::Mask,
+    Value: crate::nodes::types::Float,
+> crate::nodes::TypedNode for ThresholdMask<Mask, Value> {
     type Output = ThresholdMaskOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            mask: crate::nodes::MaskOut {
+            mask: crate::nodes::types::MaskOut {
                 node_id,
                 node_slot: 0u32,
             },

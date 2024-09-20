@@ -3,8 +3,8 @@
 use crate::WorkflowNodeId;
 ///**BasicGuider**
 pub struct BasicGuider<
-    Model: crate::nodes::Model,
-    Conditioning: crate::nodes::Conditioning,
+    Model: crate::nodes::types::Model,
+    Conditioning: crate::nodes::types::Conditioning,
 > {
     ///No documentation.
     pub model: Model,
@@ -15,16 +15,16 @@ pub struct BasicGuider<
 #[derive(Clone)]
 pub struct BasicGuiderOutput {
     ///No documentation.
-    pub guider: crate::nodes::GuiderOut,
+    pub guider: crate::nodes::types::GuiderOut,
 }
 impl<
-    Model: crate::nodes::Model,
-    Conditioning: crate::nodes::Conditioning,
+    Model: crate::nodes::types::Model,
+    Conditioning: crate::nodes::types::Conditioning,
 > crate::nodes::TypedNode for BasicGuider<Model, Conditioning> {
     type Output = BasicGuiderOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            guider: crate::nodes::GuiderOut {
+            guider: crate::nodes::types::GuiderOut {
                 node_id,
                 node_slot: 0u32,
             },
@@ -37,10 +37,10 @@ impl<
 }
 ///**CFGGuider**
 pub struct CfgGuider<
-    Model: crate::nodes::Model,
-    Positive: crate::nodes::Conditioning,
-    Negative: crate::nodes::Conditioning,
-    Cfg: crate::nodes::Float,
+    Model: crate::nodes::types::Model,
+    Positive: crate::nodes::types::Conditioning,
+    Negative: crate::nodes::types::Conditioning,
+    Cfg: crate::nodes::types::Float,
 > {
     ///No documentation.
     pub model: Model,
@@ -55,18 +55,18 @@ pub struct CfgGuider<
 #[derive(Clone)]
 pub struct CfgGuiderOutput {
     ///No documentation.
-    pub guider: crate::nodes::GuiderOut,
+    pub guider: crate::nodes::types::GuiderOut,
 }
 impl<
-    Model: crate::nodes::Model,
-    Positive: crate::nodes::Conditioning,
-    Negative: crate::nodes::Conditioning,
-    Cfg: crate::nodes::Float,
+    Model: crate::nodes::types::Model,
+    Positive: crate::nodes::types::Conditioning,
+    Negative: crate::nodes::types::Conditioning,
+    Cfg: crate::nodes::types::Float,
 > crate::nodes::TypedNode for CfgGuider<Model, Positive, Negative, Cfg> {
     type Output = CfgGuiderOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            guider: crate::nodes::GuiderOut {
+            guider: crate::nodes::types::GuiderOut {
                 node_id,
                 node_slot: 0u32,
             },
@@ -79,12 +79,12 @@ impl<
 }
 ///**DualCFGGuider**
 pub struct DualCfgGuider<
-    Model: crate::nodes::Model,
-    Cond1: crate::nodes::Conditioning,
-    Cond2: crate::nodes::Conditioning,
-    Negative: crate::nodes::Conditioning,
-    CfgConds: crate::nodes::Float,
-    CfgCond2Negative: crate::nodes::Float,
+    Model: crate::nodes::types::Model,
+    Cond1: crate::nodes::types::Conditioning,
+    Cond2: crate::nodes::types::Conditioning,
+    Negative: crate::nodes::types::Conditioning,
+    CfgConds: crate::nodes::types::Float,
+    CfgCond2Negative: crate::nodes::types::Float,
 > {
     ///No documentation.
     pub model: Model,
@@ -103,21 +103,21 @@ pub struct DualCfgGuider<
 #[derive(Clone)]
 pub struct DualCfgGuiderOutput {
     ///No documentation.
-    pub guider: crate::nodes::GuiderOut,
+    pub guider: crate::nodes::types::GuiderOut,
 }
 impl<
-    Model: crate::nodes::Model,
-    Cond1: crate::nodes::Conditioning,
-    Cond2: crate::nodes::Conditioning,
-    Negative: crate::nodes::Conditioning,
-    CfgConds: crate::nodes::Float,
-    CfgCond2Negative: crate::nodes::Float,
+    Model: crate::nodes::types::Model,
+    Cond1: crate::nodes::types::Conditioning,
+    Cond2: crate::nodes::types::Conditioning,
+    Negative: crate::nodes::types::Conditioning,
+    CfgConds: crate::nodes::types::Float,
+    CfgCond2Negative: crate::nodes::types::Float,
 > crate::nodes::TypedNode
 for DualCfgGuider<Model, Cond1, Cond2, Negative, CfgConds, CfgCond2Negative> {
     type Output = DualCfgGuiderOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            guider: crate::nodes::GuiderOut {
+            guider: crate::nodes::types::GuiderOut {
                 node_id,
                 node_slot: 0u32,
             },

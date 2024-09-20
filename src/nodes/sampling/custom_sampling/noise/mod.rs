@@ -7,13 +7,13 @@ pub struct DisableNoise {}
 #[derive(Clone)]
 pub struct DisableNoiseOutput {
     ///No documentation.
-    pub noise: crate::nodes::NoiseOut,
+    pub noise: crate::nodes::types::NoiseOut,
 }
 impl crate::nodes::TypedNode for DisableNoise {
     type Output = DisableNoiseOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            noise: crate::nodes::NoiseOut {
+            noise: crate::nodes::types::NoiseOut {
                 node_id,
                 node_slot: 0u32,
             },
@@ -25,7 +25,7 @@ impl crate::nodes::TypedNode for DisableNoise {
     const CATEGORY: &'static str = "sampling/custom_sampling/noise";
 }
 ///**RandomNoise**
-pub struct RandomNoise<NoiseSeed: crate::nodes::Int> {
+pub struct RandomNoise<NoiseSeed: crate::nodes::types::Int> {
     ///No documentation.
     pub noise_seed: NoiseSeed,
 }
@@ -33,13 +33,14 @@ pub struct RandomNoise<NoiseSeed: crate::nodes::Int> {
 #[derive(Clone)]
 pub struct RandomNoiseOutput {
     ///No documentation.
-    pub noise: crate::nodes::NoiseOut,
+    pub noise: crate::nodes::types::NoiseOut,
 }
-impl<NoiseSeed: crate::nodes::Int> crate::nodes::TypedNode for RandomNoise<NoiseSeed> {
+impl<NoiseSeed: crate::nodes::types::Int> crate::nodes::TypedNode
+for RandomNoise<NoiseSeed> {
     type Output = RandomNoiseOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            noise: crate::nodes::NoiseOut {
+            noise: crate::nodes::types::NoiseOut {
                 node_id,
                 node_slot: 0u32,
             },

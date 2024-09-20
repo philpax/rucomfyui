@@ -3,14 +3,14 @@
 use crate::WorkflowNodeId;
 ///**GLIGENTextBoxApply**
 pub struct GligenTextBoxApply<
-    ConditioningTo: crate::nodes::Conditioning,
-    Clip: crate::nodes::Clip,
-    GligenTextboxModel: crate::nodes::Gligen,
-    Text: crate::nodes::String,
-    Width: crate::nodes::Int,
-    Height: crate::nodes::Int,
-    X: crate::nodes::Int,
-    Y: crate::nodes::Int,
+    ConditioningTo: crate::nodes::types::Conditioning,
+    Clip: crate::nodes::types::Clip,
+    GligenTextboxModel: crate::nodes::types::Gligen,
+    Text: crate::nodes::types::String,
+    Width: crate::nodes::types::Int,
+    Height: crate::nodes::types::Int,
+    X: crate::nodes::types::Int,
+    Y: crate::nodes::types::Int,
 > {
     ///No documentation.
     pub conditioning_to: ConditioningTo,
@@ -33,17 +33,17 @@ pub struct GligenTextBoxApply<
 #[derive(Clone)]
 pub struct GligenTextBoxApplyOutput {
     ///No documentation.
-    pub conditioning: crate::nodes::ConditioningOut,
+    pub conditioning: crate::nodes::types::ConditioningOut,
 }
 impl<
-    ConditioningTo: crate::nodes::Conditioning,
-    Clip: crate::nodes::Clip,
-    GligenTextboxModel: crate::nodes::Gligen,
-    Text: crate::nodes::String,
-    Width: crate::nodes::Int,
-    Height: crate::nodes::Int,
-    X: crate::nodes::Int,
-    Y: crate::nodes::Int,
+    ConditioningTo: crate::nodes::types::Conditioning,
+    Clip: crate::nodes::types::Clip,
+    GligenTextboxModel: crate::nodes::types::Gligen,
+    Text: crate::nodes::types::String,
+    Width: crate::nodes::types::Int,
+    Height: crate::nodes::types::Int,
+    X: crate::nodes::types::Int,
+    Y: crate::nodes::types::Int,
 > crate::nodes::TypedNode
 for GligenTextBoxApply<
     ConditioningTo,
@@ -58,7 +58,7 @@ for GligenTextBoxApply<
     type Output = GligenTextBoxApplyOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            conditioning: crate::nodes::ConditioningOut {
+            conditioning: crate::nodes::types::ConditioningOut {
                 node_id,
                 node_slot: 0u32,
             },

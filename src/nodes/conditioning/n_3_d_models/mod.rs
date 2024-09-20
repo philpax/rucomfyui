@@ -3,13 +3,13 @@
 use crate::WorkflowNodeId;
 ///**SV3D_Conditioning**
 pub struct Sv3DConditioning<
-    ClipVision: crate::nodes::ClipVision,
-    InitImage: crate::nodes::Image,
-    Vae: crate::nodes::Vae,
-    Width: crate::nodes::Int,
-    Height: crate::nodes::Int,
-    VideoFrames: crate::nodes::Int,
-    Elevation: crate::nodes::Float,
+    ClipVision: crate::nodes::types::ClipVision,
+    InitImage: crate::nodes::types::Image,
+    Vae: crate::nodes::types::Vae,
+    Width: crate::nodes::types::Int,
+    Height: crate::nodes::types::Int,
+    VideoFrames: crate::nodes::types::Int,
+    Elevation: crate::nodes::types::Float,
 > {
     ///No documentation.
     pub clip_vision: ClipVision,
@@ -30,34 +30,34 @@ pub struct Sv3DConditioning<
 #[derive(Clone)]
 pub struct Sv3DConditioningOutput {
     ///No documentation.
-    pub positive: crate::nodes::ConditioningOut,
+    pub positive: crate::nodes::types::ConditioningOut,
     ///No documentation.
-    pub negative: crate::nodes::ConditioningOut,
+    pub negative: crate::nodes::types::ConditioningOut,
     ///No documentation.
-    pub latent: crate::nodes::LatentOut,
+    pub latent: crate::nodes::types::LatentOut,
 }
 impl<
-    ClipVision: crate::nodes::ClipVision,
-    InitImage: crate::nodes::Image,
-    Vae: crate::nodes::Vae,
-    Width: crate::nodes::Int,
-    Height: crate::nodes::Int,
-    VideoFrames: crate::nodes::Int,
-    Elevation: crate::nodes::Float,
+    ClipVision: crate::nodes::types::ClipVision,
+    InitImage: crate::nodes::types::Image,
+    Vae: crate::nodes::types::Vae,
+    Width: crate::nodes::types::Int,
+    Height: crate::nodes::types::Int,
+    VideoFrames: crate::nodes::types::Int,
+    Elevation: crate::nodes::types::Float,
 > crate::nodes::TypedNode
 for Sv3DConditioning<ClipVision, InitImage, Vae, Width, Height, VideoFrames, Elevation> {
     type Output = Sv3DConditioningOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            positive: crate::nodes::ConditioningOut {
+            positive: crate::nodes::types::ConditioningOut {
                 node_id,
                 node_slot: 0u32,
             },
-            negative: crate::nodes::ConditioningOut {
+            negative: crate::nodes::types::ConditioningOut {
                 node_id,
                 node_slot: 1u32,
             },
-            latent: crate::nodes::LatentOut {
+            latent: crate::nodes::types::LatentOut {
                 node_id,
                 node_slot: 2u32,
             },
@@ -70,14 +70,14 @@ for Sv3DConditioning<ClipVision, InitImage, Vae, Width, Height, VideoFrames, Ele
 }
 ///**StableZero123_Conditioning**
 pub struct StableZero123Conditioning<
-    ClipVision: crate::nodes::ClipVision,
-    InitImage: crate::nodes::Image,
-    Vae: crate::nodes::Vae,
-    Width: crate::nodes::Int,
-    Height: crate::nodes::Int,
-    BatchSize: crate::nodes::Int,
-    Elevation: crate::nodes::Float,
-    Azimuth: crate::nodes::Float,
+    ClipVision: crate::nodes::types::ClipVision,
+    InitImage: crate::nodes::types::Image,
+    Vae: crate::nodes::types::Vae,
+    Width: crate::nodes::types::Int,
+    Height: crate::nodes::types::Int,
+    BatchSize: crate::nodes::types::Int,
+    Elevation: crate::nodes::types::Float,
+    Azimuth: crate::nodes::types::Float,
 > {
     ///No documentation.
     pub clip_vision: ClipVision,
@@ -100,21 +100,21 @@ pub struct StableZero123Conditioning<
 #[derive(Clone)]
 pub struct StableZero123ConditioningOutput {
     ///No documentation.
-    pub positive: crate::nodes::ConditioningOut,
+    pub positive: crate::nodes::types::ConditioningOut,
     ///No documentation.
-    pub negative: crate::nodes::ConditioningOut,
+    pub negative: crate::nodes::types::ConditioningOut,
     ///No documentation.
-    pub latent: crate::nodes::LatentOut,
+    pub latent: crate::nodes::types::LatentOut,
 }
 impl<
-    ClipVision: crate::nodes::ClipVision,
-    InitImage: crate::nodes::Image,
-    Vae: crate::nodes::Vae,
-    Width: crate::nodes::Int,
-    Height: crate::nodes::Int,
-    BatchSize: crate::nodes::Int,
-    Elevation: crate::nodes::Float,
-    Azimuth: crate::nodes::Float,
+    ClipVision: crate::nodes::types::ClipVision,
+    InitImage: crate::nodes::types::Image,
+    Vae: crate::nodes::types::Vae,
+    Width: crate::nodes::types::Int,
+    Height: crate::nodes::types::Int,
+    BatchSize: crate::nodes::types::Int,
+    Elevation: crate::nodes::types::Float,
+    Azimuth: crate::nodes::types::Float,
 > crate::nodes::TypedNode
 for StableZero123Conditioning<
     ClipVision,
@@ -129,15 +129,15 @@ for StableZero123Conditioning<
     type Output = StableZero123ConditioningOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            positive: crate::nodes::ConditioningOut {
+            positive: crate::nodes::types::ConditioningOut {
                 node_id,
                 node_slot: 0u32,
             },
-            negative: crate::nodes::ConditioningOut {
+            negative: crate::nodes::types::ConditioningOut {
                 node_id,
                 node_slot: 1u32,
             },
-            latent: crate::nodes::LatentOut {
+            latent: crate::nodes::types::LatentOut {
                 node_id,
                 node_slot: 2u32,
             },
@@ -150,16 +150,16 @@ for StableZero123Conditioning<
 }
 ///**StableZero123_Conditioning_Batched**
 pub struct StableZero123ConditioningBatched<
-    ClipVision: crate::nodes::ClipVision,
-    InitImage: crate::nodes::Image,
-    Vae: crate::nodes::Vae,
-    Width: crate::nodes::Int,
-    Height: crate::nodes::Int,
-    BatchSize: crate::nodes::Int,
-    Elevation: crate::nodes::Float,
-    Azimuth: crate::nodes::Float,
-    ElevationBatchIncrement: crate::nodes::Float,
-    AzimuthBatchIncrement: crate::nodes::Float,
+    ClipVision: crate::nodes::types::ClipVision,
+    InitImage: crate::nodes::types::Image,
+    Vae: crate::nodes::types::Vae,
+    Width: crate::nodes::types::Int,
+    Height: crate::nodes::types::Int,
+    BatchSize: crate::nodes::types::Int,
+    Elevation: crate::nodes::types::Float,
+    Azimuth: crate::nodes::types::Float,
+    ElevationBatchIncrement: crate::nodes::types::Float,
+    AzimuthBatchIncrement: crate::nodes::types::Float,
 > {
     ///No documentation.
     pub clip_vision: ClipVision,
@@ -186,23 +186,23 @@ pub struct StableZero123ConditioningBatched<
 #[derive(Clone)]
 pub struct StableZero123ConditioningBatchedOutput {
     ///No documentation.
-    pub positive: crate::nodes::ConditioningOut,
+    pub positive: crate::nodes::types::ConditioningOut,
     ///No documentation.
-    pub negative: crate::nodes::ConditioningOut,
+    pub negative: crate::nodes::types::ConditioningOut,
     ///No documentation.
-    pub latent: crate::nodes::LatentOut,
+    pub latent: crate::nodes::types::LatentOut,
 }
 impl<
-    ClipVision: crate::nodes::ClipVision,
-    InitImage: crate::nodes::Image,
-    Vae: crate::nodes::Vae,
-    Width: crate::nodes::Int,
-    Height: crate::nodes::Int,
-    BatchSize: crate::nodes::Int,
-    Elevation: crate::nodes::Float,
-    Azimuth: crate::nodes::Float,
-    ElevationBatchIncrement: crate::nodes::Float,
-    AzimuthBatchIncrement: crate::nodes::Float,
+    ClipVision: crate::nodes::types::ClipVision,
+    InitImage: crate::nodes::types::Image,
+    Vae: crate::nodes::types::Vae,
+    Width: crate::nodes::types::Int,
+    Height: crate::nodes::types::Int,
+    BatchSize: crate::nodes::types::Int,
+    Elevation: crate::nodes::types::Float,
+    Azimuth: crate::nodes::types::Float,
+    ElevationBatchIncrement: crate::nodes::types::Float,
+    AzimuthBatchIncrement: crate::nodes::types::Float,
 > crate::nodes::TypedNode
 for StableZero123ConditioningBatched<
     ClipVision,
@@ -219,15 +219,15 @@ for StableZero123ConditioningBatched<
     type Output = StableZero123ConditioningBatchedOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            positive: crate::nodes::ConditioningOut {
+            positive: crate::nodes::types::ConditioningOut {
                 node_id,
                 node_slot: 0u32,
             },
-            negative: crate::nodes::ConditioningOut {
+            negative: crate::nodes::types::ConditioningOut {
                 node_id,
                 node_slot: 1u32,
             },
-            latent: crate::nodes::LatentOut {
+            latent: crate::nodes::types::LatentOut {
                 node_id,
                 node_slot: 2u32,
             },

@@ -2,7 +2,10 @@
 #![allow(unused_imports)]
 use crate::WorkflowNodeId;
 ///**LatentAdd**
-pub struct LatentAdd<Samples1: crate::nodes::Latent, Samples2: crate::nodes::Latent> {
+pub struct LatentAdd<
+    Samples1: crate::nodes::types::Latent,
+    Samples2: crate::nodes::types::Latent,
+> {
     ///No documentation.
     pub samples_1: Samples1,
     ///No documentation.
@@ -12,16 +15,16 @@ pub struct LatentAdd<Samples1: crate::nodes::Latent, Samples2: crate::nodes::Lat
 #[derive(Clone)]
 pub struct LatentAddOutput {
     ///No documentation.
-    pub latent: crate::nodes::LatentOut,
+    pub latent: crate::nodes::types::LatentOut,
 }
 impl<
-    Samples1: crate::nodes::Latent,
-    Samples2: crate::nodes::Latent,
+    Samples1: crate::nodes::types::Latent,
+    Samples2: crate::nodes::types::Latent,
 > crate::nodes::TypedNode for LatentAdd<Samples1, Samples2> {
     type Output = LatentAddOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            latent: crate::nodes::LatentOut {
+            latent: crate::nodes::types::LatentOut {
                 node_id,
                 node_slot: 0u32,
             },
@@ -34,8 +37,8 @@ impl<
 }
 ///**LatentBatchSeedBehavior**
 pub struct LatentBatchSeedBehavior<
-    Samples: crate::nodes::Latent,
-    SeedBehavior: crate::nodes::String,
+    Samples: crate::nodes::types::Latent,
+    SeedBehavior: crate::nodes::types::String,
 > {
     ///No documentation.
     pub samples: Samples,
@@ -46,16 +49,16 @@ pub struct LatentBatchSeedBehavior<
 #[derive(Clone)]
 pub struct LatentBatchSeedBehaviorOutput {
     ///No documentation.
-    pub latent: crate::nodes::LatentOut,
+    pub latent: crate::nodes::types::LatentOut,
 }
 impl<
-    Samples: crate::nodes::Latent,
-    SeedBehavior: crate::nodes::String,
+    Samples: crate::nodes::types::Latent,
+    SeedBehavior: crate::nodes::types::String,
 > crate::nodes::TypedNode for LatentBatchSeedBehavior<Samples, SeedBehavior> {
     type Output = LatentBatchSeedBehaviorOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            latent: crate::nodes::LatentOut {
+            latent: crate::nodes::types::LatentOut {
                 node_id,
                 node_slot: 0u32,
             },
@@ -68,9 +71,9 @@ impl<
 }
 ///**LatentInterpolate**
 pub struct LatentInterpolate<
-    Samples1: crate::nodes::Latent,
-    Samples2: crate::nodes::Latent,
-    Ratio: crate::nodes::Float,
+    Samples1: crate::nodes::types::Latent,
+    Samples2: crate::nodes::types::Latent,
+    Ratio: crate::nodes::types::Float,
 > {
     ///No documentation.
     pub samples_1: Samples1,
@@ -83,17 +86,17 @@ pub struct LatentInterpolate<
 #[derive(Clone)]
 pub struct LatentInterpolateOutput {
     ///No documentation.
-    pub latent: crate::nodes::LatentOut,
+    pub latent: crate::nodes::types::LatentOut,
 }
 impl<
-    Samples1: crate::nodes::Latent,
-    Samples2: crate::nodes::Latent,
-    Ratio: crate::nodes::Float,
+    Samples1: crate::nodes::types::Latent,
+    Samples2: crate::nodes::types::Latent,
+    Ratio: crate::nodes::types::Float,
 > crate::nodes::TypedNode for LatentInterpolate<Samples1, Samples2, Ratio> {
     type Output = LatentInterpolateOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            latent: crate::nodes::LatentOut {
+            latent: crate::nodes::types::LatentOut {
                 node_id,
                 node_slot: 0u32,
             },
@@ -106,8 +109,8 @@ impl<
 }
 ///**LatentMultiply**
 pub struct LatentMultiply<
-    Samples: crate::nodes::Latent,
-    Multiplier: crate::nodes::Float,
+    Samples: crate::nodes::types::Latent,
+    Multiplier: crate::nodes::types::Float,
 > {
     ///No documentation.
     pub samples: Samples,
@@ -118,16 +121,16 @@ pub struct LatentMultiply<
 #[derive(Clone)]
 pub struct LatentMultiplyOutput {
     ///No documentation.
-    pub latent: crate::nodes::LatentOut,
+    pub latent: crate::nodes::types::LatentOut,
 }
 impl<
-    Samples: crate::nodes::Latent,
-    Multiplier: crate::nodes::Float,
+    Samples: crate::nodes::types::Latent,
+    Multiplier: crate::nodes::types::Float,
 > crate::nodes::TypedNode for LatentMultiply<Samples, Multiplier> {
     type Output = LatentMultiplyOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            latent: crate::nodes::LatentOut {
+            latent: crate::nodes::types::LatentOut {
                 node_id,
                 node_slot: 0u32,
             },
@@ -140,8 +143,8 @@ impl<
 }
 ///**LatentSubtract**
 pub struct LatentSubtract<
-    Samples1: crate::nodes::Latent,
-    Samples2: crate::nodes::Latent,
+    Samples1: crate::nodes::types::Latent,
+    Samples2: crate::nodes::types::Latent,
 > {
     ///No documentation.
     pub samples_1: Samples1,
@@ -152,16 +155,16 @@ pub struct LatentSubtract<
 #[derive(Clone)]
 pub struct LatentSubtractOutput {
     ///No documentation.
-    pub latent: crate::nodes::LatentOut,
+    pub latent: crate::nodes::types::LatentOut,
 }
 impl<
-    Samples1: crate::nodes::Latent,
-    Samples2: crate::nodes::Latent,
+    Samples1: crate::nodes::types::Latent,
+    Samples2: crate::nodes::types::Latent,
 > crate::nodes::TypedNode for LatentSubtract<Samples1, Samples2> {
     type Output = LatentSubtractOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            latent: crate::nodes::LatentOut {
+            latent: crate::nodes::types::LatentOut {
                 node_id,
                 node_slot: 0u32,
             },

@@ -3,8 +3,8 @@
 use crate::WorkflowNodeId;
 ///**VideoLinearCFGGuidance**
 pub struct VideoLinearCfgGuidance<
-    Model: crate::nodes::Model,
-    MinCfg: crate::nodes::Float,
+    Model: crate::nodes::types::Model,
+    MinCfg: crate::nodes::types::Float,
 > {
     ///No documentation.
     pub model: Model,
@@ -15,14 +15,16 @@ pub struct VideoLinearCfgGuidance<
 #[derive(Clone)]
 pub struct VideoLinearCfgGuidanceOutput {
     ///No documentation.
-    pub model: crate::nodes::ModelOut,
+    pub model: crate::nodes::types::ModelOut,
 }
-impl<Model: crate::nodes::Model, MinCfg: crate::nodes::Float> crate::nodes::TypedNode
-for VideoLinearCfgGuidance<Model, MinCfg> {
+impl<
+    Model: crate::nodes::types::Model,
+    MinCfg: crate::nodes::types::Float,
+> crate::nodes::TypedNode for VideoLinearCfgGuidance<Model, MinCfg> {
     type Output = VideoLinearCfgGuidanceOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            model: crate::nodes::ModelOut {
+            model: crate::nodes::types::ModelOut {
                 node_id,
                 node_slot: 0u32,
             },
@@ -35,8 +37,8 @@ for VideoLinearCfgGuidance<Model, MinCfg> {
 }
 ///**VideoTriangleCFGGuidance**
 pub struct VideoTriangleCfgGuidance<
-    Model: crate::nodes::Model,
-    MinCfg: crate::nodes::Float,
+    Model: crate::nodes::types::Model,
+    MinCfg: crate::nodes::types::Float,
 > {
     ///No documentation.
     pub model: Model,
@@ -47,14 +49,16 @@ pub struct VideoTriangleCfgGuidance<
 #[derive(Clone)]
 pub struct VideoTriangleCfgGuidanceOutput {
     ///No documentation.
-    pub model: crate::nodes::ModelOut,
+    pub model: crate::nodes::types::ModelOut,
 }
-impl<Model: crate::nodes::Model, MinCfg: crate::nodes::Float> crate::nodes::TypedNode
-for VideoTriangleCfgGuidance<Model, MinCfg> {
+impl<
+    Model: crate::nodes::types::Model,
+    MinCfg: crate::nodes::types::Float,
+> crate::nodes::TypedNode for VideoTriangleCfgGuidance<Model, MinCfg> {
     type Output = VideoTriangleCfgGuidanceOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            model: crate::nodes::ModelOut {
+            model: crate::nodes::types::ModelOut {
                 node_id,
                 node_slot: 0u32,
             },

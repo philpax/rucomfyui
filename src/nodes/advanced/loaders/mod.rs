@@ -3,7 +3,10 @@
 use crate::WorkflowNodeId;
 pub mod deprecated;
 ///**Load CLIP**
-pub struct ClipLoader<ClipName: crate::nodes::String, Type: crate::nodes::String> {
+pub struct ClipLoader<
+    ClipName: crate::nodes::types::String,
+    Type: crate::nodes::types::String,
+> {
     ///No documentation.
     pub clip_name: ClipName,
     ///No documentation.
@@ -13,14 +16,16 @@ pub struct ClipLoader<ClipName: crate::nodes::String, Type: crate::nodes::String
 #[derive(Clone)]
 pub struct ClipLoaderOutput {
     ///No documentation.
-    pub clip: crate::nodes::ClipOut,
+    pub clip: crate::nodes::types::ClipOut,
 }
-impl<ClipName: crate::nodes::String, Type: crate::nodes::String> crate::nodes::TypedNode
-for ClipLoader<ClipName, Type> {
+impl<
+    ClipName: crate::nodes::types::String,
+    Type: crate::nodes::types::String,
+> crate::nodes::TypedNode for ClipLoader<ClipName, Type> {
     type Output = ClipLoaderOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            clip: crate::nodes::ClipOut {
+            clip: crate::nodes::types::ClipOut {
                 node_id,
                 node_slot: 0u32,
             },
@@ -33,8 +38,8 @@ for ClipLoader<ClipName, Type> {
 }
 ///**Load Checkpoint With Config (DEPRECATED)**
 pub struct CheckpointLoader<
-    ConfigName: crate::nodes::String,
-    CkptName: crate::nodes::String,
+    ConfigName: crate::nodes::types::String,
+    CkptName: crate::nodes::types::String,
 > {
     ///No documentation.
     pub config_name: ConfigName,
@@ -45,28 +50,28 @@ pub struct CheckpointLoader<
 #[derive(Clone)]
 pub struct CheckpointLoaderOutput {
     ///No documentation.
-    pub model: crate::nodes::ModelOut,
+    pub model: crate::nodes::types::ModelOut,
     ///No documentation.
-    pub clip: crate::nodes::ClipOut,
+    pub clip: crate::nodes::types::ClipOut,
     ///No documentation.
-    pub vae: crate::nodes::VaeOut,
+    pub vae: crate::nodes::types::VaeOut,
 }
 impl<
-    ConfigName: crate::nodes::String,
-    CkptName: crate::nodes::String,
+    ConfigName: crate::nodes::types::String,
+    CkptName: crate::nodes::types::String,
 > crate::nodes::TypedNode for CheckpointLoader<ConfigName, CkptName> {
     type Output = CheckpointLoaderOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            model: crate::nodes::ModelOut {
+            model: crate::nodes::types::ModelOut {
                 node_id,
                 node_slot: 0u32,
             },
-            clip: crate::nodes::ClipOut {
+            clip: crate::nodes::types::ClipOut {
                 node_id,
                 node_slot: 1u32,
             },
-            vae: crate::nodes::VaeOut {
+            vae: crate::nodes::types::VaeOut {
                 node_id,
                 node_slot: 2u32,
             },
@@ -79,9 +84,9 @@ impl<
 }
 ///**DualCLIPLoader**
 pub struct DualClipLoader<
-    ClipName1: crate::nodes::String,
-    ClipName2: crate::nodes::String,
-    Type: crate::nodes::String,
+    ClipName1: crate::nodes::types::String,
+    ClipName2: crate::nodes::types::String,
+    Type: crate::nodes::types::String,
 > {
     ///No documentation.
     pub clip_name_1: ClipName1,
@@ -94,17 +99,17 @@ pub struct DualClipLoader<
 #[derive(Clone)]
 pub struct DualClipLoaderOutput {
     ///No documentation.
-    pub clip: crate::nodes::ClipOut,
+    pub clip: crate::nodes::types::ClipOut,
 }
 impl<
-    ClipName1: crate::nodes::String,
-    ClipName2: crate::nodes::String,
-    Type: crate::nodes::String,
+    ClipName1: crate::nodes::types::String,
+    ClipName2: crate::nodes::types::String,
+    Type: crate::nodes::types::String,
 > crate::nodes::TypedNode for DualClipLoader<ClipName1, ClipName2, Type> {
     type Output = DualClipLoaderOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            clip: crate::nodes::ClipOut {
+            clip: crate::nodes::types::ClipOut {
                 node_id,
                 node_slot: 0u32,
             },
@@ -117,9 +122,9 @@ impl<
 }
 ///**TripleCLIPLoader**
 pub struct TripleClipLoader<
-    ClipName1: crate::nodes::String,
-    ClipName2: crate::nodes::String,
-    ClipName3: crate::nodes::String,
+    ClipName1: crate::nodes::types::String,
+    ClipName2: crate::nodes::types::String,
+    ClipName3: crate::nodes::types::String,
 > {
     ///No documentation.
     pub clip_name_1: ClipName1,
@@ -132,17 +137,17 @@ pub struct TripleClipLoader<
 #[derive(Clone)]
 pub struct TripleClipLoaderOutput {
     ///No documentation.
-    pub clip: crate::nodes::ClipOut,
+    pub clip: crate::nodes::types::ClipOut,
 }
 impl<
-    ClipName1: crate::nodes::String,
-    ClipName2: crate::nodes::String,
-    ClipName3: crate::nodes::String,
+    ClipName1: crate::nodes::types::String,
+    ClipName2: crate::nodes::types::String,
+    ClipName3: crate::nodes::types::String,
 > crate::nodes::TypedNode for TripleClipLoader<ClipName1, ClipName2, ClipName3> {
     type Output = TripleClipLoaderOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            clip: crate::nodes::ClipOut {
+            clip: crate::nodes::types::ClipOut {
                 node_id,
                 node_slot: 0u32,
             },
@@ -155,8 +160,8 @@ impl<
 }
 ///**Load Diffusion Model**
 pub struct UnetLoader<
-    UnetName: crate::nodes::String,
-    WeightDtype: crate::nodes::String,
+    UnetName: crate::nodes::types::String,
+    WeightDtype: crate::nodes::types::String,
 > {
     ///No documentation.
     pub unet_name: UnetName,
@@ -167,16 +172,16 @@ pub struct UnetLoader<
 #[derive(Clone)]
 pub struct UnetLoaderOutput {
     ///No documentation.
-    pub model: crate::nodes::ModelOut,
+    pub model: crate::nodes::types::ModelOut,
 }
 impl<
-    UnetName: crate::nodes::String,
-    WeightDtype: crate::nodes::String,
+    UnetName: crate::nodes::types::String,
+    WeightDtype: crate::nodes::types::String,
 > crate::nodes::TypedNode for UnetLoader<UnetName, WeightDtype> {
     type Output = UnetLoaderOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            model: crate::nodes::ModelOut {
+            model: crate::nodes::types::ModelOut {
                 node_id,
                 node_slot: 0u32,
             },

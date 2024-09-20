@@ -9,10 +9,10 @@ pub mod transform;
 pub mod upscaling;
 ///**EmptyImage**
 pub struct EmptyImage<
-    Width: crate::nodes::Int,
-    Height: crate::nodes::Int,
-    BatchSize: crate::nodes::Int,
-    Color: crate::nodes::Int,
+    Width: crate::nodes::types::Int,
+    Height: crate::nodes::types::Int,
+    BatchSize: crate::nodes::types::Int,
+    Color: crate::nodes::types::Int,
 > {
     ///No documentation.
     pub width: Width,
@@ -27,18 +27,18 @@ pub struct EmptyImage<
 #[derive(Clone)]
 pub struct EmptyImageOutput {
     ///No documentation.
-    pub image: crate::nodes::ImageOut,
+    pub image: crate::nodes::types::ImageOut,
 }
 impl<
-    Width: crate::nodes::Int,
-    Height: crate::nodes::Int,
-    BatchSize: crate::nodes::Int,
-    Color: crate::nodes::Int,
+    Width: crate::nodes::types::Int,
+    Height: crate::nodes::types::Int,
+    BatchSize: crate::nodes::types::Int,
+    Color: crate::nodes::types::Int,
 > crate::nodes::TypedNode for EmptyImage<Width, Height, BatchSize, Color> {
     type Output = EmptyImageOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            image: crate::nodes::ImageOut {
+            image: crate::nodes::types::ImageOut {
                 node_id,
                 node_slot: 0u32,
             },
@@ -50,7 +50,10 @@ impl<
     const CATEGORY: &'static str = "image";
 }
 ///**Batch Images**
-pub struct ImageBatch<Image1: crate::nodes::Image, Image2: crate::nodes::Image> {
+pub struct ImageBatch<
+    Image1: crate::nodes::types::Image,
+    Image2: crate::nodes::types::Image,
+> {
     ///No documentation.
     pub image_1: Image1,
     ///No documentation.
@@ -60,14 +63,16 @@ pub struct ImageBatch<Image1: crate::nodes::Image, Image2: crate::nodes::Image> 
 #[derive(Clone)]
 pub struct ImageBatchOutput {
     ///No documentation.
-    pub image: crate::nodes::ImageOut,
+    pub image: crate::nodes::types::ImageOut,
 }
-impl<Image1: crate::nodes::Image, Image2: crate::nodes::Image> crate::nodes::TypedNode
-for ImageBatch<Image1, Image2> {
+impl<
+    Image1: crate::nodes::types::Image,
+    Image2: crate::nodes::types::Image,
+> crate::nodes::TypedNode for ImageBatch<Image1, Image2> {
     type Output = ImageBatchOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            image: crate::nodes::ImageOut {
+            image: crate::nodes::types::ImageOut {
                 node_id,
                 node_slot: 0u32,
             },
@@ -80,12 +85,12 @@ for ImageBatch<Image1, Image2> {
 }
 ///**ImageCompositeMasked**
 pub struct ImageCompositeMasked<
-    Destination: crate::nodes::Image,
-    Source: crate::nodes::Image,
-    X: crate::nodes::Int,
-    Y: crate::nodes::Int,
-    ResizeSource: crate::nodes::Boolean,
-    Mask: crate::nodes::Mask = crate::nodes::MaskOut,
+    Destination: crate::nodes::types::Image,
+    Source: crate::nodes::types::Image,
+    X: crate::nodes::types::Int,
+    Y: crate::nodes::types::Int,
+    ResizeSource: crate::nodes::types::Boolean,
+    Mask: crate::nodes::types::Mask = crate::nodes::types::MaskOut,
 > {
     ///No documentation.
     pub destination: Destination,
@@ -104,21 +109,21 @@ pub struct ImageCompositeMasked<
 #[derive(Clone)]
 pub struct ImageCompositeMaskedOutput {
     ///No documentation.
-    pub image: crate::nodes::ImageOut,
+    pub image: crate::nodes::types::ImageOut,
 }
 impl<
-    Destination: crate::nodes::Image,
-    Source: crate::nodes::Image,
-    X: crate::nodes::Int,
-    Y: crate::nodes::Int,
-    ResizeSource: crate::nodes::Boolean,
-    Mask: crate::nodes::Mask,
+    Destination: crate::nodes::types::Image,
+    Source: crate::nodes::types::Image,
+    X: crate::nodes::types::Int,
+    Y: crate::nodes::types::Int,
+    ResizeSource: crate::nodes::types::Boolean,
+    Mask: crate::nodes::types::Mask,
 > crate::nodes::TypedNode
 for ImageCompositeMasked<Destination, Source, X, Y, ResizeSource, Mask> {
     type Output = ImageCompositeMaskedOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            image: crate::nodes::ImageOut {
+            image: crate::nodes::types::ImageOut {
                 node_id,
                 node_slot: 0u32,
             },
@@ -130,7 +135,7 @@ for ImageCompositeMasked<Destination, Source, X, Y, ResizeSource, Mask> {
     const CATEGORY: &'static str = "image";
 }
 ///**Invert Image**
-pub struct ImageInvert<Image: crate::nodes::Image> {
+pub struct ImageInvert<Image: crate::nodes::types::Image> {
     ///No documentation.
     pub image: Image,
 }
@@ -138,13 +143,13 @@ pub struct ImageInvert<Image: crate::nodes::Image> {
 #[derive(Clone)]
 pub struct ImageInvertOutput {
     ///No documentation.
-    pub image: crate::nodes::ImageOut,
+    pub image: crate::nodes::types::ImageOut,
 }
-impl<Image: crate::nodes::Image> crate::nodes::TypedNode for ImageInvert<Image> {
+impl<Image: crate::nodes::types::Image> crate::nodes::TypedNode for ImageInvert<Image> {
     type Output = ImageInvertOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            image: crate::nodes::ImageOut {
+            image: crate::nodes::types::ImageOut {
                 node_id,
                 node_slot: 0u32,
             },
@@ -157,12 +162,12 @@ impl<Image: crate::nodes::Image> crate::nodes::TypedNode for ImageInvert<Image> 
 }
 ///**Pad Image for Outpainting**
 pub struct ImagePadForOutpaint<
-    Image: crate::nodes::Image,
-    Left: crate::nodes::Int,
-    Top: crate::nodes::Int,
-    Right: crate::nodes::Int,
-    Bottom: crate::nodes::Int,
-    Feathering: crate::nodes::Int,
+    Image: crate::nodes::types::Image,
+    Left: crate::nodes::types::Int,
+    Top: crate::nodes::types::Int,
+    Right: crate::nodes::types::Int,
+    Bottom: crate::nodes::types::Int,
+    Feathering: crate::nodes::types::Int,
 > {
     ///No documentation.
     pub image: Image,
@@ -181,27 +186,27 @@ pub struct ImagePadForOutpaint<
 #[derive(Clone)]
 pub struct ImagePadForOutpaintOutput {
     ///No documentation.
-    pub image: crate::nodes::ImageOut,
+    pub image: crate::nodes::types::ImageOut,
     ///No documentation.
-    pub mask: crate::nodes::MaskOut,
+    pub mask: crate::nodes::types::MaskOut,
 }
 impl<
-    Image: crate::nodes::Image,
-    Left: crate::nodes::Int,
-    Top: crate::nodes::Int,
-    Right: crate::nodes::Int,
-    Bottom: crate::nodes::Int,
-    Feathering: crate::nodes::Int,
+    Image: crate::nodes::types::Image,
+    Left: crate::nodes::types::Int,
+    Top: crate::nodes::types::Int,
+    Right: crate::nodes::types::Int,
+    Bottom: crate::nodes::types::Int,
+    Feathering: crate::nodes::types::Int,
 > crate::nodes::TypedNode
 for ImagePadForOutpaint<Image, Left, Top, Right, Bottom, Feathering> {
     type Output = ImagePadForOutpaintOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            image: crate::nodes::ImageOut {
+            image: crate::nodes::types::ImageOut {
                 node_id,
                 node_slot: 0u32,
             },
-            mask: crate::nodes::MaskOut {
+            mask: crate::nodes::types::MaskOut {
                 node_id,
                 node_slot: 1u32,
             },
@@ -213,7 +218,7 @@ for ImagePadForOutpaint<Image, Left, Top, Right, Bottom, Feathering> {
     const CATEGORY: &'static str = "image";
 }
 ///**Load Image**
-pub struct LoadImage<Image: crate::nodes::String> {
+pub struct LoadImage<Image: crate::nodes::types::String> {
     ///No documentation.
     pub image: Image,
 }
@@ -221,19 +226,19 @@ pub struct LoadImage<Image: crate::nodes::String> {
 #[derive(Clone)]
 pub struct LoadImageOutput {
     ///No documentation.
-    pub image: crate::nodes::ImageOut,
+    pub image: crate::nodes::types::ImageOut,
     ///No documentation.
-    pub mask: crate::nodes::MaskOut,
+    pub mask: crate::nodes::types::MaskOut,
 }
-impl<Image: crate::nodes::String> crate::nodes::TypedNode for LoadImage<Image> {
+impl<Image: crate::nodes::types::String> crate::nodes::TypedNode for LoadImage<Image> {
     type Output = LoadImageOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            image: crate::nodes::ImageOut {
+            image: crate::nodes::types::ImageOut {
                 node_id,
                 node_slot: 0u32,
             },
-            mask: crate::nodes::MaskOut {
+            mask: crate::nodes::types::MaskOut {
                 node_id,
                 node_slot: 1u32,
             },
@@ -245,11 +250,12 @@ impl<Image: crate::nodes::String> crate::nodes::TypedNode for LoadImage<Image> {
     const CATEGORY: &'static str = "image";
 }
 #[doc = "**Preview Image**\n\nSaves the input images to your ComfyUI output directory."]
-pub struct PreviewImage<Images: crate::nodes::Image> {
+pub struct PreviewImage<Images: crate::nodes::types::Image> {
     ///No documentation.
     pub images: Images,
 }
-impl<Images: crate::nodes::Image> crate::nodes::TypedNode for PreviewImage<Images> {
+impl<Images: crate::nodes::types::Image> crate::nodes::TypedNode
+for PreviewImage<Images> {
     type Output = ();
     fn output(&self, _node_id: WorkflowNodeId) -> Self::Output {}
     const NAME: &'static str = "PreviewImage";
@@ -257,18 +263,21 @@ impl<Images: crate::nodes::Image> crate::nodes::TypedNode for PreviewImage<Image
     const DESCRIPTION: &'static str = "Saves the input images to your ComfyUI output directory.";
     const CATEGORY: &'static str = "image";
 }
-impl<Images: crate::nodes::Image> crate::nodes::TypedOutputNode
+impl<Images: crate::nodes::types::Image> crate::nodes::TypedOutputNode
 for PreviewImage<Images> {}
 #[doc = "**Save Image**\n\nSaves the input images to your ComfyUI output directory."]
-pub struct SaveImage<Images: crate::nodes::Image, FilenamePrefix: crate::nodes::String> {
+pub struct SaveImage<
+    Images: crate::nodes::types::Image,
+    FilenamePrefix: crate::nodes::types::String,
+> {
     ///The images to save.
     pub images: Images,
     ///The prefix for the file to save. This may include formatting information such as %date:yyyy-MM-dd% or %Empty Latent Image.width% to include values from nodes.
     pub filename_prefix: FilenamePrefix,
 }
 impl<
-    Images: crate::nodes::Image,
-    FilenamePrefix: crate::nodes::String,
+    Images: crate::nodes::types::Image,
+    FilenamePrefix: crate::nodes::types::String,
 > crate::nodes::TypedNode for SaveImage<Images, FilenamePrefix> {
     type Output = ();
     fn output(&self, _node_id: WorkflowNodeId) -> Self::Output {}
@@ -278,15 +287,15 @@ impl<
     const CATEGORY: &'static str = "image";
 }
 impl<
-    Images: crate::nodes::Image,
-    FilenamePrefix: crate::nodes::String,
+    Images: crate::nodes::types::Image,
+    FilenamePrefix: crate::nodes::types::String,
 > crate::nodes::TypedOutputNode for SaveImage<Images, FilenamePrefix> {}
 ///**Webcam Capture**
 pub struct WebcamCapture<
-    Image: crate::nodes::Webcam,
-    Width: crate::nodes::Int,
-    Height: crate::nodes::Int,
-    CaptureOnQueue: crate::nodes::Boolean,
+    Image: crate::nodes::types::Webcam,
+    Width: crate::nodes::types::Int,
+    Height: crate::nodes::types::Int,
+    CaptureOnQueue: crate::nodes::types::Boolean,
 > {
     ///No documentation.
     pub image: Image,
@@ -301,18 +310,18 @@ pub struct WebcamCapture<
 #[derive(Clone)]
 pub struct WebcamCaptureOutput {
     ///No documentation.
-    pub image: crate::nodes::ImageOut,
+    pub image: crate::nodes::types::ImageOut,
 }
 impl<
-    Image: crate::nodes::Webcam,
-    Width: crate::nodes::Int,
-    Height: crate::nodes::Int,
-    CaptureOnQueue: crate::nodes::Boolean,
+    Image: crate::nodes::types::Webcam,
+    Width: crate::nodes::types::Int,
+    Height: crate::nodes::types::Int,
+    CaptureOnQueue: crate::nodes::types::Boolean,
 > crate::nodes::TypedNode for WebcamCapture<Image, Width, Height, CaptureOnQueue> {
     type Output = WebcamCaptureOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            image: crate::nodes::ImageOut {
+            image: crate::nodes::types::ImageOut {
                 node_id,
                 node_slot: 0u32,
             },

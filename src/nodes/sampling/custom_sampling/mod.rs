@@ -8,15 +8,15 @@ pub mod schedulers;
 pub mod sigmas;
 ///**SamplerCustom**
 pub struct SamplerCustom<
-    Model: crate::nodes::Model,
-    AddNoise: crate::nodes::Boolean,
-    NoiseSeed: crate::nodes::Int,
-    Cfg: crate::nodes::Float,
-    Positive: crate::nodes::Conditioning,
-    Negative: crate::nodes::Conditioning,
-    Sampler: crate::nodes::Sampler,
-    Sigmas: crate::nodes::Sigmas,
-    LatentImage: crate::nodes::Latent,
+    Model: crate::nodes::types::Model,
+    AddNoise: crate::nodes::types::Boolean,
+    NoiseSeed: crate::nodes::types::Int,
+    Cfg: crate::nodes::types::Float,
+    Positive: crate::nodes::types::Conditioning,
+    Negative: crate::nodes::types::Conditioning,
+    Sampler: crate::nodes::types::Sampler,
+    Sigmas: crate::nodes::types::Sigmas,
+    LatentImage: crate::nodes::types::Latent,
 > {
     ///No documentation.
     pub model: Model,
@@ -41,20 +41,20 @@ pub struct SamplerCustom<
 #[derive(Clone)]
 pub struct SamplerCustomOutput {
     ///No documentation.
-    pub output: crate::nodes::LatentOut,
+    pub output: crate::nodes::types::LatentOut,
     ///No documentation.
-    pub denoised_output: crate::nodes::LatentOut,
+    pub denoised_output: crate::nodes::types::LatentOut,
 }
 impl<
-    Model: crate::nodes::Model,
-    AddNoise: crate::nodes::Boolean,
-    NoiseSeed: crate::nodes::Int,
-    Cfg: crate::nodes::Float,
-    Positive: crate::nodes::Conditioning,
-    Negative: crate::nodes::Conditioning,
-    Sampler: crate::nodes::Sampler,
-    Sigmas: crate::nodes::Sigmas,
-    LatentImage: crate::nodes::Latent,
+    Model: crate::nodes::types::Model,
+    AddNoise: crate::nodes::types::Boolean,
+    NoiseSeed: crate::nodes::types::Int,
+    Cfg: crate::nodes::types::Float,
+    Positive: crate::nodes::types::Conditioning,
+    Negative: crate::nodes::types::Conditioning,
+    Sampler: crate::nodes::types::Sampler,
+    Sigmas: crate::nodes::types::Sigmas,
+    LatentImage: crate::nodes::types::Latent,
 > crate::nodes::TypedNode
 for SamplerCustom<
     Model,
@@ -70,11 +70,11 @@ for SamplerCustom<
     type Output = SamplerCustomOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            output: crate::nodes::LatentOut {
+            output: crate::nodes::types::LatentOut {
                 node_id,
                 node_slot: 0u32,
             },
-            denoised_output: crate::nodes::LatentOut {
+            denoised_output: crate::nodes::types::LatentOut {
                 node_id,
                 node_slot: 1u32,
             },
@@ -87,11 +87,11 @@ for SamplerCustom<
 }
 ///**SamplerCustomAdvanced**
 pub struct SamplerCustomAdvanced<
-    Noise: crate::nodes::Noise,
-    Guider: crate::nodes::Guider,
-    Sampler: crate::nodes::Sampler,
-    Sigmas: crate::nodes::Sigmas,
-    LatentImage: crate::nodes::Latent,
+    Noise: crate::nodes::types::Noise,
+    Guider: crate::nodes::types::Guider,
+    Sampler: crate::nodes::types::Sampler,
+    Sigmas: crate::nodes::types::Sigmas,
+    LatentImage: crate::nodes::types::Latent,
 > {
     ///No documentation.
     pub noise: Noise,
@@ -108,26 +108,26 @@ pub struct SamplerCustomAdvanced<
 #[derive(Clone)]
 pub struct SamplerCustomAdvancedOutput {
     ///No documentation.
-    pub output: crate::nodes::LatentOut,
+    pub output: crate::nodes::types::LatentOut,
     ///No documentation.
-    pub denoised_output: crate::nodes::LatentOut,
+    pub denoised_output: crate::nodes::types::LatentOut,
 }
 impl<
-    Noise: crate::nodes::Noise,
-    Guider: crate::nodes::Guider,
-    Sampler: crate::nodes::Sampler,
-    Sigmas: crate::nodes::Sigmas,
-    LatentImage: crate::nodes::Latent,
+    Noise: crate::nodes::types::Noise,
+    Guider: crate::nodes::types::Guider,
+    Sampler: crate::nodes::types::Sampler,
+    Sigmas: crate::nodes::types::Sigmas,
+    LatentImage: crate::nodes::types::Latent,
 > crate::nodes::TypedNode
 for SamplerCustomAdvanced<Noise, Guider, Sampler, Sigmas, LatentImage> {
     type Output = SamplerCustomAdvancedOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            output: crate::nodes::LatentOut {
+            output: crate::nodes::types::LatentOut {
                 node_id,
                 node_slot: 0u32,
             },
-            denoised_output: crate::nodes::LatentOut {
+            denoised_output: crate::nodes::types::LatentOut {
                 node_id,
                 node_slot: 1u32,
             },

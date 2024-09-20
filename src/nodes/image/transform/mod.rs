@@ -3,11 +3,11 @@
 use crate::WorkflowNodeId;
 ///**ImageCrop**
 pub struct ImageCrop<
-    Image: crate::nodes::Image,
-    Width: crate::nodes::Int,
-    Height: crate::nodes::Int,
-    X: crate::nodes::Int,
-    Y: crate::nodes::Int,
+    Image: crate::nodes::types::Image,
+    Width: crate::nodes::types::Int,
+    Height: crate::nodes::types::Int,
+    X: crate::nodes::types::Int,
+    Y: crate::nodes::types::Int,
 > {
     ///No documentation.
     pub image: Image,
@@ -24,19 +24,19 @@ pub struct ImageCrop<
 #[derive(Clone)]
 pub struct ImageCropOutput {
     ///No documentation.
-    pub image: crate::nodes::ImageOut,
+    pub image: crate::nodes::types::ImageOut,
 }
 impl<
-    Image: crate::nodes::Image,
-    Width: crate::nodes::Int,
-    Height: crate::nodes::Int,
-    X: crate::nodes::Int,
-    Y: crate::nodes::Int,
+    Image: crate::nodes::types::Image,
+    Width: crate::nodes::types::Int,
+    Height: crate::nodes::types::Int,
+    X: crate::nodes::types::Int,
+    Y: crate::nodes::types::Int,
 > crate::nodes::TypedNode for ImageCrop<Image, Width, Height, X, Y> {
     type Output = ImageCropOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            image: crate::nodes::ImageOut {
+            image: crate::nodes::types::ImageOut {
                 node_id,
                 node_slot: 0u32,
             },

@@ -3,7 +3,10 @@
 use crate::WorkflowNodeId;
 pub mod model_specific;
 ///**CLIPMergeAdd**
-pub struct ClipMergeAdd<Clip1: crate::nodes::Clip, Clip2: crate::nodes::Clip> {
+pub struct ClipMergeAdd<
+    Clip1: crate::nodes::types::Clip,
+    Clip2: crate::nodes::types::Clip,
+> {
     ///No documentation.
     pub clip_1: Clip1,
     ///No documentation.
@@ -13,14 +16,16 @@ pub struct ClipMergeAdd<Clip1: crate::nodes::Clip, Clip2: crate::nodes::Clip> {
 #[derive(Clone)]
 pub struct ClipMergeAddOutput {
     ///No documentation.
-    pub clip: crate::nodes::ClipOut,
+    pub clip: crate::nodes::types::ClipOut,
 }
-impl<Clip1: crate::nodes::Clip, Clip2: crate::nodes::Clip> crate::nodes::TypedNode
-for ClipMergeAdd<Clip1, Clip2> {
+impl<
+    Clip1: crate::nodes::types::Clip,
+    Clip2: crate::nodes::types::Clip,
+> crate::nodes::TypedNode for ClipMergeAdd<Clip1, Clip2> {
     type Output = ClipMergeAddOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            clip: crate::nodes::ClipOut {
+            clip: crate::nodes::types::ClipOut {
                 node_id,
                 node_slot: 0u32,
             },
@@ -33,9 +38,9 @@ for ClipMergeAdd<Clip1, Clip2> {
 }
 ///**CLIPMergeSimple**
 pub struct ClipMergeSimple<
-    Clip1: crate::nodes::Clip,
-    Clip2: crate::nodes::Clip,
-    Ratio: crate::nodes::Float,
+    Clip1: crate::nodes::types::Clip,
+    Clip2: crate::nodes::types::Clip,
+    Ratio: crate::nodes::types::Float,
 > {
     ///No documentation.
     pub clip_1: Clip1,
@@ -48,17 +53,17 @@ pub struct ClipMergeSimple<
 #[derive(Clone)]
 pub struct ClipMergeSimpleOutput {
     ///No documentation.
-    pub clip: crate::nodes::ClipOut,
+    pub clip: crate::nodes::types::ClipOut,
 }
 impl<
-    Clip1: crate::nodes::Clip,
-    Clip2: crate::nodes::Clip,
-    Ratio: crate::nodes::Float,
+    Clip1: crate::nodes::types::Clip,
+    Clip2: crate::nodes::types::Clip,
+    Ratio: crate::nodes::types::Float,
 > crate::nodes::TypedNode for ClipMergeSimple<Clip1, Clip2, Ratio> {
     type Output = ClipMergeSimpleOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            clip: crate::nodes::ClipOut {
+            clip: crate::nodes::types::ClipOut {
                 node_id,
                 node_slot: 0u32,
             },
@@ -71,9 +76,9 @@ impl<
 }
 ///**CLIPMergeSubtract**
 pub struct ClipMergeSubtract<
-    Clip1: crate::nodes::Clip,
-    Clip2: crate::nodes::Clip,
-    Multiplier: crate::nodes::Float,
+    Clip1: crate::nodes::types::Clip,
+    Clip2: crate::nodes::types::Clip,
+    Multiplier: crate::nodes::types::Float,
 > {
     ///No documentation.
     pub clip_1: Clip1,
@@ -86,17 +91,17 @@ pub struct ClipMergeSubtract<
 #[derive(Clone)]
 pub struct ClipMergeSubtractOutput {
     ///No documentation.
-    pub clip: crate::nodes::ClipOut,
+    pub clip: crate::nodes::types::ClipOut,
 }
 impl<
-    Clip1: crate::nodes::Clip,
-    Clip2: crate::nodes::Clip,
-    Multiplier: crate::nodes::Float,
+    Clip1: crate::nodes::types::Clip,
+    Clip2: crate::nodes::types::Clip,
+    Multiplier: crate::nodes::types::Float,
 > crate::nodes::TypedNode for ClipMergeSubtract<Clip1, Clip2, Multiplier> {
     type Output = ClipMergeSubtractOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            clip: crate::nodes::ClipOut {
+            clip: crate::nodes::types::ClipOut {
                 node_id,
                 node_slot: 0u32,
             },
@@ -108,15 +113,18 @@ impl<
     const CATEGORY: &'static str = "advanced/model_merging";
 }
 ///**CLIPSave**
-pub struct ClipSave<Clip: crate::nodes::Clip, FilenamePrefix: crate::nodes::String> {
+pub struct ClipSave<
+    Clip: crate::nodes::types::Clip,
+    FilenamePrefix: crate::nodes::types::String,
+> {
     ///No documentation.
     pub clip: Clip,
     ///No documentation.
     pub filename_prefix: FilenamePrefix,
 }
 impl<
-    Clip: crate::nodes::Clip,
-    FilenamePrefix: crate::nodes::String,
+    Clip: crate::nodes::types::Clip,
+    FilenamePrefix: crate::nodes::types::String,
 > crate::nodes::TypedNode for ClipSave<Clip, FilenamePrefix> {
     type Output = ();
     fn output(&self, _node_id: WorkflowNodeId) -> Self::Output {}
@@ -126,15 +134,15 @@ impl<
     const CATEGORY: &'static str = "advanced/model_merging";
 }
 impl<
-    Clip: crate::nodes::Clip,
-    FilenamePrefix: crate::nodes::String,
+    Clip: crate::nodes::types::Clip,
+    FilenamePrefix: crate::nodes::types::String,
 > crate::nodes::TypedOutputNode for ClipSave<Clip, FilenamePrefix> {}
 ///**Save Checkpoint**
 pub struct CheckpointSave<
-    Model: crate::nodes::Model,
-    Clip: crate::nodes::Clip,
-    Vae: crate::nodes::Vae,
-    FilenamePrefix: crate::nodes::String,
+    Model: crate::nodes::types::Model,
+    Clip: crate::nodes::types::Clip,
+    Vae: crate::nodes::types::Vae,
+    FilenamePrefix: crate::nodes::types::String,
 > {
     ///No documentation.
     pub model: Model,
@@ -146,10 +154,10 @@ pub struct CheckpointSave<
     pub filename_prefix: FilenamePrefix,
 }
 impl<
-    Model: crate::nodes::Model,
-    Clip: crate::nodes::Clip,
-    Vae: crate::nodes::Vae,
-    FilenamePrefix: crate::nodes::String,
+    Model: crate::nodes::types::Model,
+    Clip: crate::nodes::types::Clip,
+    Vae: crate::nodes::types::Vae,
+    FilenamePrefix: crate::nodes::types::String,
 > crate::nodes::TypedNode for CheckpointSave<Model, Clip, Vae, FilenamePrefix> {
     type Output = ();
     fn output(&self, _node_id: WorkflowNodeId) -> Self::Output {}
@@ -159,13 +167,16 @@ impl<
     const CATEGORY: &'static str = "advanced/model_merging";
 }
 impl<
-    Model: crate::nodes::Model,
-    Clip: crate::nodes::Clip,
-    Vae: crate::nodes::Vae,
-    FilenamePrefix: crate::nodes::String,
+    Model: crate::nodes::types::Model,
+    Clip: crate::nodes::types::Clip,
+    Vae: crate::nodes::types::Vae,
+    FilenamePrefix: crate::nodes::types::String,
 > crate::nodes::TypedOutputNode for CheckpointSave<Model, Clip, Vae, FilenamePrefix> {}
 ///**ModelMergeAdd**
-pub struct ModelMergeAdd<Model1: crate::nodes::Model, Model2: crate::nodes::Model> {
+pub struct ModelMergeAdd<
+    Model1: crate::nodes::types::Model,
+    Model2: crate::nodes::types::Model,
+> {
     ///No documentation.
     pub model_1: Model1,
     ///No documentation.
@@ -175,14 +186,16 @@ pub struct ModelMergeAdd<Model1: crate::nodes::Model, Model2: crate::nodes::Mode
 #[derive(Clone)]
 pub struct ModelMergeAddOutput {
     ///No documentation.
-    pub model: crate::nodes::ModelOut,
+    pub model: crate::nodes::types::ModelOut,
 }
-impl<Model1: crate::nodes::Model, Model2: crate::nodes::Model> crate::nodes::TypedNode
-for ModelMergeAdd<Model1, Model2> {
+impl<
+    Model1: crate::nodes::types::Model,
+    Model2: crate::nodes::types::Model,
+> crate::nodes::TypedNode for ModelMergeAdd<Model1, Model2> {
     type Output = ModelMergeAddOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            model: crate::nodes::ModelOut {
+            model: crate::nodes::types::ModelOut {
                 node_id,
                 node_slot: 0u32,
             },
@@ -195,11 +208,11 @@ for ModelMergeAdd<Model1, Model2> {
 }
 ///**ModelMergeBlocks**
 pub struct ModelMergeBlocks<
-    Model1: crate::nodes::Model,
-    Model2: crate::nodes::Model,
-    Input: crate::nodes::Float,
-    Middle: crate::nodes::Float,
-    Out: crate::nodes::Float,
+    Model1: crate::nodes::types::Model,
+    Model2: crate::nodes::types::Model,
+    Input: crate::nodes::types::Float,
+    Middle: crate::nodes::types::Float,
+    Out: crate::nodes::types::Float,
 > {
     ///No documentation.
     pub model_1: Model1,
@@ -216,19 +229,19 @@ pub struct ModelMergeBlocks<
 #[derive(Clone)]
 pub struct ModelMergeBlocksOutput {
     ///No documentation.
-    pub model: crate::nodes::ModelOut,
+    pub model: crate::nodes::types::ModelOut,
 }
 impl<
-    Model1: crate::nodes::Model,
-    Model2: crate::nodes::Model,
-    Input: crate::nodes::Float,
-    Middle: crate::nodes::Float,
-    Out: crate::nodes::Float,
+    Model1: crate::nodes::types::Model,
+    Model2: crate::nodes::types::Model,
+    Input: crate::nodes::types::Float,
+    Middle: crate::nodes::types::Float,
+    Out: crate::nodes::types::Float,
 > crate::nodes::TypedNode for ModelMergeBlocks<Model1, Model2, Input, Middle, Out> {
     type Output = ModelMergeBlocksOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            model: crate::nodes::ModelOut {
+            model: crate::nodes::types::ModelOut {
                 node_id,
                 node_slot: 0u32,
             },
@@ -241,9 +254,9 @@ impl<
 }
 ///**ModelMergeSimple**
 pub struct ModelMergeSimple<
-    Model1: crate::nodes::Model,
-    Model2: crate::nodes::Model,
-    Ratio: crate::nodes::Float,
+    Model1: crate::nodes::types::Model,
+    Model2: crate::nodes::types::Model,
+    Ratio: crate::nodes::types::Float,
 > {
     ///No documentation.
     pub model_1: Model1,
@@ -256,17 +269,17 @@ pub struct ModelMergeSimple<
 #[derive(Clone)]
 pub struct ModelMergeSimpleOutput {
     ///No documentation.
-    pub model: crate::nodes::ModelOut,
+    pub model: crate::nodes::types::ModelOut,
 }
 impl<
-    Model1: crate::nodes::Model,
-    Model2: crate::nodes::Model,
-    Ratio: crate::nodes::Float,
+    Model1: crate::nodes::types::Model,
+    Model2: crate::nodes::types::Model,
+    Ratio: crate::nodes::types::Float,
 > crate::nodes::TypedNode for ModelMergeSimple<Model1, Model2, Ratio> {
     type Output = ModelMergeSimpleOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            model: crate::nodes::ModelOut {
+            model: crate::nodes::types::ModelOut {
                 node_id,
                 node_slot: 0u32,
             },
@@ -279,9 +292,9 @@ impl<
 }
 ///**ModelMergeSubtract**
 pub struct ModelMergeSubtract<
-    Model1: crate::nodes::Model,
-    Model2: crate::nodes::Model,
-    Multiplier: crate::nodes::Float,
+    Model1: crate::nodes::types::Model,
+    Model2: crate::nodes::types::Model,
+    Multiplier: crate::nodes::types::Float,
 > {
     ///No documentation.
     pub model_1: Model1,
@@ -294,17 +307,17 @@ pub struct ModelMergeSubtract<
 #[derive(Clone)]
 pub struct ModelMergeSubtractOutput {
     ///No documentation.
-    pub model: crate::nodes::ModelOut,
+    pub model: crate::nodes::types::ModelOut,
 }
 impl<
-    Model1: crate::nodes::Model,
-    Model2: crate::nodes::Model,
-    Multiplier: crate::nodes::Float,
+    Model1: crate::nodes::types::Model,
+    Model2: crate::nodes::types::Model,
+    Multiplier: crate::nodes::types::Float,
 > crate::nodes::TypedNode for ModelMergeSubtract<Model1, Model2, Multiplier> {
     type Output = ModelMergeSubtractOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            model: crate::nodes::ModelOut {
+            model: crate::nodes::types::ModelOut {
                 node_id,
                 node_slot: 0u32,
             },
@@ -316,15 +329,18 @@ impl<
     const CATEGORY: &'static str = "advanced/model_merging";
 }
 ///**ModelSave**
-pub struct ModelSave<Model: crate::nodes::Model, FilenamePrefix: crate::nodes::String> {
+pub struct ModelSave<
+    Model: crate::nodes::types::Model,
+    FilenamePrefix: crate::nodes::types::String,
+> {
     ///No documentation.
     pub model: Model,
     ///No documentation.
     pub filename_prefix: FilenamePrefix,
 }
 impl<
-    Model: crate::nodes::Model,
-    FilenamePrefix: crate::nodes::String,
+    Model: crate::nodes::types::Model,
+    FilenamePrefix: crate::nodes::types::String,
 > crate::nodes::TypedNode for ModelSave<Model, FilenamePrefix> {
     type Output = ();
     fn output(&self, _node_id: WorkflowNodeId) -> Self::Output {}
@@ -334,19 +350,22 @@ impl<
     const CATEGORY: &'static str = "advanced/model_merging";
 }
 impl<
-    Model: crate::nodes::Model,
-    FilenamePrefix: crate::nodes::String,
+    Model: crate::nodes::types::Model,
+    FilenamePrefix: crate::nodes::types::String,
 > crate::nodes::TypedOutputNode for ModelSave<Model, FilenamePrefix> {}
 ///**VAESave**
-pub struct VaeSave<Vae: crate::nodes::Vae, FilenamePrefix: crate::nodes::String> {
+pub struct VaeSave<
+    Vae: crate::nodes::types::Vae,
+    FilenamePrefix: crate::nodes::types::String,
+> {
     ///No documentation.
     pub vae: Vae,
     ///No documentation.
     pub filename_prefix: FilenamePrefix,
 }
 impl<
-    Vae: crate::nodes::Vae,
-    FilenamePrefix: crate::nodes::String,
+    Vae: crate::nodes::types::Vae,
+    FilenamePrefix: crate::nodes::types::String,
 > crate::nodes::TypedNode for VaeSave<Vae, FilenamePrefix> {
     type Output = ();
     fn output(&self, _node_id: WorkflowNodeId) -> Self::Output {}
@@ -356,6 +375,6 @@ impl<
     const CATEGORY: &'static str = "advanced/model_merging";
 }
 impl<
-    Vae: crate::nodes::Vae,
-    FilenamePrefix: crate::nodes::String,
+    Vae: crate::nodes::types::Vae,
+    FilenamePrefix: crate::nodes::types::String,
 > crate::nodes::TypedOutputNode for VaeSave<Vae, FilenamePrefix> {}

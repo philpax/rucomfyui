@@ -3,8 +3,8 @@
 use crate::WorkflowNodeId;
 ///**StableCascade_StageB_Conditioning**
 pub struct StableCascadeStageBConditioning<
-    Conditioning: crate::nodes::Conditioning,
-    StageC: crate::nodes::Latent,
+    Conditioning: crate::nodes::types::Conditioning,
+    StageC: crate::nodes::types::Latent,
 > {
     ///No documentation.
     pub conditioning: Conditioning,
@@ -15,16 +15,16 @@ pub struct StableCascadeStageBConditioning<
 #[derive(Clone)]
 pub struct StableCascadeStageBConditioningOutput {
     ///No documentation.
-    pub conditioning: crate::nodes::ConditioningOut,
+    pub conditioning: crate::nodes::types::ConditioningOut,
 }
 impl<
-    Conditioning: crate::nodes::Conditioning,
-    StageC: crate::nodes::Latent,
+    Conditioning: crate::nodes::types::Conditioning,
+    StageC: crate::nodes::types::Latent,
 > crate::nodes::TypedNode for StableCascadeStageBConditioning<Conditioning, StageC> {
     type Output = StableCascadeStageBConditioningOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            conditioning: crate::nodes::ConditioningOut {
+            conditioning: crate::nodes::types::ConditioningOut {
                 node_id,
                 node_slot: 0u32,
             },

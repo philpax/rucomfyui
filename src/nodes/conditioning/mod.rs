@@ -12,8 +12,8 @@ pub mod upscale_diffusion;
 pub mod video_models;
 ///**CLIP Set Last Layer**
 pub struct ClipSetLastLayer<
-    Clip: crate::nodes::Clip,
-    StopAtClipLayer: crate::nodes::Int,
+    Clip: crate::nodes::types::Clip,
+    StopAtClipLayer: crate::nodes::types::Int,
 > {
     ///No documentation.
     pub clip: Clip,
@@ -24,16 +24,16 @@ pub struct ClipSetLastLayer<
 #[derive(Clone)]
 pub struct ClipSetLastLayerOutput {
     ///No documentation.
-    pub clip: crate::nodes::ClipOut,
+    pub clip: crate::nodes::types::ClipOut,
 }
 impl<
-    Clip: crate::nodes::Clip,
-    StopAtClipLayer: crate::nodes::Int,
+    Clip: crate::nodes::types::Clip,
+    StopAtClipLayer: crate::nodes::types::Int,
 > crate::nodes::TypedNode for ClipSetLastLayer<Clip, StopAtClipLayer> {
     type Output = ClipSetLastLayerOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            clip: crate::nodes::ClipOut {
+            clip: crate::nodes::types::ClipOut {
                 node_id,
                 node_slot: 0u32,
             },
@@ -45,7 +45,10 @@ impl<
     const CATEGORY: &'static str = "conditioning";
 }
 #[doc = "**CLIP Text Encode (Prompt)**\n\nEncodes a text prompt using a CLIP model into an embedding that can be used to guide the diffusion model towards generating specific images."]
-pub struct ClipTextEncode<Text: crate::nodes::String, Clip: crate::nodes::Clip> {
+pub struct ClipTextEncode<
+    Text: crate::nodes::types::String,
+    Clip: crate::nodes::types::Clip,
+> {
     ///The text to be encoded.
     pub text: Text,
     ///The CLIP model used for encoding the text.
@@ -55,14 +58,16 @@ pub struct ClipTextEncode<Text: crate::nodes::String, Clip: crate::nodes::Clip> 
 #[derive(Clone)]
 pub struct ClipTextEncodeOutput {
     ///A conditioning containing the embedded text used to guide the diffusion model.
-    pub conditioning: crate::nodes::ConditioningOut,
+    pub conditioning: crate::nodes::types::ConditioningOut,
 }
-impl<Text: crate::nodes::String, Clip: crate::nodes::Clip> crate::nodes::TypedNode
-for ClipTextEncode<Text, Clip> {
+impl<
+    Text: crate::nodes::types::String,
+    Clip: crate::nodes::types::Clip,
+> crate::nodes::TypedNode for ClipTextEncode<Text, Clip> {
     type Output = ClipTextEncodeOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            conditioning: crate::nodes::ConditioningOut {
+            conditioning: crate::nodes::types::ConditioningOut {
                 node_id,
                 node_slot: 0u32,
             },
@@ -75,8 +80,8 @@ for ClipTextEncode<Text, Clip> {
 }
 ///**CLIP Vision Encode**
 pub struct ClipVisionEncode<
-    ClipVision: crate::nodes::ClipVision,
-    Image: crate::nodes::Image,
+    ClipVision: crate::nodes::types::ClipVision,
+    Image: crate::nodes::types::Image,
 > {
     ///No documentation.
     pub clip_vision: ClipVision,
@@ -87,16 +92,16 @@ pub struct ClipVisionEncode<
 #[derive(Clone)]
 pub struct ClipVisionEncodeOutput {
     ///No documentation.
-    pub clip_vision_output: crate::nodes::ClipVisionOutputOut,
+    pub clip_vision_output: crate::nodes::types::ClipVisionOutputOut,
 }
 impl<
-    ClipVision: crate::nodes::ClipVision,
-    Image: crate::nodes::Image,
+    ClipVision: crate::nodes::types::ClipVision,
+    Image: crate::nodes::types::Image,
 > crate::nodes::TypedNode for ClipVisionEncode<ClipVision, Image> {
     type Output = ClipVisionEncodeOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            clip_vision_output: crate::nodes::ClipVisionOutputOut {
+            clip_vision_output: crate::nodes::types::ClipVisionOutputOut {
                 node_id,
                 node_slot: 0u32,
             },
@@ -109,9 +114,9 @@ impl<
 }
 ///**ConditioningAverage**
 pub struct ConditioningAverage<
-    ConditioningTo: crate::nodes::Conditioning,
-    ConditioningFrom: crate::nodes::Conditioning,
-    ConditioningToStrength: crate::nodes::Float,
+    ConditioningTo: crate::nodes::types::Conditioning,
+    ConditioningFrom: crate::nodes::types::Conditioning,
+    ConditioningToStrength: crate::nodes::types::Float,
 > {
     ///No documentation.
     pub conditioning_to: ConditioningTo,
@@ -124,18 +129,18 @@ pub struct ConditioningAverage<
 #[derive(Clone)]
 pub struct ConditioningAverageOutput {
     ///No documentation.
-    pub conditioning: crate::nodes::ConditioningOut,
+    pub conditioning: crate::nodes::types::ConditioningOut,
 }
 impl<
-    ConditioningTo: crate::nodes::Conditioning,
-    ConditioningFrom: crate::nodes::Conditioning,
-    ConditioningToStrength: crate::nodes::Float,
+    ConditioningTo: crate::nodes::types::Conditioning,
+    ConditioningFrom: crate::nodes::types::Conditioning,
+    ConditioningToStrength: crate::nodes::types::Float,
 > crate::nodes::TypedNode
 for ConditioningAverage<ConditioningTo, ConditioningFrom, ConditioningToStrength> {
     type Output = ConditioningAverageOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            conditioning: crate::nodes::ConditioningOut {
+            conditioning: crate::nodes::types::ConditioningOut {
                 node_id,
                 node_slot: 0u32,
             },
@@ -148,8 +153,8 @@ for ConditioningAverage<ConditioningTo, ConditioningFrom, ConditioningToStrength
 }
 ///**Conditioning (Combine)**
 pub struct ConditioningCombine<
-    Conditioning1: crate::nodes::Conditioning,
-    Conditioning2: crate::nodes::Conditioning,
+    Conditioning1: crate::nodes::types::Conditioning,
+    Conditioning2: crate::nodes::types::Conditioning,
 > {
     ///No documentation.
     pub conditioning_1: Conditioning1,
@@ -160,16 +165,16 @@ pub struct ConditioningCombine<
 #[derive(Clone)]
 pub struct ConditioningCombineOutput {
     ///No documentation.
-    pub conditioning: crate::nodes::ConditioningOut,
+    pub conditioning: crate::nodes::types::ConditioningOut,
 }
 impl<
-    Conditioning1: crate::nodes::Conditioning,
-    Conditioning2: crate::nodes::Conditioning,
+    Conditioning1: crate::nodes::types::Conditioning,
+    Conditioning2: crate::nodes::types::Conditioning,
 > crate::nodes::TypedNode for ConditioningCombine<Conditioning1, Conditioning2> {
     type Output = ConditioningCombineOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            conditioning: crate::nodes::ConditioningOut {
+            conditioning: crate::nodes::types::ConditioningOut {
                 node_id,
                 node_slot: 0u32,
             },
@@ -182,8 +187,8 @@ impl<
 }
 ///**Conditioning (Concat)**
 pub struct ConditioningConcat<
-    ConditioningTo: crate::nodes::Conditioning,
-    ConditioningFrom: crate::nodes::Conditioning,
+    ConditioningTo: crate::nodes::types::Conditioning,
+    ConditioningFrom: crate::nodes::types::Conditioning,
 > {
     ///No documentation.
     pub conditioning_to: ConditioningTo,
@@ -194,16 +199,16 @@ pub struct ConditioningConcat<
 #[derive(Clone)]
 pub struct ConditioningConcatOutput {
     ///No documentation.
-    pub conditioning: crate::nodes::ConditioningOut,
+    pub conditioning: crate::nodes::types::ConditioningOut,
 }
 impl<
-    ConditioningTo: crate::nodes::Conditioning,
-    ConditioningFrom: crate::nodes::Conditioning,
+    ConditioningTo: crate::nodes::types::Conditioning,
+    ConditioningFrom: crate::nodes::types::Conditioning,
 > crate::nodes::TypedNode for ConditioningConcat<ConditioningTo, ConditioningFrom> {
     type Output = ConditioningConcatOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            conditioning: crate::nodes::ConditioningOut {
+            conditioning: crate::nodes::types::ConditioningOut {
                 node_id,
                 node_slot: 0u32,
             },
@@ -216,12 +221,12 @@ impl<
 }
 ///**Conditioning (Set Area)**
 pub struct ConditioningSetArea<
-    Conditioning: crate::nodes::Conditioning,
-    Width: crate::nodes::Int,
-    Height: crate::nodes::Int,
-    X: crate::nodes::Int,
-    Y: crate::nodes::Int,
-    Strength: crate::nodes::Float,
+    Conditioning: crate::nodes::types::Conditioning,
+    Width: crate::nodes::types::Int,
+    Height: crate::nodes::types::Int,
+    X: crate::nodes::types::Int,
+    Y: crate::nodes::types::Int,
+    Strength: crate::nodes::types::Float,
 > {
     ///No documentation.
     pub conditioning: Conditioning,
@@ -240,21 +245,21 @@ pub struct ConditioningSetArea<
 #[derive(Clone)]
 pub struct ConditioningSetAreaOutput {
     ///No documentation.
-    pub conditioning: crate::nodes::ConditioningOut,
+    pub conditioning: crate::nodes::types::ConditioningOut,
 }
 impl<
-    Conditioning: crate::nodes::Conditioning,
-    Width: crate::nodes::Int,
-    Height: crate::nodes::Int,
-    X: crate::nodes::Int,
-    Y: crate::nodes::Int,
-    Strength: crate::nodes::Float,
+    Conditioning: crate::nodes::types::Conditioning,
+    Width: crate::nodes::types::Int,
+    Height: crate::nodes::types::Int,
+    X: crate::nodes::types::Int,
+    Y: crate::nodes::types::Int,
+    Strength: crate::nodes::types::Float,
 > crate::nodes::TypedNode
 for ConditioningSetArea<Conditioning, Width, Height, X, Y, Strength> {
     type Output = ConditioningSetAreaOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            conditioning: crate::nodes::ConditioningOut {
+            conditioning: crate::nodes::types::ConditioningOut {
                 node_id,
                 node_slot: 0u32,
             },
@@ -267,12 +272,12 @@ for ConditioningSetArea<Conditioning, Width, Height, X, Y, Strength> {
 }
 ///**Conditioning (Set Area with Percentage)**
 pub struct ConditioningSetAreaPercentage<
-    Conditioning: crate::nodes::Conditioning,
-    Width: crate::nodes::Float,
-    Height: crate::nodes::Float,
-    X: crate::nodes::Float,
-    Y: crate::nodes::Float,
-    Strength: crate::nodes::Float,
+    Conditioning: crate::nodes::types::Conditioning,
+    Width: crate::nodes::types::Float,
+    Height: crate::nodes::types::Float,
+    X: crate::nodes::types::Float,
+    Y: crate::nodes::types::Float,
+    Strength: crate::nodes::types::Float,
 > {
     ///No documentation.
     pub conditioning: Conditioning,
@@ -291,21 +296,21 @@ pub struct ConditioningSetAreaPercentage<
 #[derive(Clone)]
 pub struct ConditioningSetAreaPercentageOutput {
     ///No documentation.
-    pub conditioning: crate::nodes::ConditioningOut,
+    pub conditioning: crate::nodes::types::ConditioningOut,
 }
 impl<
-    Conditioning: crate::nodes::Conditioning,
-    Width: crate::nodes::Float,
-    Height: crate::nodes::Float,
-    X: crate::nodes::Float,
-    Y: crate::nodes::Float,
-    Strength: crate::nodes::Float,
+    Conditioning: crate::nodes::types::Conditioning,
+    Width: crate::nodes::types::Float,
+    Height: crate::nodes::types::Float,
+    X: crate::nodes::types::Float,
+    Y: crate::nodes::types::Float,
+    Strength: crate::nodes::types::Float,
 > crate::nodes::TypedNode
 for ConditioningSetAreaPercentage<Conditioning, Width, Height, X, Y, Strength> {
     type Output = ConditioningSetAreaPercentageOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            conditioning: crate::nodes::ConditioningOut {
+            conditioning: crate::nodes::types::ConditioningOut {
                 node_id,
                 node_slot: 0u32,
             },
@@ -318,8 +323,8 @@ for ConditioningSetAreaPercentage<Conditioning, Width, Height, X, Y, Strength> {
 }
 ///**ConditioningSetAreaStrength**
 pub struct ConditioningSetAreaStrength<
-    Conditioning: crate::nodes::Conditioning,
-    Strength: crate::nodes::Float,
+    Conditioning: crate::nodes::types::Conditioning,
+    Strength: crate::nodes::types::Float,
 > {
     ///No documentation.
     pub conditioning: Conditioning,
@@ -330,16 +335,16 @@ pub struct ConditioningSetAreaStrength<
 #[derive(Clone)]
 pub struct ConditioningSetAreaStrengthOutput {
     ///No documentation.
-    pub conditioning: crate::nodes::ConditioningOut,
+    pub conditioning: crate::nodes::types::ConditioningOut,
 }
 impl<
-    Conditioning: crate::nodes::Conditioning,
-    Strength: crate::nodes::Float,
+    Conditioning: crate::nodes::types::Conditioning,
+    Strength: crate::nodes::types::Float,
 > crate::nodes::TypedNode for ConditioningSetAreaStrength<Conditioning, Strength> {
     type Output = ConditioningSetAreaStrengthOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            conditioning: crate::nodes::ConditioningOut {
+            conditioning: crate::nodes::types::ConditioningOut {
                 node_id,
                 node_slot: 0u32,
             },
@@ -352,10 +357,10 @@ impl<
 }
 ///**Conditioning (Set Mask)**
 pub struct ConditioningSetMask<
-    Conditioning: crate::nodes::Conditioning,
-    Mask: crate::nodes::Mask,
-    Strength: crate::nodes::Float,
-    SetCondArea: crate::nodes::String,
+    Conditioning: crate::nodes::types::Conditioning,
+    Mask: crate::nodes::types::Mask,
+    Strength: crate::nodes::types::Float,
+    SetCondArea: crate::nodes::types::String,
 > {
     ///No documentation.
     pub conditioning: Conditioning,
@@ -370,19 +375,19 @@ pub struct ConditioningSetMask<
 #[derive(Clone)]
 pub struct ConditioningSetMaskOutput {
     ///No documentation.
-    pub conditioning: crate::nodes::ConditioningOut,
+    pub conditioning: crate::nodes::types::ConditioningOut,
 }
 impl<
-    Conditioning: crate::nodes::Conditioning,
-    Mask: crate::nodes::Mask,
-    Strength: crate::nodes::Float,
-    SetCondArea: crate::nodes::String,
+    Conditioning: crate::nodes::types::Conditioning,
+    Mask: crate::nodes::types::Mask,
+    Strength: crate::nodes::types::Float,
+    SetCondArea: crate::nodes::types::String,
 > crate::nodes::TypedNode
 for ConditioningSetMask<Conditioning, Mask, Strength, SetCondArea> {
     type Output = ConditioningSetMaskOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            conditioning: crate::nodes::ConditioningOut {
+            conditioning: crate::nodes::types::ConditioningOut {
                 node_id,
                 node_slot: 0u32,
             },
@@ -395,10 +400,10 @@ for ConditioningSetMask<Conditioning, Mask, Strength, SetCondArea> {
 }
 ///**unCLIPConditioning**
 pub struct UnClipConditioning<
-    Conditioning: crate::nodes::Conditioning,
-    ClipVisionOutput: crate::nodes::ClipVisionOutput,
-    Strength: crate::nodes::Float,
-    NoiseAugmentation: crate::nodes::Float,
+    Conditioning: crate::nodes::types::Conditioning,
+    ClipVisionOutput: crate::nodes::types::ClipVisionOutput,
+    Strength: crate::nodes::types::Float,
+    NoiseAugmentation: crate::nodes::types::Float,
 > {
     ///No documentation.
     pub conditioning: Conditioning,
@@ -413,19 +418,19 @@ pub struct UnClipConditioning<
 #[derive(Clone)]
 pub struct UnClipConditioningOutput {
     ///No documentation.
-    pub conditioning: crate::nodes::ConditioningOut,
+    pub conditioning: crate::nodes::types::ConditioningOut,
 }
 impl<
-    Conditioning: crate::nodes::Conditioning,
-    ClipVisionOutput: crate::nodes::ClipVisionOutput,
-    Strength: crate::nodes::Float,
-    NoiseAugmentation: crate::nodes::Float,
+    Conditioning: crate::nodes::types::Conditioning,
+    ClipVisionOutput: crate::nodes::types::ClipVisionOutput,
+    Strength: crate::nodes::types::Float,
+    NoiseAugmentation: crate::nodes::types::Float,
 > crate::nodes::TypedNode
 for UnClipConditioning<Conditioning, ClipVisionOutput, Strength, NoiseAugmentation> {
     type Output = UnClipConditioningOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            conditioning: crate::nodes::ConditioningOut {
+            conditioning: crate::nodes::types::ConditioningOut {
                 node_id,
                 node_slot: 0u32,
             },

@@ -3,15 +3,15 @@
 use crate::WorkflowNodeId;
 ///**SVD_img2vid_Conditioning**
 pub struct SvdImg2VidConditioning<
-    ClipVision: crate::nodes::ClipVision,
-    InitImage: crate::nodes::Image,
-    Vae: crate::nodes::Vae,
-    Width: crate::nodes::Int,
-    Height: crate::nodes::Int,
-    VideoFrames: crate::nodes::Int,
-    MotionBucketId: crate::nodes::Int,
-    Fps: crate::nodes::Int,
-    AugmentationLevel: crate::nodes::Float,
+    ClipVision: crate::nodes::types::ClipVision,
+    InitImage: crate::nodes::types::Image,
+    Vae: crate::nodes::types::Vae,
+    Width: crate::nodes::types::Int,
+    Height: crate::nodes::types::Int,
+    VideoFrames: crate::nodes::types::Int,
+    MotionBucketId: crate::nodes::types::Int,
+    Fps: crate::nodes::types::Int,
+    AugmentationLevel: crate::nodes::types::Float,
 > {
     ///No documentation.
     pub clip_vision: ClipVision,
@@ -36,22 +36,22 @@ pub struct SvdImg2VidConditioning<
 #[derive(Clone)]
 pub struct SvdImg2VidConditioningOutput {
     ///No documentation.
-    pub positive: crate::nodes::ConditioningOut,
+    pub positive: crate::nodes::types::ConditioningOut,
     ///No documentation.
-    pub negative: crate::nodes::ConditioningOut,
+    pub negative: crate::nodes::types::ConditioningOut,
     ///No documentation.
-    pub latent: crate::nodes::LatentOut,
+    pub latent: crate::nodes::types::LatentOut,
 }
 impl<
-    ClipVision: crate::nodes::ClipVision,
-    InitImage: crate::nodes::Image,
-    Vae: crate::nodes::Vae,
-    Width: crate::nodes::Int,
-    Height: crate::nodes::Int,
-    VideoFrames: crate::nodes::Int,
-    MotionBucketId: crate::nodes::Int,
-    Fps: crate::nodes::Int,
-    AugmentationLevel: crate::nodes::Float,
+    ClipVision: crate::nodes::types::ClipVision,
+    InitImage: crate::nodes::types::Image,
+    Vae: crate::nodes::types::Vae,
+    Width: crate::nodes::types::Int,
+    Height: crate::nodes::types::Int,
+    VideoFrames: crate::nodes::types::Int,
+    MotionBucketId: crate::nodes::types::Int,
+    Fps: crate::nodes::types::Int,
+    AugmentationLevel: crate::nodes::types::Float,
 > crate::nodes::TypedNode
 for SvdImg2VidConditioning<
     ClipVision,
@@ -67,15 +67,15 @@ for SvdImg2VidConditioning<
     type Output = SvdImg2VidConditioningOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            positive: crate::nodes::ConditioningOut {
+            positive: crate::nodes::types::ConditioningOut {
                 node_id,
                 node_slot: 0u32,
             },
-            negative: crate::nodes::ConditioningOut {
+            negative: crate::nodes::types::ConditioningOut {
                 node_id,
                 node_slot: 1u32,
             },
-            latent: crate::nodes::LatentOut {
+            latent: crate::nodes::types::LatentOut {
                 node_id,
                 node_slot: 2u32,
             },

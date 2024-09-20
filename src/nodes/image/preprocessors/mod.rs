@@ -3,9 +3,9 @@
 use crate::WorkflowNodeId;
 ///**Canny**
 pub struct Canny<
-    Image: crate::nodes::Image,
-    LowThreshold: crate::nodes::Float,
-    HighThreshold: crate::nodes::Float,
+    Image: crate::nodes::types::Image,
+    LowThreshold: crate::nodes::types::Float,
+    HighThreshold: crate::nodes::types::Float,
 > {
     ///No documentation.
     pub image: Image,
@@ -18,17 +18,17 @@ pub struct Canny<
 #[derive(Clone)]
 pub struct CannyOutput {
     ///No documentation.
-    pub image: crate::nodes::ImageOut,
+    pub image: crate::nodes::types::ImageOut,
 }
 impl<
-    Image: crate::nodes::Image,
-    LowThreshold: crate::nodes::Float,
-    HighThreshold: crate::nodes::Float,
+    Image: crate::nodes::types::Image,
+    LowThreshold: crate::nodes::types::Float,
+    HighThreshold: crate::nodes::types::Float,
 > crate::nodes::TypedNode for Canny<Image, LowThreshold, HighThreshold> {
     type Output = CannyOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            image: crate::nodes::ImageOut {
+            image: crate::nodes::types::ImageOut {
                 node_id,
                 node_slot: 0u32,
             },

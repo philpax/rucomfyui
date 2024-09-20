@@ -3,11 +3,11 @@
 use crate::WorkflowNodeId;
 ///**InpaintModelConditioning**
 pub struct InpaintModelConditioning<
-    Positive: crate::nodes::Conditioning,
-    Negative: crate::nodes::Conditioning,
-    Vae: crate::nodes::Vae,
-    Pixels: crate::nodes::Image,
-    Mask: crate::nodes::Mask,
+    Positive: crate::nodes::types::Conditioning,
+    Negative: crate::nodes::types::Conditioning,
+    Vae: crate::nodes::types::Vae,
+    Pixels: crate::nodes::types::Image,
+    Mask: crate::nodes::types::Mask,
 > {
     ///No documentation.
     pub positive: Positive,
@@ -24,32 +24,32 @@ pub struct InpaintModelConditioning<
 #[derive(Clone)]
 pub struct InpaintModelConditioningOutput {
     ///No documentation.
-    pub positive: crate::nodes::ConditioningOut,
+    pub positive: crate::nodes::types::ConditioningOut,
     ///No documentation.
-    pub negative: crate::nodes::ConditioningOut,
+    pub negative: crate::nodes::types::ConditioningOut,
     ///No documentation.
-    pub latent: crate::nodes::LatentOut,
+    pub latent: crate::nodes::types::LatentOut,
 }
 impl<
-    Positive: crate::nodes::Conditioning,
-    Negative: crate::nodes::Conditioning,
-    Vae: crate::nodes::Vae,
-    Pixels: crate::nodes::Image,
-    Mask: crate::nodes::Mask,
+    Positive: crate::nodes::types::Conditioning,
+    Negative: crate::nodes::types::Conditioning,
+    Vae: crate::nodes::types::Vae,
+    Pixels: crate::nodes::types::Image,
+    Mask: crate::nodes::types::Mask,
 > crate::nodes::TypedNode
 for InpaintModelConditioning<Positive, Negative, Vae, Pixels, Mask> {
     type Output = InpaintModelConditioningOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            positive: crate::nodes::ConditioningOut {
+            positive: crate::nodes::types::ConditioningOut {
                 node_id,
                 node_slot: 0u32,
             },
-            negative: crate::nodes::ConditioningOut {
+            negative: crate::nodes::types::ConditioningOut {
                 node_id,
                 node_slot: 1u32,
             },
-            latent: crate::nodes::LatentOut {
+            latent: crate::nodes::types::LatentOut {
                 node_id,
                 node_slot: 2u32,
             },

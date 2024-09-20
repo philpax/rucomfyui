@@ -27,6 +27,13 @@ async fn run() -> Result<()> {
     let _ = std::fs::remove_dir_all(out_dir);
     std::fs::create_dir_all(out_dir)?;
 
+    // Write all categories and nodes.
+    write_category_tree(("", &category_tree), out_dir).context("root")?;
+
+    // Write type-definitions module.
+    write_tokenstream_with_formatting(&out_dir.join("types.rs"), type_module_definitions()?)?;
+
+    // Write all-nodes module.
     let all_nodes = build_list_of_all_nodes(&category_tree, &[])?;
     write_tokenstream_with_formatting(
         &out_dir.join("all.rs"),
@@ -36,7 +43,6 @@ async fn run() -> Result<()> {
         },
     )?;
 
-    write_category_tree(("", &category_tree), out_dir).context("root")?;
     Ok(())
 }
 
@@ -112,6 +118,75 @@ fn write_category_tree((name, tree): (&str, &CategoryTree), directory: &Path) ->
 }
 
 fn root_module_definitions() -> Result<TokenStream> {
+    Ok(quote! {
+        pub mod all;
+        pub mod types;
+
+        use crate::WorkflowInput;
+
+        /// Implemented for all typed nodes; provides the node's output and metadata.
+        pub trait TypedNode {
+            /// The type of the node's output.
+            type Output;
+            /// Returns the node's output.
+            fn output(&self, node_id: WorkflowNodeId) -> Self::Output;
+
+            /// The name of the node.
+            const NAME: &'static str;
+            /// The display name of the node.
+            const DISPLAY_NAME: &'static str;
+            /// The description of the node.
+            const DESCRIPTION: &'static str;
+            /// The category of the node.
+            const CATEGORY: &'static str;
+        }
+
+        /// Implemented for all output nodes (i.e. nodes at which a workflow terminates).
+        pub trait TypedOutputNode {}
+
+        /// Converts a value to a workflow input.
+        pub trait ToWorkflowInput {
+            /// Converts the value to a workflow input.
+            fn to_workflow_input(&self) -> WorkflowInput;
+        }
+
+        impl ToWorkflowInput for std::string::String {
+            fn to_workflow_input(&self) -> WorkflowInput {
+                WorkflowInput::String(self.clone())
+            }
+        }
+        impl types :: String for std::string::String {}
+        impl<'a> ToWorkflowInput for &'a str {
+            fn to_workflow_input(&self) -> WorkflowInput {
+                WorkflowInput::String(self.to_string())
+            }
+        }
+        impl<'a> types :: String for &'a str {}
+
+        impl ToWorkflowInput for f32 {
+            fn to_workflow_input(&self) -> WorkflowInput {
+                WorkflowInput::F32(*self)
+            }
+        }
+        impl types :: Float for f32 {}
+
+        impl ToWorkflowInput for i32 {
+            fn to_workflow_input(&self) -> WorkflowInput {
+                WorkflowInput::I32(*self)
+            }
+        }
+        impl types :: Int for i32 {}
+
+        impl ToWorkflowInput for bool {
+            fn to_workflow_input(&self) -> WorkflowInput {
+                WorkflowInput::Boolean(*self)
+            }
+        }
+        impl types :: Boolean for bool {}
+    })
+}
+
+fn type_module_definitions() -> Result<TokenStream> {
     let types = ObjectType::ALL
         .iter()
         .map(|ty| {
@@ -150,69 +225,9 @@ fn root_module_definitions() -> Result<TokenStream> {
         .collect::<Result<Vec<_>>>()?;
 
     Ok(quote! {
-        pub mod all;
+        //! Definitions for all ComfyUI types.
 
-        use crate::WorkflowInput;
-
-        /// Implemented for all typed nodes; provides the node's output and metadata.
-        pub trait TypedNode {
-            /// The type of the node's output.
-            type Output;
-            /// Returns the node's output.
-            fn output(&self, node_id: WorkflowNodeId) -> Self::Output;
-
-            /// The name of the node.
-            const NAME: &'static str;
-            /// The display name of the node.
-            const DISPLAY_NAME: &'static str;
-            /// The description of the node.
-            const DESCRIPTION: &'static str;
-            /// The category of the node.
-            const CATEGORY: &'static str;
-        }
-
-        /// Implemented for all output nodes (i.e. nodes at which a workflow terminates).
-        pub trait TypedOutputNode {}
-
-        /// Converts a value to a workflow input.
-        pub trait ToWorkflowInput {
-            /// Converts the value to a workflow input.
-            fn to_workflow_input(&self) -> WorkflowInput;
-        }
-
-        impl ToWorkflowInput for std::string::String {
-            fn to_workflow_input(&self) -> WorkflowInput {
-                WorkflowInput::String(self.clone())
-            }
-        }
-        impl String for std::string::String {}
-        impl<'a> ToWorkflowInput for &'a str {
-            fn to_workflow_input(&self) -> WorkflowInput {
-                WorkflowInput::String(self.to_string())
-            }
-        }
-        impl<'a> String for &'a str {}
-
-        impl ToWorkflowInput for f32 {
-            fn to_workflow_input(&self) -> WorkflowInput {
-                WorkflowInput::F32(*self)
-            }
-        }
-        impl Float for f32 {}
-
-        impl ToWorkflowInput for i32 {
-            fn to_workflow_input(&self) -> WorkflowInput {
-                WorkflowInput::I32(*self)
-            }
-        }
-        impl Int for i32 {}
-
-        impl ToWorkflowInput for bool {
-            fn to_workflow_input(&self) -> WorkflowInput {
-                WorkflowInput::Boolean(*self)
-            }
-        }
-        impl Boolean for bool {}
+        use crate::{nodes::ToWorkflowInput, WorkflowInput, WorkflowNodeId};
 
         #(#types)*
     })
@@ -297,12 +312,12 @@ fn write_node_inputs(node: &Object) -> Result<(syn::Ident, Vec<ProcessedInput>, 
             let ty = &input.generic_ty;
             let default = if input.optional {
                 let output_struct_name = object_type_struct_ident(&input.ty);
-                quote! { = crate :: nodes :: #output_struct_name }
+                quote! { = crate :: nodes :: types :: #output_struct_name }
             } else {
                 quote! {}
             };
             Ok(quote! {
-                #generic_name: crate :: nodes :: #ty #default
+                #generic_name: crate :: nodes :: types :: #ty #default
             })
         })
         .collect::<Result<Vec<_>>>()?;
@@ -362,7 +377,7 @@ fn write_node_outputs(
             let generic_name = &input.generic_name;
             let generic_ty = &input.generic_ty;
             quote! {
-                #generic_name: crate :: nodes :: #generic_ty
+                #generic_name: crate :: nodes :: types :: #generic_ty
             }
         })
         .collect::<Vec<_>>();
@@ -407,7 +422,7 @@ fn write_node_outputs(
             let doc = output.tooltip.unwrap_or("No documentation.");
             Ok(quote! {
                 #[doc = #doc]
-                pub #name: crate :: nodes :: #ty
+                pub #name: crate :: nodes :: types :: #ty
             })
         })
         .collect::<Result<Vec<_>>>()?;
@@ -423,7 +438,7 @@ fn write_node_outputs(
                 let ty = object_type_struct_ident(&output.ty);
                 let i = i as u32;
                 Ok(quote! {
-                    #name: crate :: nodes :: #ty { node_id, node_slot: #i }
+                    #name: crate :: nodes :: types :: #ty { node_id, node_slot: #i }
                 })
             })
             .collect::<Result<Vec<_>>>()?;

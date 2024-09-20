@@ -2,7 +2,10 @@
 #![allow(unused_imports)]
 use crate::WorkflowNodeId;
 ///**Set Latent Noise Mask**
-pub struct SetLatentNoiseMask<Samples: crate::nodes::Latent, Mask: crate::nodes::Mask> {
+pub struct SetLatentNoiseMask<
+    Samples: crate::nodes::types::Latent,
+    Mask: crate::nodes::types::Mask,
+> {
     ///No documentation.
     pub samples: Samples,
     ///No documentation.
@@ -12,14 +15,16 @@ pub struct SetLatentNoiseMask<Samples: crate::nodes::Latent, Mask: crate::nodes:
 #[derive(Clone)]
 pub struct SetLatentNoiseMaskOutput {
     ///No documentation.
-    pub latent: crate::nodes::LatentOut,
+    pub latent: crate::nodes::types::LatentOut,
 }
-impl<Samples: crate::nodes::Latent, Mask: crate::nodes::Mask> crate::nodes::TypedNode
-for SetLatentNoiseMask<Samples, Mask> {
+impl<
+    Samples: crate::nodes::types::Latent,
+    Mask: crate::nodes::types::Mask,
+> crate::nodes::TypedNode for SetLatentNoiseMask<Samples, Mask> {
     type Output = SetLatentNoiseMaskOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            latent: crate::nodes::LatentOut {
+            latent: crate::nodes::types::LatentOut {
                 node_id,
                 node_slot: 0u32,
             },
@@ -32,10 +37,10 @@ for SetLatentNoiseMask<Samples, Mask> {
 }
 ///**VAE Encode (for Inpainting)**
 pub struct VaeEncodeForInpaint<
-    Pixels: crate::nodes::Image,
-    Vae: crate::nodes::Vae,
-    Mask: crate::nodes::Mask,
-    GrowMaskBy: crate::nodes::Int,
+    Pixels: crate::nodes::types::Image,
+    Vae: crate::nodes::types::Vae,
+    Mask: crate::nodes::types::Mask,
+    GrowMaskBy: crate::nodes::types::Int,
 > {
     ///No documentation.
     pub pixels: Pixels,
@@ -50,18 +55,18 @@ pub struct VaeEncodeForInpaint<
 #[derive(Clone)]
 pub struct VaeEncodeForInpaintOutput {
     ///No documentation.
-    pub latent: crate::nodes::LatentOut,
+    pub latent: crate::nodes::types::LatentOut,
 }
 impl<
-    Pixels: crate::nodes::Image,
-    Vae: crate::nodes::Vae,
-    Mask: crate::nodes::Mask,
-    GrowMaskBy: crate::nodes::Int,
+    Pixels: crate::nodes::types::Image,
+    Vae: crate::nodes::types::Vae,
+    Mask: crate::nodes::types::Mask,
+    GrowMaskBy: crate::nodes::types::Int,
 > crate::nodes::TypedNode for VaeEncodeForInpaint<Pixels, Vae, Mask, GrowMaskBy> {
     type Output = VaeEncodeForInpaintOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            latent: crate::nodes::LatentOut {
+            latent: crate::nodes::types::LatentOut {
                 node_id,
                 node_slot: 0u32,
             },

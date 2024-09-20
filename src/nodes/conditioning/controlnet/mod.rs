@@ -3,10 +3,10 @@
 use crate::WorkflowNodeId;
 ///**Apply ControlNet**
 pub struct ControlNetApply<
-    Conditioning: crate::nodes::Conditioning,
-    ControlNet: crate::nodes::ControlNet,
-    Image: crate::nodes::Image,
-    Strength: crate::nodes::Float,
+    Conditioning: crate::nodes::types::Conditioning,
+    ControlNet: crate::nodes::types::ControlNet,
+    Image: crate::nodes::types::Image,
+    Strength: crate::nodes::types::Float,
 > {
     ///No documentation.
     pub conditioning: Conditioning,
@@ -21,19 +21,19 @@ pub struct ControlNetApply<
 #[derive(Clone)]
 pub struct ControlNetApplyOutput {
     ///No documentation.
-    pub conditioning: crate::nodes::ConditioningOut,
+    pub conditioning: crate::nodes::types::ConditioningOut,
 }
 impl<
-    Conditioning: crate::nodes::Conditioning,
-    ControlNet: crate::nodes::ControlNet,
-    Image: crate::nodes::Image,
-    Strength: crate::nodes::Float,
+    Conditioning: crate::nodes::types::Conditioning,
+    ControlNet: crate::nodes::types::ControlNet,
+    Image: crate::nodes::types::Image,
+    Strength: crate::nodes::types::Float,
 > crate::nodes::TypedNode
 for ControlNetApply<Conditioning, ControlNet, Image, Strength> {
     type Output = ControlNetApplyOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            conditioning: crate::nodes::ConditioningOut {
+            conditioning: crate::nodes::types::ConditioningOut {
                 node_id,
                 node_slot: 0u32,
             },
@@ -46,13 +46,13 @@ for ControlNetApply<Conditioning, ControlNet, Image, Strength> {
 }
 ///**Apply ControlNet (Advanced)**
 pub struct ControlNetApplyAdvanced<
-    Positive: crate::nodes::Conditioning,
-    Negative: crate::nodes::Conditioning,
-    ControlNet: crate::nodes::ControlNet,
-    Image: crate::nodes::Image,
-    Strength: crate::nodes::Float,
-    StartPercent: crate::nodes::Float,
-    EndPercent: crate::nodes::Float,
+    Positive: crate::nodes::types::Conditioning,
+    Negative: crate::nodes::types::Conditioning,
+    ControlNet: crate::nodes::types::ControlNet,
+    Image: crate::nodes::types::Image,
+    Strength: crate::nodes::types::Float,
+    StartPercent: crate::nodes::types::Float,
+    EndPercent: crate::nodes::types::Float,
 > {
     ///No documentation.
     pub positive: Positive,
@@ -73,18 +73,18 @@ pub struct ControlNetApplyAdvanced<
 #[derive(Clone)]
 pub struct ControlNetApplyAdvancedOutput {
     ///No documentation.
-    pub positive: crate::nodes::ConditioningOut,
+    pub positive: crate::nodes::types::ConditioningOut,
     ///No documentation.
-    pub negative: crate::nodes::ConditioningOut,
+    pub negative: crate::nodes::types::ConditioningOut,
 }
 impl<
-    Positive: crate::nodes::Conditioning,
-    Negative: crate::nodes::Conditioning,
-    ControlNet: crate::nodes::ControlNet,
-    Image: crate::nodes::Image,
-    Strength: crate::nodes::Float,
-    StartPercent: crate::nodes::Float,
-    EndPercent: crate::nodes::Float,
+    Positive: crate::nodes::types::Conditioning,
+    Negative: crate::nodes::types::Conditioning,
+    ControlNet: crate::nodes::types::ControlNet,
+    Image: crate::nodes::types::Image,
+    Strength: crate::nodes::types::Float,
+    StartPercent: crate::nodes::types::Float,
+    EndPercent: crate::nodes::types::Float,
 > crate::nodes::TypedNode
 for ControlNetApplyAdvanced<
     Positive,
@@ -98,11 +98,11 @@ for ControlNetApplyAdvanced<
     type Output = ControlNetApplyAdvancedOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            positive: crate::nodes::ConditioningOut {
+            positive: crate::nodes::types::ConditioningOut {
                 node_id,
                 node_slot: 0u32,
             },
-            negative: crate::nodes::ConditioningOut {
+            negative: crate::nodes::types::ConditioningOut {
                 node_id,
                 node_slot: 1u32,
             },
@@ -115,14 +115,14 @@ for ControlNetApplyAdvanced<
 }
 ///**ControlNetApply SD3 and HunyuanDiT**
 pub struct ControlNetApplySd3<
-    Positive: crate::nodes::Conditioning,
-    Negative: crate::nodes::Conditioning,
-    ControlNet: crate::nodes::ControlNet,
-    Vae: crate::nodes::Vae,
-    Image: crate::nodes::Image,
-    Strength: crate::nodes::Float,
-    StartPercent: crate::nodes::Float,
-    EndPercent: crate::nodes::Float,
+    Positive: crate::nodes::types::Conditioning,
+    Negative: crate::nodes::types::Conditioning,
+    ControlNet: crate::nodes::types::ControlNet,
+    Vae: crate::nodes::types::Vae,
+    Image: crate::nodes::types::Image,
+    Strength: crate::nodes::types::Float,
+    StartPercent: crate::nodes::types::Float,
+    EndPercent: crate::nodes::types::Float,
 > {
     ///No documentation.
     pub positive: Positive,
@@ -145,19 +145,19 @@ pub struct ControlNetApplySd3<
 #[derive(Clone)]
 pub struct ControlNetApplySd3Output {
     ///No documentation.
-    pub positive: crate::nodes::ConditioningOut,
+    pub positive: crate::nodes::types::ConditioningOut,
     ///No documentation.
-    pub negative: crate::nodes::ConditioningOut,
+    pub negative: crate::nodes::types::ConditioningOut,
 }
 impl<
-    Positive: crate::nodes::Conditioning,
-    Negative: crate::nodes::Conditioning,
-    ControlNet: crate::nodes::ControlNet,
-    Vae: crate::nodes::Vae,
-    Image: crate::nodes::Image,
-    Strength: crate::nodes::Float,
-    StartPercent: crate::nodes::Float,
-    EndPercent: crate::nodes::Float,
+    Positive: crate::nodes::types::Conditioning,
+    Negative: crate::nodes::types::Conditioning,
+    ControlNet: crate::nodes::types::ControlNet,
+    Vae: crate::nodes::types::Vae,
+    Image: crate::nodes::types::Image,
+    Strength: crate::nodes::types::Float,
+    StartPercent: crate::nodes::types::Float,
+    EndPercent: crate::nodes::types::Float,
 > crate::nodes::TypedNode
 for ControlNetApplySd3<
     Positive,
@@ -172,11 +172,11 @@ for ControlNetApplySd3<
     type Output = ControlNetApplySd3Output;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            positive: crate::nodes::ConditioningOut {
+            positive: crate::nodes::types::ConditioningOut {
                 node_id,
                 node_slot: 0u32,
             },
-            negative: crate::nodes::ConditioningOut {
+            negative: crate::nodes::types::ConditioningOut {
                 node_id,
                 node_slot: 1u32,
             },
@@ -189,8 +189,8 @@ for ControlNetApplySd3<
 }
 ///**SetUnionControlNetType**
 pub struct SetUnionControlNetType<
-    ControlNet: crate::nodes::ControlNet,
-    Type: crate::nodes::String,
+    ControlNet: crate::nodes::types::ControlNet,
+    Type: crate::nodes::types::String,
 > {
     ///No documentation.
     pub control_net: ControlNet,
@@ -201,16 +201,16 @@ pub struct SetUnionControlNetType<
 #[derive(Clone)]
 pub struct SetUnionControlNetTypeOutput {
     ///No documentation.
-    pub control_net: crate::nodes::ControlNetOut,
+    pub control_net: crate::nodes::types::ControlNetOut,
 }
 impl<
-    ControlNet: crate::nodes::ControlNet,
-    Type: crate::nodes::String,
+    ControlNet: crate::nodes::types::ControlNet,
+    Type: crate::nodes::types::String,
 > crate::nodes::TypedNode for SetUnionControlNetType<ControlNet, Type> {
     type Output = SetUnionControlNetTypeOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            control_net: crate::nodes::ControlNetOut {
+            control_net: crate::nodes::types::ControlNetOut {
                 node_id,
                 node_slot: 0u32,
             },

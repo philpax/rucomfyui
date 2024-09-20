@@ -3,11 +3,11 @@
 use crate::WorkflowNodeId;
 ///**FreeU**
 pub struct FreeU<
-    Model: crate::nodes::Model,
-    B1: crate::nodes::Float,
-    B2: crate::nodes::Float,
-    S1: crate::nodes::Float,
-    S2: crate::nodes::Float,
+    Model: crate::nodes::types::Model,
+    B1: crate::nodes::types::Float,
+    B2: crate::nodes::types::Float,
+    S1: crate::nodes::types::Float,
+    S2: crate::nodes::types::Float,
 > {
     ///No documentation.
     pub model: Model,
@@ -24,19 +24,19 @@ pub struct FreeU<
 #[derive(Clone)]
 pub struct FreeUOutput {
     ///No documentation.
-    pub model: crate::nodes::ModelOut,
+    pub model: crate::nodes::types::ModelOut,
 }
 impl<
-    Model: crate::nodes::Model,
-    B1: crate::nodes::Float,
-    B2: crate::nodes::Float,
-    S1: crate::nodes::Float,
-    S2: crate::nodes::Float,
+    Model: crate::nodes::types::Model,
+    B1: crate::nodes::types::Float,
+    B2: crate::nodes::types::Float,
+    S1: crate::nodes::types::Float,
+    S2: crate::nodes::types::Float,
 > crate::nodes::TypedNode for FreeU<Model, B1, B2, S1, S2> {
     type Output = FreeUOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            model: crate::nodes::ModelOut {
+            model: crate::nodes::types::ModelOut {
                 node_id,
                 node_slot: 0u32,
             },
@@ -49,11 +49,11 @@ impl<
 }
 ///**FreeU_V2**
 pub struct FreeUV2<
-    Model: crate::nodes::Model,
-    B1: crate::nodes::Float,
-    B2: crate::nodes::Float,
-    S1: crate::nodes::Float,
-    S2: crate::nodes::Float,
+    Model: crate::nodes::types::Model,
+    B1: crate::nodes::types::Float,
+    B2: crate::nodes::types::Float,
+    S1: crate::nodes::types::Float,
+    S2: crate::nodes::types::Float,
 > {
     ///No documentation.
     pub model: Model,
@@ -70,19 +70,19 @@ pub struct FreeUV2<
 #[derive(Clone)]
 pub struct FreeUV2Output {
     ///No documentation.
-    pub model: crate::nodes::ModelOut,
+    pub model: crate::nodes::types::ModelOut,
 }
 impl<
-    Model: crate::nodes::Model,
-    B1: crate::nodes::Float,
-    B2: crate::nodes::Float,
-    S1: crate::nodes::Float,
-    S2: crate::nodes::Float,
+    Model: crate::nodes::types::Model,
+    B1: crate::nodes::types::Float,
+    B2: crate::nodes::types::Float,
+    S1: crate::nodes::types::Float,
+    S2: crate::nodes::types::Float,
 > crate::nodes::TypedNode for FreeUV2<Model, B1, B2, S1, S2> {
     type Output = FreeUV2Output;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            model: crate::nodes::ModelOut {
+            model: crate::nodes::types::ModelOut {
                 node_id,
                 node_slot: 0u32,
             },
@@ -95,11 +95,11 @@ impl<
 }
 ///**HyperTile**
 pub struct HyperTile<
-    Model: crate::nodes::Model,
-    TileSize: crate::nodes::Int,
-    SwapSize: crate::nodes::Int,
-    MaxDepth: crate::nodes::Int,
-    ScaleDepth: crate::nodes::Boolean,
+    Model: crate::nodes::types::Model,
+    TileSize: crate::nodes::types::Int,
+    SwapSize: crate::nodes::types::Int,
+    MaxDepth: crate::nodes::types::Int,
+    ScaleDepth: crate::nodes::types::Boolean,
 > {
     ///No documentation.
     pub model: Model,
@@ -116,20 +116,20 @@ pub struct HyperTile<
 #[derive(Clone)]
 pub struct HyperTileOutput {
     ///No documentation.
-    pub model: crate::nodes::ModelOut,
+    pub model: crate::nodes::types::ModelOut,
 }
 impl<
-    Model: crate::nodes::Model,
-    TileSize: crate::nodes::Int,
-    SwapSize: crate::nodes::Int,
-    MaxDepth: crate::nodes::Int,
-    ScaleDepth: crate::nodes::Boolean,
+    Model: crate::nodes::types::Model,
+    TileSize: crate::nodes::types::Int,
+    SwapSize: crate::nodes::types::Int,
+    MaxDepth: crate::nodes::types::Int,
+    ScaleDepth: crate::nodes::types::Boolean,
 > crate::nodes::TypedNode
 for HyperTile<Model, TileSize, SwapSize, MaxDepth, ScaleDepth> {
     type Output = HyperTileOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            model: crate::nodes::ModelOut {
+            model: crate::nodes::types::ModelOut {
                 node_id,
                 node_slot: 0u32,
             },
@@ -142,8 +142,8 @@ for HyperTile<Model, TileSize, SwapSize, MaxDepth, ScaleDepth> {
 }
 ///**PerturbedAttentionGuidance**
 pub struct PerturbedAttentionGuidance<
-    Model: crate::nodes::Model,
-    Scale: crate::nodes::Float,
+    Model: crate::nodes::types::Model,
+    Scale: crate::nodes::types::Float,
 > {
     ///No documentation.
     pub model: Model,
@@ -154,14 +154,16 @@ pub struct PerturbedAttentionGuidance<
 #[derive(Clone)]
 pub struct PerturbedAttentionGuidanceOutput {
     ///No documentation.
-    pub model: crate::nodes::ModelOut,
+    pub model: crate::nodes::types::ModelOut,
 }
-impl<Model: crate::nodes::Model, Scale: crate::nodes::Float> crate::nodes::TypedNode
-for PerturbedAttentionGuidance<Model, Scale> {
+impl<
+    Model: crate::nodes::types::Model,
+    Scale: crate::nodes::types::Float,
+> crate::nodes::TypedNode for PerturbedAttentionGuidance<Model, Scale> {
     type Output = PerturbedAttentionGuidanceOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            model: crate::nodes::ModelOut {
+            model: crate::nodes::types::ModelOut {
                 node_id,
                 node_slot: 0u32,
             },

@@ -3,10 +3,10 @@
 use crate::WorkflowNodeId;
 ///**ImageBlend**
 pub struct ImageBlend<
-    Image1: crate::nodes::Image,
-    Image2: crate::nodes::Image,
-    BlendFactor: crate::nodes::Float,
-    BlendMode: crate::nodes::String,
+    Image1: crate::nodes::types::Image,
+    Image2: crate::nodes::types::Image,
+    BlendFactor: crate::nodes::types::Float,
+    BlendMode: crate::nodes::types::String,
 > {
     ///No documentation.
     pub image_1: Image1,
@@ -21,18 +21,18 @@ pub struct ImageBlend<
 #[derive(Clone)]
 pub struct ImageBlendOutput {
     ///No documentation.
-    pub image: crate::nodes::ImageOut,
+    pub image: crate::nodes::types::ImageOut,
 }
 impl<
-    Image1: crate::nodes::Image,
-    Image2: crate::nodes::Image,
-    BlendFactor: crate::nodes::Float,
-    BlendMode: crate::nodes::String,
+    Image1: crate::nodes::types::Image,
+    Image2: crate::nodes::types::Image,
+    BlendFactor: crate::nodes::types::Float,
+    BlendMode: crate::nodes::types::String,
 > crate::nodes::TypedNode for ImageBlend<Image1, Image2, BlendFactor, BlendMode> {
     type Output = ImageBlendOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            image: crate::nodes::ImageOut {
+            image: crate::nodes::types::ImageOut {
                 node_id,
                 node_slot: 0u32,
             },
@@ -45,9 +45,9 @@ impl<
 }
 ///**ImageBlur**
 pub struct ImageBlur<
-    Image: crate::nodes::Image,
-    BlurRadius: crate::nodes::Int,
-    Sigma: crate::nodes::Float,
+    Image: crate::nodes::types::Image,
+    BlurRadius: crate::nodes::types::Int,
+    Sigma: crate::nodes::types::Float,
 > {
     ///No documentation.
     pub image: Image,
@@ -60,17 +60,17 @@ pub struct ImageBlur<
 #[derive(Clone)]
 pub struct ImageBlurOutput {
     ///No documentation.
-    pub image: crate::nodes::ImageOut,
+    pub image: crate::nodes::types::ImageOut,
 }
 impl<
-    Image: crate::nodes::Image,
-    BlurRadius: crate::nodes::Int,
-    Sigma: crate::nodes::Float,
+    Image: crate::nodes::types::Image,
+    BlurRadius: crate::nodes::types::Int,
+    Sigma: crate::nodes::types::Float,
 > crate::nodes::TypedNode for ImageBlur<Image, BlurRadius, Sigma> {
     type Output = ImageBlurOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            image: crate::nodes::ImageOut {
+            image: crate::nodes::types::ImageOut {
                 node_id,
                 node_slot: 0u32,
             },
@@ -83,9 +83,9 @@ impl<
 }
 ///**ImageQuantize**
 pub struct ImageQuantize<
-    Image: crate::nodes::Image,
-    Colors: crate::nodes::Int,
-    Dither: crate::nodes::String,
+    Image: crate::nodes::types::Image,
+    Colors: crate::nodes::types::Int,
+    Dither: crate::nodes::types::String,
 > {
     ///No documentation.
     pub image: Image,
@@ -98,17 +98,17 @@ pub struct ImageQuantize<
 #[derive(Clone)]
 pub struct ImageQuantizeOutput {
     ///No documentation.
-    pub image: crate::nodes::ImageOut,
+    pub image: crate::nodes::types::ImageOut,
 }
 impl<
-    Image: crate::nodes::Image,
-    Colors: crate::nodes::Int,
-    Dither: crate::nodes::String,
+    Image: crate::nodes::types::Image,
+    Colors: crate::nodes::types::Int,
+    Dither: crate::nodes::types::String,
 > crate::nodes::TypedNode for ImageQuantize<Image, Colors, Dither> {
     type Output = ImageQuantizeOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            image: crate::nodes::ImageOut {
+            image: crate::nodes::types::ImageOut {
                 node_id,
                 node_slot: 0u32,
             },
@@ -121,10 +121,10 @@ impl<
 }
 ///**ImageSharpen**
 pub struct ImageSharpen<
-    Image: crate::nodes::Image,
-    SharpenRadius: crate::nodes::Int,
-    Sigma: crate::nodes::Float,
-    Alpha: crate::nodes::Float,
+    Image: crate::nodes::types::Image,
+    SharpenRadius: crate::nodes::types::Int,
+    Sigma: crate::nodes::types::Float,
+    Alpha: crate::nodes::types::Float,
 > {
     ///No documentation.
     pub image: Image,
@@ -139,18 +139,18 @@ pub struct ImageSharpen<
 #[derive(Clone)]
 pub struct ImageSharpenOutput {
     ///No documentation.
-    pub image: crate::nodes::ImageOut,
+    pub image: crate::nodes::types::ImageOut,
 }
 impl<
-    Image: crate::nodes::Image,
-    SharpenRadius: crate::nodes::Int,
-    Sigma: crate::nodes::Float,
-    Alpha: crate::nodes::Float,
+    Image: crate::nodes::types::Image,
+    SharpenRadius: crate::nodes::types::Int,
+    Sigma: crate::nodes::types::Float,
+    Alpha: crate::nodes::types::Float,
 > crate::nodes::TypedNode for ImageSharpen<Image, SharpenRadius, Sigma, Alpha> {
     type Output = ImageSharpenOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            image: crate::nodes::ImageOut {
+            image: crate::nodes::types::ImageOut {
                 node_id,
                 node_slot: 0u32,
             },
@@ -163,9 +163,9 @@ impl<
 }
 ///**ImageMorphology**
 pub struct Morphology<
-    Image: crate::nodes::Image,
-    Operation: crate::nodes::String,
-    KernelSize: crate::nodes::Int,
+    Image: crate::nodes::types::Image,
+    Operation: crate::nodes::types::String,
+    KernelSize: crate::nodes::types::Int,
 > {
     ///No documentation.
     pub image: Image,
@@ -178,17 +178,17 @@ pub struct Morphology<
 #[derive(Clone)]
 pub struct MorphologyOutput {
     ///No documentation.
-    pub image: crate::nodes::ImageOut,
+    pub image: crate::nodes::types::ImageOut,
 }
 impl<
-    Image: crate::nodes::Image,
-    Operation: crate::nodes::String,
-    KernelSize: crate::nodes::Int,
+    Image: crate::nodes::types::Image,
+    Operation: crate::nodes::types::String,
+    KernelSize: crate::nodes::types::Int,
 > crate::nodes::TypedNode for Morphology<Image, Operation, KernelSize> {
     type Output = MorphologyOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            image: crate::nodes::ImageOut {
+            image: crate::nodes::types::ImageOut {
                 node_id,
                 node_slot: 0u32,
             },

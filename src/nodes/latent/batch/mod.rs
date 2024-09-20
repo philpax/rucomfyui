@@ -2,7 +2,10 @@
 #![allow(unused_imports)]
 use crate::WorkflowNodeId;
 ///**LatentBatch**
-pub struct LatentBatch<Samples1: crate::nodes::Latent, Samples2: crate::nodes::Latent> {
+pub struct LatentBatch<
+    Samples1: crate::nodes::types::Latent,
+    Samples2: crate::nodes::types::Latent,
+> {
     ///No documentation.
     pub samples_1: Samples1,
     ///No documentation.
@@ -12,16 +15,16 @@ pub struct LatentBatch<Samples1: crate::nodes::Latent, Samples2: crate::nodes::L
 #[derive(Clone)]
 pub struct LatentBatchOutput {
     ///No documentation.
-    pub latent: crate::nodes::LatentOut,
+    pub latent: crate::nodes::types::LatentOut,
 }
 impl<
-    Samples1: crate::nodes::Latent,
-    Samples2: crate::nodes::Latent,
+    Samples1: crate::nodes::types::Latent,
+    Samples2: crate::nodes::types::Latent,
 > crate::nodes::TypedNode for LatentBatch<Samples1, Samples2> {
     type Output = LatentBatchOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            latent: crate::nodes::LatentOut {
+            latent: crate::nodes::types::LatentOut {
                 node_id,
                 node_slot: 0u32,
             },
@@ -34,9 +37,9 @@ impl<
 }
 ///**Latent From Batch**
 pub struct LatentFromBatch<
-    Samples: crate::nodes::Latent,
-    BatchIndex: crate::nodes::Int,
-    Length: crate::nodes::Int,
+    Samples: crate::nodes::types::Latent,
+    BatchIndex: crate::nodes::types::Int,
+    Length: crate::nodes::types::Int,
 > {
     ///No documentation.
     pub samples: Samples,
@@ -49,17 +52,17 @@ pub struct LatentFromBatch<
 #[derive(Clone)]
 pub struct LatentFromBatchOutput {
     ///No documentation.
-    pub latent: crate::nodes::LatentOut,
+    pub latent: crate::nodes::types::LatentOut,
 }
 impl<
-    Samples: crate::nodes::Latent,
-    BatchIndex: crate::nodes::Int,
-    Length: crate::nodes::Int,
+    Samples: crate::nodes::types::Latent,
+    BatchIndex: crate::nodes::types::Int,
+    Length: crate::nodes::types::Int,
 > crate::nodes::TypedNode for LatentFromBatch<Samples, BatchIndex, Length> {
     type Output = LatentFromBatchOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            latent: crate::nodes::LatentOut {
+            latent: crate::nodes::types::LatentOut {
                 node_id,
                 node_slot: 0u32,
             },
@@ -71,7 +74,10 @@ impl<
     const CATEGORY: &'static str = "latent/batch";
 }
 ///**Rebatch Latents**
-pub struct RebatchLatents<Latents: crate::nodes::Latent, BatchSize: crate::nodes::Int> {
+pub struct RebatchLatents<
+    Latents: crate::nodes::types::Latent,
+    BatchSize: crate::nodes::types::Int,
+> {
     ///No documentation.
     pub latents: Latents,
     ///No documentation.
@@ -81,14 +87,16 @@ pub struct RebatchLatents<Latents: crate::nodes::Latent, BatchSize: crate::nodes
 #[derive(Clone)]
 pub struct RebatchLatentsOutput {
     ///No documentation.
-    pub latent: crate::nodes::LatentOut,
+    pub latent: crate::nodes::types::LatentOut,
 }
-impl<Latents: crate::nodes::Latent, BatchSize: crate::nodes::Int> crate::nodes::TypedNode
-for RebatchLatents<Latents, BatchSize> {
+impl<
+    Latents: crate::nodes::types::Latent,
+    BatchSize: crate::nodes::types::Int,
+> crate::nodes::TypedNode for RebatchLatents<Latents, BatchSize> {
     type Output = RebatchLatentsOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            latent: crate::nodes::LatentOut {
+            latent: crate::nodes::types::LatentOut {
                 node_id,
                 node_slot: 0u32,
             },
@@ -100,7 +108,10 @@ for RebatchLatents<Latents, BatchSize> {
     const CATEGORY: &'static str = "latent/batch";
 }
 ///**Repeat Latent Batch**
-pub struct RepeatLatentBatch<Samples: crate::nodes::Latent, Amount: crate::nodes::Int> {
+pub struct RepeatLatentBatch<
+    Samples: crate::nodes::types::Latent,
+    Amount: crate::nodes::types::Int,
+> {
     ///No documentation.
     pub samples: Samples,
     ///No documentation.
@@ -110,14 +121,16 @@ pub struct RepeatLatentBatch<Samples: crate::nodes::Latent, Amount: crate::nodes
 #[derive(Clone)]
 pub struct RepeatLatentBatchOutput {
     ///No documentation.
-    pub latent: crate::nodes::LatentOut,
+    pub latent: crate::nodes::types::LatentOut,
 }
-impl<Samples: crate::nodes::Latent, Amount: crate::nodes::Int> crate::nodes::TypedNode
-for RepeatLatentBatch<Samples, Amount> {
+impl<
+    Samples: crate::nodes::types::Latent,
+    Amount: crate::nodes::types::Int,
+> crate::nodes::TypedNode for RepeatLatentBatch<Samples, Amount> {
     type Output = RepeatLatentBatchOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            latent: crate::nodes::LatentOut {
+            latent: crate::nodes::types::LatentOut {
                 node_id,
                 node_slot: 0u32,
             },

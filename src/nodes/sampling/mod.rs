@@ -5,16 +5,16 @@ pub mod custom_sampling;
 pub mod video_models;
 #[doc = "**KSampler**\n\nUses the provided model, positive and negative conditioning to denoise the latent image."]
 pub struct KSampler<
-    Model: crate::nodes::Model,
-    Seed: crate::nodes::Int,
-    Steps: crate::nodes::Int,
-    Cfg: crate::nodes::Float,
-    SamplerName: crate::nodes::String,
-    Scheduler: crate::nodes::String,
-    Positive: crate::nodes::Conditioning,
-    Negative: crate::nodes::Conditioning,
-    LatentImage: crate::nodes::Latent,
-    Denoise: crate::nodes::Float,
+    Model: crate::nodes::types::Model,
+    Seed: crate::nodes::types::Int,
+    Steps: crate::nodes::types::Int,
+    Cfg: crate::nodes::types::Float,
+    SamplerName: crate::nodes::types::String,
+    Scheduler: crate::nodes::types::String,
+    Positive: crate::nodes::types::Conditioning,
+    Negative: crate::nodes::types::Conditioning,
+    LatentImage: crate::nodes::types::Latent,
+    Denoise: crate::nodes::types::Float,
 > {
     ///The model used for denoising the input latent.
     pub model: Model,
@@ -41,19 +41,19 @@ pub struct KSampler<
 #[derive(Clone)]
 pub struct KSamplerOutput {
     ///The denoised latent.
-    pub latent: crate::nodes::LatentOut,
+    pub latent: crate::nodes::types::LatentOut,
 }
 impl<
-    Model: crate::nodes::Model,
-    Seed: crate::nodes::Int,
-    Steps: crate::nodes::Int,
-    Cfg: crate::nodes::Float,
-    SamplerName: crate::nodes::String,
-    Scheduler: crate::nodes::String,
-    Positive: crate::nodes::Conditioning,
-    Negative: crate::nodes::Conditioning,
-    LatentImage: crate::nodes::Latent,
-    Denoise: crate::nodes::Float,
+    Model: crate::nodes::types::Model,
+    Seed: crate::nodes::types::Int,
+    Steps: crate::nodes::types::Int,
+    Cfg: crate::nodes::types::Float,
+    SamplerName: crate::nodes::types::String,
+    Scheduler: crate::nodes::types::String,
+    Positive: crate::nodes::types::Conditioning,
+    Negative: crate::nodes::types::Conditioning,
+    LatentImage: crate::nodes::types::Latent,
+    Denoise: crate::nodes::types::Float,
 > crate::nodes::TypedNode
 for KSampler<
     Model,
@@ -70,7 +70,7 @@ for KSampler<
     type Output = KSamplerOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            latent: crate::nodes::LatentOut {
+            latent: crate::nodes::types::LatentOut {
                 node_id,
                 node_slot: 0u32,
             },
@@ -83,19 +83,19 @@ for KSampler<
 }
 ///**KSampler (Advanced)**
 pub struct KSamplerAdvanced<
-    Model: crate::nodes::Model,
-    AddNoise: crate::nodes::String,
-    NoiseSeed: crate::nodes::Int,
-    Steps: crate::nodes::Int,
-    Cfg: crate::nodes::Float,
-    SamplerName: crate::nodes::String,
-    Scheduler: crate::nodes::String,
-    Positive: crate::nodes::Conditioning,
-    Negative: crate::nodes::Conditioning,
-    LatentImage: crate::nodes::Latent,
-    StartAtStep: crate::nodes::Int,
-    EndAtStep: crate::nodes::Int,
-    ReturnWithLeftoverNoise: crate::nodes::String,
+    Model: crate::nodes::types::Model,
+    AddNoise: crate::nodes::types::String,
+    NoiseSeed: crate::nodes::types::Int,
+    Steps: crate::nodes::types::Int,
+    Cfg: crate::nodes::types::Float,
+    SamplerName: crate::nodes::types::String,
+    Scheduler: crate::nodes::types::String,
+    Positive: crate::nodes::types::Conditioning,
+    Negative: crate::nodes::types::Conditioning,
+    LatentImage: crate::nodes::types::Latent,
+    StartAtStep: crate::nodes::types::Int,
+    EndAtStep: crate::nodes::types::Int,
+    ReturnWithLeftoverNoise: crate::nodes::types::String,
 > {
     ///No documentation.
     pub model: Model,
@@ -128,22 +128,22 @@ pub struct KSamplerAdvanced<
 #[derive(Clone)]
 pub struct KSamplerAdvancedOutput {
     ///No documentation.
-    pub latent: crate::nodes::LatentOut,
+    pub latent: crate::nodes::types::LatentOut,
 }
 impl<
-    Model: crate::nodes::Model,
-    AddNoise: crate::nodes::String,
-    NoiseSeed: crate::nodes::Int,
-    Steps: crate::nodes::Int,
-    Cfg: crate::nodes::Float,
-    SamplerName: crate::nodes::String,
-    Scheduler: crate::nodes::String,
-    Positive: crate::nodes::Conditioning,
-    Negative: crate::nodes::Conditioning,
-    LatentImage: crate::nodes::Latent,
-    StartAtStep: crate::nodes::Int,
-    EndAtStep: crate::nodes::Int,
-    ReturnWithLeftoverNoise: crate::nodes::String,
+    Model: crate::nodes::types::Model,
+    AddNoise: crate::nodes::types::String,
+    NoiseSeed: crate::nodes::types::Int,
+    Steps: crate::nodes::types::Int,
+    Cfg: crate::nodes::types::Float,
+    SamplerName: crate::nodes::types::String,
+    Scheduler: crate::nodes::types::String,
+    Positive: crate::nodes::types::Conditioning,
+    Negative: crate::nodes::types::Conditioning,
+    LatentImage: crate::nodes::types::Latent,
+    StartAtStep: crate::nodes::types::Int,
+    EndAtStep: crate::nodes::types::Int,
+    ReturnWithLeftoverNoise: crate::nodes::types::String,
 > crate::nodes::TypedNode
 for KSamplerAdvanced<
     Model,
@@ -163,7 +163,7 @@ for KSamplerAdvanced<
     type Output = KSamplerAdvancedOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            latent: crate::nodes::LatentOut {
+            latent: crate::nodes::types::LatentOut {
                 node_id,
                 node_slot: 0u32,
             },
