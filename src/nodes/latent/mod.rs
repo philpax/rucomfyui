@@ -8,7 +8,7 @@ pub mod inpaint;
 pub mod sd_3;
 pub mod stable_cascade;
 pub mod transform;
-#[doc = "**Empty Latent Image**\n\nCreate a new batch of empty latent images to be denoised via sampling."]
+///**Empty Latent Image**: Create a new batch of empty latent images to be denoised via sampling.
 pub struct EmptyLatentImage<
     Width: crate::nodes::types::Int,
     Height: crate::nodes::types::Int,
@@ -228,7 +228,7 @@ impl<
     const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "latent";
 }
-#[doc = "**VAE Decode**\n\nDecodes latent images back into pixel space images."]
+///**VAE Decode**: Decodes latent images back into pixel space images.
 pub struct VaeDecode<
     Samples: crate::nodes::types::Latent,
     Vae: crate::nodes::types::Vae,

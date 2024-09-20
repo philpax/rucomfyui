@@ -29,7 +29,7 @@ for ClipVisionLoader<ClipName> {
     const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "loaders";
 }
-#[doc = "**Load Checkpoint**\n\nLoads a diffusion model checkpoint, diffusion models are used to denoise latents."]
+///**Load Checkpoint**: Loads a diffusion model checkpoint, diffusion models are used to denoise latents.
 pub struct CheckpointLoaderSimple<CkptName: crate::nodes::types::String> {
     ///The name of the checkpoint (model) to load.
     pub ckpt_name: CkptName,
@@ -194,7 +194,7 @@ impl<
     const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "loaders";
 }
-#[doc = "**Load LoRA**\n\nLoRAs are used to modify diffusion and CLIP models, altering the way in which latents are denoised such as applying styles. Multiple LoRA nodes can be linked together."]
+///**Load LoRA**: LoRAs are used to modify diffusion and CLIP models, altering the way in which latents are denoised such as applying styles. Multiple LoRA nodes can be linked together.
 pub struct LoraLoader<
     Model: crate::nodes::types::Model,
     Clip: crate::nodes::types::Clip,
@@ -247,7 +247,7 @@ for LoraLoader<Model, Clip, LoraName, StrengthModel, StrengthClip> {
     const DESCRIPTION: &'static str = "LoRAs are used to modify diffusion and CLIP models, altering the way in which latents are denoised such as applying styles. Multiple LoRA nodes can be linked together.";
     const CATEGORY: &'static str = "loaders";
 }
-#[doc = "**LoraLoaderModelOnly**\n\nLoRAs are used to modify diffusion and CLIP models, altering the way in which latents are denoised such as applying styles. Multiple LoRA nodes can be linked together."]
+///**LoraLoaderModelOnly**: LoRAs are used to modify diffusion and CLIP models, altering the way in which latents are denoised such as applying styles. Multiple LoRA nodes can be linked together.
 pub struct LoraLoaderModelOnly<
     Model: crate::nodes::types::Model,
     LoraName: crate::nodes::types::String,

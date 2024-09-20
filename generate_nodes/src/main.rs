@@ -352,7 +352,7 @@ fn write_node_inputs(node: &Object) -> Result<(syn::Ident, Vec<ProcessedInput>, 
     let name = util::name_to_ident(&node.name, true)?;
     let mut doc = format!("**{}**", node.display_name);
     if !node.description.is_empty() {
-        doc.push_str("\n\n");
+        doc.push_str(": ");
         doc.push_str(&node.description);
     }
 

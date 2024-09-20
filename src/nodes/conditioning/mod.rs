@@ -44,7 +44,7 @@ impl<
     const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "conditioning";
 }
-#[doc = "**CLIP Text Encode (Prompt)**\n\nEncodes a text prompt using a CLIP model into an embedding that can be used to guide the diffusion model towards generating specific images."]
+///**CLIP Text Encode (Prompt)**: Encodes a text prompt using a CLIP model into an embedding that can be used to guide the diffusion model towards generating specific images.
 pub struct ClipTextEncode<
     Text: crate::nodes::types::String,
     Clip: crate::nodes::types::Clip,

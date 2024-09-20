@@ -3,7 +3,7 @@
 use crate::WorkflowNodeId;
 pub mod custom_sampling;
 pub mod video_models;
-#[doc = "**KSampler**\n\nUses the provided model, positive and negative conditioning to denoise the latent image."]
+///**KSampler**: Uses the provided model, positive and negative conditioning to denoise the latent image.
 pub struct KSampler<
     Model: crate::nodes::types::Model,
     Seed: crate::nodes::types::Int,

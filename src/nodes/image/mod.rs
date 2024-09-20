@@ -249,7 +249,7 @@ impl<Image: crate::nodes::types::String> crate::nodes::TypedNode for LoadImage<I
     const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "image";
 }
-#[doc = "**Preview Image**\n\nSaves the input images to your ComfyUI output directory."]
+///**Preview Image**: Saves the input images to your ComfyUI output directory.
 pub struct PreviewImage<Images: crate::nodes::types::Image> {
     ///No documentation.
     pub images: Images,
@@ -265,7 +265,7 @@ for PreviewImage<Images> {
 }
 impl<Images: crate::nodes::types::Image> crate::nodes::TypedOutputNode
 for PreviewImage<Images> {}
-#[doc = "**Save Image**\n\nSaves the input images to your ComfyUI output directory."]
+///**Save Image**: Saves the input images to your ComfyUI output directory.
 pub struct SaveImage<
     Images: crate::nodes::types::Image,
     FilenamePrefix: crate::nodes::types::String,
