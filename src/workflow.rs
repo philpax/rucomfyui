@@ -4,6 +4,9 @@ use std::collections::HashMap;
 
 use serde::{Deserialize, Serialize};
 
+#[cfg(feature = "typed_nodes")]
+use crate::nodes::TypedNode;
+
 /// A workflow is a graph of nodes that are executed in order.
 /// Each node is a step in the workflow.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq, Default)]
@@ -28,7 +31,9 @@ impl FromIterator<(u32, WorkflowNode)> for Workflow {
 /// The [`Workflow`] can be retrieved using the [`Into`] implementation or through the [`AsRef`] implementation.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq, Default)]
 pub struct WorkflowGraph {
-    workflow: Workflow,
+    /// The workflow being constructed.
+    pub workflow: Workflow,
+    /// The last node ID used.
     last_node: WorkflowNodeId,
 }
 impl From<WorkflowGraph> for Workflow {
@@ -49,6 +54,17 @@ impl WorkflowGraph {
         self.last_node = id;
         id
     }
+
+    #[cfg(feature = "typed_nodes")]
+    /// Add a typed node to the workflow.
+    pub fn add_typed<T: TypedNode>(&mut self, node: T) -> T::Output {
+        let node_id = self.add(WorkflowNode {
+            inputs: node.inputs(),
+            class_type: T::NAME.to_string(),
+            meta: Some(WorkflowMeta::new(T::DISPLAY_NAME)),
+        });
+        node.output(node_id)
+    }
 }
 
 /// A workflow node ID.
@@ -59,7 +75,7 @@ pub type WorkflowNodeId = u32;
 pub struct WorkflowNode {
     /// The inputs to the node.
     pub inputs: HashMap<String, WorkflowInput>,
-    /// The type of node, e.g. "CLIPTextEncode".
+    /// The type of node, e.g. `CLIPTextEncode`.
     pub class_type: String,
     #[serde(rename = "_meta")]
     /// The metadata for the node.
@@ -98,7 +114,7 @@ pub enum WorkflowInput {
     I32(i32),
     /// A boolean input.
     Boolean(bool),
-    /// A slot input. First value is the node ID, second is the slot index.
+    /// A slot input. First value is the node ID (integer-as-string), second is the slot index.
     Slot(String, u32),
 }
 impl WorkflowInput {
