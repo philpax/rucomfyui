@@ -8,9 +8,9 @@ use crate::{workflow::WorkflowNodeId, Bytes, Client, Result, Workflow};
 
 impl Client {
     /// Send a workflow to the ComfyUI API.
-    pub async fn queue(&self, workflow: impl AsRef<Workflow>) -> Result<QueueResult> {
+    pub async fn queue(&self, workflow: &Workflow) -> Result<QueueResult> {
         let payload = serde_json::json!({
-            "prompt": workflow.as_ref(),
+            "prompt": workflow,
         });
         Ok(self
             .client
@@ -25,7 +25,7 @@ impl Client {
     /// Helper function that prompts with a workflow, polls for the result, and then returns all output images.
     pub async fn easy_queue(
         &self,
-        workflow: impl AsRef<Workflow>,
+        workflow: &Workflow,
     ) -> Result<HashMap<WorkflowNodeId, Vec<Bytes>>> {
         let output = self.queue(workflow).await?;
 

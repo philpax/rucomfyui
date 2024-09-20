@@ -1,6 +1,11 @@
 //! Workflow graphs for ComfyUI.
 
-use std::{collections::HashMap, fmt::Display, str::FromStr};
+use std::{
+    cell::{Ref, RefCell},
+    collections::HashMap,
+    fmt::Display,
+    str::FromStr,
+};
 
 use serde::{Deserialize, Serialize};
 
@@ -28,42 +33,48 @@ impl FromIterator<(WorkflowNodeId, WorkflowNode)> for Workflow {
 
 /// A workflow graph constructs a [`Workflow`] by adding nodes to it.
 ///
-/// The [`Workflow`] can be retrieved using the [`Into`] implementation or through the [`AsRef`] implementation.
+/// The [`Workflow`] can be retrieved using the [`Into`] implementation or through [`Self::borrow`].
+///
+/// This type uses interior mutability to make it easier to add multiple nodes to the graph
+/// in a nested fashion. Ensure that you only add nodes when the graph is not being borrowed.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq, Default)]
 pub struct WorkflowGraph {
-    /// The workflow being constructed.
-    pub workflow: Workflow,
-    /// The last node ID used.
-    last_node: WorkflowNodeId,
+    workflow: RefCell<Workflow>,
+    last_node: RefCell<WorkflowNodeId>,
 }
 impl From<WorkflowGraph> for Workflow {
     fn from(value: WorkflowGraph) -> Self {
-        value.workflow
-    }
-}
-impl AsRef<Workflow> for WorkflowGraph {
-    fn as_ref(&self) -> &Workflow {
-        &self.workflow
+        value.into_workflow()
     }
 }
 impl WorkflowGraph {
     /// Add a node to the workflow.
-    pub fn add(&mut self, node: impl Into<WorkflowNode>) -> WorkflowNodeId {
-        let id = WorkflowNodeId(self.last_node.0 + 1);
-        self.workflow.0.insert(id, node.into());
-        self.last_node = id;
+    pub fn add(&self, node: impl Into<WorkflowNode>) -> WorkflowNodeId {
+        let id = WorkflowNodeId(self.last_node.borrow().0 + 1);
+        self.workflow.borrow_mut().0.insert(id, node.into());
+        self.last_node.replace(id);
         id
     }
 
     #[cfg(feature = "typed_nodes")]
     /// Add a typed node to the workflow.
-    pub fn add_typed<T: TypedNode>(&mut self, node: T) -> T::Output {
+    pub fn add_typed<T: TypedNode>(&self, node: T) -> T::Output {
         let node_id = self.add(WorkflowNode {
             inputs: node.inputs(),
             class_type: T::NAME.to_string(),
             meta: Some(WorkflowMeta::new(T::DISPLAY_NAME)),
         });
         node.output(node_id)
+    }
+
+    /// Borrow the workflow.
+    pub fn borrow(&self) -> Ref<'_, Workflow> {
+        self.workflow.borrow()
+    }
+
+    /// Consume this type, returning the inner workflow.
+    pub fn into_workflow(self) -> Workflow {
+        self.workflow.into_inner()
     }
 }
 
