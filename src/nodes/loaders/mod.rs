@@ -5,12 +5,6 @@ use crate::workflow::{WorkflowNodeId, WorkflowInput};
 pub mod video_models;
 /// Output types for nodes.
 pub mod out {
-    ///Output for [`ClipVisionLoader`](super::ClipVisionLoader).
-    #[derive(Clone)]
-    pub struct ClipVisionLoaderOutput {
-        ///No documentation.
-        pub clip_vision: crate::nodes::types::ClipVisionOut,
-    }
     ///Output for [`CheckpointLoaderSimple`](super::CheckpointLoaderSimple).
     #[derive(Clone)]
     pub struct CheckpointLoaderSimpleOutput {
@@ -21,30 +15,6 @@ pub mod out {
         ///The VAE model used for encoding and decoding images to and from latent space.
         pub vae: crate::nodes::types::VaeOut,
     }
-    ///Output for [`ControlNetLoader`](super::ControlNetLoader).
-    #[derive(Clone)]
-    pub struct ControlNetLoaderOutput {
-        ///No documentation.
-        pub control_net: crate::nodes::types::ControlNetOut,
-    }
-    ///Output for [`DiffControlNetLoader`](super::DiffControlNetLoader).
-    #[derive(Clone)]
-    pub struct DiffControlNetLoaderOutput {
-        ///No documentation.
-        pub control_net: crate::nodes::types::ControlNetOut,
-    }
-    ///Output for [`GligenLoader`](super::GligenLoader).
-    #[derive(Clone)]
-    pub struct GligenLoaderOutput {
-        ///No documentation.
-        pub gligen: crate::nodes::types::GligenOut,
-    }
-    ///Output for [`HypernetworkLoader`](super::HypernetworkLoader).
-    #[derive(Clone)]
-    pub struct HypernetworkLoaderOutput {
-        ///No documentation.
-        pub model: crate::nodes::types::ModelOut,
-    }
     ///Output for [`LoraLoader`](super::LoraLoader).
     #[derive(Clone)]
     pub struct LoraLoaderOutput {
@@ -52,30 +22,6 @@ pub mod out {
         pub model: crate::nodes::types::ModelOut,
         ///The modified CLIP model.
         pub clip: crate::nodes::types::ClipOut,
-    }
-    ///Output for [`LoraLoaderModelOnly`](super::LoraLoaderModelOnly).
-    #[derive(Clone)]
-    pub struct LoraLoaderModelOnlyOutput {
-        ///The modified diffusion model.
-        pub model: crate::nodes::types::ModelOut,
-    }
-    ///Output for [`StyleModelLoader`](super::StyleModelLoader).
-    #[derive(Clone)]
-    pub struct StyleModelLoaderOutput {
-        ///No documentation.
-        pub style_model: crate::nodes::types::StyleModelOut,
-    }
-    ///Output for [`UpscaleModelLoader`](super::UpscaleModelLoader).
-    #[derive(Clone)]
-    pub struct UpscaleModelLoaderOutput {
-        ///No documentation.
-        pub upscale_model: crate::nodes::types::UpscaleModelOut,
-    }
-    ///Output for [`VaeLoader`](super::VaeLoader).
-    #[derive(Clone)]
-    pub struct VaeLoaderOutput {
-        ///No documentation.
-        pub vae: crate::nodes::types::VaeOut,
     }
     ///Output for [`UnClipCheckpointLoader`](super::UnClipCheckpointLoader).
     #[derive(Clone)]
@@ -97,13 +43,11 @@ pub struct ClipVisionLoader<ClipName: crate::nodes::types::String> {
 }
 impl<ClipName: crate::nodes::types::String> crate::nodes::TypedNode
 for ClipVisionLoader<ClipName> {
-    type Output = out::ClipVisionLoaderOutput;
+    type Output = crate::nodes::types::ClipVisionOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            clip_vision: crate::nodes::types::ClipVisionOut {
-                node_id,
-                node_slot: 0u32,
-            },
+            node_id,
+            node_slot: 0u32,
         }
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
@@ -157,13 +101,11 @@ pub struct ControlNetLoader<ControlNetName: crate::nodes::types::String> {
 }
 impl<ControlNetName: crate::nodes::types::String> crate::nodes::TypedNode
 for ControlNetLoader<ControlNetName> {
-    type Output = out::ControlNetLoaderOutput;
+    type Output = crate::nodes::types::ControlNetOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            control_net: crate::nodes::types::ControlNetOut {
-                node_id,
-                node_slot: 0u32,
-            },
+            node_id,
+            node_slot: 0u32,
         }
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
@@ -194,13 +136,11 @@ impl<
     Model: crate::nodes::types::Model,
     ControlNetName: crate::nodes::types::String,
 > crate::nodes::TypedNode for DiffControlNetLoader<Model, ControlNetName> {
-    type Output = out::DiffControlNetLoaderOutput;
+    type Output = crate::nodes::types::ControlNetOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            control_net: crate::nodes::types::ControlNetOut {
-                node_id,
-                node_slot: 0u32,
-            },
+            node_id,
+            node_slot: 0u32,
         }
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
@@ -225,13 +165,11 @@ pub struct GligenLoader<GligenName: crate::nodes::types::String> {
 }
 impl<GligenName: crate::nodes::types::String> crate::nodes::TypedNode
 for GligenLoader<GligenName> {
-    type Output = out::GligenLoaderOutput;
+    type Output = crate::nodes::types::GligenOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            gligen: crate::nodes::types::GligenOut {
-                node_id,
-                node_slot: 0u32,
-            },
+            node_id,
+            node_slot: 0u32,
         }
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
@@ -262,13 +200,11 @@ impl<
     HypernetworkName: crate::nodes::types::String,
     Strength: crate::nodes::types::Float,
 > crate::nodes::TypedNode for HypernetworkLoader<Model, HypernetworkName, Strength> {
-    type Output = out::HypernetworkLoaderOutput;
+    type Output = crate::nodes::types::ModelOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            model: crate::nodes::types::ModelOut {
-                node_id,
-                node_slot: 0u32,
-            },
+            node_id,
+            node_slot: 0u32,
         }
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
@@ -364,13 +300,11 @@ impl<
     LoraName: crate::nodes::types::String,
     StrengthModel: crate::nodes::types::Float,
 > crate::nodes::TypedNode for LoraLoaderModelOnly<Model, LoraName, StrengthModel> {
-    type Output = out::LoraLoaderModelOnlyOutput;
+    type Output = crate::nodes::types::ModelOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            model: crate::nodes::types::ModelOut {
-                node_id,
-                node_slot: 0u32,
-            },
+            node_id,
+            node_slot: 0u32,
         }
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
@@ -396,13 +330,11 @@ pub struct StyleModelLoader<StyleModelName: crate::nodes::types::String> {
 }
 impl<StyleModelName: crate::nodes::types::String> crate::nodes::TypedNode
 for StyleModelLoader<StyleModelName> {
-    type Output = out::StyleModelLoaderOutput;
+    type Output = crate::nodes::types::StyleModelOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            style_model: crate::nodes::types::StyleModelOut {
-                node_id,
-                node_slot: 0u32,
-            },
+            node_id,
+            node_slot: 0u32,
         }
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
@@ -426,13 +358,11 @@ pub struct UpscaleModelLoader<ModelName: crate::nodes::types::String> {
 }
 impl<ModelName: crate::nodes::types::String> crate::nodes::TypedNode
 for UpscaleModelLoader<ModelName> {
-    type Output = out::UpscaleModelLoaderOutput;
+    type Output = crate::nodes::types::UpscaleModelOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            upscale_model: crate::nodes::types::UpscaleModelOut {
-                node_id,
-                node_slot: 0u32,
-            },
+            node_id,
+            node_slot: 0u32,
         }
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
@@ -452,13 +382,11 @@ pub struct VaeLoader<VaeName: crate::nodes::types::String> {
 }
 impl<VaeName: crate::nodes::types::String> crate::nodes::TypedNode
 for VaeLoader<VaeName> {
-    type Output = out::VaeLoaderOutput;
+    type Output = crate::nodes::types::VaeOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            vae: crate::nodes::types::VaeOut {
-                node_id,
-                node_slot: 0u32,
-            },
+            node_id,
+            node_slot: 0u32,
         }
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {

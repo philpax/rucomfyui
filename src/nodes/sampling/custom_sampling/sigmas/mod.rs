@@ -4,12 +4,6 @@ use std::collections::HashMap;
 use crate::workflow::{WorkflowNodeId, WorkflowInput};
 /// Output types for nodes.
 pub mod out {
-    ///Output for [`FlipSigmas`](super::FlipSigmas).
-    #[derive(Clone)]
-    pub struct FlipSigmasOutput {
-        ///No documentation.
-        pub sigmas: crate::nodes::types::SigmasOut,
-    }
     ///Output for [`SplitSigmas`](super::SplitSigmas).
     #[derive(Clone)]
     pub struct SplitSigmasOutput {
@@ -34,13 +28,11 @@ pub struct FlipSigmas<Sigmas: crate::nodes::types::Sigmas> {
 }
 impl<Sigmas: crate::nodes::types::Sigmas> crate::nodes::TypedNode
 for FlipSigmas<Sigmas> {
-    type Output = out::FlipSigmasOutput;
+    type Output = crate::nodes::types::SigmasOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            sigmas: crate::nodes::types::SigmasOut {
-                node_id,
-                node_slot: 0u32,
-            },
+            node_id,
+            node_slot: 0u32,
         }
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {

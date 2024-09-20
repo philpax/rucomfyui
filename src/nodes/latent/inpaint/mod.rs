@@ -2,21 +2,6 @@
 #![allow(unused_imports)]
 use std::collections::HashMap;
 use crate::workflow::{WorkflowNodeId, WorkflowInput};
-/// Output types for nodes.
-pub mod out {
-    ///Output for [`SetLatentNoiseMask`](super::SetLatentNoiseMask).
-    #[derive(Clone)]
-    pub struct SetLatentNoiseMaskOutput {
-        ///No documentation.
-        pub latent: crate::nodes::types::LatentOut,
-    }
-    ///Output for [`VaeEncodeForInpaint`](super::VaeEncodeForInpaint).
-    #[derive(Clone)]
-    pub struct VaeEncodeForInpaintOutput {
-        ///No documentation.
-        pub latent: crate::nodes::types::LatentOut,
-    }
-}
 ///**Set Latent Noise Mask**: No description.
 pub struct SetLatentNoiseMask<
     Samples: crate::nodes::types::Latent,
@@ -31,13 +16,11 @@ impl<
     Samples: crate::nodes::types::Latent,
     Mask: crate::nodes::types::Mask,
 > crate::nodes::TypedNode for SetLatentNoiseMask<Samples, Mask> {
-    type Output = out::SetLatentNoiseMaskOutput;
+    type Output = crate::nodes::types::LatentOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            latent: crate::nodes::types::LatentOut {
-                node_id,
-                node_slot: 0u32,
-            },
+            node_id,
+            node_slot: 0u32,
         }
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
@@ -73,13 +56,11 @@ impl<
     Mask: crate::nodes::types::Mask,
     GrowMaskBy: crate::nodes::types::Int,
 > crate::nodes::TypedNode for VaeEncodeForInpaint<Pixels, Vae, Mask, GrowMaskBy> {
-    type Output = out::VaeEncodeForInpaintOutput;
+    type Output = crate::nodes::types::LatentOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            latent: crate::nodes::types::LatentOut {
-                node_id,
-                node_slot: 0u32,
-            },
+            node_id,
+            node_slot: 0u32,
         }
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {

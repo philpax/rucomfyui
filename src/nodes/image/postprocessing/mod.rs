@@ -2,39 +2,6 @@
 #![allow(unused_imports)]
 use std::collections::HashMap;
 use crate::workflow::{WorkflowNodeId, WorkflowInput};
-/// Output types for nodes.
-pub mod out {
-    ///Output for [`ImageBlend`](super::ImageBlend).
-    #[derive(Clone)]
-    pub struct ImageBlendOutput {
-        ///No documentation.
-        pub image: crate::nodes::types::ImageOut,
-    }
-    ///Output for [`ImageBlur`](super::ImageBlur).
-    #[derive(Clone)]
-    pub struct ImageBlurOutput {
-        ///No documentation.
-        pub image: crate::nodes::types::ImageOut,
-    }
-    ///Output for [`ImageQuantize`](super::ImageQuantize).
-    #[derive(Clone)]
-    pub struct ImageQuantizeOutput {
-        ///No documentation.
-        pub image: crate::nodes::types::ImageOut,
-    }
-    ///Output for [`ImageSharpen`](super::ImageSharpen).
-    #[derive(Clone)]
-    pub struct ImageSharpenOutput {
-        ///No documentation.
-        pub image: crate::nodes::types::ImageOut,
-    }
-    ///Output for [`Morphology`](super::Morphology).
-    #[derive(Clone)]
-    pub struct MorphologyOutput {
-        ///No documentation.
-        pub image: crate::nodes::types::ImageOut,
-    }
-}
 ///**ImageBlend**: No description.
 pub struct ImageBlend<
     Image1: crate::nodes::types::Image,
@@ -57,13 +24,11 @@ impl<
     BlendFactor: crate::nodes::types::Float,
     BlendMode: crate::nodes::types::String,
 > crate::nodes::TypedNode for ImageBlend<Image1, Image2, BlendFactor, BlendMode> {
-    type Output = out::ImageBlendOutput;
+    type Output = crate::nodes::types::ImageOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            image: crate::nodes::types::ImageOut {
-                node_id,
-                node_slot: 0u32,
-            },
+            node_id,
+            node_slot: 0u32,
         }
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
@@ -97,13 +62,11 @@ impl<
     BlurRadius: crate::nodes::types::Int,
     Sigma: crate::nodes::types::Float,
 > crate::nodes::TypedNode for ImageBlur<Image, BlurRadius, Sigma> {
-    type Output = out::ImageBlurOutput;
+    type Output = crate::nodes::types::ImageOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            image: crate::nodes::types::ImageOut {
-                node_id,
-                node_slot: 0u32,
-            },
+            node_id,
+            node_slot: 0u32,
         }
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
@@ -136,13 +99,11 @@ impl<
     Colors: crate::nodes::types::Int,
     Dither: crate::nodes::types::String,
 > crate::nodes::TypedNode for ImageQuantize<Image, Colors, Dither> {
-    type Output = out::ImageQuantizeOutput;
+    type Output = crate::nodes::types::ImageOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            image: crate::nodes::types::ImageOut {
-                node_id,
-                node_slot: 0u32,
-            },
+            node_id,
+            node_slot: 0u32,
         }
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
@@ -179,13 +140,11 @@ impl<
     Sigma: crate::nodes::types::Float,
     Alpha: crate::nodes::types::Float,
 > crate::nodes::TypedNode for ImageSharpen<Image, SharpenRadius, Sigma, Alpha> {
-    type Output = out::ImageSharpenOutput;
+    type Output = crate::nodes::types::ImageOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            image: crate::nodes::types::ImageOut {
-                node_id,
-                node_slot: 0u32,
-            },
+            node_id,
+            node_slot: 0u32,
         }
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
@@ -223,13 +182,11 @@ impl<
     Operation: crate::nodes::types::String,
     KernelSize: crate::nodes::types::Int,
 > crate::nodes::TypedNode for Morphology<Image, Operation, KernelSize> {
-    type Output = out::MorphologyOutput;
+    type Output = crate::nodes::types::ImageOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            image: crate::nodes::types::ImageOut {
-                node_id,
-                node_slot: 0u32,
-            },
+            node_id,
+            node_slot: 0u32,
         }
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {

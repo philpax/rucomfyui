@@ -2,57 +2,6 @@
 #![allow(unused_imports)]
 use std::collections::HashMap;
 use crate::workflow::{WorkflowNodeId, WorkflowInput};
-/// Output types for nodes.
-pub mod out {
-    ///Output for [`ModelSamplingAuraFlow`](super::ModelSamplingAuraFlow).
-    #[derive(Clone)]
-    pub struct ModelSamplingAuraFlowOutput {
-        ///No documentation.
-        pub model: crate::nodes::types::ModelOut,
-    }
-    ///Output for [`ModelSamplingContinuousEdm`](super::ModelSamplingContinuousEdm).
-    #[derive(Clone)]
-    pub struct ModelSamplingContinuousEdmOutput {
-        ///No documentation.
-        pub model: crate::nodes::types::ModelOut,
-    }
-    ///Output for [`ModelSamplingContinuousV`](super::ModelSamplingContinuousV).
-    #[derive(Clone)]
-    pub struct ModelSamplingContinuousVOutput {
-        ///No documentation.
-        pub model: crate::nodes::types::ModelOut,
-    }
-    ///Output for [`ModelSamplingDiscrete`](super::ModelSamplingDiscrete).
-    #[derive(Clone)]
-    pub struct ModelSamplingDiscreteOutput {
-        ///No documentation.
-        pub model: crate::nodes::types::ModelOut,
-    }
-    ///Output for [`ModelSamplingFlux`](super::ModelSamplingFlux).
-    #[derive(Clone)]
-    pub struct ModelSamplingFluxOutput {
-        ///No documentation.
-        pub model: crate::nodes::types::ModelOut,
-    }
-    ///Output for [`ModelSamplingSd3`](super::ModelSamplingSd3).
-    #[derive(Clone)]
-    pub struct ModelSamplingSd3Output {
-        ///No documentation.
-        pub model: crate::nodes::types::ModelOut,
-    }
-    ///Output for [`ModelSamplingStableCascade`](super::ModelSamplingStableCascade).
-    #[derive(Clone)]
-    pub struct ModelSamplingStableCascadeOutput {
-        ///No documentation.
-        pub model: crate::nodes::types::ModelOut,
-    }
-    ///Output for [`RescaleCfg`](super::RescaleCfg).
-    #[derive(Clone)]
-    pub struct RescaleCfgOutput {
-        ///No documentation.
-        pub model: crate::nodes::types::ModelOut,
-    }
-}
 ///**ModelSamplingAuraFlow**: No description.
 pub struct ModelSamplingAuraFlow<
     Model: crate::nodes::types::Model,
@@ -67,13 +16,11 @@ impl<
     Model: crate::nodes::types::Model,
     Shift: crate::nodes::types::Float,
 > crate::nodes::TypedNode for ModelSamplingAuraFlow<Model, Shift> {
-    type Output = out::ModelSamplingAuraFlowOutput;
+    type Output = crate::nodes::types::ModelOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            model: crate::nodes::types::ModelOut {
-                node_id,
-                node_slot: 0u32,
-            },
+            node_id,
+            node_slot: 0u32,
         }
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
@@ -110,13 +57,11 @@ impl<
     SigmaMin: crate::nodes::types::Float,
 > crate::nodes::TypedNode
 for ModelSamplingContinuousEdm<Model, Sampling, SigmaMax, SigmaMin> {
-    type Output = out::ModelSamplingContinuousEdmOutput;
+    type Output = crate::nodes::types::ModelOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            model: crate::nodes::types::ModelOut {
-                node_id,
-                node_slot: 0u32,
-            },
+            node_id,
+            node_slot: 0u32,
         }
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
@@ -155,13 +100,11 @@ impl<
     SigmaMin: crate::nodes::types::Float,
 > crate::nodes::TypedNode
 for ModelSamplingContinuousV<Model, Sampling, SigmaMax, SigmaMin> {
-    type Output = out::ModelSamplingContinuousVOutput;
+    type Output = crate::nodes::types::ModelOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            model: crate::nodes::types::ModelOut {
-                node_id,
-                node_slot: 0u32,
-            },
+            node_id,
+            node_slot: 0u32,
         }
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
@@ -195,13 +138,11 @@ impl<
     Sampling: crate::nodes::types::String,
     Zsnr: crate::nodes::types::Boolean,
 > crate::nodes::TypedNode for ModelSamplingDiscrete<Model, Sampling, Zsnr> {
-    type Output = out::ModelSamplingDiscreteOutput;
+    type Output = crate::nodes::types::ModelOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            model: crate::nodes::types::ModelOut {
-                node_id,
-                node_slot: 0u32,
-            },
+            node_id,
+            node_slot: 0u32,
         }
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
@@ -243,13 +184,11 @@ impl<
     Height: crate::nodes::types::Int,
 > crate::nodes::TypedNode
 for ModelSamplingFlux<Model, MaxShift, BaseShift, Width, Height> {
-    type Output = out::ModelSamplingFluxOutput;
+    type Output = crate::nodes::types::ModelOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            model: crate::nodes::types::ModelOut {
-                node_id,
-                node_slot: 0u32,
-            },
+            node_id,
+            node_slot: 0u32,
         }
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
@@ -280,13 +219,11 @@ impl<
     Model: crate::nodes::types::Model,
     Shift: crate::nodes::types::Float,
 > crate::nodes::TypedNode for ModelSamplingSd3<Model, Shift> {
-    type Output = out::ModelSamplingSd3Output;
+    type Output = crate::nodes::types::ModelOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            model: crate::nodes::types::ModelOut {
-                node_id,
-                node_slot: 0u32,
-            },
+            node_id,
+            node_slot: 0u32,
         }
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
@@ -314,13 +251,11 @@ impl<
     Model: crate::nodes::types::Model,
     Shift: crate::nodes::types::Float,
 > crate::nodes::TypedNode for ModelSamplingStableCascade<Model, Shift> {
-    type Output = out::ModelSamplingStableCascadeOutput;
+    type Output = crate::nodes::types::ModelOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            model: crate::nodes::types::ModelOut {
-                node_id,
-                node_slot: 0u32,
-            },
+            node_id,
+            node_slot: 0u32,
         }
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
@@ -348,13 +283,11 @@ impl<
     Model: crate::nodes::types::Model,
     Multiplier: crate::nodes::types::Float,
 > crate::nodes::TypedNode for RescaleCfg<Model, Multiplier> {
-    type Output = out::RescaleCfgOutput;
+    type Output = crate::nodes::types::ModelOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            model: crate::nodes::types::ModelOut {
-                node_id,
-                node_slot: 0u32,
-            },
+            node_id,
+            node_slot: 0u32,
         }
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {

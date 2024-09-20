@@ -2,39 +2,6 @@
 #![allow(unused_imports)]
 use std::collections::HashMap;
 use crate::workflow::{WorkflowNodeId, WorkflowInput};
-/// Output types for nodes.
-pub mod out {
-    ///Output for [`LatentAdd`](super::LatentAdd).
-    #[derive(Clone)]
-    pub struct LatentAddOutput {
-        ///No documentation.
-        pub latent: crate::nodes::types::LatentOut,
-    }
-    ///Output for [`LatentBatchSeedBehavior`](super::LatentBatchSeedBehavior).
-    #[derive(Clone)]
-    pub struct LatentBatchSeedBehaviorOutput {
-        ///No documentation.
-        pub latent: crate::nodes::types::LatentOut,
-    }
-    ///Output for [`LatentInterpolate`](super::LatentInterpolate).
-    #[derive(Clone)]
-    pub struct LatentInterpolateOutput {
-        ///No documentation.
-        pub latent: crate::nodes::types::LatentOut,
-    }
-    ///Output for [`LatentMultiply`](super::LatentMultiply).
-    #[derive(Clone)]
-    pub struct LatentMultiplyOutput {
-        ///No documentation.
-        pub latent: crate::nodes::types::LatentOut,
-    }
-    ///Output for [`LatentSubtract`](super::LatentSubtract).
-    #[derive(Clone)]
-    pub struct LatentSubtractOutput {
-        ///No documentation.
-        pub latent: crate::nodes::types::LatentOut,
-    }
-}
 ///**LatentAdd**: No description.
 pub struct LatentAdd<
     Samples1: crate::nodes::types::Latent,
@@ -49,13 +16,11 @@ impl<
     Samples1: crate::nodes::types::Latent,
     Samples2: crate::nodes::types::Latent,
 > crate::nodes::TypedNode for LatentAdd<Samples1, Samples2> {
-    type Output = out::LatentAddOutput;
+    type Output = crate::nodes::types::LatentOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            latent: crate::nodes::types::LatentOut {
-                node_id,
-                node_slot: 0u32,
-            },
+            node_id,
+            node_slot: 0u32,
         }
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
@@ -83,13 +48,11 @@ impl<
     Samples: crate::nodes::types::Latent,
     SeedBehavior: crate::nodes::types::String,
 > crate::nodes::TypedNode for LatentBatchSeedBehavior<Samples, SeedBehavior> {
-    type Output = out::LatentBatchSeedBehaviorOutput;
+    type Output = crate::nodes::types::LatentOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            latent: crate::nodes::types::LatentOut {
-                node_id,
-                node_slot: 0u32,
-            },
+            node_id,
+            node_slot: 0u32,
         }
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
@@ -122,13 +85,11 @@ impl<
     Samples2: crate::nodes::types::Latent,
     Ratio: crate::nodes::types::Float,
 > crate::nodes::TypedNode for LatentInterpolate<Samples1, Samples2, Ratio> {
-    type Output = out::LatentInterpolateOutput;
+    type Output = crate::nodes::types::LatentOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            latent: crate::nodes::types::LatentOut {
-                node_id,
-                node_slot: 0u32,
-            },
+            node_id,
+            node_slot: 0u32,
         }
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
@@ -157,13 +118,11 @@ impl<
     Samples: crate::nodes::types::Latent,
     Multiplier: crate::nodes::types::Float,
 > crate::nodes::TypedNode for LatentMultiply<Samples, Multiplier> {
-    type Output = out::LatentMultiplyOutput;
+    type Output = crate::nodes::types::LatentOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            latent: crate::nodes::types::LatentOut {
-                node_id,
-                node_slot: 0u32,
-            },
+            node_id,
+            node_slot: 0u32,
         }
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
@@ -191,13 +150,11 @@ impl<
     Samples1: crate::nodes::types::Latent,
     Samples2: crate::nodes::types::Latent,
 > crate::nodes::TypedNode for LatentSubtract<Samples1, Samples2> {
-    type Output = out::LatentSubtractOutput;
+    type Output = crate::nodes::types::LatentOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            latent: crate::nodes::types::LatentOut {
-                node_id,
-                node_slot: 0u32,
-            },
+            node_id,
+            node_slot: 0u32,
         }
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {

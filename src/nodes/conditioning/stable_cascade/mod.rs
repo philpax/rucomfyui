@@ -2,15 +2,6 @@
 #![allow(unused_imports)]
 use std::collections::HashMap;
 use crate::workflow::{WorkflowNodeId, WorkflowInput};
-/// Output types for nodes.
-pub mod out {
-    ///Output for [`StableCascadeStageBConditioning`](super::StableCascadeStageBConditioning).
-    #[derive(Clone)]
-    pub struct StableCascadeStageBConditioningOutput {
-        ///No documentation.
-        pub conditioning: crate::nodes::types::ConditioningOut,
-    }
-}
 ///**StableCascade_StageB_Conditioning**: No description.
 pub struct StableCascadeStageBConditioning<
     Conditioning: crate::nodes::types::Conditioning,
@@ -25,13 +16,11 @@ impl<
     Conditioning: crate::nodes::types::Conditioning,
     StageC: crate::nodes::types::Latent,
 > crate::nodes::TypedNode for StableCascadeStageBConditioning<Conditioning, StageC> {
-    type Output = out::StableCascadeStageBConditioningOutput;
+    type Output = crate::nodes::types::ConditioningOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            conditioning: crate::nodes::types::ConditioningOut {
-                node_id,
-                node_slot: 0u32,
-            },
+            node_id,
+            node_slot: 0u32,
         }
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {

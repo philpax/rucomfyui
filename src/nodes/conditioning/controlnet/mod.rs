@@ -4,12 +4,6 @@ use std::collections::HashMap;
 use crate::workflow::{WorkflowNodeId, WorkflowInput};
 /// Output types for nodes.
 pub mod out {
-    ///Output for [`ControlNetApply`](super::ControlNetApply).
-    #[derive(Clone)]
-    pub struct ControlNetApplyOutput {
-        ///No documentation.
-        pub conditioning: crate::nodes::types::ConditioningOut,
-    }
     ///Output for [`ControlNetApplyAdvanced`](super::ControlNetApplyAdvanced).
     #[derive(Clone)]
     pub struct ControlNetApplyAdvancedOutput {
@@ -25,12 +19,6 @@ pub mod out {
         pub positive: crate::nodes::types::ConditioningOut,
         ///No documentation.
         pub negative: crate::nodes::types::ConditioningOut,
-    }
-    ///Output for [`SetUnionControlNetType`](super::SetUnionControlNetType).
-    #[derive(Clone)]
-    pub struct SetUnionControlNetTypeOutput {
-        ///No documentation.
-        pub control_net: crate::nodes::types::ControlNetOut,
     }
 }
 ///**Apply ControlNet**: No description.
@@ -56,13 +44,11 @@ impl<
     Strength: crate::nodes::types::Float,
 > crate::nodes::TypedNode
 for ControlNetApply<Conditioning, ControlNet, Image, Strength> {
-    type Output = out::ControlNetApplyOutput;
+    type Output = crate::nodes::types::ConditioningOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            conditioning: crate::nodes::types::ConditioningOut {
-                node_id,
-                node_slot: 0u32,
-            },
+            node_id,
+            node_slot: 0u32,
         }
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
@@ -244,13 +230,11 @@ impl<
     ControlNet: crate::nodes::types::ControlNet,
     Type: crate::nodes::types::String,
 > crate::nodes::TypedNode for SetUnionControlNetType<ControlNet, Type> {
-    type Output = out::SetUnionControlNetTypeOutput;
+    type Output = crate::nodes::types::ControlNetOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            control_net: crate::nodes::types::ControlNetOut {
-                node_id,
-                node_slot: 0u32,
-            },
+            node_id,
+            node_slot: 0u32,
         }
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {

@@ -2,27 +2,6 @@
 #![allow(unused_imports)]
 use std::collections::HashMap;
 use crate::workflow::{WorkflowNodeId, WorkflowInput};
-/// Output types for nodes.
-pub mod out {
-    ///Output for [`BasicGuider`](super::BasicGuider).
-    #[derive(Clone)]
-    pub struct BasicGuiderOutput {
-        ///No documentation.
-        pub guider: crate::nodes::types::GuiderOut,
-    }
-    ///Output for [`CfgGuider`](super::CfgGuider).
-    #[derive(Clone)]
-    pub struct CfgGuiderOutput {
-        ///No documentation.
-        pub guider: crate::nodes::types::GuiderOut,
-    }
-    ///Output for [`DualCfgGuider`](super::DualCfgGuider).
-    #[derive(Clone)]
-    pub struct DualCfgGuiderOutput {
-        ///No documentation.
-        pub guider: crate::nodes::types::GuiderOut,
-    }
-}
 ///**BasicGuider**: No description.
 pub struct BasicGuider<
     Model: crate::nodes::types::Model,
@@ -37,13 +16,11 @@ impl<
     Model: crate::nodes::types::Model,
     Conditioning: crate::nodes::types::Conditioning,
 > crate::nodes::TypedNode for BasicGuider<Model, Conditioning> {
-    type Output = out::BasicGuiderOutput;
+    type Output = crate::nodes::types::GuiderOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            guider: crate::nodes::types::GuiderOut {
-                node_id,
-                node_slot: 0u32,
-            },
+            node_id,
+            node_slot: 0u32,
         }
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
@@ -79,13 +56,11 @@ impl<
     Negative: crate::nodes::types::Conditioning,
     Cfg: crate::nodes::types::Float,
 > crate::nodes::TypedNode for CfgGuider<Model, Positive, Negative, Cfg> {
-    type Output = out::CfgGuiderOutput;
+    type Output = crate::nodes::types::GuiderOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            guider: crate::nodes::types::GuiderOut {
-                node_id,
-                node_slot: 0u32,
-            },
+            node_id,
+            node_slot: 0u32,
         }
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
@@ -132,13 +107,11 @@ impl<
     CfgCond2Negative: crate::nodes::types::Float,
 > crate::nodes::TypedNode
 for DualCfgGuider<Model, Cond1, Cond2, Negative, CfgConds, CfgCond2Negative> {
-    type Output = out::DualCfgGuiderOutput;
+    type Output = crate::nodes::types::GuiderOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            guider: crate::nodes::types::GuiderOut {
-                node_id,
-                node_slot: 0u32,
-            },
+            node_id,
+            node_slot: 0u32,
         }
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {

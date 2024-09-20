@@ -2,27 +2,6 @@
 #![allow(unused_imports)]
 use std::collections::HashMap;
 use crate::workflow::{WorkflowNodeId, WorkflowInput};
-/// Output types for nodes.
-pub mod out {
-    ///Output for [`EmptyLatentAudio`](super::EmptyLatentAudio).
-    #[derive(Clone)]
-    pub struct EmptyLatentAudioOutput {
-        ///No documentation.
-        pub latent: crate::nodes::types::LatentOut,
-    }
-    ///Output for [`VaeDecodeAudio`](super::VaeDecodeAudio).
-    #[derive(Clone)]
-    pub struct VaeDecodeAudioOutput {
-        ///No documentation.
-        pub audio: crate::nodes::types::AudioOut,
-    }
-    ///Output for [`VaeEncodeAudio`](super::VaeEncodeAudio).
-    #[derive(Clone)]
-    pub struct VaeEncodeAudioOutput {
-        ///No documentation.
-        pub latent: crate::nodes::types::LatentOut,
-    }
-}
 ///**EmptyLatentAudio**: No description.
 pub struct EmptyLatentAudio<Seconds: crate::nodes::types::Float> {
     ///No documentation.
@@ -30,13 +9,11 @@ pub struct EmptyLatentAudio<Seconds: crate::nodes::types::Float> {
 }
 impl<Seconds: crate::nodes::types::Float> crate::nodes::TypedNode
 for EmptyLatentAudio<Seconds> {
-    type Output = out::EmptyLatentAudioOutput;
+    type Output = crate::nodes::types::LatentOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            latent: crate::nodes::types::LatentOut {
-                node_id,
-                node_slot: 0u32,
-            },
+            node_id,
+            node_slot: 0u32,
         }
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
@@ -63,13 +40,11 @@ impl<
     Samples: crate::nodes::types::Latent,
     Vae: crate::nodes::types::Vae,
 > crate::nodes::TypedNode for VaeDecodeAudio<Samples, Vae> {
-    type Output = out::VaeDecodeAudioOutput;
+    type Output = crate::nodes::types::AudioOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            audio: crate::nodes::types::AudioOut {
-                node_id,
-                node_slot: 0u32,
-            },
+            node_id,
+            node_slot: 0u32,
         }
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
@@ -97,13 +72,11 @@ impl<
     Audio: crate::nodes::types::Audio,
     Vae: crate::nodes::types::Vae,
 > crate::nodes::TypedNode for VaeEncodeAudio<Audio, Vae> {
-    type Output = out::VaeEncodeAudioOutput;
+    type Output = crate::nodes::types::LatentOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            latent: crate::nodes::types::LatentOut {
-                node_id,
-                node_slot: 0u32,
-            },
+            node_id,
+            node_slot: 0u32,
         }
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {

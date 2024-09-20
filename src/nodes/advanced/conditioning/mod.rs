@@ -3,45 +3,6 @@
 use std::collections::HashMap;
 use crate::workflow::{WorkflowNodeId, WorkflowInput};
 pub mod flux;
-/// Output types for nodes.
-pub mod out {
-    ///Output for [`ClipTextEncodeHunyuanDiT`](super::ClipTextEncodeHunyuanDiT).
-    #[derive(Clone)]
-    pub struct ClipTextEncodeHunyuanDiTOutput {
-        ///No documentation.
-        pub conditioning: crate::nodes::types::ConditioningOut,
-    }
-    ///Output for [`ClipTextEncodeSd3`](super::ClipTextEncodeSd3).
-    #[derive(Clone)]
-    pub struct ClipTextEncodeSd3Output {
-        ///No documentation.
-        pub conditioning: crate::nodes::types::ConditioningOut,
-    }
-    ///Output for [`ClipTextEncodeSdxl`](super::ClipTextEncodeSdxl).
-    #[derive(Clone)]
-    pub struct ClipTextEncodeSdxlOutput {
-        ///No documentation.
-        pub conditioning: crate::nodes::types::ConditioningOut,
-    }
-    ///Output for [`ClipTextEncodeSdxlRefiner`](super::ClipTextEncodeSdxlRefiner).
-    #[derive(Clone)]
-    pub struct ClipTextEncodeSdxlRefinerOutput {
-        ///No documentation.
-        pub conditioning: crate::nodes::types::ConditioningOut,
-    }
-    ///Output for [`ConditioningSetTimestepRange`](super::ConditioningSetTimestepRange).
-    #[derive(Clone)]
-    pub struct ConditioningSetTimestepRangeOutput {
-        ///No documentation.
-        pub conditioning: crate::nodes::types::ConditioningOut,
-    }
-    ///Output for [`ConditioningZeroOut`](super::ConditioningZeroOut).
-    #[derive(Clone)]
-    pub struct ConditioningZeroOutOutput {
-        ///No documentation.
-        pub conditioning: crate::nodes::types::ConditioningOut,
-    }
-}
 ///**CLIPTextEncodeHunyuanDiT**: No description.
 pub struct ClipTextEncodeHunyuanDiT<
     Clip: crate::nodes::types::Clip,
@@ -60,13 +21,11 @@ impl<
     Bert: crate::nodes::types::String,
     Mt5Xl: crate::nodes::types::String,
 > crate::nodes::TypedNode for ClipTextEncodeHunyuanDiT<Clip, Bert, Mt5Xl> {
-    type Output = out::ClipTextEncodeHunyuanDiTOutput;
+    type Output = crate::nodes::types::ConditioningOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            conditioning: crate::nodes::types::ConditioningOut {
-                node_id,
-                node_slot: 0u32,
-            },
+            node_id,
+            node_slot: 0u32,
         }
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
@@ -108,13 +67,11 @@ impl<
     EmptyPadding: crate::nodes::types::String,
 > crate::nodes::TypedNode
 for ClipTextEncodeSd3<Clip, ClipL, ClipG, T5Xxl, EmptyPadding> {
-    type Output = out::ClipTextEncodeSd3Output;
+    type Output = crate::nodes::types::ConditioningOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            conditioning: crate::nodes::types::ConditioningOut {
-                node_id,
-                node_slot: 0u32,
-            },
+            node_id,
+            node_slot: 0u32,
         }
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
@@ -185,13 +142,11 @@ for ClipTextEncodeSdxl<
     Clip,
     TextL,
 > {
-    type Output = out::ClipTextEncodeSdxlOutput;
+    type Output = crate::nodes::types::ConditioningOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            conditioning: crate::nodes::types::ConditioningOut {
-                node_id,
-                node_slot: 0u32,
-            },
+            node_id,
+            node_slot: 0u32,
         }
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
@@ -240,13 +195,11 @@ impl<
     Clip: crate::nodes::types::Clip,
 > crate::nodes::TypedNode
 for ClipTextEncodeSdxlRefiner<Ascore, Width, Height, Text, Clip> {
-    type Output = out::ClipTextEncodeSdxlRefinerOutput;
+    type Output = crate::nodes::types::ConditioningOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            conditioning: crate::nodes::types::ConditioningOut {
-                node_id,
-                node_slot: 0u32,
-            },
+            node_id,
+            node_slot: 0u32,
         }
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
@@ -281,13 +234,11 @@ impl<
     Start: crate::nodes::types::Float,
     End: crate::nodes::types::Float,
 > crate::nodes::TypedNode for ConditioningSetTimestepRange<Conditioning, Start, End> {
-    type Output = out::ConditioningSetTimestepRangeOutput;
+    type Output = crate::nodes::types::ConditioningOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            conditioning: crate::nodes::types::ConditioningOut {
-                node_id,
-                node_slot: 0u32,
-            },
+            node_id,
+            node_slot: 0u32,
         }
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
@@ -309,13 +260,11 @@ pub struct ConditioningZeroOut<Conditioning: crate::nodes::types::Conditioning> 
 }
 impl<Conditioning: crate::nodes::types::Conditioning> crate::nodes::TypedNode
 for ConditioningZeroOut<Conditioning> {
-    type Output = out::ConditioningZeroOutOutput;
+    type Output = crate::nodes::types::ConditioningOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            conditioning: crate::nodes::types::ConditioningOut {
-                node_id,
-                node_slot: 0u32,
-            },
+            node_id,
+            node_slot: 0u32,
         }
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {

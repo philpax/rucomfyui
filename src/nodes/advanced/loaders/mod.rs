@@ -5,12 +5,6 @@ use crate::workflow::{WorkflowNodeId, WorkflowInput};
 pub mod deprecated;
 /// Output types for nodes.
 pub mod out {
-    ///Output for [`ClipLoader`](super::ClipLoader).
-    #[derive(Clone)]
-    pub struct ClipLoaderOutput {
-        ///No documentation.
-        pub clip: crate::nodes::types::ClipOut,
-    }
     ///Output for [`CheckpointLoader`](super::CheckpointLoader).
     #[derive(Clone)]
     pub struct CheckpointLoaderOutput {
@@ -20,24 +14,6 @@ pub mod out {
         pub clip: crate::nodes::types::ClipOut,
         ///No documentation.
         pub vae: crate::nodes::types::VaeOut,
-    }
-    ///Output for [`DualClipLoader`](super::DualClipLoader).
-    #[derive(Clone)]
-    pub struct DualClipLoaderOutput {
-        ///No documentation.
-        pub clip: crate::nodes::types::ClipOut,
-    }
-    ///Output for [`TripleClipLoader`](super::TripleClipLoader).
-    #[derive(Clone)]
-    pub struct TripleClipLoaderOutput {
-        ///No documentation.
-        pub clip: crate::nodes::types::ClipOut,
-    }
-    ///Output for [`UnetLoader`](super::UnetLoader).
-    #[derive(Clone)]
-    pub struct UnetLoaderOutput {
-        ///No documentation.
-        pub model: crate::nodes::types::ModelOut,
     }
 }
 ///**Load CLIP**: No description.
@@ -54,13 +30,11 @@ impl<
     ClipName: crate::nodes::types::String,
     Type: crate::nodes::types::String,
 > crate::nodes::TypedNode for ClipLoader<ClipName, Type> {
-    type Output = out::ClipLoaderOutput;
+    type Output = crate::nodes::types::ClipOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            clip: crate::nodes::types::ClipOut {
-                node_id,
-                node_slot: 0u32,
-            },
+            node_id,
+            node_slot: 0u32,
         }
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
@@ -134,13 +108,11 @@ impl<
     ClipName2: crate::nodes::types::String,
     Type: crate::nodes::types::String,
 > crate::nodes::TypedNode for DualClipLoader<ClipName1, ClipName2, Type> {
-    type Output = out::DualClipLoaderOutput;
+    type Output = crate::nodes::types::ClipOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            clip: crate::nodes::types::ClipOut {
-                node_id,
-                node_slot: 0u32,
-            },
+            node_id,
+            node_slot: 0u32,
         }
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
@@ -173,13 +145,11 @@ impl<
     ClipName2: crate::nodes::types::String,
     ClipName3: crate::nodes::types::String,
 > crate::nodes::TypedNode for TripleClipLoader<ClipName1, ClipName2, ClipName3> {
-    type Output = out::TripleClipLoaderOutput;
+    type Output = crate::nodes::types::ClipOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            clip: crate::nodes::types::ClipOut {
-                node_id,
-                node_slot: 0u32,
-            },
+            node_id,
+            node_slot: 0u32,
         }
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
@@ -208,13 +178,11 @@ impl<
     UnetName: crate::nodes::types::String,
     WeightDtype: crate::nodes::types::String,
 > crate::nodes::TypedNode for UnetLoader<UnetName, WeightDtype> {
-    type Output = out::UnetLoaderOutput;
+    type Output = crate::nodes::types::ModelOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            model: crate::nodes::types::ModelOut {
-                node_id,
-                node_slot: 0u32,
-            },
+            node_id,
+            node_slot: 0u32,
         }
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {

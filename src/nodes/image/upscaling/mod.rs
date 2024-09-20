@@ -2,33 +2,6 @@
 #![allow(unused_imports)]
 use std::collections::HashMap;
 use crate::workflow::{WorkflowNodeId, WorkflowInput};
-/// Output types for nodes.
-pub mod out {
-    ///Output for [`ImageScale`](super::ImageScale).
-    #[derive(Clone)]
-    pub struct ImageScaleOutput {
-        ///No documentation.
-        pub image: crate::nodes::types::ImageOut,
-    }
-    ///Output for [`ImageScaleBy`](super::ImageScaleBy).
-    #[derive(Clone)]
-    pub struct ImageScaleByOutput {
-        ///No documentation.
-        pub image: crate::nodes::types::ImageOut,
-    }
-    ///Output for [`ImageScaleToTotalPixels`](super::ImageScaleToTotalPixels).
-    #[derive(Clone)]
-    pub struct ImageScaleToTotalPixelsOutput {
-        ///No documentation.
-        pub image: crate::nodes::types::ImageOut,
-    }
-    ///Output for [`ImageUpscaleWithModel`](super::ImageUpscaleWithModel).
-    #[derive(Clone)]
-    pub struct ImageUpscaleWithModelOutput {
-        ///No documentation.
-        pub image: crate::nodes::types::ImageOut,
-    }
-}
 ///**Upscale Image**: No description.
 pub struct ImageScale<
     Image: crate::nodes::types::Image,
@@ -55,13 +28,11 @@ impl<
     Height: crate::nodes::types::Int,
     Crop: crate::nodes::types::String,
 > crate::nodes::TypedNode for ImageScale<Image, UpscaleMethod, Width, Height, Crop> {
-    type Output = out::ImageScaleOutput;
+    type Output = crate::nodes::types::ImageOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            image: crate::nodes::types::ImageOut {
-                node_id,
-                node_slot: 0u32,
-            },
+            node_id,
+            node_slot: 0u32,
         }
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
@@ -100,13 +71,11 @@ impl<
     UpscaleMethod: crate::nodes::types::String,
     ScaleBy: crate::nodes::types::Float,
 > crate::nodes::TypedNode for ImageScaleBy<Image, UpscaleMethod, ScaleBy> {
-    type Output = out::ImageScaleByOutput;
+    type Output = crate::nodes::types::ImageOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            image: crate::nodes::types::ImageOut {
-                node_id,
-                node_slot: 0u32,
-            },
+            node_id,
+            node_slot: 0u32,
         }
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
@@ -143,13 +112,11 @@ impl<
     UpscaleMethod: crate::nodes::types::String,
     Megapixels: crate::nodes::types::Float,
 > crate::nodes::TypedNode for ImageScaleToTotalPixels<Image, UpscaleMethod, Megapixels> {
-    type Output = out::ImageScaleToTotalPixelsOutput;
+    type Output = crate::nodes::types::ImageOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            image: crate::nodes::types::ImageOut {
-                node_id,
-                node_slot: 0u32,
-            },
+            node_id,
+            node_slot: 0u32,
         }
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
@@ -182,13 +149,11 @@ impl<
     UpscaleModel: crate::nodes::types::UpscaleModel,
     Image: crate::nodes::types::Image,
 > crate::nodes::TypedNode for ImageUpscaleWithModel<UpscaleModel, Image> {
-    type Output = out::ImageUpscaleWithModelOutput;
+    type Output = crate::nodes::types::ImageOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            image: crate::nodes::types::ImageOut {
-                node_id,
-                node_slot: 0u32,
-            },
+            node_id,
+            node_slot: 0u32,
         }
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {

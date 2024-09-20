@@ -2,28 +2,17 @@
 #![allow(unused_imports)]
 use std::collections::HashMap;
 use crate::workflow::{WorkflowNodeId, WorkflowInput};
-/// Output types for nodes.
-pub mod out {
-    ///Output for [`LoadAudio`](super::LoadAudio).
-    #[derive(Clone)]
-    pub struct LoadAudioOutput {
-        ///No documentation.
-        pub audio: crate::nodes::types::AudioOut,
-    }
-}
 ///**LoadAudio**: No description.
 pub struct LoadAudio<Audio: crate::nodes::types::String> {
     ///No documentation.
     pub audio: Audio,
 }
 impl<Audio: crate::nodes::types::String> crate::nodes::TypedNode for LoadAudio<Audio> {
-    type Output = out::LoadAudioOutput;
+    type Output = crate::nodes::types::AudioOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            audio: crate::nodes::types::AudioOut {
-                node_id,
-                node_slot: 0u32,
-            },
+            node_id,
+            node_slot: 0u32,
         }
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {

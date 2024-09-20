@@ -2,15 +2,6 @@
 #![allow(unused_imports)]
 use std::collections::HashMap;
 use crate::workflow::{WorkflowNodeId, WorkflowInput};
-/// Output types for nodes.
-pub mod out {
-    ///Output for [`StyleModelApply`](super::StyleModelApply).
-    #[derive(Clone)]
-    pub struct StyleModelApplyOutput {
-        ///No documentation.
-        pub conditioning: crate::nodes::types::ConditioningOut,
-    }
-}
 ///**Apply Style Model**: No description.
 pub struct StyleModelApply<
     Conditioning: crate::nodes::types::Conditioning,
@@ -30,13 +21,11 @@ impl<
     ClipVisionOutput: crate::nodes::types::ClipVisionOutput,
 > crate::nodes::TypedNode
 for StyleModelApply<Conditioning, StyleModel, ClipVisionOutput> {
-    type Output = out::StyleModelApplyOutput;
+    type Output = crate::nodes::types::ConditioningOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            conditioning: crate::nodes::types::ConditioningOut {
-                node_id,
-                node_slot: 0u32,
-            },
+            node_id,
+            node_slot: 0u32,
         }
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {

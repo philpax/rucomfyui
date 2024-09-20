@@ -10,30 +10,6 @@ pub mod transform;
 pub mod upscaling;
 /// Output types for nodes.
 pub mod out {
-    ///Output for [`EmptyImage`](super::EmptyImage).
-    #[derive(Clone)]
-    pub struct EmptyImageOutput {
-        ///No documentation.
-        pub image: crate::nodes::types::ImageOut,
-    }
-    ///Output for [`ImageBatch`](super::ImageBatch).
-    #[derive(Clone)]
-    pub struct ImageBatchOutput {
-        ///No documentation.
-        pub image: crate::nodes::types::ImageOut,
-    }
-    ///Output for [`ImageCompositeMasked`](super::ImageCompositeMasked).
-    #[derive(Clone)]
-    pub struct ImageCompositeMaskedOutput {
-        ///No documentation.
-        pub image: crate::nodes::types::ImageOut,
-    }
-    ///Output for [`ImageInvert`](super::ImageInvert).
-    #[derive(Clone)]
-    pub struct ImageInvertOutput {
-        ///No documentation.
-        pub image: crate::nodes::types::ImageOut,
-    }
     ///Output for [`ImagePadForOutpaint`](super::ImagePadForOutpaint).
     #[derive(Clone)]
     pub struct ImagePadForOutpaintOutput {
@@ -49,12 +25,6 @@ pub mod out {
         pub image: crate::nodes::types::ImageOut,
         ///No documentation.
         pub mask: crate::nodes::types::MaskOut,
-    }
-    ///Output for [`WebcamCapture`](super::WebcamCapture).
-    #[derive(Clone)]
-    pub struct WebcamCaptureOutput {
-        ///No documentation.
-        pub image: crate::nodes::types::ImageOut,
     }
 }
 ///**EmptyImage**: No description.
@@ -79,13 +49,11 @@ impl<
     BatchSize: crate::nodes::types::Int,
     Color: crate::nodes::types::Int,
 > crate::nodes::TypedNode for EmptyImage<Width, Height, BatchSize, Color> {
-    type Output = out::EmptyImageOutput;
+    type Output = crate::nodes::types::ImageOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            image: crate::nodes::types::ImageOut {
-                node_id,
-                node_slot: 0u32,
-            },
+            node_id,
+            node_slot: 0u32,
         }
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
@@ -115,13 +83,11 @@ impl<
     Image1: crate::nodes::types::Image,
     Image2: crate::nodes::types::Image,
 > crate::nodes::TypedNode for ImageBatch<Image1, Image2> {
-    type Output = out::ImageBatchOutput;
+    type Output = crate::nodes::types::ImageOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            image: crate::nodes::types::ImageOut {
-                node_id,
-                node_slot: 0u32,
-            },
+            node_id,
+            node_slot: 0u32,
         }
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
@@ -166,13 +132,11 @@ impl<
     Mask: crate::nodes::types::Mask,
 > crate::nodes::TypedNode
 for ImageCompositeMasked<Destination, Source, X, Y, ResizeSource, Mask> {
-    type Output = out::ImageCompositeMaskedOutput;
+    type Output = crate::nodes::types::ImageOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            image: crate::nodes::types::ImageOut {
-                node_id,
-                node_slot: 0u32,
-            },
+            node_id,
+            node_slot: 0u32,
         }
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
@@ -199,13 +163,11 @@ pub struct ImageInvert<Image: crate::nodes::types::Image> {
     pub image: Image,
 }
 impl<Image: crate::nodes::types::Image> crate::nodes::TypedNode for ImageInvert<Image> {
-    type Output = out::ImageInvertOutput;
+    type Output = crate::nodes::types::ImageOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            image: crate::nodes::types::ImageOut {
-                node_id,
-                node_slot: 0u32,
-            },
+            node_id,
+            node_slot: 0u32,
         }
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
@@ -388,13 +350,11 @@ impl<
     Height: crate::nodes::types::Int,
     CaptureOnQueue: crate::nodes::types::Boolean,
 > crate::nodes::TypedNode for WebcamCapture<Image, Width, Height, CaptureOnQueue> {
-    type Output = out::WebcamCaptureOutput;
+    type Output = crate::nodes::types::ImageOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            image: crate::nodes::types::ImageOut {
-                node_id,
-                node_slot: 0u32,
-            },
+            node_id,
+            node_slot: 0u32,
         }
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {

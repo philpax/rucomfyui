@@ -2,15 +2,6 @@
 #![allow(unused_imports)]
 use std::collections::HashMap;
 use crate::workflow::{WorkflowNodeId, WorkflowInput};
-/// Output types for nodes.
-pub mod out {
-    ///Output for [`EmptySd3LatentImage`](super::EmptySd3LatentImage).
-    #[derive(Clone)]
-    pub struct EmptySd3LatentImageOutput {
-        ///No documentation.
-        pub latent: crate::nodes::types::LatentOut,
-    }
-}
 ///**EmptySD3LatentImage**: No description.
 pub struct EmptySd3LatentImage<
     Width: crate::nodes::types::Int,
@@ -29,13 +20,11 @@ impl<
     Height: crate::nodes::types::Int,
     BatchSize: crate::nodes::types::Int,
 > crate::nodes::TypedNode for EmptySd3LatentImage<Width, Height, BatchSize> {
-    type Output = out::EmptySd3LatentImageOutput;
+    type Output = crate::nodes::types::LatentOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            latent: crate::nodes::types::LatentOut {
-                node_id,
-                node_slot: 0u32,
-            },
+            node_id,
+            node_slot: 0u32,
         }
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {

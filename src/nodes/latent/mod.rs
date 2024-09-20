@@ -9,51 +9,6 @@ pub mod inpaint;
 pub mod sd_3;
 pub mod stable_cascade;
 pub mod transform;
-/// Output types for nodes.
-pub mod out {
-    ///Output for [`EmptyLatentImage`](super::EmptyLatentImage).
-    #[derive(Clone)]
-    pub struct EmptyLatentImageOutput {
-        ///The empty latent image batch.
-        pub latent: crate::nodes::types::LatentOut,
-    }
-    ///Output for [`LatentComposite`](super::LatentComposite).
-    #[derive(Clone)]
-    pub struct LatentCompositeOutput {
-        ///No documentation.
-        pub latent: crate::nodes::types::LatentOut,
-    }
-    ///Output for [`LatentCompositeMasked`](super::LatentCompositeMasked).
-    #[derive(Clone)]
-    pub struct LatentCompositeMaskedOutput {
-        ///No documentation.
-        pub latent: crate::nodes::types::LatentOut,
-    }
-    ///Output for [`LatentUpscale`](super::LatentUpscale).
-    #[derive(Clone)]
-    pub struct LatentUpscaleOutput {
-        ///No documentation.
-        pub latent: crate::nodes::types::LatentOut,
-    }
-    ///Output for [`LatentUpscaleBy`](super::LatentUpscaleBy).
-    #[derive(Clone)]
-    pub struct LatentUpscaleByOutput {
-        ///No documentation.
-        pub latent: crate::nodes::types::LatentOut,
-    }
-    ///Output for [`VaeDecode`](super::VaeDecode).
-    #[derive(Clone)]
-    pub struct VaeDecodeOutput {
-        ///The decoded image.
-        pub image: crate::nodes::types::ImageOut,
-    }
-    ///Output for [`VaeEncode`](super::VaeEncode).
-    #[derive(Clone)]
-    pub struct VaeEncodeOutput {
-        ///No documentation.
-        pub latent: crate::nodes::types::LatentOut,
-    }
-}
 ///**Empty Latent Image**: Create a new batch of empty latent images to be denoised via sampling.
 pub struct EmptyLatentImage<
     Width: crate::nodes::types::Int,
@@ -72,13 +27,11 @@ impl<
     Height: crate::nodes::types::Int,
     BatchSize: crate::nodes::types::Int,
 > crate::nodes::TypedNode for EmptyLatentImage<Width, Height, BatchSize> {
-    type Output = out::EmptyLatentImageOutput;
+    type Output = crate::nodes::types::LatentOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            latent: crate::nodes::types::LatentOut {
-                node_id,
-                node_slot: 0u32,
-            },
+            node_id,
+            node_slot: 0u32,
         }
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
@@ -119,13 +72,11 @@ impl<
     Y: crate::nodes::types::Int,
     Feather: crate::nodes::types::Int,
 > crate::nodes::TypedNode for LatentComposite<SamplesTo, SamplesFrom, X, Y, Feather> {
-    type Output = out::LatentCompositeOutput;
+    type Output = crate::nodes::types::LatentOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            latent: crate::nodes::types::LatentOut {
-                node_id,
-                node_slot: 0u32,
-            },
+            node_id,
+            node_slot: 0u32,
         }
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
@@ -173,13 +124,11 @@ impl<
     Mask: crate::nodes::types::Mask,
 > crate::nodes::TypedNode
 for LatentCompositeMasked<Destination, Source, X, Y, ResizeSource, Mask> {
-    type Output = out::LatentCompositeMaskedOutput;
+    type Output = crate::nodes::types::LatentOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            latent: crate::nodes::types::LatentOut {
-                node_id,
-                node_slot: 0u32,
-            },
+            node_id,
+            node_slot: 0u32,
         }
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
@@ -227,13 +176,11 @@ impl<
     Crop: crate::nodes::types::String,
 > crate::nodes::TypedNode
 for LatentUpscale<Samples, UpscaleMethod, Width, Height, Crop> {
-    type Output = out::LatentUpscaleOutput;
+    type Output = crate::nodes::types::LatentOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            latent: crate::nodes::types::LatentOut {
-                node_id,
-                node_slot: 0u32,
-            },
+            node_id,
+            node_slot: 0u32,
         }
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
@@ -272,13 +219,11 @@ impl<
     UpscaleMethod: crate::nodes::types::String,
     ScaleBy: crate::nodes::types::Float,
 > crate::nodes::TypedNode for LatentUpscaleBy<Samples, UpscaleMethod, ScaleBy> {
-    type Output = out::LatentUpscaleByOutput;
+    type Output = crate::nodes::types::LatentOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            latent: crate::nodes::types::LatentOut {
-                node_id,
-                node_slot: 0u32,
-            },
+            node_id,
+            node_slot: 0u32,
         }
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
@@ -311,13 +256,11 @@ impl<
     Samples: crate::nodes::types::Latent,
     Vae: crate::nodes::types::Vae,
 > crate::nodes::TypedNode for VaeDecode<Samples, Vae> {
-    type Output = out::VaeDecodeOutput;
+    type Output = crate::nodes::types::ImageOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            image: crate::nodes::types::ImageOut {
-                node_id,
-                node_slot: 0u32,
-            },
+            node_id,
+            node_slot: 0u32,
         }
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
@@ -342,13 +285,11 @@ impl<
     Pixels: crate::nodes::types::Image,
     Vae: crate::nodes::types::Vae,
 > crate::nodes::TypedNode for VaeEncode<Pixels, Vae> {
-    type Output = out::VaeEncodeOutput;
+    type Output = crate::nodes::types::LatentOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            latent: crate::nodes::types::LatentOut {
-                node_id,
-                node_slot: 0u32,
-            },
+            node_id,
+            node_slot: 0u32,
         }
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {

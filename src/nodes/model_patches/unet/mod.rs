@@ -2,33 +2,6 @@
 #![allow(unused_imports)]
 use std::collections::HashMap;
 use crate::workflow::{WorkflowNodeId, WorkflowInput};
-/// Output types for nodes.
-pub mod out {
-    ///Output for [`FreeU`](super::FreeU).
-    #[derive(Clone)]
-    pub struct FreeUOutput {
-        ///No documentation.
-        pub model: crate::nodes::types::ModelOut,
-    }
-    ///Output for [`FreeUV2`](super::FreeUV2).
-    #[derive(Clone)]
-    pub struct FreeUV2Output {
-        ///No documentation.
-        pub model: crate::nodes::types::ModelOut,
-    }
-    ///Output for [`HyperTile`](super::HyperTile).
-    #[derive(Clone)]
-    pub struct HyperTileOutput {
-        ///No documentation.
-        pub model: crate::nodes::types::ModelOut,
-    }
-    ///Output for [`PerturbedAttentionGuidance`](super::PerturbedAttentionGuidance).
-    #[derive(Clone)]
-    pub struct PerturbedAttentionGuidanceOutput {
-        ///No documentation.
-        pub model: crate::nodes::types::ModelOut,
-    }
-}
 ///**FreeU**: No description.
 pub struct FreeU<
     Model: crate::nodes::types::Model,
@@ -55,13 +28,11 @@ impl<
     S1: crate::nodes::types::Float,
     S2: crate::nodes::types::Float,
 > crate::nodes::TypedNode for FreeU<Model, B1, B2, S1, S2> {
-    type Output = out::FreeUOutput;
+    type Output = crate::nodes::types::ModelOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            model: crate::nodes::types::ModelOut {
-                node_id,
-                node_slot: 0u32,
-            },
+            node_id,
+            node_slot: 0u32,
         }
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
@@ -104,13 +75,11 @@ impl<
     S1: crate::nodes::types::Float,
     S2: crate::nodes::types::Float,
 > crate::nodes::TypedNode for FreeUV2<Model, B1, B2, S1, S2> {
-    type Output = out::FreeUV2Output;
+    type Output = crate::nodes::types::ModelOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            model: crate::nodes::types::ModelOut {
-                node_id,
-                node_slot: 0u32,
-            },
+            node_id,
+            node_slot: 0u32,
         }
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
@@ -154,13 +123,11 @@ impl<
     ScaleDepth: crate::nodes::types::Boolean,
 > crate::nodes::TypedNode
 for HyperTile<Model, TileSize, SwapSize, MaxDepth, ScaleDepth> {
-    type Output = out::HyperTileOutput;
+    type Output = crate::nodes::types::ModelOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            model: crate::nodes::types::ModelOut {
-                node_id,
-                node_slot: 0u32,
-            },
+            node_id,
+            node_slot: 0u32,
         }
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
@@ -191,13 +158,11 @@ impl<
     Model: crate::nodes::types::Model,
     Scale: crate::nodes::types::Float,
 > crate::nodes::TypedNode for PerturbedAttentionGuidance<Model, Scale> {
-    type Output = out::PerturbedAttentionGuidanceOutput;
+    type Output = crate::nodes::types::ModelOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            model: crate::nodes::types::ModelOut {
-                node_id,
-                node_slot: 0u32,
-            },
+            node_id,
+            node_slot: 0u32,
         }
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {

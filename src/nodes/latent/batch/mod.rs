@@ -2,33 +2,6 @@
 #![allow(unused_imports)]
 use std::collections::HashMap;
 use crate::workflow::{WorkflowNodeId, WorkflowInput};
-/// Output types for nodes.
-pub mod out {
-    ///Output for [`LatentBatch`](super::LatentBatch).
-    #[derive(Clone)]
-    pub struct LatentBatchOutput {
-        ///No documentation.
-        pub latent: crate::nodes::types::LatentOut,
-    }
-    ///Output for [`LatentFromBatch`](super::LatentFromBatch).
-    #[derive(Clone)]
-    pub struct LatentFromBatchOutput {
-        ///No documentation.
-        pub latent: crate::nodes::types::LatentOut,
-    }
-    ///Output for [`RebatchLatents`](super::RebatchLatents).
-    #[derive(Clone)]
-    pub struct RebatchLatentsOutput {
-        ///No documentation.
-        pub latent: crate::nodes::types::LatentOut,
-    }
-    ///Output for [`RepeatLatentBatch`](super::RepeatLatentBatch).
-    #[derive(Clone)]
-    pub struct RepeatLatentBatchOutput {
-        ///No documentation.
-        pub latent: crate::nodes::types::LatentOut,
-    }
-}
 ///**LatentBatch**: No description.
 pub struct LatentBatch<
     Samples1: crate::nodes::types::Latent,
@@ -43,13 +16,11 @@ impl<
     Samples1: crate::nodes::types::Latent,
     Samples2: crate::nodes::types::Latent,
 > crate::nodes::TypedNode for LatentBatch<Samples1, Samples2> {
-    type Output = out::LatentBatchOutput;
+    type Output = crate::nodes::types::LatentOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            latent: crate::nodes::types::LatentOut {
-                node_id,
-                node_slot: 0u32,
-            },
+            node_id,
+            node_slot: 0u32,
         }
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
@@ -81,13 +52,11 @@ impl<
     BatchIndex: crate::nodes::types::Int,
     Length: crate::nodes::types::Int,
 > crate::nodes::TypedNode for LatentFromBatch<Samples, BatchIndex, Length> {
-    type Output = out::LatentFromBatchOutput;
+    type Output = crate::nodes::types::LatentOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            latent: crate::nodes::types::LatentOut {
-                node_id,
-                node_slot: 0u32,
-            },
+            node_id,
+            node_slot: 0u32,
         }
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
@@ -116,13 +85,11 @@ impl<
     Latents: crate::nodes::types::Latent,
     BatchSize: crate::nodes::types::Int,
 > crate::nodes::TypedNode for RebatchLatents<Latents, BatchSize> {
-    type Output = out::RebatchLatentsOutput;
+    type Output = crate::nodes::types::LatentOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            latent: crate::nodes::types::LatentOut {
-                node_id,
-                node_slot: 0u32,
-            },
+            node_id,
+            node_slot: 0u32,
         }
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
@@ -150,13 +117,11 @@ impl<
     Samples: crate::nodes::types::Latent,
     Amount: crate::nodes::types::Int,
 > crate::nodes::TypedNode for RepeatLatentBatch<Samples, Amount> {
-    type Output = out::RepeatLatentBatchOutput;
+    type Output = crate::nodes::types::LatentOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            latent: crate::nodes::types::LatentOut {
-                node_id,
-                node_slot: 0u32,
-            },
+            node_id,
+            node_slot: 0u32,
         }
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {

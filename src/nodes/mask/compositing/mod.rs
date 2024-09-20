@@ -4,12 +4,6 @@ use std::collections::HashMap;
 use crate::workflow::{WorkflowNodeId, WorkflowInput};
 /// Output types for nodes.
 pub mod out {
-    ///Output for [`JoinImageWithAlpha`](super::JoinImageWithAlpha).
-    #[derive(Clone)]
-    pub struct JoinImageWithAlphaOutput {
-        ///No documentation.
-        pub image: crate::nodes::types::ImageOut,
-    }
     ///Output for [`PorterDuffImageComposite`](super::PorterDuffImageComposite).
     #[derive(Clone)]
     pub struct PorterDuffImageCompositeOutput {
@@ -41,13 +35,11 @@ impl<
     Image: crate::nodes::types::Image,
     Alpha: crate::nodes::types::Mask,
 > crate::nodes::TypedNode for JoinImageWithAlpha<Image, Alpha> {
-    type Output = out::JoinImageWithAlphaOutput;
+    type Output = crate::nodes::types::ImageOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            image: crate::nodes::types::ImageOut {
-                node_id,
-                node_slot: 0u32,
-            },
+            node_id,
+            node_slot: 0u32,
         }
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {

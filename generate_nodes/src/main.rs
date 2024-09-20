@@ -241,7 +241,7 @@ fn write_category_tree((name, tree): (&str, &CategoryTree), directory: &Path) ->
             }
             CategoryTreeNode::Object(object) => {
                 let struct_name = util::name_to_ident(&object.name, true)?;
-                let node_output_struct_name = (!object.output_node)
+                let node_output_struct_name = (!object.output_node && object.output.len() > 1)
                     .then(|| util::name_to_ident(&format!("{}Output", object.name), true))
                     .transpose()?;
 
@@ -478,13 +478,26 @@ fn write_node_trait_impl(
             }
         }
     } else {
-        // Output nodes terminate the workflow and do not produce any
-        // output, so we return just the node ID.
-        quote! {
-            type Output = WorkflowNodeId;
-            fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
-                node_id
+        if node.output_node {
+            // Output nodes terminate the workflow and do not produce any
+            // output, so we return just the node ID.
+            quote! {
+                type Output = WorkflowNodeId;
+                fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
+                    node_id
+                }
             }
+        } else if node.output.len() == 1 {
+            // If it's just a single output, use that type directly
+            let ty = util::object_type_struct_ident(&node.output[0]);
+            quote! {
+                type Output = crate :: nodes :: types :: #ty;
+                fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
+                    Self::Output { node_id, node_slot: 0u32 }
+                }
+            }
+        } else {
+            panic!("`node_output_struct_name` missing, but not a handled case: {node:?}");
         }
     };
 

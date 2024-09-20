@@ -2,21 +2,6 @@
 #![allow(unused_imports)]
 use std::collections::HashMap;
 use crate::workflow::{WorkflowNodeId, WorkflowInput};
-/// Output types for nodes.
-pub mod out {
-    ///Output for [`VideoLinearCfgGuidance`](super::VideoLinearCfgGuidance).
-    #[derive(Clone)]
-    pub struct VideoLinearCfgGuidanceOutput {
-        ///No documentation.
-        pub model: crate::nodes::types::ModelOut,
-    }
-    ///Output for [`VideoTriangleCfgGuidance`](super::VideoTriangleCfgGuidance).
-    #[derive(Clone)]
-    pub struct VideoTriangleCfgGuidanceOutput {
-        ///No documentation.
-        pub model: crate::nodes::types::ModelOut,
-    }
-}
 ///**VideoLinearCFGGuidance**: No description.
 pub struct VideoLinearCfgGuidance<
     Model: crate::nodes::types::Model,
@@ -31,13 +16,11 @@ impl<
     Model: crate::nodes::types::Model,
     MinCfg: crate::nodes::types::Float,
 > crate::nodes::TypedNode for VideoLinearCfgGuidance<Model, MinCfg> {
-    type Output = out::VideoLinearCfgGuidanceOutput;
+    type Output = crate::nodes::types::ModelOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            model: crate::nodes::types::ModelOut {
-                node_id,
-                node_slot: 0u32,
-            },
+            node_id,
+            node_slot: 0u32,
         }
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
@@ -65,13 +48,11 @@ impl<
     Model: crate::nodes::types::Model,
     MinCfg: crate::nodes::types::Float,
 > crate::nodes::TypedNode for VideoTriangleCfgGuidance<Model, MinCfg> {
-    type Output = out::VideoTriangleCfgGuidanceOutput;
+    type Output = crate::nodes::types::ModelOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            model: crate::nodes::types::ModelOut {
-                node_id,
-                node_slot: 0u32,
-            },
+            node_id,
+            node_slot: 0u32,
         }
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {

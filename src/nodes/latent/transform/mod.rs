@@ -2,27 +2,6 @@
 #![allow(unused_imports)]
 use std::collections::HashMap;
 use crate::workflow::{WorkflowNodeId, WorkflowInput};
-/// Output types for nodes.
-pub mod out {
-    ///Output for [`LatentCrop`](super::LatentCrop).
-    #[derive(Clone)]
-    pub struct LatentCropOutput {
-        ///No documentation.
-        pub latent: crate::nodes::types::LatentOut,
-    }
-    ///Output for [`LatentFlip`](super::LatentFlip).
-    #[derive(Clone)]
-    pub struct LatentFlipOutput {
-        ///No documentation.
-        pub latent: crate::nodes::types::LatentOut,
-    }
-    ///Output for [`LatentRotate`](super::LatentRotate).
-    #[derive(Clone)]
-    pub struct LatentRotateOutput {
-        ///No documentation.
-        pub latent: crate::nodes::types::LatentOut,
-    }
-}
 ///**Crop Latent**: No description.
 pub struct LatentCrop<
     Samples: crate::nodes::types::Latent,
@@ -49,13 +28,11 @@ impl<
     X: crate::nodes::types::Int,
     Y: crate::nodes::types::Int,
 > crate::nodes::TypedNode for LatentCrop<Samples, Width, Height, X, Y> {
-    type Output = out::LatentCropOutput;
+    type Output = crate::nodes::types::LatentOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            latent: crate::nodes::types::LatentOut {
-                node_id,
-                node_slot: 0u32,
-            },
+            node_id,
+            node_slot: 0u32,
         }
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
@@ -86,13 +63,11 @@ impl<
     Samples: crate::nodes::types::Latent,
     FlipMethod: crate::nodes::types::String,
 > crate::nodes::TypedNode for LatentFlip<Samples, FlipMethod> {
-    type Output = out::LatentFlipOutput;
+    type Output = crate::nodes::types::LatentOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            latent: crate::nodes::types::LatentOut {
-                node_id,
-                node_slot: 0u32,
-            },
+            node_id,
+            node_slot: 0u32,
         }
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
@@ -120,13 +95,11 @@ impl<
     Samples: crate::nodes::types::Latent,
     Rotation: crate::nodes::types::String,
 > crate::nodes::TypedNode for LatentRotate<Samples, Rotation> {
-    type Output = out::LatentRotateOutput;
+    type Output = crate::nodes::types::LatentOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            latent: crate::nodes::types::LatentOut {
-                node_id,
-                node_slot: 0u32,
-            },
+            node_id,
+            node_slot: 0u32,
         }
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {

@@ -2,15 +2,6 @@
 #![allow(unused_imports)]
 use std::collections::HashMap;
 use crate::workflow::{WorkflowNodeId, WorkflowInput};
-/// Output types for nodes.
-pub mod out {
-    ///Output for [`ImageCrop`](super::ImageCrop).
-    #[derive(Clone)]
-    pub struct ImageCropOutput {
-        ///No documentation.
-        pub image: crate::nodes::types::ImageOut,
-    }
-}
 ///**ImageCrop**: No description.
 pub struct ImageCrop<
     Image: crate::nodes::types::Image,
@@ -37,13 +28,11 @@ impl<
     X: crate::nodes::types::Int,
     Y: crate::nodes::types::Int,
 > crate::nodes::TypedNode for ImageCrop<Image, Width, Height, X, Y> {
-    type Output = out::ImageCropOutput;
+    type Output = crate::nodes::types::ImageOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            image: crate::nodes::types::ImageOut {
-                node_id,
-                node_slot: 0u32,
-            },
+            node_id,
+            node_slot: 0u32,
         }
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {

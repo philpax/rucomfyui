@@ -4,21 +4,6 @@ use std::collections::HashMap;
 use crate::workflow::{WorkflowNodeId, WorkflowInput};
 pub mod custom_sampling;
 pub mod video_models;
-/// Output types for nodes.
-pub mod out {
-    ///Output for [`KSampler`](super::KSampler).
-    #[derive(Clone)]
-    pub struct KSamplerOutput {
-        ///The denoised latent.
-        pub latent: crate::nodes::types::LatentOut,
-    }
-    ///Output for [`KSamplerAdvanced`](super::KSamplerAdvanced).
-    #[derive(Clone)]
-    pub struct KSamplerAdvancedOutput {
-        ///No documentation.
-        pub latent: crate::nodes::types::LatentOut,
-    }
-}
 ///**KSampler**: Uses the provided model, positive and negative conditioning to denoise the latent image.
 pub struct KSampler<
     Model: crate::nodes::types::Model,
@@ -77,13 +62,11 @@ for KSampler<
     LatentImage,
     Denoise,
 > {
-    type Output = out::KSamplerOutput;
+    type Output = crate::nodes::types::LatentOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            latent: crate::nodes::types::LatentOut {
-                node_id,
-                node_slot: 0u32,
-            },
+            node_id,
+            node_slot: 0u32,
         }
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
@@ -178,13 +161,11 @@ for KSamplerAdvanced<
     EndAtStep,
     ReturnWithLeftoverNoise,
 > {
-    type Output = out::KSamplerAdvancedOutput;
+    type Output = crate::nodes::types::LatentOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            latent: crate::nodes::types::LatentOut {
-                node_id,
-                node_slot: 0u32,
-            },
+            node_id,
+            node_slot: 0u32,
         }
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {

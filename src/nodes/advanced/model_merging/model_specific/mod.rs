@@ -2,39 +2,6 @@
 #![allow(unused_imports)]
 use std::collections::HashMap;
 use crate::workflow::{WorkflowNodeId, WorkflowInput};
-/// Output types for nodes.
-pub mod out {
-    ///Output for [`ModelMergeFlux1`](super::ModelMergeFlux1).
-    #[derive(Clone)]
-    pub struct ModelMergeFlux1Output {
-        ///No documentation.
-        pub model: crate::nodes::types::ModelOut,
-    }
-    ///Output for [`ModelMergeSd1`](super::ModelMergeSd1).
-    #[derive(Clone)]
-    pub struct ModelMergeSd1Output {
-        ///No documentation.
-        pub model: crate::nodes::types::ModelOut,
-    }
-    ///Output for [`ModelMergeSd2`](super::ModelMergeSd2).
-    #[derive(Clone)]
-    pub struct ModelMergeSd2Output {
-        ///No documentation.
-        pub model: crate::nodes::types::ModelOut,
-    }
-    ///Output for [`ModelMergeSd32B`](super::ModelMergeSd32B).
-    #[derive(Clone)]
-    pub struct ModelMergeSd32BOutput {
-        ///No documentation.
-        pub model: crate::nodes::types::ModelOut,
-    }
-    ///Output for [`ModelMergeSdxl`](super::ModelMergeSdxl).
-    #[derive(Clone)]
-    pub struct ModelMergeSdxlOutput {
-        ///No documentation.
-        pub model: crate::nodes::types::ModelOut,
-    }
-}
 ///**ModelMergeFlux1**: No description.
 pub struct ModelMergeFlux1<
     Model1: crate::nodes::types::Model,
@@ -368,13 +335,11 @@ for ModelMergeFlux1<
     SingleBlocks37,
     FinalLayer,
 > {
-    type Output = out::ModelMergeFlux1Output;
+    type Output = crate::nodes::types::ModelOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            model: crate::nodes::types::ModelOut {
-                node_id,
-                node_slot: 0u32,
-            },
+            node_id,
+            node_slot: 0u32,
         }
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
@@ -847,13 +812,11 @@ for ModelMergeSd1<
     OutputBlocks11,
     Out,
 > {
-    type Output = out::ModelMergeSd1Output;
+    type Output = crate::nodes::types::ModelOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            model: crate::nodes::types::ModelOut {
-                node_id,
-                node_slot: 0u32,
-            },
+            node_id,
+            node_slot: 0u32,
         }
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
@@ -1173,13 +1136,11 @@ for ModelMergeSd2<
     OutputBlocks11,
     Out,
 > {
-    type Output = out::ModelMergeSd2Output;
+    type Output = crate::nodes::types::ModelOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            model: crate::nodes::types::ModelOut {
-                node_id,
-                node_slot: 0u32,
-            },
+            node_id,
+            node_slot: 0u32,
         }
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
@@ -1499,13 +1460,11 @@ for ModelMergeSd32B<
     JointBlocks23,
     FinalLayer,
 > {
-    type Output = out::ModelMergeSd32BOutput;
+    type Output = crate::nodes::types::ModelOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            model: crate::nodes::types::ModelOut {
-                node_id,
-                node_slot: 0u32,
-            },
+            node_id,
+            node_slot: 0u32,
         }
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
@@ -1787,13 +1746,11 @@ for ModelMergeSdxl<
     OutputBlocks8,
     Out,
 > {
-    type Output = out::ModelMergeSdxlOutput;
+    type Output = crate::nodes::types::ModelOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            model: crate::nodes::types::ModelOut {
-                node_id,
-                node_slot: 0u32,
-            },
+            node_id,
+            node_slot: 0u32,
         }
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {

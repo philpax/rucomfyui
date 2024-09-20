@@ -3,51 +3,6 @@
 use std::collections::HashMap;
 use crate::workflow::{WorkflowNodeId, WorkflowInput};
 pub mod model_specific;
-/// Output types for nodes.
-pub mod out {
-    ///Output for [`ClipMergeAdd`](super::ClipMergeAdd).
-    #[derive(Clone)]
-    pub struct ClipMergeAddOutput {
-        ///No documentation.
-        pub clip: crate::nodes::types::ClipOut,
-    }
-    ///Output for [`ClipMergeSimple`](super::ClipMergeSimple).
-    #[derive(Clone)]
-    pub struct ClipMergeSimpleOutput {
-        ///No documentation.
-        pub clip: crate::nodes::types::ClipOut,
-    }
-    ///Output for [`ClipMergeSubtract`](super::ClipMergeSubtract).
-    #[derive(Clone)]
-    pub struct ClipMergeSubtractOutput {
-        ///No documentation.
-        pub clip: crate::nodes::types::ClipOut,
-    }
-    ///Output for [`ModelMergeAdd`](super::ModelMergeAdd).
-    #[derive(Clone)]
-    pub struct ModelMergeAddOutput {
-        ///No documentation.
-        pub model: crate::nodes::types::ModelOut,
-    }
-    ///Output for [`ModelMergeBlocks`](super::ModelMergeBlocks).
-    #[derive(Clone)]
-    pub struct ModelMergeBlocksOutput {
-        ///No documentation.
-        pub model: crate::nodes::types::ModelOut,
-    }
-    ///Output for [`ModelMergeSimple`](super::ModelMergeSimple).
-    #[derive(Clone)]
-    pub struct ModelMergeSimpleOutput {
-        ///No documentation.
-        pub model: crate::nodes::types::ModelOut,
-    }
-    ///Output for [`ModelMergeSubtract`](super::ModelMergeSubtract).
-    #[derive(Clone)]
-    pub struct ModelMergeSubtractOutput {
-        ///No documentation.
-        pub model: crate::nodes::types::ModelOut,
-    }
-}
 ///**CLIPMergeAdd**: No description.
 pub struct ClipMergeAdd<
     Clip1: crate::nodes::types::Clip,
@@ -62,13 +17,11 @@ impl<
     Clip1: crate::nodes::types::Clip,
     Clip2: crate::nodes::types::Clip,
 > crate::nodes::TypedNode for ClipMergeAdd<Clip1, Clip2> {
-    type Output = out::ClipMergeAddOutput;
+    type Output = crate::nodes::types::ClipOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            clip: crate::nodes::types::ClipOut {
-                node_id,
-                node_slot: 0u32,
-            },
+            node_id,
+            node_slot: 0u32,
         }
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
@@ -100,13 +53,11 @@ impl<
     Clip2: crate::nodes::types::Clip,
     Ratio: crate::nodes::types::Float,
 > crate::nodes::TypedNode for ClipMergeSimple<Clip1, Clip2, Ratio> {
-    type Output = out::ClipMergeSimpleOutput;
+    type Output = crate::nodes::types::ClipOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            clip: crate::nodes::types::ClipOut {
-                node_id,
-                node_slot: 0u32,
-            },
+            node_id,
+            node_slot: 0u32,
         }
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
@@ -139,13 +90,11 @@ impl<
     Clip2: crate::nodes::types::Clip,
     Multiplier: crate::nodes::types::Float,
 > crate::nodes::TypedNode for ClipMergeSubtract<Clip1, Clip2, Multiplier> {
-    type Output = out::ClipMergeSubtractOutput;
+    type Output = crate::nodes::types::ClipOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            clip: crate::nodes::types::ClipOut {
-                node_id,
-                node_slot: 0u32,
-            },
+            node_id,
+            node_slot: 0u32,
         }
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
@@ -260,13 +209,11 @@ impl<
     Model1: crate::nodes::types::Model,
     Model2: crate::nodes::types::Model,
 > crate::nodes::TypedNode for ModelMergeAdd<Model1, Model2> {
-    type Output = out::ModelMergeAddOutput;
+    type Output = crate::nodes::types::ModelOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            model: crate::nodes::types::ModelOut {
-                node_id,
-                node_slot: 0u32,
-            },
+            node_id,
+            node_slot: 0u32,
         }
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
@@ -306,13 +253,11 @@ impl<
     Middle: crate::nodes::types::Float,
     Out: crate::nodes::types::Float,
 > crate::nodes::TypedNode for ModelMergeBlocks<Model1, Model2, Input, Middle, Out> {
-    type Output = out::ModelMergeBlocksOutput;
+    type Output = crate::nodes::types::ModelOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            model: crate::nodes::types::ModelOut {
-                node_id,
-                node_slot: 0u32,
-            },
+            node_id,
+            node_slot: 0u32,
         }
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
@@ -347,13 +292,11 @@ impl<
     Model2: crate::nodes::types::Model,
     Ratio: crate::nodes::types::Float,
 > crate::nodes::TypedNode for ModelMergeSimple<Model1, Model2, Ratio> {
-    type Output = out::ModelMergeSimpleOutput;
+    type Output = crate::nodes::types::ModelOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            model: crate::nodes::types::ModelOut {
-                node_id,
-                node_slot: 0u32,
-            },
+            node_id,
+            node_slot: 0u32,
         }
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
@@ -386,13 +329,11 @@ impl<
     Model2: crate::nodes::types::Model,
     Multiplier: crate::nodes::types::Float,
 > crate::nodes::TypedNode for ModelMergeSubtract<Model1, Model2, Multiplier> {
-    type Output = out::ModelMergeSubtractOutput;
+    type Output = crate::nodes::types::ModelOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            model: crate::nodes::types::ModelOut {
-                node_id,
-                node_slot: 0u32,
-            },
+            node_id,
+            node_slot: 0u32,
         }
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {

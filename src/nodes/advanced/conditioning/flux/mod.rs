@@ -2,21 +2,6 @@
 #![allow(unused_imports)]
 use std::collections::HashMap;
 use crate::workflow::{WorkflowNodeId, WorkflowInput};
-/// Output types for nodes.
-pub mod out {
-    ///Output for [`ClipTextEncodeFlux`](super::ClipTextEncodeFlux).
-    #[derive(Clone)]
-    pub struct ClipTextEncodeFluxOutput {
-        ///No documentation.
-        pub conditioning: crate::nodes::types::ConditioningOut,
-    }
-    ///Output for [`FluxGuidance`](super::FluxGuidance).
-    #[derive(Clone)]
-    pub struct FluxGuidanceOutput {
-        ///No documentation.
-        pub conditioning: crate::nodes::types::ConditioningOut,
-    }
-}
 ///**CLIPTextEncodeFlux**: No description.
 pub struct ClipTextEncodeFlux<
     Clip: crate::nodes::types::Clip,
@@ -39,13 +24,11 @@ impl<
     T5Xxl: crate::nodes::types::String,
     Guidance: crate::nodes::types::Float,
 > crate::nodes::TypedNode for ClipTextEncodeFlux<Clip, ClipL, T5Xxl, Guidance> {
-    type Output = out::ClipTextEncodeFluxOutput;
+    type Output = crate::nodes::types::ConditioningOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            conditioning: crate::nodes::types::ConditioningOut {
-                node_id,
-                node_slot: 0u32,
-            },
+            node_id,
+            node_slot: 0u32,
         }
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
@@ -75,13 +58,11 @@ impl<
     Conditioning: crate::nodes::types::Conditioning,
     Guidance: crate::nodes::types::Float,
 > crate::nodes::TypedNode for FluxGuidance<Conditioning, Guidance> {
-    type Output = out::FluxGuidanceOutput;
+    type Output = crate::nodes::types::ConditioningOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            conditioning: crate::nodes::types::ConditioningOut {
-                node_id,
-                node_slot: 0u32,
-            },
+            node_id,
+            node_slot: 0u32,
         }
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {

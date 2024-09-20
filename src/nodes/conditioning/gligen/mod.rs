@@ -2,15 +2,6 @@
 #![allow(unused_imports)]
 use std::collections::HashMap;
 use crate::workflow::{WorkflowNodeId, WorkflowInput};
-/// Output types for nodes.
-pub mod out {
-    ///Output for [`GligenTextBoxApply`](super::GligenTextBoxApply).
-    #[derive(Clone)]
-    pub struct GligenTextBoxApplyOutput {
-        ///No documentation.
-        pub conditioning: crate::nodes::types::ConditioningOut,
-    }
-}
 ///**GLIGENTextBoxApply**: No description.
 pub struct GligenTextBoxApply<
     ConditioningTo: crate::nodes::types::Conditioning,
@@ -59,13 +50,11 @@ for GligenTextBoxApply<
     X,
     Y,
 > {
-    type Output = out::GligenTextBoxApplyOutput;
+    type Output = crate::nodes::types::ConditioningOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            conditioning: crate::nodes::types::ConditioningOut {
-                node_id,
-                node_slot: 0u32,
-            },
+            node_id,
+            node_slot: 0u32,
         }
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
