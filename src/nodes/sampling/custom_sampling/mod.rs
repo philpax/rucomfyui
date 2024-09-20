@@ -1,4 +1,6 @@
 //!custom_sampling
+#![allow(unused_imports)]
+use crate::WorkflowNodeId;
 pub mod guiders;
 pub mod noise;
 pub mod samplers;
@@ -66,10 +68,16 @@ for SamplerCustom<
     LatentImage,
 > {
     type Output = SamplerCustomOutput;
-    fn output(&self) -> Self::Output {
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            output: crate::nodes::LatentOut(0u32),
-            denoised_output: crate::nodes::LatentOut(1u32),
+            output: crate::nodes::LatentOut {
+                node_id,
+                slot: 0u32,
+            },
+            denoised_output: crate::nodes::LatentOut {
+                node_id,
+                slot: 1u32,
+            },
         }
     }
     const NAME: &'static str = "SamplerCustom";
@@ -113,10 +121,16 @@ impl<
 > crate::nodes::TypedNode
 for SamplerCustomAdvanced<Noise, Guider, Sampler, Sigmas, LatentImage> {
     type Output = SamplerCustomAdvancedOutput;
-    fn output(&self) -> Self::Output {
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            output: crate::nodes::LatentOut(0u32),
-            denoised_output: crate::nodes::LatentOut(1u32),
+            output: crate::nodes::LatentOut {
+                node_id,
+                slot: 0u32,
+            },
+            denoised_output: crate::nodes::LatentOut {
+                node_id,
+                slot: 1u32,
+            },
         }
     }
     const NAME: &'static str = "SamplerCustomAdvanced";

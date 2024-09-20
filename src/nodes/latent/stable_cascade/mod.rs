@@ -1,4 +1,6 @@
 //!stable_cascade
+#![allow(unused_imports)]
+use crate::WorkflowNodeId;
 ///**StableCascade_EmptyLatentImage**
 pub struct StableCascadeEmptyLatentImage<
     Width: crate::nodes::Int,
@@ -31,10 +33,16 @@ impl<
 > crate::nodes::TypedNode
 for StableCascadeEmptyLatentImage<Width, Height, Compression, BatchSize> {
     type Output = StableCascadeEmptyLatentImageOutput;
-    fn output(&self) -> Self::Output {
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            stage_c: crate::nodes::LatentOut(0u32),
-            stage_b: crate::nodes::LatentOut(1u32),
+            stage_c: crate::nodes::LatentOut {
+                node_id,
+                slot: 0u32,
+            },
+            stage_b: crate::nodes::LatentOut {
+                node_id,
+                slot: 1u32,
+            },
         }
     }
     const NAME: &'static str = "StableCascade_EmptyLatentImage";
@@ -69,10 +77,16 @@ impl<
     Compression: crate::nodes::Int,
 > crate::nodes::TypedNode for StableCascadeStageCVaeEncode<Image, Vae, Compression> {
     type Output = StableCascadeStageCVaeEncodeOutput;
-    fn output(&self) -> Self::Output {
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            stage_c: crate::nodes::LatentOut(0u32),
-            stage_b: crate::nodes::LatentOut(1u32),
+            stage_c: crate::nodes::LatentOut {
+                node_id,
+                slot: 0u32,
+            },
+            stage_b: crate::nodes::LatentOut {
+                node_id,
+                slot: 1u32,
+            },
         }
     }
     const NAME: &'static str = "StableCascade_StageC_VAEEncode";

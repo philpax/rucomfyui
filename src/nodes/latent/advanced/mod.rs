@@ -1,4 +1,6 @@
 //!advanced
+#![allow(unused_imports)]
+use crate::WorkflowNodeId;
 ///**LatentAdd**
 pub struct LatentAdd<Samples1: crate::nodes::Latent, Samples2: crate::nodes::Latent> {
     ///No documentation.
@@ -17,9 +19,12 @@ impl<
     Samples2: crate::nodes::Latent,
 > crate::nodes::TypedNode for LatentAdd<Samples1, Samples2> {
     type Output = LatentAddOutput;
-    fn output(&self) -> Self::Output {
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            latent: crate::nodes::LatentOut(0u32),
+            latent: crate::nodes::LatentOut {
+                node_id,
+                slot: 0u32,
+            },
         }
     }
     const NAME: &'static str = "LatentAdd";
@@ -48,9 +53,12 @@ impl<
     SeedBehavior: crate::nodes::String,
 > crate::nodes::TypedNode for LatentBatchSeedBehavior<Samples, SeedBehavior> {
     type Output = LatentBatchSeedBehaviorOutput;
-    fn output(&self) -> Self::Output {
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            latent: crate::nodes::LatentOut(0u32),
+            latent: crate::nodes::LatentOut {
+                node_id,
+                slot: 0u32,
+            },
         }
     }
     const NAME: &'static str = "LatentBatchSeedBehavior";
@@ -83,9 +91,12 @@ impl<
     Ratio: crate::nodes::Float,
 > crate::nodes::TypedNode for LatentInterpolate<Samples1, Samples2, Ratio> {
     type Output = LatentInterpolateOutput;
-    fn output(&self) -> Self::Output {
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            latent: crate::nodes::LatentOut(0u32),
+            latent: crate::nodes::LatentOut {
+                node_id,
+                slot: 0u32,
+            },
         }
     }
     const NAME: &'static str = "LatentInterpolate";
@@ -114,9 +125,12 @@ impl<
     Multiplier: crate::nodes::Float,
 > crate::nodes::TypedNode for LatentMultiply<Samples, Multiplier> {
     type Output = LatentMultiplyOutput;
-    fn output(&self) -> Self::Output {
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            latent: crate::nodes::LatentOut(0u32),
+            latent: crate::nodes::LatentOut {
+                node_id,
+                slot: 0u32,
+            },
         }
     }
     const NAME: &'static str = "LatentMultiply";
@@ -145,9 +159,12 @@ impl<
     Samples2: crate::nodes::Latent,
 > crate::nodes::TypedNode for LatentSubtract<Samples1, Samples2> {
     type Output = LatentSubtractOutput;
-    fn output(&self) -> Self::Output {
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            latent: crate::nodes::LatentOut(0u32),
+            latent: crate::nodes::LatentOut {
+                node_id,
+                slot: 0u32,
+            },
         }
     }
     const NAME: &'static str = "LatentSubtract";

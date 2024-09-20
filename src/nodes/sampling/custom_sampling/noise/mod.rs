@@ -1,4 +1,6 @@
 //!noise
+#![allow(unused_imports)]
+use crate::WorkflowNodeId;
 ///**DisableNoise**
 pub struct DisableNoise {}
 ///Output for [`DisableNoise`].
@@ -9,9 +11,12 @@ pub struct DisableNoiseOutput {
 }
 impl crate::nodes::TypedNode for DisableNoise {
     type Output = DisableNoiseOutput;
-    fn output(&self) -> Self::Output {
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            noise: crate::nodes::NoiseOut(0u32),
+            noise: crate::nodes::NoiseOut {
+                node_id,
+                slot: 0u32,
+            },
         }
     }
     const NAME: &'static str = "DisableNoise";
@@ -32,9 +37,12 @@ pub struct RandomNoiseOutput {
 }
 impl<NoiseSeed: crate::nodes::Int> crate::nodes::TypedNode for RandomNoise<NoiseSeed> {
     type Output = RandomNoiseOutput;
-    fn output(&self) -> Self::Output {
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            noise: crate::nodes::NoiseOut(0u32),
+            noise: crate::nodes::NoiseOut {
+                node_id,
+                slot: 0u32,
+            },
         }
     }
     const NAME: &'static str = "RandomNoise";

@@ -1,4 +1,6 @@
 //!sampling
+#![allow(unused_imports)]
+use crate::WorkflowNodeId;
 pub mod custom_sampling;
 pub mod video_models;
 #[doc = "**KSampler**\n\nUses the provided model, positive and negative conditioning to denoise the latent image."]
@@ -66,9 +68,12 @@ for KSampler<
     Denoise,
 > {
     type Output = KSamplerOutput;
-    fn output(&self) -> Self::Output {
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            latent: crate::nodes::LatentOut(0u32),
+            latent: crate::nodes::LatentOut {
+                node_id,
+                slot: 0u32,
+            },
         }
     }
     const NAME: &'static str = "KSampler";
@@ -156,9 +161,12 @@ for KSamplerAdvanced<
     ReturnWithLeftoverNoise,
 > {
     type Output = KSamplerAdvancedOutput;
-    fn output(&self) -> Self::Output {
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            latent: crate::nodes::LatentOut(0u32),
+            latent: crate::nodes::LatentOut {
+                node_id,
+                slot: 0u32,
+            },
         }
     }
     const NAME: &'static str = "KSamplerAdvanced";

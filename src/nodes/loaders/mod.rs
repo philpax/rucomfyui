@@ -1,4 +1,6 @@
 //!loaders
+#![allow(unused_imports)]
+use crate::WorkflowNodeId;
 pub mod video_models;
 ///**Load CLIP Vision**
 pub struct ClipVisionLoader<ClipName: crate::nodes::String> {
@@ -14,9 +16,12 @@ pub struct ClipVisionLoaderOutput {
 impl<ClipName: crate::nodes::String> crate::nodes::TypedNode
 for ClipVisionLoader<ClipName> {
     type Output = ClipVisionLoaderOutput;
-    fn output(&self) -> Self::Output {
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            clip_vision: crate::nodes::ClipVisionOut(0u32),
+            clip_vision: crate::nodes::ClipVisionOut {
+                node_id,
+                slot: 0u32,
+            },
         }
     }
     const NAME: &'static str = "CLIPVisionLoader";
@@ -42,11 +47,20 @@ pub struct CheckpointLoaderSimpleOutput {
 impl<CkptName: crate::nodes::String> crate::nodes::TypedNode
 for CheckpointLoaderSimple<CkptName> {
     type Output = CheckpointLoaderSimpleOutput;
-    fn output(&self) -> Self::Output {
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            model: crate::nodes::ModelOut(0u32),
-            clip: crate::nodes::ClipOut(1u32),
-            vae: crate::nodes::VaeOut(2u32),
+            model: crate::nodes::ModelOut {
+                node_id,
+                slot: 0u32,
+            },
+            clip: crate::nodes::ClipOut {
+                node_id,
+                slot: 1u32,
+            },
+            vae: crate::nodes::VaeOut {
+                node_id,
+                slot: 2u32,
+            },
         }
     }
     const NAME: &'static str = "CheckpointLoaderSimple";
@@ -68,9 +82,12 @@ pub struct ControlNetLoaderOutput {
 impl<ControlNetName: crate::nodes::String> crate::nodes::TypedNode
 for ControlNetLoader<ControlNetName> {
     type Output = ControlNetLoaderOutput;
-    fn output(&self) -> Self::Output {
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            control_net: crate::nodes::ControlNetOut(0u32),
+            control_net: crate::nodes::ControlNetOut {
+                node_id,
+                slot: 0u32,
+            },
         }
     }
     const NAME: &'static str = "ControlNetLoader";
@@ -99,9 +116,12 @@ impl<
     ControlNetName: crate::nodes::String,
 > crate::nodes::TypedNode for DiffControlNetLoader<Model, ControlNetName> {
     type Output = DiffControlNetLoaderOutput;
-    fn output(&self) -> Self::Output {
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            control_net: crate::nodes::ControlNetOut(0u32),
+            control_net: crate::nodes::ControlNetOut {
+                node_id,
+                slot: 0u32,
+            },
         }
     }
     const NAME: &'static str = "DiffControlNetLoader";
@@ -123,9 +143,12 @@ pub struct GligenLoaderOutput {
 impl<GligenName: crate::nodes::String> crate::nodes::TypedNode
 for GligenLoader<GligenName> {
     type Output = GligenLoaderOutput;
-    fn output(&self) -> Self::Output {
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            gligen: crate::nodes::GligenOut(0u32),
+            gligen: crate::nodes::GligenOut {
+                node_id,
+                slot: 0u32,
+            },
         }
     }
     const NAME: &'static str = "GLIGENLoader";
@@ -158,9 +181,12 @@ impl<
     Strength: crate::nodes::Float,
 > crate::nodes::TypedNode for HypernetworkLoader<Model, HypernetworkName, Strength> {
     type Output = HypernetworkLoaderOutput;
-    fn output(&self) -> Self::Output {
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            model: crate::nodes::ModelOut(0u32),
+            model: crate::nodes::ModelOut {
+                node_id,
+                slot: 0u32,
+            },
         }
     }
     const NAME: &'static str = "HypernetworkLoader";
@@ -204,10 +230,16 @@ impl<
 > crate::nodes::TypedNode
 for LoraLoader<Model, Clip, LoraName, StrengthModel, StrengthClip> {
     type Output = LoraLoaderOutput;
-    fn output(&self) -> Self::Output {
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            model: crate::nodes::ModelOut(0u32),
-            clip: crate::nodes::ClipOut(1u32),
+            model: crate::nodes::ModelOut {
+                node_id,
+                slot: 0u32,
+            },
+            clip: crate::nodes::ClipOut {
+                node_id,
+                slot: 1u32,
+            },
         }
     }
     const NAME: &'static str = "LoraLoader";
@@ -240,9 +272,12 @@ impl<
     StrengthModel: crate::nodes::Float,
 > crate::nodes::TypedNode for LoraLoaderModelOnly<Model, LoraName, StrengthModel> {
     type Output = LoraLoaderModelOnlyOutput;
-    fn output(&self) -> Self::Output {
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            model: crate::nodes::ModelOut(0u32),
+            model: crate::nodes::ModelOut {
+                node_id,
+                slot: 0u32,
+            },
         }
     }
     const NAME: &'static str = "LoraLoaderModelOnly";
@@ -264,9 +299,12 @@ pub struct StyleModelLoaderOutput {
 impl<StyleModelName: crate::nodes::String> crate::nodes::TypedNode
 for StyleModelLoader<StyleModelName> {
     type Output = StyleModelLoaderOutput;
-    fn output(&self) -> Self::Output {
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            style_model: crate::nodes::StyleModelOut(0u32),
+            style_model: crate::nodes::StyleModelOut {
+                node_id,
+                slot: 0u32,
+            },
         }
     }
     const NAME: &'static str = "StyleModelLoader";
@@ -288,9 +326,12 @@ pub struct UpscaleModelLoaderOutput {
 impl<ModelName: crate::nodes::String> crate::nodes::TypedNode
 for UpscaleModelLoader<ModelName> {
     type Output = UpscaleModelLoaderOutput;
-    fn output(&self) -> Self::Output {
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            upscale_model: crate::nodes::UpscaleModelOut(0u32),
+            upscale_model: crate::nodes::UpscaleModelOut {
+                node_id,
+                slot: 0u32,
+            },
         }
     }
     const NAME: &'static str = "UpscaleModelLoader";
@@ -311,9 +352,12 @@ pub struct VaeLoaderOutput {
 }
 impl<VaeName: crate::nodes::String> crate::nodes::TypedNode for VaeLoader<VaeName> {
     type Output = VaeLoaderOutput;
-    fn output(&self) -> Self::Output {
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            vae: crate::nodes::VaeOut(0u32),
+            vae: crate::nodes::VaeOut {
+                node_id,
+                slot: 0u32,
+            },
         }
     }
     const NAME: &'static str = "VAELoader";
@@ -341,12 +385,24 @@ pub struct UnClipCheckpointLoaderOutput {
 impl<CkptName: crate::nodes::String> crate::nodes::TypedNode
 for UnClipCheckpointLoader<CkptName> {
     type Output = UnClipCheckpointLoaderOutput;
-    fn output(&self) -> Self::Output {
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            model: crate::nodes::ModelOut(0u32),
-            clip: crate::nodes::ClipOut(1u32),
-            vae: crate::nodes::VaeOut(2u32),
-            clip_vision: crate::nodes::ClipVisionOut(3u32),
+            model: crate::nodes::ModelOut {
+                node_id,
+                slot: 0u32,
+            },
+            clip: crate::nodes::ClipOut {
+                node_id,
+                slot: 1u32,
+            },
+            vae: crate::nodes::VaeOut {
+                node_id,
+                slot: 2u32,
+            },
+            clip_vision: crate::nodes::ClipVisionOut {
+                node_id,
+                slot: 3u32,
+            },
         }
     }
     const NAME: &'static str = "unCLIPCheckpointLoader";

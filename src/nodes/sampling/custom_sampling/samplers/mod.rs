@@ -1,4 +1,6 @@
 //!samplers
+#![allow(unused_imports)]
+use crate::WorkflowNodeId;
 ///**KSamplerSelect**
 pub struct KSamplerSelect<SamplerName: crate::nodes::String> {
     ///No documentation.
@@ -13,9 +15,12 @@ pub struct KSamplerSelectOutput {
 impl<SamplerName: crate::nodes::String> crate::nodes::TypedNode
 for KSamplerSelect<SamplerName> {
     type Output = KSamplerSelectOutput;
-    fn output(&self) -> Self::Output {
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            sampler: crate::nodes::SamplerOut(0u32),
+            sampler: crate::nodes::SamplerOut {
+                node_id,
+                slot: 0u32,
+            },
         }
     }
     const NAME: &'static str = "KSamplerSelect";
@@ -88,9 +93,12 @@ for SamplerDpmAdaptative<
     SNoise,
 > {
     type Output = SamplerDpmAdaptativeOutput;
-    fn output(&self) -> Self::Output {
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            sampler: crate::nodes::SamplerOut(0u32),
+            sampler: crate::nodes::SamplerOut {
+                node_id,
+                slot: 0u32,
+            },
         }
     }
     const NAME: &'static str = "SamplerDPMAdaptative";
@@ -127,9 +135,12 @@ impl<
     NoiseDevice: crate::nodes::String,
 > crate::nodes::TypedNode for SamplerDpmpp2MSde<SolverType, Eta, SNoise, NoiseDevice> {
     type Output = SamplerDpmpp2MSdeOutput;
-    fn output(&self) -> Self::Output {
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            sampler: crate::nodes::SamplerOut(0u32),
+            sampler: crate::nodes::SamplerOut {
+                node_id,
+                slot: 0u32,
+            },
         }
     }
     const NAME: &'static str = "SamplerDPMPP_2M_SDE";
@@ -156,9 +167,12 @@ pub struct SamplerDpmpp2SAncestralOutput {
 impl<Eta: crate::nodes::Float, SNoise: crate::nodes::Float> crate::nodes::TypedNode
 for SamplerDpmpp2SAncestral<Eta, SNoise> {
     type Output = SamplerDpmpp2SAncestralOutput;
-    fn output(&self) -> Self::Output {
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            sampler: crate::nodes::SamplerOut(0u32),
+            sampler: crate::nodes::SamplerOut {
+                node_id,
+                slot: 0u32,
+            },
         }
     }
     const NAME: &'static str = "SamplerDPMPP_2S_Ancestral";
@@ -191,9 +205,12 @@ impl<
     NoiseDevice: crate::nodes::String,
 > crate::nodes::TypedNode for SamplerDpmpp3MSde<Eta, SNoise, NoiseDevice> {
     type Output = SamplerDpmpp3MSdeOutput;
-    fn output(&self) -> Self::Output {
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            sampler: crate::nodes::SamplerOut(0u32),
+            sampler: crate::nodes::SamplerOut {
+                node_id,
+                slot: 0u32,
+            },
         }
     }
     const NAME: &'static str = "SamplerDPMPP_3M_SDE";
@@ -230,9 +247,12 @@ impl<
     NoiseDevice: crate::nodes::String,
 > crate::nodes::TypedNode for SamplerDpmppSde<Eta, SNoise, R, NoiseDevice> {
     type Output = SamplerDpmppSdeOutput;
-    fn output(&self) -> Self::Output {
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            sampler: crate::nodes::SamplerOut(0u32),
+            sampler: crate::nodes::SamplerOut {
+                node_id,
+                slot: 0u32,
+            },
         }
     }
     const NAME: &'static str = "SamplerDPMPP_SDE";
@@ -256,9 +276,12 @@ pub struct SamplerEulerAncestralOutput {
 impl<Eta: crate::nodes::Float, SNoise: crate::nodes::Float> crate::nodes::TypedNode
 for SamplerEulerAncestral<Eta, SNoise> {
     type Output = SamplerEulerAncestralOutput;
-    fn output(&self) -> Self::Output {
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            sampler: crate::nodes::SamplerOut(0u32),
+            sampler: crate::nodes::SamplerOut {
+                node_id,
+                slot: 0u32,
+            },
         }
     }
     const NAME: &'static str = "SamplerEulerAncestral";
@@ -285,9 +308,12 @@ pub struct SamplerEulerAncestralCfgppOutput {
 impl<Eta: crate::nodes::Float, SNoise: crate::nodes::Float> crate::nodes::TypedNode
 for SamplerEulerAncestralCfgpp<Eta, SNoise> {
     type Output = SamplerEulerAncestralCfgppOutput;
-    fn output(&self) -> Self::Output {
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            sampler: crate::nodes::SamplerOut(0u32),
+            sampler: crate::nodes::SamplerOut {
+                node_id,
+                slot: 0u32,
+            },
         }
     }
     const NAME: &'static str = "SamplerEulerAncestralCFGPP";
@@ -320,9 +346,12 @@ impl<
     UpscaleMethod: crate::nodes::String,
 > crate::nodes::TypedNode for SamplerLcmUpscale<ScaleRatio, ScaleSteps, UpscaleMethod> {
     type Output = SamplerLcmUpscaleOutput;
-    fn output(&self) -> Self::Output {
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            sampler: crate::nodes::SamplerOut(0u32),
+            sampler: crate::nodes::SamplerOut {
+                node_id,
+                slot: 0u32,
+            },
         }
     }
     const NAME: &'static str = "SamplerLCMUpscale";
@@ -343,9 +372,12 @@ pub struct SamplerLmsOutput {
 }
 impl<Order: crate::nodes::Int> crate::nodes::TypedNode for SamplerLms<Order> {
     type Output = SamplerLmsOutput;
-    fn output(&self) -> Self::Output {
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            sampler: crate::nodes::SamplerOut(0u32),
+            sampler: crate::nodes::SamplerOut {
+                node_id,
+                slot: 0u32,
+            },
         }
     }
     const NAME: &'static str = "SamplerLMS";

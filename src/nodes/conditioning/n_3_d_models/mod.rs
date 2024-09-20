@@ -1,4 +1,6 @@
 //!3d_models
+#![allow(unused_imports)]
+use crate::WorkflowNodeId;
 ///**SV3D_Conditioning**
 pub struct Sv3DConditioning<
     ClipVision: crate::nodes::ClipVision,
@@ -45,11 +47,20 @@ impl<
 > crate::nodes::TypedNode
 for Sv3DConditioning<ClipVision, InitImage, Vae, Width, Height, VideoFrames, Elevation> {
     type Output = Sv3DConditioningOutput;
-    fn output(&self) -> Self::Output {
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            positive: crate::nodes::ConditioningOut(0u32),
-            negative: crate::nodes::ConditioningOut(1u32),
-            latent: crate::nodes::LatentOut(2u32),
+            positive: crate::nodes::ConditioningOut {
+                node_id,
+                slot: 0u32,
+            },
+            negative: crate::nodes::ConditioningOut {
+                node_id,
+                slot: 1u32,
+            },
+            latent: crate::nodes::LatentOut {
+                node_id,
+                slot: 2u32,
+            },
         }
     }
     const NAME: &'static str = "SV3D_Conditioning";
@@ -116,11 +127,20 @@ for StableZero123Conditioning<
     Azimuth,
 > {
     type Output = StableZero123ConditioningOutput;
-    fn output(&self) -> Self::Output {
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            positive: crate::nodes::ConditioningOut(0u32),
-            negative: crate::nodes::ConditioningOut(1u32),
-            latent: crate::nodes::LatentOut(2u32),
+            positive: crate::nodes::ConditioningOut {
+                node_id,
+                slot: 0u32,
+            },
+            negative: crate::nodes::ConditioningOut {
+                node_id,
+                slot: 1u32,
+            },
+            latent: crate::nodes::LatentOut {
+                node_id,
+                slot: 2u32,
+            },
         }
     }
     const NAME: &'static str = "StableZero123_Conditioning";
@@ -197,11 +217,20 @@ for StableZero123ConditioningBatched<
     AzimuthBatchIncrement,
 > {
     type Output = StableZero123ConditioningBatchedOutput;
-    fn output(&self) -> Self::Output {
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            positive: crate::nodes::ConditioningOut(0u32),
-            negative: crate::nodes::ConditioningOut(1u32),
-            latent: crate::nodes::LatentOut(2u32),
+            positive: crate::nodes::ConditioningOut {
+                node_id,
+                slot: 0u32,
+            },
+            negative: crate::nodes::ConditioningOut {
+                node_id,
+                slot: 1u32,
+            },
+            latent: crate::nodes::LatentOut {
+                node_id,
+                slot: 2u32,
+            },
         }
     }
     const NAME: &'static str = "StableZero123_Conditioning_Batched";

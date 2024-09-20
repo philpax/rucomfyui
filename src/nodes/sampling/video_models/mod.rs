@@ -1,4 +1,6 @@
 //!video_models
+#![allow(unused_imports)]
+use crate::WorkflowNodeId;
 ///**VideoLinearCFGGuidance**
 pub struct VideoLinearCfgGuidance<
     Model: crate::nodes::Model,
@@ -18,9 +20,12 @@ pub struct VideoLinearCfgGuidanceOutput {
 impl<Model: crate::nodes::Model, MinCfg: crate::nodes::Float> crate::nodes::TypedNode
 for VideoLinearCfgGuidance<Model, MinCfg> {
     type Output = VideoLinearCfgGuidanceOutput;
-    fn output(&self) -> Self::Output {
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            model: crate::nodes::ModelOut(0u32),
+            model: crate::nodes::ModelOut {
+                node_id,
+                slot: 0u32,
+            },
         }
     }
     const NAME: &'static str = "VideoLinearCFGGuidance";
@@ -47,9 +52,12 @@ pub struct VideoTriangleCfgGuidanceOutput {
 impl<Model: crate::nodes::Model, MinCfg: crate::nodes::Float> crate::nodes::TypedNode
 for VideoTriangleCfgGuidance<Model, MinCfg> {
     type Output = VideoTriangleCfgGuidanceOutput;
-    fn output(&self) -> Self::Output {
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            model: crate::nodes::ModelOut(0u32),
+            model: crate::nodes::ModelOut {
+                node_id,
+                slot: 0u32,
+            },
         }
     }
     const NAME: &'static str = "VideoTriangleCFGGuidance";

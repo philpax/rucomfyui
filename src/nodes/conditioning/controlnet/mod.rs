@@ -1,4 +1,6 @@
 //!controlnet
+#![allow(unused_imports)]
+use crate::WorkflowNodeId;
 ///**Apply ControlNet**
 pub struct ControlNetApply<
     Conditioning: crate::nodes::Conditioning,
@@ -29,9 +31,12 @@ impl<
 > crate::nodes::TypedNode
 for ControlNetApply<Conditioning, ControlNet, Image, Strength> {
     type Output = ControlNetApplyOutput;
-    fn output(&self) -> Self::Output {
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            conditioning: crate::nodes::ConditioningOut(0u32),
+            conditioning: crate::nodes::ConditioningOut {
+                node_id,
+                slot: 0u32,
+            },
         }
     }
     const NAME: &'static str = "ControlNetApply";
@@ -91,10 +96,16 @@ for ControlNetApplyAdvanced<
     EndPercent,
 > {
     type Output = ControlNetApplyAdvancedOutput;
-    fn output(&self) -> Self::Output {
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            positive: crate::nodes::ConditioningOut(0u32),
-            negative: crate::nodes::ConditioningOut(1u32),
+            positive: crate::nodes::ConditioningOut {
+                node_id,
+                slot: 0u32,
+            },
+            negative: crate::nodes::ConditioningOut {
+                node_id,
+                slot: 1u32,
+            },
         }
     }
     const NAME: &'static str = "ControlNetApplyAdvanced";
@@ -159,10 +170,16 @@ for ControlNetApplySd3<
     EndPercent,
 > {
     type Output = ControlNetApplySd3Output;
-    fn output(&self) -> Self::Output {
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            positive: crate::nodes::ConditioningOut(0u32),
-            negative: crate::nodes::ConditioningOut(1u32),
+            positive: crate::nodes::ConditioningOut {
+                node_id,
+                slot: 0u32,
+            },
+            negative: crate::nodes::ConditioningOut {
+                node_id,
+                slot: 1u32,
+            },
         }
     }
     const NAME: &'static str = "ControlNetApplySD3";
@@ -191,9 +208,12 @@ impl<
     Type: crate::nodes::String,
 > crate::nodes::TypedNode for SetUnionControlNetType<ControlNet, Type> {
     type Output = SetUnionControlNetTypeOutput;
-    fn output(&self) -> Self::Output {
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            control_net: crate::nodes::ControlNetOut(0u32),
+            control_net: crate::nodes::ControlNetOut {
+                node_id,
+                slot: 0u32,
+            },
         }
     }
     const NAME: &'static str = "SetUnionControlNetType";

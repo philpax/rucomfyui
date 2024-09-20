@@ -1,4 +1,6 @@
 //!latent
+#![allow(unused_imports)]
+use crate::WorkflowNodeId;
 pub mod advanced;
 pub mod audio;
 pub mod batch;
@@ -31,9 +33,12 @@ impl<
     BatchSize: crate::nodes::Int,
 > crate::nodes::TypedNode for EmptyLatentImage<Width, Height, BatchSize> {
     type Output = EmptyLatentImageOutput;
-    fn output(&self) -> Self::Output {
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            latent: crate::nodes::LatentOut(0u32),
+            latent: crate::nodes::LatentOut {
+                node_id,
+                slot: 0u32,
+            },
         }
     }
     const NAME: &'static str = "EmptyLatentImage";
@@ -74,9 +79,12 @@ impl<
     Feather: crate::nodes::Int,
 > crate::nodes::TypedNode for LatentComposite<SamplesTo, SamplesFrom, X, Y, Feather> {
     type Output = LatentCompositeOutput;
-    fn output(&self) -> Self::Output {
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            latent: crate::nodes::LatentOut(0u32),
+            latent: crate::nodes::LatentOut {
+                node_id,
+                slot: 0u32,
+            },
         }
     }
     const NAME: &'static str = "LatentComposite";
@@ -122,9 +130,12 @@ impl<
 > crate::nodes::TypedNode
 for LatentCompositeMasked<Destination, Source, X, Y, ResizeSource, Mask> {
     type Output = LatentCompositeMaskedOutput;
-    fn output(&self) -> Self::Output {
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            latent: crate::nodes::LatentOut(0u32),
+            latent: crate::nodes::LatentOut {
+                node_id,
+                slot: 0u32,
+            },
         }
     }
     const NAME: &'static str = "LatentCompositeMasked";
@@ -166,9 +177,12 @@ impl<
 > crate::nodes::TypedNode
 for LatentUpscale<Samples, UpscaleMethod, Width, Height, Crop> {
     type Output = LatentUpscaleOutput;
-    fn output(&self) -> Self::Output {
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            latent: crate::nodes::LatentOut(0u32),
+            latent: crate::nodes::LatentOut {
+                node_id,
+                slot: 0u32,
+            },
         }
     }
     const NAME: &'static str = "LatentUpscale";
@@ -201,9 +215,12 @@ impl<
     ScaleBy: crate::nodes::Float,
 > crate::nodes::TypedNode for LatentUpscaleBy<Samples, UpscaleMethod, ScaleBy> {
     type Output = LatentUpscaleByOutput;
-    fn output(&self) -> Self::Output {
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            latent: crate::nodes::LatentOut(0u32),
+            latent: crate::nodes::LatentOut {
+                node_id,
+                slot: 0u32,
+            },
         }
     }
     const NAME: &'static str = "LatentUpscaleBy";
@@ -227,9 +244,12 @@ pub struct VaeDecodeOutput {
 impl<Samples: crate::nodes::Latent, Vae: crate::nodes::Vae> crate::nodes::TypedNode
 for VaeDecode<Samples, Vae> {
     type Output = VaeDecodeOutput;
-    fn output(&self) -> Self::Output {
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            image: crate::nodes::ImageOut(0u32),
+            image: crate::nodes::ImageOut {
+                node_id,
+                slot: 0u32,
+            },
         }
     }
     const NAME: &'static str = "VAEDecode";
@@ -253,9 +273,12 @@ pub struct VaeEncodeOutput {
 impl<Pixels: crate::nodes::Image, Vae: crate::nodes::Vae> crate::nodes::TypedNode
 for VaeEncode<Pixels, Vae> {
     type Output = VaeEncodeOutput;
-    fn output(&self) -> Self::Output {
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            latent: crate::nodes::LatentOut(0u32),
+            latent: crate::nodes::LatentOut {
+                node_id,
+                slot: 0u32,
+            },
         }
     }
     const NAME: &'static str = "VAEEncode";

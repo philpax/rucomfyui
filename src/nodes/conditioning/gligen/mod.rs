@@ -1,4 +1,6 @@
 //!gligen
+#![allow(unused_imports)]
+use crate::WorkflowNodeId;
 ///**GLIGENTextBoxApply**
 pub struct GligenTextBoxApply<
     ConditioningTo: crate::nodes::Conditioning,
@@ -54,9 +56,12 @@ for GligenTextBoxApply<
     Y,
 > {
     type Output = GligenTextBoxApplyOutput;
-    fn output(&self) -> Self::Output {
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            conditioning: crate::nodes::ConditioningOut(0u32),
+            conditioning: crate::nodes::ConditioningOut {
+                node_id,
+                slot: 0u32,
+            },
         }
     }
     const NAME: &'static str = "GLIGENTextBoxApply";

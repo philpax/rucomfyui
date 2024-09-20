@@ -1,4 +1,6 @@
 //!deprecated
+#![allow(unused_imports)]
+use crate::WorkflowNodeId;
 ///**DiffusersLoader**
 pub struct DiffusersLoader<ModelPath: crate::nodes::String> {
     ///No documentation.
@@ -17,11 +19,20 @@ pub struct DiffusersLoaderOutput {
 impl<ModelPath: crate::nodes::String> crate::nodes::TypedNode
 for DiffusersLoader<ModelPath> {
     type Output = DiffusersLoaderOutput;
-    fn output(&self) -> Self::Output {
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            model: crate::nodes::ModelOut(0u32),
-            clip: crate::nodes::ClipOut(1u32),
-            vae: crate::nodes::VaeOut(2u32),
+            model: crate::nodes::ModelOut {
+                node_id,
+                slot: 0u32,
+            },
+            clip: crate::nodes::ClipOut {
+                node_id,
+                slot: 1u32,
+            },
+            vae: crate::nodes::VaeOut {
+                node_id,
+                slot: 2u32,
+            },
         }
     }
     const NAME: &'static str = "DiffusersLoader";

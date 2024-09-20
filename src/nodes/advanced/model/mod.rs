@@ -1,4 +1,6 @@
 //!model
+#![allow(unused_imports)]
+use crate::WorkflowNodeId;
 ///**ModelSamplingAuraFlow**
 pub struct ModelSamplingAuraFlow<
     Model: crate::nodes::Model,
@@ -18,9 +20,12 @@ pub struct ModelSamplingAuraFlowOutput {
 impl<Model: crate::nodes::Model, Shift: crate::nodes::Float> crate::nodes::TypedNode
 for ModelSamplingAuraFlow<Model, Shift> {
     type Output = ModelSamplingAuraFlowOutput;
-    fn output(&self) -> Self::Output {
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            model: crate::nodes::ModelOut(0u32),
+            model: crate::nodes::ModelOut {
+                node_id,
+                slot: 0u32,
+            },
         }
     }
     const NAME: &'static str = "ModelSamplingAuraFlow";
@@ -58,9 +63,12 @@ impl<
 > crate::nodes::TypedNode
 for ModelSamplingContinuousEdm<Model, Sampling, SigmaMax, SigmaMin> {
     type Output = ModelSamplingContinuousEdmOutput;
-    fn output(&self) -> Self::Output {
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            model: crate::nodes::ModelOut(0u32),
+            model: crate::nodes::ModelOut {
+                node_id,
+                slot: 0u32,
+            },
         }
     }
     const NAME: &'static str = "ModelSamplingContinuousEDM";
@@ -98,9 +106,12 @@ impl<
 > crate::nodes::TypedNode
 for ModelSamplingContinuousV<Model, Sampling, SigmaMax, SigmaMin> {
     type Output = ModelSamplingContinuousVOutput;
-    fn output(&self) -> Self::Output {
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            model: crate::nodes::ModelOut(0u32),
+            model: crate::nodes::ModelOut {
+                node_id,
+                slot: 0u32,
+            },
         }
     }
     const NAME: &'static str = "ModelSamplingContinuousV";
@@ -133,9 +144,12 @@ impl<
     Zsnr: crate::nodes::Boolean,
 > crate::nodes::TypedNode for ModelSamplingDiscrete<Model, Sampling, Zsnr> {
     type Output = ModelSamplingDiscreteOutput;
-    fn output(&self) -> Self::Output {
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            model: crate::nodes::ModelOut(0u32),
+            model: crate::nodes::ModelOut {
+                node_id,
+                slot: 0u32,
+            },
         }
     }
     const NAME: &'static str = "ModelSamplingDiscrete";
@@ -177,9 +191,12 @@ impl<
 > crate::nodes::TypedNode
 for ModelSamplingFlux<Model, MaxShift, BaseShift, Width, Height> {
     type Output = ModelSamplingFluxOutput;
-    fn output(&self) -> Self::Output {
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            model: crate::nodes::ModelOut(0u32),
+            model: crate::nodes::ModelOut {
+                node_id,
+                slot: 0u32,
+            },
         }
     }
     const NAME: &'static str = "ModelSamplingFlux";
@@ -203,9 +220,12 @@ pub struct ModelSamplingSd3Output {
 impl<Model: crate::nodes::Model, Shift: crate::nodes::Float> crate::nodes::TypedNode
 for ModelSamplingSd3<Model, Shift> {
     type Output = ModelSamplingSd3Output;
-    fn output(&self) -> Self::Output {
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            model: crate::nodes::ModelOut(0u32),
+            model: crate::nodes::ModelOut {
+                node_id,
+                slot: 0u32,
+            },
         }
     }
     const NAME: &'static str = "ModelSamplingSD3";
@@ -232,9 +252,12 @@ pub struct ModelSamplingStableCascadeOutput {
 impl<Model: crate::nodes::Model, Shift: crate::nodes::Float> crate::nodes::TypedNode
 for ModelSamplingStableCascade<Model, Shift> {
     type Output = ModelSamplingStableCascadeOutput;
-    fn output(&self) -> Self::Output {
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            model: crate::nodes::ModelOut(0u32),
+            model: crate::nodes::ModelOut {
+                node_id,
+                slot: 0u32,
+            },
         }
     }
     const NAME: &'static str = "ModelSamplingStableCascade";
@@ -258,9 +281,12 @@ pub struct RescaleCfgOutput {
 impl<Model: crate::nodes::Model, Multiplier: crate::nodes::Float> crate::nodes::TypedNode
 for RescaleCfg<Model, Multiplier> {
     type Output = RescaleCfgOutput;
-    fn output(&self) -> Self::Output {
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            model: crate::nodes::ModelOut(0u32),
+            model: crate::nodes::ModelOut {
+                node_id,
+                slot: 0u32,
+            },
         }
     }
     const NAME: &'static str = "RescaleCFG";

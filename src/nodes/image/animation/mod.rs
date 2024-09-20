@@ -1,4 +1,6 @@
 //!animation
+#![allow(unused_imports)]
+use crate::WorkflowNodeId;
 ///**SaveAnimatedPNG**
 pub struct SaveAnimatedPng<
     Images: crate::nodes::Image,
@@ -26,7 +28,7 @@ impl<
 > crate::nodes::TypedNode
 for SaveAnimatedPng<Images, FilenamePrefix, Fps, CompressLevel> {
     type Output = SaveAnimatedPngOutput;
-    fn output(&self) -> Self::Output {
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {}
     }
     const NAME: &'static str = "SaveAnimatedPNG";
@@ -69,7 +71,7 @@ impl<
 > crate::nodes::TypedNode
 for SaveAnimatedWebp<Images, FilenamePrefix, Fps, Lossless, Quality, Method> {
     type Output = SaveAnimatedWebpOutput;
-    fn output(&self) -> Self::Output {
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {}
     }
     const NAME: &'static str = "SaveAnimatedWEBP";

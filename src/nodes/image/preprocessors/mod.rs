@@ -1,4 +1,6 @@
 //!preprocessors
+#![allow(unused_imports)]
+use crate::WorkflowNodeId;
 ///**Canny**
 pub struct Canny<
     Image: crate::nodes::Image,
@@ -24,9 +26,12 @@ impl<
     HighThreshold: crate::nodes::Float,
 > crate::nodes::TypedNode for Canny<Image, LowThreshold, HighThreshold> {
     type Output = CannyOutput;
-    fn output(&self) -> Self::Output {
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            image: crate::nodes::ImageOut(0u32),
+            image: crate::nodes::ImageOut {
+                node_id,
+                slot: 0u32,
+            },
         }
     }
     const NAME: &'static str = "Canny";

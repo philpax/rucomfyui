@@ -1,4 +1,6 @@
 //!postprocessing
+#![allow(unused_imports)]
+use crate::WorkflowNodeId;
 ///**ImageBlend**
 pub struct ImageBlend<
     Image1: crate::nodes::Image,
@@ -28,9 +30,12 @@ impl<
     BlendMode: crate::nodes::String,
 > crate::nodes::TypedNode for ImageBlend<Image1, Image2, BlendFactor, BlendMode> {
     type Output = ImageBlendOutput;
-    fn output(&self) -> Self::Output {
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            image: crate::nodes::ImageOut(0u32),
+            image: crate::nodes::ImageOut {
+                node_id,
+                slot: 0u32,
+            },
         }
     }
     const NAME: &'static str = "ImageBlend";
@@ -63,9 +68,12 @@ impl<
     Sigma: crate::nodes::Float,
 > crate::nodes::TypedNode for ImageBlur<Image, BlurRadius, Sigma> {
     type Output = ImageBlurOutput;
-    fn output(&self) -> Self::Output {
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            image: crate::nodes::ImageOut(0u32),
+            image: crate::nodes::ImageOut {
+                node_id,
+                slot: 0u32,
+            },
         }
     }
     const NAME: &'static str = "ImageBlur";
@@ -98,9 +106,12 @@ impl<
     Dither: crate::nodes::String,
 > crate::nodes::TypedNode for ImageQuantize<Image, Colors, Dither> {
     type Output = ImageQuantizeOutput;
-    fn output(&self) -> Self::Output {
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            image: crate::nodes::ImageOut(0u32),
+            image: crate::nodes::ImageOut {
+                node_id,
+                slot: 0u32,
+            },
         }
     }
     const NAME: &'static str = "ImageQuantize";
@@ -137,9 +148,12 @@ impl<
     Alpha: crate::nodes::Float,
 > crate::nodes::TypedNode for ImageSharpen<Image, SharpenRadius, Sigma, Alpha> {
     type Output = ImageSharpenOutput;
-    fn output(&self) -> Self::Output {
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            image: crate::nodes::ImageOut(0u32),
+            image: crate::nodes::ImageOut {
+                node_id,
+                slot: 0u32,
+            },
         }
     }
     const NAME: &'static str = "ImageSharpen";
@@ -172,9 +186,12 @@ impl<
     KernelSize: crate::nodes::Int,
 > crate::nodes::TypedNode for Morphology<Image, Operation, KernelSize> {
     type Output = MorphologyOutput;
-    fn output(&self) -> Self::Output {
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            image: crate::nodes::ImageOut(0u32),
+            image: crate::nodes::ImageOut {
+                node_id,
+                slot: 0u32,
+            },
         }
     }
     const NAME: &'static str = "Morphology";

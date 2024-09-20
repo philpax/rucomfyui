@@ -1,4 +1,6 @@
 //!flux
+#![allow(unused_imports)]
+use crate::WorkflowNodeId;
 ///**CLIPTextEncodeFlux**
 pub struct ClipTextEncodeFlux<
     Clip: crate::nodes::Clip,
@@ -28,9 +30,12 @@ impl<
     Guidance: crate::nodes::Float,
 > crate::nodes::TypedNode for ClipTextEncodeFlux<Clip, ClipL, T5Xxl, Guidance> {
     type Output = ClipTextEncodeFluxOutput;
-    fn output(&self) -> Self::Output {
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            conditioning: crate::nodes::ConditioningOut(0u32),
+            conditioning: crate::nodes::ConditioningOut {
+                node_id,
+                slot: 0u32,
+            },
         }
     }
     const NAME: &'static str = "CLIPTextEncodeFlux";
@@ -59,9 +64,12 @@ impl<
     Guidance: crate::nodes::Float,
 > crate::nodes::TypedNode for FluxGuidance<Conditioning, Guidance> {
     type Output = FluxGuidanceOutput;
-    fn output(&self) -> Self::Output {
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            conditioning: crate::nodes::ConditioningOut(0u32),
+            conditioning: crate::nodes::ConditioningOut {
+                node_id,
+                slot: 0u32,
+            },
         }
     }
     const NAME: &'static str = "FluxGuidance";

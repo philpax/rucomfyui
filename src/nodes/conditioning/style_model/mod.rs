@@ -1,4 +1,6 @@
 //!style_model
+#![allow(unused_imports)]
+use crate::WorkflowNodeId;
 ///**Apply Style Model**
 pub struct StyleModelApply<
     Conditioning: crate::nodes::Conditioning,
@@ -25,9 +27,12 @@ impl<
 > crate::nodes::TypedNode
 for StyleModelApply<Conditioning, StyleModel, ClipVisionOutput> {
     type Output = StyleModelApplyOutput;
-    fn output(&self) -> Self::Output {
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            conditioning: crate::nodes::ConditioningOut(0u32),
+            conditioning: crate::nodes::ConditioningOut {
+                node_id,
+                slot: 0u32,
+            },
         }
     }
     const NAME: &'static str = "StyleModelApply";

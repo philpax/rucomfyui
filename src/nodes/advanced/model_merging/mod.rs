@@ -1,4 +1,6 @@
 //!model_merging
+#![allow(unused_imports)]
+use crate::WorkflowNodeId;
 pub mod model_specific;
 ///**CLIPMergeAdd**
 pub struct ClipMergeAdd<Clip1: crate::nodes::Clip, Clip2: crate::nodes::Clip> {
@@ -16,9 +18,12 @@ pub struct ClipMergeAddOutput {
 impl<Clip1: crate::nodes::Clip, Clip2: crate::nodes::Clip> crate::nodes::TypedNode
 for ClipMergeAdd<Clip1, Clip2> {
     type Output = ClipMergeAddOutput;
-    fn output(&self) -> Self::Output {
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            clip: crate::nodes::ClipOut(0u32),
+            clip: crate::nodes::ClipOut {
+                node_id,
+                slot: 0u32,
+            },
         }
     }
     const NAME: &'static str = "CLIPMergeAdd";
@@ -51,9 +56,12 @@ impl<
     Ratio: crate::nodes::Float,
 > crate::nodes::TypedNode for ClipMergeSimple<Clip1, Clip2, Ratio> {
     type Output = ClipMergeSimpleOutput;
-    fn output(&self) -> Self::Output {
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            clip: crate::nodes::ClipOut(0u32),
+            clip: crate::nodes::ClipOut {
+                node_id,
+                slot: 0u32,
+            },
         }
     }
     const NAME: &'static str = "CLIPMergeSimple";
@@ -86,9 +94,12 @@ impl<
     Multiplier: crate::nodes::Float,
 > crate::nodes::TypedNode for ClipMergeSubtract<Clip1, Clip2, Multiplier> {
     type Output = ClipMergeSubtractOutput;
-    fn output(&self) -> Self::Output {
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            clip: crate::nodes::ClipOut(0u32),
+            clip: crate::nodes::ClipOut {
+                node_id,
+                slot: 0u32,
+            },
         }
     }
     const NAME: &'static str = "CLIPMergeSubtract";
@@ -111,7 +122,7 @@ impl<
     FilenamePrefix: crate::nodes::String,
 > crate::nodes::TypedNode for ClipSave<Clip, FilenamePrefix> {
     type Output = ClipSaveOutput;
-    fn output(&self) -> Self::Output {
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {}
     }
     const NAME: &'static str = "CLIPSave";
@@ -145,7 +156,7 @@ impl<
     FilenamePrefix: crate::nodes::String,
 > crate::nodes::TypedNode for CheckpointSave<Model, Clip, Vae, FilenamePrefix> {
     type Output = CheckpointSaveOutput;
-    fn output(&self) -> Self::Output {
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {}
     }
     const NAME: &'static str = "CheckpointSave";
@@ -169,9 +180,12 @@ pub struct ModelMergeAddOutput {
 impl<Model1: crate::nodes::Model, Model2: crate::nodes::Model> crate::nodes::TypedNode
 for ModelMergeAdd<Model1, Model2> {
     type Output = ModelMergeAddOutput;
-    fn output(&self) -> Self::Output {
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            model: crate::nodes::ModelOut(0u32),
+            model: crate::nodes::ModelOut {
+                node_id,
+                slot: 0u32,
+            },
         }
     }
     const NAME: &'static str = "ModelMergeAdd";
@@ -212,9 +226,12 @@ impl<
     Out: crate::nodes::Float,
 > crate::nodes::TypedNode for ModelMergeBlocks<Model1, Model2, Input, Middle, Out> {
     type Output = ModelMergeBlocksOutput;
-    fn output(&self) -> Self::Output {
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            model: crate::nodes::ModelOut(0u32),
+            model: crate::nodes::ModelOut {
+                node_id,
+                slot: 0u32,
+            },
         }
     }
     const NAME: &'static str = "ModelMergeBlocks";
@@ -247,9 +264,12 @@ impl<
     Ratio: crate::nodes::Float,
 > crate::nodes::TypedNode for ModelMergeSimple<Model1, Model2, Ratio> {
     type Output = ModelMergeSimpleOutput;
-    fn output(&self) -> Self::Output {
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            model: crate::nodes::ModelOut(0u32),
+            model: crate::nodes::ModelOut {
+                node_id,
+                slot: 0u32,
+            },
         }
     }
     const NAME: &'static str = "ModelMergeSimple";
@@ -282,9 +302,12 @@ impl<
     Multiplier: crate::nodes::Float,
 > crate::nodes::TypedNode for ModelMergeSubtract<Model1, Model2, Multiplier> {
     type Output = ModelMergeSubtractOutput;
-    fn output(&self) -> Self::Output {
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            model: crate::nodes::ModelOut(0u32),
+            model: crate::nodes::ModelOut {
+                node_id,
+                slot: 0u32,
+            },
         }
     }
     const NAME: &'static str = "ModelMergeSubtract";
@@ -307,7 +330,7 @@ impl<
     FilenamePrefix: crate::nodes::String,
 > crate::nodes::TypedNode for ModelSave<Model, FilenamePrefix> {
     type Output = ModelSaveOutput;
-    fn output(&self) -> Self::Output {
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {}
     }
     const NAME: &'static str = "ModelSave";
@@ -330,7 +353,7 @@ impl<
     FilenamePrefix: crate::nodes::String,
 > crate::nodes::TypedNode for VaeSave<Vae, FilenamePrefix> {
     type Output = VaeSaveOutput;
-    fn output(&self) -> Self::Output {
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {}
     }
     const NAME: &'static str = "VAESave";

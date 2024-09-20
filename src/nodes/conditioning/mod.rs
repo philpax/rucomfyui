@@ -1,4 +1,6 @@
 //!conditioning
+#![allow(unused_imports)]
+use crate::WorkflowNodeId;
 pub mod n_3_d_models;
 pub mod controlnet;
 pub mod gligen;
@@ -29,9 +31,12 @@ impl<
     StopAtClipLayer: crate::nodes::Int,
 > crate::nodes::TypedNode for ClipSetLastLayer<Clip, StopAtClipLayer> {
     type Output = ClipSetLastLayerOutput;
-    fn output(&self) -> Self::Output {
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            clip: crate::nodes::ClipOut(0u32),
+            clip: crate::nodes::ClipOut {
+                node_id,
+                slot: 0u32,
+            },
         }
     }
     const NAME: &'static str = "CLIPSetLastLayer";
@@ -55,9 +60,12 @@ pub struct ClipTextEncodeOutput {
 impl<Text: crate::nodes::String, Clip: crate::nodes::Clip> crate::nodes::TypedNode
 for ClipTextEncode<Text, Clip> {
     type Output = ClipTextEncodeOutput;
-    fn output(&self) -> Self::Output {
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            conditioning: crate::nodes::ConditioningOut(0u32),
+            conditioning: crate::nodes::ConditioningOut {
+                node_id,
+                slot: 0u32,
+            },
         }
     }
     const NAME: &'static str = "CLIPTextEncode";
@@ -86,9 +94,12 @@ impl<
     Image: crate::nodes::Image,
 > crate::nodes::TypedNode for ClipVisionEncode<ClipVision, Image> {
     type Output = ClipVisionEncodeOutput;
-    fn output(&self) -> Self::Output {
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            clip_vision_output: crate::nodes::ClipVisionOutputOut(0u32),
+            clip_vision_output: crate::nodes::ClipVisionOutputOut {
+                node_id,
+                slot: 0u32,
+            },
         }
     }
     const NAME: &'static str = "CLIPVisionEncode";
@@ -122,9 +133,12 @@ impl<
 > crate::nodes::TypedNode
 for ConditioningAverage<ConditioningTo, ConditioningFrom, ConditioningToStrength> {
     type Output = ConditioningAverageOutput;
-    fn output(&self) -> Self::Output {
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            conditioning: crate::nodes::ConditioningOut(0u32),
+            conditioning: crate::nodes::ConditioningOut {
+                node_id,
+                slot: 0u32,
+            },
         }
     }
     const NAME: &'static str = "ConditioningAverage";
@@ -153,9 +167,12 @@ impl<
     Conditioning2: crate::nodes::Conditioning,
 > crate::nodes::TypedNode for ConditioningCombine<Conditioning1, Conditioning2> {
     type Output = ConditioningCombineOutput;
-    fn output(&self) -> Self::Output {
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            conditioning: crate::nodes::ConditioningOut(0u32),
+            conditioning: crate::nodes::ConditioningOut {
+                node_id,
+                slot: 0u32,
+            },
         }
     }
     const NAME: &'static str = "ConditioningCombine";
@@ -184,9 +201,12 @@ impl<
     ConditioningFrom: crate::nodes::Conditioning,
 > crate::nodes::TypedNode for ConditioningConcat<ConditioningTo, ConditioningFrom> {
     type Output = ConditioningConcatOutput;
-    fn output(&self) -> Self::Output {
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            conditioning: crate::nodes::ConditioningOut(0u32),
+            conditioning: crate::nodes::ConditioningOut {
+                node_id,
+                slot: 0u32,
+            },
         }
     }
     const NAME: &'static str = "ConditioningConcat";
@@ -232,9 +252,12 @@ impl<
 > crate::nodes::TypedNode
 for ConditioningSetArea<Conditioning, Width, Height, X, Y, Strength> {
     type Output = ConditioningSetAreaOutput;
-    fn output(&self) -> Self::Output {
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            conditioning: crate::nodes::ConditioningOut(0u32),
+            conditioning: crate::nodes::ConditioningOut {
+                node_id,
+                slot: 0u32,
+            },
         }
     }
     const NAME: &'static str = "ConditioningSetArea";
@@ -280,9 +303,12 @@ impl<
 > crate::nodes::TypedNode
 for ConditioningSetAreaPercentage<Conditioning, Width, Height, X, Y, Strength> {
     type Output = ConditioningSetAreaPercentageOutput;
-    fn output(&self) -> Self::Output {
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            conditioning: crate::nodes::ConditioningOut(0u32),
+            conditioning: crate::nodes::ConditioningOut {
+                node_id,
+                slot: 0u32,
+            },
         }
     }
     const NAME: &'static str = "ConditioningSetAreaPercentage";
@@ -311,9 +337,12 @@ impl<
     Strength: crate::nodes::Float,
 > crate::nodes::TypedNode for ConditioningSetAreaStrength<Conditioning, Strength> {
     type Output = ConditioningSetAreaStrengthOutput;
-    fn output(&self) -> Self::Output {
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            conditioning: crate::nodes::ConditioningOut(0u32),
+            conditioning: crate::nodes::ConditioningOut {
+                node_id,
+                slot: 0u32,
+            },
         }
     }
     const NAME: &'static str = "ConditioningSetAreaStrength";
@@ -351,9 +380,12 @@ impl<
 > crate::nodes::TypedNode
 for ConditioningSetMask<Conditioning, Mask, Strength, SetCondArea> {
     type Output = ConditioningSetMaskOutput;
-    fn output(&self) -> Self::Output {
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            conditioning: crate::nodes::ConditioningOut(0u32),
+            conditioning: crate::nodes::ConditioningOut {
+                node_id,
+                slot: 0u32,
+            },
         }
     }
     const NAME: &'static str = "ConditioningSetMask";
@@ -391,9 +423,12 @@ impl<
 > crate::nodes::TypedNode
 for UnClipConditioning<Conditioning, ClipVisionOutput, Strength, NoiseAugmentation> {
     type Output = UnClipConditioningOutput;
-    fn output(&self) -> Self::Output {
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            conditioning: crate::nodes::ConditioningOut(0u32),
+            conditioning: crate::nodes::ConditioningOut {
+                node_id,
+                slot: 0u32,
+            },
         }
     }
     const NAME: &'static str = "unCLIPConditioning";

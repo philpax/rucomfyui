@@ -1,4 +1,6 @@
 //!instructpix2pix
+#![allow(unused_imports)]
+use crate::WorkflowNodeId;
 ///**InstructPixToPixConditioning**
 pub struct InstructPixToPixConditioning<
     Positive: crate::nodes::Conditioning,
@@ -33,11 +35,20 @@ impl<
 > crate::nodes::TypedNode
 for InstructPixToPixConditioning<Positive, Negative, Vae, Pixels> {
     type Output = InstructPixToPixConditioningOutput;
-    fn output(&self) -> Self::Output {
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            positive: crate::nodes::ConditioningOut(0u32),
-            negative: crate::nodes::ConditioningOut(1u32),
-            latent: crate::nodes::LatentOut(2u32),
+            positive: crate::nodes::ConditioningOut {
+                node_id,
+                slot: 0u32,
+            },
+            negative: crate::nodes::ConditioningOut {
+                node_id,
+                slot: 1u32,
+            },
+            latent: crate::nodes::LatentOut {
+                node_id,
+                slot: 2u32,
+            },
         }
     }
     const NAME: &'static str = "InstructPixToPixConditioning";

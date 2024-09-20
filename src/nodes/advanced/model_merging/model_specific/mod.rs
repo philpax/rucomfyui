@@ -1,4 +1,6 @@
 //!model_specific
+#![allow(unused_imports)]
+use crate::WorkflowNodeId;
 ///**ModelMergeFlux1**
 pub struct ModelMergeFlux1<
     Model1: crate::nodes::Model,
@@ -339,9 +341,12 @@ for ModelMergeFlux1<
     FinalLayer,
 > {
     type Output = ModelMergeFlux1Output;
-    fn output(&self) -> Self::Output {
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            model: crate::nodes::ModelOut(0u32),
+            model: crate::nodes::ModelOut {
+                node_id,
+                slot: 0u32,
+            },
         }
     }
     const NAME: &'static str = "ModelMergeFlux1";
@@ -524,9 +529,12 @@ for ModelMergeSd1<
     Out,
 > {
     type Output = ModelMergeSd1Output;
-    fn output(&self) -> Self::Output {
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            model: crate::nodes::ModelOut(0u32),
+            model: crate::nodes::ModelOut {
+                node_id,
+                slot: 0u32,
+            },
         }
     }
     const NAME: &'static str = "ModelMergeSD1";
@@ -709,9 +717,12 @@ for ModelMergeSd2<
     Out,
 > {
     type Output = ModelMergeSd2Output;
-    fn output(&self) -> Self::Output {
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            model: crate::nodes::ModelOut(0u32),
+            model: crate::nodes::ModelOut {
+                node_id,
+                slot: 0u32,
+            },
         }
     }
     const NAME: &'static str = "ModelMergeSD2";
@@ -894,9 +905,12 @@ for ModelMergeSd32B<
     FinalLayer,
 > {
     type Output = ModelMergeSd32BOutput;
-    fn output(&self) -> Self::Output {
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            model: crate::nodes::ModelOut(0u32),
+            model: crate::nodes::ModelOut {
+                node_id,
+                slot: 0u32,
+            },
         }
     }
     const NAME: &'static str = "ModelMergeSD3_2B";
@@ -1049,9 +1063,12 @@ for ModelMergeSdxl<
     Out,
 > {
     type Output = ModelMergeSdxlOutput;
-    fn output(&self) -> Self::Output {
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            model: crate::nodes::ModelOut(0u32),
+            model: crate::nodes::ModelOut {
+                node_id,
+                slot: 0u32,
+            },
         }
     }
     const NAME: &'static str = "ModelMergeSDXL";

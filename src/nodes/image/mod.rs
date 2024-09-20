@@ -1,4 +1,6 @@
 //!image
+#![allow(unused_imports)]
+use crate::WorkflowNodeId;
 pub mod animation;
 pub mod batch;
 pub mod postprocessing;
@@ -34,9 +36,12 @@ impl<
     Color: crate::nodes::Int,
 > crate::nodes::TypedNode for EmptyImage<Width, Height, BatchSize, Color> {
     type Output = EmptyImageOutput;
-    fn output(&self) -> Self::Output {
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            image: crate::nodes::ImageOut(0u32),
+            image: crate::nodes::ImageOut {
+                node_id,
+                slot: 0u32,
+            },
         }
     }
     const NAME: &'static str = "EmptyImage";
@@ -60,9 +65,12 @@ pub struct ImageBatchOutput {
 impl<Image1: crate::nodes::Image, Image2: crate::nodes::Image> crate::nodes::TypedNode
 for ImageBatch<Image1, Image2> {
     type Output = ImageBatchOutput;
-    fn output(&self) -> Self::Output {
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            image: crate::nodes::ImageOut(0u32),
+            image: crate::nodes::ImageOut {
+                node_id,
+                slot: 0u32,
+            },
         }
     }
     const NAME: &'static str = "ImageBatch";
@@ -108,9 +116,12 @@ impl<
 > crate::nodes::TypedNode
 for ImageCompositeMasked<Destination, Source, X, Y, ResizeSource, Mask> {
     type Output = ImageCompositeMaskedOutput;
-    fn output(&self) -> Self::Output {
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            image: crate::nodes::ImageOut(0u32),
+            image: crate::nodes::ImageOut {
+                node_id,
+                slot: 0u32,
+            },
         }
     }
     const NAME: &'static str = "ImageCompositeMasked";
@@ -131,9 +142,12 @@ pub struct ImageInvertOutput {
 }
 impl<Image: crate::nodes::Image> crate::nodes::TypedNode for ImageInvert<Image> {
     type Output = ImageInvertOutput;
-    fn output(&self) -> Self::Output {
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            image: crate::nodes::ImageOut(0u32),
+            image: crate::nodes::ImageOut {
+                node_id,
+                slot: 0u32,
+            },
         }
     }
     const NAME: &'static str = "ImageInvert";
@@ -181,10 +195,16 @@ impl<
 > crate::nodes::TypedNode
 for ImagePadForOutpaint<Image, Left, Top, Right, Bottom, Feathering> {
     type Output = ImagePadForOutpaintOutput;
-    fn output(&self) -> Self::Output {
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            image: crate::nodes::ImageOut(0u32),
-            mask: crate::nodes::MaskOut(1u32),
+            image: crate::nodes::ImageOut {
+                node_id,
+                slot: 0u32,
+            },
+            mask: crate::nodes::MaskOut {
+                node_id,
+                slot: 1u32,
+            },
         }
     }
     const NAME: &'static str = "ImagePadForOutpaint";
@@ -207,10 +227,16 @@ pub struct LoadImageOutput {
 }
 impl<Image: crate::nodes::String> crate::nodes::TypedNode for LoadImage<Image> {
     type Output = LoadImageOutput;
-    fn output(&self) -> Self::Output {
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            image: crate::nodes::ImageOut(0u32),
-            mask: crate::nodes::MaskOut(1u32),
+            image: crate::nodes::ImageOut {
+                node_id,
+                slot: 0u32,
+            },
+            mask: crate::nodes::MaskOut {
+                node_id,
+                slot: 1u32,
+            },
         }
     }
     const NAME: &'static str = "LoadImage";
@@ -228,7 +254,7 @@ pub struct PreviewImage<Images: crate::nodes::Image> {
 pub struct PreviewImageOutput {}
 impl<Images: crate::nodes::Image> crate::nodes::TypedNode for PreviewImage<Images> {
     type Output = PreviewImageOutput;
-    fn output(&self) -> Self::Output {
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {}
     }
     const NAME: &'static str = "PreviewImage";
@@ -251,7 +277,7 @@ impl<
     FilenamePrefix: crate::nodes::String,
 > crate::nodes::TypedNode for SaveImage<Images, FilenamePrefix> {
     type Output = SaveImageOutput;
-    fn output(&self) -> Self::Output {
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {}
     }
     const NAME: &'static str = "SaveImage";
@@ -288,9 +314,12 @@ impl<
     CaptureOnQueue: crate::nodes::Boolean,
 > crate::nodes::TypedNode for WebcamCapture<Image, Width, Height, CaptureOnQueue> {
     type Output = WebcamCaptureOutput;
-    fn output(&self) -> Self::Output {
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            image: crate::nodes::ImageOut(0u32),
+            image: crate::nodes::ImageOut {
+                node_id,
+                slot: 0u32,
+            },
         }
     }
     const NAME: &'static str = "WebcamCapture";

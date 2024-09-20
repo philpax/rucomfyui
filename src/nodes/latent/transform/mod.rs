@@ -1,4 +1,6 @@
 //!transform
+#![allow(unused_imports)]
+use crate::WorkflowNodeId;
 ///**Crop Latent**
 pub struct LatentCrop<
     Samples: crate::nodes::Latent,
@@ -32,9 +34,12 @@ impl<
     Y: crate::nodes::Int,
 > crate::nodes::TypedNode for LatentCrop<Samples, Width, Height, X, Y> {
     type Output = LatentCropOutput;
-    fn output(&self) -> Self::Output {
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            latent: crate::nodes::LatentOut(0u32),
+            latent: crate::nodes::LatentOut {
+                node_id,
+                slot: 0u32,
+            },
         }
     }
     const NAME: &'static str = "LatentCrop";
@@ -60,9 +65,12 @@ impl<
     FlipMethod: crate::nodes::String,
 > crate::nodes::TypedNode for LatentFlip<Samples, FlipMethod> {
     type Output = LatentFlipOutput;
-    fn output(&self) -> Self::Output {
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            latent: crate::nodes::LatentOut(0u32),
+            latent: crate::nodes::LatentOut {
+                node_id,
+                slot: 0u32,
+            },
         }
     }
     const NAME: &'static str = "LatentFlip";
@@ -88,9 +96,12 @@ impl<
     Rotation: crate::nodes::String,
 > crate::nodes::TypedNode for LatentRotate<Samples, Rotation> {
     type Output = LatentRotateOutput;
-    fn output(&self) -> Self::Output {
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            latent: crate::nodes::LatentOut(0u32),
+            latent: crate::nodes::LatentOut {
+                node_id,
+                slot: 0u32,
+            },
         }
     }
     const NAME: &'static str = "LatentRotate";

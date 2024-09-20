@@ -1,4 +1,6 @@
 //!audio
+#![allow(unused_imports)]
+use crate::WorkflowNodeId;
 ///**EmptyLatentAudio**
 pub struct EmptyLatentAudio<Seconds: crate::nodes::Float> {
     ///No documentation.
@@ -13,9 +15,12 @@ pub struct EmptyLatentAudioOutput {
 impl<Seconds: crate::nodes::Float> crate::nodes::TypedNode
 for EmptyLatentAudio<Seconds> {
     type Output = EmptyLatentAudioOutput;
-    fn output(&self) -> Self::Output {
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            latent: crate::nodes::LatentOut(0u32),
+            latent: crate::nodes::LatentOut {
+                node_id,
+                slot: 0u32,
+            },
         }
     }
     const NAME: &'static str = "EmptyLatentAudio";
@@ -39,9 +44,12 @@ pub struct VaeDecodeAudioOutput {
 impl<Samples: crate::nodes::Latent, Vae: crate::nodes::Vae> crate::nodes::TypedNode
 for VaeDecodeAudio<Samples, Vae> {
     type Output = VaeDecodeAudioOutput;
-    fn output(&self) -> Self::Output {
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            audio: crate::nodes::AudioOut(0u32),
+            audio: crate::nodes::AudioOut {
+                node_id,
+                slot: 0u32,
+            },
         }
     }
     const NAME: &'static str = "VAEDecodeAudio";
@@ -65,9 +73,12 @@ pub struct VaeEncodeAudioOutput {
 impl<Audio: crate::nodes::Audio, Vae: crate::nodes::Vae> crate::nodes::TypedNode
 for VaeEncodeAudio<Audio, Vae> {
     type Output = VaeEncodeAudioOutput;
-    fn output(&self) -> Self::Output {
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            latent: crate::nodes::LatentOut(0u32),
+            latent: crate::nodes::LatentOut {
+                node_id,
+                slot: 0u32,
+            },
         }
     }
     const NAME: &'static str = "VAEEncodeAudio";

@@ -1,4 +1,6 @@
 //!inpaint
+#![allow(unused_imports)]
+use crate::WorkflowNodeId;
 ///**Set Latent Noise Mask**
 pub struct SetLatentNoiseMask<Samples: crate::nodes::Latent, Mask: crate::nodes::Mask> {
     ///No documentation.
@@ -15,9 +17,12 @@ pub struct SetLatentNoiseMaskOutput {
 impl<Samples: crate::nodes::Latent, Mask: crate::nodes::Mask> crate::nodes::TypedNode
 for SetLatentNoiseMask<Samples, Mask> {
     type Output = SetLatentNoiseMaskOutput;
-    fn output(&self) -> Self::Output {
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            latent: crate::nodes::LatentOut(0u32),
+            latent: crate::nodes::LatentOut {
+                node_id,
+                slot: 0u32,
+            },
         }
     }
     const NAME: &'static str = "SetLatentNoiseMask";
@@ -54,9 +59,12 @@ impl<
     GrowMaskBy: crate::nodes::Int,
 > crate::nodes::TypedNode for VaeEncodeForInpaint<Pixels, Vae, Mask, GrowMaskBy> {
     type Output = VaeEncodeForInpaintOutput;
-    fn output(&self) -> Self::Output {
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            latent: crate::nodes::LatentOut(0u32),
+            latent: crate::nodes::LatentOut {
+                node_id,
+                slot: 0u32,
+            },
         }
     }
     const NAME: &'static str = "VAEEncodeForInpaint";

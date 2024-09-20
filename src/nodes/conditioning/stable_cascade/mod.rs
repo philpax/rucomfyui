@@ -1,4 +1,6 @@
 //!stable_cascade
+#![allow(unused_imports)]
+use crate::WorkflowNodeId;
 ///**StableCascade_StageB_Conditioning**
 pub struct StableCascadeStageBConditioning<
     Conditioning: crate::nodes::Conditioning,
@@ -20,9 +22,12 @@ impl<
     StageC: crate::nodes::Latent,
 > crate::nodes::TypedNode for StableCascadeStageBConditioning<Conditioning, StageC> {
     type Output = StableCascadeStageBConditioningOutput;
-    fn output(&self) -> Self::Output {
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            conditioning: crate::nodes::ConditioningOut(0u32),
+            conditioning: crate::nodes::ConditioningOut {
+                node_id,
+                slot: 0u32,
+            },
         }
     }
     const NAME: &'static str = "StableCascade_StageB_Conditioning";

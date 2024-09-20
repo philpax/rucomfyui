@@ -1,4 +1,6 @@
 //!compositing
+#![allow(unused_imports)]
+use crate::WorkflowNodeId;
 ///**Join Image with Alpha**
 pub struct JoinImageWithAlpha<Image: crate::nodes::Image, Alpha: crate::nodes::Mask> {
     ///No documentation.
@@ -15,9 +17,12 @@ pub struct JoinImageWithAlphaOutput {
 impl<Image: crate::nodes::Image, Alpha: crate::nodes::Mask> crate::nodes::TypedNode
 for JoinImageWithAlpha<Image, Alpha> {
     type Output = JoinImageWithAlphaOutput;
-    fn output(&self) -> Self::Output {
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            image: crate::nodes::ImageOut(0u32),
+            image: crate::nodes::ImageOut {
+                node_id,
+                slot: 0u32,
+            },
         }
     }
     const NAME: &'static str = "JoinImageWithAlpha";
@@ -61,10 +66,16 @@ impl<
 > crate::nodes::TypedNode
 for PorterDuffImageComposite<Source, SourceAlpha, Destination, DestinationAlpha, Mode> {
     type Output = PorterDuffImageCompositeOutput;
-    fn output(&self) -> Self::Output {
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            image: crate::nodes::ImageOut(0u32),
-            mask: crate::nodes::MaskOut(1u32),
+            image: crate::nodes::ImageOut {
+                node_id,
+                slot: 0u32,
+            },
+            mask: crate::nodes::MaskOut {
+                node_id,
+                slot: 1u32,
+            },
         }
     }
     const NAME: &'static str = "PorterDuffImageComposite";
@@ -87,10 +98,16 @@ pub struct SplitImageWithAlphaOutput {
 }
 impl<Image: crate::nodes::Image> crate::nodes::TypedNode for SplitImageWithAlpha<Image> {
     type Output = SplitImageWithAlphaOutput;
-    fn output(&self) -> Self::Output {
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            image: crate::nodes::ImageOut(0u32),
-            mask: crate::nodes::MaskOut(1u32),
+            image: crate::nodes::ImageOut {
+                node_id,
+                slot: 0u32,
+            },
+            mask: crate::nodes::MaskOut {
+                node_id,
+                slot: 1u32,
+            },
         }
     }
     const NAME: &'static str = "SplitImageWithAlpha";

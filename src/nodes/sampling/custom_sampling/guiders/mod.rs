@@ -1,4 +1,6 @@
 //!guiders
+#![allow(unused_imports)]
+use crate::WorkflowNodeId;
 ///**BasicGuider**
 pub struct BasicGuider<
     Model: crate::nodes::Model,
@@ -20,9 +22,12 @@ impl<
     Conditioning: crate::nodes::Conditioning,
 > crate::nodes::TypedNode for BasicGuider<Model, Conditioning> {
     type Output = BasicGuiderOutput;
-    fn output(&self) -> Self::Output {
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            guider: crate::nodes::GuiderOut(0u32),
+            guider: crate::nodes::GuiderOut {
+                node_id,
+                slot: 0u32,
+            },
         }
     }
     const NAME: &'static str = "BasicGuider";
@@ -59,9 +64,12 @@ impl<
     Cfg: crate::nodes::Float,
 > crate::nodes::TypedNode for CfgGuider<Model, Positive, Negative, Cfg> {
     type Output = CfgGuiderOutput;
-    fn output(&self) -> Self::Output {
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            guider: crate::nodes::GuiderOut(0u32),
+            guider: crate::nodes::GuiderOut {
+                node_id,
+                slot: 0u32,
+            },
         }
     }
     const NAME: &'static str = "CFGGuider";
@@ -107,9 +115,12 @@ impl<
 > crate::nodes::TypedNode
 for DualCfgGuider<Model, Cond1, Cond2, Negative, CfgConds, CfgCond2Negative> {
     type Output = DualCfgGuiderOutput;
-    fn output(&self) -> Self::Output {
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            guider: crate::nodes::GuiderOut(0u32),
+            guider: crate::nodes::GuiderOut {
+                node_id,
+                slot: 0u32,
+            },
         }
     }
     const NAME: &'static str = "DualCFGGuider";

@@ -1,4 +1,6 @@
 //!video_models
+#![allow(unused_imports)]
+use crate::WorkflowNodeId;
 ///**Image Only Checkpoint Loader (img2vid model)**
 pub struct ImageOnlyCheckpointLoader<CkptName: crate::nodes::String> {
     ///No documentation.
@@ -17,11 +19,20 @@ pub struct ImageOnlyCheckpointLoaderOutput {
 impl<CkptName: crate::nodes::String> crate::nodes::TypedNode
 for ImageOnlyCheckpointLoader<CkptName> {
     type Output = ImageOnlyCheckpointLoaderOutput;
-    fn output(&self) -> Self::Output {
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            model: crate::nodes::ModelOut(0u32),
-            clip_vision: crate::nodes::ClipVisionOut(1u32),
-            vae: crate::nodes::VaeOut(2u32),
+            model: crate::nodes::ModelOut {
+                node_id,
+                slot: 0u32,
+            },
+            clip_vision: crate::nodes::ClipVisionOut {
+                node_id,
+                slot: 1u32,
+            },
+            vae: crate::nodes::VaeOut {
+                node_id,
+                slot: 2u32,
+            },
         }
     }
     const NAME: &'static str = "ImageOnlyCheckpointLoader";

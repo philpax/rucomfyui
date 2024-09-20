@@ -1,4 +1,6 @@
 //!inpaint
+#![allow(unused_imports)]
+use crate::WorkflowNodeId;
 ///**InpaintModelConditioning**
 pub struct InpaintModelConditioning<
     Positive: crate::nodes::Conditioning,
@@ -37,11 +39,20 @@ impl<
 > crate::nodes::TypedNode
 for InpaintModelConditioning<Positive, Negative, Vae, Pixels, Mask> {
     type Output = InpaintModelConditioningOutput;
-    fn output(&self) -> Self::Output {
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            positive: crate::nodes::ConditioningOut(0u32),
-            negative: crate::nodes::ConditioningOut(1u32),
-            latent: crate::nodes::LatentOut(2u32),
+            positive: crate::nodes::ConditioningOut {
+                node_id,
+                slot: 0u32,
+            },
+            negative: crate::nodes::ConditioningOut {
+                node_id,
+                slot: 1u32,
+            },
+            latent: crate::nodes::LatentOut {
+                node_id,
+                slot: 2u32,
+            },
         }
     }
     const NAME: &'static str = "InpaintModelConditioning";

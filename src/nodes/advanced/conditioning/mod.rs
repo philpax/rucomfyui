@@ -1,4 +1,6 @@
 //!conditioning
+#![allow(unused_imports)]
+use crate::WorkflowNodeId;
 pub mod flux;
 ///**CLIPTextEncodeHunyuanDiT**
 pub struct ClipTextEncodeHunyuanDiT<
@@ -25,9 +27,12 @@ impl<
     Mt5Xl: crate::nodes::String,
 > crate::nodes::TypedNode for ClipTextEncodeHunyuanDiT<Clip, Bert, Mt5Xl> {
     type Output = ClipTextEncodeHunyuanDiTOutput;
-    fn output(&self) -> Self::Output {
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            conditioning: crate::nodes::ConditioningOut(0u32),
+            conditioning: crate::nodes::ConditioningOut {
+                node_id,
+                slot: 0u32,
+            },
         }
     }
     const NAME: &'static str = "CLIPTextEncodeHunyuanDiT";
@@ -69,9 +74,12 @@ impl<
 > crate::nodes::TypedNode
 for ClipTextEncodeSd3<Clip, ClipL, ClipG, T5Xxl, EmptyPadding> {
     type Output = ClipTextEncodeSd3Output;
-    fn output(&self) -> Self::Output {
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            conditioning: crate::nodes::ConditioningOut(0u32),
+            conditioning: crate::nodes::ConditioningOut {
+                node_id,
+                slot: 0u32,
+            },
         }
     }
     const NAME: &'static str = "CLIPTextEncodeSD3";
@@ -139,9 +147,12 @@ for ClipTextEncodeSdxl<
     TextL,
 > {
     type Output = ClipTextEncodeSdxlOutput;
-    fn output(&self) -> Self::Output {
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            conditioning: crate::nodes::ConditioningOut(0u32),
+            conditioning: crate::nodes::ConditioningOut {
+                node_id,
+                slot: 0u32,
+            },
         }
     }
     const NAME: &'static str = "CLIPTextEncodeSDXL";
@@ -183,9 +194,12 @@ impl<
 > crate::nodes::TypedNode
 for ClipTextEncodeSdxlRefiner<Ascore, Width, Height, Text, Clip> {
     type Output = ClipTextEncodeSdxlRefinerOutput;
-    fn output(&self) -> Self::Output {
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            conditioning: crate::nodes::ConditioningOut(0u32),
+            conditioning: crate::nodes::ConditioningOut {
+                node_id,
+                slot: 0u32,
+            },
         }
     }
     const NAME: &'static str = "CLIPTextEncodeSDXLRefiner";
@@ -218,9 +232,12 @@ impl<
     End: crate::nodes::Float,
 > crate::nodes::TypedNode for ConditioningSetTimestepRange<Conditioning, Start, End> {
     type Output = ConditioningSetTimestepRangeOutput;
-    fn output(&self) -> Self::Output {
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            conditioning: crate::nodes::ConditioningOut(0u32),
+            conditioning: crate::nodes::ConditioningOut {
+                node_id,
+                slot: 0u32,
+            },
         }
     }
     const NAME: &'static str = "ConditioningSetTimestepRange";
@@ -242,9 +259,12 @@ pub struct ConditioningZeroOutOutput {
 impl<Conditioning: crate::nodes::Conditioning> crate::nodes::TypedNode
 for ConditioningZeroOut<Conditioning> {
     type Output = ConditioningZeroOutOutput;
-    fn output(&self) -> Self::Output {
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            conditioning: crate::nodes::ConditioningOut(0u32),
+            conditioning: crate::nodes::ConditioningOut {
+                node_id,
+                slot: 0u32,
+            },
         }
     }
     const NAME: &'static str = "ConditioningZeroOut";

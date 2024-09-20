@@ -1,4 +1,6 @@
 //!audio
+#![allow(unused_imports)]
+use crate::WorkflowNodeId;
 ///**LoadAudio**
 pub struct LoadAudio<Audio: crate::nodes::String> {
     ///No documentation.
@@ -12,9 +14,12 @@ pub struct LoadAudioOutput {
 }
 impl<Audio: crate::nodes::String> crate::nodes::TypedNode for LoadAudio<Audio> {
     type Output = LoadAudioOutput;
-    fn output(&self) -> Self::Output {
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            audio: crate::nodes::AudioOut(0u32),
+            audio: crate::nodes::AudioOut {
+                node_id,
+                slot: 0u32,
+            },
         }
     }
     const NAME: &'static str = "LoadAudio";
@@ -32,7 +37,7 @@ pub struct PreviewAudio<Audio: crate::nodes::Audio> {
 pub struct PreviewAudioOutput {}
 impl<Audio: crate::nodes::Audio> crate::nodes::TypedNode for PreviewAudio<Audio> {
     type Output = PreviewAudioOutput;
-    fn output(&self) -> Self::Output {
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {}
     }
     const NAME: &'static str = "PreviewAudio";
@@ -55,7 +60,7 @@ impl<
     FilenamePrefix: crate::nodes::String,
 > crate::nodes::TypedNode for SaveAudio<Audio, FilenamePrefix> {
     type Output = SaveAudioOutput;
-    fn output(&self) -> Self::Output {
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {}
     }
     const NAME: &'static str = "SaveAudio";

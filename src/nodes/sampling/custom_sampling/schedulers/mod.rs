@@ -1,4 +1,6 @@
 //!schedulers
+#![allow(unused_imports)]
+use crate::WorkflowNodeId;
 ///**AlignYourStepsScheduler**
 pub struct AlignYourStepsScheduler<
     ModelType: crate::nodes::String,
@@ -24,9 +26,12 @@ impl<
     Denoise: crate::nodes::Float,
 > crate::nodes::TypedNode for AlignYourStepsScheduler<ModelType, Steps, Denoise> {
     type Output = AlignYourStepsSchedulerOutput;
-    fn output(&self) -> Self::Output {
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            sigmas: crate::nodes::SigmasOut(0u32),
+            sigmas: crate::nodes::SigmasOut {
+                node_id,
+                slot: 0u32,
+            },
         }
     }
     const NAME: &'static str = "AlignYourStepsScheduler";
@@ -63,9 +68,12 @@ impl<
     Denoise: crate::nodes::Float,
 > crate::nodes::TypedNode for BasicScheduler<Model, Scheduler, Steps, Denoise> {
     type Output = BasicSchedulerOutput;
-    fn output(&self) -> Self::Output {
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            sigmas: crate::nodes::SigmasOut(0u32),
+            sigmas: crate::nodes::SigmasOut {
+                node_id,
+                slot: 0u32,
+            },
         }
     }
     const NAME: &'static str = "BasicScheduler";
@@ -102,9 +110,12 @@ impl<
     Beta: crate::nodes::Float,
 > crate::nodes::TypedNode for BetaSamplingScheduler<Model, Steps, Alpha, Beta> {
     type Output = BetaSamplingSchedulerOutput;
-    fn output(&self) -> Self::Output {
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            sigmas: crate::nodes::SigmasOut(0u32),
+            sigmas: crate::nodes::SigmasOut {
+                node_id,
+                slot: 0u32,
+            },
         }
     }
     const NAME: &'static str = "BetaSamplingScheduler";
@@ -137,9 +148,12 @@ impl<
     SigmaMin: crate::nodes::Float,
 > crate::nodes::TypedNode for ExponentialScheduler<Steps, SigmaMax, SigmaMin> {
     type Output = ExponentialSchedulerOutput;
-    fn output(&self) -> Self::Output {
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            sigmas: crate::nodes::SigmasOut(0u32),
+            sigmas: crate::nodes::SigmasOut {
+                node_id,
+                slot: 0u32,
+            },
         }
     }
     const NAME: &'static str = "ExponentialScheduler";
@@ -172,9 +186,12 @@ impl<
     Denoise: crate::nodes::Float,
 > crate::nodes::TypedNode for GitsScheduler<Coeff, Steps, Denoise> {
     type Output = GitsSchedulerOutput;
-    fn output(&self) -> Self::Output {
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            sigmas: crate::nodes::SigmasOut(0u32),
+            sigmas: crate::nodes::SigmasOut {
+                node_id,
+                slot: 0u32,
+            },
         }
     }
     const NAME: &'static str = "GITSScheduler";
@@ -211,9 +228,12 @@ impl<
     Rho: crate::nodes::Float,
 > crate::nodes::TypedNode for KarrasScheduler<Steps, SigmaMax, SigmaMin, Rho> {
     type Output = KarrasSchedulerOutput;
-    fn output(&self) -> Self::Output {
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            sigmas: crate::nodes::SigmasOut(0u32),
+            sigmas: crate::nodes::SigmasOut {
+                node_id,
+                slot: 0u32,
+            },
         }
     }
     const NAME: &'static str = "KarrasScheduler";
@@ -250,9 +270,12 @@ impl<
     Rho: crate::nodes::Float,
 > crate::nodes::TypedNode for PolyexponentialScheduler<Steps, SigmaMax, SigmaMin, Rho> {
     type Output = PolyexponentialSchedulerOutput;
-    fn output(&self) -> Self::Output {
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            sigmas: crate::nodes::SigmasOut(0u32),
+            sigmas: crate::nodes::SigmasOut {
+                node_id,
+                slot: 0u32,
+            },
         }
     }
     const NAME: &'static str = "PolyexponentialScheduler";
@@ -285,9 +308,12 @@ impl<
     Denoise: crate::nodes::Float,
 > crate::nodes::TypedNode for SdTurboScheduler<Model, Steps, Denoise> {
     type Output = SdTurboSchedulerOutput;
-    fn output(&self) -> Self::Output {
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            sigmas: crate::nodes::SigmasOut(0u32),
+            sigmas: crate::nodes::SigmasOut {
+                node_id,
+                slot: 0u32,
+            },
         }
     }
     const NAME: &'static str = "SDTurboScheduler";
@@ -324,9 +350,12 @@ impl<
     EpsS: crate::nodes::Float,
 > crate::nodes::TypedNode for VpScheduler<Steps, BetaD, BetaMin, EpsS> {
     type Output = VpSchedulerOutput;
-    fn output(&self) -> Self::Output {
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            sigmas: crate::nodes::SigmasOut(0u32),
+            sigmas: crate::nodes::SigmasOut {
+                node_id,
+                slot: 0u32,
+            },
         }
     }
     const NAME: &'static str = "VPScheduler";

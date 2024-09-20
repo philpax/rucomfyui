@@ -1,4 +1,6 @@
 //!transform
+#![allow(unused_imports)]
+use crate::WorkflowNodeId;
 ///**ImageCrop**
 pub struct ImageCrop<
     Image: crate::nodes::Image,
@@ -32,9 +34,12 @@ impl<
     Y: crate::nodes::Int,
 > crate::nodes::TypedNode for ImageCrop<Image, Width, Height, X, Y> {
     type Output = ImageCropOutput;
-    fn output(&self) -> Self::Output {
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            image: crate::nodes::ImageOut(0u32),
+            image: crate::nodes::ImageOut {
+                node_id,
+                slot: 0u32,
+            },
         }
     }
     const NAME: &'static str = "ImageCrop";

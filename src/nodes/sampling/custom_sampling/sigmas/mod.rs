@@ -1,4 +1,6 @@
 //!sigmas
+#![allow(unused_imports)]
+use crate::WorkflowNodeId;
 ///**FlipSigmas**
 pub struct FlipSigmas<Sigmas: crate::nodes::Sigmas> {
     ///No documentation.
@@ -12,9 +14,12 @@ pub struct FlipSigmasOutput {
 }
 impl<Sigmas: crate::nodes::Sigmas> crate::nodes::TypedNode for FlipSigmas<Sigmas> {
     type Output = FlipSigmasOutput;
-    fn output(&self) -> Self::Output {
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            sigmas: crate::nodes::SigmasOut(0u32),
+            sigmas: crate::nodes::SigmasOut {
+                node_id,
+                slot: 0u32,
+            },
         }
     }
     const NAME: &'static str = "FlipSigmas";
@@ -40,10 +45,16 @@ pub struct SplitSigmasOutput {
 impl<Sigmas: crate::nodes::Sigmas, Step: crate::nodes::Int> crate::nodes::TypedNode
 for SplitSigmas<Sigmas, Step> {
     type Output = SplitSigmasOutput;
-    fn output(&self) -> Self::Output {
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            high_sigmas: crate::nodes::SigmasOut(0u32),
-            low_sigmas: crate::nodes::SigmasOut(1u32),
+            high_sigmas: crate::nodes::SigmasOut {
+                node_id,
+                slot: 0u32,
+            },
+            low_sigmas: crate::nodes::SigmasOut {
+                node_id,
+                slot: 1u32,
+            },
         }
     }
     const NAME: &'static str = "SplitSigmas";
@@ -72,10 +83,16 @@ pub struct SplitSigmasDenoiseOutput {
 impl<Sigmas: crate::nodes::Sigmas, Denoise: crate::nodes::Float> crate::nodes::TypedNode
 for SplitSigmasDenoise<Sigmas, Denoise> {
     type Output = SplitSigmasDenoiseOutput;
-    fn output(&self) -> Self::Output {
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            high_sigmas: crate::nodes::SigmasOut(0u32),
-            low_sigmas: crate::nodes::SigmasOut(1u32),
+            high_sigmas: crate::nodes::SigmasOut {
+                node_id,
+                slot: 0u32,
+            },
+            low_sigmas: crate::nodes::SigmasOut {
+                node_id,
+                slot: 1u32,
+            },
         }
     }
     const NAME: &'static str = "SplitSigmasDenoise";

@@ -1,4 +1,6 @@
 //!batch
+#![allow(unused_imports)]
+use crate::WorkflowNodeId;
 ///**LatentBatch**
 pub struct LatentBatch<Samples1: crate::nodes::Latent, Samples2: crate::nodes::Latent> {
     ///No documentation.
@@ -17,9 +19,12 @@ impl<
     Samples2: crate::nodes::Latent,
 > crate::nodes::TypedNode for LatentBatch<Samples1, Samples2> {
     type Output = LatentBatchOutput;
-    fn output(&self) -> Self::Output {
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            latent: crate::nodes::LatentOut(0u32),
+            latent: crate::nodes::LatentOut {
+                node_id,
+                slot: 0u32,
+            },
         }
     }
     const NAME: &'static str = "LatentBatch";
@@ -52,9 +57,12 @@ impl<
     Length: crate::nodes::Int,
 > crate::nodes::TypedNode for LatentFromBatch<Samples, BatchIndex, Length> {
     type Output = LatentFromBatchOutput;
-    fn output(&self) -> Self::Output {
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            latent: crate::nodes::LatentOut(0u32),
+            latent: crate::nodes::LatentOut {
+                node_id,
+                slot: 0u32,
+            },
         }
     }
     const NAME: &'static str = "LatentFromBatch";
@@ -78,9 +86,12 @@ pub struct RebatchLatentsOutput {
 impl<Latents: crate::nodes::Latent, BatchSize: crate::nodes::Int> crate::nodes::TypedNode
 for RebatchLatents<Latents, BatchSize> {
     type Output = RebatchLatentsOutput;
-    fn output(&self) -> Self::Output {
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            latent: crate::nodes::LatentOut(0u32),
+            latent: crate::nodes::LatentOut {
+                node_id,
+                slot: 0u32,
+            },
         }
     }
     const NAME: &'static str = "RebatchLatents";
@@ -104,9 +115,12 @@ pub struct RepeatLatentBatchOutput {
 impl<Samples: crate::nodes::Latent, Amount: crate::nodes::Int> crate::nodes::TypedNode
 for RepeatLatentBatch<Samples, Amount> {
     type Output = RepeatLatentBatchOutput;
-    fn output(&self) -> Self::Output {
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            latent: crate::nodes::LatentOut(0u32),
+            latent: crate::nodes::LatentOut {
+                node_id,
+                slot: 0u32,
+            },
         }
     }
     const NAME: &'static str = "RepeatLatentBatch";

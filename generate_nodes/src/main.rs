@@ -94,23 +94,26 @@ fn write_category_tree((name, tree): (&str, &CategoryTree), directory: &Path) ->
                 let name = name_to_ident(&format!("{ty:?}"), true)?;
 
                 let output_doc = format!("A node output of type [`{ty:?}`].");
-                let output_name = name_to_ident(&format!("{ty:?}Out"), true)?;
+                let output_name = object_type_struct_ident(&ty);
                 Ok(quote! {
                     #[doc = #doc]
-                    pub trait #name : ToTypedValue {}
-                    impl ToTypedValue for Box<dyn #name> {
-                        fn to_typed_value(&self) -> TypedValue {
-                            self.as_ref().to_typed_value()
+                    pub trait #name : ToWorkflowInput {}
+                    impl ToWorkflowInput for Box<dyn #name> {
+                        fn to_workflow_input(&self) -> WorkflowInput {
+                            self.as_ref().to_workflow_input()
                         }
                     }
                     impl #name for Box<dyn #name> {}
 
                     #[doc = #output_doc]
                     #[derive(Clone, Copy)]
-                    pub struct #output_name(pub u32);
-                    impl ToTypedValue for #output_name {
-                        fn to_typed_value(&self) -> TypedValue {
-                            TypedValue::Slot(self.0)
+                    pub struct #output_name {
+                        node_id: WorkflowNodeId,
+                        slot: u32,
+                    }
+                    impl ToWorkflowInput for #output_name {
+                        fn to_workflow_input(&self) -> WorkflowInput {
+                            WorkflowInput::Slot(self.node_id.to_string(), self.slot)
                         }
                     }
                     impl #name for #output_name {}
@@ -123,12 +126,14 @@ fn write_category_tree((name, tree): (&str, &CategoryTree), directory: &Path) ->
             quote! {
                 pub mod all;
 
+                use crate::WorkflowInput;
+
                 /// Implemented for all typed nodes. Provides the node's output and metadata.
                 pub trait TypedNode {
                     /// The type of the node's output.
                     type Output;
                     /// Returns the node's output.
-                    fn output(&self) -> Self::Output;
+                    fn output(&self, node_id: WorkflowNodeId) -> Self::Output;
 
                     /// The name of the node.
                     const NAME: &'static str;
@@ -140,57 +145,42 @@ fn write_category_tree((name, tree): (&str, &CategoryTree), directory: &Path) ->
                     const CATEGORY: &'static str;
                 }
 
-                /// A typed value. Used to determine the value for a given input.
-                #[derive(Debug, Clone, PartialEq)]
-                pub enum TypedValue {
-                    /// A string value.
-                    String(std::string::String),
-                    /// A f32 value.
-                    F32(f32),
-                    /// A i32 value.
-                    I32(i32),
-                    /// A boolean value.
-                    Boolean(bool),
-                    /// A slot value. The inner value is the index of the output slot.
-                    Slot(u32),
+                /// Converts a value to a workflow input.
+                pub trait ToWorkflowInput {
+                    /// Converts the value to a workflow input.
+                    fn to_workflow_input(&self) -> WorkflowInput;
                 }
 
-                /// Converts a value to a typed value for use in a workflow.
-                pub trait ToTypedValue {
-                    /// Converts the value to a typed value.
-                    fn to_typed_value(&self) -> TypedValue;
-                }
-
-                impl ToTypedValue for std::string::String {
-                    fn to_typed_value(&self) -> TypedValue {
-                        TypedValue::String(self.clone())
+                impl ToWorkflowInput for std::string::String {
+                    fn to_workflow_input(&self) -> WorkflowInput {
+                        WorkflowInput::String(self.clone())
                     }
                 }
                 impl String for std::string::String {}
-                impl<'a> ToTypedValue for &'a str {
-                    fn to_typed_value(&self) -> TypedValue {
-                        TypedValue::String(self.to_string())
+                impl<'a> ToWorkflowInput for &'a str {
+                    fn to_workflow_input(&self) -> WorkflowInput {
+                        WorkflowInput::String(self.to_string())
                     }
                 }
                 impl<'a> String for &'a str {}
 
-                impl ToTypedValue for f32 {
-                    fn to_typed_value(&self) -> TypedValue {
-                        TypedValue::F32(*self)
+                impl ToWorkflowInput for f32 {
+                    fn to_workflow_input(&self) -> WorkflowInput {
+                        WorkflowInput::F32(*self)
                     }
                 }
                 impl Float for f32 {}
 
-                impl ToTypedValue for i32 {
-                    fn to_typed_value(&self) -> TypedValue {
-                        TypedValue::I32(*self)
+                impl ToWorkflowInput for i32 {
+                    fn to_workflow_input(&self) -> WorkflowInput {
+                        WorkflowInput::I32(*self)
                     }
                 }
                 impl Int for i32 {}
 
-                impl ToTypedValue for bool {
-                    fn to_typed_value(&self) -> TypedValue {
-                        TypedValue::Boolean(*self)
+                impl ToWorkflowInput for bool {
+                    fn to_workflow_input(&self) -> WorkflowInput {
+                        WorkflowInput::Boolean(*self)
                     }
                 }
                 impl Boolean for bool {}
@@ -204,6 +194,10 @@ fn write_category_tree((name, tree): (&str, &CategoryTree), directory: &Path) ->
 
     let output = quote! {
         #![doc = #doc]
+        #![allow(unused_imports)]
+
+        use crate::WorkflowNodeId;
+
         #(#modules)*
         #(#nodes)*
         #extra
@@ -291,7 +285,7 @@ fn write_node_inputs(node: &Object) -> Result<(syn::Ident, Vec<ProcessedInput>, 
             let generic_name = &input.generic_name;
             let ty = &input.generic_ty;
             let default = if input.optional {
-                let output_struct_name = output_struct_ident(input.ty.clone());
+                let output_struct_name = object_type_struct_ident(&input.ty);
                 quote! { = crate :: nodes :: #output_struct_name }
             } else {
                 quote! {}
@@ -355,7 +349,7 @@ fn write_node_outputs(
         .iter()
         .map(|output| {
             let name = name_to_ident(output.name, false)?;
-            let ty = output_struct_ident(output.ty.clone());
+            let ty = object_type_struct_ident(&output.ty);
             let doc = output.tooltip.unwrap_or("No documentation.");
             Ok(quote! {
                 #[doc = #doc]
@@ -376,10 +370,10 @@ fn write_node_outputs(
             .enumerate()
             .map(|(i, output)| {
                 let name = name_to_ident(output.name, false)?;
-                let ty = output_struct_ident(output.ty.clone());
+                let ty = object_type_struct_ident(&output.ty);
                 let i = i as u32;
                 Ok(quote! {
-                    #name: crate :: nodes :: #ty (#i)
+                    #name: crate :: nodes :: #ty { node_id, slot: #i }
                 })
             })
             .collect::<Result<Vec<_>>>()?;
@@ -402,7 +396,7 @@ fn write_node_outputs(
         quote! {
             impl < #(#generic_list),* > crate :: nodes :: TypedNode for #inputs_name < #(#generic_instantiation_list),* >  {
                 type Output = #outputs_name;
-                fn output(&self) -> Self::Output {
+                fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
                     Self::Output {
                         #(#fields),*
                     }
@@ -446,6 +440,6 @@ fn name_to_ident(name: &str, pascal_case: bool) -> Result<syn::Ident> {
         .map_err(|e| anyhow::anyhow!("Error parsing {name}: {:?}", e.downcast_ref::<&str>()))
 }
 
-fn output_struct_ident(ty: ObjectType) -> syn::Ident {
+fn object_type_struct_ident(ty: &ObjectType) -> syn::Ident {
     name_to_ident(&format!("{ty:?}Out"), true).unwrap()
 }

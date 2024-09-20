@@ -1,4 +1,6 @@
 //!unet
+#![allow(unused_imports)]
+use crate::WorkflowNodeId;
 ///**FreeU**
 pub struct FreeU<
     Model: crate::nodes::Model,
@@ -32,9 +34,12 @@ impl<
     S2: crate::nodes::Float,
 > crate::nodes::TypedNode for FreeU<Model, B1, B2, S1, S2> {
     type Output = FreeUOutput;
-    fn output(&self) -> Self::Output {
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            model: crate::nodes::ModelOut(0u32),
+            model: crate::nodes::ModelOut {
+                node_id,
+                slot: 0u32,
+            },
         }
     }
     const NAME: &'static str = "FreeU";
@@ -75,9 +80,12 @@ impl<
     S2: crate::nodes::Float,
 > crate::nodes::TypedNode for FreeUV2<Model, B1, B2, S1, S2> {
     type Output = FreeUV2Output;
-    fn output(&self) -> Self::Output {
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            model: crate::nodes::ModelOut(0u32),
+            model: crate::nodes::ModelOut {
+                node_id,
+                slot: 0u32,
+            },
         }
     }
     const NAME: &'static str = "FreeU_V2";
@@ -119,9 +127,12 @@ impl<
 > crate::nodes::TypedNode
 for HyperTile<Model, TileSize, SwapSize, MaxDepth, ScaleDepth> {
     type Output = HyperTileOutput;
-    fn output(&self) -> Self::Output {
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            model: crate::nodes::ModelOut(0u32),
+            model: crate::nodes::ModelOut {
+                node_id,
+                slot: 0u32,
+            },
         }
     }
     const NAME: &'static str = "HyperTile";
@@ -148,9 +159,12 @@ pub struct PerturbedAttentionGuidanceOutput {
 impl<Model: crate::nodes::Model, Scale: crate::nodes::Float> crate::nodes::TypedNode
 for PerturbedAttentionGuidance<Model, Scale> {
     type Output = PerturbedAttentionGuidanceOutput;
-    fn output(&self) -> Self::Output {
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            model: crate::nodes::ModelOut(0u32),
+            model: crate::nodes::ModelOut {
+                node_id,
+                slot: 0u32,
+            },
         }
     }
     const NAME: &'static str = "PerturbedAttentionGuidance";

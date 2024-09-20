@@ -1,4 +1,6 @@
 //!upscaling
+#![allow(unused_imports)]
+use crate::WorkflowNodeId;
 ///**Upscale Image**
 pub struct ImageScale<
     Image: crate::nodes::Image,
@@ -32,9 +34,12 @@ impl<
     Crop: crate::nodes::String,
 > crate::nodes::TypedNode for ImageScale<Image, UpscaleMethod, Width, Height, Crop> {
     type Output = ImageScaleOutput;
-    fn output(&self) -> Self::Output {
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            image: crate::nodes::ImageOut(0u32),
+            image: crate::nodes::ImageOut {
+                node_id,
+                slot: 0u32,
+            },
         }
     }
     const NAME: &'static str = "ImageScale";
@@ -67,9 +72,12 @@ impl<
     ScaleBy: crate::nodes::Float,
 > crate::nodes::TypedNode for ImageScaleBy<Image, UpscaleMethod, ScaleBy> {
     type Output = ImageScaleByOutput;
-    fn output(&self) -> Self::Output {
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            image: crate::nodes::ImageOut(0u32),
+            image: crate::nodes::ImageOut {
+                node_id,
+                slot: 0u32,
+            },
         }
     }
     const NAME: &'static str = "ImageScaleBy";
@@ -102,9 +110,12 @@ impl<
     Megapixels: crate::nodes::Float,
 > crate::nodes::TypedNode for ImageScaleToTotalPixels<Image, UpscaleMethod, Megapixels> {
     type Output = ImageScaleToTotalPixelsOutput;
-    fn output(&self) -> Self::Output {
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            image: crate::nodes::ImageOut(0u32),
+            image: crate::nodes::ImageOut {
+                node_id,
+                slot: 0u32,
+            },
         }
     }
     const NAME: &'static str = "ImageScaleToTotalPixels";
@@ -133,9 +144,12 @@ impl<
     Image: crate::nodes::Image,
 > crate::nodes::TypedNode for ImageUpscaleWithModel<UpscaleModel, Image> {
     type Output = ImageUpscaleWithModelOutput;
-    fn output(&self) -> Self::Output {
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            image: crate::nodes::ImageOut(0u32),
+            image: crate::nodes::ImageOut {
+                node_id,
+                slot: 0u32,
+            },
         }
     }
     const NAME: &'static str = "ImageUpscaleWithModel";
