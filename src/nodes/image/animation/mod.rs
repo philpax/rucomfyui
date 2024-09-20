@@ -1,6 +1,8 @@
 //!`animation` definitions/categories.
 #![allow(unused_imports)]
 use crate::WorkflowNodeId;
+/// Output types for nodes.
+pub mod out {}
 ///**SaveAnimatedPNG**
 pub struct SaveAnimatedPng<
     Images: crate::nodes::types::Image,

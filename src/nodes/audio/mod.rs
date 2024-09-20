@@ -1,19 +1,22 @@
 //!`audio` definitions/categories.
 #![allow(unused_imports)]
 use crate::WorkflowNodeId;
+/// Output types for nodes.
+pub mod out {
+    ///Output for [`LoadAudio`](super::LoadAudio).
+    #[derive(Clone)]
+    pub struct LoadAudioOutput {
+        ///No documentation.
+        pub audio: crate::nodes::types::AudioOut,
+    }
+}
 ///**LoadAudio**
 pub struct LoadAudio<Audio: crate::nodes::types::String> {
     ///No documentation.
     pub audio: Audio,
 }
-///Output for [`LoadAudio`].
-#[derive(Clone)]
-pub struct LoadAudioOutput {
-    ///No documentation.
-    pub audio: crate::nodes::types::AudioOut,
-}
 impl<Audio: crate::nodes::types::String> crate::nodes::TypedNode for LoadAudio<Audio> {
-    type Output = LoadAudioOutput;
+    type Output = out::LoadAudioOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
             audio: crate::nodes::types::AudioOut {

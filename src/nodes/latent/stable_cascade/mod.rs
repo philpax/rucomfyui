@@ -1,6 +1,25 @@
 //!`stable_cascade` definitions/categories.
 #![allow(unused_imports)]
 use crate::WorkflowNodeId;
+/// Output types for nodes.
+pub mod out {
+    ///Output for [`StableCascadeEmptyLatentImage`](super::StableCascadeEmptyLatentImage).
+    #[derive(Clone)]
+    pub struct StableCascadeEmptyLatentImageOutput {
+        ///No documentation.
+        pub stage_c: crate::nodes::types::LatentOut,
+        ///No documentation.
+        pub stage_b: crate::nodes::types::LatentOut,
+    }
+    ///Output for [`StableCascadeStageCVaeEncode`](super::StableCascadeStageCVaeEncode).
+    #[derive(Clone)]
+    pub struct StableCascadeStageCVaeEncodeOutput {
+        ///No documentation.
+        pub stage_c: crate::nodes::types::LatentOut,
+        ///No documentation.
+        pub stage_b: crate::nodes::types::LatentOut,
+    }
+}
 ///**StableCascade_EmptyLatentImage**
 pub struct StableCascadeEmptyLatentImage<
     Width: crate::nodes::types::Int,
@@ -17,14 +36,6 @@ pub struct StableCascadeEmptyLatentImage<
     ///No documentation.
     pub batch_size: BatchSize,
 }
-///Output for [`StableCascadeEmptyLatentImage`].
-#[derive(Clone)]
-pub struct StableCascadeEmptyLatentImageOutput {
-    ///No documentation.
-    pub stage_c: crate::nodes::types::LatentOut,
-    ///No documentation.
-    pub stage_b: crate::nodes::types::LatentOut,
-}
 impl<
     Width: crate::nodes::types::Int,
     Height: crate::nodes::types::Int,
@@ -32,7 +43,7 @@ impl<
     BatchSize: crate::nodes::types::Int,
 > crate::nodes::TypedNode
 for StableCascadeEmptyLatentImage<Width, Height, Compression, BatchSize> {
-    type Output = StableCascadeEmptyLatentImageOutput;
+    type Output = out::StableCascadeEmptyLatentImageOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
             stage_c: crate::nodes::types::LatentOut {
@@ -63,20 +74,12 @@ pub struct StableCascadeStageCVaeEncode<
     ///No documentation.
     pub compression: Compression,
 }
-///Output for [`StableCascadeStageCVaeEncode`].
-#[derive(Clone)]
-pub struct StableCascadeStageCVaeEncodeOutput {
-    ///No documentation.
-    pub stage_c: crate::nodes::types::LatentOut,
-    ///No documentation.
-    pub stage_b: crate::nodes::types::LatentOut,
-}
 impl<
     Image: crate::nodes::types::Image,
     Vae: crate::nodes::types::Vae,
     Compression: crate::nodes::types::Int,
 > crate::nodes::TypedNode for StableCascadeStageCVaeEncode<Image, Vae, Compression> {
-    type Output = StableCascadeStageCVaeEncodeOutput;
+    type Output = out::StableCascadeStageCVaeEncodeOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
             stage_c: crate::nodes::types::LatentOut {

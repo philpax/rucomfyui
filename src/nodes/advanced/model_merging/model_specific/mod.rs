@@ -1,6 +1,39 @@
 //!`model_specific` definitions/categories.
 #![allow(unused_imports)]
 use crate::WorkflowNodeId;
+/// Output types for nodes.
+pub mod out {
+    ///Output for [`ModelMergeFlux1`](super::ModelMergeFlux1).
+    #[derive(Clone)]
+    pub struct ModelMergeFlux1Output {
+        ///No documentation.
+        pub model: crate::nodes::types::ModelOut,
+    }
+    ///Output for [`ModelMergeSd1`](super::ModelMergeSd1).
+    #[derive(Clone)]
+    pub struct ModelMergeSd1Output {
+        ///No documentation.
+        pub model: crate::nodes::types::ModelOut,
+    }
+    ///Output for [`ModelMergeSd2`](super::ModelMergeSd2).
+    #[derive(Clone)]
+    pub struct ModelMergeSd2Output {
+        ///No documentation.
+        pub model: crate::nodes::types::ModelOut,
+    }
+    ///Output for [`ModelMergeSd32B`](super::ModelMergeSd32B).
+    #[derive(Clone)]
+    pub struct ModelMergeSd32BOutput {
+        ///No documentation.
+        pub model: crate::nodes::types::ModelOut,
+    }
+    ///Output for [`ModelMergeSdxl`](super::ModelMergeSdxl).
+    #[derive(Clone)]
+    pub struct ModelMergeSdxlOutput {
+        ///No documentation.
+        pub model: crate::nodes::types::ModelOut,
+    }
+}
 ///**ModelMergeFlux1**
 pub struct ModelMergeFlux1<
     Model1: crate::nodes::types::Model,
@@ -200,12 +233,6 @@ pub struct ModelMergeFlux1<
     ///No documentation.
     pub final_layer: FinalLayer,
 }
-///Output for [`ModelMergeFlux1`].
-#[derive(Clone)]
-pub struct ModelMergeFlux1Output {
-    ///No documentation.
-    pub model: crate::nodes::types::ModelOut,
-}
 impl<
     Model1: crate::nodes::types::Model,
     Model2: crate::nodes::types::Model,
@@ -340,7 +367,7 @@ for ModelMergeFlux1<
     SingleBlocks37,
     FinalLayer,
 > {
-    type Output = ModelMergeFlux1Output;
+    type Output = out::ModelMergeFlux1Output;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
             model: crate::nodes::types::ModelOut {
@@ -454,12 +481,6 @@ pub struct ModelMergeSd1<
     ///No documentation.
     pub out: Out,
 }
-///Output for [`ModelMergeSd1`].
-#[derive(Clone)]
-pub struct ModelMergeSd1Output {
-    ///No documentation.
-    pub model: crate::nodes::types::ModelOut,
-}
 impl<
     Model1: crate::nodes::types::Model,
     Model2: crate::nodes::types::Model,
@@ -528,7 +549,7 @@ for ModelMergeSd1<
     OutputBlocks11,
     Out,
 > {
-    type Output = ModelMergeSd1Output;
+    type Output = out::ModelMergeSd1Output;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
             model: crate::nodes::types::ModelOut {
@@ -642,12 +663,6 @@ pub struct ModelMergeSd2<
     ///No documentation.
     pub out: Out,
 }
-///Output for [`ModelMergeSd2`].
-#[derive(Clone)]
-pub struct ModelMergeSd2Output {
-    ///No documentation.
-    pub model: crate::nodes::types::ModelOut,
-}
 impl<
     Model1: crate::nodes::types::Model,
     Model2: crate::nodes::types::Model,
@@ -716,7 +731,7 @@ for ModelMergeSd2<
     OutputBlocks11,
     Out,
 > {
-    type Output = ModelMergeSd2Output;
+    type Output = out::ModelMergeSd2Output;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
             model: crate::nodes::types::ModelOut {
@@ -830,12 +845,6 @@ pub struct ModelMergeSd32B<
     ///No documentation.
     pub final_layer: FinalLayer,
 }
-///Output for [`ModelMergeSd32B`].
-#[derive(Clone)]
-pub struct ModelMergeSd32BOutput {
-    ///No documentation.
-    pub model: crate::nodes::types::ModelOut,
-}
 impl<
     Model1: crate::nodes::types::Model,
     Model2: crate::nodes::types::Model,
@@ -904,7 +913,7 @@ for ModelMergeSd32B<
     JointBlocks23,
     FinalLayer,
 > {
-    type Output = ModelMergeSd32BOutput;
+    type Output = out::ModelMergeSd32BOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
             model: crate::nodes::types::ModelOut {
@@ -1000,12 +1009,6 @@ pub struct ModelMergeSdxl<
     ///No documentation.
     pub out: Out,
 }
-///Output for [`ModelMergeSdxl`].
-#[derive(Clone)]
-pub struct ModelMergeSdxlOutput {
-    ///No documentation.
-    pub model: crate::nodes::types::ModelOut,
-}
 impl<
     Model1: crate::nodes::types::Model,
     Model2: crate::nodes::types::Model,
@@ -1062,7 +1065,7 @@ for ModelMergeSdxl<
     OutputBlocks8,
     Out,
 > {
-    type Output = ModelMergeSdxlOutput;
+    type Output = out::ModelMergeSdxlOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
             model: crate::nodes::types::ModelOut {

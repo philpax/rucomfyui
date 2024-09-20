@@ -1,6 +1,15 @@
 //!`stable_cascade` definitions/categories.
 #![allow(unused_imports)]
 use crate::WorkflowNodeId;
+/// Output types for nodes.
+pub mod out {
+    ///Output for [`StableCascadeStageBConditioning`](super::StableCascadeStageBConditioning).
+    #[derive(Clone)]
+    pub struct StableCascadeStageBConditioningOutput {
+        ///No documentation.
+        pub conditioning: crate::nodes::types::ConditioningOut,
+    }
+}
 ///**StableCascade_StageB_Conditioning**
 pub struct StableCascadeStageBConditioning<
     Conditioning: crate::nodes::types::Conditioning,
@@ -11,17 +20,11 @@ pub struct StableCascadeStageBConditioning<
     ///No documentation.
     pub stage_c: StageC,
 }
-///Output for [`StableCascadeStageBConditioning`].
-#[derive(Clone)]
-pub struct StableCascadeStageBConditioningOutput {
-    ///No documentation.
-    pub conditioning: crate::nodes::types::ConditioningOut,
-}
 impl<
     Conditioning: crate::nodes::types::Conditioning,
     StageC: crate::nodes::types::Latent,
 > crate::nodes::TypedNode for StableCascadeStageBConditioning<Conditioning, StageC> {
-    type Output = StableCascadeStageBConditioningOutput;
+    type Output = out::StableCascadeStageBConditioningOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
             conditioning: crate::nodes::types::ConditioningOut {

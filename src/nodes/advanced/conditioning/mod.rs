@@ -2,6 +2,45 @@
 #![allow(unused_imports)]
 use crate::WorkflowNodeId;
 pub mod flux;
+/// Output types for nodes.
+pub mod out {
+    ///Output for [`ClipTextEncodeHunyuanDiT`](super::ClipTextEncodeHunyuanDiT).
+    #[derive(Clone)]
+    pub struct ClipTextEncodeHunyuanDiTOutput {
+        ///No documentation.
+        pub conditioning: crate::nodes::types::ConditioningOut,
+    }
+    ///Output for [`ClipTextEncodeSd3`](super::ClipTextEncodeSd3).
+    #[derive(Clone)]
+    pub struct ClipTextEncodeSd3Output {
+        ///No documentation.
+        pub conditioning: crate::nodes::types::ConditioningOut,
+    }
+    ///Output for [`ClipTextEncodeSdxl`](super::ClipTextEncodeSdxl).
+    #[derive(Clone)]
+    pub struct ClipTextEncodeSdxlOutput {
+        ///No documentation.
+        pub conditioning: crate::nodes::types::ConditioningOut,
+    }
+    ///Output for [`ClipTextEncodeSdxlRefiner`](super::ClipTextEncodeSdxlRefiner).
+    #[derive(Clone)]
+    pub struct ClipTextEncodeSdxlRefinerOutput {
+        ///No documentation.
+        pub conditioning: crate::nodes::types::ConditioningOut,
+    }
+    ///Output for [`ConditioningSetTimestepRange`](super::ConditioningSetTimestepRange).
+    #[derive(Clone)]
+    pub struct ConditioningSetTimestepRangeOutput {
+        ///No documentation.
+        pub conditioning: crate::nodes::types::ConditioningOut,
+    }
+    ///Output for [`ConditioningZeroOut`](super::ConditioningZeroOut).
+    #[derive(Clone)]
+    pub struct ConditioningZeroOutOutput {
+        ///No documentation.
+        pub conditioning: crate::nodes::types::ConditioningOut,
+    }
+}
 ///**CLIPTextEncodeHunyuanDiT**
 pub struct ClipTextEncodeHunyuanDiT<
     Clip: crate::nodes::types::Clip,
@@ -15,18 +54,12 @@ pub struct ClipTextEncodeHunyuanDiT<
     ///No documentation.
     pub mt_5_xl: Mt5Xl,
 }
-///Output for [`ClipTextEncodeHunyuanDiT`].
-#[derive(Clone)]
-pub struct ClipTextEncodeHunyuanDiTOutput {
-    ///No documentation.
-    pub conditioning: crate::nodes::types::ConditioningOut,
-}
 impl<
     Clip: crate::nodes::types::Clip,
     Bert: crate::nodes::types::String,
     Mt5Xl: crate::nodes::types::String,
 > crate::nodes::TypedNode for ClipTextEncodeHunyuanDiT<Clip, Bert, Mt5Xl> {
-    type Output = ClipTextEncodeHunyuanDiTOutput;
+    type Output = out::ClipTextEncodeHunyuanDiTOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
             conditioning: crate::nodes::types::ConditioningOut {
@@ -59,12 +92,6 @@ pub struct ClipTextEncodeSd3<
     ///No documentation.
     pub empty_padding: EmptyPadding,
 }
-///Output for [`ClipTextEncodeSd3`].
-#[derive(Clone)]
-pub struct ClipTextEncodeSd3Output {
-    ///No documentation.
-    pub conditioning: crate::nodes::types::ConditioningOut,
-}
 impl<
     Clip: crate::nodes::types::Clip,
     ClipL: crate::nodes::types::String,
@@ -73,7 +100,7 @@ impl<
     EmptyPadding: crate::nodes::types::String,
 > crate::nodes::TypedNode
 for ClipTextEncodeSd3<Clip, ClipL, ClipG, T5Xxl, EmptyPadding> {
-    type Output = ClipTextEncodeSd3Output;
+    type Output = out::ClipTextEncodeSd3Output;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
             conditioning: crate::nodes::types::ConditioningOut {
@@ -118,12 +145,6 @@ pub struct ClipTextEncodeSdxl<
     ///No documentation.
     pub text_l: TextL,
 }
-///Output for [`ClipTextEncodeSdxl`].
-#[derive(Clone)]
-pub struct ClipTextEncodeSdxlOutput {
-    ///No documentation.
-    pub conditioning: crate::nodes::types::ConditioningOut,
-}
 impl<
     Width: crate::nodes::types::Int,
     Height: crate::nodes::types::Int,
@@ -146,7 +167,7 @@ for ClipTextEncodeSdxl<
     Clip,
     TextL,
 > {
-    type Output = ClipTextEncodeSdxlOutput;
+    type Output = out::ClipTextEncodeSdxlOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
             conditioning: crate::nodes::types::ConditioningOut {
@@ -179,12 +200,6 @@ pub struct ClipTextEncodeSdxlRefiner<
     ///No documentation.
     pub clip: Clip,
 }
-///Output for [`ClipTextEncodeSdxlRefiner`].
-#[derive(Clone)]
-pub struct ClipTextEncodeSdxlRefinerOutput {
-    ///No documentation.
-    pub conditioning: crate::nodes::types::ConditioningOut,
-}
 impl<
     Ascore: crate::nodes::types::Float,
     Width: crate::nodes::types::Int,
@@ -193,7 +208,7 @@ impl<
     Clip: crate::nodes::types::Clip,
 > crate::nodes::TypedNode
 for ClipTextEncodeSdxlRefiner<Ascore, Width, Height, Text, Clip> {
-    type Output = ClipTextEncodeSdxlRefinerOutput;
+    type Output = out::ClipTextEncodeSdxlRefinerOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
             conditioning: crate::nodes::types::ConditioningOut {
@@ -220,18 +235,12 @@ pub struct ConditioningSetTimestepRange<
     ///No documentation.
     pub end: End,
 }
-///Output for [`ConditioningSetTimestepRange`].
-#[derive(Clone)]
-pub struct ConditioningSetTimestepRangeOutput {
-    ///No documentation.
-    pub conditioning: crate::nodes::types::ConditioningOut,
-}
 impl<
     Conditioning: crate::nodes::types::Conditioning,
     Start: crate::nodes::types::Float,
     End: crate::nodes::types::Float,
 > crate::nodes::TypedNode for ConditioningSetTimestepRange<Conditioning, Start, End> {
-    type Output = ConditioningSetTimestepRangeOutput;
+    type Output = out::ConditioningSetTimestepRangeOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
             conditioning: crate::nodes::types::ConditioningOut {
@@ -250,15 +259,9 @@ pub struct ConditioningZeroOut<Conditioning: crate::nodes::types::Conditioning> 
     ///No documentation.
     pub conditioning: Conditioning,
 }
-///Output for [`ConditioningZeroOut`].
-#[derive(Clone)]
-pub struct ConditioningZeroOutOutput {
-    ///No documentation.
-    pub conditioning: crate::nodes::types::ConditioningOut,
-}
 impl<Conditioning: crate::nodes::types::Conditioning> crate::nodes::TypedNode
 for ConditioningZeroOut<Conditioning> {
-    type Output = ConditioningZeroOutOutput;
+    type Output = out::ConditioningZeroOutOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
             conditioning: crate::nodes::types::ConditioningOut {

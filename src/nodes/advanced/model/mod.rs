@@ -1,6 +1,57 @@
 //!`model` definitions/categories.
 #![allow(unused_imports)]
 use crate::WorkflowNodeId;
+/// Output types for nodes.
+pub mod out {
+    ///Output for [`ModelSamplingAuraFlow`](super::ModelSamplingAuraFlow).
+    #[derive(Clone)]
+    pub struct ModelSamplingAuraFlowOutput {
+        ///No documentation.
+        pub model: crate::nodes::types::ModelOut,
+    }
+    ///Output for [`ModelSamplingContinuousEdm`](super::ModelSamplingContinuousEdm).
+    #[derive(Clone)]
+    pub struct ModelSamplingContinuousEdmOutput {
+        ///No documentation.
+        pub model: crate::nodes::types::ModelOut,
+    }
+    ///Output for [`ModelSamplingContinuousV`](super::ModelSamplingContinuousV).
+    #[derive(Clone)]
+    pub struct ModelSamplingContinuousVOutput {
+        ///No documentation.
+        pub model: crate::nodes::types::ModelOut,
+    }
+    ///Output for [`ModelSamplingDiscrete`](super::ModelSamplingDiscrete).
+    #[derive(Clone)]
+    pub struct ModelSamplingDiscreteOutput {
+        ///No documentation.
+        pub model: crate::nodes::types::ModelOut,
+    }
+    ///Output for [`ModelSamplingFlux`](super::ModelSamplingFlux).
+    #[derive(Clone)]
+    pub struct ModelSamplingFluxOutput {
+        ///No documentation.
+        pub model: crate::nodes::types::ModelOut,
+    }
+    ///Output for [`ModelSamplingSd3`](super::ModelSamplingSd3).
+    #[derive(Clone)]
+    pub struct ModelSamplingSd3Output {
+        ///No documentation.
+        pub model: crate::nodes::types::ModelOut,
+    }
+    ///Output for [`ModelSamplingStableCascade`](super::ModelSamplingStableCascade).
+    #[derive(Clone)]
+    pub struct ModelSamplingStableCascadeOutput {
+        ///No documentation.
+        pub model: crate::nodes::types::ModelOut,
+    }
+    ///Output for [`RescaleCfg`](super::RescaleCfg).
+    #[derive(Clone)]
+    pub struct RescaleCfgOutput {
+        ///No documentation.
+        pub model: crate::nodes::types::ModelOut,
+    }
+}
 ///**ModelSamplingAuraFlow**
 pub struct ModelSamplingAuraFlow<
     Model: crate::nodes::types::Model,
@@ -11,17 +62,11 @@ pub struct ModelSamplingAuraFlow<
     ///No documentation.
     pub shift: Shift,
 }
-///Output for [`ModelSamplingAuraFlow`].
-#[derive(Clone)]
-pub struct ModelSamplingAuraFlowOutput {
-    ///No documentation.
-    pub model: crate::nodes::types::ModelOut,
-}
 impl<
     Model: crate::nodes::types::Model,
     Shift: crate::nodes::types::Float,
 > crate::nodes::TypedNode for ModelSamplingAuraFlow<Model, Shift> {
-    type Output = ModelSamplingAuraFlowOutput;
+    type Output = out::ModelSamplingAuraFlowOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
             model: crate::nodes::types::ModelOut {
@@ -51,12 +96,6 @@ pub struct ModelSamplingContinuousEdm<
     ///No documentation.
     pub sigma_min: SigmaMin,
 }
-///Output for [`ModelSamplingContinuousEdm`].
-#[derive(Clone)]
-pub struct ModelSamplingContinuousEdmOutput {
-    ///No documentation.
-    pub model: crate::nodes::types::ModelOut,
-}
 impl<
     Model: crate::nodes::types::Model,
     Sampling: crate::nodes::types::String,
@@ -64,7 +103,7 @@ impl<
     SigmaMin: crate::nodes::types::Float,
 > crate::nodes::TypedNode
 for ModelSamplingContinuousEdm<Model, Sampling, SigmaMax, SigmaMin> {
-    type Output = ModelSamplingContinuousEdmOutput;
+    type Output = out::ModelSamplingContinuousEdmOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
             model: crate::nodes::types::ModelOut {
@@ -94,12 +133,6 @@ pub struct ModelSamplingContinuousV<
     ///No documentation.
     pub sigma_min: SigmaMin,
 }
-///Output for [`ModelSamplingContinuousV`].
-#[derive(Clone)]
-pub struct ModelSamplingContinuousVOutput {
-    ///No documentation.
-    pub model: crate::nodes::types::ModelOut,
-}
 impl<
     Model: crate::nodes::types::Model,
     Sampling: crate::nodes::types::String,
@@ -107,7 +140,7 @@ impl<
     SigmaMin: crate::nodes::types::Float,
 > crate::nodes::TypedNode
 for ModelSamplingContinuousV<Model, Sampling, SigmaMax, SigmaMin> {
-    type Output = ModelSamplingContinuousVOutput;
+    type Output = out::ModelSamplingContinuousVOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
             model: crate::nodes::types::ModelOut {
@@ -134,18 +167,12 @@ pub struct ModelSamplingDiscrete<
     ///No documentation.
     pub zsnr: Zsnr,
 }
-///Output for [`ModelSamplingDiscrete`].
-#[derive(Clone)]
-pub struct ModelSamplingDiscreteOutput {
-    ///No documentation.
-    pub model: crate::nodes::types::ModelOut,
-}
 impl<
     Model: crate::nodes::types::Model,
     Sampling: crate::nodes::types::String,
     Zsnr: crate::nodes::types::Boolean,
 > crate::nodes::TypedNode for ModelSamplingDiscrete<Model, Sampling, Zsnr> {
-    type Output = ModelSamplingDiscreteOutput;
+    type Output = out::ModelSamplingDiscreteOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
             model: crate::nodes::types::ModelOut {
@@ -178,12 +205,6 @@ pub struct ModelSamplingFlux<
     ///No documentation.
     pub height: Height,
 }
-///Output for [`ModelSamplingFlux`].
-#[derive(Clone)]
-pub struct ModelSamplingFluxOutput {
-    ///No documentation.
-    pub model: crate::nodes::types::ModelOut,
-}
 impl<
     Model: crate::nodes::types::Model,
     MaxShift: crate::nodes::types::Float,
@@ -192,7 +213,7 @@ impl<
     Height: crate::nodes::types::Int,
 > crate::nodes::TypedNode
 for ModelSamplingFlux<Model, MaxShift, BaseShift, Width, Height> {
-    type Output = ModelSamplingFluxOutput;
+    type Output = out::ModelSamplingFluxOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
             model: crate::nodes::types::ModelOut {
@@ -216,17 +237,11 @@ pub struct ModelSamplingSd3<
     ///No documentation.
     pub shift: Shift,
 }
-///Output for [`ModelSamplingSd3`].
-#[derive(Clone)]
-pub struct ModelSamplingSd3Output {
-    ///No documentation.
-    pub model: crate::nodes::types::ModelOut,
-}
 impl<
     Model: crate::nodes::types::Model,
     Shift: crate::nodes::types::Float,
 > crate::nodes::TypedNode for ModelSamplingSd3<Model, Shift> {
-    type Output = ModelSamplingSd3Output;
+    type Output = out::ModelSamplingSd3Output;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
             model: crate::nodes::types::ModelOut {
@@ -250,17 +265,11 @@ pub struct ModelSamplingStableCascade<
     ///No documentation.
     pub shift: Shift,
 }
-///Output for [`ModelSamplingStableCascade`].
-#[derive(Clone)]
-pub struct ModelSamplingStableCascadeOutput {
-    ///No documentation.
-    pub model: crate::nodes::types::ModelOut,
-}
 impl<
     Model: crate::nodes::types::Model,
     Shift: crate::nodes::types::Float,
 > crate::nodes::TypedNode for ModelSamplingStableCascade<Model, Shift> {
-    type Output = ModelSamplingStableCascadeOutput;
+    type Output = out::ModelSamplingStableCascadeOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
             model: crate::nodes::types::ModelOut {
@@ -284,17 +293,11 @@ pub struct RescaleCfg<
     ///No documentation.
     pub multiplier: Multiplier,
 }
-///Output for [`RescaleCfg`].
-#[derive(Clone)]
-pub struct RescaleCfgOutput {
-    ///No documentation.
-    pub model: crate::nodes::types::ModelOut,
-}
 impl<
     Model: crate::nodes::types::Model,
     Multiplier: crate::nodes::types::Float,
 > crate::nodes::TypedNode for RescaleCfg<Model, Multiplier> {
-    type Output = RescaleCfgOutput;
+    type Output = out::RescaleCfgOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
             model: crate::nodes::types::ModelOut {

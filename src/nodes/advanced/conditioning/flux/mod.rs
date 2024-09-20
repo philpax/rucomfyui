@@ -1,6 +1,21 @@
 //!`flux` definitions/categories.
 #![allow(unused_imports)]
 use crate::WorkflowNodeId;
+/// Output types for nodes.
+pub mod out {
+    ///Output for [`ClipTextEncodeFlux`](super::ClipTextEncodeFlux).
+    #[derive(Clone)]
+    pub struct ClipTextEncodeFluxOutput {
+        ///No documentation.
+        pub conditioning: crate::nodes::types::ConditioningOut,
+    }
+    ///Output for [`FluxGuidance`](super::FluxGuidance).
+    #[derive(Clone)]
+    pub struct FluxGuidanceOutput {
+        ///No documentation.
+        pub conditioning: crate::nodes::types::ConditioningOut,
+    }
+}
 ///**CLIPTextEncodeFlux**
 pub struct ClipTextEncodeFlux<
     Clip: crate::nodes::types::Clip,
@@ -17,19 +32,13 @@ pub struct ClipTextEncodeFlux<
     ///No documentation.
     pub guidance: Guidance,
 }
-///Output for [`ClipTextEncodeFlux`].
-#[derive(Clone)]
-pub struct ClipTextEncodeFluxOutput {
-    ///No documentation.
-    pub conditioning: crate::nodes::types::ConditioningOut,
-}
 impl<
     Clip: crate::nodes::types::Clip,
     ClipL: crate::nodes::types::String,
     T5Xxl: crate::nodes::types::String,
     Guidance: crate::nodes::types::Float,
 > crate::nodes::TypedNode for ClipTextEncodeFlux<Clip, ClipL, T5Xxl, Guidance> {
-    type Output = ClipTextEncodeFluxOutput;
+    type Output = out::ClipTextEncodeFluxOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
             conditioning: crate::nodes::types::ConditioningOut {
@@ -53,17 +62,11 @@ pub struct FluxGuidance<
     ///No documentation.
     pub guidance: Guidance,
 }
-///Output for [`FluxGuidance`].
-#[derive(Clone)]
-pub struct FluxGuidanceOutput {
-    ///No documentation.
-    pub conditioning: crate::nodes::types::ConditioningOut,
-}
 impl<
     Conditioning: crate::nodes::types::Conditioning,
     Guidance: crate::nodes::types::Float,
 > crate::nodes::TypedNode for FluxGuidance<Conditioning, Guidance> {
-    type Output = FluxGuidanceOutput;
+    type Output = out::FluxGuidanceOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
             conditioning: crate::nodes::types::ConditioningOut {

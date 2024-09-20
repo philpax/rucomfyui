@@ -1,6 +1,37 @@
 //!`controlnet` definitions/categories.
 #![allow(unused_imports)]
 use crate::WorkflowNodeId;
+/// Output types for nodes.
+pub mod out {
+    ///Output for [`ControlNetApply`](super::ControlNetApply).
+    #[derive(Clone)]
+    pub struct ControlNetApplyOutput {
+        ///No documentation.
+        pub conditioning: crate::nodes::types::ConditioningOut,
+    }
+    ///Output for [`ControlNetApplyAdvanced`](super::ControlNetApplyAdvanced).
+    #[derive(Clone)]
+    pub struct ControlNetApplyAdvancedOutput {
+        ///No documentation.
+        pub positive: crate::nodes::types::ConditioningOut,
+        ///No documentation.
+        pub negative: crate::nodes::types::ConditioningOut,
+    }
+    ///Output for [`ControlNetApplySd3`](super::ControlNetApplySd3).
+    #[derive(Clone)]
+    pub struct ControlNetApplySd3Output {
+        ///No documentation.
+        pub positive: crate::nodes::types::ConditioningOut,
+        ///No documentation.
+        pub negative: crate::nodes::types::ConditioningOut,
+    }
+    ///Output for [`SetUnionControlNetType`](super::SetUnionControlNetType).
+    #[derive(Clone)]
+    pub struct SetUnionControlNetTypeOutput {
+        ///No documentation.
+        pub control_net: crate::nodes::types::ControlNetOut,
+    }
+}
 ///**Apply ControlNet**
 pub struct ControlNetApply<
     Conditioning: crate::nodes::types::Conditioning,
@@ -17,12 +48,6 @@ pub struct ControlNetApply<
     ///No documentation.
     pub strength: Strength,
 }
-///Output for [`ControlNetApply`].
-#[derive(Clone)]
-pub struct ControlNetApplyOutput {
-    ///No documentation.
-    pub conditioning: crate::nodes::types::ConditioningOut,
-}
 impl<
     Conditioning: crate::nodes::types::Conditioning,
     ControlNet: crate::nodes::types::ControlNet,
@@ -30,7 +55,7 @@ impl<
     Strength: crate::nodes::types::Float,
 > crate::nodes::TypedNode
 for ControlNetApply<Conditioning, ControlNet, Image, Strength> {
-    type Output = ControlNetApplyOutput;
+    type Output = out::ControlNetApplyOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
             conditioning: crate::nodes::types::ConditioningOut {
@@ -69,14 +94,6 @@ pub struct ControlNetApplyAdvanced<
     ///No documentation.
     pub end_percent: EndPercent,
 }
-///Output for [`ControlNetApplyAdvanced`].
-#[derive(Clone)]
-pub struct ControlNetApplyAdvancedOutput {
-    ///No documentation.
-    pub positive: crate::nodes::types::ConditioningOut,
-    ///No documentation.
-    pub negative: crate::nodes::types::ConditioningOut,
-}
 impl<
     Positive: crate::nodes::types::Conditioning,
     Negative: crate::nodes::types::Conditioning,
@@ -95,7 +112,7 @@ for ControlNetApplyAdvanced<
     StartPercent,
     EndPercent,
 > {
-    type Output = ControlNetApplyAdvancedOutput;
+    type Output = out::ControlNetApplyAdvancedOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
             positive: crate::nodes::types::ConditioningOut {
@@ -141,14 +158,6 @@ pub struct ControlNetApplySd3<
     ///No documentation.
     pub end_percent: EndPercent,
 }
-///Output for [`ControlNetApplySd3`].
-#[derive(Clone)]
-pub struct ControlNetApplySd3Output {
-    ///No documentation.
-    pub positive: crate::nodes::types::ConditioningOut,
-    ///No documentation.
-    pub negative: crate::nodes::types::ConditioningOut,
-}
 impl<
     Positive: crate::nodes::types::Conditioning,
     Negative: crate::nodes::types::Conditioning,
@@ -169,7 +178,7 @@ for ControlNetApplySd3<
     StartPercent,
     EndPercent,
 > {
-    type Output = ControlNetApplySd3Output;
+    type Output = out::ControlNetApplySd3Output;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
             positive: crate::nodes::types::ConditioningOut {
@@ -197,17 +206,11 @@ pub struct SetUnionControlNetType<
     ///No documentation.
     pub type_: Type,
 }
-///Output for [`SetUnionControlNetType`].
-#[derive(Clone)]
-pub struct SetUnionControlNetTypeOutput {
-    ///No documentation.
-    pub control_net: crate::nodes::types::ControlNetOut,
-}
 impl<
     ControlNet: crate::nodes::types::ControlNet,
     Type: crate::nodes::types::String,
 > crate::nodes::TypedNode for SetUnionControlNetType<ControlNet, Type> {
-    type Output = SetUnionControlNetTypeOutput;
+    type Output = out::SetUnionControlNetTypeOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
             control_net: crate::nodes::types::ControlNetOut {

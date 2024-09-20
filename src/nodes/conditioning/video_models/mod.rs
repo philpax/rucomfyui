@@ -1,6 +1,19 @@
 //!`video_models` definitions/categories.
 #![allow(unused_imports)]
 use crate::WorkflowNodeId;
+/// Output types for nodes.
+pub mod out {
+    ///Output for [`SvdImg2VidConditioning`](super::SvdImg2VidConditioning).
+    #[derive(Clone)]
+    pub struct SvdImg2VidConditioningOutput {
+        ///No documentation.
+        pub positive: crate::nodes::types::ConditioningOut,
+        ///No documentation.
+        pub negative: crate::nodes::types::ConditioningOut,
+        ///No documentation.
+        pub latent: crate::nodes::types::LatentOut,
+    }
+}
 ///**SVD_img2vid_Conditioning**
 pub struct SvdImg2VidConditioning<
     ClipVision: crate::nodes::types::ClipVision,
@@ -32,16 +45,6 @@ pub struct SvdImg2VidConditioning<
     ///No documentation.
     pub augmentation_level: AugmentationLevel,
 }
-///Output for [`SvdImg2VidConditioning`].
-#[derive(Clone)]
-pub struct SvdImg2VidConditioningOutput {
-    ///No documentation.
-    pub positive: crate::nodes::types::ConditioningOut,
-    ///No documentation.
-    pub negative: crate::nodes::types::ConditioningOut,
-    ///No documentation.
-    pub latent: crate::nodes::types::LatentOut,
-}
 impl<
     ClipVision: crate::nodes::types::ClipVision,
     InitImage: crate::nodes::types::Image,
@@ -64,7 +67,7 @@ for SvdImg2VidConditioning<
     Fps,
     AugmentationLevel,
 > {
-    type Output = SvdImg2VidConditioningOutput;
+    type Output = out::SvdImg2VidConditioningOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
             positive: crate::nodes::types::ConditioningOut {

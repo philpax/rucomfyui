@@ -6,6 +6,25 @@ pub mod noise;
 pub mod samplers;
 pub mod schedulers;
 pub mod sigmas;
+/// Output types for nodes.
+pub mod out {
+    ///Output for [`SamplerCustom`](super::SamplerCustom).
+    #[derive(Clone)]
+    pub struct SamplerCustomOutput {
+        ///No documentation.
+        pub output: crate::nodes::types::LatentOut,
+        ///No documentation.
+        pub denoised_output: crate::nodes::types::LatentOut,
+    }
+    ///Output for [`SamplerCustomAdvanced`](super::SamplerCustomAdvanced).
+    #[derive(Clone)]
+    pub struct SamplerCustomAdvancedOutput {
+        ///No documentation.
+        pub output: crate::nodes::types::LatentOut,
+        ///No documentation.
+        pub denoised_output: crate::nodes::types::LatentOut,
+    }
+}
 ///**SamplerCustom**
 pub struct SamplerCustom<
     Model: crate::nodes::types::Model,
@@ -37,14 +56,6 @@ pub struct SamplerCustom<
     ///No documentation.
     pub latent_image: LatentImage,
 }
-///Output for [`SamplerCustom`].
-#[derive(Clone)]
-pub struct SamplerCustomOutput {
-    ///No documentation.
-    pub output: crate::nodes::types::LatentOut,
-    ///No documentation.
-    pub denoised_output: crate::nodes::types::LatentOut,
-}
 impl<
     Model: crate::nodes::types::Model,
     AddNoise: crate::nodes::types::Boolean,
@@ -67,7 +78,7 @@ for SamplerCustom<
     Sigmas,
     LatentImage,
 > {
-    type Output = SamplerCustomOutput;
+    type Output = out::SamplerCustomOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
             output: crate::nodes::types::LatentOut {
@@ -104,14 +115,6 @@ pub struct SamplerCustomAdvanced<
     ///No documentation.
     pub latent_image: LatentImage,
 }
-///Output for [`SamplerCustomAdvanced`].
-#[derive(Clone)]
-pub struct SamplerCustomAdvancedOutput {
-    ///No documentation.
-    pub output: crate::nodes::types::LatentOut,
-    ///No documentation.
-    pub denoised_output: crate::nodes::types::LatentOut,
-}
 impl<
     Noise: crate::nodes::types::Noise,
     Guider: crate::nodes::types::Guider,
@@ -120,7 +123,7 @@ impl<
     LatentImage: crate::nodes::types::Latent,
 > crate::nodes::TypedNode
 for SamplerCustomAdvanced<Noise, Guider, Sampler, Sigmas, LatentImage> {
-    type Output = SamplerCustomAdvancedOutput;
+    type Output = out::SamplerCustomAdvancedOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
             output: crate::nodes::types::LatentOut {

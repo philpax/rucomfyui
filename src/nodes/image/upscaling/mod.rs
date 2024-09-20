@@ -1,6 +1,33 @@
 //!`upscaling` definitions/categories.
 #![allow(unused_imports)]
 use crate::WorkflowNodeId;
+/// Output types for nodes.
+pub mod out {
+    ///Output for [`ImageScale`](super::ImageScale).
+    #[derive(Clone)]
+    pub struct ImageScaleOutput {
+        ///No documentation.
+        pub image: crate::nodes::types::ImageOut,
+    }
+    ///Output for [`ImageScaleBy`](super::ImageScaleBy).
+    #[derive(Clone)]
+    pub struct ImageScaleByOutput {
+        ///No documentation.
+        pub image: crate::nodes::types::ImageOut,
+    }
+    ///Output for [`ImageScaleToTotalPixels`](super::ImageScaleToTotalPixels).
+    #[derive(Clone)]
+    pub struct ImageScaleToTotalPixelsOutput {
+        ///No documentation.
+        pub image: crate::nodes::types::ImageOut,
+    }
+    ///Output for [`ImageUpscaleWithModel`](super::ImageUpscaleWithModel).
+    #[derive(Clone)]
+    pub struct ImageUpscaleWithModelOutput {
+        ///No documentation.
+        pub image: crate::nodes::types::ImageOut,
+    }
+}
 ///**Upscale Image**
 pub struct ImageScale<
     Image: crate::nodes::types::Image,
@@ -20,12 +47,6 @@ pub struct ImageScale<
     ///No documentation.
     pub crop: Crop,
 }
-///Output for [`ImageScale`].
-#[derive(Clone)]
-pub struct ImageScaleOutput {
-    ///No documentation.
-    pub image: crate::nodes::types::ImageOut,
-}
 impl<
     Image: crate::nodes::types::Image,
     UpscaleMethod: crate::nodes::types::String,
@@ -33,7 +54,7 @@ impl<
     Height: crate::nodes::types::Int,
     Crop: crate::nodes::types::String,
 > crate::nodes::TypedNode for ImageScale<Image, UpscaleMethod, Width, Height, Crop> {
-    type Output = ImageScaleOutput;
+    type Output = out::ImageScaleOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
             image: crate::nodes::types::ImageOut {
@@ -60,18 +81,12 @@ pub struct ImageScaleBy<
     ///No documentation.
     pub scale_by: ScaleBy,
 }
-///Output for [`ImageScaleBy`].
-#[derive(Clone)]
-pub struct ImageScaleByOutput {
-    ///No documentation.
-    pub image: crate::nodes::types::ImageOut,
-}
 impl<
     Image: crate::nodes::types::Image,
     UpscaleMethod: crate::nodes::types::String,
     ScaleBy: crate::nodes::types::Float,
 > crate::nodes::TypedNode for ImageScaleBy<Image, UpscaleMethod, ScaleBy> {
-    type Output = ImageScaleByOutput;
+    type Output = out::ImageScaleByOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
             image: crate::nodes::types::ImageOut {
@@ -98,18 +113,12 @@ pub struct ImageScaleToTotalPixels<
     ///No documentation.
     pub megapixels: Megapixels,
 }
-///Output for [`ImageScaleToTotalPixels`].
-#[derive(Clone)]
-pub struct ImageScaleToTotalPixelsOutput {
-    ///No documentation.
-    pub image: crate::nodes::types::ImageOut,
-}
 impl<
     Image: crate::nodes::types::Image,
     UpscaleMethod: crate::nodes::types::String,
     Megapixels: crate::nodes::types::Float,
 > crate::nodes::TypedNode for ImageScaleToTotalPixels<Image, UpscaleMethod, Megapixels> {
-    type Output = ImageScaleToTotalPixelsOutput;
+    type Output = out::ImageScaleToTotalPixelsOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
             image: crate::nodes::types::ImageOut {
@@ -133,17 +142,11 @@ pub struct ImageUpscaleWithModel<
     ///No documentation.
     pub image: Image,
 }
-///Output for [`ImageUpscaleWithModel`].
-#[derive(Clone)]
-pub struct ImageUpscaleWithModelOutput {
-    ///No documentation.
-    pub image: crate::nodes::types::ImageOut,
-}
 impl<
     UpscaleModel: crate::nodes::types::UpscaleModel,
     Image: crate::nodes::types::Image,
 > crate::nodes::TypedNode for ImageUpscaleWithModel<UpscaleModel, Image> {
-    type Output = ImageUpscaleWithModelOutput;
+    type Output = out::ImageUpscaleWithModelOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
             image: crate::nodes::types::ImageOut {

@@ -1,6 +1,33 @@
 //!`unet` definitions/categories.
 #![allow(unused_imports)]
 use crate::WorkflowNodeId;
+/// Output types for nodes.
+pub mod out {
+    ///Output for [`FreeU`](super::FreeU).
+    #[derive(Clone)]
+    pub struct FreeUOutput {
+        ///No documentation.
+        pub model: crate::nodes::types::ModelOut,
+    }
+    ///Output for [`FreeUV2`](super::FreeUV2).
+    #[derive(Clone)]
+    pub struct FreeUV2Output {
+        ///No documentation.
+        pub model: crate::nodes::types::ModelOut,
+    }
+    ///Output for [`HyperTile`](super::HyperTile).
+    #[derive(Clone)]
+    pub struct HyperTileOutput {
+        ///No documentation.
+        pub model: crate::nodes::types::ModelOut,
+    }
+    ///Output for [`PerturbedAttentionGuidance`](super::PerturbedAttentionGuidance).
+    #[derive(Clone)]
+    pub struct PerturbedAttentionGuidanceOutput {
+        ///No documentation.
+        pub model: crate::nodes::types::ModelOut,
+    }
+}
 ///**FreeU**
 pub struct FreeU<
     Model: crate::nodes::types::Model,
@@ -20,12 +47,6 @@ pub struct FreeU<
     ///No documentation.
     pub s_2: S2,
 }
-///Output for [`FreeU`].
-#[derive(Clone)]
-pub struct FreeUOutput {
-    ///No documentation.
-    pub model: crate::nodes::types::ModelOut,
-}
 impl<
     Model: crate::nodes::types::Model,
     B1: crate::nodes::types::Float,
@@ -33,7 +54,7 @@ impl<
     S1: crate::nodes::types::Float,
     S2: crate::nodes::types::Float,
 > crate::nodes::TypedNode for FreeU<Model, B1, B2, S1, S2> {
-    type Output = FreeUOutput;
+    type Output = out::FreeUOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
             model: crate::nodes::types::ModelOut {
@@ -66,12 +87,6 @@ pub struct FreeUV2<
     ///No documentation.
     pub s_2: S2,
 }
-///Output for [`FreeUV2`].
-#[derive(Clone)]
-pub struct FreeUV2Output {
-    ///No documentation.
-    pub model: crate::nodes::types::ModelOut,
-}
 impl<
     Model: crate::nodes::types::Model,
     B1: crate::nodes::types::Float,
@@ -79,7 +94,7 @@ impl<
     S1: crate::nodes::types::Float,
     S2: crate::nodes::types::Float,
 > crate::nodes::TypedNode for FreeUV2<Model, B1, B2, S1, S2> {
-    type Output = FreeUV2Output;
+    type Output = out::FreeUV2Output;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
             model: crate::nodes::types::ModelOut {
@@ -112,12 +127,6 @@ pub struct HyperTile<
     ///No documentation.
     pub scale_depth: ScaleDepth,
 }
-///Output for [`HyperTile`].
-#[derive(Clone)]
-pub struct HyperTileOutput {
-    ///No documentation.
-    pub model: crate::nodes::types::ModelOut,
-}
 impl<
     Model: crate::nodes::types::Model,
     TileSize: crate::nodes::types::Int,
@@ -126,7 +135,7 @@ impl<
     ScaleDepth: crate::nodes::types::Boolean,
 > crate::nodes::TypedNode
 for HyperTile<Model, TileSize, SwapSize, MaxDepth, ScaleDepth> {
-    type Output = HyperTileOutput;
+    type Output = out::HyperTileOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
             model: crate::nodes::types::ModelOut {
@@ -150,17 +159,11 @@ pub struct PerturbedAttentionGuidance<
     ///No documentation.
     pub scale: Scale,
 }
-///Output for [`PerturbedAttentionGuidance`].
-#[derive(Clone)]
-pub struct PerturbedAttentionGuidanceOutput {
-    ///No documentation.
-    pub model: crate::nodes::types::ModelOut,
-}
 impl<
     Model: crate::nodes::types::Model,
     Scale: crate::nodes::types::Float,
 > crate::nodes::TypedNode for PerturbedAttentionGuidance<Model, Scale> {
-    type Output = PerturbedAttentionGuidanceOutput;
+    type Output = out::PerturbedAttentionGuidanceOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
             model: crate::nodes::types::ModelOut {

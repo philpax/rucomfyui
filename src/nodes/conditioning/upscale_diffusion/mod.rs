@@ -1,6 +1,19 @@
 //!`upscale_diffusion` definitions/categories.
 #![allow(unused_imports)]
 use crate::WorkflowNodeId;
+/// Output types for nodes.
+pub mod out {
+    ///Output for [`Sd4XUpscaleConditioning`](super::Sd4XUpscaleConditioning).
+    #[derive(Clone)]
+    pub struct Sd4XUpscaleConditioningOutput {
+        ///No documentation.
+        pub positive: crate::nodes::types::ConditioningOut,
+        ///No documentation.
+        pub negative: crate::nodes::types::ConditioningOut,
+        ///No documentation.
+        pub latent: crate::nodes::types::LatentOut,
+    }
+}
 ///**SD_4XUpscale_Conditioning**
 pub struct Sd4XUpscaleConditioning<
     Images: crate::nodes::types::Image,
@@ -20,16 +33,6 @@ pub struct Sd4XUpscaleConditioning<
     ///No documentation.
     pub noise_augmentation: NoiseAugmentation,
 }
-///Output for [`Sd4XUpscaleConditioning`].
-#[derive(Clone)]
-pub struct Sd4XUpscaleConditioningOutput {
-    ///No documentation.
-    pub positive: crate::nodes::types::ConditioningOut,
-    ///No documentation.
-    pub negative: crate::nodes::types::ConditioningOut,
-    ///No documentation.
-    pub latent: crate::nodes::types::LatentOut,
-}
 impl<
     Images: crate::nodes::types::Image,
     Positive: crate::nodes::types::Conditioning,
@@ -38,7 +41,7 @@ impl<
     NoiseAugmentation: crate::nodes::types::Float,
 > crate::nodes::TypedNode
 for Sd4XUpscaleConditioning<Images, Positive, Negative, ScaleRatio, NoiseAugmentation> {
-    type Output = Sd4XUpscaleConditioningOutput;
+    type Output = out::Sd4XUpscaleConditioningOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
             positive: crate::nodes::types::ConditioningOut {

@@ -3,6 +3,21 @@
 use crate::WorkflowNodeId;
 pub mod custom_sampling;
 pub mod video_models;
+/// Output types for nodes.
+pub mod out {
+    ///Output for [`KSampler`](super::KSampler).
+    #[derive(Clone)]
+    pub struct KSamplerOutput {
+        ///The denoised latent.
+        pub latent: crate::nodes::types::LatentOut,
+    }
+    ///Output for [`KSamplerAdvanced`](super::KSamplerAdvanced).
+    #[derive(Clone)]
+    pub struct KSamplerAdvancedOutput {
+        ///No documentation.
+        pub latent: crate::nodes::types::LatentOut,
+    }
+}
 ///**KSampler**: Uses the provided model, positive and negative conditioning to denoise the latent image.
 pub struct KSampler<
     Model: crate::nodes::types::Model,
@@ -37,12 +52,6 @@ pub struct KSampler<
     ///The amount of denoising applied, lower values will maintain the structure of the initial image allowing for image to image sampling.
     pub denoise: Denoise,
 }
-///Output for [`KSampler`].
-#[derive(Clone)]
-pub struct KSamplerOutput {
-    ///The denoised latent.
-    pub latent: crate::nodes::types::LatentOut,
-}
 impl<
     Model: crate::nodes::types::Model,
     Seed: crate::nodes::types::Int,
@@ -67,7 +76,7 @@ for KSampler<
     LatentImage,
     Denoise,
 > {
-    type Output = KSamplerOutput;
+    type Output = out::KSamplerOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
             latent: crate::nodes::types::LatentOut {
@@ -124,12 +133,6 @@ pub struct KSamplerAdvanced<
     ///No documentation.
     pub return_with_leftover_noise: ReturnWithLeftoverNoise,
 }
-///Output for [`KSamplerAdvanced`].
-#[derive(Clone)]
-pub struct KSamplerAdvancedOutput {
-    ///No documentation.
-    pub latent: crate::nodes::types::LatentOut,
-}
 impl<
     Model: crate::nodes::types::Model,
     AddNoise: crate::nodes::types::String,
@@ -160,7 +163,7 @@ for KSamplerAdvanced<
     EndAtStep,
     ReturnWithLeftoverNoise,
 > {
-    type Output = KSamplerAdvancedOutput;
+    type Output = out::KSamplerAdvancedOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
             latent: crate::nodes::types::LatentOut {

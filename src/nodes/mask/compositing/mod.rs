@@ -1,6 +1,31 @@
 //!`compositing` definitions/categories.
 #![allow(unused_imports)]
 use crate::WorkflowNodeId;
+/// Output types for nodes.
+pub mod out {
+    ///Output for [`JoinImageWithAlpha`](super::JoinImageWithAlpha).
+    #[derive(Clone)]
+    pub struct JoinImageWithAlphaOutput {
+        ///No documentation.
+        pub image: crate::nodes::types::ImageOut,
+    }
+    ///Output for [`PorterDuffImageComposite`](super::PorterDuffImageComposite).
+    #[derive(Clone)]
+    pub struct PorterDuffImageCompositeOutput {
+        ///No documentation.
+        pub image: crate::nodes::types::ImageOut,
+        ///No documentation.
+        pub mask: crate::nodes::types::MaskOut,
+    }
+    ///Output for [`SplitImageWithAlpha`](super::SplitImageWithAlpha).
+    #[derive(Clone)]
+    pub struct SplitImageWithAlphaOutput {
+        ///No documentation.
+        pub image: crate::nodes::types::ImageOut,
+        ///No documentation.
+        pub mask: crate::nodes::types::MaskOut,
+    }
+}
 ///**Join Image with Alpha**
 pub struct JoinImageWithAlpha<
     Image: crate::nodes::types::Image,
@@ -11,17 +36,11 @@ pub struct JoinImageWithAlpha<
     ///No documentation.
     pub alpha: Alpha,
 }
-///Output for [`JoinImageWithAlpha`].
-#[derive(Clone)]
-pub struct JoinImageWithAlphaOutput {
-    ///No documentation.
-    pub image: crate::nodes::types::ImageOut,
-}
 impl<
     Image: crate::nodes::types::Image,
     Alpha: crate::nodes::types::Mask,
 > crate::nodes::TypedNode for JoinImageWithAlpha<Image, Alpha> {
-    type Output = JoinImageWithAlphaOutput;
+    type Output = out::JoinImageWithAlphaOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
             image: crate::nodes::types::ImageOut {
@@ -54,14 +73,6 @@ pub struct PorterDuffImageComposite<
     ///No documentation.
     pub mode: Mode,
 }
-///Output for [`PorterDuffImageComposite`].
-#[derive(Clone)]
-pub struct PorterDuffImageCompositeOutput {
-    ///No documentation.
-    pub image: crate::nodes::types::ImageOut,
-    ///No documentation.
-    pub mask: crate::nodes::types::MaskOut,
-}
 impl<
     Source: crate::nodes::types::Image,
     SourceAlpha: crate::nodes::types::Mask,
@@ -70,7 +81,7 @@ impl<
     Mode: crate::nodes::types::String,
 > crate::nodes::TypedNode
 for PorterDuffImageComposite<Source, SourceAlpha, Destination, DestinationAlpha, Mode> {
-    type Output = PorterDuffImageCompositeOutput;
+    type Output = out::PorterDuffImageCompositeOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
             image: crate::nodes::types::ImageOut {
@@ -93,17 +104,9 @@ pub struct SplitImageWithAlpha<Image: crate::nodes::types::Image> {
     ///No documentation.
     pub image: Image,
 }
-///Output for [`SplitImageWithAlpha`].
-#[derive(Clone)]
-pub struct SplitImageWithAlphaOutput {
-    ///No documentation.
-    pub image: crate::nodes::types::ImageOut,
-    ///No documentation.
-    pub mask: crate::nodes::types::MaskOut,
-}
 impl<Image: crate::nodes::types::Image> crate::nodes::TypedNode
 for SplitImageWithAlpha<Image> {
-    type Output = SplitImageWithAlphaOutput;
+    type Output = out::SplitImageWithAlphaOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
             image: crate::nodes::types::ImageOut {

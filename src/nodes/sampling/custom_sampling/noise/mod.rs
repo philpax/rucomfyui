@@ -1,16 +1,25 @@
 //!`noise` definitions/categories.
 #![allow(unused_imports)]
 use crate::WorkflowNodeId;
+/// Output types for nodes.
+pub mod out {
+    ///Output for [`DisableNoise`](super::DisableNoise).
+    #[derive(Clone)]
+    pub struct DisableNoiseOutput {
+        ///No documentation.
+        pub noise: crate::nodes::types::NoiseOut,
+    }
+    ///Output for [`RandomNoise`](super::RandomNoise).
+    #[derive(Clone)]
+    pub struct RandomNoiseOutput {
+        ///No documentation.
+        pub noise: crate::nodes::types::NoiseOut,
+    }
+}
 ///**DisableNoise**
 pub struct DisableNoise {}
-///Output for [`DisableNoise`].
-#[derive(Clone)]
-pub struct DisableNoiseOutput {
-    ///No documentation.
-    pub noise: crate::nodes::types::NoiseOut,
-}
 impl crate::nodes::TypedNode for DisableNoise {
-    type Output = DisableNoiseOutput;
+    type Output = out::DisableNoiseOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
             noise: crate::nodes::types::NoiseOut {
@@ -29,15 +38,9 @@ pub struct RandomNoise<NoiseSeed: crate::nodes::types::Int> {
     ///No documentation.
     pub noise_seed: NoiseSeed,
 }
-///Output for [`RandomNoise`].
-#[derive(Clone)]
-pub struct RandomNoiseOutput {
-    ///No documentation.
-    pub noise: crate::nodes::types::NoiseOut,
-}
 impl<NoiseSeed: crate::nodes::types::Int> crate::nodes::TypedNode
 for RandomNoise<NoiseSeed> {
-    type Output = RandomNoiseOutput;
+    type Output = out::RandomNoiseOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
             noise: crate::nodes::types::NoiseOut {

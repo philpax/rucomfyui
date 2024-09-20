@@ -1,6 +1,19 @@
 //!`inpaint` definitions/categories.
 #![allow(unused_imports)]
 use crate::WorkflowNodeId;
+/// Output types for nodes.
+pub mod out {
+    ///Output for [`InpaintModelConditioning`](super::InpaintModelConditioning).
+    #[derive(Clone)]
+    pub struct InpaintModelConditioningOutput {
+        ///No documentation.
+        pub positive: crate::nodes::types::ConditioningOut,
+        ///No documentation.
+        pub negative: crate::nodes::types::ConditioningOut,
+        ///No documentation.
+        pub latent: crate::nodes::types::LatentOut,
+    }
+}
 ///**InpaintModelConditioning**
 pub struct InpaintModelConditioning<
     Positive: crate::nodes::types::Conditioning,
@@ -20,16 +33,6 @@ pub struct InpaintModelConditioning<
     ///No documentation.
     pub mask: Mask,
 }
-///Output for [`InpaintModelConditioning`].
-#[derive(Clone)]
-pub struct InpaintModelConditioningOutput {
-    ///No documentation.
-    pub positive: crate::nodes::types::ConditioningOut,
-    ///No documentation.
-    pub negative: crate::nodes::types::ConditioningOut,
-    ///No documentation.
-    pub latent: crate::nodes::types::LatentOut,
-}
 impl<
     Positive: crate::nodes::types::Conditioning,
     Negative: crate::nodes::types::Conditioning,
@@ -38,7 +41,7 @@ impl<
     Mask: crate::nodes::types::Mask,
 > crate::nodes::TypedNode
 for InpaintModelConditioning<Positive, Negative, Vae, Pixels, Mask> {
-    type Output = InpaintModelConditioningOutput;
+    type Output = out::InpaintModelConditioningOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
             positive: crate::nodes::types::ConditioningOut {

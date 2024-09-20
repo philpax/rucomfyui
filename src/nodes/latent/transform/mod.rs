@@ -1,6 +1,27 @@
 //!`transform` definitions/categories.
 #![allow(unused_imports)]
 use crate::WorkflowNodeId;
+/// Output types for nodes.
+pub mod out {
+    ///Output for [`LatentCrop`](super::LatentCrop).
+    #[derive(Clone)]
+    pub struct LatentCropOutput {
+        ///No documentation.
+        pub latent: crate::nodes::types::LatentOut,
+    }
+    ///Output for [`LatentFlip`](super::LatentFlip).
+    #[derive(Clone)]
+    pub struct LatentFlipOutput {
+        ///No documentation.
+        pub latent: crate::nodes::types::LatentOut,
+    }
+    ///Output for [`LatentRotate`](super::LatentRotate).
+    #[derive(Clone)]
+    pub struct LatentRotateOutput {
+        ///No documentation.
+        pub latent: crate::nodes::types::LatentOut,
+    }
+}
 ///**Crop Latent**
 pub struct LatentCrop<
     Samples: crate::nodes::types::Latent,
@@ -20,12 +41,6 @@ pub struct LatentCrop<
     ///No documentation.
     pub y: Y,
 }
-///Output for [`LatentCrop`].
-#[derive(Clone)]
-pub struct LatentCropOutput {
-    ///No documentation.
-    pub latent: crate::nodes::types::LatentOut,
-}
 impl<
     Samples: crate::nodes::types::Latent,
     Width: crate::nodes::types::Int,
@@ -33,7 +48,7 @@ impl<
     X: crate::nodes::types::Int,
     Y: crate::nodes::types::Int,
 > crate::nodes::TypedNode for LatentCrop<Samples, Width, Height, X, Y> {
-    type Output = LatentCropOutput;
+    type Output = out::LatentCropOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
             latent: crate::nodes::types::LatentOut {
@@ -57,17 +72,11 @@ pub struct LatentFlip<
     ///No documentation.
     pub flip_method: FlipMethod,
 }
-///Output for [`LatentFlip`].
-#[derive(Clone)]
-pub struct LatentFlipOutput {
-    ///No documentation.
-    pub latent: crate::nodes::types::LatentOut,
-}
 impl<
     Samples: crate::nodes::types::Latent,
     FlipMethod: crate::nodes::types::String,
 > crate::nodes::TypedNode for LatentFlip<Samples, FlipMethod> {
-    type Output = LatentFlipOutput;
+    type Output = out::LatentFlipOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
             latent: crate::nodes::types::LatentOut {
@@ -91,17 +100,11 @@ pub struct LatentRotate<
     ///No documentation.
     pub rotation: Rotation,
 }
-///Output for [`LatentRotate`].
-#[derive(Clone)]
-pub struct LatentRotateOutput {
-    ///No documentation.
-    pub latent: crate::nodes::types::LatentOut,
-}
 impl<
     Samples: crate::nodes::types::Latent,
     Rotation: crate::nodes::types::String,
 > crate::nodes::TypedNode for LatentRotate<Samples, Rotation> {
-    type Output = LatentRotateOutput;
+    type Output = out::LatentRotateOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
             latent: crate::nodes::types::LatentOut {

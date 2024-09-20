@@ -1,6 +1,39 @@
 //!`3d_models` definitions/categories.
 #![allow(unused_imports)]
 use crate::WorkflowNodeId;
+/// Output types for nodes.
+pub mod out {
+    ///Output for [`Sv3DConditioning`](super::Sv3DConditioning).
+    #[derive(Clone)]
+    pub struct Sv3DConditioningOutput {
+        ///No documentation.
+        pub positive: crate::nodes::types::ConditioningOut,
+        ///No documentation.
+        pub negative: crate::nodes::types::ConditioningOut,
+        ///No documentation.
+        pub latent: crate::nodes::types::LatentOut,
+    }
+    ///Output for [`StableZero123Conditioning`](super::StableZero123Conditioning).
+    #[derive(Clone)]
+    pub struct StableZero123ConditioningOutput {
+        ///No documentation.
+        pub positive: crate::nodes::types::ConditioningOut,
+        ///No documentation.
+        pub negative: crate::nodes::types::ConditioningOut,
+        ///No documentation.
+        pub latent: crate::nodes::types::LatentOut,
+    }
+    ///Output for [`StableZero123ConditioningBatched`](super::StableZero123ConditioningBatched).
+    #[derive(Clone)]
+    pub struct StableZero123ConditioningBatchedOutput {
+        ///No documentation.
+        pub positive: crate::nodes::types::ConditioningOut,
+        ///No documentation.
+        pub negative: crate::nodes::types::ConditioningOut,
+        ///No documentation.
+        pub latent: crate::nodes::types::LatentOut,
+    }
+}
 ///**SV3D_Conditioning**
 pub struct Sv3DConditioning<
     ClipVision: crate::nodes::types::ClipVision,
@@ -26,16 +59,6 @@ pub struct Sv3DConditioning<
     ///No documentation.
     pub elevation: Elevation,
 }
-///Output for [`Sv3DConditioning`].
-#[derive(Clone)]
-pub struct Sv3DConditioningOutput {
-    ///No documentation.
-    pub positive: crate::nodes::types::ConditioningOut,
-    ///No documentation.
-    pub negative: crate::nodes::types::ConditioningOut,
-    ///No documentation.
-    pub latent: crate::nodes::types::LatentOut,
-}
 impl<
     ClipVision: crate::nodes::types::ClipVision,
     InitImage: crate::nodes::types::Image,
@@ -46,7 +69,7 @@ impl<
     Elevation: crate::nodes::types::Float,
 > crate::nodes::TypedNode
 for Sv3DConditioning<ClipVision, InitImage, Vae, Width, Height, VideoFrames, Elevation> {
-    type Output = Sv3DConditioningOutput;
+    type Output = out::Sv3DConditioningOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
             positive: crate::nodes::types::ConditioningOut {
@@ -96,16 +119,6 @@ pub struct StableZero123Conditioning<
     ///No documentation.
     pub azimuth: Azimuth,
 }
-///Output for [`StableZero123Conditioning`].
-#[derive(Clone)]
-pub struct StableZero123ConditioningOutput {
-    ///No documentation.
-    pub positive: crate::nodes::types::ConditioningOut,
-    ///No documentation.
-    pub negative: crate::nodes::types::ConditioningOut,
-    ///No documentation.
-    pub latent: crate::nodes::types::LatentOut,
-}
 impl<
     ClipVision: crate::nodes::types::ClipVision,
     InitImage: crate::nodes::types::Image,
@@ -126,7 +139,7 @@ for StableZero123Conditioning<
     Elevation,
     Azimuth,
 > {
-    type Output = StableZero123ConditioningOutput;
+    type Output = out::StableZero123ConditioningOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
             positive: crate::nodes::types::ConditioningOut {
@@ -182,16 +195,6 @@ pub struct StableZero123ConditioningBatched<
     ///No documentation.
     pub azimuth_batch_increment: AzimuthBatchIncrement,
 }
-///Output for [`StableZero123ConditioningBatched`].
-#[derive(Clone)]
-pub struct StableZero123ConditioningBatchedOutput {
-    ///No documentation.
-    pub positive: crate::nodes::types::ConditioningOut,
-    ///No documentation.
-    pub negative: crate::nodes::types::ConditioningOut,
-    ///No documentation.
-    pub latent: crate::nodes::types::LatentOut,
-}
 impl<
     ClipVision: crate::nodes::types::ClipVision,
     InitImage: crate::nodes::types::Image,
@@ -216,7 +219,7 @@ for StableZero123ConditioningBatched<
     ElevationBatchIncrement,
     AzimuthBatchIncrement,
 > {
-    type Output = StableZero123ConditioningBatchedOutput;
+    type Output = out::StableZero123ConditioningBatchedOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
             positive: crate::nodes::types::ConditioningOut {

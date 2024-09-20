@@ -1,6 +1,21 @@
 //!`inpaint` definitions/categories.
 #![allow(unused_imports)]
 use crate::WorkflowNodeId;
+/// Output types for nodes.
+pub mod out {
+    ///Output for [`SetLatentNoiseMask`](super::SetLatentNoiseMask).
+    #[derive(Clone)]
+    pub struct SetLatentNoiseMaskOutput {
+        ///No documentation.
+        pub latent: crate::nodes::types::LatentOut,
+    }
+    ///Output for [`VaeEncodeForInpaint`](super::VaeEncodeForInpaint).
+    #[derive(Clone)]
+    pub struct VaeEncodeForInpaintOutput {
+        ///No documentation.
+        pub latent: crate::nodes::types::LatentOut,
+    }
+}
 ///**Set Latent Noise Mask**
 pub struct SetLatentNoiseMask<
     Samples: crate::nodes::types::Latent,
@@ -11,17 +26,11 @@ pub struct SetLatentNoiseMask<
     ///No documentation.
     pub mask: Mask,
 }
-///Output for [`SetLatentNoiseMask`].
-#[derive(Clone)]
-pub struct SetLatentNoiseMaskOutput {
-    ///No documentation.
-    pub latent: crate::nodes::types::LatentOut,
-}
 impl<
     Samples: crate::nodes::types::Latent,
     Mask: crate::nodes::types::Mask,
 > crate::nodes::TypedNode for SetLatentNoiseMask<Samples, Mask> {
-    type Output = SetLatentNoiseMaskOutput;
+    type Output = out::SetLatentNoiseMaskOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
             latent: crate::nodes::types::LatentOut {
@@ -51,19 +60,13 @@ pub struct VaeEncodeForInpaint<
     ///No documentation.
     pub grow_mask_by: GrowMaskBy,
 }
-///Output for [`VaeEncodeForInpaint`].
-#[derive(Clone)]
-pub struct VaeEncodeForInpaintOutput {
-    ///No documentation.
-    pub latent: crate::nodes::types::LatentOut,
-}
 impl<
     Pixels: crate::nodes::types::Image,
     Vae: crate::nodes::types::Vae,
     Mask: crate::nodes::types::Mask,
     GrowMaskBy: crate::nodes::types::Int,
 > crate::nodes::TypedNode for VaeEncodeForInpaint<Pixels, Vae, Mask, GrowMaskBy> {
-    type Output = VaeEncodeForInpaintOutput;
+    type Output = out::VaeEncodeForInpaintOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
             latent: crate::nodes::types::LatentOut {

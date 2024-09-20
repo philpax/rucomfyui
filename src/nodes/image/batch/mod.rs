@@ -1,6 +1,27 @@
 //!`batch` definitions/categories.
 #![allow(unused_imports)]
 use crate::WorkflowNodeId;
+/// Output types for nodes.
+pub mod out {
+    ///Output for [`ImageFromBatch`](super::ImageFromBatch).
+    #[derive(Clone)]
+    pub struct ImageFromBatchOutput {
+        ///No documentation.
+        pub image: crate::nodes::types::ImageOut,
+    }
+    ///Output for [`RebatchImages`](super::RebatchImages).
+    #[derive(Clone)]
+    pub struct RebatchImagesOutput {
+        ///No documentation.
+        pub image: crate::nodes::types::ImageOut,
+    }
+    ///Output for [`RepeatImageBatch`](super::RepeatImageBatch).
+    #[derive(Clone)]
+    pub struct RepeatImageBatchOutput {
+        ///No documentation.
+        pub image: crate::nodes::types::ImageOut,
+    }
+}
 ///**ImageFromBatch**
 pub struct ImageFromBatch<
     Image: crate::nodes::types::Image,
@@ -14,18 +35,12 @@ pub struct ImageFromBatch<
     ///No documentation.
     pub length: Length,
 }
-///Output for [`ImageFromBatch`].
-#[derive(Clone)]
-pub struct ImageFromBatchOutput {
-    ///No documentation.
-    pub image: crate::nodes::types::ImageOut,
-}
 impl<
     Image: crate::nodes::types::Image,
     BatchIndex: crate::nodes::types::Int,
     Length: crate::nodes::types::Int,
 > crate::nodes::TypedNode for ImageFromBatch<Image, BatchIndex, Length> {
-    type Output = ImageFromBatchOutput;
+    type Output = out::ImageFromBatchOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
             image: crate::nodes::types::ImageOut {
@@ -49,17 +64,11 @@ pub struct RebatchImages<
     ///No documentation.
     pub batch_size: BatchSize,
 }
-///Output for [`RebatchImages`].
-#[derive(Clone)]
-pub struct RebatchImagesOutput {
-    ///No documentation.
-    pub image: crate::nodes::types::ImageOut,
-}
 impl<
     Images: crate::nodes::types::Image,
     BatchSize: crate::nodes::types::Int,
 > crate::nodes::TypedNode for RebatchImages<Images, BatchSize> {
-    type Output = RebatchImagesOutput;
+    type Output = out::RebatchImagesOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
             image: crate::nodes::types::ImageOut {
@@ -83,17 +92,11 @@ pub struct RepeatImageBatch<
     ///No documentation.
     pub amount: Amount,
 }
-///Output for [`RepeatImageBatch`].
-#[derive(Clone)]
-pub struct RepeatImageBatchOutput {
-    ///No documentation.
-    pub image: crate::nodes::types::ImageOut,
-}
 impl<
     Image: crate::nodes::types::Image,
     Amount: crate::nodes::types::Int,
 > crate::nodes::TypedNode for RepeatImageBatch<Image, Amount> {
-    type Output = RepeatImageBatchOutput;
+    type Output = out::RepeatImageBatchOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
             image: crate::nodes::types::ImageOut {

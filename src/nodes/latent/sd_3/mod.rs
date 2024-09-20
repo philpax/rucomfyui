@@ -1,6 +1,15 @@
 //!`sd3` definitions/categories.
 #![allow(unused_imports)]
 use crate::WorkflowNodeId;
+/// Output types for nodes.
+pub mod out {
+    ///Output for [`EmptySd3LatentImage`](super::EmptySd3LatentImage).
+    #[derive(Clone)]
+    pub struct EmptySd3LatentImageOutput {
+        ///No documentation.
+        pub latent: crate::nodes::types::LatentOut,
+    }
+}
 ///**EmptySD3LatentImage**
 pub struct EmptySd3LatentImage<
     Width: crate::nodes::types::Int,
@@ -14,18 +23,12 @@ pub struct EmptySd3LatentImage<
     ///No documentation.
     pub batch_size: BatchSize,
 }
-///Output for [`EmptySd3LatentImage`].
-#[derive(Clone)]
-pub struct EmptySd3LatentImageOutput {
-    ///No documentation.
-    pub latent: crate::nodes::types::LatentOut,
-}
 impl<
     Width: crate::nodes::types::Int,
     Height: crate::nodes::types::Int,
     BatchSize: crate::nodes::types::Int,
 > crate::nodes::TypedNode for EmptySd3LatentImage<Width, Height, BatchSize> {
-    type Output = EmptySd3LatentImageOutput;
+    type Output = out::EmptySd3LatentImageOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
             latent: crate::nodes::types::LatentOut {

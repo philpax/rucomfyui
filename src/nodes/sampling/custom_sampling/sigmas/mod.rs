@@ -1,20 +1,39 @@
 //!`sigmas` definitions/categories.
 #![allow(unused_imports)]
 use crate::WorkflowNodeId;
+/// Output types for nodes.
+pub mod out {
+    ///Output for [`FlipSigmas`](super::FlipSigmas).
+    #[derive(Clone)]
+    pub struct FlipSigmasOutput {
+        ///No documentation.
+        pub sigmas: crate::nodes::types::SigmasOut,
+    }
+    ///Output for [`SplitSigmas`](super::SplitSigmas).
+    #[derive(Clone)]
+    pub struct SplitSigmasOutput {
+        ///No documentation.
+        pub high_sigmas: crate::nodes::types::SigmasOut,
+        ///No documentation.
+        pub low_sigmas: crate::nodes::types::SigmasOut,
+    }
+    ///Output for [`SplitSigmasDenoise`](super::SplitSigmasDenoise).
+    #[derive(Clone)]
+    pub struct SplitSigmasDenoiseOutput {
+        ///No documentation.
+        pub high_sigmas: crate::nodes::types::SigmasOut,
+        ///No documentation.
+        pub low_sigmas: crate::nodes::types::SigmasOut,
+    }
+}
 ///**FlipSigmas**
 pub struct FlipSigmas<Sigmas: crate::nodes::types::Sigmas> {
     ///No documentation.
     pub sigmas: Sigmas,
 }
-///Output for [`FlipSigmas`].
-#[derive(Clone)]
-pub struct FlipSigmasOutput {
-    ///No documentation.
-    pub sigmas: crate::nodes::types::SigmasOut,
-}
 impl<Sigmas: crate::nodes::types::Sigmas> crate::nodes::TypedNode
 for FlipSigmas<Sigmas> {
-    type Output = FlipSigmasOutput;
+    type Output = out::FlipSigmasOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
             sigmas: crate::nodes::types::SigmasOut {
@@ -38,19 +57,11 @@ pub struct SplitSigmas<
     ///No documentation.
     pub step: Step,
 }
-///Output for [`SplitSigmas`].
-#[derive(Clone)]
-pub struct SplitSigmasOutput {
-    ///No documentation.
-    pub high_sigmas: crate::nodes::types::SigmasOut,
-    ///No documentation.
-    pub low_sigmas: crate::nodes::types::SigmasOut,
-}
 impl<
     Sigmas: crate::nodes::types::Sigmas,
     Step: crate::nodes::types::Int,
 > crate::nodes::TypedNode for SplitSigmas<Sigmas, Step> {
-    type Output = SplitSigmasOutput;
+    type Output = out::SplitSigmasOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
             high_sigmas: crate::nodes::types::SigmasOut {
@@ -78,19 +89,11 @@ pub struct SplitSigmasDenoise<
     ///No documentation.
     pub denoise: Denoise,
 }
-///Output for [`SplitSigmasDenoise`].
-#[derive(Clone)]
-pub struct SplitSigmasDenoiseOutput {
-    ///No documentation.
-    pub high_sigmas: crate::nodes::types::SigmasOut,
-    ///No documentation.
-    pub low_sigmas: crate::nodes::types::SigmasOut,
-}
 impl<
     Sigmas: crate::nodes::types::Sigmas,
     Denoise: crate::nodes::types::Float,
 > crate::nodes::TypedNode for SplitSigmasDenoise<Sigmas, Denoise> {
-    type Output = SplitSigmasDenoiseOutput;
+    type Output = out::SplitSigmasDenoiseOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
             high_sigmas: crate::nodes::types::SigmasOut {

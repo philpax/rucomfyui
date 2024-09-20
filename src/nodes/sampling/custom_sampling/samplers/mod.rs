@@ -1,20 +1,77 @@
 //!`samplers` definitions/categories.
 #![allow(unused_imports)]
 use crate::WorkflowNodeId;
+/// Output types for nodes.
+pub mod out {
+    ///Output for [`KSamplerSelect`](super::KSamplerSelect).
+    #[derive(Clone)]
+    pub struct KSamplerSelectOutput {
+        ///No documentation.
+        pub sampler: crate::nodes::types::SamplerOut,
+    }
+    ///Output for [`SamplerDpmAdaptative`](super::SamplerDpmAdaptative).
+    #[derive(Clone)]
+    pub struct SamplerDpmAdaptativeOutput {
+        ///No documentation.
+        pub sampler: crate::nodes::types::SamplerOut,
+    }
+    ///Output for [`SamplerDpmpp2MSde`](super::SamplerDpmpp2MSde).
+    #[derive(Clone)]
+    pub struct SamplerDpmpp2MSdeOutput {
+        ///No documentation.
+        pub sampler: crate::nodes::types::SamplerOut,
+    }
+    ///Output for [`SamplerDpmpp2SAncestral`](super::SamplerDpmpp2SAncestral).
+    #[derive(Clone)]
+    pub struct SamplerDpmpp2SAncestralOutput {
+        ///No documentation.
+        pub sampler: crate::nodes::types::SamplerOut,
+    }
+    ///Output for [`SamplerDpmpp3MSde`](super::SamplerDpmpp3MSde).
+    #[derive(Clone)]
+    pub struct SamplerDpmpp3MSdeOutput {
+        ///No documentation.
+        pub sampler: crate::nodes::types::SamplerOut,
+    }
+    ///Output for [`SamplerDpmppSde`](super::SamplerDpmppSde).
+    #[derive(Clone)]
+    pub struct SamplerDpmppSdeOutput {
+        ///No documentation.
+        pub sampler: crate::nodes::types::SamplerOut,
+    }
+    ///Output for [`SamplerEulerAncestral`](super::SamplerEulerAncestral).
+    #[derive(Clone)]
+    pub struct SamplerEulerAncestralOutput {
+        ///No documentation.
+        pub sampler: crate::nodes::types::SamplerOut,
+    }
+    ///Output for [`SamplerEulerAncestralCfgpp`](super::SamplerEulerAncestralCfgpp).
+    #[derive(Clone)]
+    pub struct SamplerEulerAncestralCfgppOutput {
+        ///No documentation.
+        pub sampler: crate::nodes::types::SamplerOut,
+    }
+    ///Output for [`SamplerLcmUpscale`](super::SamplerLcmUpscale).
+    #[derive(Clone)]
+    pub struct SamplerLcmUpscaleOutput {
+        ///No documentation.
+        pub sampler: crate::nodes::types::SamplerOut,
+    }
+    ///Output for [`SamplerLms`](super::SamplerLms).
+    #[derive(Clone)]
+    pub struct SamplerLmsOutput {
+        ///No documentation.
+        pub sampler: crate::nodes::types::SamplerOut,
+    }
+}
 ///**KSamplerSelect**
 pub struct KSamplerSelect<SamplerName: crate::nodes::types::String> {
     ///No documentation.
     pub sampler_name: SamplerName,
 }
-///Output for [`KSamplerSelect`].
-#[derive(Clone)]
-pub struct KSamplerSelectOutput {
-    ///No documentation.
-    pub sampler: crate::nodes::types::SamplerOut,
-}
 impl<SamplerName: crate::nodes::types::String> crate::nodes::TypedNode
 for KSamplerSelect<SamplerName> {
-    type Output = KSamplerSelectOutput;
+    type Output = out::KSamplerSelectOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
             sampler: crate::nodes::types::SamplerOut {
@@ -62,12 +119,6 @@ pub struct SamplerDpmAdaptative<
     ///No documentation.
     pub s_noise: SNoise,
 }
-///Output for [`SamplerDpmAdaptative`].
-#[derive(Clone)]
-pub struct SamplerDpmAdaptativeOutput {
-    ///No documentation.
-    pub sampler: crate::nodes::types::SamplerOut,
-}
 impl<
     Order: crate::nodes::types::Int,
     Rtol: crate::nodes::types::Float,
@@ -92,7 +143,7 @@ for SamplerDpmAdaptative<
     Eta,
     SNoise,
 > {
-    type Output = SamplerDpmAdaptativeOutput;
+    type Output = out::SamplerDpmAdaptativeOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
             sampler: crate::nodes::types::SamplerOut {
@@ -122,19 +173,13 @@ pub struct SamplerDpmpp2MSde<
     ///No documentation.
     pub noise_device: NoiseDevice,
 }
-///Output for [`SamplerDpmpp2MSde`].
-#[derive(Clone)]
-pub struct SamplerDpmpp2MSdeOutput {
-    ///No documentation.
-    pub sampler: crate::nodes::types::SamplerOut,
-}
 impl<
     SolverType: crate::nodes::types::String,
     Eta: crate::nodes::types::Float,
     SNoise: crate::nodes::types::Float,
     NoiseDevice: crate::nodes::types::String,
 > crate::nodes::TypedNode for SamplerDpmpp2MSde<SolverType, Eta, SNoise, NoiseDevice> {
-    type Output = SamplerDpmpp2MSdeOutput;
+    type Output = out::SamplerDpmpp2MSdeOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
             sampler: crate::nodes::types::SamplerOut {
@@ -158,17 +203,11 @@ pub struct SamplerDpmpp2SAncestral<
     ///No documentation.
     pub s_noise: SNoise,
 }
-///Output for [`SamplerDpmpp2SAncestral`].
-#[derive(Clone)]
-pub struct SamplerDpmpp2SAncestralOutput {
-    ///No documentation.
-    pub sampler: crate::nodes::types::SamplerOut,
-}
 impl<
     Eta: crate::nodes::types::Float,
     SNoise: crate::nodes::types::Float,
 > crate::nodes::TypedNode for SamplerDpmpp2SAncestral<Eta, SNoise> {
-    type Output = SamplerDpmpp2SAncestralOutput;
+    type Output = out::SamplerDpmpp2SAncestralOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
             sampler: crate::nodes::types::SamplerOut {
@@ -195,18 +234,12 @@ pub struct SamplerDpmpp3MSde<
     ///No documentation.
     pub noise_device: NoiseDevice,
 }
-///Output for [`SamplerDpmpp3MSde`].
-#[derive(Clone)]
-pub struct SamplerDpmpp3MSdeOutput {
-    ///No documentation.
-    pub sampler: crate::nodes::types::SamplerOut,
-}
 impl<
     Eta: crate::nodes::types::Float,
     SNoise: crate::nodes::types::Float,
     NoiseDevice: crate::nodes::types::String,
 > crate::nodes::TypedNode for SamplerDpmpp3MSde<Eta, SNoise, NoiseDevice> {
-    type Output = SamplerDpmpp3MSdeOutput;
+    type Output = out::SamplerDpmpp3MSdeOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
             sampler: crate::nodes::types::SamplerOut {
@@ -236,19 +269,13 @@ pub struct SamplerDpmppSde<
     ///No documentation.
     pub noise_device: NoiseDevice,
 }
-///Output for [`SamplerDpmppSde`].
-#[derive(Clone)]
-pub struct SamplerDpmppSdeOutput {
-    ///No documentation.
-    pub sampler: crate::nodes::types::SamplerOut,
-}
 impl<
     Eta: crate::nodes::types::Float,
     SNoise: crate::nodes::types::Float,
     R: crate::nodes::types::Float,
     NoiseDevice: crate::nodes::types::String,
 > crate::nodes::TypedNode for SamplerDpmppSde<Eta, SNoise, R, NoiseDevice> {
-    type Output = SamplerDpmppSdeOutput;
+    type Output = out::SamplerDpmppSdeOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
             sampler: crate::nodes::types::SamplerOut {
@@ -272,17 +299,11 @@ pub struct SamplerEulerAncestral<
     ///No documentation.
     pub s_noise: SNoise,
 }
-///Output for [`SamplerEulerAncestral`].
-#[derive(Clone)]
-pub struct SamplerEulerAncestralOutput {
-    ///No documentation.
-    pub sampler: crate::nodes::types::SamplerOut,
-}
 impl<
     Eta: crate::nodes::types::Float,
     SNoise: crate::nodes::types::Float,
 > crate::nodes::TypedNode for SamplerEulerAncestral<Eta, SNoise> {
-    type Output = SamplerEulerAncestralOutput;
+    type Output = out::SamplerEulerAncestralOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
             sampler: crate::nodes::types::SamplerOut {
@@ -306,17 +327,11 @@ pub struct SamplerEulerAncestralCfgpp<
     ///No documentation.
     pub s_noise: SNoise,
 }
-///Output for [`SamplerEulerAncestralCfgpp`].
-#[derive(Clone)]
-pub struct SamplerEulerAncestralCfgppOutput {
-    ///No documentation.
-    pub sampler: crate::nodes::types::SamplerOut,
-}
 impl<
     Eta: crate::nodes::types::Float,
     SNoise: crate::nodes::types::Float,
 > crate::nodes::TypedNode for SamplerEulerAncestralCfgpp<Eta, SNoise> {
-    type Output = SamplerEulerAncestralCfgppOutput;
+    type Output = out::SamplerEulerAncestralCfgppOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
             sampler: crate::nodes::types::SamplerOut {
@@ -343,18 +358,12 @@ pub struct SamplerLcmUpscale<
     ///No documentation.
     pub upscale_method: UpscaleMethod,
 }
-///Output for [`SamplerLcmUpscale`].
-#[derive(Clone)]
-pub struct SamplerLcmUpscaleOutput {
-    ///No documentation.
-    pub sampler: crate::nodes::types::SamplerOut,
-}
 impl<
     ScaleRatio: crate::nodes::types::Float,
     ScaleSteps: crate::nodes::types::Int,
     UpscaleMethod: crate::nodes::types::String,
 > crate::nodes::TypedNode for SamplerLcmUpscale<ScaleRatio, ScaleSteps, UpscaleMethod> {
-    type Output = SamplerLcmUpscaleOutput;
+    type Output = out::SamplerLcmUpscaleOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
             sampler: crate::nodes::types::SamplerOut {
@@ -373,14 +382,8 @@ pub struct SamplerLms<Order: crate::nodes::types::Int> {
     ///No documentation.
     pub order: Order,
 }
-///Output for [`SamplerLms`].
-#[derive(Clone)]
-pub struct SamplerLmsOutput {
-    ///No documentation.
-    pub sampler: crate::nodes::types::SamplerOut,
-}
 impl<Order: crate::nodes::types::Int> crate::nodes::TypedNode for SamplerLms<Order> {
-    type Output = SamplerLmsOutput;
+    type Output = out::SamplerLmsOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
             sampler: crate::nodes::types::SamplerOut {

@@ -1,6 +1,27 @@
 //!`guiders` definitions/categories.
 #![allow(unused_imports)]
 use crate::WorkflowNodeId;
+/// Output types for nodes.
+pub mod out {
+    ///Output for [`BasicGuider`](super::BasicGuider).
+    #[derive(Clone)]
+    pub struct BasicGuiderOutput {
+        ///No documentation.
+        pub guider: crate::nodes::types::GuiderOut,
+    }
+    ///Output for [`CfgGuider`](super::CfgGuider).
+    #[derive(Clone)]
+    pub struct CfgGuiderOutput {
+        ///No documentation.
+        pub guider: crate::nodes::types::GuiderOut,
+    }
+    ///Output for [`DualCfgGuider`](super::DualCfgGuider).
+    #[derive(Clone)]
+    pub struct DualCfgGuiderOutput {
+        ///No documentation.
+        pub guider: crate::nodes::types::GuiderOut,
+    }
+}
 ///**BasicGuider**
 pub struct BasicGuider<
     Model: crate::nodes::types::Model,
@@ -11,17 +32,11 @@ pub struct BasicGuider<
     ///No documentation.
     pub conditioning: Conditioning,
 }
-///Output for [`BasicGuider`].
-#[derive(Clone)]
-pub struct BasicGuiderOutput {
-    ///No documentation.
-    pub guider: crate::nodes::types::GuiderOut,
-}
 impl<
     Model: crate::nodes::types::Model,
     Conditioning: crate::nodes::types::Conditioning,
 > crate::nodes::TypedNode for BasicGuider<Model, Conditioning> {
-    type Output = BasicGuiderOutput;
+    type Output = out::BasicGuiderOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
             guider: crate::nodes::types::GuiderOut {
@@ -51,19 +66,13 @@ pub struct CfgGuider<
     ///No documentation.
     pub cfg: Cfg,
 }
-///Output for [`CfgGuider`].
-#[derive(Clone)]
-pub struct CfgGuiderOutput {
-    ///No documentation.
-    pub guider: crate::nodes::types::GuiderOut,
-}
 impl<
     Model: crate::nodes::types::Model,
     Positive: crate::nodes::types::Conditioning,
     Negative: crate::nodes::types::Conditioning,
     Cfg: crate::nodes::types::Float,
 > crate::nodes::TypedNode for CfgGuider<Model, Positive, Negative, Cfg> {
-    type Output = CfgGuiderOutput;
+    type Output = out::CfgGuiderOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
             guider: crate::nodes::types::GuiderOut {
@@ -99,12 +108,6 @@ pub struct DualCfgGuider<
     ///No documentation.
     pub cfg_cond_2_negative: CfgCond2Negative,
 }
-///Output for [`DualCfgGuider`].
-#[derive(Clone)]
-pub struct DualCfgGuiderOutput {
-    ///No documentation.
-    pub guider: crate::nodes::types::GuiderOut,
-}
 impl<
     Model: crate::nodes::types::Model,
     Cond1: crate::nodes::types::Conditioning,
@@ -114,7 +117,7 @@ impl<
     CfgCond2Negative: crate::nodes::types::Float,
 > crate::nodes::TypedNode
 for DualCfgGuider<Model, Cond1, Cond2, Negative, CfgConds, CfgCond2Negative> {
-    type Output = DualCfgGuiderOutput;
+    type Output = out::DualCfgGuiderOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
             guider: crate::nodes::types::GuiderOut {

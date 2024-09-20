@@ -1,6 +1,15 @@
 //!`transform` definitions/categories.
 #![allow(unused_imports)]
 use crate::WorkflowNodeId;
+/// Output types for nodes.
+pub mod out {
+    ///Output for [`ImageCrop`](super::ImageCrop).
+    #[derive(Clone)]
+    pub struct ImageCropOutput {
+        ///No documentation.
+        pub image: crate::nodes::types::ImageOut,
+    }
+}
 ///**ImageCrop**
 pub struct ImageCrop<
     Image: crate::nodes::types::Image,
@@ -20,12 +29,6 @@ pub struct ImageCrop<
     ///No documentation.
     pub y: Y,
 }
-///Output for [`ImageCrop`].
-#[derive(Clone)]
-pub struct ImageCropOutput {
-    ///No documentation.
-    pub image: crate::nodes::types::ImageOut,
-}
 impl<
     Image: crate::nodes::types::Image,
     Width: crate::nodes::types::Int,
@@ -33,7 +36,7 @@ impl<
     X: crate::nodes::types::Int,
     Y: crate::nodes::types::Int,
 > crate::nodes::TypedNode for ImageCrop<Image, Width, Height, X, Y> {
-    type Output = ImageCropOutput;
+    type Output = out::ImageCropOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
             image: crate::nodes::types::ImageOut {

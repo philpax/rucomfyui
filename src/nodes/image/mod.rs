@@ -7,6 +7,55 @@ pub mod postprocessing;
 pub mod preprocessors;
 pub mod transform;
 pub mod upscaling;
+/// Output types for nodes.
+pub mod out {
+    ///Output for [`EmptyImage`](super::EmptyImage).
+    #[derive(Clone)]
+    pub struct EmptyImageOutput {
+        ///No documentation.
+        pub image: crate::nodes::types::ImageOut,
+    }
+    ///Output for [`ImageBatch`](super::ImageBatch).
+    #[derive(Clone)]
+    pub struct ImageBatchOutput {
+        ///No documentation.
+        pub image: crate::nodes::types::ImageOut,
+    }
+    ///Output for [`ImageCompositeMasked`](super::ImageCompositeMasked).
+    #[derive(Clone)]
+    pub struct ImageCompositeMaskedOutput {
+        ///No documentation.
+        pub image: crate::nodes::types::ImageOut,
+    }
+    ///Output for [`ImageInvert`](super::ImageInvert).
+    #[derive(Clone)]
+    pub struct ImageInvertOutput {
+        ///No documentation.
+        pub image: crate::nodes::types::ImageOut,
+    }
+    ///Output for [`ImagePadForOutpaint`](super::ImagePadForOutpaint).
+    #[derive(Clone)]
+    pub struct ImagePadForOutpaintOutput {
+        ///No documentation.
+        pub image: crate::nodes::types::ImageOut,
+        ///No documentation.
+        pub mask: crate::nodes::types::MaskOut,
+    }
+    ///Output for [`LoadImage`](super::LoadImage).
+    #[derive(Clone)]
+    pub struct LoadImageOutput {
+        ///No documentation.
+        pub image: crate::nodes::types::ImageOut,
+        ///No documentation.
+        pub mask: crate::nodes::types::MaskOut,
+    }
+    ///Output for [`WebcamCapture`](super::WebcamCapture).
+    #[derive(Clone)]
+    pub struct WebcamCaptureOutput {
+        ///No documentation.
+        pub image: crate::nodes::types::ImageOut,
+    }
+}
 ///**EmptyImage**
 pub struct EmptyImage<
     Width: crate::nodes::types::Int,
@@ -23,19 +72,13 @@ pub struct EmptyImage<
     ///No documentation.
     pub color: Color,
 }
-///Output for [`EmptyImage`].
-#[derive(Clone)]
-pub struct EmptyImageOutput {
-    ///No documentation.
-    pub image: crate::nodes::types::ImageOut,
-}
 impl<
     Width: crate::nodes::types::Int,
     Height: crate::nodes::types::Int,
     BatchSize: crate::nodes::types::Int,
     Color: crate::nodes::types::Int,
 > crate::nodes::TypedNode for EmptyImage<Width, Height, BatchSize, Color> {
-    type Output = EmptyImageOutput;
+    type Output = out::EmptyImageOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
             image: crate::nodes::types::ImageOut {
@@ -59,17 +102,11 @@ pub struct ImageBatch<
     ///No documentation.
     pub image_2: Image2,
 }
-///Output for [`ImageBatch`].
-#[derive(Clone)]
-pub struct ImageBatchOutput {
-    ///No documentation.
-    pub image: crate::nodes::types::ImageOut,
-}
 impl<
     Image1: crate::nodes::types::Image,
     Image2: crate::nodes::types::Image,
 > crate::nodes::TypedNode for ImageBatch<Image1, Image2> {
-    type Output = ImageBatchOutput;
+    type Output = out::ImageBatchOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
             image: crate::nodes::types::ImageOut {
@@ -105,12 +142,6 @@ pub struct ImageCompositeMasked<
     ///No documentation.
     pub mask: Option<Mask>,
 }
-///Output for [`ImageCompositeMasked`].
-#[derive(Clone)]
-pub struct ImageCompositeMaskedOutput {
-    ///No documentation.
-    pub image: crate::nodes::types::ImageOut,
-}
 impl<
     Destination: crate::nodes::types::Image,
     Source: crate::nodes::types::Image,
@@ -120,7 +151,7 @@ impl<
     Mask: crate::nodes::types::Mask,
 > crate::nodes::TypedNode
 for ImageCompositeMasked<Destination, Source, X, Y, ResizeSource, Mask> {
-    type Output = ImageCompositeMaskedOutput;
+    type Output = out::ImageCompositeMaskedOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
             image: crate::nodes::types::ImageOut {
@@ -139,14 +170,8 @@ pub struct ImageInvert<Image: crate::nodes::types::Image> {
     ///No documentation.
     pub image: Image,
 }
-///Output for [`ImageInvert`].
-#[derive(Clone)]
-pub struct ImageInvertOutput {
-    ///No documentation.
-    pub image: crate::nodes::types::ImageOut,
-}
 impl<Image: crate::nodes::types::Image> crate::nodes::TypedNode for ImageInvert<Image> {
-    type Output = ImageInvertOutput;
+    type Output = out::ImageInvertOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
             image: crate::nodes::types::ImageOut {
@@ -182,14 +207,6 @@ pub struct ImagePadForOutpaint<
     ///No documentation.
     pub feathering: Feathering,
 }
-///Output for [`ImagePadForOutpaint`].
-#[derive(Clone)]
-pub struct ImagePadForOutpaintOutput {
-    ///No documentation.
-    pub image: crate::nodes::types::ImageOut,
-    ///No documentation.
-    pub mask: crate::nodes::types::MaskOut,
-}
 impl<
     Image: crate::nodes::types::Image,
     Left: crate::nodes::types::Int,
@@ -199,7 +216,7 @@ impl<
     Feathering: crate::nodes::types::Int,
 > crate::nodes::TypedNode
 for ImagePadForOutpaint<Image, Left, Top, Right, Bottom, Feathering> {
-    type Output = ImagePadForOutpaintOutput;
+    type Output = out::ImagePadForOutpaintOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
             image: crate::nodes::types::ImageOut {
@@ -222,16 +239,8 @@ pub struct LoadImage<Image: crate::nodes::types::String> {
     ///No documentation.
     pub image: Image,
 }
-///Output for [`LoadImage`].
-#[derive(Clone)]
-pub struct LoadImageOutput {
-    ///No documentation.
-    pub image: crate::nodes::types::ImageOut,
-    ///No documentation.
-    pub mask: crate::nodes::types::MaskOut,
-}
 impl<Image: crate::nodes::types::String> crate::nodes::TypedNode for LoadImage<Image> {
-    type Output = LoadImageOutput;
+    type Output = out::LoadImageOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
             image: crate::nodes::types::ImageOut {
@@ -306,19 +315,13 @@ pub struct WebcamCapture<
     ///No documentation.
     pub capture_on_queue: CaptureOnQueue,
 }
-///Output for [`WebcamCapture`].
-#[derive(Clone)]
-pub struct WebcamCaptureOutput {
-    ///No documentation.
-    pub image: crate::nodes::types::ImageOut,
-}
 impl<
     Image: crate::nodes::types::Webcam,
     Width: crate::nodes::types::Int,
     Height: crate::nodes::types::Int,
     CaptureOnQueue: crate::nodes::types::Boolean,
 > crate::nodes::TypedNode for WebcamCapture<Image, Width, Height, CaptureOnQueue> {
-    type Output = WebcamCaptureOutput;
+    type Output = out::WebcamCaptureOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
             image: crate::nodes::types::ImageOut {

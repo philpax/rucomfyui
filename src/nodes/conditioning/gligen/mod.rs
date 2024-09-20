@@ -1,6 +1,15 @@
 //!`gligen` definitions/categories.
 #![allow(unused_imports)]
 use crate::WorkflowNodeId;
+/// Output types for nodes.
+pub mod out {
+    ///Output for [`GligenTextBoxApply`](super::GligenTextBoxApply).
+    #[derive(Clone)]
+    pub struct GligenTextBoxApplyOutput {
+        ///No documentation.
+        pub conditioning: crate::nodes::types::ConditioningOut,
+    }
+}
 ///**GLIGENTextBoxApply**
 pub struct GligenTextBoxApply<
     ConditioningTo: crate::nodes::types::Conditioning,
@@ -29,12 +38,6 @@ pub struct GligenTextBoxApply<
     ///No documentation.
     pub y: Y,
 }
-///Output for [`GligenTextBoxApply`].
-#[derive(Clone)]
-pub struct GligenTextBoxApplyOutput {
-    ///No documentation.
-    pub conditioning: crate::nodes::types::ConditioningOut,
-}
 impl<
     ConditioningTo: crate::nodes::types::Conditioning,
     Clip: crate::nodes::types::Clip,
@@ -55,7 +58,7 @@ for GligenTextBoxApply<
     X,
     Y,
 > {
-    type Output = GligenTextBoxApplyOutput;
+    type Output = out::GligenTextBoxApplyOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
             conditioning: crate::nodes::types::ConditioningOut {

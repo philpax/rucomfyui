@@ -1,6 +1,19 @@
 //!`instructpix2pix` definitions/categories.
 #![allow(unused_imports)]
 use crate::WorkflowNodeId;
+/// Output types for nodes.
+pub mod out {
+    ///Output for [`InstructPixToPixConditioning`](super::InstructPixToPixConditioning).
+    #[derive(Clone)]
+    pub struct InstructPixToPixConditioningOutput {
+        ///No documentation.
+        pub positive: crate::nodes::types::ConditioningOut,
+        ///No documentation.
+        pub negative: crate::nodes::types::ConditioningOut,
+        ///No documentation.
+        pub latent: crate::nodes::types::LatentOut,
+    }
+}
 ///**InstructPixToPixConditioning**
 pub struct InstructPixToPixConditioning<
     Positive: crate::nodes::types::Conditioning,
@@ -17,16 +30,6 @@ pub struct InstructPixToPixConditioning<
     ///No documentation.
     pub pixels: Pixels,
 }
-///Output for [`InstructPixToPixConditioning`].
-#[derive(Clone)]
-pub struct InstructPixToPixConditioningOutput {
-    ///No documentation.
-    pub positive: crate::nodes::types::ConditioningOut,
-    ///No documentation.
-    pub negative: crate::nodes::types::ConditioningOut,
-    ///No documentation.
-    pub latent: crate::nodes::types::LatentOut,
-}
 impl<
     Positive: crate::nodes::types::Conditioning,
     Negative: crate::nodes::types::Conditioning,
@@ -34,7 +37,7 @@ impl<
     Pixels: crate::nodes::types::Image,
 > crate::nodes::TypedNode
 for InstructPixToPixConditioning<Positive, Negative, Vae, Pixels> {
-    type Output = InstructPixToPixConditioningOutput;
+    type Output = out::InstructPixToPixConditioningOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
             positive: crate::nodes::types::ConditioningOut {

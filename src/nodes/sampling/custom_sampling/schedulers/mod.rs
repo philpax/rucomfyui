@@ -1,6 +1,63 @@
 //!`schedulers` definitions/categories.
 #![allow(unused_imports)]
 use crate::WorkflowNodeId;
+/// Output types for nodes.
+pub mod out {
+    ///Output for [`AlignYourStepsScheduler`](super::AlignYourStepsScheduler).
+    #[derive(Clone)]
+    pub struct AlignYourStepsSchedulerOutput {
+        ///No documentation.
+        pub sigmas: crate::nodes::types::SigmasOut,
+    }
+    ///Output for [`BasicScheduler`](super::BasicScheduler).
+    #[derive(Clone)]
+    pub struct BasicSchedulerOutput {
+        ///No documentation.
+        pub sigmas: crate::nodes::types::SigmasOut,
+    }
+    ///Output for [`BetaSamplingScheduler`](super::BetaSamplingScheduler).
+    #[derive(Clone)]
+    pub struct BetaSamplingSchedulerOutput {
+        ///No documentation.
+        pub sigmas: crate::nodes::types::SigmasOut,
+    }
+    ///Output for [`ExponentialScheduler`](super::ExponentialScheduler).
+    #[derive(Clone)]
+    pub struct ExponentialSchedulerOutput {
+        ///No documentation.
+        pub sigmas: crate::nodes::types::SigmasOut,
+    }
+    ///Output for [`GitsScheduler`](super::GitsScheduler).
+    #[derive(Clone)]
+    pub struct GitsSchedulerOutput {
+        ///No documentation.
+        pub sigmas: crate::nodes::types::SigmasOut,
+    }
+    ///Output for [`KarrasScheduler`](super::KarrasScheduler).
+    #[derive(Clone)]
+    pub struct KarrasSchedulerOutput {
+        ///No documentation.
+        pub sigmas: crate::nodes::types::SigmasOut,
+    }
+    ///Output for [`PolyexponentialScheduler`](super::PolyexponentialScheduler).
+    #[derive(Clone)]
+    pub struct PolyexponentialSchedulerOutput {
+        ///No documentation.
+        pub sigmas: crate::nodes::types::SigmasOut,
+    }
+    ///Output for [`SdTurboScheduler`](super::SdTurboScheduler).
+    #[derive(Clone)]
+    pub struct SdTurboSchedulerOutput {
+        ///No documentation.
+        pub sigmas: crate::nodes::types::SigmasOut,
+    }
+    ///Output for [`VpScheduler`](super::VpScheduler).
+    #[derive(Clone)]
+    pub struct VpSchedulerOutput {
+        ///No documentation.
+        pub sigmas: crate::nodes::types::SigmasOut,
+    }
+}
 ///**AlignYourStepsScheduler**
 pub struct AlignYourStepsScheduler<
     ModelType: crate::nodes::types::String,
@@ -14,18 +71,12 @@ pub struct AlignYourStepsScheduler<
     ///No documentation.
     pub denoise: Denoise,
 }
-///Output for [`AlignYourStepsScheduler`].
-#[derive(Clone)]
-pub struct AlignYourStepsSchedulerOutput {
-    ///No documentation.
-    pub sigmas: crate::nodes::types::SigmasOut,
-}
 impl<
     ModelType: crate::nodes::types::String,
     Steps: crate::nodes::types::Int,
     Denoise: crate::nodes::types::Float,
 > crate::nodes::TypedNode for AlignYourStepsScheduler<ModelType, Steps, Denoise> {
-    type Output = AlignYourStepsSchedulerOutput;
+    type Output = out::AlignYourStepsSchedulerOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
             sigmas: crate::nodes::types::SigmasOut {
@@ -55,19 +106,13 @@ pub struct BasicScheduler<
     ///No documentation.
     pub denoise: Denoise,
 }
-///Output for [`BasicScheduler`].
-#[derive(Clone)]
-pub struct BasicSchedulerOutput {
-    ///No documentation.
-    pub sigmas: crate::nodes::types::SigmasOut,
-}
 impl<
     Model: crate::nodes::types::Model,
     Scheduler: crate::nodes::types::String,
     Steps: crate::nodes::types::Int,
     Denoise: crate::nodes::types::Float,
 > crate::nodes::TypedNode for BasicScheduler<Model, Scheduler, Steps, Denoise> {
-    type Output = BasicSchedulerOutput;
+    type Output = out::BasicSchedulerOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
             sigmas: crate::nodes::types::SigmasOut {
@@ -97,19 +142,13 @@ pub struct BetaSamplingScheduler<
     ///No documentation.
     pub beta: Beta,
 }
-///Output for [`BetaSamplingScheduler`].
-#[derive(Clone)]
-pub struct BetaSamplingSchedulerOutput {
-    ///No documentation.
-    pub sigmas: crate::nodes::types::SigmasOut,
-}
 impl<
     Model: crate::nodes::types::Model,
     Steps: crate::nodes::types::Int,
     Alpha: crate::nodes::types::Float,
     Beta: crate::nodes::types::Float,
 > crate::nodes::TypedNode for BetaSamplingScheduler<Model, Steps, Alpha, Beta> {
-    type Output = BetaSamplingSchedulerOutput;
+    type Output = out::BetaSamplingSchedulerOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
             sigmas: crate::nodes::types::SigmasOut {
@@ -136,18 +175,12 @@ pub struct ExponentialScheduler<
     ///No documentation.
     pub sigma_min: SigmaMin,
 }
-///Output for [`ExponentialScheduler`].
-#[derive(Clone)]
-pub struct ExponentialSchedulerOutput {
-    ///No documentation.
-    pub sigmas: crate::nodes::types::SigmasOut,
-}
 impl<
     Steps: crate::nodes::types::Int,
     SigmaMax: crate::nodes::types::Float,
     SigmaMin: crate::nodes::types::Float,
 > crate::nodes::TypedNode for ExponentialScheduler<Steps, SigmaMax, SigmaMin> {
-    type Output = ExponentialSchedulerOutput;
+    type Output = out::ExponentialSchedulerOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
             sigmas: crate::nodes::types::SigmasOut {
@@ -174,18 +207,12 @@ pub struct GitsScheduler<
     ///No documentation.
     pub denoise: Denoise,
 }
-///Output for [`GitsScheduler`].
-#[derive(Clone)]
-pub struct GitsSchedulerOutput {
-    ///No documentation.
-    pub sigmas: crate::nodes::types::SigmasOut,
-}
 impl<
     Coeff: crate::nodes::types::Float,
     Steps: crate::nodes::types::Int,
     Denoise: crate::nodes::types::Float,
 > crate::nodes::TypedNode for GitsScheduler<Coeff, Steps, Denoise> {
-    type Output = GitsSchedulerOutput;
+    type Output = out::GitsSchedulerOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
             sigmas: crate::nodes::types::SigmasOut {
@@ -215,19 +242,13 @@ pub struct KarrasScheduler<
     ///No documentation.
     pub rho: Rho,
 }
-///Output for [`KarrasScheduler`].
-#[derive(Clone)]
-pub struct KarrasSchedulerOutput {
-    ///No documentation.
-    pub sigmas: crate::nodes::types::SigmasOut,
-}
 impl<
     Steps: crate::nodes::types::Int,
     SigmaMax: crate::nodes::types::Float,
     SigmaMin: crate::nodes::types::Float,
     Rho: crate::nodes::types::Float,
 > crate::nodes::TypedNode for KarrasScheduler<Steps, SigmaMax, SigmaMin, Rho> {
-    type Output = KarrasSchedulerOutput;
+    type Output = out::KarrasSchedulerOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
             sigmas: crate::nodes::types::SigmasOut {
@@ -257,19 +278,13 @@ pub struct PolyexponentialScheduler<
     ///No documentation.
     pub rho: Rho,
 }
-///Output for [`PolyexponentialScheduler`].
-#[derive(Clone)]
-pub struct PolyexponentialSchedulerOutput {
-    ///No documentation.
-    pub sigmas: crate::nodes::types::SigmasOut,
-}
 impl<
     Steps: crate::nodes::types::Int,
     SigmaMax: crate::nodes::types::Float,
     SigmaMin: crate::nodes::types::Float,
     Rho: crate::nodes::types::Float,
 > crate::nodes::TypedNode for PolyexponentialScheduler<Steps, SigmaMax, SigmaMin, Rho> {
-    type Output = PolyexponentialSchedulerOutput;
+    type Output = out::PolyexponentialSchedulerOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
             sigmas: crate::nodes::types::SigmasOut {
@@ -296,18 +311,12 @@ pub struct SdTurboScheduler<
     ///No documentation.
     pub denoise: Denoise,
 }
-///Output for [`SdTurboScheduler`].
-#[derive(Clone)]
-pub struct SdTurboSchedulerOutput {
-    ///No documentation.
-    pub sigmas: crate::nodes::types::SigmasOut,
-}
 impl<
     Model: crate::nodes::types::Model,
     Steps: crate::nodes::types::Int,
     Denoise: crate::nodes::types::Float,
 > crate::nodes::TypedNode for SdTurboScheduler<Model, Steps, Denoise> {
-    type Output = SdTurboSchedulerOutput;
+    type Output = out::SdTurboSchedulerOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
             sigmas: crate::nodes::types::SigmasOut {
@@ -337,19 +346,13 @@ pub struct VpScheduler<
     ///No documentation.
     pub eps_s: EpsS,
 }
-///Output for [`VpScheduler`].
-#[derive(Clone)]
-pub struct VpSchedulerOutput {
-    ///No documentation.
-    pub sigmas: crate::nodes::types::SigmasOut,
-}
 impl<
     Steps: crate::nodes::types::Int,
     BetaD: crate::nodes::types::Float,
     BetaMin: crate::nodes::types::Float,
     EpsS: crate::nodes::types::Float,
 > crate::nodes::TypedNode for VpScheduler<Steps, BetaD, BetaMin, EpsS> {
-    type Output = VpSchedulerOutput;
+    type Output = out::VpSchedulerOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
             sigmas: crate::nodes::types::SigmasOut {

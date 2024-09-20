@@ -29,13 +29,9 @@ async fn run() -> Result<()> {
     let _ = std::fs::remove_dir_all(out_dir);
     std::fs::create_dir_all(out_dir)?;
 
-    // Write all categories and nodes.
+    // Write all.
     write_category_tree_root(&category_tree, out_dir).context("root")?;
-
-    // Write type-definitions module.
     util::write_tokenstream(&out_dir.join("types.rs"), type_module_definitions()?)?;
-
-    // Write all-nodes module.
     util::write_tokenstream(&out_dir.join("all.rs"), all_nodes(&category_tree, &[])?)?;
 
     Ok(())
@@ -74,6 +70,52 @@ fn all_nodes(tree: &CategoryTree, ctx: &[syn::Ident]) -> Result<TokenStream> {
     Ok(quote! {
         //! Helper module to import all nodes at once.
         #(#nodes)*
+    })
+}
+
+fn type_module_definitions() -> Result<TokenStream> {
+    let types = ObjectType::ALL
+        .iter()
+        .map(|ty| {
+            let recased_ty = format!("{ty:?}").to_case(Case::ScreamingSnake);
+            let doc = format!("A value of ComfyUI type `{recased_ty}`.");
+            let name = util::name_to_ident(&format!("{ty:?}"), true)?;
+
+            let output_doc = format!("A node output of type [`{ty:?}`].");
+            let output_name = util::object_type_struct_ident(&ty);
+            Ok(quote! {
+                #[doc = #doc]
+                pub trait #name : ToWorkflowInput {}
+                impl ToWorkflowInput for Box<dyn #name> {
+                    fn to_workflow_input(&self) -> WorkflowInput {
+                        self.as_ref().to_workflow_input()
+                    }
+                }
+                impl #name for Box<dyn #name> {}
+
+                #[doc = #output_doc]
+                #[derive(Clone, Copy)]
+                pub struct #output_name {
+                    /// The ID of the node that produced the output.
+                    pub node_id: WorkflowNodeId,
+                    /// The node's output slot.
+                    pub node_slot: u32,
+                }
+                impl ToWorkflowInput for #output_name {
+                    fn to_workflow_input(&self) -> WorkflowInput {
+                        WorkflowInput::Slot(self.node_id.to_string(), self.node_slot)
+                    }
+                }
+                impl #name for #output_name {}
+            })
+        })
+        .collect::<Result<Vec<_>>>()?;
+
+    Ok(quote! {
+        //! Definitions for all ComfyUI types.
+        use crate::{nodes::ToWorkflowInput, WorkflowInput, WorkflowNodeId};
+
+        #(#types)*
     })
 }
 
@@ -174,6 +216,7 @@ fn write_category_tree((name, tree): (&str, &CategoryTree), directory: &Path) ->
 
     let mut modules = vec![];
     let mut nodes = vec![];
+    let mut node_outputs = vec![];
 
     for (key, node) in tree {
         match node {
@@ -186,7 +229,24 @@ fn write_category_tree((name, tree): (&str, &CategoryTree), directory: &Path) ->
                 });
             }
             CategoryTreeNode::Object(object) => {
-                nodes.push(write_node(object)?);
+                let struct_name = util::name_to_ident(&object.name, true)?;
+                let node_output_struct_name = (!object.output_node)
+                    .then(|| util::name_to_ident(&format!("{}Output", object.name), true))
+                    .transpose()?;
+
+                nodes.push(write_node(
+                    object,
+                    &struct_name,
+                    node_output_struct_name.as_ref(),
+                )?);
+
+                if let Some(node_output_struct_name) = &node_output_struct_name {
+                    node_outputs.push(write_node_output_struct(
+                        object,
+                        &struct_name,
+                        node_output_struct_name,
+                    )?);
+                }
             }
         }
     }
@@ -198,6 +258,12 @@ fn write_category_tree((name, tree): (&str, &CategoryTree), directory: &Path) ->
         use crate::WorkflowNodeId;
 
         #(#modules)*
+
+        /// Output types for nodes.
+        pub mod out {
+            #(#node_outputs)*
+        }
+
         #(#nodes)*
     };
     let path = directory.join("mod.rs");
@@ -205,74 +271,23 @@ fn write_category_tree((name, tree): (&str, &CategoryTree), directory: &Path) ->
     Ok(())
 }
 
-fn type_module_definitions() -> Result<TokenStream> {
-    let types = ObjectType::ALL
-        .iter()
-        .map(|ty| {
-            let recased_ty = format!("{ty:?}").to_case(Case::ScreamingSnake);
-            let doc = format!("A value of ComfyUI type `{recased_ty}`.");
-            let name = util::name_to_ident(&format!("{ty:?}"), true)?;
-
-            let output_doc = format!("A node output of type [`{ty:?}`].");
-            let output_name = util::object_type_struct_ident(&ty);
-            Ok(quote! {
-                #[doc = #doc]
-                pub trait #name : ToWorkflowInput {}
-                impl ToWorkflowInput for Box<dyn #name> {
-                    fn to_workflow_input(&self) -> WorkflowInput {
-                        self.as_ref().to_workflow_input()
-                    }
-                }
-                impl #name for Box<dyn #name> {}
-
-                #[doc = #output_doc]
-                #[derive(Clone, Copy)]
-                pub struct #output_name {
-                    /// The ID of the node that produced the output.
-                    pub node_id: WorkflowNodeId,
-                    /// The node's output slot.
-                    pub node_slot: u32,
-                }
-                impl ToWorkflowInput for #output_name {
-                    fn to_workflow_input(&self) -> WorkflowInput {
-                        WorkflowInput::Slot(self.node_id.to_string(), self.node_slot)
-                    }
-                }
-                impl #name for #output_name {}
-            })
-        })
-        .collect::<Result<Vec<_>>>()?;
-
-    Ok(quote! {
-        //! Definitions for all ComfyUI types.
-        use crate::{nodes::ToWorkflowInput, WorkflowInput, WorkflowNodeId};
-
-        #(#types)*
-    })
-}
-
-fn write_node(node: &Object) -> Result<TokenStream> {
-    let struct_name = util::name_to_ident(&node.name, true)?;
-    let node_output_struct_name = (!node.output_node)
-        .then(|| node_output_struct_name(node))
-        .transpose()?;
+fn write_node(
+    node: &Object,
+    struct_name: &syn::Ident,
+    node_output_struct_name: Option<&syn::Ident>,
+) -> Result<TokenStream> {
     let processed_inputs = node_processed_inputs(node)?;
 
-    let node_struct = write_node_struct(node, &struct_name, &processed_inputs)?;
-    let output_struct = node_output_struct_name
-        .as_ref()
-        .map(|name| write_node_output_struct(node, &struct_name, name))
-        .transpose()?;
+    let node_struct = write_node_struct(node, struct_name, &processed_inputs)?;
     let trait_impl = write_node_trait_impl(
         node,
         &struct_name,
-        processed_inputs,
-        node_output_struct_name.as_ref(),
+        &processed_inputs,
+        node_output_struct_name,
     )?;
 
     Ok(quote! {
         #node_struct
-        #output_struct
         #trait_impl
     })
 }
@@ -325,10 +340,6 @@ fn node_processed_inputs(node: &Object) -> Result<Vec<ProcessedInput>> {
         .into_iter()
         .chain(optional_inputs.into_iter())
         .collect::<Vec<_>>())
-}
-
-fn node_output_struct_name(node: &Object) -> Result<syn::Ident> {
-    Ok(util::name_to_ident(&format!("{}Output", node.name), true)?)
 }
 
 fn write_node_struct(
@@ -387,38 +398,10 @@ fn write_node_struct(
     })
 }
 
-fn write_node_output_struct(
-    node: &Object,
-    node_struct_name: &syn::Ident,
-    node_output_struct_name: &syn::Ident,
-) -> Result<TokenStream> {
-    let doc = format!("Output for [`{}`].", node_struct_name);
-    let fields = node
-        .processed_output()
-        .map(|output| {
-            let name = util::name_to_ident(output.name, false)?;
-            let ty = util::object_type_struct_ident(&output.ty);
-            let doc = output.tooltip.unwrap_or("No documentation.");
-            Ok(quote! {
-                #[doc = #doc]
-                pub #name: crate :: nodes :: types :: #ty
-            })
-        })
-        .collect::<Result<Vec<_>>>()?;
-
-    Ok(quote! {
-        #[doc = #doc]
-        #[derive(Clone)]
-        pub struct #node_output_struct_name {
-            #(#fields),*
-        }
-    })
-}
-
 fn write_node_trait_impl(
     node: &Object,
     inputs_name: &syn::Ident,
-    processed_inputs: Vec<ProcessedInput<'_>>,
+    processed_inputs: &[ProcessedInput<'_>],
     node_output_struct_name: Option<&syn::Ident>,
 ) -> Result<TokenStream> {
     let node_name = node.name.as_str();
@@ -462,7 +445,7 @@ fn write_node_trait_impl(
             .collect::<Result<Vec<_>>>()?;
 
         quote! {
-            type Output = #node_output_struct_name;
+            type Output = out :: #node_output_struct_name;
             fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
                 Self::Output {
                     #(#fields),*
@@ -505,5 +488,33 @@ fn write_node_trait_impl(
             const CATEGORY: &'static str = #category;
         }
         #output_node_impl
+    })
+}
+
+fn write_node_output_struct(
+    node: &Object,
+    node_struct_name: &syn::Ident,
+    node_output_struct_name: &syn::Ident,
+) -> Result<TokenStream> {
+    let doc = format!("Output for [`{node_struct_name}`](super::{node_struct_name}).");
+    let fields = node
+        .processed_output()
+        .map(|output| {
+            let name = util::name_to_ident(output.name, false)?;
+            let ty = util::object_type_struct_ident(&output.ty);
+            let doc = output.tooltip.unwrap_or("No documentation.");
+            Ok(quote! {
+                #[doc = #doc]
+                pub #name: crate :: nodes :: types :: #ty
+            })
+        })
+        .collect::<Result<Vec<_>>>()?;
+
+    Ok(quote! {
+        #[doc = #doc]
+        #[derive(Clone)]
+        pub struct #node_output_struct_name {
+            #(#fields),*
+        }
     })
 }

@@ -1,6 +1,21 @@
 //!`video_models` definitions/categories.
 #![allow(unused_imports)]
 use crate::WorkflowNodeId;
+/// Output types for nodes.
+pub mod out {
+    ///Output for [`VideoLinearCfgGuidance`](super::VideoLinearCfgGuidance).
+    #[derive(Clone)]
+    pub struct VideoLinearCfgGuidanceOutput {
+        ///No documentation.
+        pub model: crate::nodes::types::ModelOut,
+    }
+    ///Output for [`VideoTriangleCfgGuidance`](super::VideoTriangleCfgGuidance).
+    #[derive(Clone)]
+    pub struct VideoTriangleCfgGuidanceOutput {
+        ///No documentation.
+        pub model: crate::nodes::types::ModelOut,
+    }
+}
 ///**VideoLinearCFGGuidance**
 pub struct VideoLinearCfgGuidance<
     Model: crate::nodes::types::Model,
@@ -11,17 +26,11 @@ pub struct VideoLinearCfgGuidance<
     ///No documentation.
     pub min_cfg: MinCfg,
 }
-///Output for [`VideoLinearCfgGuidance`].
-#[derive(Clone)]
-pub struct VideoLinearCfgGuidanceOutput {
-    ///No documentation.
-    pub model: crate::nodes::types::ModelOut,
-}
 impl<
     Model: crate::nodes::types::Model,
     MinCfg: crate::nodes::types::Float,
 > crate::nodes::TypedNode for VideoLinearCfgGuidance<Model, MinCfg> {
-    type Output = VideoLinearCfgGuidanceOutput;
+    type Output = out::VideoLinearCfgGuidanceOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
             model: crate::nodes::types::ModelOut {
@@ -45,17 +54,11 @@ pub struct VideoTriangleCfgGuidance<
     ///No documentation.
     pub min_cfg: MinCfg,
 }
-///Output for [`VideoTriangleCfgGuidance`].
-#[derive(Clone)]
-pub struct VideoTriangleCfgGuidanceOutput {
-    ///No documentation.
-    pub model: crate::nodes::types::ModelOut,
-}
 impl<
     Model: crate::nodes::types::Model,
     MinCfg: crate::nodes::types::Float,
 > crate::nodes::TypedNode for VideoTriangleCfgGuidance<Model, MinCfg> {
-    type Output = VideoTriangleCfgGuidanceOutput;
+    type Output = out::VideoTriangleCfgGuidanceOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
             model: crate::nodes::types::ModelOut {

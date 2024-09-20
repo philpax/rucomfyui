@@ -1,6 +1,15 @@
 //!`preprocessors` definitions/categories.
 #![allow(unused_imports)]
 use crate::WorkflowNodeId;
+/// Output types for nodes.
+pub mod out {
+    ///Output for [`Canny`](super::Canny).
+    #[derive(Clone)]
+    pub struct CannyOutput {
+        ///No documentation.
+        pub image: crate::nodes::types::ImageOut,
+    }
+}
 ///**Canny**
 pub struct Canny<
     Image: crate::nodes::types::Image,
@@ -14,18 +23,12 @@ pub struct Canny<
     ///No documentation.
     pub high_threshold: HighThreshold,
 }
-///Output for [`Canny`].
-#[derive(Clone)]
-pub struct CannyOutput {
-    ///No documentation.
-    pub image: crate::nodes::types::ImageOut,
-}
 impl<
     Image: crate::nodes::types::Image,
     LowThreshold: crate::nodes::types::Float,
     HighThreshold: crate::nodes::types::Float,
 > crate::nodes::TypedNode for Canny<Image, LowThreshold, HighThreshold> {
-    type Output = CannyOutput;
+    type Output = out::CannyOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
             image: crate::nodes::types::ImageOut {
