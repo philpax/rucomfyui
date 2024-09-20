@@ -245,7 +245,6 @@ fn type_module_definitions() -> Result<TokenStream> {
 
     Ok(quote! {
         //! Definitions for all ComfyUI types.
-
         use crate::{nodes::ToWorkflowInput, WorkflowInput, WorkflowNodeId};
 
         #(#types)*
@@ -253,12 +252,28 @@ fn type_module_definitions() -> Result<TokenStream> {
 }
 
 fn write_node(node: &Object) -> Result<TokenStream> {
-    let (inputs_name, processed_inputs, inputs) = write_node_inputs(node)?;
-    let outputs = write_node_outputs(node, &inputs_name, processed_inputs)?;
+    let struct_name = util::name_to_ident(&node.name, true)?;
+    let node_output_struct_name = (!node.output_node)
+        .then(|| node_output_struct_name(node))
+        .transpose()?;
+    let processed_inputs = node_processed_inputs(node)?;
+
+    let node_struct = write_node_struct(node, &struct_name, &processed_inputs)?;
+    let output_struct = node_output_struct_name
+        .as_ref()
+        .map(|name| write_node_output_struct(node, &struct_name, name))
+        .transpose()?;
+    let trait_impl = write_node_trait_impl(
+        node,
+        &struct_name,
+        processed_inputs,
+        node_output_struct_name.as_ref(),
+    )?;
 
     Ok(quote! {
-        #inputs
-        #outputs
+        #node_struct
+        #output_struct
+        #trait_impl
     })
 }
 
@@ -270,8 +285,7 @@ struct ProcessedInput<'a> {
     generic_ty: syn::Ident,
     optional: bool,
 }
-
-fn write_node_inputs(node: &Object) -> Result<(syn::Ident, Vec<ProcessedInput>, TokenStream)> {
+fn node_processed_inputs(node: &Object) -> Result<Vec<ProcessedInput>> {
     fn process_input<'a>(
         name: &'a str,
         input: &'a ObjectInput,
@@ -307,11 +321,21 @@ fn write_node_inputs(node: &Object) -> Result<(syn::Ident, Vec<ProcessedInput>, 
         })
         .unwrap_or_default();
 
-    let processed_inputs = required_inputs
+    Ok(required_inputs
         .into_iter()
         .chain(optional_inputs.into_iter())
-        .collect::<Vec<_>>();
+        .collect::<Vec<_>>())
+}
 
+fn node_output_struct_name(node: &Object) -> Result<syn::Ident> {
+    Ok(util::name_to_ident(&format!("{}Output", node.name), true)?)
+}
+
+fn write_node_struct(
+    node: &Object,
+    struct_name: &syn::Ident,
+    processed_inputs: &[ProcessedInput<'_>],
+) -> Result<TokenStream> {
     let input_generics = processed_inputs
         .iter()
         .map(|input| {
@@ -349,29 +373,53 @@ fn write_node_inputs(node: &Object) -> Result<(syn::Ident, Vec<ProcessedInput>, 
         })
         .collect::<Result<Vec<_>>>()?;
 
-    let name = util::name_to_ident(&node.name, true)?;
     let mut doc = format!("**{}**", node.display_name);
     if !node.description.is_empty() {
         doc.push_str(": ");
         doc.push_str(&node.description);
     }
 
-    Ok((
-        name.clone(),
-        processed_inputs,
-        quote! {
-            #[doc = #doc]
-            pub struct #name < #(#input_generics),* > {
-                #(#fields),*
-            }
-        },
-    ))
+    Ok(quote! {
+        #[doc = #doc]
+        pub struct #struct_name < #(#input_generics),* > {
+            #(#fields),*
+        }
+    })
 }
 
-fn write_node_outputs(
+fn write_node_output_struct(
+    node: &Object,
+    node_struct_name: &syn::Ident,
+    node_output_struct_name: &syn::Ident,
+) -> Result<TokenStream> {
+    let doc = format!("Output for [`{}`].", node_struct_name);
+    let fields = node
+        .processed_output()
+        .map(|output| {
+            let name = util::name_to_ident(output.name, false)?;
+            let ty = util::object_type_struct_ident(&output.ty);
+            let doc = output.tooltip.unwrap_or("No documentation.");
+            Ok(quote! {
+                #[doc = #doc]
+                pub #name: crate :: nodes :: types :: #ty
+            })
+        })
+        .collect::<Result<Vec<_>>>()?;
+
+    Ok(quote! {
+        #[doc = #doc]
+        #[derive(Clone)]
+        pub struct #node_output_struct_name {
+            #(#fields),*
+        }
+    })
+}
+
+fn write_node_trait_impl(
     node: &Object,
     inputs_name: &syn::Ident,
     processed_inputs: Vec<ProcessedInput<'_>>,
+    node_output_struct_name: Option<&syn::Ident>,
 ) -> Result<TokenStream> {
     let node_name = node.name.as_str();
     let display_name = node.display_name.as_str();
@@ -399,46 +447,9 @@ fn write_node_outputs(
         })
         .collect::<Vec<_>>();
 
-    if node.output_node {
-        // Output nodes terminate the workflow and do not produce any
-        // output, so we return an empty tuple.
-        return Ok(quote! {
-            impl < #(#generic_list),* > crate :: nodes :: TypedNode for #inputs_name < #(#generic_instantiation_list),* >  {
-                type Output = ();
-                fn output(&self, _node_id: WorkflowNodeId) -> Self::Output {}
-
-                const NAME: &'static str = #node_name;
-                const DISPLAY_NAME: &'static str = #display_name;
-                const DESCRIPTION: &'static str = #description;
-                const CATEGORY: &'static str = #category;
-            }
-            impl < #(#generic_list),* > crate :: nodes :: TypedOutputNode for #inputs_name < #(#generic_instantiation_list),* > {}
-        });
-    }
-
-    let outputs = node.processed_output().collect::<Vec<_>>();
-
-    let name = util::name_to_ident(&format!("{}Output", node.name), true)?;
-    let doc = format!("Output for [`{}`].", inputs_name);
-
-    let fields = outputs
-        .iter()
-        .map(|output| {
-            let name = util::name_to_ident(output.name, false)?;
-            let ty = util::object_type_struct_ident(&output.ty);
-            let doc = output.tooltip.unwrap_or("No documentation.");
-            Ok(quote! {
-                #[doc = #doc]
-                pub #name: crate :: nodes :: types :: #ty
-            })
-        })
-        .collect::<Result<Vec<_>>>()?;
-
-    let typed_node = {
-        let outputs_name = name.clone();
-
-        let fields = outputs
-            .iter()
+    let output_section = if let Some(node_output_struct_name) = node_output_struct_name {
+        let fields = node
+            .processed_output()
             .enumerate()
             .map(|(i, output)| {
                 let name = util::name_to_ident(output.name, false)?;
@@ -451,28 +462,48 @@ fn write_node_outputs(
             .collect::<Result<Vec<_>>>()?;
 
         quote! {
-            impl < #(#generic_list),* > crate :: nodes :: TypedNode for #inputs_name < #(#generic_instantiation_list),* >  {
-                type Output = #outputs_name;
-                fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
-                    Self::Output {
-                        #(#fields),*
-                    }
+            type Output = #node_output_struct_name;
+            fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
+                Self::Output {
+                    #(#fields),*
                 }
-
-                const NAME: &'static str = #node_name;
-                const DISPLAY_NAME: &'static str = #display_name;
-                const DESCRIPTION: &'static str = #description;
-                const CATEGORY: &'static str = #category;
             }
+        }
+    } else {
+        // Output nodes terminate the workflow and do not produce any
+        // output, so we return an empty tuple.
+        quote! {
+            type Output = ();
+            fn output(&self, _node_id: WorkflowNodeId) -> Self::Output {}
         }
     };
 
-    Ok(quote! {
-        #[doc = #doc]
-        #[derive(Clone)]
-        pub struct #name {
-            #(#fields),*
+    let output_node_impl = node.output_node.then(|| {
+        quote! {
+            impl
+                < #(#generic_list),* >
+                crate :: nodes :: TypedOutputNode
+                for
+                #inputs_name < #(#generic_instantiation_list),* >
+            {}
         }
-        #typed_node
+    });
+
+    Ok(quote! {
+        impl
+            < #(#generic_list),* >
+            crate :: nodes :: TypedNode
+            for
+            #inputs_name
+            < #(#generic_instantiation_list),* >
+        {
+            #output_section
+
+            const NAME: &'static str = #node_name;
+            const DISPLAY_NAME: &'static str = #display_name;
+            const DESCRIPTION: &'static str = #description;
+            const CATEGORY: &'static str = #category;
+        }
+        #output_node_impl
     })
 }
