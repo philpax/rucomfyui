@@ -18,7 +18,7 @@ impl Client {
             .await?)
     }
 }
-#[derive(Debug, Serialize, Deserialize)]
+#[derive(Debug, Serialize, Deserialize, Clone)]
 /// Object info for a node.
 pub struct Object {
     /// The name of the object.
@@ -80,7 +80,7 @@ pub struct ObjectProcessedOutput<'a> {
     pub tooltip: Option<&'a str>,
 }
 
-#[derive(Debug, Serialize, Deserialize)]
+#[derive(Debug, Serialize, Deserialize, Clone)]
 #[serde(untagged)]
 /// Input to an object.
 pub enum ObjectInput {
@@ -106,7 +106,7 @@ impl ObjectInput {
     }
 }
 
-#[derive(Debug, Serialize, Deserialize)]
+#[derive(Debug, Serialize, Deserialize, Clone)]
 #[serde(untagged)]
 /// Type of an input.
 pub enum ObjectInputType {
@@ -136,7 +136,7 @@ impl ObjectInputType {
     }
 }
 
-#[derive(Debug, Serialize, Deserialize)]
+#[derive(Debug, Serialize, Deserialize, Clone)]
 /// Bundle of required and optional inputs.
 pub struct ObjectInputBundle<T> {
     /// Required inputs.
@@ -145,7 +145,7 @@ pub struct ObjectInputBundle<T> {
     pub optional: Option<T>,
 }
 
-#[derive(Debug, Serialize, Deserialize)]
+#[derive(Debug, Serialize, Deserialize, Clone)]
 /// Metadata for an input.
 pub struct ObjectInputMeta {
     /// Tooltip for the input.
@@ -227,6 +227,7 @@ impl ObjectType {
 pub type CategoryTree<'a> = BTreeMap<String, CategoryTreeNode<'a>>;
 
 /// A node in the category tree.
+#[derive(Clone)]
 pub enum CategoryTreeNode<'a> {
     /// A category in the tree.
     Category(String, CategoryTree<'a>),

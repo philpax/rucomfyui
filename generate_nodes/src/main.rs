@@ -15,15 +15,8 @@ async fn main() {
 }
 
 async fn run() -> Result<()> {
-    let url = std::env::args().nth(1).expect("ComfyUI URL not provided");
-
-    let client = rucomfyui::Client::new(url);
-    let object_info = client.object_info().await?;
-
-    let category_tree =
-        rucomfyui::object_info::categorize(object_info.values().filter(|n| {
-            !(n.python_module.starts_with("custom_nodes") || n.category.starts_with("_"))
-        }));
+    let object_info = load_or_get_object_info().await?;
+    let category_tree = rucomfyui::object_info::categorize(object_info.iter());
 
     let out_dir = Path::new("src/nodes");
     let _ = std::fs::remove_dir_all(out_dir);
@@ -35,6 +28,30 @@ async fn run() -> Result<()> {
     util::write_tokenstream(&out_dir.join("all.rs"), all_nodes(&category_tree, &[])?)?;
 
     Ok(())
+}
+
+async fn load_or_get_object_info() -> Result<Vec<rucomfyui::object_info::Object>> {
+    let path = Path::new(env!("CARGO_PKG_NAME")).join("object_info.json");
+    match std::fs::read_to_string(&path) {
+        Ok(existing) => Ok(serde_json::from_str(&existing)?),
+        Err(_) => {
+            println!("Loading object info from ComfyUI...");
+            let url = std::env::args().nth(1).expect("ComfyUI URL not provided");
+            let client = rucomfyui::Client::new(url);
+
+            let object_info = client
+                .object_info()
+                .await?
+                .values()
+                .filter(|n| {
+                    !(n.python_module.starts_with("custom_nodes") || n.category.starts_with("_"))
+                })
+                .cloned()
+                .collect();
+            std::fs::write(path, serde_json::to_string(&object_info)?)?;
+            Ok(object_info)
+        }
+    }
 }
 
 fn all_nodes(tree: &CategoryTree, ctx: &[syn::Ident]) -> Result<TokenStream> {
