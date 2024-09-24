@@ -10,7 +10,7 @@ use std::{
 use serde::{Deserialize, Serialize};
 
 #[cfg(feature = "typed_nodes")]
-use crate::nodes::TypedNode;
+use crate::nodes::{types::Out, TypedNode};
 
 /// A workflow is a graph of nodes that are executed in order.
 /// Each node is a step in the workflow.
@@ -30,6 +30,50 @@ impl FromIterator<(WorkflowNodeId, WorkflowNode)> for Workflow {
         Self(HashMap::from_iter(iter))
     }
 }
+#[cfg(feature = "typed_nodes")]
+/// Trait that allows using multiple [`Out`] types as outputs for [`WorkflowGraph::add_typed_dynamic`].
+pub trait TypedOut: Sized {
+    /// Provide the node ID for the output.
+    fn provide_node_id(node_id: WorkflowNodeId) -> Self;
+}
+
+#[cfg(feature = "typed_nodes")]
+impl<T: Out> TypedOut for T {
+    fn provide_node_id(node_id: WorkflowNodeId) -> Self {
+        T::from_dynamic(node_id, 0)
+    }
+}
+#[cfg(feature = "typed_nodes")]
+impl<T: Out> TypedOut for (T,) {
+    fn provide_node_id(node_id: WorkflowNodeId) -> Self {
+        (T::from_dynamic(node_id, 0),)
+    }
+}
+#[cfg(feature = "typed_nodes")]
+macro_rules! impl_typed_out_tuples {
+    ($(($($name:ident),+)),+) => {
+        $(
+            impl<$($name: Out),+> TypedOut for ($($name),+) {
+                fn provide_node_id(node_id: WorkflowNodeId) -> Self {
+                    let mut i = 0;
+                    ($(
+                        $name::from_dynamic(node_id, { i += 1; i - 1 })
+                    ),+)
+                }
+            }
+        )+
+    };
+}
+#[cfg(feature = "typed_nodes")]
+impl_typed_out_tuples!(
+    (A, B),
+    (A, B, C),
+    (A, B, C, D),
+    (A, B, C, D, E),
+    (A, B, C, D, E, F),
+    (A, B, C, D, E, F, G),
+    (A, B, C, D, E, F, G, H)
+);
 
 /// A workflow graph constructs a [`Workflow`] by adding nodes to it.
 ///
@@ -48,7 +92,7 @@ impl From<WorkflowGraph> for Workflow {
     }
 }
 impl WorkflowGraph {
-    /// Add a node to the workflow.
+    /// Add a dynamic node to the workflow.
     pub fn add_dynamic(&self, node: impl Into<WorkflowNode>) -> WorkflowNodeId {
         let id = WorkflowNodeId(self.last_node.borrow().0 + 1);
         self.workflow.borrow_mut().0.insert(id, node.into());
@@ -65,6 +109,14 @@ impl WorkflowGraph {
             meta: Some(WorkflowMeta::new(T::DISPLAY_NAME)),
         });
         node.output(node_id)
+    }
+
+    #[cfg(feature = "typed_nodes")]
+    /// Add a dynamic node to the workflow with the given typed output.
+    ///
+    /// Ensure that you verify the types of the output - the library will not check for you!
+    pub fn add_typed_dynamic<Output: TypedOut>(&self, node: impl Into<WorkflowNode>) -> Output {
+        Output::provide_node_id(self.add_dynamic(node))
     }
 
     /// Borrow the workflow.

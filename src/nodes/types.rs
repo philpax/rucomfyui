@@ -1,5 +1,10 @@
 //! Definitions for all ComfyUI types.
 use crate::workflow::{WorkflowInput, WorkflowNodeId};
+/// Implemented for all `*Out` types.
+pub trait Out: Sized {
+    /// Create an output from a dynamic node. Use carefully.
+    fn from_dynamic(node_id: WorkflowNodeId, node_slot: u32) -> Self;
+}
 ///A value of ComfyUI type `AUDIO`.
 pub trait Audio: Clone + Into<WorkflowInput> {}
 ///A node output of type [`Audio`].
@@ -10,9 +15,8 @@ pub struct AudioOut {
     /// The node's output slot.
     pub node_slot: u32,
 }
-impl AudioOut {
-    /// Create an output from a dynamic node. Use carefully.
-    pub fn from_dynamic(node_id: WorkflowNodeId, node_slot: u32) -> Self {
+impl Out for AudioOut {
+    fn from_dynamic(node_id: WorkflowNodeId, node_slot: u32) -> Self {
         Self { node_id, node_slot }
     }
 }
@@ -32,9 +36,8 @@ pub struct BooleanOut {
     /// The node's output slot.
     pub node_slot: u32,
 }
-impl BooleanOut {
-    /// Create an output from a dynamic node. Use carefully.
-    pub fn from_dynamic(node_id: WorkflowNodeId, node_slot: u32) -> Self {
+impl Out for BooleanOut {
+    fn from_dynamic(node_id: WorkflowNodeId, node_slot: u32) -> Self {
         Self { node_id, node_slot }
     }
 }
@@ -54,9 +57,8 @@ pub struct ClipVisionOutputOut {
     /// The node's output slot.
     pub node_slot: u32,
 }
-impl ClipVisionOutputOut {
-    /// Create an output from a dynamic node. Use carefully.
-    pub fn from_dynamic(node_id: WorkflowNodeId, node_slot: u32) -> Self {
+impl Out for ClipVisionOutputOut {
+    fn from_dynamic(node_id: WorkflowNodeId, node_slot: u32) -> Self {
         Self { node_id, node_slot }
     }
 }
@@ -76,9 +78,8 @@ pub struct ClipVisionOut {
     /// The node's output slot.
     pub node_slot: u32,
 }
-impl ClipVisionOut {
-    /// Create an output from a dynamic node. Use carefully.
-    pub fn from_dynamic(node_id: WorkflowNodeId, node_slot: u32) -> Self {
+impl Out for ClipVisionOut {
+    fn from_dynamic(node_id: WorkflowNodeId, node_slot: u32) -> Self {
         Self { node_id, node_slot }
     }
 }
@@ -98,9 +99,8 @@ pub struct ClipOut {
     /// The node's output slot.
     pub node_slot: u32,
 }
-impl ClipOut {
-    /// Create an output from a dynamic node. Use carefully.
-    pub fn from_dynamic(node_id: WorkflowNodeId, node_slot: u32) -> Self {
+impl Out for ClipOut {
+    fn from_dynamic(node_id: WorkflowNodeId, node_slot: u32) -> Self {
         Self { node_id, node_slot }
     }
 }
@@ -120,9 +120,8 @@ pub struct ConditioningOut {
     /// The node's output slot.
     pub node_slot: u32,
 }
-impl ConditioningOut {
-    /// Create an output from a dynamic node. Use carefully.
-    pub fn from_dynamic(node_id: WorkflowNodeId, node_slot: u32) -> Self {
+impl Out for ConditioningOut {
+    fn from_dynamic(node_id: WorkflowNodeId, node_slot: u32) -> Self {
         Self { node_id, node_slot }
     }
 }
@@ -142,9 +141,8 @@ pub struct ControlNetOut {
     /// The node's output slot.
     pub node_slot: u32,
 }
-impl ControlNetOut {
-    /// Create an output from a dynamic node. Use carefully.
-    pub fn from_dynamic(node_id: WorkflowNodeId, node_slot: u32) -> Self {
+impl Out for ControlNetOut {
+    fn from_dynamic(node_id: WorkflowNodeId, node_slot: u32) -> Self {
         Self { node_id, node_slot }
     }
 }
@@ -164,9 +162,8 @@ pub struct FloatOut {
     /// The node's output slot.
     pub node_slot: u32,
 }
-impl FloatOut {
-    /// Create an output from a dynamic node. Use carefully.
-    pub fn from_dynamic(node_id: WorkflowNodeId, node_slot: u32) -> Self {
+impl Out for FloatOut {
+    fn from_dynamic(node_id: WorkflowNodeId, node_slot: u32) -> Self {
         Self { node_id, node_slot }
     }
 }
@@ -186,9 +183,8 @@ pub struct GligenOut {
     /// The node's output slot.
     pub node_slot: u32,
 }
-impl GligenOut {
-    /// Create an output from a dynamic node. Use carefully.
-    pub fn from_dynamic(node_id: WorkflowNodeId, node_slot: u32) -> Self {
+impl Out for GligenOut {
+    fn from_dynamic(node_id: WorkflowNodeId, node_slot: u32) -> Self {
         Self { node_id, node_slot }
     }
 }
@@ -208,9 +204,8 @@ pub struct GuiderOut {
     /// The node's output slot.
     pub node_slot: u32,
 }
-impl GuiderOut {
-    /// Create an output from a dynamic node. Use carefully.
-    pub fn from_dynamic(node_id: WorkflowNodeId, node_slot: u32) -> Self {
+impl Out for GuiderOut {
+    fn from_dynamic(node_id: WorkflowNodeId, node_slot: u32) -> Self {
         Self { node_id, node_slot }
     }
 }
@@ -230,9 +225,8 @@ pub struct ImageOut {
     /// The node's output slot.
     pub node_slot: u32,
 }
-impl ImageOut {
-    /// Create an output from a dynamic node. Use carefully.
-    pub fn from_dynamic(node_id: WorkflowNodeId, node_slot: u32) -> Self {
+impl Out for ImageOut {
+    fn from_dynamic(node_id: WorkflowNodeId, node_slot: u32) -> Self {
         Self { node_id, node_slot }
     }
 }
@@ -252,9 +246,8 @@ pub struct InpaintModelOut {
     /// The node's output slot.
     pub node_slot: u32,
 }
-impl InpaintModelOut {
-    /// Create an output from a dynamic node. Use carefully.
-    pub fn from_dynamic(node_id: WorkflowNodeId, node_slot: u32) -> Self {
+impl Out for InpaintModelOut {
+    fn from_dynamic(node_id: WorkflowNodeId, node_slot: u32) -> Self {
         Self { node_id, node_slot }
     }
 }
@@ -274,9 +267,8 @@ pub struct InpaintPatchOut {
     /// The node's output slot.
     pub node_slot: u32,
 }
-impl InpaintPatchOut {
-    /// Create an output from a dynamic node. Use carefully.
-    pub fn from_dynamic(node_id: WorkflowNodeId, node_slot: u32) -> Self {
+impl Out for InpaintPatchOut {
+    fn from_dynamic(node_id: WorkflowNodeId, node_slot: u32) -> Self {
         Self { node_id, node_slot }
     }
 }
@@ -296,9 +288,8 @@ pub struct IntOut {
     /// The node's output slot.
     pub node_slot: u32,
 }
-impl IntOut {
-    /// Create an output from a dynamic node. Use carefully.
-    pub fn from_dynamic(node_id: WorkflowNodeId, node_slot: u32) -> Self {
+impl Out for IntOut {
+    fn from_dynamic(node_id: WorkflowNodeId, node_slot: u32) -> Self {
         Self { node_id, node_slot }
     }
 }
@@ -318,9 +309,8 @@ pub struct LatentOut {
     /// The node's output slot.
     pub node_slot: u32,
 }
-impl LatentOut {
-    /// Create an output from a dynamic node. Use carefully.
-    pub fn from_dynamic(node_id: WorkflowNodeId, node_slot: u32) -> Self {
+impl Out for LatentOut {
+    fn from_dynamic(node_id: WorkflowNodeId, node_slot: u32) -> Self {
         Self { node_id, node_slot }
     }
 }
@@ -340,9 +330,8 @@ pub struct MaskOut {
     /// The node's output slot.
     pub node_slot: u32,
 }
-impl MaskOut {
-    /// Create an output from a dynamic node. Use carefully.
-    pub fn from_dynamic(node_id: WorkflowNodeId, node_slot: u32) -> Self {
+impl Out for MaskOut {
+    fn from_dynamic(node_id: WorkflowNodeId, node_slot: u32) -> Self {
         Self { node_id, node_slot }
     }
 }
@@ -362,9 +351,8 @@ pub struct ModelOut {
     /// The node's output slot.
     pub node_slot: u32,
 }
-impl ModelOut {
-    /// Create an output from a dynamic node. Use carefully.
-    pub fn from_dynamic(node_id: WorkflowNodeId, node_slot: u32) -> Self {
+impl Out for ModelOut {
+    fn from_dynamic(node_id: WorkflowNodeId, node_slot: u32) -> Self {
         Self { node_id, node_slot }
     }
 }
@@ -384,9 +372,8 @@ pub struct NoiseOut {
     /// The node's output slot.
     pub node_slot: u32,
 }
-impl NoiseOut {
-    /// Create an output from a dynamic node. Use carefully.
-    pub fn from_dynamic(node_id: WorkflowNodeId, node_slot: u32) -> Self {
+impl Out for NoiseOut {
+    fn from_dynamic(node_id: WorkflowNodeId, node_slot: u32) -> Self {
         Self { node_id, node_slot }
     }
 }
@@ -406,9 +393,8 @@ pub struct PhotomakerOut {
     /// The node's output slot.
     pub node_slot: u32,
 }
-impl PhotomakerOut {
-    /// Create an output from a dynamic node. Use carefully.
-    pub fn from_dynamic(node_id: WorkflowNodeId, node_slot: u32) -> Self {
+impl Out for PhotomakerOut {
+    fn from_dynamic(node_id: WorkflowNodeId, node_slot: u32) -> Self {
         Self { node_id, node_slot }
     }
 }
@@ -428,9 +414,8 @@ pub struct SamplerOut {
     /// The node's output slot.
     pub node_slot: u32,
 }
-impl SamplerOut {
-    /// Create an output from a dynamic node. Use carefully.
-    pub fn from_dynamic(node_id: WorkflowNodeId, node_slot: u32) -> Self {
+impl Out for SamplerOut {
+    fn from_dynamic(node_id: WorkflowNodeId, node_slot: u32) -> Self {
         Self { node_id, node_slot }
     }
 }
@@ -450,9 +435,8 @@ pub struct StringOut {
     /// The node's output slot.
     pub node_slot: u32,
 }
-impl StringOut {
-    /// Create an output from a dynamic node. Use carefully.
-    pub fn from_dynamic(node_id: WorkflowNodeId, node_slot: u32) -> Self {
+impl Out for StringOut {
+    fn from_dynamic(node_id: WorkflowNodeId, node_slot: u32) -> Self {
         Self { node_id, node_slot }
     }
 }
@@ -472,9 +456,8 @@ pub struct SigmasOut {
     /// The node's output slot.
     pub node_slot: u32,
 }
-impl SigmasOut {
-    /// Create an output from a dynamic node. Use carefully.
-    pub fn from_dynamic(node_id: WorkflowNodeId, node_slot: u32) -> Self {
+impl Out for SigmasOut {
+    fn from_dynamic(node_id: WorkflowNodeId, node_slot: u32) -> Self {
         Self { node_id, node_slot }
     }
 }
@@ -494,9 +477,8 @@ pub struct StyleModelOut {
     /// The node's output slot.
     pub node_slot: u32,
 }
-impl StyleModelOut {
-    /// Create an output from a dynamic node. Use carefully.
-    pub fn from_dynamic(node_id: WorkflowNodeId, node_slot: u32) -> Self {
+impl Out for StyleModelOut {
+    fn from_dynamic(node_id: WorkflowNodeId, node_slot: u32) -> Self {
         Self { node_id, node_slot }
     }
 }
@@ -516,9 +498,8 @@ pub struct UpscaleModelOut {
     /// The node's output slot.
     pub node_slot: u32,
 }
-impl UpscaleModelOut {
-    /// Create an output from a dynamic node. Use carefully.
-    pub fn from_dynamic(node_id: WorkflowNodeId, node_slot: u32) -> Self {
+impl Out for UpscaleModelOut {
+    fn from_dynamic(node_id: WorkflowNodeId, node_slot: u32) -> Self {
         Self { node_id, node_slot }
     }
 }
@@ -538,9 +519,8 @@ pub struct VaeOut {
     /// The node's output slot.
     pub node_slot: u32,
 }
-impl VaeOut {
-    /// Create an output from a dynamic node. Use carefully.
-    pub fn from_dynamic(node_id: WorkflowNodeId, node_slot: u32) -> Self {
+impl Out for VaeOut {
+    fn from_dynamic(node_id: WorkflowNodeId, node_slot: u32) -> Self {
         Self { node_id, node_slot }
     }
 }
@@ -560,9 +540,8 @@ pub struct WebcamOut {
     /// The node's output slot.
     pub node_slot: u32,
 }
-impl WebcamOut {
-    /// Create an output from a dynamic node. Use carefully.
-    pub fn from_dynamic(node_id: WorkflowNodeId, node_slot: u32) -> Self {
+impl Out for WebcamOut {
+    fn from_dynamic(node_id: WorkflowNodeId, node_slot: u32) -> Self {
         Self { node_id, node_slot }
     }
 }

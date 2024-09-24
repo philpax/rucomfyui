@@ -112,9 +112,8 @@ fn type_module_definitions() -> Result<TokenStream> {
                     /// The node's output slot.
                     pub node_slot: u32,
                 }
-                impl #output_name {
-                    /// Create an output from a dynamic node. Use carefully.
-                    pub fn from_dynamic(node_id: WorkflowNodeId, node_slot: u32) -> Self {
+                impl Out for #output_name {
+                    fn from_dynamic(node_id: WorkflowNodeId, node_slot: u32) -> Self {
                         Self { node_id, node_slot }
                     }
                 }
@@ -131,6 +130,12 @@ fn type_module_definitions() -> Result<TokenStream> {
     Ok(quote! {
         //! Definitions for all ComfyUI types.
         use crate::workflow::{WorkflowInput, WorkflowNodeId};
+
+        /// Implemented for all `*Out` types.
+        pub trait Out: Sized {
+            /// Create an output from a dynamic node. Use carefully.
+            fn from_dynamic(node_id: WorkflowNodeId, node_slot: u32) -> Self;
+        }
 
         #(#types)*
 
