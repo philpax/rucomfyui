@@ -288,6 +288,43 @@ impl WorkflowInput {
     pub fn slot(node_id: WorkflowNodeId, slot_index: u32) -> Self {
         WorkflowInput::Slot(node_id.to_string(), slot_index)
     }
+    /// Get the string value of this input, if it is a string.
+    pub fn as_str(&self) -> Option<&str> {
+        match self {
+            Self::String(v) => Some(v.as_str()),
+            _ => None,
+        }
+    }
+    /// Get the `f32` value of this input, if it is a `f32`.
+    pub fn as_f32(&self) -> Option<f32> {
+        match self {
+            Self::F32(v) => Some(*v),
+            _ => None,
+        }
+    }
+    /// Get the `i32` value of this input, if it is a `i32`.
+    pub fn as_i32(&self) -> Option<i32> {
+        match self {
+            Self::I32(v) => Some(*v),
+            _ => None,
+        }
+    }
+    /// Get the `bool` value of this input, if it is a `bool`.
+    pub fn as_bool(&self) -> Option<bool> {
+        match self {
+            Self::Boolean(v) => Some(*v),
+            _ => None,
+        }
+    }
+    /// Get the slot value of this input, if it is a slot.
+    pub fn as_slot(&self) -> Option<(WorkflowNodeId, u32)> {
+        match self {
+            Self::Slot(node_id, slot_index) => {
+                Some((WorkflowNodeId(node_id.parse::<u32>().ok()?), *slot_index))
+            }
+            _ => None,
+        }
+    }
 }
 impl From<String> for WorkflowInput {
     fn from(value: String) -> Self {

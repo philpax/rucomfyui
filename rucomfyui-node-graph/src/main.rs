@@ -1,13 +1,19 @@
 use std::{
     borrow::Cow,
+    collections::HashMap,
     hash::{Hash, Hasher},
+    path::PathBuf,
     sync::mpsc::{Receiver, Sender},
     thread::JoinHandle,
 };
 
+use anyhow::Context;
 use eframe::egui::{self, DragValue, TextStyle, Visuals};
 use egui_node_graph2::*;
-use rucomfyui::object_info::{Object, ObjectInfo, ObjectInputType, ObjectType};
+use rucomfyui::{
+    object_info::{Object, ObjectInfo, ObjectInputType, ObjectType},
+    workflow::{WorkflowInput, WorkflowNode, WorkflowNodeId},
+};
 use serde::{Deserialize, Serialize};
 
 fn main() {
@@ -25,15 +31,21 @@ fn main() {
 pub struct Application {
     persisted: PersistedState,
     user_state: FlowUserState,
+
     object_info: Option<ObjectInfo>,
+
     tokio_input_tx: Sender<TokioInputEvent>,
     tokio_output_rx: Receiver<TokioOutputEvent>,
     _tokio_runtime_thread: JoinHandle<()>,
+
     error: Option<String>,
+
+    file_dialog: egui_file_dialog::FileDialog,
 }
 impl Application {
     pub fn new(cc: &eframe::CreationContext<'_>) -> Self {
-        let persisted = PersistedState::load(cc);
+        let mut file_dialog = egui_file_dialog::FileDialog::new();
+        let persisted = PersistedState::load(cc, &mut file_dialog);
 
         let (tokio_input_tx, tokio_input_rx) = std::sync::mpsc::channel();
         let (tokio_output_tx, tokio_output_rx) = std::sync::mpsc::channel();
@@ -41,19 +53,81 @@ impl Application {
         Self {
             persisted,
             user_state: FlowUserState::default(),
+
             object_info: None,
+
             tokio_input_tx,
             tokio_output_rx,
             _tokio_runtime_thread: std::thread::spawn(move || {
                 tokio_runtime_thread(tokio_input_rx, tokio_output_tx)
             }),
+
             error: None,
+
+            file_dialog,
         }
+    }
+
+    fn load(&mut self, path: PathBuf) -> anyhow::Result<()> {
+        let object_info = self.object_info.as_ref().context("No object info")?;
+        let workflow = rucomfyui::Workflow::from_json(&std::fs::read_to_string(path)?)?;
+        let sorted_node_ids = workflow.topological_sort_with_depth();
+
+        let mut mapping = HashMap::<WorkflowNodeId, BuildNodeOutput>::new();
+        let mut node_position = egui::Pos2::ZERO;
+
+        let state = &mut self.persisted.state;
+        for node_ids in sorted_node_ids {
+            node_position.x += 300.0;
+            node_position.y = 0.0;
+
+            for node_id in node_ids {
+                let node = workflow.0.get(&node_id).unwrap();
+                let object = object_info.get(&node.class_type).with_context(|| {
+                    format!(
+                        "Node {} has unknown class type {}",
+                        node_id.0, node.class_type
+                    )
+                })?;
+                let template = FlowNodeTemplate(object.clone());
+                let g_node_id = state.graph.add_node(
+                    object.display_name.clone(),
+                    FlowNodeData {
+                        template: template.clone(),
+                    },
+                    |g, g_node_id| {
+                        let bno = build_node(&template, g, g_node_id, Some(node));
+                        for (name, input) in node.inputs.iter() {
+                            let Some(&input_id) = bno.input_ids.get(name) else {
+                                continue;
+                            };
+                            let Some((output_node_id, slot)) = input.as_slot() else {
+                                continue;
+                            };
+                            let Some(output_bno) = mapping.get(&output_node_id) else {
+                                continue;
+                            };
+                            let Some(&output_id) = output_bno.output_ids.get(slot as usize) else {
+                                continue;
+                            };
+                            g.add_connection(output_id, input_id, 0);
+                        }
+                        mapping.insert(node_id, bno);
+                    },
+                );
+
+                state.node_positions.insert(g_node_id, node_position);
+                node_position.y += 200.0;
+                state.node_order.push(g_node_id);
+            }
+        }
+
+        Ok(())
     }
 }
 impl eframe::App for Application {
     fn save(&mut self, storage: &mut dyn eframe::Storage) {
-        self.persisted.save(storage);
+        self.persisted.save(storage, &mut self.file_dialog);
     }
 
     fn update(&mut self, ctx: &egui::Context, _frame: &mut eframe::Frame) {
@@ -72,13 +146,15 @@ impl eframe::App for Application {
             });
         });
         egui::TopBottomPanel::bottom("bottom").show(ctx, |ui| {
+            let is_connected = self.object_info.is_some();
+
             ui.horizontal(|ui| {
                 ui.label("ComfyUI address:");
                 ui.text_edit_singleline(&mut self.persisted.comfyui_address);
                 if ui
                     .add_enabled(
-                        self.object_info.is_none(),
-                        egui::Button::new(if self.object_info.is_none() {
+                        !is_connected,
+                        egui::Button::new(if !is_connected {
                             "Connect"
                         } else {
                             "Connected"
@@ -91,6 +167,12 @@ impl eframe::App for Application {
                             self.persisted.comfyui_address.clone(),
                         ))
                         .unwrap();
+                }
+
+                if is_connected {
+                    if ui.button("Open API workflow").clicked() {
+                        self.file_dialog.select_file();
+                    }
                 }
             });
         });
@@ -117,6 +199,13 @@ impl eframe::App for Application {
                     self.error = None;
                 }
             });
+        }
+
+        self.file_dialog.update(ctx);
+        if let Some(path) = self.file_dialog.take_selected() {
+            if let Err(err) = self.load(path) {
+                self.error = Some(err.to_string());
+            }
         }
     }
 }
@@ -176,6 +265,26 @@ pub enum FlowValueType {
     Unknown,
 }
 impl FlowValueType {
+    fn from_object_type(object_type: &ObjectType) -> Self {
+        match object_type {
+            ObjectType::Boolean => FlowValueType::Boolean(false),
+            ObjectType::Float => FlowValueType::Float(0.0),
+            ObjectType::Int => FlowValueType::Int(0),
+            ObjectType::String => FlowValueType::String("".into()),
+            _ => FlowValueType::Other(object_type.clone()),
+        }
+    }
+
+    fn from_object_type_and_input(object_type: &ObjectType, input: &WorkflowInput) -> Self {
+        match input {
+            WorkflowInput::String(s) => FlowValueType::String(s.clone()),
+            WorkflowInput::F32(v) => FlowValueType::Float(*v),
+            WorkflowInput::I32(v) => FlowValueType::Int(*v),
+            WorkflowInput::Boolean(b) => FlowValueType::Boolean(*b),
+            WorkflowInput::Slot(_, _) => FlowValueType::Other(object_type.clone()),
+        }
+    }
+
     #[must_use]
     pub fn is_connection_only(&self) -> bool {
         matches!(self, Self::Other(..)) || matches!(self, Self::Unknown)
@@ -183,17 +292,6 @@ impl FlowValueType {
     #[must_use]
     pub fn is_constant_only(&self) -> bool {
         matches!(self, Self::Array { .. })
-    }
-}
-impl<'a> From<&'a ObjectType> for FlowValueType {
-    fn from(value: &'a ObjectType) -> Self {
-        match value {
-            ObjectType::Boolean => FlowValueType::Boolean(false),
-            ObjectType::Float => FlowValueType::Float(0.0),
-            ObjectType::Int => FlowValueType::Int(0),
-            ObjectType::String => FlowValueType::String("".into()),
-            _ => FlowValueType::Other(value.clone()),
-        }
     }
 }
 
@@ -251,28 +349,56 @@ impl NodeTemplateTrait for FlowNodeTemplate {
         _user_state: &mut Self::UserState,
         node_id: NodeId,
     ) {
-        for (name, input, _required) in self.0.all_inputs() {
-            let (type_, value_type) = match input.as_input_type() {
-                ObjectInputType::Array(vec) => (
-                    ObjectType::String,
-                    FlowValueType::Array {
-                        options: vec.clone(),
-                        selected: vec.first().cloned().unwrap_or_default(),
-                    },
-                ),
-                ObjectInputType::Typed(object_type) => {
-                    (object_type.clone(), FlowValueType::from(object_type))
-                }
-            };
+        build_node(self, graph, node_id, None);
+    }
+}
 
-            let input_param_kind = if value_type.is_connection_only() {
-                InputParamKind::ConnectionOnly
-            } else if value_type.is_constant_only() {
-                InputParamKind::ConstantOnly
-            } else {
-                InputParamKind::ConnectionOrConstant
-            };
+struct BuildNodeOutput {
+    input_ids: HashMap<String, InputId>,
+    output_ids: Vec<OutputId>,
+}
+fn build_node(
+    template: &FlowNodeTemplate,
+    graph: &mut Graph<FlowNodeData, ObjectType, FlowValueType>,
+    node_id: NodeId,
+    workflow_node: Option<&WorkflowNode>,
+) -> BuildNodeOutput {
+    let mut input_ids = HashMap::new();
+    let mut output_ids = vec![];
 
+    for (name, input, _required) in template.0.all_inputs() {
+        let workflow_input = workflow_node.and_then(|n| n.inputs.get(name));
+
+        let (type_, value_type) = match input.as_input_type() {
+            ObjectInputType::Array(vec) => (
+                ObjectType::String,
+                FlowValueType::Array {
+                    options: vec.clone(),
+                    selected: workflow_input
+                        .and_then(|i| i.as_str())
+                        .map(|s| s.to_string())
+                        .or_else(|| vec.first().cloned())
+                        .unwrap_or_default(),
+                },
+            ),
+            ObjectInputType::Typed(object_type) => (
+                object_type.clone(),
+                workflow_input
+                    .map(|input| FlowValueType::from_object_type_and_input(object_type, input))
+                    .unwrap_or_else(|| FlowValueType::from_object_type(object_type)),
+            ),
+        };
+
+        let input_param_kind = if value_type.is_connection_only() {
+            InputParamKind::ConnectionOnly
+        } else if value_type.is_constant_only() {
+            InputParamKind::ConstantOnly
+        } else {
+            InputParamKind::ConnectionOrConstant
+        };
+
+        input_ids.insert(
+            name.to_string(),
             graph.add_input_param(
                 node_id,
                 name.to_string(),
@@ -280,12 +406,17 @@ impl NodeTemplateTrait for FlowNodeTemplate {
                 value_type,
                 input_param_kind,
                 true,
-            );
-        }
+            ),
+        );
+    }
 
-        for (name, output) in self.0.output_name.iter().zip(self.0.output.iter()) {
-            graph.add_output_param(node_id, name.clone(), output.clone());
-        }
+    for (name, output) in template.0.output_name.iter().zip(template.0.output.iter()) {
+        output_ids.push(graph.add_output_param(node_id, name.clone(), output.clone()));
+    }
+
+    BuildNodeOutput {
+        input_ids,
+        output_ids,
     }
 }
 
@@ -373,9 +504,14 @@ struct PersistedState {
     pub state: FlowEditorState,
 }
 impl PersistedState {
-    pub fn load(cc: &eframe::CreationContext<'_>) -> Self {
+    pub fn load(
+        cc: &eframe::CreationContext<'_>,
+        file_dialog: &mut egui_file_dialog::FileDialog,
+    ) -> Self {
         let default = Self::default();
         if let Some(storage) = cc.storage {
+            *file_dialog.storage_mut() =
+                eframe::get_value(storage, "file_dialog").unwrap_or_default();
             Self {
                 comfyui_address: eframe::get_value(storage, "comfyui_address")
                     .unwrap_or(default.comfyui_address),
@@ -385,9 +521,14 @@ impl PersistedState {
             default
         }
     }
-    pub fn save(&self, storage: &mut dyn eframe::Storage) {
+    pub fn save(
+        &self,
+        storage: &mut dyn eframe::Storage,
+        file_dialog: &mut egui_file_dialog::FileDialog,
+    ) {
         eframe::set_value(storage, "comfyui_address", &self.comfyui_address);
         eframe::set_value(storage, "state", &self.state);
+        eframe::set_value(storage, "file_dialog", file_dialog.storage_mut());
     }
 }
 impl Default for PersistedState {

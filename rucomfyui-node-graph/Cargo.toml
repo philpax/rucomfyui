@@ -11,3 +11,4 @@ serde = "1.0"
 
 rucomfyui = { path = "../" }
 tokio = { workspace = true, features = ["full"] }
+egui-file-dialog = "0.6.1"
