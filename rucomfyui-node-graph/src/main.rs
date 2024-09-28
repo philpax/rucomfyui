@@ -251,13 +251,7 @@ impl NodeTemplateTrait for FlowNodeTemplate {
         _user_state: &mut Self::UserState,
         node_id: NodeId,
     ) {
-        for (name, input) in self
-            .0
-            .input
-            .required
-            .iter()
-            .chain(self.0.input.optional.iter().flat_map(|v| v.iter()))
-        {
+        for (name, input, _required) in self.0.all_inputs() {
             let (type_, value_type) = match input.as_input_type() {
                 ObjectInputType::Array(vec) => (
                     ObjectType::String,
@@ -281,7 +275,7 @@ impl NodeTemplateTrait for FlowNodeTemplate {
 
             graph.add_input_param(
                 node_id,
-                name.clone(),
+                name.to_string(),
                 type_.clone(),
                 value_type,
                 input_param_kind,
