@@ -30,6 +30,13 @@ impl Workflow {
     }
     /// Return a topological sort of the nodes in the workflow, with outputs at the end.
     pub fn topological_sort(&self) -> Vec<WorkflowNodeId> {
+        self.topological_sort_with_depth()
+            .into_iter()
+            .flatten()
+            .collect()
+    }
+    /// Return a topological sort of the nodes in the workflow, with nodes of the same depth grouped together, with outputs at the end.
+    pub fn topological_sort_with_depth(&self) -> Vec<Vec<WorkflowNodeId>> {
         let mut result = Vec::new();
         let mut in_degree: HashMap<WorkflowNodeId, usize> = HashMap::new();
         let mut queue = VecDeque::new();
@@ -39,14 +46,12 @@ impl Workflow {
         for (&node_id, node) in &self.0 {
             in_degree.entry(node_id).or_insert(0);
             for input in node.inputs.values() {
-                let WorkflowInput::Slot(dep_id, _) = input else {
-                    continue;
-                };
-                let Ok(dep_id) = dep_id.parse::<u32>() else {
-                    continue;
-                };
-                let dep_node_id = WorkflowNodeId(dep_id);
-                *in_degree.entry(dep_node_id).or_insert(0) += 1;
+                if let WorkflowInput::Slot(dep_id, _) = input {
+                    if let Ok(dep_id) = dep_id.parse::<u32>() {
+                        let dep_node_id = WorkflowNodeId(dep_id);
+                        *in_degree.entry(dep_node_id).or_insert(0) += 1;
+                    }
+                }
             }
         }
 
@@ -58,37 +63,43 @@ impl Workflow {
         }
 
         // Process the queue
-        while let Some(node_id) = queue.pop_front() {
-            if visited.contains(&node_id) {
-                continue;
-            }
-            visited.insert(node_id);
-            result.push(node_id);
+        while !queue.is_empty() {
+            let mut current_depth = Vec::new();
 
-            let Some(node) = self.0.get(&node_id) else {
-                continue;
-            };
-            for input in node.inputs.values() {
-                let WorkflowInput::Slot(dep_id, _) = input else {
-                    continue;
-                };
-                let Ok(dep_id) = dep_id.parse::<u32>() else {
-                    continue;
-                };
-                let dep_node_id = WorkflowNodeId(dep_id);
-                let Some(degree) = in_degree.get_mut(&dep_node_id) else {
-                    continue;
-                };
+            for _ in 0..queue.len() {
+                if let Some(node_id) = queue.pop_front() {
+                    if visited.contains(&node_id) {
+                        continue;
+                    }
+                    visited.insert(node_id);
+                    current_depth.push(node_id);
 
-                *degree -= 1;
-                if *degree == 0 {
-                    queue.push_back(dep_node_id);
+                    if let Some(node) = self.0.get(&node_id) {
+                        for input in node.inputs.values() {
+                            if let WorkflowInput::Slot(dep_id, _) = input {
+                                if let Ok(dep_id) = dep_id.parse::<u32>() {
+                                    let dep_node_id = WorkflowNodeId(dep_id);
+                                    if let Some(degree) = in_degree.get_mut(&dep_node_id) {
+                                        *degree -= 1;
+                                        if *degree == 0 {
+                                            queue.push_back(dep_node_id);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
                 }
+            }
+
+            if !current_depth.is_empty() {
+                result.push(current_depth);
             }
         }
 
         // Check for cycles
-        if result.len() != self.0.len() {
+        let total_nodes: usize = result.iter().map(|v| v.len()).sum();
+        if total_nodes != self.0.len() {
             panic!("Cyclic dependency detected in the workflow");
         }
 
