@@ -6,11 +6,11 @@ use serde::{Deserialize, Serialize};
 
 use crate::{Client, Result};
 
-/// Object info for a ComfyUI instance.
+/// Object info for a ComfyUI instance, where the keys are the object names.
 pub type ObjectInfo = HashMap<String, Object>;
 
 impl Client {
-    /// Get the object info for this ComfyUI instance.
+    /// Get the object info for this ComfyUI instance, where the keys are the object names.
     pub async fn object_info(&self) -> Result<ObjectInfo> {
         Ok(self
             .client
@@ -36,6 +36,10 @@ pub struct Object {
     pub category: String,
 
     /// Inputs to the object.
+    ///
+    /// Note that this is not guaranteed to be in sorted order due to the nature of JSON objects.
+    /// Use [`Self::required_inputs`], [`Self::optional_inputs`], or [`Self::all_inputs`] to get
+    /// the inputs in the order they should be provided.
     pub input: ObjectInputBundle<HashMap<String, ObjectInput>>,
     /// Order of inputs.
     pub input_order: ObjectInputBundle<Vec<String>>,
@@ -66,6 +70,34 @@ impl Object {
                 name: name.as_str(),
                 tooltip: self.output_tooltips.get(idx).map(|s| s.as_str()),
             })
+    }
+    /// Required inputs for the object, returned in the order they should be provided.
+    pub fn required_inputs(&self) -> impl Iterator<Item = (&str, &ObjectInput)> {
+        self.input_order
+            .required
+            .iter()
+            .map(|name| (name.as_str(), self.input.required.get(name).unwrap()))
+    }
+    /// Optional inputs for the object, returned in the order they should be provided.
+    pub fn optional_inputs(&self) -> impl Iterator<Item = (&str, &ObjectInput)> {
+        self.input_order.optional.iter().flat_map(move |names| {
+            names.iter().map(move |name| {
+                (
+                    name.as_str(),
+                    self.input.optional.as_ref().unwrap().get(name).unwrap(),
+                )
+            })
+        })
+    }
+    /// All inputs for the object, returned in the order they should be provided, where the third value is
+    /// true when the input is required.
+    pub fn all_inputs(&self) -> impl Iterator<Item = (&str, &ObjectInput, bool)> {
+        self.required_inputs()
+            .map(|(name, input)| (name, input, true))
+            .chain(
+                self.optional_inputs()
+                    .map(|(name, input)| (name, input, false)),
+            )
     }
 }
 

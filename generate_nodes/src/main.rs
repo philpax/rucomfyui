@@ -7,7 +7,7 @@ use quote::quote;
 
 mod util;
 
-use rucomfyui::object_info::{CategoryTree, CategoryTreeNode, Object, ObjectInput, ObjectType};
+use rucomfyui::object_info::{CategoryTree, CategoryTreeNode, Object, ObjectType};
 
 #[tokio::main]
 async fn main() {
@@ -303,46 +303,21 @@ struct ProcessedInput<'a> {
     optional: bool,
 }
 fn node_processed_inputs(node: &Object) -> Result<Vec<ProcessedInput>> {
-    fn process_input<'a>(
-        name: &'a str,
-        input: &'a ObjectInput,
-        optional: bool,
-    ) -> Option<ProcessedInput<'a>> {
-        let ty = input.as_type()?;
-        Some(ProcessedInput {
-            original_name: name,
-            name: util::name_to_ident(name, false).ok()?,
-            tooltip: input.tooltip(),
-            ty: ty.clone(),
-            generic_name: util::name_to_ident(name, true).ok()?,
-            generic_ty: util::name_to_ident(&format!("{:?}", ty), true).ok()?,
-            optional,
+    Ok(node
+        .all_inputs()
+        .flat_map(|(name, input, required)| {
+            let ty = input.as_type()?;
+            Some(ProcessedInput {
+                original_name: name,
+                name: util::name_to_ident(name, false).ok()?,
+                tooltip: input.tooltip(),
+                ty: ty.clone(),
+                generic_name: util::name_to_ident(name, true).ok()?,
+                generic_ty: util::name_to_ident(&format!("{:?}", ty), true).ok()?,
+                optional: !required,
+            })
         })
-    }
-
-    let required_inputs = node
-        .input_order
-        .required
-        .iter()
-        .flat_map(|name| process_input(name, node.input.required.get(name)?, false))
-        .collect::<Vec<_>>();
-    let optional_inputs = node
-        .input_order
-        .optional
-        .as_ref()
-        .map(|o| {
-            o.iter()
-                .flat_map(|name| {
-                    process_input(name, node.input.optional.as_ref()?.get(name)?, true)
-                })
-                .collect::<Vec<_>>()
-        })
-        .unwrap_or_default();
-
-    Ok(required_inputs
-        .into_iter()
-        .chain(optional_inputs.into_iter())
-        .collect::<Vec<_>>())
+        .collect())
 }
 
 fn write_node_struct(
