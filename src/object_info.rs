@@ -6,9 +6,12 @@ use serde::{Deserialize, Serialize};
 
 use crate::{Client, Result};
 
+/// Object info for a ComfyUI instance.
+pub type ObjectInfo = HashMap<String, Object>;
+
 impl Client {
     /// Get the object info for this ComfyUI instance.
-    pub async fn object_info(&self) -> Result<HashMap<String, Object>> {
+    pub async fn object_info(&self) -> Result<ObjectInfo> {
         Ok(self
             .client
             .get(format!("{}/object_info", self.api_base))
@@ -90,12 +93,16 @@ pub enum ObjectInput {
     Input((ObjectInputType,)),
 }
 impl ObjectInput {
+    /// The [`ObjectInputType`] of the input.
+    pub fn as_input_type(&self) -> &ObjectInputType {
+        match self {
+            Self::InputWithMeta(ty, _) => ty,
+            Self::Input(ty) => &ty.0,
+        }
+    }
     /// The type of the input.
     pub fn as_type(&self) -> Option<&ObjectType> {
-        match self {
-            Self::InputWithMeta(ty, _) => ty.as_type(),
-            Self::Input(ty) => ty.0.as_type(),
-        }
+        self.as_input_type().as_type()
     }
     /// Tooltip for the input, if available.
     pub fn tooltip(&self) -> Option<&str> {
@@ -155,7 +162,7 @@ pub struct ObjectInputMeta {
     pub rest: serde_json::Value,
 }
 
-#[derive(Debug, Serialize, Deserialize, Clone)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq, Eq)]
 #[serde(rename_all = "SCREAMING_SNAKE_CASE")]
 /// Type of an object.
 #[allow(missing_docs)]
