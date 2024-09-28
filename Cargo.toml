@@ -1,5 +1,5 @@
 [workspace]
-members = [".", "generate_nodes"]
+members = [".", "generate_nodes", "rucomfyui-node-graph"]
 
 [workspace.dependencies]
 serde_json = "1.0"
