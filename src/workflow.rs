@@ -2,7 +2,7 @@
 
 use std::{
     cell::{Ref, RefCell},
-    collections::HashMap,
+    collections::{HashMap, HashSet, VecDeque},
     fmt::Display,
     str::FromStr,
 };
@@ -27,6 +27,74 @@ impl Workflow {
     /// Load a workflow from a string. Convenience wrapper for [`serde_json::from_str`].
     pub fn from_json(s: &str) -> serde_json::Result<Self> {
         serde_json::from_str(s)
+    }
+    /// Return a topological sort of the nodes in the workflow, with outputs at the end.
+    pub fn topological_sort(&self) -> Vec<WorkflowNodeId> {
+        let mut result = Vec::new();
+        let mut in_degree: HashMap<WorkflowNodeId, usize> = HashMap::new();
+        let mut queue = VecDeque::new();
+        let mut visited = HashSet::new();
+
+        // Calculate in-degree for each node
+        for (&node_id, node) in &self.0 {
+            in_degree.entry(node_id).or_insert(0);
+            for input in node.inputs.values() {
+                let WorkflowInput::Slot(dep_id, _) = input else {
+                    continue;
+                };
+                let Ok(dep_id) = dep_id.parse::<u32>() else {
+                    continue;
+                };
+                let dep_node_id = WorkflowNodeId(dep_id);
+                *in_degree.entry(dep_node_id).or_insert(0) += 1;
+            }
+        }
+
+        // Add nodes with in-degree 0 to the queue
+        for (&node_id, &degree) in &in_degree {
+            if degree == 0 {
+                queue.push_back(node_id);
+            }
+        }
+
+        // Process the queue
+        while let Some(node_id) = queue.pop_front() {
+            if visited.contains(&node_id) {
+                continue;
+            }
+            visited.insert(node_id);
+            result.push(node_id);
+
+            let Some(node) = self.0.get(&node_id) else {
+                continue;
+            };
+            for input in node.inputs.values() {
+                let WorkflowInput::Slot(dep_id, _) = input else {
+                    continue;
+                };
+                let Ok(dep_id) = dep_id.parse::<u32>() else {
+                    continue;
+                };
+                let dep_node_id = WorkflowNodeId(dep_id);
+                let Some(degree) = in_degree.get_mut(&dep_node_id) else {
+                    continue;
+                };
+
+                *degree -= 1;
+                if *degree == 0 {
+                    queue.push_back(dep_node_id);
+                }
+            }
+        }
+
+        // Check for cycles
+        if result.len() != self.0.len() {
+            panic!("Cyclic dependency detected in the workflow");
+        }
+
+        result.reverse();
+
+        result
     }
 }
 impl FromIterator<(WorkflowNodeId, WorkflowNode)> for Workflow {
