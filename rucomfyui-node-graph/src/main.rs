@@ -10,8 +10,6 @@ use egui_node_graph2::*;
 use rucomfyui::object_info::{Object, ObjectInfo, ObjectInputType, ObjectType};
 use serde::{Deserialize, Serialize};
 
-const PERSISTENCE_KEY: &str = "rucomfyui-node-graph";
-
 fn main() {
     eframe::run_native(
         "rucomfyui-node-graph",
@@ -35,10 +33,7 @@ pub struct Application {
 }
 impl Application {
     pub fn new(cc: &eframe::CreationContext<'_>) -> Self {
-        let persisted = cc
-            .storage
-            .and_then(|storage| eframe::get_value(storage, PERSISTENCE_KEY))
-            .unwrap_or_default();
+        let persisted = PersistedState::load(cc);
 
         let (tokio_input_tx, tokio_input_rx) = std::sync::mpsc::channel();
         let (tokio_output_tx, tokio_output_rx) = std::sync::mpsc::channel();
@@ -58,7 +53,7 @@ impl Application {
 }
 impl eframe::App for Application {
     fn save(&mut self, storage: &mut dyn eframe::Storage) {
-        eframe::set_value(storage, PERSISTENCE_KEY, &self.persisted);
+        self.persisted.save(storage);
     }
 
     fn update(&mut self, ctx: &egui::Context, _frame: &mut eframe::Frame) {
@@ -382,6 +377,24 @@ type FlowEditorState =
 struct PersistedState {
     pub comfyui_address: String,
     pub state: FlowEditorState,
+}
+impl PersistedState {
+    pub fn load(cc: &eframe::CreationContext<'_>) -> Self {
+        let default = Self::default();
+        if let Some(storage) = cc.storage {
+            Self {
+                comfyui_address: eframe::get_value(storage, "comfyui_address")
+                    .unwrap_or(default.comfyui_address),
+                state: eframe::get_value(storage, "state").unwrap_or(default.state),
+            }
+        } else {
+            default
+        }
+    }
+    pub fn save(&self, storage: &mut dyn eframe::Storage) {
+        eframe::set_value(storage, "comfyui_address", &self.comfyui_address);
+        eframe::set_value(storage, "state", &self.state);
+    }
 }
 impl Default for PersistedState {
     fn default() -> Self {
