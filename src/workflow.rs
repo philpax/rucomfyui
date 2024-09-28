@@ -24,6 +24,10 @@ impl Workflow {
     pub fn new(nodes: impl IntoIterator<Item = (WorkflowNodeId, WorkflowNode)>) -> Self {
         Self::from_iter(nodes)
     }
+    /// Load a workflow from a string. Convenience wrapper for [`serde_json::from_str`].
+    pub fn from_json(s: &str) -> serde_json::Result<Self> {
+        serde_json::from_str(s)
+    }
 }
 impl FromIterator<(WorkflowNodeId, WorkflowNode)> for Workflow {
     fn from_iter<T: IntoIterator<Item = (WorkflowNodeId, WorkflowNode)>>(iter: T) -> Self {
