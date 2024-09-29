@@ -289,8 +289,18 @@ pub enum FlowValueType {
         round: Option<f64>,
         step: f64,
     },
-    SignedInt(i64),
-    UnsignedInt(u64),
+    SignedInt {
+        value: i64,
+        min: i64,
+        max: i64,
+        step: i64,
+    },
+    UnsignedInt {
+        value: u64,
+        min: u64,
+        max: u64,
+        step: u64,
+    },
     Boolean(bool),
     Other(ObjectType),
     #[default]
@@ -324,6 +334,40 @@ impl FlowValueType {
                 .unwrap_or(false),
         }
     }
+    fn convert_i64(value: Option<i64>, typed_meta_orig: Option<&ObjectInputMetaTyped>) -> Self {
+        let typed_meta = typed_meta_orig.and_then(|m| m.as_number());
+        if typed_meta.is_some_and(|m| u64::from(m.min) == 0)
+            || typed_meta.is_some_and(|m| u64::from(m.max) >= i64::MAX as u64)
+        {
+            // HACK: If the min is 0 or the max is greater than i64::MAX, then it's probably a u64
+            return Self::convert_u64(value.map(|v| v as u64), typed_meta_orig);
+        }
+        Self::SignedInt {
+            value: value
+                .or(typed_meta.map(|m| i64::from(m.default)))
+                .unwrap_or(0),
+            min: typed_meta.map(|m| i64::from(m.min)).unwrap_or(i64::MIN),
+            max: typed_meta.map(|m| i64::from(m.max)).unwrap_or(i64::MAX),
+            step: typed_meta
+                .and_then(|m| m.step)
+                .map(|s| i64::from(s))
+                .unwrap_or(1),
+        }
+    }
+    fn convert_u64(value: Option<u64>, typed_meta: Option<&ObjectInputMetaTyped>) -> Self {
+        let typed_meta = typed_meta.and_then(|m| m.as_number());
+        Self::UnsignedInt {
+            value: value
+                .or(typed_meta.map(|m| u64::from(m.default)))
+                .unwrap_or(0),
+            min: typed_meta.map(|m| u64::from(m.min)).unwrap_or(0),
+            max: typed_meta.map(|m| u64::from(m.max)).unwrap_or(u64::MAX),
+            step: typed_meta
+                .and_then(|m| m.step)
+                .map(|s| u64::from(s))
+                .unwrap_or(1),
+        }
+    }
     fn convert_bool(value: Option<bool>, typed_meta: Option<&ObjectInputMetaTyped>) -> Self {
         Self::Boolean(
             value
@@ -339,7 +383,7 @@ impl FlowValueType {
         match object_type {
             ObjectType::Boolean => Self::convert_bool(None, typed_meta),
             ObjectType::Float => Self::convert_float(None, typed_meta),
-            ObjectType::Int => Self::SignedInt(0),
+            ObjectType::Int => Self::convert_i64(None, typed_meta),
             ObjectType::String => Self::convert_string("", typed_meta),
             _ => Self::Other(object_type.clone()),
         }
@@ -352,12 +396,13 @@ impl FlowValueType {
         match input {
             WorkflowInput::String(s) => Self::convert_string(s, typed_meta),
             WorkflowInput::F64(v) => Self::convert_float(Some(*v), typed_meta),
-            WorkflowInput::I64(v) => Self::SignedInt(*v),
-            WorkflowInput::U64(v) => Self::UnsignedInt(*v),
+            WorkflowInput::I64(v) => Self::convert_i64(Some(*v), typed_meta),
+            WorkflowInput::U64(v) => Self::convert_u64(Some(*v), typed_meta),
             WorkflowInput::Boolean(b) => Self::convert_bool(Some(*b), typed_meta),
             WorkflowInput::Slot(_, _) => Self::Other(object_type.clone()),
         }
     }
+
     #[must_use]
     pub fn is_connection_only(&self) -> bool {
         matches!(self, Self::Other(..)) || matches!(self, Self::Unknown)
@@ -407,11 +452,21 @@ impl WidgetValueTrait for FlowValueType {
                 ui.add(DragValue::new(value).range(*min..=*max).speed(*step));
                 *value = round.map(|r| (*value / r).round() * r).unwrap_or(*value);
             }
-            FlowValueType::SignedInt(v) => {
-                ui.add(DragValue::new(v));
+            FlowValueType::SignedInt {
+                value,
+                min,
+                max,
+                step,
+            } => {
+                ui.add(DragValue::new(value).range(*min..=*max).speed(*step as f64));
             }
-            FlowValueType::UnsignedInt(v) => {
-                ui.add(DragValue::new(v));
+            FlowValueType::UnsignedInt {
+                value,
+                min,
+                max,
+                step,
+            } => {
+                ui.add(DragValue::new(value).range(*min..=*max).speed(*step as f64));
             }
             FlowValueType::Boolean(b) => {
                 ui.checkbox(b, "");
