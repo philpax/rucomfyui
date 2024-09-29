@@ -206,50 +206,107 @@ pub struct ObjectInputMeta {
 #[serde(untagged)]
 pub enum ObjectInputMetaTyped {
     /// Metadata for an image input.
-    Image {
-        /// Whether the input should allow image uploads.
-        image_upload: bool,
-    },
+    Image(ObjectInputMetaTypedImage),
     /// Metadata for an audio input.
-    Audio {
-        /// Whether the input should allow audio uploads.
-        audio_upload: bool,
-    },
+    Audio(ObjectInputMetaTypedAudio),
     /// Metadata for a boolean input.
-    Boolean {
-        /// Default value.
-        default: bool,
-    },
+    Boolean(ObjectInputMetaTypedBoolean),
     /// Metadata for a string input.
-    String {
-        /// Whether the input should have dynamic prompts.
-        #[serde(rename = "dynamicPrompts", skip_serializing_if = "Option::is_none")]
-        dynamic_prompts: Option<bool>,
-        /// Whether the input should be multiline.
-        #[serde(default, skip_serializing_if = "Option::is_none")]
-        multiline: Option<bool>,
-        /// Default value.
-        #[serde(default, skip_serializing_if = "Option::is_none")]
-        default: Option<String>,
-    },
+    String(ObjectInputMetaTypedString),
     /// Metadata for a number input.
-    Number {
-        /// Default value.
-        default: ObjectInputMetaTypedNumber,
-        /// How the number should be displayed.
-        #[serde(skip_serializing_if = "Option::is_none")]
-        display: Option<String>,
-        /// Maximum value.
-        max: ObjectInputMetaTypedNumber,
-        /// Minimum value.
-        min: ObjectInputMetaTypedNumber,
-        /// What to round the number to.
-        #[serde(skip_serializing_if = "Option::is_none")]
-        round: Option<ObjectInputMetaTypedRound>,
-        /// Step value.
-        #[serde(skip_serializing_if = "Option::is_none")]
-        step: Option<ObjectInputMetaTypedNumber>,
-    },
+    Number(ObjectInputMetaTypedNumber),
+}
+impl ObjectInputMetaTyped {
+    /// Get the [`ObjectInputMetaTypedImage`] if this is an image input.
+    pub fn as_image(&self) -> Option<&ObjectInputMetaTypedImage> {
+        match self {
+            Self::Image(v) => Some(v),
+            _ => None,
+        }
+    }
+    /// Get the [`ObjectInputMetaTypedAudio`] if this is an audio input.
+    pub fn as_audio(&self) -> Option<&ObjectInputMetaTypedAudio> {
+        match self {
+            Self::Audio(v) => Some(v),
+            _ => None,
+        }
+    }
+    /// Get the [`ObjectInputMetaTypedBoolean`] if this is a boolean input.
+    pub fn as_boolean(&self) -> Option<&ObjectInputMetaTypedBoolean> {
+        match self {
+            Self::Boolean(v) => Some(v),
+            _ => None,
+        }
+    }
+    /// Get the [`ObjectInputMetaTypedString`] if this is a string input.
+    pub fn as_string(&self) -> Option<&ObjectInputMetaTypedString> {
+        match self {
+            Self::String(v) => Some(v),
+            _ => None,
+        }
+    }
+    /// Get the [`ObjectInputMetaTypedNumber`] if this is a number input.
+    pub fn as_number(&self) -> Option<&ObjectInputMetaTypedNumber> {
+        match self {
+            Self::Number(v) => Some(v),
+            _ => None,
+        }
+    }
+}
+
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+/// Metadata for an image input.
+pub struct ObjectInputMetaTypedImage {
+    /// Whether the input should allow image uploads.
+    pub image_upload: bool,
+}
+
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+/// Metadata for an audio input.
+pub struct ObjectInputMetaTypedAudio {
+    /// Whether the input should allow audio uploads.
+    pub audio_upload: bool,
+}
+
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+/// Metadata for a boolean input.
+pub struct ObjectInputMetaTypedBoolean {
+    /// Default value.
+    pub default: bool,
+}
+
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+/// Metadata for a string input.
+pub struct ObjectInputMetaTypedString {
+    /// Whether the input should have dynamic prompts.
+    #[serde(rename = "dynamicPrompts", skip_serializing_if = "Option::is_none")]
+    pub dynamic_prompts: Option<bool>,
+    /// Whether the input should be multiline.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub multiline: Option<bool>,
+    /// Default value.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub default: Option<String>,
+}
+
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+/// Metadata for a number input.
+pub struct ObjectInputMetaTypedNumber {
+    /// Default value.
+    pub default: ObjectInputMetaTypedNumberValue,
+    /// How the number should be displayed.
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub display: Option<String>,
+    /// Maximum value.
+    pub max: ObjectInputMetaTypedNumberValue,
+    /// Minimum value.
+    pub min: ObjectInputMetaTypedNumberValue,
+    /// What to round the number to.
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub round: Option<ObjectInputMetaTypedRoundValue>,
+    /// Step value.
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub step: Option<ObjectInputMetaTypedNumberValue>,
 }
 
 #[derive(Debug, Serialize, Deserialize, Copy, Clone, PartialEq)]
@@ -257,7 +314,7 @@ pub enum ObjectInputMetaTyped {
 ///
 /// This is necessary as ComfyUI may return integers for float types, so we need to preserve whatever type it originally was.
 #[serde(untagged)]
-pub enum ObjectInputMetaTypedNumber {
+pub enum ObjectInputMetaTypedNumberValue {
     /// Signed integer metadata.
     I64(i64),
     /// Unsigned integer metadata.
@@ -265,22 +322,22 @@ pub enum ObjectInputMetaTypedNumber {
     /// Float metadata.
     F64(f64),
 }
-impl From<i64> for ObjectInputMetaTypedNumber {
+impl From<i64> for ObjectInputMetaTypedNumberValue {
     fn from(v: i64) -> Self {
         Self::I64(v)
     }
 }
-impl From<u64> for ObjectInputMetaTypedNumber {
+impl From<u64> for ObjectInputMetaTypedNumberValue {
     fn from(v: u64) -> Self {
         Self::U64(v)
     }
 }
-impl From<f64> for ObjectInputMetaTypedNumber {
+impl From<f64> for ObjectInputMetaTypedNumberValue {
     fn from(v: f64) -> Self {
         Self::F64(v)
     }
 }
-impl std::fmt::Display for ObjectInputMetaTypedNumber {
+impl std::fmt::Display for ObjectInputMetaTypedNumberValue {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
             Self::I64(v) => v.fmt(f),
@@ -295,13 +352,13 @@ impl std::fmt::Display for ObjectInputMetaTypedNumber {
 /// How to round a number in typed metadata.
 ///
 /// This is necessary as ComfyUI can return either a boolean for whether to round to the nearest integer or a number of decimal places to round to.
-pub enum ObjectInputMetaTypedRound {
+pub enum ObjectInputMetaTypedRoundValue {
     /// Whether to round the number to the nearest integer.
     Bool(bool),
     /// Number of decimal places to round to.
     Number(f64),
 }
-impl std::fmt::Display for ObjectInputMetaTypedRound {
+impl std::fmt::Display for ObjectInputMetaTypedRoundValue {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
             Self::Bool(v) => v.fmt(f),
@@ -500,14 +557,16 @@ mod tests {
                             ObjectInputType::Typed(ObjectType::Int),
                             ObjectInputMeta {
                                 tooltip: Some("The number of latent images in the batch.".into()),
-                                typed: Some(ObjectInputMetaTyped::Number {
-                                    default: 1i64.into(),
-                                    display: None,
-                                    max: 4096i64.into(),
-                                    min: 1i64.into(),
-                                    round: None,
-                                    step: None,
-                                }),
+                                typed: Some(ObjectInputMetaTyped::Number(
+                                    ObjectInputMetaTypedNumber {
+                                        default: 1i64.into(),
+                                        display: None,
+                                        max: 4096i64.into(),
+                                        min: 1i64.into(),
+                                        round: None,
+                                        step: None,
+                                    },
+                                )),
                             },
                         ),
                     ),
@@ -517,14 +576,16 @@ mod tests {
                             ObjectInputType::Typed(ObjectType::Float),
                             ObjectInputMeta {
                                 tooltip: None,
-                                typed: Some(ObjectInputMetaTyped::Number {
-                                    default: 47.6.into(),
-                                    display: None,
-                                    max: 1000.0.into(),
-                                    min: 1.0.into(),
-                                    round: None,
-                                    step: Some(0.1.into()),
-                                }),
+                                typed: Some(ObjectInputMetaTyped::Number(
+                                    ObjectInputMetaTypedNumber {
+                                        default: 47.6.into(),
+                                        display: None,
+                                        max: 1000.0.into(),
+                                        min: 1.0.into(),
+                                        round: None,
+                                        step: Some(0.1.into()),
+                                    },
+                                )),
                             },
                         ),
                     ),

@@ -374,39 +374,28 @@ fn write_node_struct(
         if let Some(metadata) = input.meta_typed {
             let mut metadata_items = vec![];
             match metadata {
-                ObjectInputMetaTyped::Image { image_upload } => {
-                    metadata_items.push(("Image upload", Some(image_upload.to_string())));
+                ObjectInputMetaTyped::Image(v) => {
+                    metadata_items.push(("Image upload", Some(v.image_upload.to_string())));
                 }
-                ObjectInputMetaTyped::Audio { audio_upload } => {
-                    metadata_items.push(("Audio upload", Some(audio_upload.to_string())));
+                ObjectInputMetaTyped::Audio(v) => {
+                    metadata_items.push(("Audio upload", Some(v.audio_upload.to_string())));
                 }
-                ObjectInputMetaTyped::Boolean { default } => {
-                    metadata_items.push(("Default", Some(default.to_string())));
+                ObjectInputMetaTyped::Boolean(v) => {
+                    metadata_items.push(("Default", Some(v.default.to_string())));
                 }
-                ObjectInputMetaTyped::String {
-                    dynamic_prompts,
-                    multiline,
-                    default,
-                } => {
+                ObjectInputMetaTyped::String(v) => {
                     metadata_items
-                        .push(("Dynamic prompts", dynamic_prompts.map(|v| v.to_string())));
-                    metadata_items.push(("Multiline", multiline.map(|v| v.to_string())));
-                    metadata_items.push(("Default", default.as_ref().map(|v| v.to_string())));
+                        .push(("Dynamic prompts", v.dynamic_prompts.map(|v| v.to_string())));
+                    metadata_items.push(("Multiline", v.multiline.map(|v| v.to_string())));
+                    metadata_items.push(("Default", v.default.as_ref().map(|v| v.to_string())));
                 }
-                ObjectInputMetaTyped::Number {
-                    default,
-                    display,
-                    max,
-                    min,
-                    round,
-                    step,
-                } => {
-                    metadata_items.push(("Default", Some(default.to_string())));
-                    metadata_items.push(("Display", display.as_ref().map(|v| v.to_string())));
-                    metadata_items.push(("Max", Some(max.to_string())));
-                    metadata_items.push(("Min", Some(min.to_string())));
-                    metadata_items.push(("Round", round.map(|v| v.to_string())));
-                    metadata_items.push(("Step", step.map(|v| v.to_string())));
+                ObjectInputMetaTyped::Number(v) => {
+                    metadata_items.push(("Default", Some(v.default.to_string())));
+                    metadata_items.push(("Display", v.display.as_ref().map(|v| v.to_string())));
+                    metadata_items.push(("Max", Some(v.max.to_string())));
+                    metadata_items.push(("Min", Some(v.min.to_string())));
+                    metadata_items.push(("Round", v.round.map(|v| v.to_string())));
+                    metadata_items.push(("Step", v.step.map(|v| v.to_string())));
                 }
             }
             let metadata_items = metadata_items

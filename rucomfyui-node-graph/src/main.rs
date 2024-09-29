@@ -11,7 +11,7 @@ use anyhow::Context;
 use eframe::egui::{self, DragValue, TextStyle, Visuals};
 use egui_node_graph2::*;
 use rucomfyui::{
-    object_info::{Object, ObjectInfo, ObjectInputType, ObjectType},
+    object_info::{Object, ObjectInfo, ObjectInputMetaTyped, ObjectInputType, ObjectType},
     workflow::{WorkflowInput, WorkflowNode, WorkflowNodeId},
 };
 use serde::{Deserialize, Serialize};
@@ -274,7 +274,10 @@ pub enum FlowValueType {
         options: Vec<String>,
         selected: String,
     },
-    String(String),
+    String {
+        value: String,
+        multiline: bool,
+    },
     Float(f64),
     SignedInt(i64),
     UnsignedInt(u64),
@@ -284,18 +287,37 @@ pub enum FlowValueType {
     Unknown,
 }
 impl FlowValueType {
-    fn from_object_type(object_type: &ObjectType) -> Self {
+    fn from_object_type(
+        object_type: &ObjectType,
+        typed_meta: Option<&ObjectInputMetaTyped>,
+    ) -> Self {
         match object_type {
             ObjectType::Boolean => FlowValueType::Boolean(false),
             ObjectType::Float => FlowValueType::Float(0.0),
             ObjectType::Int => FlowValueType::SignedInt(0),
-            ObjectType::String => FlowValueType::String("".into()),
+            ObjectType::String => FlowValueType::String {
+                value: "".into(),
+                multiline: typed_meta
+                    .and_then(|m| m.as_string())
+                    .and_then(|m| m.multiline)
+                    .unwrap_or(false),
+            },
             _ => FlowValueType::Other(object_type.clone()),
         }
     }
-    fn from_object_type_and_input(object_type: &ObjectType, input: &WorkflowInput) -> Self {
+    fn from_object_type_and_input(
+        object_type: &ObjectType,
+        input: &WorkflowInput,
+        typed_meta: Option<&ObjectInputMetaTyped>,
+    ) -> Self {
         match input {
-            WorkflowInput::String(s) => FlowValueType::String(s.clone()),
+            WorkflowInput::String(s) => FlowValueType::String {
+                value: s.clone(),
+                multiline: typed_meta
+                    .and_then(|m| m.as_string())
+                    .and_then(|m| m.multiline)
+                    .unwrap_or(false),
+            },
             WorkflowInput::F64(v) => FlowValueType::Float(*v),
             WorkflowInput::I64(v) => FlowValueType::SignedInt(*v),
             WorkflowInput::U64(v) => FlowValueType::UnsignedInt(*v),
@@ -335,8 +357,12 @@ impl WidgetValueTrait for FlowValueType {
                         }
                     });
             }
-            FlowValueType::String(string) => {
-                ui.text_edit_singleline(string);
+            FlowValueType::String { value, multiline } => {
+                if *multiline {
+                    ui.text_edit_multiline(value);
+                } else {
+                    ui.text_edit_singleline(value);
+                }
             }
             FlowValueType::Float(v) => {
                 ui.add(DragValue::new(v));
@@ -433,6 +459,7 @@ fn build_node(
     for (name, input, _required) in template.0.all_inputs() {
         let workflow_input = workflow_node.and_then(|n| n.inputs.get(name));
 
+        let meta_typed = input.as_meta_typed();
         let (type_, value_type) = match input.as_input_type() {
             ObjectInputType::Array(vec) => (
                 ObjectType::String,
@@ -448,8 +475,10 @@ fn build_node(
             ObjectInputType::Typed(object_type) => (
                 object_type.clone(),
                 workflow_input
-                    .map(|input| FlowValueType::from_object_type_and_input(object_type, input))
-                    .unwrap_or_else(|| FlowValueType::from_object_type(object_type)),
+                    .map(|input| {
+                        FlowValueType::from_object_type_and_input(object_type, input, meta_typed)
+                    })
+                    .unwrap_or_else(|| FlowValueType::from_object_type(object_type, meta_typed)),
             ),
         };
 
