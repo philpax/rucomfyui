@@ -5,6 +5,7 @@ use std::{
     path::PathBuf,
     sync::mpsc::{Receiver, Sender},
     thread::JoinHandle,
+    time::Instant,
 };
 
 use anyhow::Context;
@@ -17,7 +18,8 @@ use rucomfyui::{
         Object, ObjectInfo, ObjectInputMetaTyped, ObjectInputMetaTypedRoundValue, ObjectInputType,
         ObjectType,
     },
-    workflow::{WorkflowInput, WorkflowNode, WorkflowNodeId},
+    workflow::{WorkflowInput, WorkflowMeta, WorkflowNode, WorkflowNodeId},
+    Workflow, WorkflowGraph,
 };
 
 fn main() {
@@ -46,6 +48,8 @@ pub struct Application {
     error: Option<(String, String)>,
 
     file_dialog: egui_file_dialog::FileDialog,
+
+    last_queue_time: Option<Instant>,
 }
 impl Application {
     pub fn new(cc: &eframe::CreationContext<'_>) -> Self {
@@ -77,6 +81,8 @@ impl Application {
             error: None,
 
             file_dialog,
+
+            last_queue_time: None,
         }
     }
 
@@ -145,9 +151,20 @@ impl Application {
         for event in self.tokio_output_rx.try_iter() {
             match event {
                 TokioOutputEvent::ObjectInfo(oi) => self.object_info = Some(oi),
+                TokioOutputEvent::QueueWorkflowResult(result) => {
+                    println!(
+                        "Received node outputs: {:?}",
+                        result.keys().collect::<Vec<_>>()
+                    );
+                    self.last_queue_time = None;
+                }
                 TokioOutputEvent::Error(err) => {
                     let err = match err {
                         TokioOutputError::Connection(err) => ("Connection".to_string(), err),
+                        TokioOutputError::Queue(err) => {
+                            self.last_queue_time = None;
+                            ("Queue".to_string(), err)
+                        }
                     };
                     self.error = Some(err);
                 }
@@ -177,6 +194,75 @@ impl Application {
     fn disconnect(&mut self) {
         self.object_info = None;
     }
+
+    fn queue(&mut self) {
+        let g = WorkflowGraph::new();
+        let graph = &self.persisted.state.graph;
+        let mut mapping: HashMap<NodeId, WorkflowNodeId> = HashMap::new();
+        let mut input_mapping: HashMap<InputId, (WorkflowNodeId, String)> = HashMap::new();
+        let mut output_mapping: HashMap<OutputId, (WorkflowNodeId, usize)> = HashMap::new();
+
+        for (node_id, node) in &graph.nodes {
+            let object = &node.user_data.template.0;
+            let mut g_node = WorkflowNode::new(object.name.clone())
+                .with_meta(WorkflowMeta::new(object.display_name.clone()));
+
+            let mut connections = vec![];
+            for (input_name, input_id) in &node.inputs {
+                let input = graph.inputs.get(*input_id).unwrap();
+                let workflow_input = match &input.value {
+                    FlowValueType::Array { selected, .. } => {
+                        WorkflowInput::String(selected.clone())
+                    }
+                    FlowValueType::String { value, .. } => WorkflowInput::String(value.clone()),
+                    FlowValueType::Float { value, .. } => WorkflowInput::F64(*value),
+                    FlowValueType::SignedInt { value, .. } => WorkflowInput::I64(*value),
+                    FlowValueType::UnsignedInt { value, .. } => WorkflowInput::U64(*value),
+                    FlowValueType::Boolean(value) => WorkflowInput::Boolean(*value),
+                    FlowValueType::Other(_) => {
+                        connections.push((*input_id, input_name.clone()));
+                        continue;
+                    }
+                    FlowValueType::Unknown => continue,
+                };
+                g_node.add_input(input_name.clone(), workflow_input);
+            }
+
+            let g_node_id = g.add_dynamic(g_node);
+            mapping.insert(node_id, g_node_id);
+            for (input_id, input_name) in connections {
+                input_mapping.insert(input_id, (g_node_id, input_name));
+            }
+            for (output_slot, (_output_name, output_id)) in node.outputs.iter().enumerate() {
+                output_mapping.insert(*output_id, (g_node_id, output_slot));
+            }
+        }
+
+        for (input_id, output_ids) in &graph.connections {
+            let Some(output_id) = output_ids.first().copied() else {
+                continue;
+            };
+
+            let Some((g_input_node_id, input_name)) = input_mapping.get(&input_id) else {
+                continue;
+            };
+            let Some((g_output_node_id, output_slot)) = output_mapping.get(&output_id) else {
+                continue;
+            };
+            let Some(mut g_input_node) = g.get_node_mut(*g_input_node_id) else {
+                continue;
+            };
+            g_input_node.add_input(
+                input_name.clone(),
+                WorkflowInput::slot(*g_output_node_id, *output_slot as u32),
+            );
+        }
+
+        self.tokio_input_tx
+            .send(TokioInputEvent::QueueWorkflow(g.into_workflow()))
+            .unwrap();
+        self.last_queue_time = Some(Instant::now());
+    }
 }
 impl eframe::App for Application {
     fn save(&mut self, storage: &mut dyn eframe::Storage) {
@@ -195,6 +281,17 @@ impl eframe::App for Application {
                 if is_connected {
                     if ui.button("Open API workflow").clicked() {
                         self.file_dialog.select_file();
+                    }
+
+                    if let Some(last_queue_time) = self.last_queue_time {
+                        ui.label(format!(
+                            "Queued: {:.02}s ago",
+                            last_queue_time.elapsed().as_secs_f32()
+                        ));
+                    } else {
+                        if ui.button("Queue").clicked() {
+                            self.queue();
+                        }
                     }
                 }
 
@@ -250,17 +347,20 @@ impl eframe::App for Application {
 
 enum TokioInputEvent {
     Connect(String),
+    QueueWorkflow(Workflow),
 }
 enum TokioOutputError {
     Connection(String),
+    Queue(String),
 }
 enum TokioOutputEvent {
     ObjectInfo(ObjectInfo),
+    QueueWorkflowResult(HashMap<WorkflowNodeId, Vec<rucomfyui::Bytes>>),
     Error(TokioOutputError),
 }
 fn tokio_runtime_thread(input: Receiver<TokioInputEvent>, output: Sender<TokioOutputEvent>) {
     let rt = tokio::runtime::Runtime::new().unwrap();
-    let mut _client = None;
+    let mut client = None;
     for event in input.iter() {
         match event {
             TokioInputEvent::Connect(address) => {
@@ -271,11 +371,37 @@ fn tokio_runtime_thread(input: Receiver<TokioInputEvent>, output: Sender<TokioOu
                         output
                             .send(TokioOutputEvent::ObjectInfo(object_info))
                             .unwrap();
-                        _client = Some(temp_client);
+                        client = Some(temp_client);
                     }
                     Err(err) => {
                         output
                             .send(TokioOutputEvent::Error(TokioOutputError::Connection(
+                                err.to_string(),
+                            )))
+                            .unwrap();
+                    }
+                }
+            }
+            TokioInputEvent::QueueWorkflow(workflow) => {
+                let Some(client) = &mut client else {
+                    output
+                        .send(TokioOutputEvent::Error(TokioOutputError::Connection(
+                            "Not connected to ComfyUI".to_string(),
+                        )))
+                        .unwrap();
+                    continue;
+                };
+
+                let result = rt.block_on(async { client.easy_queue(&workflow).await });
+                match result {
+                    Ok(result) => {
+                        output
+                            .send(TokioOutputEvent::QueueWorkflowResult(result))
+                            .unwrap();
+                    }
+                    Err(err) => {
+                        output
+                            .send(TokioOutputEvent::Error(TokioOutputError::Queue(
                                 err.to_string(),
                             )))
                             .unwrap();

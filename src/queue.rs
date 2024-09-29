@@ -42,11 +42,11 @@ impl Client {
 
         let mut output = HashMap::new();
         for (node_name, node_output) in history_output.nodes {
-            let images = futures::future::try_join_all(
-                node_output.images.iter().map(|image| image.download(self)),
+            let outputs = futures::future::try_join_all(
+                node_output.images.iter().map(|out| out.download(self)),
             )
             .await?;
-            output.insert(node_name.parse::<WorkflowNodeId>()?, images);
+            output.insert(node_name.parse::<WorkflowNodeId>()?, outputs);
         }
         Ok(output)
     }
