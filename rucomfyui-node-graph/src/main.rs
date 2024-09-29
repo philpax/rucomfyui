@@ -429,6 +429,11 @@ impl FlowValueType {
     #[must_use]
     pub fn is_constant_only(&self) -> bool {
         matches!(self, Self::Array { .. })
+            | matches!(self, Self::String { .. })
+            | matches!(self, Self::Float { .. })
+            | matches!(self, Self::SignedInt { .. })
+            | matches!(self, Self::UnsignedInt { .. })
+            | matches!(self, Self::Boolean(..))
     }
 }
 impl WidgetValueTrait for FlowValueType {
