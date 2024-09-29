@@ -21,7 +21,7 @@ impl Client {
             .await?)
     }
 }
-#[derive(Debug, Serialize, Deserialize, Clone)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 /// Object info for a node.
 pub struct Object {
     /// The name of the object.
@@ -115,7 +115,7 @@ pub struct ObjectProcessedOutput<'a> {
     pub tooltip: Option<&'a str>,
 }
 
-#[derive(Debug, Serialize, Deserialize, Clone)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(untagged)]
 /// Input to an object.
 pub enum ObjectInput {
@@ -145,7 +145,7 @@ impl ObjectInput {
     }
 }
 
-#[derive(Debug, Serialize, Deserialize, Clone)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq, Eq)]
 #[serde(untagged)]
 /// Type of an input.
 pub enum ObjectInputType {
@@ -175,7 +175,7 @@ impl ObjectInputType {
     }
 }
 
-#[derive(Debug, Serialize, Deserialize, Clone)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 /// Bundle of required and optional inputs.
 pub struct ObjectInputBundle<T> {
     /// Required inputs.
@@ -184,14 +184,106 @@ pub struct ObjectInputBundle<T> {
     pub optional: Option<T>,
 }
 
-#[derive(Debug, Serialize, Deserialize, Clone)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 /// Metadata for an input.
 pub struct ObjectInputMeta {
     /// Tooltip for the input.
     pub tooltip: Option<String>,
-    /// Rest of the input metadata.
+    /// Optional typed metadata.
     #[serde(flatten)]
-    pub rest: serde_json::Value,
+    pub typed: Option<ObjectInputMetaTyped>,
+}
+
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+/// Typed metadata for an input.
+#[serde(untagged)]
+pub enum ObjectInputMetaTyped {
+    /// Metadata for an image input.
+    Image {
+        /// Whether the input should allow image uploads.
+        image_upload: bool,
+    },
+    /// Metadata for an audio input.
+    Audio {
+        /// Whether the input should allow audio uploads.
+        audio_upload: bool,
+    },
+    /// Metadata for a boolean input.
+    Boolean {
+        /// Default value.
+        default: bool,
+    },
+    /// Metadata for a string input.
+    String {
+        /// Whether the input should have dynamic prompts.
+        #[serde(rename = "dynamicPrompts", skip_serializing_if = "Option::is_none")]
+        dynamic_prompts: Option<bool>,
+        /// Whether the input should be multiline.
+        #[serde(default, skip_serializing_if = "Option::is_none")]
+        multiline: Option<bool>,
+        /// Default value.
+        #[serde(default, skip_serializing_if = "Option::is_none")]
+        default: Option<String>,
+    },
+    /// Metadata for a number input.
+    Number {
+        /// Default value.
+        default: ObjectInputMetaTypedNumber,
+        /// How the number should be displayed.
+        #[serde(skip_serializing_if = "Option::is_none")]
+        display: Option<String>,
+        /// Maximum value.
+        max: ObjectInputMetaTypedNumber,
+        /// Minimum value.
+        min: ObjectInputMetaTypedNumber,
+        /// What to round the number to.
+        #[serde(skip_serializing_if = "Option::is_none")]
+        round: Option<ObjectInputMetaTypedRound>,
+        /// Step value.
+        #[serde(skip_serializing_if = "Option::is_none")]
+        step: Option<ObjectInputMetaTypedNumber>,
+    },
+}
+
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+/// A number in typed metadata.
+///
+/// This is necessary as ComfyUI may return integers for float types, so we need to preserve whatever type it originally was.
+#[serde(untagged)]
+pub enum ObjectInputMetaTypedNumber {
+    /// Signed integer metadata.
+    I64(i64),
+    /// Unsigned integer metadata.
+    U64(u64),
+    /// Float metadata.
+    F64(f64),
+}
+impl From<i64> for ObjectInputMetaTypedNumber {
+    fn from(v: i64) -> Self {
+        Self::I64(v)
+    }
+}
+impl From<u64> for ObjectInputMetaTypedNumber {
+    fn from(v: u64) -> Self {
+        Self::U64(v)
+    }
+}
+impl From<f64> for ObjectInputMetaTypedNumber {
+    fn from(v: f64) -> Self {
+        Self::F64(v)
+    }
+}
+
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[serde(untagged)]
+/// How to round a number in typed metadata.
+///
+/// This is necessary as ComfyUI can return either a boolean for whether to round to the nearest integer or a number of decimal places to round to.
+pub enum ObjectInputMetaTypedRound {
+    /// Whether to round the number to the nearest integer.
+    Bool(bool),
+    /// Number of decimal places to round to.
+    Number(f64),
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq, Eq)]
@@ -312,4 +404,121 @@ pub fn categorize<'a>(objects: impl Iterator<Item = &'a Object>) -> CategoryTree
     }
 
     tree
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn can_parse_example_object() {
+        let example = serde_json::json!({
+            "name": "EmptyLatentAudio",
+            "display_name": "EmptyLatentAudio",
+            "description": "",
+            "python_module": "comfy_extras.nodes_audio",
+            "category": "latent/audio",
+            "input": {
+              "required": {
+                "batch_size": [
+                  "INT",
+                  {
+                    "tooltip": "The number of latent images in the batch.",
+                    "default": 1,
+                    "max": 4096,
+                    "min": 1
+                  }
+                ],
+                "seconds": [
+                  "FLOAT",
+                  {
+                    "tooltip": null,
+                    "default": 47.6,
+                    "max": 1000.0,
+                    "min": 1.0,
+                    "step": 0.1
+                  }
+                ]
+              },
+              "optional": null
+            },
+            "input_order": {
+              "required": [
+                "seconds",
+                "batch_size"
+              ],
+              "optional": null
+            },
+            "output": [
+              "LATENT"
+            ],
+            "output_is_list": [
+              false
+            ],
+            "output_name": [
+              "LATENT"
+            ],
+            "output_node": false,
+            "output_tooltips": []
+        });
+
+        let target_object = Object {
+            name: "EmptyLatentAudio".into(),
+            display_name: "EmptyLatentAudio".into(),
+            description: "".into(),
+            python_module: "comfy_extras.nodes_audio".into(),
+            category: "latent/audio".into(),
+            input: ObjectInputBundle {
+                required: BTreeMap::from_iter([
+                    (
+                        "batch_size".into(),
+                        ObjectInput::InputWithMeta(
+                            ObjectInputType::Typed(ObjectType::Int),
+                            ObjectInputMeta {
+                                tooltip: Some("The number of latent images in the batch.".into()),
+                                typed: Some(ObjectInputMetaTyped::Number {
+                                    default: 1i64.into(),
+                                    display: None,
+                                    max: 4096i64.into(),
+                                    min: 1i64.into(),
+                                    round: None,
+                                    step: None,
+                                }),
+                            },
+                        ),
+                    ),
+                    (
+                        "seconds".into(),
+                        ObjectInput::InputWithMeta(
+                            ObjectInputType::Typed(ObjectType::Float),
+                            ObjectInputMeta {
+                                tooltip: None,
+                                typed: Some(ObjectInputMetaTyped::Number {
+                                    default: 47.6.into(),
+                                    display: None,
+                                    max: 1000.0.into(),
+                                    min: 1.0.into(),
+                                    round: None,
+                                    step: Some(0.1.into()),
+                                }),
+                            },
+                        ),
+                    ),
+                ]),
+                optional: None,
+            },
+            input_order: ObjectInputBundle {
+                required: vec!["seconds".into(), "batch_size".into()],
+                optional: None,
+            },
+            output: vec![ObjectType::Latent],
+            output_is_list: vec![false],
+            output_name: vec!["LATENT".into()],
+            output_node: false,
+            output_tooltips: vec![],
+        };
+
+        let object: Object = serde_json::from_value(example).unwrap();
+        assert_eq!(object, target_object);
+    }
 }
