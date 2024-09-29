@@ -215,12 +215,10 @@ impl eframe::App for Application {
 enum TokioInputEvent {
     Connect(String),
 }
-
 enum TokioOutputEvent {
     ObjectInfo(ObjectInfo),
     Error(String),
 }
-
 fn tokio_runtime_thread(input: Receiver<TokioInputEvent>, output: Sender<TokioOutputEvent>) {
     let rt = tokio::runtime::Runtime::new().unwrap();
     let mut _client = None;
@@ -261,13 +259,39 @@ impl NodeDataTrait for FlowNodeData {
         &self,
         _ui: &mut egui::Ui,
         _node_id: NodeId,
-        _graph: &Graph<FlowNodeData, ObjectType, FlowValueType>,
+        _graph: &Graph<Self, Self::DataType, Self::ValueType>,
         _user_state: &mut Self::UserState,
     ) -> Vec<NodeResponse<MyResponse, FlowNodeData>>
     where
         MyResponse: UserResponseTrait,
     {
         vec![]
+    }
+    fn output_ui(
+        &self,
+        ui: &mut egui::Ui,
+        node_id: NodeId,
+        graph: &Graph<Self, Self::DataType, Self::ValueType>,
+        _user_state: &mut Self::UserState,
+        param_name: &str,
+    ) -> Vec<NodeResponse<Self::Response, Self>>
+    where
+        Self::Response: UserResponseTrait,
+    {
+        let node = graph.nodes.get(node_id).unwrap();
+        let tooltip = node
+            .user_data
+            .template
+            .0
+            .processed_output()
+            .find(|o| o.name == param_name)
+            .and_then(|o| o.tooltip.clone());
+        let r = ui.label(param_name);
+        if let Some(tooltip) = tooltip {
+            r.on_hover_text(tooltip);
+        }
+
+        Default::default()
     }
 }
 
@@ -421,9 +445,18 @@ impl WidgetValueTrait for FlowValueType {
         _node_id: NodeId,
         ui: &mut egui::Ui,
         _user_state: &mut FlowUserState,
-        _node_data: &FlowNodeData,
+        node_data: &FlowNodeData,
     ) -> Vec<MyResponse> {
-        ui.label(param_name);
+        let tooltip = node_data
+            .template
+            .0
+            .all_inputs()
+            .find(|(name, _, _)| *name == param_name)
+            .and_then(|(_, node, _)| node.tooltip());
+        let r = ui.label(param_name);
+        if let Some(tooltip) = tooltip {
+            r.on_hover_text(tooltip);
+        }
         match self {
             FlowValueType::Array { options, selected } => {
                 egui::ComboBox::new(format!("{param_name}_checkbox"), "")
@@ -492,21 +525,17 @@ impl NodeTemplateTrait for FlowNodeTemplate {
     fn node_finder_label(&self, _user_state: &mut Self::UserState) -> Cow<'_, str> {
         self.0.display_name.as_str().into()
     }
-
     fn node_finder_categories(&self, _user_state: &mut Self::UserState) -> Vec<String> {
         vec![self.0.category.clone()]
     }
-
     fn node_graph_label(&self, user_state: &mut Self::UserState) -> String {
         self.node_finder_label(user_state).into()
     }
-
     fn user_data(&self, _user_state: &mut Self::UserState) -> Self::NodeData {
         FlowNodeData {
             template: self.clone(),
         }
     }
-
     fn build_node(
         &self,
         graph: &mut Graph<Self::NodeData, Self::DataType, Self::ValueType>,
