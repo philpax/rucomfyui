@@ -257,7 +257,8 @@ pub enum FlowValueType {
     },
     String(String),
     Float(f64),
-    Int(i64),
+    SignedInt(i64),
+    UnsignedInt(u64),
     Boolean(bool),
     Other(ObjectType),
     #[default]
@@ -268,7 +269,7 @@ impl FlowValueType {
         match object_type {
             ObjectType::Boolean => FlowValueType::Boolean(false),
             ObjectType::Float => FlowValueType::Float(0.0),
-            ObjectType::Int => FlowValueType::Int(0),
+            ObjectType::Int => FlowValueType::SignedInt(0),
             ObjectType::String => FlowValueType::String("".into()),
             _ => FlowValueType::Other(object_type.clone()),
         }
@@ -278,7 +279,8 @@ impl FlowValueType {
         match input {
             WorkflowInput::String(s) => FlowValueType::String(s.clone()),
             WorkflowInput::F64(v) => FlowValueType::Float(*v),
-            WorkflowInput::I64(v) => FlowValueType::Int(*v),
+            WorkflowInput::I64(v) => FlowValueType::SignedInt(*v),
+            WorkflowInput::U64(v) => FlowValueType::UnsignedInt(*v),
             WorkflowInput::Boolean(b) => FlowValueType::Boolean(*b),
             WorkflowInput::Slot(_, _) => FlowValueType::Other(object_type.clone()),
         }
@@ -457,7 +459,10 @@ impl WidgetValueTrait for FlowValueType {
             FlowValueType::Float(v) => {
                 ui.add(DragValue::new(v));
             }
-            FlowValueType::Int(v) => {
+            FlowValueType::SignedInt(v) => {
+                ui.add(DragValue::new(v));
+            }
+            FlowValueType::UnsignedInt(v) => {
                 ui.add(DragValue::new(v));
             }
             FlowValueType::Boolean(b) => {

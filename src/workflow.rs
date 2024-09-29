@@ -280,6 +280,8 @@ pub enum WorkflowInput {
     F64(f64),
     /// A i64 input.
     I64(i64),
+    /// A u64 input.
+    U64(u64),
     /// A boolean input.
     Boolean(bool),
     /// A slot input. First value is the node ID (integer-as-string), second is the slot index.
@@ -308,6 +310,13 @@ impl WorkflowInput {
     pub fn as_i64(&self) -> Option<i64> {
         match self {
             Self::I64(v) => Some(*v),
+            _ => None,
+        }
+    }
+    /// Get the `u64` value of this input, if it is a `u64`.
+    pub fn as_u64(&self) -> Option<u64> {
+        match self {
+            Self::U64(v) => Some(*v),
             _ => None,
         }
     }
@@ -355,12 +364,17 @@ impl From<i32> for WorkflowInput {
 }
 impl From<u32> for WorkflowInput {
     fn from(value: u32) -> Self {
-        WorkflowInput::I64(value as i64)
+        WorkflowInput::U64(value as u64)
     }
 }
 impl From<i64> for WorkflowInput {
     fn from(value: i64) -> Self {
         WorkflowInput::I64(value)
+    }
+}
+impl From<u64> for WorkflowInput {
+    fn from(value: u64) -> Self {
+        WorkflowInput::U64(value)
     }
 }
 impl From<bool> for WorkflowInput {

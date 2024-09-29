@@ -558,4 +558,5 @@ impl Float for f64 {}
 impl Int for u32 {}
 impl Int for i32 {}
 impl Int for i64 {}
+impl Int for u64 {}
 impl Boolean for bool {}
