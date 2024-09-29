@@ -324,13 +324,20 @@ impl FlowValueType {
                 .unwrap_or(false),
         }
     }
+    fn convert_bool(value: Option<bool>, typed_meta: Option<&ObjectInputMetaTyped>) -> Self {
+        Self::Boolean(
+            value
+                .or(typed_meta.and_then(|m| m.as_boolean()).map(|m| m.default))
+                .unwrap_or_default(),
+        )
+    }
 
     fn from_object_type(
         object_type: &ObjectType,
         typed_meta: Option<&ObjectInputMetaTyped>,
     ) -> Self {
         match object_type {
-            ObjectType::Boolean => Self::Boolean(false),
+            ObjectType::Boolean => Self::convert_bool(None, typed_meta),
             ObjectType::Float => Self::convert_float(None, typed_meta),
             ObjectType::Int => Self::SignedInt(0),
             ObjectType::String => Self::convert_string("", typed_meta),
@@ -347,7 +354,7 @@ impl FlowValueType {
             WorkflowInput::F64(v) => Self::convert_float(Some(*v), typed_meta),
             WorkflowInput::I64(v) => Self::SignedInt(*v),
             WorkflowInput::U64(v) => Self::UnsignedInt(*v),
-            WorkflowInput::Boolean(b) => Self::Boolean(*b),
+            WorkflowInput::Boolean(b) => Self::convert_bool(Some(*b), typed_meta),
             WorkflowInput::Slot(_, _) => Self::Other(object_type.clone()),
         }
     }
