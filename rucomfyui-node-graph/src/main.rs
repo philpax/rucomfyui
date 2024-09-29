@@ -281,15 +281,17 @@ impl eframe::App for Application {
             egui::menu::bar(ui, |ui| {
                 egui::widgets::global_dark_light_mode_switch(ui);
                 if is_connected {
-                    if ui.button("Open API workflow").clicked() {
-                        self.file_mode = FileMode::Load;
-                        self.file_dialog.select_file();
-                    }
+                    ui.menu_button("File", |ui| {
+                        if ui.button("Open API workflow").clicked() {
+                            self.file_mode = FileMode::Load;
+                            self.file_dialog.select_file();
+                        }
 
-                    if ui.button("Save API workflow").clicked() {
-                        self.file_mode = FileMode::Save;
-                        self.file_dialog.save_file();
-                    }
+                        if ui.button("Save API workflow").clicked() {
+                            self.file_mode = FileMode::Save;
+                            self.file_dialog.save_file();
+                        }
+                    });
 
                     if let Some(last_queue_time) = self.last_queue_time {
                         ui.label(format!(
