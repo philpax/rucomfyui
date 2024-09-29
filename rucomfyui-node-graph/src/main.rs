@@ -42,7 +42,7 @@ pub struct Application {
     tokio_output_rx: Receiver<TokioOutputEvent>,
     _tokio_runtime_thread: JoinHandle<()>,
 
-    error: Option<String>,
+    error: Option<(String, String)>,
 
     file_dialog: egui_file_dialog::FileDialog,
 }
@@ -74,7 +74,10 @@ impl Application {
 
     fn load(&mut self, path: PathBuf) -> anyhow::Result<()> {
         let object_info = self.object_info.as_ref().context("No object info")?;
-        let workflow = rucomfyui::Workflow::from_json(&std::fs::read_to_string(path)?)?;
+        let workflow = rucomfyui::Workflow::from_json(
+            &std::fs::read_to_string(path).context("Failed to read file")?,
+        )
+        .context("Failed to parse workflow")?;
         let sorted_node_ids = workflow.topological_sort_with_depth();
 
         let mut mapping = HashMap::<WorkflowNodeId, BuildNodeOutput>::new();
@@ -135,6 +138,9 @@ impl Application {
             match event {
                 TokioOutputEvent::ObjectInfo(oi) => self.object_info = Some(oi),
                 TokioOutputEvent::Error(err) => {
+                    let err = match err {
+                        TokioOutputError::Connection(err) => ("Connection".to_string(), err),
+                    };
                     self.error = Some(err);
                 }
             }
@@ -144,7 +150,7 @@ impl Application {
         // Process file dialog
         if let Some(path) = self.file_dialog.take_selected() {
             if let Err(err) = self.load(path) {
-                self.error = Some(err.to_string());
+                self.error = Some(("File load".to_string(), err.to_string()));
                 needs_repaint = true;
             }
         }
@@ -220,8 +226,9 @@ impl eframe::App for Application {
             }
         });
 
-        if let Some(error) = self.error.clone() {
+        if let Some((category, error)) = self.error.clone() {
             egui::Window::new("Error").show(ctx, |ui| {
+                ui.label(egui::RichText::new(category).strong());
                 ui.label(error);
                 if ui.button("Close").clicked() {
                     self.error = None;
@@ -236,9 +243,12 @@ impl eframe::App for Application {
 enum TokioInputEvent {
     Connect(String),
 }
+enum TokioOutputError {
+    Connection(String),
+}
 enum TokioOutputEvent {
     ObjectInfo(ObjectInfo),
-    Error(String),
+    Error(TokioOutputError),
 }
 fn tokio_runtime_thread(input: Receiver<TokioInputEvent>, output: Sender<TokioOutputEvent>) {
     let rt = tokio::runtime::Runtime::new().unwrap();
@@ -257,7 +267,9 @@ fn tokio_runtime_thread(input: Receiver<TokioInputEvent>, output: Sender<TokioOu
                     }
                     Err(err) => {
                         output
-                            .send(TokioOutputEvent::Error(err.to_string()))
+                            .send(TokioOutputEvent::Error(TokioOutputError::Connection(
+                                err.to_string(),
+                            )))
                             .unwrap();
                     }
                 }
