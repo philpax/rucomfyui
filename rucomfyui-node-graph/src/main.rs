@@ -448,7 +448,7 @@ pub struct FlowNodeData {
     output_tooltips: HashMap<String, String>,
 }
 impl NodeDataTrait for FlowNodeData {
-    type Response = MyResponse;
+    type Response = EmptyResponse;
     type UserState = FlowUserState;
     type DataType = ObjectType;
     type ValueType = FlowValueType;
@@ -459,9 +459,9 @@ impl NodeDataTrait for FlowNodeData {
         node_id: NodeId,
         _graph: &Graph<Self, Self::DataType, Self::ValueType>,
         user_state: &mut Self::UserState,
-    ) -> Vec<NodeResponse<MyResponse, FlowNodeData>>
+    ) -> Vec<NodeResponse<EmptyResponse, FlowNodeData>>
     where
-        MyResponse: UserResponseTrait,
+        EmptyResponse: UserResponseTrait,
     {
         if let Some((images, selected)) = user_state.output_images.get_mut(&node_id) {
             ui.horizontal(|ui| {
@@ -655,7 +655,7 @@ impl FlowValueType {
     }
 }
 impl WidgetValueTrait for FlowValueType {
-    type Response = MyResponse;
+    type Response = EmptyResponse;
     type UserState = FlowUserState;
     type NodeData = FlowNodeData;
     fn value_widget(
@@ -665,7 +665,7 @@ impl WidgetValueTrait for FlowValueType {
         ui: &mut egui::Ui,
         _user_state: &mut FlowUserState,
         node_data: &FlowNodeData,
-    ) -> Vec<MyResponse> {
+    ) -> Vec<EmptyResponse> {
         let r = ui.label(param_name);
         if let Some(tooltip) = node_data.input_tooltips.get(param_name) {
             r.on_hover_text(tooltip);
@@ -772,7 +772,8 @@ impl NodeTemplateTrait for FlowNodeTemplate {
 }
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
-pub enum MyResponse {}
+pub struct EmptyResponse;
+impl UserResponseTrait for EmptyResponse {}
 
 #[derive(Default, serde::Serialize, serde::Deserialize)]
 pub struct FlowUserState {
@@ -879,8 +880,6 @@ impl<'a> NodeTemplateIter for AllMyNodeTemplates<'a> {
         self.0.values().cloned().map(FlowNodeTemplate).collect()
     }
 }
-
-impl UserResponseTrait for MyResponse {}
 
 type FlowEditorState =
     GraphEditorState<FlowNodeData, ObjectType, FlowValueType, FlowNodeTemplate, FlowUserState>;
