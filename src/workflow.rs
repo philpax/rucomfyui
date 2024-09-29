@@ -28,6 +28,10 @@ impl Workflow {
     pub fn from_json(s: &str) -> serde_json::Result<Self> {
         serde_json::from_str(s)
     }
+    /// Save a workflow to a string. Convenience wrapper for [`serde_json::to_string`].
+    pub fn to_json(&self) -> serde_json::Result<String> {
+        serde_json::to_string(self)
+    }
     /// Return a topological sort of the nodes in the workflow, with outputs at the end.
     pub fn topological_sort(&self) -> Vec<WorkflowNodeId> {
         self.topological_sort_with_depth()
