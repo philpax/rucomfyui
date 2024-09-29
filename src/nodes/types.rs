@@ -554,5 +554,8 @@ impl Webcam for WebcamOut {}
 impl String for std::string::String {}
 impl<'a> String for &'a str {}
 impl Float for f32 {}
+impl Float for f64 {}
+impl Int for u32 {}
 impl Int for i32 {}
+impl Int for i64 {}
 impl Boolean for bool {}

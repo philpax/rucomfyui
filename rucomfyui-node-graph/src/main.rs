@@ -256,8 +256,8 @@ pub enum FlowValueType {
         selected: String,
     },
     String(String),
-    Float(f32),
-    Int(i32),
+    Float(f64),
+    Int(i64),
     Boolean(bool),
     Other(ObjectType),
     #[default]
@@ -277,8 +277,8 @@ impl FlowValueType {
     fn from_object_type_and_input(object_type: &ObjectType, input: &WorkflowInput) -> Self {
         match input {
             WorkflowInput::String(s) => FlowValueType::String(s.clone()),
-            WorkflowInput::F32(v) => FlowValueType::Float(*v),
-            WorkflowInput::I32(v) => FlowValueType::Int(*v),
+            WorkflowInput::F64(v) => FlowValueType::Float(*v),
+            WorkflowInput::I64(v) => FlowValueType::Int(*v),
             WorkflowInput::Boolean(b) => FlowValueType::Boolean(*b),
             WorkflowInput::Slot(_, _) => FlowValueType::Other(object_type.clone()),
         }

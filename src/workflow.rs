@@ -274,10 +274,10 @@ impl WorkflowNode {
 pub enum WorkflowInput {
     /// A string input.
     String(String),
-    /// A f32 input.
-    F32(f32),
-    /// A i32 input.
-    I32(i32),
+    /// A F64 input.
+    F64(f64),
+    /// A i64 input.
+    I64(i64),
     /// A boolean input.
     Boolean(bool),
     /// A slot input. First value is the node ID (integer-as-string), second is the slot index.
@@ -295,17 +295,17 @@ impl WorkflowInput {
             _ => None,
         }
     }
-    /// Get the `f32` value of this input, if it is a `f32`.
-    pub fn as_f32(&self) -> Option<f32> {
+    /// Get the `f64` value of this input, if it is a `f64`.
+    pub fn as_f64(&self) -> Option<f64> {
         match self {
-            Self::F32(v) => Some(*v),
+            Self::F64(v) => Some(*v),
             _ => None,
         }
     }
-    /// Get the `i32` value of this input, if it is a `i32`.
-    pub fn as_i32(&self) -> Option<i32> {
+    /// Get the `i64` value of this input, if it is a `i64`.
+    pub fn as_i64(&self) -> Option<i64> {
         match self {
-            Self::I32(v) => Some(*v),
+            Self::I64(v) => Some(*v),
             _ => None,
         }
     }
@@ -338,12 +338,27 @@ impl From<&str> for WorkflowInput {
 }
 impl From<f32> for WorkflowInput {
     fn from(value: f32) -> Self {
-        WorkflowInput::F32(value)
+        WorkflowInput::F64(value as f64)
+    }
+}
+impl From<f64> for WorkflowInput {
+    fn from(value: f64) -> Self {
+        WorkflowInput::F64(value)
     }
 }
 impl From<i32> for WorkflowInput {
     fn from(value: i32) -> Self {
-        WorkflowInput::I32(value)
+        WorkflowInput::I64(value as i64)
+    }
+}
+impl From<u32> for WorkflowInput {
+    fn from(value: u32) -> Self {
+        WorkflowInput::I64(value as i64)
+    }
+}
+impl From<i64> for WorkflowInput {
+    fn from(value: i64) -> Self {
+        WorkflowInput::I64(value)
     }
 }
 impl From<bool> for WorkflowInput {
