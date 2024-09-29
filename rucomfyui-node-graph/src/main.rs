@@ -126,13 +126,11 @@ impl Application {
 
         Ok(())
     }
-}
-impl eframe::App for Application {
-    fn save(&mut self, storage: &mut dyn eframe::Storage) {
-        self.persisted.save(storage, &mut self.file_dialog);
-    }
 
-    fn update(&mut self, ctx: &egui::Context, _frame: &mut eframe::Frame) {
+    fn process_incoming_events(&mut self) -> bool {
+        let mut needs_repaint = false;
+
+        // Process async events
         for event in self.tokio_output_rx.try_iter() {
             match event {
                 TokioOutputEvent::ObjectInfo(oi) => self.object_info = Some(oi),
@@ -140,6 +138,40 @@ impl eframe::App for Application {
                     self.error = Some(err);
                 }
             }
+            needs_repaint = true;
+        }
+
+        // Process file dialog
+        if let Some(path) = self.file_dialog.take_selected() {
+            if let Err(err) = self.load(path) {
+                self.error = Some(err.to_string());
+                needs_repaint = true;
+            }
+        }
+
+        needs_repaint
+    }
+
+    fn connect(&mut self) {
+        self.tokio_input_tx
+            .send(TokioInputEvent::Connect(
+                self.persisted.comfyui_address.clone(),
+            ))
+            .unwrap();
+    }
+
+    fn disconnect(&mut self) {
+        self.object_info = None;
+    }
+}
+impl eframe::App for Application {
+    fn save(&mut self, storage: &mut dyn eframe::Storage) {
+        self.persisted.save(storage, &mut self.file_dialog);
+    }
+
+    fn update(&mut self, ctx: &egui::Context, _frame: &mut eframe::Frame) {
+        if self.process_incoming_events() {
+            ctx.request_repaint();
         }
 
         egui::TopBottomPanel::top("top").show(ctx, |ui| {
@@ -162,13 +194,9 @@ impl eframe::App for Application {
                         .clicked()
                     {
                         if !is_connected {
-                            self.tokio_input_tx
-                                .send(TokioInputEvent::Connect(
-                                    self.persisted.comfyui_address.clone(),
-                                ))
-                                .unwrap();
+                            self.connect();
                         } else {
-                            self.object_info = None;
+                            self.disconnect();
                         }
                     }
                     ui.text_edit_singleline(&mut self.persisted.comfyui_address);
@@ -202,11 +230,6 @@ impl eframe::App for Application {
         }
 
         self.file_dialog.update(ctx);
-        if let Some(path) = self.file_dialog.take_selected() {
-            if let Err(err) = self.load(path) {
-                self.error = Some(err.to_string());
-            }
-        }
     }
 }
 
