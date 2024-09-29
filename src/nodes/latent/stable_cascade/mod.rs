@@ -29,13 +29,40 @@ pub struct StableCascadeEmptyLatentImage<
     Compression: crate::nodes::types::Int,
     BatchSize: crate::nodes::types::Int,
 > {
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1024
+  - Max: 16384
+  - Min: 256
+  - Step: 8
+*/
     pub width: Width,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1024
+  - Max: 16384
+  - Min: 256
+  - Step: 8
+*/
     pub height: Height,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 42
+  - Max: 128
+  - Min: 4
+  - Step: 1
+*/
     pub compression: Compression,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 4096
+  - Min: 1
+*/
     pub batch_size: BatchSize,
 }
 impl<
@@ -103,7 +130,14 @@ pub struct StableCascadeStageCVaeEncode<
     pub image: Image,
     ///No documentation.
     pub vae: Vae,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 42
+  - Max: 128
+  - Min: 4
+  - Step: 1
+*/
     pub compression: Compression,
 }
 impl<

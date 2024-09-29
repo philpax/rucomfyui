@@ -16,11 +16,31 @@ pub struct EmptyLatentImage<
     Height: crate::nodes::types::Int,
     BatchSize: crate::nodes::types::Int,
 > {
-    ///The width of the latent images in pixels.
+    /**The width of the latent images in pixels.
+
+**Metadata**:
+  - Default: 512
+  - Max: 16384
+  - Min: 16
+  - Step: 8
+*/
     pub width: Width,
-    ///The height of the latent images in pixels.
+    /**The height of the latent images in pixels.
+
+**Metadata**:
+  - Default: 512
+  - Max: 16384
+  - Min: 16
+  - Step: 8
+*/
     pub height: Height,
-    ///The number of latent images in the batch.
+    /**The number of latent images in the batch.
+
+**Metadata**:
+  - Default: 1
+  - Max: 4096
+  - Min: 1
+*/
     pub batch_size: BatchSize,
 }
 impl<
@@ -70,11 +90,32 @@ pub struct LatentComposite<
     pub samples_to: SamplesTo,
     ///No documentation.
     pub samples_from: SamplesFrom,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 0
+  - Max: 16384
+  - Min: 0
+  - Step: 8
+*/
     pub x: X,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 0
+  - Max: 16384
+  - Min: 0
+  - Step: 8
+*/
     pub y: Y,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 0
+  - Max: 16384
+  - Min: 0
+  - Step: 8
+*/
     pub feather: Feather,
 }
 impl<
@@ -143,11 +184,29 @@ pub struct LatentCompositeMasked<
     pub destination: Destination,
     ///No documentation.
     pub source: Source,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 0
+  - Max: 16384
+  - Min: 0
+  - Step: 8
+*/
     pub x: X,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 0
+  - Max: 16384
+  - Min: 0
+  - Step: 8
+*/
     pub y: Y,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: false
+*/
     pub resize_source: ResizeSource,
     ///No documentation.
     pub mask: Option<Mask>,
@@ -225,9 +284,23 @@ pub struct LatentUpscale<
     pub samples: Samples,
     ///No documentation.
     pub upscale_method: UpscaleMethod,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 512
+  - Max: 16384
+  - Min: 0
+  - Step: 8
+*/
     pub width: Width,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 512
+  - Max: 16384
+  - Min: 0
+  - Step: 8
+*/
     pub height: Height,
     ///No documentation.
     pub crop: Crop,
@@ -296,7 +369,14 @@ pub struct LatentUpscaleBy<
     pub samples: Samples,
     ///No documentation.
     pub upscale_method: UpscaleMethod,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1.5
+  - Max: 8
+  - Min: 0.01
+  - Step: 0.01
+*/
     pub scale_by: ScaleBy,
 }
 impl<

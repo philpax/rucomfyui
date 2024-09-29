@@ -231,7 +231,14 @@ pub struct HypernetworkLoader<
     pub model: Model,
     ///No documentation.
     pub hypernetwork_name: HypernetworkName,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 10
+  - Min: -10
+  - Step: 0.01
+*/
     pub strength: Strength,
 }
 impl<
@@ -295,9 +302,23 @@ pub struct LoraLoader<
     pub clip: Clip,
     ///The name of the LoRA.
     pub lora_name: LoraName,
-    ///How strongly to modify the diffusion model. This value can be negative.
+    /**How strongly to modify the diffusion model. This value can be negative.
+
+**Metadata**:
+  - Default: 1
+  - Max: 100
+  - Min: -100
+  - Step: 0.01
+*/
     pub strength_model: StrengthModel,
-    ///How strongly to modify the CLIP model. This value can be negative.
+    /**How strongly to modify the CLIP model. This value can be negative.
+
+**Metadata**:
+  - Default: 1
+  - Max: 100
+  - Min: -100
+  - Step: 0.01
+*/
     pub strength_clip: StrengthClip,
 }
 impl<
@@ -370,7 +391,14 @@ pub struct LoraLoaderModelOnly<
     pub model: Model,
     ///No documentation.
     pub lora_name: LoraName,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 100
+  - Min: -100
+  - Step: 0.01
+*/
     pub strength_model: StrengthModel,
 }
 impl<

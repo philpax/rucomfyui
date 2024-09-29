@@ -1,8 +1,8 @@
 //! Workflow graphs for ComfyUI.
 
 use std::{
-    cell::{Ref, RefCell},
-    collections::HashMap,
+    cell::{Ref, RefCell, RefMut},
+    collections::{BTreeMap, HashMap, HashSet, VecDeque},
     fmt::Display,
     str::FromStr,
 };
@@ -17,17 +17,104 @@ use crate::nodes::{types::Out, TypedNode};
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq, Default)]
 pub struct Workflow(
     /// The nodes in the workflow.
-    pub HashMap<WorkflowNodeId, WorkflowNode>,
+    pub BTreeMap<WorkflowNodeId, WorkflowNode>,
 );
 impl Workflow {
     /// Create a new workflow.
     pub fn new(nodes: impl IntoIterator<Item = (WorkflowNodeId, WorkflowNode)>) -> Self {
         Self::from_iter(nodes)
     }
+    /// Load a workflow from a string. Convenience wrapper for [`serde_json::from_str`].
+    pub fn from_json(s: &str) -> serde_json::Result<Self> {
+        serde_json::from_str(s)
+    }
+    /// Save a workflow to a string. Convenience wrapper for [`serde_json::to_string`].
+    pub fn to_json(&self) -> serde_json::Result<String> {
+        serde_json::to_string(self)
+    }
+    /// Return a topological sort of the nodes in the workflow, with outputs at the end.
+    pub fn topological_sort(&self) -> Vec<WorkflowNodeId> {
+        self.topological_sort_with_depth()
+            .into_iter()
+            .flatten()
+            .collect()
+    }
+    /// Return a topological sort of the nodes in the workflow, with nodes of the same depth grouped together, with outputs at the end.
+    pub fn topological_sort_with_depth(&self) -> Vec<Vec<WorkflowNodeId>> {
+        let mut result = Vec::new();
+        let mut in_degree: HashMap<WorkflowNodeId, usize> = HashMap::new();
+        let mut queue = VecDeque::new();
+        let mut visited = HashSet::new();
+
+        // Calculate in-degree for each node
+        for (&node_id, node) in &self.0 {
+            in_degree.entry(node_id).or_insert(0);
+            for input in node.inputs.values() {
+                if let WorkflowInput::Slot(dep_id, _) = input {
+                    if let Ok(dep_id) = dep_id.parse::<u32>() {
+                        let dep_node_id = WorkflowNodeId(dep_id);
+                        *in_degree.entry(dep_node_id).or_insert(0) += 1;
+                    }
+                }
+            }
+        }
+
+        // Add nodes with in-degree 0 to the queue
+        for (&node_id, &degree) in &in_degree {
+            if degree == 0 {
+                queue.push_back(node_id);
+            }
+        }
+
+        // Process the queue
+        while !queue.is_empty() {
+            let mut current_depth = Vec::new();
+
+            for _ in 0..queue.len() {
+                if let Some(node_id) = queue.pop_front() {
+                    if visited.contains(&node_id) {
+                        continue;
+                    }
+                    visited.insert(node_id);
+                    current_depth.push(node_id);
+
+                    if let Some(node) = self.0.get(&node_id) {
+                        for input in node.inputs.values() {
+                            if let WorkflowInput::Slot(dep_id, _) = input {
+                                if let Ok(dep_id) = dep_id.parse::<u32>() {
+                                    let dep_node_id = WorkflowNodeId(dep_id);
+                                    if let Some(degree) = in_degree.get_mut(&dep_node_id) {
+                                        *degree -= 1;
+                                        if *degree == 0 {
+                                            queue.push_back(dep_node_id);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            if !current_depth.is_empty() {
+                result.push(current_depth);
+            }
+        }
+
+        // Check for cycles
+        let total_nodes: usize = result.iter().map(|v| v.len()).sum();
+        if total_nodes != self.0.len() {
+            panic!("Cyclic dependency detected in the workflow");
+        }
+
+        result.reverse();
+
+        result
+    }
 }
 impl FromIterator<(WorkflowNodeId, WorkflowNode)> for Workflow {
     fn from_iter<T: IntoIterator<Item = (WorkflowNodeId, WorkflowNode)>>(iter: T) -> Self {
-        Self(HashMap::from_iter(iter))
+        Self(BTreeMap::from_iter(iter))
     }
 }
 #[cfg(feature = "typed_nodes")]
@@ -92,6 +179,10 @@ impl From<WorkflowGraph> for Workflow {
     }
 }
 impl WorkflowGraph {
+    /// Create a new workflow graph.
+    pub fn new() -> Self {
+        Self::default()
+    }
     /// Add a dynamic node to the workflow.
     pub fn add_dynamic(&self, node: impl Into<WorkflowNode>) -> WorkflowNodeId {
         let id = WorkflowNodeId(self.last_node.borrow().0 + 1);
@@ -99,7 +190,6 @@ impl WorkflowGraph {
         self.last_node.replace(id);
         id
     }
-
     #[cfg(feature = "typed_nodes")]
     /// Add a typed node to the workflow.
     pub fn add<T: TypedNode>(&self, node: T) -> T::Output {
@@ -110,7 +200,6 @@ impl WorkflowGraph {
         });
         node.output(node_id)
     }
-
     #[cfg(feature = "typed_nodes")]
     /// Add a dynamic node to the workflow with the given typed output.
     ///
@@ -118,12 +207,22 @@ impl WorkflowGraph {
     pub fn add_typed_dynamic<Output: TypedOut>(&self, node: impl Into<WorkflowNode>) -> Output {
         Output::provide_node_id(self.add_dynamic(node))
     }
-
     /// Borrow the workflow.
     pub fn borrow(&self) -> Ref<'_, Workflow> {
         self.workflow.borrow()
     }
-
+    /// Mutably borrow the workflow.
+    pub fn borrow_mut(&self) -> RefMut<'_, Workflow> {
+        self.workflow.borrow_mut()
+    }
+    /// Get a node from the workflow, if it exists.
+    pub fn get_node(&self, id: WorkflowNodeId) -> Option<Ref<'_, WorkflowNode>> {
+        Ref::filter_map(self.borrow(), |w| w.0.get(&id)).ok()
+    }
+    /// Mutably get a node from the workflow, if it exists.
+    pub fn get_node_mut(&self, id: WorkflowNodeId) -> Option<RefMut<'_, WorkflowNode>> {
+        RefMut::filter_map(self.borrow_mut(), |w| w.0.get_mut(&id)).ok()
+    }
     /// Consume this type, returning the inner workflow.
     pub fn into_workflow(self) -> Workflow {
         self.workflow.into_inner()
@@ -131,7 +230,9 @@ impl WorkflowGraph {
 }
 
 /// A workflow node ID.
-#[derive(Debug, Serialize, Deserialize, Copy, Clone, PartialEq, Eq, Hash, Default)]
+#[derive(
+    Debug, Serialize, Deserialize, Copy, Clone, PartialEq, Eq, Hash, Default, PartialOrd, Ord,
+)]
 #[repr(transparent)]
 #[serde(transparent)]
 pub struct WorkflowNodeId(pub u32);
@@ -173,9 +274,13 @@ impl WorkflowNode {
             meta: None,
         }
     }
-    /// Set the inputs for the node.
-    pub fn with_input(mut self, key: impl Into<String>, value: impl Into<WorkflowInput>) -> Self {
+    /// Add an input to the node.
+    pub fn add_input(&mut self, key: impl Into<String>, value: impl Into<WorkflowInput>) {
         self.inputs.insert(key.into(), value.into());
+    }
+    /// Add an input to the node and return the node.
+    pub fn with_input(mut self, key: impl Into<String>, value: impl Into<WorkflowInput>) -> Self {
+        self.add_input(key, value);
         self
     }
     /// Set the metadata for the node.
@@ -191,10 +296,12 @@ impl WorkflowNode {
 pub enum WorkflowInput {
     /// A string input.
     String(String),
-    /// A f32 input.
-    F32(f32),
-    /// A i32 input.
-    I32(i32),
+    /// A F64 input.
+    F64(f64),
+    /// A i64 input.
+    I64(i64),
+    /// A u64 input.
+    U64(u64),
     /// A boolean input.
     Boolean(bool),
     /// A slot input. First value is the node ID (integer-as-string), second is the slot index.
@@ -204,6 +311,50 @@ impl WorkflowInput {
     /// Create a new slot input.
     pub fn slot(node_id: WorkflowNodeId, slot_index: u32) -> Self {
         WorkflowInput::Slot(node_id.to_string(), slot_index)
+    }
+    /// Get the string value of this input, if it is a string.
+    pub fn as_str(&self) -> Option<&str> {
+        match self {
+            Self::String(v) => Some(v.as_str()),
+            _ => None,
+        }
+    }
+    /// Get the `f64` value of this input, if it is a `f64`.
+    pub fn as_f64(&self) -> Option<f64> {
+        match self {
+            Self::F64(v) => Some(*v),
+            _ => None,
+        }
+    }
+    /// Get the `i64` value of this input, if it is a `i64`.
+    pub fn as_i64(&self) -> Option<i64> {
+        match self {
+            Self::I64(v) => Some(*v),
+            _ => None,
+        }
+    }
+    /// Get the `u64` value of this input, if it is a `u64`.
+    pub fn as_u64(&self) -> Option<u64> {
+        match self {
+            Self::U64(v) => Some(*v),
+            _ => None,
+        }
+    }
+    /// Get the `bool` value of this input, if it is a `bool`.
+    pub fn as_bool(&self) -> Option<bool> {
+        match self {
+            Self::Boolean(v) => Some(*v),
+            _ => None,
+        }
+    }
+    /// Get the slot value of this input, if it is a slot.
+    pub fn as_slot(&self) -> Option<(WorkflowNodeId, u32)> {
+        match self {
+            Self::Slot(node_id, slot_index) => {
+                Some((WorkflowNodeId(node_id.parse::<u32>().ok()?), *slot_index))
+            }
+            _ => None,
+        }
     }
 }
 impl From<String> for WorkflowInput {
@@ -218,12 +369,32 @@ impl From<&str> for WorkflowInput {
 }
 impl From<f32> for WorkflowInput {
     fn from(value: f32) -> Self {
-        WorkflowInput::F32(value)
+        WorkflowInput::F64(value as f64)
+    }
+}
+impl From<f64> for WorkflowInput {
+    fn from(value: f64) -> Self {
+        WorkflowInput::F64(value)
     }
 }
 impl From<i32> for WorkflowInput {
     fn from(value: i32) -> Self {
-        WorkflowInput::I32(value)
+        WorkflowInput::I64(value as i64)
+    }
+}
+impl From<u32> for WorkflowInput {
+    fn from(value: u32) -> Self {
+        WorkflowInput::U64(value as u64)
+    }
+}
+impl From<i64> for WorkflowInput {
+    fn from(value: i64) -> Self {
+        WorkflowInput::I64(value)
+    }
+}
+impl From<u64> for WorkflowInput {
+    fn from(value: u64) -> Self {
+        WorkflowInput::U64(value)
     }
 }
 impl From<bool> for WorkflowInput {

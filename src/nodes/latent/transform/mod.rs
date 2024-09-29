@@ -13,13 +13,41 @@ pub struct LatentCrop<
 > {
     ///No documentation.
     pub samples: Samples,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 512
+  - Max: 16384
+  - Min: 64
+  - Step: 8
+*/
     pub width: Width,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 512
+  - Max: 16384
+  - Min: 64
+  - Step: 8
+*/
     pub height: Height,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 0
+  - Max: 16384
+  - Min: 0
+  - Step: 8
+*/
     pub x: X,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 0
+  - Max: 16384
+  - Min: 0
+  - Step: 8
+*/
     pub y: Y,
 }
 impl<

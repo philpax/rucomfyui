@@ -10,7 +10,15 @@ pub struct VideoLinearCfgGuidance<
 > {
     ///No documentation.
     pub model: Model,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 100
+  - Min: 0
+  - Round: 0.01
+  - Step: 0.5
+*/
     pub min_cfg: MinCfg,
 }
 impl<
@@ -52,7 +60,15 @@ pub struct VideoTriangleCfgGuidance<
 > {
     ///No documentation.
     pub model: Model,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 100
+  - Min: 0
+  - Round: 0.01
+  - Step: 0.5
+*/
     pub min_cfg: MinCfg,
 }
 impl<

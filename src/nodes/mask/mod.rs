@@ -14,13 +14,41 @@ pub struct CropMask<
 > {
     ///No documentation.
     pub mask: Mask,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 0
+  - Max: 16384
+  - Min: 0
+  - Step: 1
+*/
     pub x: X,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 0
+  - Max: 16384
+  - Min: 0
+  - Step: 1
+*/
     pub y: Y,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 512
+  - Max: 16384
+  - Min: 1
+  - Step: 1
+*/
     pub width: Width,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 512
+  - Max: 16384
+  - Min: 1
+  - Step: 1
+*/
     pub height: Height,
 }
 impl<
@@ -74,13 +102,41 @@ pub struct FeatherMask<
 > {
     ///No documentation.
     pub mask: Mask,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 0
+  - Max: 16384
+  - Min: 0
+  - Step: 1
+*/
     pub left: Left,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 0
+  - Max: 16384
+  - Min: 0
+  - Step: 1
+*/
     pub top: Top,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 0
+  - Max: 16384
+  - Min: 0
+  - Step: 1
+*/
     pub right: Right,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 0
+  - Max: 16384
+  - Min: 0
+  - Step: 1
+*/
     pub bottom: Bottom,
 }
 impl<
@@ -138,9 +194,20 @@ pub struct GrowMask<
 > {
     ///No documentation.
     pub mask: Mask,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 0
+  - Max: 16384
+  - Min: -16384
+  - Step: 1
+*/
     pub expand: Expand,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: true
+*/
     pub tapered_corners: TaperedCorners,
 }
 impl<
@@ -190,7 +257,15 @@ pub struct ImageColorToMask<
 > {
     ///No documentation.
     pub image: Image,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 0
+  - Display: color
+  - Max: 16777215
+  - Min: 0
+  - Step: 1
+*/
     pub color: Color,
 }
 impl<
@@ -302,7 +377,11 @@ pub struct LoadImageMask<
     Image: crate::nodes::types::String,
     Channel: crate::nodes::types::String,
 > {
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Image upload: true
+*/
     pub image: Image,
     ///No documentation.
     pub channel: Channel,
@@ -351,9 +430,23 @@ pub struct MaskComposite<
     pub destination: Destination,
     ///No documentation.
     pub source: Source,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 0
+  - Max: 16384
+  - Min: 0
+  - Step: 1
+*/
     pub x: X,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 0
+  - Max: 16384
+  - Min: 0
+  - Step: 1
+*/
     pub y: Y,
     ///No documentation.
     pub operation: Operation,
@@ -447,11 +540,32 @@ pub struct SolidMask<
     Width: crate::nodes::types::Int,
     Height: crate::nodes::types::Int,
 > {
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
     pub value: Value,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 512
+  - Max: 16384
+  - Min: 1
+  - Step: 1
+*/
     pub width: Width,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 512
+  - Max: 16384
+  - Min: 1
+  - Step: 1
+*/
     pub height: Height,
 }
 impl<
@@ -496,7 +610,14 @@ pub struct ThresholdMask<
 > {
     ///No documentation.
     pub mask: Mask,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 0.5
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
     pub value: Value,
 }
 impl<

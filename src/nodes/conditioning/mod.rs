@@ -19,7 +19,14 @@ pub struct ClipSetLastLayer<
 > {
     ///No documentation.
     pub clip: Clip,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: -1
+  - Max: -1
+  - Min: -24
+  - Step: 1
+*/
     pub stop_at_clip_layer: StopAtClipLayer,
 }
 impl<
@@ -63,7 +70,12 @@ pub struct ClipTextEncode<
     Text: crate::nodes::types::String,
     Clip: crate::nodes::types::Clip,
 > {
-    ///The text to be encoded.
+    /**The text to be encoded.
+
+**Metadata**:
+  - Dynamic prompts: true
+  - Multiline: true
+*/
     pub text: Text,
     ///The CLIP model used for encoding the text.
     pub clip: Clip,
@@ -152,7 +164,14 @@ pub struct ConditioningAverage<
     pub conditioning_to: ConditioningTo,
     ///No documentation.
     pub conditioning_from: ConditioningFrom,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
     pub conditioning_to_strength: ConditioningToStrength,
 }
 impl<
@@ -317,15 +336,50 @@ pub struct ConditioningSetArea<
 > {
     ///No documentation.
     pub conditioning: Conditioning,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 64
+  - Max: 16384
+  - Min: 64
+  - Step: 8
+*/
     pub width: Width,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 64
+  - Max: 16384
+  - Min: 64
+  - Step: 8
+*/
     pub height: Height,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 0
+  - Max: 16384
+  - Min: 0
+  - Step: 8
+*/
     pub x: X,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 0
+  - Max: 16384
+  - Min: 0
+  - Step: 8
+*/
     pub y: Y,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 10
+  - Min: 0
+  - Step: 0.01
+*/
     pub strength: Strength,
 }
 impl<
@@ -398,15 +452,50 @@ pub struct ConditioningSetAreaPercentage<
 > {
     ///No documentation.
     pub conditioning: Conditioning,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
     pub width: Width,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
     pub height: Height,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 0
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
     pub x: X,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 0
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
     pub y: Y,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 10
+  - Min: 0
+  - Step: 0.01
+*/
     pub strength: Strength,
 }
 impl<
@@ -475,7 +564,14 @@ pub struct ConditioningSetAreaStrength<
 > {
     ///No documentation.
     pub conditioning: Conditioning,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 10
+  - Min: 0
+  - Step: 0.01
+*/
     pub strength: Strength,
 }
 impl<
@@ -521,7 +617,14 @@ pub struct ConditioningSetMask<
     pub conditioning: Conditioning,
     ///No documentation.
     pub mask: Mask,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 10
+  - Min: 0
+  - Step: 0.01
+*/
     pub strength: Strength,
     ///No documentation.
     pub set_cond_area: SetCondArea,
@@ -586,9 +689,23 @@ pub struct UnClipConditioning<
     pub conditioning: Conditioning,
     ///No documentation.
     pub clip_vision_output: ClipVisionOutput,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 10
+  - Min: -10
+  - Step: 0.01
+*/
     pub strength: Strength,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 0
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
     pub noise_augmentation: NoiseAugmentation,
 }
 impl<

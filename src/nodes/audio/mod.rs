@@ -5,7 +5,11 @@ use crate::workflow::{WorkflowNodeId, WorkflowInput};
 ///**LoadAudio**: No description.
 #[derive(Clone)]
 pub struct LoadAudio<Audio: crate::nodes::types::String> {
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Audio upload: true
+*/
     pub audio: Audio,
 }
 impl<Audio: crate::nodes::types::String> LoadAudio<Audio> {
@@ -69,7 +73,11 @@ pub struct SaveAudio<
 > {
     ///No documentation.
     pub audio: Audio,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: audio/ComfyUI
+*/
     pub filename_prefix: FilenamePrefix,
 }
 impl<

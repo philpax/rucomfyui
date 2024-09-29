@@ -13,13 +13,41 @@ pub struct ImageCrop<
 > {
     ///No documentation.
     pub image: Image,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 512
+  - Max: 16384
+  - Min: 1
+  - Step: 1
+*/
     pub width: Width,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 512
+  - Max: 16384
+  - Min: 1
+  - Step: 1
+*/
     pub height: Height,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 0
+  - Max: 16384
+  - Min: 0
+  - Step: 1
+*/
     pub x: X,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 0
+  - Max: 16384
+  - Min: 0
+  - Step: 1
+*/
     pub y: Y,
 }
 impl<

@@ -30,7 +30,13 @@ impl crate::nodes::TypedNode for DisableNoise {
 ///**RandomNoise**: No description.
 #[derive(Clone)]
 pub struct RandomNoise<NoiseSeed: crate::nodes::types::Int> {
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 0
+  - Max: 18446744073709551615
+  - Min: 0
+*/
     pub noise_seed: NoiseSeed,
 }
 impl<NoiseSeed: crate::nodes::types::Int> RandomNoise<NoiseSeed> {

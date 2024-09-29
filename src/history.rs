@@ -1,6 +1,6 @@
 //! History of queued prompts.
 
-use std::collections::HashMap;
+use std::collections::BTreeMap;
 
 use serde::{Deserialize, Serialize};
 
@@ -26,7 +26,7 @@ impl Client {
 pub struct History {
     #[serde(flatten)]
     /// Data.
-    pub data: HashMap<String, HistoryData>,
+    pub data: BTreeMap<String, HistoryData>,
 }
 #[derive(Serialize, Deserialize, Debug, Clone)]
 /// Data for a queued prompt.
@@ -49,7 +49,7 @@ pub struct Status {
 pub struct HistoryOutputs {
     #[serde(flatten)]
     /// Nodes.
-    pub nodes: HashMap<String, HistoryNodeOutput>,
+    pub nodes: BTreeMap<String, HistoryNodeOutput>,
 }
 #[derive(Serialize, Deserialize, Debug, Clone)]
 /// Output of a node in the history.

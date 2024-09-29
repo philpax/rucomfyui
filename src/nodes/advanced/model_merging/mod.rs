@@ -56,7 +56,14 @@ pub struct ClipMergeSimple<
     pub clip_1: Clip1,
     ///No documentation.
     pub clip_2: Clip2,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
     pub ratio: Ratio,
 }
 impl<
@@ -104,7 +111,14 @@ pub struct ClipMergeSubtract<
     pub clip_1: Clip1,
     ///No documentation.
     pub clip_2: Clip2,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 10
+  - Min: -10
+  - Step: 0.01
+*/
     pub multiplier: Multiplier,
 }
 impl<
@@ -149,7 +163,11 @@ pub struct ClipSave<
 > {
     ///No documentation.
     pub clip: Clip,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: clip/ComfyUI
+*/
     pub filename_prefix: FilenamePrefix,
 }
 impl<
@@ -199,7 +217,11 @@ pub struct CheckpointSave<
     pub clip: Clip,
     ///No documentation.
     pub vae: Vae,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: checkpoints/ComfyUI
+*/
     pub filename_prefix: FilenamePrefix,
 }
 impl<
@@ -253,6 +275,80 @@ impl<
     Vae: crate::nodes::types::Vae,
     FilenamePrefix: crate::nodes::types::String,
 > crate::nodes::TypedOutputNode for CheckpointSave<Model, Clip, Vae, FilenamePrefix> {}
+///**ImageOnlyCheckpointSave**: No description.
+#[derive(Clone)]
+pub struct ImageOnlyCheckpointSave<
+    Model: crate::nodes::types::Model,
+    ClipVision: crate::nodes::types::ClipVision,
+    Vae: crate::nodes::types::Vae,
+    FilenamePrefix: crate::nodes::types::String,
+> {
+    ///No documentation.
+    pub model: Model,
+    ///No documentation.
+    pub clip_vision: ClipVision,
+    ///No documentation.
+    pub vae: Vae,
+    /**No documentation.
+
+**Metadata**:
+  - Default: checkpoints/ComfyUI
+*/
+    pub filename_prefix: FilenamePrefix,
+}
+impl<
+    Model: crate::nodes::types::Model,
+    ClipVision: crate::nodes::types::ClipVision,
+    Vae: crate::nodes::types::Vae,
+    FilenamePrefix: crate::nodes::types::String,
+> ImageOnlyCheckpointSave<Model, ClipVision, Vae, FilenamePrefix> {
+    /// Create a new node.
+    pub fn new(
+        model: Model,
+        clip_vision: ClipVision,
+        vae: Vae,
+        filename_prefix: FilenamePrefix,
+    ) -> Self {
+        Self {
+            model,
+            clip_vision,
+            vae,
+            filename_prefix,
+        }
+    }
+}
+impl<
+    Model: crate::nodes::types::Model,
+    ClipVision: crate::nodes::types::ClipVision,
+    Vae: crate::nodes::types::Vae,
+    FilenamePrefix: crate::nodes::types::String,
+> crate::nodes::TypedNode
+for ImageOnlyCheckpointSave<Model, ClipVision, Vae, FilenamePrefix> {
+    type Output = WorkflowNodeId;
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
+        node_id
+    }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("model".to_string(), self.model.clone().into());
+        output.insert("clip_vision".to_string(), self.clip_vision.clone().into());
+        output.insert("vae".to_string(), self.vae.clone().into());
+        output
+            .insert("filename_prefix".to_string(), self.filename_prefix.clone().into());
+        output
+    }
+    const NAME: &'static str = "ImageOnlyCheckpointSave";
+    const DISPLAY_NAME: &'static str = "ImageOnlyCheckpointSave";
+    const DESCRIPTION: &'static str = "";
+    const CATEGORY: &'static str = "advanced/model_merging";
+}
+impl<
+    Model: crate::nodes::types::Model,
+    ClipVision: crate::nodes::types::ClipVision,
+    Vae: crate::nodes::types::Vae,
+    FilenamePrefix: crate::nodes::types::String,
+> crate::nodes::TypedOutputNode
+for ImageOnlyCheckpointSave<Model, ClipVision, Vae, FilenamePrefix> {}
 ///**ModelMergeAdd**: No description.
 #[derive(Clone)]
 pub struct ModelMergeAdd<
@@ -308,11 +404,32 @@ pub struct ModelMergeBlocks<
     pub model_1: Model1,
     ///No documentation.
     pub model_2: Model2,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
     pub input: Input,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
     pub middle: Middle,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
     pub out: Out,
 }
 impl<
@@ -378,7 +495,14 @@ pub struct ModelMergeSimple<
     pub model_1: Model1,
     ///No documentation.
     pub model_2: Model2,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
     pub ratio: Ratio,
 }
 impl<
@@ -426,7 +550,14 @@ pub struct ModelMergeSubtract<
     pub model_1: Model1,
     ///No documentation.
     pub model_2: Model2,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 10
+  - Min: -10
+  - Step: 0.01
+*/
     pub multiplier: Multiplier,
 }
 impl<
@@ -475,7 +606,11 @@ pub struct ModelSave<
 > {
     ///No documentation.
     pub model: Model,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: diffusion_models/ComfyUI
+*/
     pub filename_prefix: FilenamePrefix,
 }
 impl<
@@ -519,7 +654,11 @@ pub struct VaeSave<
 > {
     ///No documentation.
     pub vae: Vae,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: vae/ComfyUI_vae
+*/
     pub filename_prefix: FilenamePrefix,
 }
 impl<

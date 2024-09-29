@@ -13,13 +13,41 @@ pub struct FreeU<
 > {
     ///No documentation.
     pub model: Model,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1.1
+  - Max: 10
+  - Min: 0
+  - Step: 0.01
+*/
     pub b_1: B1,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1.2
+  - Max: 10
+  - Min: 0
+  - Step: 0.01
+*/
     pub b_2: B2,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 0.9
+  - Max: 10
+  - Min: 0
+  - Step: 0.01
+*/
     pub s_1: S1,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 0.2
+  - Max: 10
+  - Min: 0
+  - Step: 0.01
+*/
     pub s_2: S2,
 }
 impl<
@@ -73,13 +101,41 @@ pub struct FreeUV2<
 > {
     ///No documentation.
     pub model: Model,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1.3
+  - Max: 10
+  - Min: 0
+  - Step: 0.01
+*/
     pub b_1: B1,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1.4
+  - Max: 10
+  - Min: 0
+  - Step: 0.01
+*/
     pub b_2: B2,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 0.9
+  - Max: 10
+  - Min: 0
+  - Step: 0.01
+*/
     pub s_1: S1,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 0.2
+  - Max: 10
+  - Min: 0
+  - Step: 0.01
+*/
     pub s_2: S2,
 }
 impl<
@@ -133,13 +189,35 @@ pub struct HyperTile<
 > {
     ///No documentation.
     pub model: Model,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 256
+  - Max: 2048
+  - Min: 1
+*/
     pub tile_size: TileSize,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 2
+  - Max: 128
+  - Min: 1
+*/
     pub swap_size: SwapSize,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 0
+  - Max: 10
+  - Min: 0
+*/
     pub max_depth: MaxDepth,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: false
+*/
     pub scale_depth: ScaleDepth,
 }
 impl<
@@ -195,6 +273,165 @@ for HyperTile<Model, TileSize, SwapSize, MaxDepth, ScaleDepth> {
     const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "model_patches/unet";
 }
+///**PatchModelAddDownscale (Kohya Deep Shrink)**: No description.
+#[derive(Clone)]
+pub struct PatchModelAddDownscale<
+    Model: crate::nodes::types::Model,
+    BlockNumber: crate::nodes::types::Int,
+    DownscaleFactor: crate::nodes::types::Float,
+    StartPercent: crate::nodes::types::Float,
+    EndPercent: crate::nodes::types::Float,
+    DownscaleAfterSkip: crate::nodes::types::Boolean,
+    DownscaleMethod: crate::nodes::types::String,
+    UpscaleMethod: crate::nodes::types::String,
+> {
+    ///No documentation.
+    pub model: Model,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 3
+  - Max: 32
+  - Min: 1
+  - Step: 1
+*/
+    pub block_number: BlockNumber,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 2
+  - Max: 9
+  - Min: 0.1
+  - Step: 0.001
+*/
+    pub downscale_factor: DownscaleFactor,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 0
+  - Max: 1
+  - Min: 0
+  - Step: 0.001
+*/
+    pub start_percent: StartPercent,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 0.35
+  - Max: 1
+  - Min: 0
+  - Step: 0.001
+*/
+    pub end_percent: EndPercent,
+    /**No documentation.
+
+**Metadata**:
+  - Default: true
+*/
+    pub downscale_after_skip: DownscaleAfterSkip,
+    ///No documentation.
+    pub downscale_method: DownscaleMethod,
+    ///No documentation.
+    pub upscale_method: UpscaleMethod,
+}
+impl<
+    Model: crate::nodes::types::Model,
+    BlockNumber: crate::nodes::types::Int,
+    DownscaleFactor: crate::nodes::types::Float,
+    StartPercent: crate::nodes::types::Float,
+    EndPercent: crate::nodes::types::Float,
+    DownscaleAfterSkip: crate::nodes::types::Boolean,
+    DownscaleMethod: crate::nodes::types::String,
+    UpscaleMethod: crate::nodes::types::String,
+> PatchModelAddDownscale<
+    Model,
+    BlockNumber,
+    DownscaleFactor,
+    StartPercent,
+    EndPercent,
+    DownscaleAfterSkip,
+    DownscaleMethod,
+    UpscaleMethod,
+> {
+    /// Create a new node.
+    pub fn new(
+        model: Model,
+        block_number: BlockNumber,
+        downscale_factor: DownscaleFactor,
+        start_percent: StartPercent,
+        end_percent: EndPercent,
+        downscale_after_skip: DownscaleAfterSkip,
+        downscale_method: DownscaleMethod,
+        upscale_method: UpscaleMethod,
+    ) -> Self {
+        Self {
+            model,
+            block_number,
+            downscale_factor,
+            start_percent,
+            end_percent,
+            downscale_after_skip,
+            downscale_method,
+            upscale_method,
+        }
+    }
+}
+impl<
+    Model: crate::nodes::types::Model,
+    BlockNumber: crate::nodes::types::Int,
+    DownscaleFactor: crate::nodes::types::Float,
+    StartPercent: crate::nodes::types::Float,
+    EndPercent: crate::nodes::types::Float,
+    DownscaleAfterSkip: crate::nodes::types::Boolean,
+    DownscaleMethod: crate::nodes::types::String,
+    UpscaleMethod: crate::nodes::types::String,
+> crate::nodes::TypedNode
+for PatchModelAddDownscale<
+    Model,
+    BlockNumber,
+    DownscaleFactor,
+    StartPercent,
+    EndPercent,
+    DownscaleAfterSkip,
+    DownscaleMethod,
+    UpscaleMethod,
+> {
+    type Output = crate::nodes::types::ModelOut;
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
+        Self::Output {
+            node_id,
+            node_slot: 0u32,
+        }
+    }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("model".to_string(), self.model.clone().into());
+        output.insert("block_number".to_string(), self.block_number.clone().into());
+        output
+            .insert(
+                "downscale_factor".to_string(),
+                self.downscale_factor.clone().into(),
+            );
+        output.insert("start_percent".to_string(), self.start_percent.clone().into());
+        output.insert("end_percent".to_string(), self.end_percent.clone().into());
+        output
+            .insert(
+                "downscale_after_skip".to_string(),
+                self.downscale_after_skip.clone().into(),
+            );
+        output
+            .insert(
+                "downscale_method".to_string(),
+                self.downscale_method.clone().into(),
+            );
+        output.insert("upscale_method".to_string(), self.upscale_method.clone().into());
+        output
+    }
+    const NAME: &'static str = "PatchModelAddDownscale";
+    const DISPLAY_NAME: &'static str = "PatchModelAddDownscale (Kohya Deep Shrink)";
+    const DESCRIPTION: &'static str = "";
+    const CATEGORY: &'static str = "model_patches/unet";
+}
 ///**PerturbedAttentionGuidance**: No description.
 #[derive(Clone)]
 pub struct PerturbedAttentionGuidance<
@@ -203,7 +440,15 @@ pub struct PerturbedAttentionGuidance<
 > {
     ///No documentation.
     pub model: Model,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 3
+  - Max: 100
+  - Min: 0
+  - Round: 0.01
+  - Step: 0.01
+*/
     pub scale: Scale,
 }
 impl<
@@ -234,6 +479,55 @@ impl<
     }
     const NAME: &'static str = "PerturbedAttentionGuidance";
     const DISPLAY_NAME: &'static str = "PerturbedAttentionGuidance";
+    const DESCRIPTION: &'static str = "";
+    const CATEGORY: &'static str = "model_patches/unet";
+}
+///**TomePatchModel**: No description.
+#[derive(Clone)]
+pub struct TomePatchModel<
+    Model: crate::nodes::types::Model,
+    Ratio: crate::nodes::types::Float,
+> {
+    ///No documentation.
+    pub model: Model,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 0.3
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub ratio: Ratio,
+}
+impl<
+    Model: crate::nodes::types::Model,
+    Ratio: crate::nodes::types::Float,
+> TomePatchModel<Model, Ratio> {
+    /// Create a new node.
+    pub fn new(model: Model, ratio: Ratio) -> Self {
+        Self { model, ratio }
+    }
+}
+impl<
+    Model: crate::nodes::types::Model,
+    Ratio: crate::nodes::types::Float,
+> crate::nodes::TypedNode for TomePatchModel<Model, Ratio> {
+    type Output = crate::nodes::types::ModelOut;
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
+        Self::Output {
+            node_id,
+            node_slot: 0u32,
+        }
+    }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("model".to_string(), self.model.clone().into());
+        output.insert("ratio".to_string(), self.ratio.clone().into());
+        output
+    }
+    const NAME: &'static str = "TomePatchModel";
+    const DISPLAY_NAME: &'static str = "TomePatchModel";
     const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "model_patches/unet";
 }

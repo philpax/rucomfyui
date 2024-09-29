@@ -20,15 +20,48 @@ pub struct GligenTextBoxApply<
     pub clip: Clip,
     ///No documentation.
     pub gligen_textbox_model: GligenTextboxModel,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Dynamic prompts: true
+  - Multiline: true
+*/
     pub text: Text,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 64
+  - Max: 16384
+  - Min: 8
+  - Step: 8
+*/
     pub width: Width,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 64
+  - Max: 16384
+  - Min: 8
+  - Step: 8
+*/
     pub height: Height,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 0
+  - Max: 16384
+  - Min: 0
+  - Step: 8
+*/
     pub x: X,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 0
+  - Max: 16384
+  - Min: 0
+  - Step: 8
+*/
     pub y: Y,
 }
 impl<

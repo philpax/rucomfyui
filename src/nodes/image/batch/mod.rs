@@ -11,9 +11,21 @@ pub struct ImageFromBatch<
 > {
     ///No documentation.
     pub image: Image,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 0
+  - Max: 4095
+  - Min: 0
+*/
     pub batch_index: BatchIndex,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 4096
+  - Min: 1
+*/
     pub length: Length,
 }
 impl<
@@ -58,7 +70,13 @@ pub struct RebatchImages<
 > {
     ///No documentation.
     pub images: Images,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 4096
+  - Min: 1
+*/
     pub batch_size: BatchSize,
 }
 impl<
@@ -100,7 +118,13 @@ pub struct RepeatImageBatch<
 > {
     ///No documentation.
     pub image: Image,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 4096
+  - Min: 1
+*/
     pub amount: Amount,
 }
 impl<

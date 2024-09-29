@@ -58,7 +58,14 @@ pub struct VaeEncodeForInpaint<
     pub vae: Vae,
     ///No documentation.
     pub mask: Mask,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 6
+  - Max: 64
+  - Min: 0
+  - Step: 1
+*/
     pub grow_mask_by: GrowMaskBy,
 }
 impl<

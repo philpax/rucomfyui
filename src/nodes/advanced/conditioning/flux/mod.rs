@@ -12,11 +12,28 @@ pub struct ClipTextEncodeFlux<
 > {
     ///No documentation.
     pub clip: Clip,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Dynamic prompts: true
+  - Multiline: true
+*/
     pub clip_l: ClipL,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Dynamic prompts: true
+  - Multiline: true
+*/
     pub t_5_xxl: T5Xxl,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 3.5
+  - Max: 100
+  - Min: 0
+  - Step: 0.1
+*/
     pub guidance: Guidance,
 }
 impl<
@@ -69,7 +86,14 @@ pub struct FluxGuidance<
 > {
     ///No documentation.
     pub conditioning: Conditioning,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 3.5
+  - Max: 100
+  - Min: 0
+  - Step: 0.1
+*/
     pub guidance: Guidance,
 }
 impl<

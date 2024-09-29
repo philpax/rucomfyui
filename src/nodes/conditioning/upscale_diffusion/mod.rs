@@ -30,9 +30,23 @@ pub struct Sd4XUpscaleConditioning<
     pub positive: Positive,
     ///No documentation.
     pub negative: Negative,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 4
+  - Max: 10
+  - Min: 0
+  - Step: 0.01
+*/
     pub scale_ratio: ScaleRatio,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 0
+  - Max: 1
+  - Min: 0
+  - Step: 0.001
+*/
     pub noise_augmentation: NoiseAugmentation,
 }
 impl<

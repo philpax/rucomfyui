@@ -20,11 +20,31 @@ pub struct KSampler<
 > {
     ///The model used for denoising the input latent.
     pub model: Model,
-    ///The random seed used for creating the noise.
+    /**The random seed used for creating the noise.
+
+**Metadata**:
+  - Default: 0
+  - Max: 18446744073709551615
+  - Min: 0
+*/
     pub seed: Seed,
-    ///The number of steps used in the denoising process.
+    /**The number of steps used in the denoising process.
+
+**Metadata**:
+  - Default: 20
+  - Max: 10000
+  - Min: 1
+*/
     pub steps: Steps,
-    ///The Classifier-Free Guidance scale balances creativity and adherence to the prompt. Higher values result in images more closely matching the prompt however too high values will negatively impact quality.
+    /**The Classifier-Free Guidance scale balances creativity and adherence to the prompt. Higher values result in images more closely matching the prompt however too high values will negatively impact quality.
+
+**Metadata**:
+  - Default: 8
+  - Max: 100
+  - Min: 0
+  - Round: 0.01
+  - Step: 0.1
+*/
     pub cfg: Cfg,
     ///The algorithm used when sampling, this can affect the quality, speed, and style of the generated output.
     pub sampler_name: SamplerName,
@@ -36,7 +56,14 @@ pub struct KSampler<
     pub negative: Negative,
     ///The latent image to denoise.
     pub latent_image: LatentImage,
-    ///The amount of denoising applied, lower values will maintain the structure of the initial image allowing for image to image sampling.
+    /**The amount of denoising applied, lower values will maintain the structure of the initial image allowing for image to image sampling.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
     pub denoise: Denoise,
 }
 impl<
@@ -160,11 +187,31 @@ pub struct KSamplerAdvanced<
     pub model: Model,
     ///No documentation.
     pub add_noise: AddNoise,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 0
+  - Max: 18446744073709551615
+  - Min: 0
+*/
     pub noise_seed: NoiseSeed,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 20
+  - Max: 10000
+  - Min: 1
+*/
     pub steps: Steps,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 8
+  - Max: 100
+  - Min: 0
+  - Round: 0.01
+  - Step: 0.1
+*/
     pub cfg: Cfg,
     ///No documentation.
     pub sampler_name: SamplerName,
@@ -176,9 +223,21 @@ pub struct KSamplerAdvanced<
     pub negative: Negative,
     ///No documentation.
     pub latent_image: LatentImage,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 0
+  - Max: 10000
+  - Min: 0
+*/
     pub start_at_step: StartAtStep,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 10000
+  - Max: 10000
+  - Min: 0
+*/
     pub end_at_step: EndAtStep,
     ///No documentation.
     pub return_with_leftover_noise: ReturnWithLeftoverNoise,

@@ -10,7 +10,14 @@ pub struct ModelSamplingAuraFlow<
 > {
     ///No documentation.
     pub model: Model,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1.73
+  - Max: 100
+  - Min: 0
+  - Step: 0.01
+*/
     pub shift: Shift,
 }
 impl<
@@ -56,9 +63,25 @@ pub struct ModelSamplingContinuousEdm<
     pub model: Model,
     ///No documentation.
     pub sampling: Sampling,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 120
+  - Max: 1000
+  - Min: 0
+  - Round: false
+  - Step: 0.001
+*/
     pub sigma_max: SigmaMax,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 0.002
+  - Max: 1000
+  - Min: 0
+  - Round: false
+  - Step: 0.001
+*/
     pub sigma_min: SigmaMin,
 }
 impl<
@@ -121,9 +144,25 @@ pub struct ModelSamplingContinuousV<
     pub model: Model,
     ///No documentation.
     pub sampling: Sampling,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 500
+  - Max: 1000
+  - Min: 0
+  - Round: false
+  - Step: 0.001
+*/
     pub sigma_max: SigmaMax,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 0.03
+  - Max: 1000
+  - Min: 0
+  - Round: false
+  - Step: 0.001
+*/
     pub sigma_min: SigmaMin,
 }
 impl<
@@ -185,7 +224,11 @@ pub struct ModelSamplingDiscrete<
     pub model: Model,
     ///No documentation.
     pub sampling: Sampling,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: false
+*/
     pub zsnr: Zsnr,
 }
 impl<
@@ -233,13 +276,41 @@ pub struct ModelSamplingFlux<
 > {
     ///No documentation.
     pub model: Model,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1.15
+  - Max: 100
+  - Min: 0
+  - Step: 0.01
+*/
     pub max_shift: MaxShift,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 0.5
+  - Max: 100
+  - Min: 0
+  - Step: 0.01
+*/
     pub base_shift: BaseShift,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1024
+  - Max: 16384
+  - Min: 16
+  - Step: 8
+*/
     pub width: Width,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1024
+  - Max: 16384
+  - Min: 16
+  - Step: 8
+*/
     pub height: Height,
 }
 impl<
@@ -303,7 +374,14 @@ pub struct ModelSamplingSd3<
 > {
     ///No documentation.
     pub model: Model,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 3
+  - Max: 100
+  - Min: 0
+  - Step: 0.01
+*/
     pub shift: Shift,
 }
 impl<
@@ -345,7 +423,14 @@ pub struct ModelSamplingStableCascade<
 > {
     ///No documentation.
     pub model: Model,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 2
+  - Max: 100
+  - Min: 0
+  - Step: 0.01
+*/
     pub shift: Shift,
 }
 impl<
@@ -387,7 +472,14 @@ pub struct RescaleCfg<
 > {
     ///No documentation.
     pub model: Model,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 0.7
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
     pub multiplier: Multiplier,
 }
 impl<

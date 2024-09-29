@@ -60,7 +60,13 @@ pub struct SplitSigmas<
 > {
     ///No documentation.
     pub sigmas: Sigmas,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 0
+  - Max: 10000
+  - Min: 0
+*/
     pub step: Step,
 }
 impl<
@@ -108,7 +114,14 @@ pub struct SplitSigmasDenoise<
 > {
     ///No documentation.
     pub sigmas: Sigmas,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
     pub denoise: Denoise,
 }
 impl<

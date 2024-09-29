@@ -7,7 +7,9 @@ use quote::quote;
 
 mod util;
 
-use rucomfyui::object_info::{CategoryTree, CategoryTreeNode, Object, ObjectInput, ObjectType};
+use rucomfyui::object_info::{
+    CategoryTree, CategoryTreeNode, Object, ObjectInputMetaTyped, ObjectType,
+};
 
 #[tokio::main]
 async fn main() {
@@ -39,7 +41,7 @@ async fn load_or_get_object_info() -> Result<Vec<rucomfyui::object_info::Object>
             let url = std::env::args().nth(1).expect("ComfyUI URL not provided");
             let client = rucomfyui::Client::new(url);
 
-            let object_info = client
+            let mut object_info: Vec<Object> = client
                 .object_info()
                 .await?
                 .values()
@@ -48,7 +50,8 @@ async fn load_or_get_object_info() -> Result<Vec<rucomfyui::object_info::Object>
                 })
                 .cloned()
                 .collect();
-            std::fs::write(path, serde_json::to_string(&object_info)?)?;
+            object_info.sort_by(|a, b| a.name.cmp(&b.name));
+            std::fs::write(path, serde_json::to_string_pretty(&object_info)?)?;
             Ok(object_info)
         }
     }
@@ -142,7 +145,11 @@ fn type_module_definitions() -> Result<TokenStream> {
         impl String for std::string::String {}
         impl<'a> String for &'a str {}
         impl Float for f32 {}
+        impl Float for f64 {}
+        impl Int for u32 {}
         impl Int for i32 {}
+        impl Int for i64 {}
+        impl Int for u64 {}
         impl Boolean for bool {}
     })
 }
@@ -296,6 +303,7 @@ fn write_node(
 struct ProcessedInput<'a> {
     original_name: &'a str,
     name: syn::Ident,
+    meta_typed: Option<&'a ObjectInputMetaTyped>,
     tooltip: Option<&'a str>,
     ty: ObjectType,
     generic_name: syn::Ident,
@@ -303,46 +311,23 @@ struct ProcessedInput<'a> {
     optional: bool,
 }
 fn node_processed_inputs(node: &Object) -> Result<Vec<ProcessedInput>> {
-    fn process_input<'a>(
-        name: &'a str,
-        input: &'a ObjectInput,
-        optional: bool,
-    ) -> Option<ProcessedInput<'a>> {
-        let ty = input.as_type()?;
-        Some(ProcessedInput {
-            original_name: name,
-            name: util::name_to_ident(name, false).ok()?,
-            tooltip: input.tooltip(),
-            ty: ty.clone(),
-            generic_name: util::name_to_ident(name, true).ok()?,
-            generic_ty: util::name_to_ident(&format!("{:?}", ty), true).ok()?,
-            optional,
+    Ok(node
+        .all_inputs()
+        .flat_map(|(name, input, required)| {
+            let ty = input.as_type()?;
+            let meta_typed = input.as_meta_typed();
+            Some(ProcessedInput {
+                original_name: name,
+                name: util::name_to_ident(name, false).ok()?,
+                meta_typed,
+                tooltip: input.tooltip(),
+                ty: ty.clone(),
+                generic_name: util::name_to_ident(name, true).ok()?,
+                generic_ty: util::name_to_ident(&format!("{:?}", ty), true).ok()?,
+                optional: !required,
+            })
         })
-    }
-
-    let required_inputs = node
-        .input_order
-        .required
-        .iter()
-        .flat_map(|name| process_input(name, node.input.required.get(name)?, false))
-        .collect::<Vec<_>>();
-    let optional_inputs = node
-        .input_order
-        .optional
-        .as_ref()
-        .map(|o| {
-            o.iter()
-                .flat_map(|name| {
-                    process_input(name, node.input.optional.as_ref()?.get(name)?, true)
-                })
-                .collect::<Vec<_>>()
-        })
-        .unwrap_or_default();
-
-    Ok(required_inputs
-        .into_iter()
-        .chain(optional_inputs.into_iter())
-        .collect::<Vec<_>>())
+        .collect())
 }
 
 fn write_node_struct(
@@ -385,7 +370,45 @@ fn write_node_struct(
     let fields = processed_inputs.iter().map(|input| {
         let name = &input.name;
         let generic_name = &input.generic_name;
-        let doc = input.tooltip.unwrap_or("No documentation.");
+        let mut doc = input.tooltip.unwrap_or("No documentation.").to_string();
+        if let Some(metadata) = input.meta_typed {
+            let mut metadata_items = vec![];
+            match metadata {
+                ObjectInputMetaTyped::Image(v) => {
+                    metadata_items.push(("Image upload", Some(v.image_upload.to_string())));
+                }
+                ObjectInputMetaTyped::Audio(v) => {
+                    metadata_items.push(("Audio upload", Some(v.audio_upload.to_string())));
+                }
+                ObjectInputMetaTyped::Boolean(v) => {
+                    metadata_items.push(("Default", Some(v.default.to_string())));
+                }
+                ObjectInputMetaTyped::String(v) => {
+                    metadata_items
+                        .push(("Dynamic prompts", v.dynamic_prompts.map(|v| v.to_string())));
+                    metadata_items.push(("Multiline", v.multiline.map(|v| v.to_string())));
+                    metadata_items.push(("Default", v.default.as_ref().map(|v| v.to_string())));
+                }
+                ObjectInputMetaTyped::Number(v) => {
+                    metadata_items.push(("Default", Some(v.default.to_string())));
+                    metadata_items.push(("Display", v.display.as_ref().map(|v| v.to_string())));
+                    metadata_items.push(("Max", Some(v.max.to_string())));
+                    metadata_items.push(("Min", Some(v.min.to_string())));
+                    metadata_items.push(("Round", v.round.map(|v| v.to_string())));
+                    metadata_items.push(("Step", v.step.map(|v| v.to_string())));
+                }
+            }
+            let metadata_items = metadata_items
+                .into_iter()
+                .filter_map(|(k, v)| v.map(|v| (k, v)))
+                .collect::<Vec<_>>();
+            if !metadata_items.is_empty() {
+                doc.push_str("\n\n**Metadata**:\n");
+                for (key, value) in metadata_items {
+                    doc.push_str(&format!("  - {}: {}\n", key, value));
+                }
+            }
+        }
         let ty = if input.optional {
             quote! {
                 Option<#generic_name>

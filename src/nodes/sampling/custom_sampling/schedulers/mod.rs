@@ -11,9 +11,22 @@ pub struct AlignYourStepsScheduler<
 > {
     ///No documentation.
     pub model_type: ModelType,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 10
+  - Max: 10000
+  - Min: 10
+*/
     pub steps: Steps,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
     pub denoise: Denoise,
 }
 impl<
@@ -62,9 +75,22 @@ pub struct BasicScheduler<
     pub model: Model,
     ///No documentation.
     pub scheduler: Scheduler,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 20
+  - Max: 10000
+  - Min: 1
+*/
     pub steps: Steps,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
     pub denoise: Denoise,
 }
 impl<
@@ -124,11 +150,33 @@ pub struct BetaSamplingScheduler<
 > {
     ///No documentation.
     pub model: Model,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 20
+  - Max: 10000
+  - Min: 1
+*/
     pub steps: Steps,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 0.6
+  - Max: 50
+  - Min: 0
+  - Round: false
+  - Step: 0.01
+*/
     pub alpha: Alpha,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 0.6
+  - Max: 50
+  - Min: 0
+  - Round: false
+  - Step: 0.01
+*/
     pub beta: Beta,
 }
 impl<
@@ -175,11 +223,33 @@ pub struct ExponentialScheduler<
     SigmaMax: crate::nodes::types::Float,
     SigmaMin: crate::nodes::types::Float,
 > {
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 20
+  - Max: 10000
+  - Min: 1
+*/
     pub steps: Steps,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 14.614642
+  - Max: 5000
+  - Min: 0
+  - Round: false
+  - Step: 0.01
+*/
     pub sigma_max: SigmaMax,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 0.0291675
+  - Max: 5000
+  - Min: 0
+  - Round: false
+  - Step: 0.01
+*/
     pub sigma_min: SigmaMin,
 }
 impl<
@@ -227,11 +297,31 @@ pub struct GitsScheduler<
     Steps: crate::nodes::types::Int,
     Denoise: crate::nodes::types::Float,
 > {
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1.2
+  - Max: 1.5
+  - Min: 0.8
+  - Step: 0.05
+*/
     pub coeff: Coeff,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 10
+  - Max: 1000
+  - Min: 2
+*/
     pub steps: Steps,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
     pub denoise: Denoise,
 }
 impl<
@@ -276,13 +366,43 @@ pub struct KarrasScheduler<
     SigmaMin: crate::nodes::types::Float,
     Rho: crate::nodes::types::Float,
 > {
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 20
+  - Max: 10000
+  - Min: 1
+*/
     pub steps: Steps,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 14.614642
+  - Max: 5000
+  - Min: 0
+  - Round: false
+  - Step: 0.01
+*/
     pub sigma_max: SigmaMax,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 0.0291675
+  - Max: 5000
+  - Min: 0
+  - Round: false
+  - Step: 0.01
+*/
     pub sigma_min: SigmaMin,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 7
+  - Max: 100
+  - Min: 0
+  - Round: false
+  - Step: 0.01
+*/
     pub rho: Rho,
 }
 impl<
@@ -332,6 +452,116 @@ impl<
     const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "sampling/custom_sampling/schedulers";
 }
+///**LaplaceScheduler**: No description.
+#[derive(Clone)]
+pub struct LaplaceScheduler<
+    Steps: crate::nodes::types::Int,
+    SigmaMax: crate::nodes::types::Float,
+    SigmaMin: crate::nodes::types::Float,
+    Mu: crate::nodes::types::Float,
+    Beta: crate::nodes::types::Float,
+> {
+    /**No documentation.
+
+**Metadata**:
+  - Default: 20
+  - Max: 10000
+  - Min: 1
+*/
+    pub steps: Steps,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 14.614642
+  - Max: 5000
+  - Min: 0
+  - Round: false
+  - Step: 0.01
+*/
+    pub sigma_max: SigmaMax,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 0.0291675
+  - Max: 5000
+  - Min: 0
+  - Round: false
+  - Step: 0.01
+*/
+    pub sigma_min: SigmaMin,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 0
+  - Max: 10
+  - Min: -10
+  - Round: false
+  - Step: 0.1
+*/
+    pub mu: Mu,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 0.5
+  - Max: 10
+  - Min: 0
+  - Round: false
+  - Step: 0.1
+*/
+    pub beta: Beta,
+}
+impl<
+    Steps: crate::nodes::types::Int,
+    SigmaMax: crate::nodes::types::Float,
+    SigmaMin: crate::nodes::types::Float,
+    Mu: crate::nodes::types::Float,
+    Beta: crate::nodes::types::Float,
+> LaplaceScheduler<Steps, SigmaMax, SigmaMin, Mu, Beta> {
+    /// Create a new node.
+    pub fn new(
+        steps: Steps,
+        sigma_max: SigmaMax,
+        sigma_min: SigmaMin,
+        mu: Mu,
+        beta: Beta,
+    ) -> Self {
+        Self {
+            steps,
+            sigma_max,
+            sigma_min,
+            mu,
+            beta,
+        }
+    }
+}
+impl<
+    Steps: crate::nodes::types::Int,
+    SigmaMax: crate::nodes::types::Float,
+    SigmaMin: crate::nodes::types::Float,
+    Mu: crate::nodes::types::Float,
+    Beta: crate::nodes::types::Float,
+> crate::nodes::TypedNode for LaplaceScheduler<Steps, SigmaMax, SigmaMin, Mu, Beta> {
+    type Output = crate::nodes::types::SigmasOut;
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
+        Self::Output {
+            node_id,
+            node_slot: 0u32,
+        }
+    }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("steps".to_string(), self.steps.clone().into());
+        output.insert("sigma_max".to_string(), self.sigma_max.clone().into());
+        output.insert("sigma_min".to_string(), self.sigma_min.clone().into());
+        output.insert("mu".to_string(), self.mu.clone().into());
+        output.insert("beta".to_string(), self.beta.clone().into());
+        output
+    }
+    const NAME: &'static str = "LaplaceScheduler";
+    const DISPLAY_NAME: &'static str = "LaplaceScheduler";
+    const DESCRIPTION: &'static str = "";
+    const CATEGORY: &'static str = "sampling/custom_sampling/schedulers";
+}
 ///**PolyexponentialScheduler**: No description.
 #[derive(Clone)]
 pub struct PolyexponentialScheduler<
@@ -340,13 +570,43 @@ pub struct PolyexponentialScheduler<
     SigmaMin: crate::nodes::types::Float,
     Rho: crate::nodes::types::Float,
 > {
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 20
+  - Max: 10000
+  - Min: 1
+*/
     pub steps: Steps,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 14.614642
+  - Max: 5000
+  - Min: 0
+  - Round: false
+  - Step: 0.01
+*/
     pub sigma_max: SigmaMax,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 0.0291675
+  - Max: 5000
+  - Min: 0
+  - Round: false
+  - Step: 0.01
+*/
     pub sigma_min: SigmaMin,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 100
+  - Min: 0
+  - Round: false
+  - Step: 0.01
+*/
     pub rho: Rho,
 }
 impl<
@@ -405,9 +665,22 @@ pub struct SdTurboScheduler<
 > {
     ///No documentation.
     pub model: Model,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 10
+  - Min: 1
+*/
     pub steps: Steps,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
     pub denoise: Denoise,
 }
 impl<
@@ -452,13 +725,43 @@ pub struct VpScheduler<
     BetaMin: crate::nodes::types::Float,
     EpsS: crate::nodes::types::Float,
 > {
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 20
+  - Max: 10000
+  - Min: 1
+*/
     pub steps: Steps,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 19.9
+  - Max: 5000
+  - Min: 0
+  - Round: false
+  - Step: 0.01
+*/
     pub beta_d: BetaD,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 0.1
+  - Max: 5000
+  - Min: 0
+  - Round: false
+  - Step: 0.01
+*/
     pub beta_min: BetaMin,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 0.001
+  - Max: 1
+  - Min: 0
+  - Round: false
+  - Step: 0.0001
+*/
     pub eps_s: EpsS,
 }
 impl<
