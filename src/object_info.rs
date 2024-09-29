@@ -337,6 +337,33 @@ impl From<f64> for ObjectInputMetaTypedNumberValue {
         Self::F64(v)
     }
 }
+impl From<ObjectInputMetaTypedNumberValue> for i64 {
+    fn from(v: ObjectInputMetaTypedNumberValue) -> Self {
+        match v {
+            ObjectInputMetaTypedNumberValue::I64(v) => v,
+            ObjectInputMetaTypedNumberValue::U64(v) => v as i64,
+            ObjectInputMetaTypedNumberValue::F64(v) => v as i64,
+        }
+    }
+}
+impl From<ObjectInputMetaTypedNumberValue> for u64 {
+    fn from(v: ObjectInputMetaTypedNumberValue) -> Self {
+        match v {
+            ObjectInputMetaTypedNumberValue::I64(v) => v as u64,
+            ObjectInputMetaTypedNumberValue::U64(v) => v,
+            ObjectInputMetaTypedNumberValue::F64(v) => v as u64,
+        }
+    }
+}
+impl From<ObjectInputMetaTypedNumberValue> for f64 {
+    fn from(v: ObjectInputMetaTypedNumberValue) -> Self {
+        match v {
+            ObjectInputMetaTypedNumberValue::I64(v) => v as f64,
+            ObjectInputMetaTypedNumberValue::U64(v) => v as f64,
+            ObjectInputMetaTypedNumberValue::F64(v) => v,
+        }
+    }
+}
 impl std::fmt::Display for ObjectInputMetaTypedNumberValue {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {

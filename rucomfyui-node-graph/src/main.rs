@@ -10,11 +10,15 @@ use std::{
 use anyhow::Context;
 use eframe::egui::{self, DragValue, TextStyle, Visuals};
 use egui_node_graph2::*;
+use serde::{Deserialize, Serialize};
+
 use rucomfyui::{
-    object_info::{Object, ObjectInfo, ObjectInputMetaTyped, ObjectInputType, ObjectType},
+    object_info::{
+        Object, ObjectInfo, ObjectInputMetaTyped, ObjectInputMetaTypedRoundValue, ObjectInputType,
+        ObjectType,
+    },
     workflow::{WorkflowInput, WorkflowNode, WorkflowNodeId},
 };
-use serde::{Deserialize, Serialize};
 
 fn main() {
     eframe::run_native(
@@ -278,7 +282,14 @@ pub enum FlowValueType {
         value: String,
         multiline: bool,
     },
-    Float(f64),
+    Float {
+        value: f64,
+        default: f64,
+        min: f64,
+        max: f64,
+        round: Option<f64>,
+        step: f64,
+    },
     SignedInt(i64),
     UnsignedInt(u64),
     Boolean(bool),
@@ -287,22 +298,46 @@ pub enum FlowValueType {
     Unknown,
 }
 impl FlowValueType {
+    fn convert_float(value: Option<f64>, typed_meta: Option<&ObjectInputMetaTyped>) -> Self {
+        let typed_meta = typed_meta.and_then(|m| m.as_number());
+        Self::Float {
+            value: typed_meta
+                .map(|m| f64::from(m.default))
+                .or(value)
+                .unwrap_or(0.0),
+            default: typed_meta.map(|m| m.default.into()).unwrap_or(0.0),
+            min: typed_meta.map(|m| m.min.into()).unwrap_or(f64::MIN),
+            max: typed_meta.map(|m| m.max.into()).unwrap_or(f64::MAX),
+            round: typed_meta.and_then(|m| m.round).and_then(|r| match r {
+                ObjectInputMetaTypedRoundValue::Bool(b) => b.then_some(1.0),
+                ObjectInputMetaTypedRoundValue::Number(v) => Some(v),
+            }),
+            step: typed_meta
+                .and_then(|m| m.step)
+                .map(|s| s.into())
+                .unwrap_or(1.0),
+        }
+    }
+    fn convert_string(value: &str, typed_meta: Option<&ObjectInputMetaTyped>) -> Self {
+        Self::String {
+            value: value.into(),
+            multiline: typed_meta
+                .and_then(|m| m.as_string())
+                .and_then(|m| m.multiline)
+                .unwrap_or(false),
+        }
+    }
+
     fn from_object_type(
         object_type: &ObjectType,
         typed_meta: Option<&ObjectInputMetaTyped>,
     ) -> Self {
         match object_type {
-            ObjectType::Boolean => FlowValueType::Boolean(false),
-            ObjectType::Float => FlowValueType::Float(0.0),
-            ObjectType::Int => FlowValueType::SignedInt(0),
-            ObjectType::String => FlowValueType::String {
-                value: "".into(),
-                multiline: typed_meta
-                    .and_then(|m| m.as_string())
-                    .and_then(|m| m.multiline)
-                    .unwrap_or(false),
-            },
-            _ => FlowValueType::Other(object_type.clone()),
+            ObjectType::Boolean => Self::Boolean(false),
+            ObjectType::Float => Self::convert_float(None, typed_meta),
+            ObjectType::Int => Self::SignedInt(0),
+            ObjectType::String => Self::convert_string("", typed_meta),
+            _ => Self::Other(object_type.clone()),
         }
     }
     fn from_object_type_and_input(
@@ -311,18 +346,12 @@ impl FlowValueType {
         typed_meta: Option<&ObjectInputMetaTyped>,
     ) -> Self {
         match input {
-            WorkflowInput::String(s) => FlowValueType::String {
-                value: s.clone(),
-                multiline: typed_meta
-                    .and_then(|m| m.as_string())
-                    .and_then(|m| m.multiline)
-                    .unwrap_or(false),
-            },
-            WorkflowInput::F64(v) => FlowValueType::Float(*v),
-            WorkflowInput::I64(v) => FlowValueType::SignedInt(*v),
-            WorkflowInput::U64(v) => FlowValueType::UnsignedInt(*v),
-            WorkflowInput::Boolean(b) => FlowValueType::Boolean(*b),
-            WorkflowInput::Slot(_, _) => FlowValueType::Other(object_type.clone()),
+            WorkflowInput::String(s) => Self::convert_string(s, typed_meta),
+            WorkflowInput::F64(v) => Self::convert_float(Some(*v), typed_meta),
+            WorkflowInput::I64(v) => Self::SignedInt(*v),
+            WorkflowInput::U64(v) => Self::UnsignedInt(*v),
+            WorkflowInput::Boolean(b) => Self::Boolean(*b),
+            WorkflowInput::Slot(_, _) => Self::Other(object_type.clone()),
         }
     }
     #[must_use]
@@ -364,8 +393,16 @@ impl WidgetValueTrait for FlowValueType {
                     ui.text_edit_singleline(value);
                 }
             }
-            FlowValueType::Float(v) => {
-                ui.add(DragValue::new(v));
+            FlowValueType::Float {
+                value,
+                default: _,
+                min,
+                max,
+                round,
+                step,
+            } => {
+                ui.add(DragValue::new(value).range(*min..=*max).speed(*step));
+                *value = round.map(|r| (*value / r).round() * r).unwrap_or(*value);
             }
             FlowValueType::SignedInt(v) => {
                 ui.add(DragValue::new(v));
