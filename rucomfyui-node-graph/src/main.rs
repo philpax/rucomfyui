@@ -99,6 +99,7 @@ impl Application {
         let mut mapping = HashMap::<WorkflowNodeId, BuildNodeOutput>::new();
         let mut node_position = egui::Pos2::ZERO;
 
+        self.persisted.clear_editor_state();
         let state = &mut self.persisted.state;
         for node_ids in sorted_node_ids {
             node_position.x += 300.0;
@@ -915,6 +916,17 @@ impl PersistedState {
         eframe::set_value(storage, "comfyui_address", &self.comfyui_address);
         eframe::set_value(storage, "state", &self.state);
         eframe::set_value(storage, "file_dialog", file_dialog.storage_mut());
+    }
+    pub fn clear_editor_state(&mut self) {
+        let state = &mut self.state;
+        state.node_finder = None;
+        state.node_order.clear();
+        state.node_positions.clear();
+        state.selected_nodes.clear();
+        state.graph.connections.clear();
+        state.graph.inputs.clear();
+        state.graph.outputs.clear();
+        state.graph.nodes.clear();
     }
 }
 impl Default for PersistedState {
