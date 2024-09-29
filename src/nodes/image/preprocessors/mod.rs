@@ -11,9 +11,23 @@ pub struct Canny<
 > {
     ///No documentation.
     pub image: Image,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 0.4
+  - Max: 0.99
+  - Min: 0.01
+  - Step: 0.01
+*/
     pub low_threshold: LowThreshold,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 0.8
+  - Max: 0.99
+  - Min: 0.01
+  - Step: 0.01
+*/
     pub high_threshold: HighThreshold,
 }
 impl<

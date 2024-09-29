@@ -12,9 +12,19 @@ pub struct ClipTextEncodeHunyuanDiT<
 > {
     ///No documentation.
     pub clip: Clip,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Dynamic prompts: true
+  - Multiline: true
+*/
     pub bert: Bert,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Dynamic prompts: true
+  - Multiline: true
+*/
     pub mt_5_xl: Mt5Xl,
 }
 impl<
@@ -62,11 +72,26 @@ pub struct ClipTextEncodeSd3<
 > {
     ///No documentation.
     pub clip: Clip,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Dynamic prompts: true
+  - Multiline: true
+*/
     pub clip_l: ClipL,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Dynamic prompts: true
+  - Multiline: true
+*/
     pub clip_g: ClipG,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Dynamic prompts: true
+  - Multiline: true
+*/
     pub t_5_xxl: T5Xxl,
     ///No documentation.
     pub empty_padding: EmptyPadding,
@@ -137,23 +162,69 @@ pub struct ClipTextEncodeSdxl<
     Clip: crate::nodes::types::Clip,
     TextL: crate::nodes::types::String,
 > {
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1024
+  - Max: 16384
+  - Min: 0
+*/
     pub width: Width,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1024
+  - Max: 16384
+  - Min: 0
+*/
     pub height: Height,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 0
+  - Max: 16384
+  - Min: 0
+*/
     pub crop_w: CropW,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 0
+  - Max: 16384
+  - Min: 0
+*/
     pub crop_h: CropH,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1024
+  - Max: 16384
+  - Min: 0
+*/
     pub target_width: TargetWidth,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1024
+  - Max: 16384
+  - Min: 0
+*/
     pub target_height: TargetHeight,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Dynamic prompts: true
+  - Multiline: true
+*/
     pub text_g: TextG,
     ///No documentation.
     pub clip: Clip,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Dynamic prompts: true
+  - Multiline: true
+*/
     pub text_l: TextL,
 }
 impl<
@@ -258,13 +329,37 @@ pub struct ClipTextEncodeSdxlRefiner<
     Text: crate::nodes::types::String,
     Clip: crate::nodes::types::Clip,
 > {
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 6
+  - Max: 1000
+  - Min: 0
+  - Step: 0.01
+*/
     pub ascore: Ascore,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1024
+  - Max: 16384
+  - Min: 0
+*/
     pub width: Width,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1024
+  - Max: 16384
+  - Min: 0
+*/
     pub height: Height,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Dynamic prompts: true
+  - Multiline: true
+*/
     pub text: Text,
     ///No documentation.
     pub clip: Clip,
@@ -331,9 +426,23 @@ pub struct ConditioningSetTimestepRange<
 > {
     ///No documentation.
     pub conditioning: Conditioning,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 0
+  - Max: 1
+  - Min: 0
+  - Step: 0.001
+*/
     pub start: Start,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.001
+*/
     pub end: End,
 }
 impl<

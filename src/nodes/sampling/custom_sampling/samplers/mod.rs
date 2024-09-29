@@ -47,25 +47,103 @@ pub struct SamplerDpmAdaptative<
     Eta: crate::nodes::types::Float,
     SNoise: crate::nodes::types::Float,
 > {
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 3
+  - Max: 3
+  - Min: 2
+*/
     pub order: Order,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 0.05
+  - Max: 100
+  - Min: 0
+  - Round: false
+  - Step: 0.01
+*/
     pub rtol: Rtol,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 0.0078
+  - Max: 100
+  - Min: 0
+  - Round: false
+  - Step: 0.01
+*/
     pub atol: Atol,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 0.05
+  - Max: 100
+  - Min: 0
+  - Round: false
+  - Step: 0.01
+*/
     pub h_init: HInit,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 0
+  - Max: 100
+  - Min: 0
+  - Round: false
+  - Step: 0.01
+*/
     pub pcoeff: Pcoeff,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 100
+  - Min: 0
+  - Round: false
+  - Step: 0.01
+*/
     pub icoeff: Icoeff,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 0
+  - Max: 100
+  - Min: 0
+  - Round: false
+  - Step: 0.01
+*/
     pub dcoeff: Dcoeff,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 0.81
+  - Max: 100
+  - Min: 0
+  - Round: false
+  - Step: 0.01
+*/
     pub accept_safety: AcceptSafety,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 0
+  - Max: 100
+  - Min: 0
+  - Round: false
+  - Step: 0.01
+*/
     pub eta: Eta,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 100
+  - Min: 0
+  - Round: false
+  - Step: 0.01
+*/
     pub s_noise: SNoise,
 }
 impl<
@@ -178,9 +256,25 @@ pub struct SamplerDpmpp2MSde<
 > {
     ///No documentation.
     pub solver_type: SolverType,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 100
+  - Min: 0
+  - Round: false
+  - Step: 0.01
+*/
     pub eta: Eta,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 100
+  - Min: 0
+  - Round: false
+  - Step: 0.01
+*/
     pub s_noise: SNoise,
     ///No documentation.
     pub noise_device: NoiseDevice,
@@ -238,9 +332,25 @@ pub struct SamplerDpmpp2SAncestral<
     Eta: crate::nodes::types::Float,
     SNoise: crate::nodes::types::Float,
 > {
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 100
+  - Min: 0
+  - Round: false
+  - Step: 0.01
+*/
     pub eta: Eta,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 100
+  - Min: 0
+  - Round: false
+  - Step: 0.01
+*/
     pub s_noise: SNoise,
 }
 impl<
@@ -281,9 +391,25 @@ pub struct SamplerDpmpp3MSde<
     SNoise: crate::nodes::types::Float,
     NoiseDevice: crate::nodes::types::String,
 > {
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 100
+  - Min: 0
+  - Round: false
+  - Step: 0.01
+*/
     pub eta: Eta,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 100
+  - Min: 0
+  - Round: false
+  - Step: 0.01
+*/
     pub s_noise: SNoise,
     ///No documentation.
     pub noise_device: NoiseDevice,
@@ -330,11 +456,35 @@ pub struct SamplerDpmppSde<
     R: crate::nodes::types::Float,
     NoiseDevice: crate::nodes::types::String,
 > {
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 100
+  - Min: 0
+  - Round: false
+  - Step: 0.01
+*/
     pub eta: Eta,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 100
+  - Min: 0
+  - Round: false
+  - Step: 0.01
+*/
     pub s_noise: SNoise,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 0.5
+  - Max: 100
+  - Min: 0
+  - Round: false
+  - Step: 0.01
+*/
     pub r: R,
     ///No documentation.
     pub noise_device: NoiseDevice,
@@ -387,9 +537,25 @@ pub struct SamplerEulerAncestral<
     Eta: crate::nodes::types::Float,
     SNoise: crate::nodes::types::Float,
 > {
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 100
+  - Min: 0
+  - Round: false
+  - Step: 0.01
+*/
     pub eta: Eta,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 100
+  - Min: 0
+  - Round: false
+  - Step: 0.01
+*/
     pub s_noise: SNoise,
 }
 impl<
@@ -429,9 +595,25 @@ pub struct SamplerEulerAncestralCfgpp<
     Eta: crate::nodes::types::Float,
     SNoise: crate::nodes::types::Float,
 > {
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Round: false
+  - Step: 0.01
+*/
     pub eta: Eta,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 10
+  - Min: 0
+  - Round: false
+  - Step: 0.01
+*/
     pub s_noise: SNoise,
 }
 impl<
@@ -472,9 +654,23 @@ pub struct SamplerLcmUpscale<
     ScaleSteps: crate::nodes::types::Int,
     UpscaleMethod: crate::nodes::types::String,
 > {
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 20
+  - Min: 0.1
+  - Step: 0.01
+*/
     pub scale_ratio: ScaleRatio,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: -1
+  - Max: 1000
+  - Min: -1
+  - Step: 1
+*/
     pub scale_steps: ScaleSteps,
     ///No documentation.
     pub upscale_method: UpscaleMethod,
@@ -524,7 +720,13 @@ impl<
 ///**SamplerLMS**: No description.
 #[derive(Clone)]
 pub struct SamplerLms<Order: crate::nodes::types::Int> {
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 4
+  - Max: 100
+  - Min: 1
+*/
     pub order: Order,
 }
 impl<Order: crate::nodes::types::Int> SamplerLms<Order> {

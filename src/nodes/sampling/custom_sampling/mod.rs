@@ -41,11 +41,29 @@ pub struct SamplerCustom<
 > {
     ///No documentation.
     pub model: Model,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: true
+*/
     pub add_noise: AddNoise,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 0
+  - Max: 18446744073709551615
+  - Min: 0
+*/
     pub noise_seed: NoiseSeed,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 8
+  - Max: 100
+  - Min: 0
+  - Round: 0.01
+  - Step: 0.1
+*/
     pub cfg: Cfg,
     ///No documentation.
     pub positive: Positive,

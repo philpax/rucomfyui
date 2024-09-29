@@ -52,13 +52,41 @@ pub struct Sv3DConditioning<
     pub init_image: InitImage,
     ///No documentation.
     pub vae: Vae,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 576
+  - Max: 16384
+  - Min: 16
+  - Step: 8
+*/
     pub width: Width,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 576
+  - Max: 16384
+  - Min: 16
+  - Step: 8
+*/
     pub height: Height,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 21
+  - Max: 4096
+  - Min: 1
+*/
     pub video_frames: VideoFrames,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 0
+  - Max: 90
+  - Min: -90
+  - Round: false
+  - Step: 0.1
+*/
     pub elevation: Elevation,
 }
 impl<
@@ -152,15 +180,51 @@ pub struct StableZero123Conditioning<
     pub init_image: InitImage,
     ///No documentation.
     pub vae: Vae,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 256
+  - Max: 16384
+  - Min: 16
+  - Step: 8
+*/
     pub width: Width,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 256
+  - Max: 16384
+  - Min: 16
+  - Step: 8
+*/
     pub height: Height,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 4096
+  - Min: 1
+*/
     pub batch_size: BatchSize,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 0
+  - Max: 180
+  - Min: -180
+  - Round: false
+  - Step: 0.1
+*/
     pub elevation: Elevation,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 0
+  - Max: 180
+  - Min: -180
+  - Round: false
+  - Step: 0.1
+*/
     pub azimuth: Azimuth,
 }
 impl<
@@ -279,19 +343,71 @@ pub struct StableZero123ConditioningBatched<
     pub init_image: InitImage,
     ///No documentation.
     pub vae: Vae,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 256
+  - Max: 16384
+  - Min: 16
+  - Step: 8
+*/
     pub width: Width,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 256
+  - Max: 16384
+  - Min: 16
+  - Step: 8
+*/
     pub height: Height,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 4096
+  - Min: 1
+*/
     pub batch_size: BatchSize,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 0
+  - Max: 180
+  - Min: -180
+  - Round: false
+  - Step: 0.1
+*/
     pub elevation: Elevation,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 0
+  - Max: 180
+  - Min: -180
+  - Round: false
+  - Step: 0.1
+*/
     pub azimuth: Azimuth,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 0
+  - Max: 180
+  - Min: -180
+  - Round: false
+  - Step: 0.1
+*/
     pub elevation_batch_increment: ElevationBatchIncrement,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 0
+  - Max: 180
+  - Min: -180
+  - Round: false
+  - Step: 0.1
+*/
     pub azimuth_batch_increment: AzimuthBatchIncrement,
 }
 impl<

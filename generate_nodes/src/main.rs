@@ -7,7 +7,9 @@ use quote::quote;
 
 mod util;
 
-use rucomfyui::object_info::{CategoryTree, CategoryTreeNode, Object, ObjectType};
+use rucomfyui::object_info::{
+    CategoryTree, CategoryTreeNode, Object, ObjectInputMetaTyped, ObjectType,
+};
 
 #[tokio::main]
 async fn main() {
@@ -301,6 +303,7 @@ fn write_node(
 struct ProcessedInput<'a> {
     original_name: &'a str,
     name: syn::Ident,
+    meta_typed: Option<&'a ObjectInputMetaTyped>,
     tooltip: Option<&'a str>,
     ty: ObjectType,
     generic_name: syn::Ident,
@@ -312,9 +315,11 @@ fn node_processed_inputs(node: &Object) -> Result<Vec<ProcessedInput>> {
         .all_inputs()
         .flat_map(|(name, input, required)| {
             let ty = input.as_type()?;
+            let meta_typed = input.as_meta_typed();
             Some(ProcessedInput {
                 original_name: name,
                 name: util::name_to_ident(name, false).ok()?,
+                meta_typed,
                 tooltip: input.tooltip(),
                 ty: ty.clone(),
                 generic_name: util::name_to_ident(name, true).ok()?,
@@ -365,7 +370,56 @@ fn write_node_struct(
     let fields = processed_inputs.iter().map(|input| {
         let name = &input.name;
         let generic_name = &input.generic_name;
-        let doc = input.tooltip.unwrap_or("No documentation.");
+        let mut doc = input.tooltip.unwrap_or("No documentation.").to_string();
+        if let Some(metadata) = input.meta_typed {
+            let mut metadata_items = vec![];
+            match metadata {
+                ObjectInputMetaTyped::Image { image_upload } => {
+                    metadata_items.push(("Image upload", Some(image_upload.to_string())));
+                }
+                ObjectInputMetaTyped::Audio { audio_upload } => {
+                    metadata_items.push(("Audio upload", Some(audio_upload.to_string())));
+                }
+                ObjectInputMetaTyped::Boolean { default } => {
+                    metadata_items.push(("Default", Some(default.to_string())));
+                }
+                ObjectInputMetaTyped::String {
+                    dynamic_prompts,
+                    multiline,
+                    default,
+                } => {
+                    metadata_items
+                        .push(("Dynamic prompts", dynamic_prompts.map(|v| v.to_string())));
+                    metadata_items.push(("Multiline", multiline.map(|v| v.to_string())));
+                    metadata_items.push(("Default", default.as_ref().map(|v| v.to_string())));
+                }
+                ObjectInputMetaTyped::Number {
+                    default,
+                    display,
+                    max,
+                    min,
+                    round,
+                    step,
+                } => {
+                    metadata_items.push(("Default", Some(default.to_string())));
+                    metadata_items.push(("Display", display.as_ref().map(|v| v.to_string())));
+                    metadata_items.push(("Max", Some(max.to_string())));
+                    metadata_items.push(("Min", Some(min.to_string())));
+                    metadata_items.push(("Round", round.map(|v| v.to_string())));
+                    metadata_items.push(("Step", step.map(|v| v.to_string())));
+                }
+            }
+            let metadata_items = metadata_items
+                .into_iter()
+                .filter_map(|(k, v)| v.map(|v| (k, v)))
+                .collect::<Vec<_>>();
+            if !metadata_items.is_empty() {
+                doc.push_str("\n\n**Metadata**:\n");
+                for (key, value) in metadata_items {
+                    doc.push_str(&format!("  - {}: {}\n", key, value));
+                }
+            }
+        }
         let ty = if input.optional {
             quote! {
                 Option<#generic_name>

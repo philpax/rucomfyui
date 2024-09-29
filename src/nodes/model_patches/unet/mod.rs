@@ -13,13 +13,41 @@ pub struct FreeU<
 > {
     ///No documentation.
     pub model: Model,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1.1
+  - Max: 10
+  - Min: 0
+  - Step: 0.01
+*/
     pub b_1: B1,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1.2
+  - Max: 10
+  - Min: 0
+  - Step: 0.01
+*/
     pub b_2: B2,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 0.9
+  - Max: 10
+  - Min: 0
+  - Step: 0.01
+*/
     pub s_1: S1,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 0.2
+  - Max: 10
+  - Min: 0
+  - Step: 0.01
+*/
     pub s_2: S2,
 }
 impl<
@@ -73,13 +101,41 @@ pub struct FreeUV2<
 > {
     ///No documentation.
     pub model: Model,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1.3
+  - Max: 10
+  - Min: 0
+  - Step: 0.01
+*/
     pub b_1: B1,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1.4
+  - Max: 10
+  - Min: 0
+  - Step: 0.01
+*/
     pub b_2: B2,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 0.9
+  - Max: 10
+  - Min: 0
+  - Step: 0.01
+*/
     pub s_1: S1,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 0.2
+  - Max: 10
+  - Min: 0
+  - Step: 0.01
+*/
     pub s_2: S2,
 }
 impl<
@@ -133,13 +189,35 @@ pub struct HyperTile<
 > {
     ///No documentation.
     pub model: Model,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 256
+  - Max: 2048
+  - Min: 1
+*/
     pub tile_size: TileSize,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 2
+  - Max: 128
+  - Min: 1
+*/
     pub swap_size: SwapSize,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 0
+  - Max: 10
+  - Min: 0
+*/
     pub max_depth: MaxDepth,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: false
+*/
     pub scale_depth: ScaleDepth,
 }
 impl<
@@ -209,15 +287,47 @@ pub struct PatchModelAddDownscale<
 > {
     ///No documentation.
     pub model: Model,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 3
+  - Max: 32
+  - Min: 1
+  - Step: 1
+*/
     pub block_number: BlockNumber,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 2
+  - Max: 9
+  - Min: 0.1
+  - Step: 0.001
+*/
     pub downscale_factor: DownscaleFactor,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 0
+  - Max: 1
+  - Min: 0
+  - Step: 0.001
+*/
     pub start_percent: StartPercent,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 0.35
+  - Max: 1
+  - Min: 0
+  - Step: 0.001
+*/
     pub end_percent: EndPercent,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: true
+*/
     pub downscale_after_skip: DownscaleAfterSkip,
     ///No documentation.
     pub downscale_method: DownscaleMethod,
@@ -330,7 +440,15 @@ pub struct PerturbedAttentionGuidance<
 > {
     ///No documentation.
     pub model: Model,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 3
+  - Max: 100
+  - Min: 0
+  - Round: 0.01
+  - Step: 0.01
+*/
     pub scale: Scale,
 }
 impl<
@@ -372,7 +490,14 @@ pub struct TomePatchModel<
 > {
     ///No documentation.
     pub model: Model,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 0.3
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
     pub ratio: Ratio,
 }
 impl<

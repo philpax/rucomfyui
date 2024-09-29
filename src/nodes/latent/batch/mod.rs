@@ -53,9 +53,21 @@ pub struct LatentFromBatch<
 > {
     ///No documentation.
     pub samples: Samples,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 0
+  - Max: 63
+  - Min: 0
+*/
     pub batch_index: BatchIndex,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 64
+  - Min: 1
+*/
     pub length: Length,
 }
 impl<
@@ -104,7 +116,13 @@ pub struct RebatchLatents<
 > {
     ///No documentation.
     pub latents: Latents,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 4096
+  - Min: 1
+*/
     pub batch_size: BatchSize,
 }
 impl<
@@ -146,7 +164,13 @@ pub struct RepeatLatentBatch<
 > {
     ///No documentation.
     pub samples: Samples,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 64
+  - Min: 1
+*/
     pub amount: Amount,
 }
 impl<

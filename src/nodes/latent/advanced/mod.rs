@@ -52,7 +52,11 @@ pub struct LatentBatchSeedBehavior<
 > {
     ///No documentation.
     pub samples: Samples,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: fixed
+*/
     pub seed_behavior: SeedBehavior,
 }
 impl<
@@ -97,7 +101,14 @@ pub struct LatentInterpolate<
     pub samples_1: Samples1,
     ///No documentation.
     pub samples_2: Samples2,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
     pub ratio: Ratio,
 }
 impl<
@@ -146,7 +157,14 @@ pub struct LatentMultiply<
 > {
     ///No documentation.
     pub samples: Samples,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 10
+  - Min: -10
+  - Step: 0.01
+*/
     pub multiplier: Multiplier,
 }
 impl<

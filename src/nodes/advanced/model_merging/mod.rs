@@ -56,7 +56,14 @@ pub struct ClipMergeSimple<
     pub clip_1: Clip1,
     ///No documentation.
     pub clip_2: Clip2,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
     pub ratio: Ratio,
 }
 impl<
@@ -104,7 +111,14 @@ pub struct ClipMergeSubtract<
     pub clip_1: Clip1,
     ///No documentation.
     pub clip_2: Clip2,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 10
+  - Min: -10
+  - Step: 0.01
+*/
     pub multiplier: Multiplier,
 }
 impl<
@@ -149,7 +163,11 @@ pub struct ClipSave<
 > {
     ///No documentation.
     pub clip: Clip,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: clip/ComfyUI
+*/
     pub filename_prefix: FilenamePrefix,
 }
 impl<
@@ -199,7 +217,11 @@ pub struct CheckpointSave<
     pub clip: Clip,
     ///No documentation.
     pub vae: Vae,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: checkpoints/ComfyUI
+*/
     pub filename_prefix: FilenamePrefix,
 }
 impl<
@@ -267,7 +289,11 @@ pub struct ImageOnlyCheckpointSave<
     pub clip_vision: ClipVision,
     ///No documentation.
     pub vae: Vae,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: checkpoints/ComfyUI
+*/
     pub filename_prefix: FilenamePrefix,
 }
 impl<
@@ -378,11 +404,32 @@ pub struct ModelMergeBlocks<
     pub model_1: Model1,
     ///No documentation.
     pub model_2: Model2,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
     pub input: Input,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
     pub middle: Middle,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
     pub out: Out,
 }
 impl<
@@ -448,7 +495,14 @@ pub struct ModelMergeSimple<
     pub model_1: Model1,
     ///No documentation.
     pub model_2: Model2,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
     pub ratio: Ratio,
 }
 impl<
@@ -496,7 +550,14 @@ pub struct ModelMergeSubtract<
     pub model_1: Model1,
     ///No documentation.
     pub model_2: Model2,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 10
+  - Min: -10
+  - Step: 0.01
+*/
     pub multiplier: Multiplier,
 }
 impl<
@@ -545,7 +606,11 @@ pub struct ModelSave<
 > {
     ///No documentation.
     pub model: Model,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: diffusion_models/ComfyUI
+*/
     pub filename_prefix: FilenamePrefix,
 }
 impl<
@@ -589,7 +654,11 @@ pub struct VaeSave<
 > {
     ///No documentation.
     pub vae: Vae,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: vae/ComfyUI_vae
+*/
     pub filename_prefix: FilenamePrefix,
 }
 impl<

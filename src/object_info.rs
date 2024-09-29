@@ -132,6 +132,13 @@ impl ObjectInput {
             Self::Input(ty) => &ty.0,
         }
     }
+    /// The [`ObjectInputMetaTyped`] of the input, if available.
+    pub fn as_meta_typed(&self) -> Option<&ObjectInputMetaTyped> {
+        match self {
+            Self::InputWithMeta(_, meta) => meta.typed.as_ref(),
+            _ => None,
+        }
+    }
     /// The type of the input.
     pub fn as_type(&self) -> Option<&ObjectType> {
         self.as_input_type().as_type()
@@ -245,7 +252,7 @@ pub enum ObjectInputMetaTyped {
     },
 }
 
-#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, Copy, Clone, PartialEq)]
 /// A number in typed metadata.
 ///
 /// This is necessary as ComfyUI may return integers for float types, so we need to preserve whatever type it originally was.
@@ -273,8 +280,17 @@ impl From<f64> for ObjectInputMetaTypedNumber {
         Self::F64(v)
     }
 }
+impl std::fmt::Display for ObjectInputMetaTypedNumber {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            Self::I64(v) => v.fmt(f),
+            Self::U64(v) => v.fmt(f),
+            Self::F64(v) => v.fmt(f),
+        }
+    }
+}
 
-#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, Copy, Clone, PartialEq)]
 #[serde(untagged)]
 /// How to round a number in typed metadata.
 ///
@@ -284,6 +300,14 @@ pub enum ObjectInputMetaTypedRound {
     Bool(bool),
     /// Number of decimal places to round to.
     Number(f64),
+}
+impl std::fmt::Display for ObjectInputMetaTypedRound {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            Self::Bool(v) => v.fmt(f),
+            Self::Number(v) => v.fmt(f),
+        }
+    }
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq, Eq)]

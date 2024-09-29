@@ -8,9 +8,22 @@ pub struct EmptyLatentAudio<
     Seconds: crate::nodes::types::Float,
     BatchSize: crate::nodes::types::Int,
 > {
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 47.6
+  - Max: 1000
+  - Min: 1
+  - Step: 0.1
+*/
     pub seconds: Seconds,
-    ///The number of latent images in the batch.
+    /**The number of latent images in the batch.
+
+**Metadata**:
+  - Default: 1
+  - Max: 4096
+  - Min: 1
+*/
     pub batch_size: BatchSize,
 }
 impl<

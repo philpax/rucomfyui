@@ -58,7 +58,15 @@ pub struct CfgGuider<
     pub positive: Positive,
     ///No documentation.
     pub negative: Negative,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 8
+  - Max: 100
+  - Min: 0
+  - Round: 0.01
+  - Step: 0.1
+*/
     pub cfg: Cfg,
 }
 impl<
@@ -121,9 +129,25 @@ pub struct DualCfgGuider<
     pub cond_2: Cond2,
     ///No documentation.
     pub negative: Negative,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 8
+  - Max: 100
+  - Min: 0
+  - Round: 0.01
+  - Step: 0.1
+*/
     pub cfg_conds: CfgConds,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 8
+  - Max: 100
+  - Min: 0
+  - Round: 0.01
+  - Step: 0.1
+*/
     pub cfg_cond_2_negative: CfgCond2Negative,
 }
 impl<

@@ -43,7 +43,14 @@ pub struct ControlNetApply<
     pub control_net: ControlNet,
     ///No documentation.
     pub image: Image,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 10
+  - Min: 0
+  - Step: 0.01
+*/
     pub strength: Strength,
 }
 impl<
@@ -114,11 +121,32 @@ pub struct ControlNetApplyAdvanced<
     pub control_net: ControlNet,
     ///No documentation.
     pub image: Image,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 10
+  - Min: 0
+  - Step: 0.01
+*/
     pub strength: Strength,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 0
+  - Max: 1
+  - Min: 0
+  - Step: 0.001
+*/
     pub start_percent: StartPercent,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.001
+*/
     pub end_percent: EndPercent,
     ///No documentation.
     pub vae: Option<Vae>,
@@ -239,11 +267,32 @@ pub struct ControlNetApplySd3<
     pub vae: Vae,
     ///No documentation.
     pub image: Image,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 10
+  - Min: 0
+  - Step: 0.01
+*/
     pub strength: Strength,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 0
+  - Max: 1
+  - Min: 0
+  - Step: 0.001
+*/
     pub start_percent: StartPercent,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.001
+*/
     pub end_percent: EndPercent,
 }
 impl<
@@ -363,11 +412,32 @@ pub struct ControlNetInpaintingAliMamaApply<
     pub image: Image,
     ///No documentation.
     pub mask: Mask,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 10
+  - Min: 0
+  - Step: 0.01
+*/
     pub strength: Strength,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 0
+  - Max: 1
+  - Min: 0
+  - Step: 0.001
+*/
     pub start_percent: StartPercent,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.001
+*/
     pub end_percent: EndPercent,
 }
 impl<

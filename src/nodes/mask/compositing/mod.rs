@@ -80,7 +80,11 @@ pub struct PorterDuffImageComposite<
     pub destination: Destination,
     ///No documentation.
     pub destination_alpha: DestinationAlpha,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: DST
+*/
     pub mode: Mode,
 }
 impl<

@@ -14,7 +14,14 @@ pub struct ImageBlend<
     pub image_1: Image1,
     ///No documentation.
     pub image_2: Image2,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 0.5
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
     pub blend_factor: BlendFactor,
     ///No documentation.
     pub blend_mode: BlendMode,
@@ -75,9 +82,23 @@ pub struct ImageBlur<
 > {
     ///No documentation.
     pub image: Image,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 31
+  - Min: 1
+  - Step: 1
+*/
     pub blur_radius: BlurRadius,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 10
+  - Min: 0.1
+  - Step: 0.1
+*/
     pub sigma: Sigma,
 }
 impl<
@@ -123,7 +144,14 @@ pub struct ImageQuantize<
 > {
     ///No documentation.
     pub image: Image,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 256
+  - Max: 256
+  - Min: 1
+  - Step: 1
+*/
     pub colors: Colors,
     ///No documentation.
     pub dither: Dither,
@@ -172,11 +200,32 @@ pub struct ImageSharpen<
 > {
     ///No documentation.
     pub image: Image,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 31
+  - Min: 1
+  - Step: 1
+*/
     pub sharpen_radius: SharpenRadius,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 10
+  - Min: 0.1
+  - Step: 0.01
+*/
     pub sigma: Sigma,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 5
+  - Min: 0
+  - Step: 0.01
+*/
     pub alpha: Alpha,
 }
 impl<
@@ -237,7 +286,14 @@ pub struct Morphology<
     pub image: Image,
     ///No documentation.
     pub operation: Operation,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 3
+  - Max: 999
+  - Min: 3
+  - Step: 1
+*/
     pub kernel_size: KernelSize,
 }
 impl<

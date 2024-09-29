@@ -15,9 +15,23 @@ pub struct ImageScale<
     pub image: Image,
     ///No documentation.
     pub upscale_method: UpscaleMethod,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 512
+  - Max: 16384
+  - Min: 0
+  - Step: 1
+*/
     pub width: Width,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 512
+  - Max: 16384
+  - Min: 0
+  - Step: 1
+*/
     pub height: Height,
     ///No documentation.
     pub crop: Crop,
@@ -85,7 +99,14 @@ pub struct ImageScaleBy<
     pub image: Image,
     ///No documentation.
     pub upscale_method: UpscaleMethod,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 8
+  - Min: 0.01
+  - Step: 0.01
+*/
     pub scale_by: ScaleBy,
 }
 impl<
@@ -137,7 +158,14 @@ pub struct ImageScaleToTotalPixels<
     pub image: Image,
     ///No documentation.
     pub upscale_method: UpscaleMethod,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 16
+  - Min: 0.01
+  - Step: 0.01
+*/
     pub megapixels: Megapixels,
 }
 impl<

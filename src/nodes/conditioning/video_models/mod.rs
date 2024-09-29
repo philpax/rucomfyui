@@ -34,17 +34,56 @@ pub struct SvdImg2VidConditioning<
     pub init_image: InitImage,
     ///No documentation.
     pub vae: Vae,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1024
+  - Max: 16384
+  - Min: 16
+  - Step: 8
+*/
     pub width: Width,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 576
+  - Max: 16384
+  - Min: 16
+  - Step: 8
+*/
     pub height: Height,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 14
+  - Max: 4096
+  - Min: 1
+*/
     pub video_frames: VideoFrames,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 127
+  - Max: 1023
+  - Min: 1
+*/
     pub motion_bucket_id: MotionBucketId,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 6
+  - Max: 1024
+  - Min: 1
+*/
     pub fps: Fps,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 0
+  - Max: 10
+  - Min: 0
+  - Step: 0.01
+*/
     pub augmentation_level: AugmentationLevel,
 }
 impl<

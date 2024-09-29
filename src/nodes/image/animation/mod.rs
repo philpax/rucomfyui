@@ -12,11 +12,28 @@ pub struct SaveAnimatedPng<
 > {
     ///No documentation.
     pub images: Images,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: ComfyUI
+*/
     pub filename_prefix: FilenamePrefix,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 6
+  - Max: 1000
+  - Min: 0.01
+  - Step: 0.01
+*/
     pub fps: Fps,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 4
+  - Max: 9
+  - Min: 0
+*/
     pub compress_level: CompressLevel,
 }
 impl<
@@ -84,13 +101,34 @@ pub struct SaveAnimatedWebp<
 > {
     ///No documentation.
     pub images: Images,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: ComfyUI
+*/
     pub filename_prefix: FilenamePrefix,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 6
+  - Max: 1000
+  - Min: 0.01
+  - Step: 0.01
+*/
     pub fps: Fps,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: true
+*/
     pub lossless: Lossless,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 80
+  - Max: 100
+  - Min: 0
+*/
     pub quality: Quality,
     ///No documentation.
     pub method: Method,

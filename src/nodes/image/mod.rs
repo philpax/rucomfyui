@@ -35,13 +35,41 @@ pub struct EmptyImage<
     BatchSize: crate::nodes::types::Int,
     Color: crate::nodes::types::Int,
 > {
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 512
+  - Max: 16384
+  - Min: 1
+  - Step: 1
+*/
     pub width: Width,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 512
+  - Max: 16384
+  - Min: 1
+  - Step: 1
+*/
     pub height: Height,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 4096
+  - Min: 1
+*/
     pub batch_size: BatchSize,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 0
+  - Display: color
+  - Max: 16777215
+  - Min: 0
+  - Step: 1
+*/
     pub color: Color,
 }
 impl<
@@ -147,11 +175,29 @@ pub struct ImageCompositeMasked<
     pub destination: Destination,
     ///No documentation.
     pub source: Source,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 0
+  - Max: 16384
+  - Min: 0
+  - Step: 1
+*/
     pub x: X,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 0
+  - Max: 16384
+  - Min: 0
+  - Step: 1
+*/
     pub y: Y,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: false
+*/
     pub resize_source: ResizeSource,
     ///No documentation.
     pub mask: Option<Mask>,
@@ -258,15 +304,50 @@ pub struct ImagePadForOutpaint<
 > {
     ///No documentation.
     pub image: Image,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 0
+  - Max: 16384
+  - Min: 0
+  - Step: 8
+*/
     pub left: Left,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 0
+  - Max: 16384
+  - Min: 0
+  - Step: 8
+*/
     pub top: Top,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 0
+  - Max: 16384
+  - Min: 0
+  - Step: 8
+*/
     pub right: Right,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 0
+  - Max: 16384
+  - Min: 0
+  - Step: 8
+*/
     pub bottom: Bottom,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 40
+  - Max: 16384
+  - Min: 0
+  - Step: 1
+*/
     pub feathering: Feathering,
 }
 impl<
@@ -336,7 +417,11 @@ for ImagePadForOutpaint<Image, Left, Top, Right, Bottom, Feathering> {
 ///**Load Image**: No description.
 #[derive(Clone)]
 pub struct LoadImage<Image: crate::nodes::types::String> {
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Image upload: true
+*/
     pub image: Image,
 }
 impl<Image: crate::nodes::types::String> LoadImage<Image> {
@@ -407,7 +492,11 @@ pub struct SaveImage<
 > {
     ///The images to save.
     pub images: Images,
-    ///The prefix for the file to save. This may include formatting information such as %date:yyyy-MM-dd% or %Empty Latent Image.width% to include values from nodes.
+    /**The prefix for the file to save. This may include formatting information such as %date:yyyy-MM-dd% or %Empty Latent Image.width% to include values from nodes.
+
+**Metadata**:
+  - Default: ComfyUI
+*/
     pub filename_prefix: FilenamePrefix,
 }
 impl<
@@ -453,11 +542,29 @@ pub struct WebcamCapture<
 > {
     ///No documentation.
     pub image: Image,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 0
+  - Max: 16384
+  - Min: 0
+  - Step: 1
+*/
     pub width: Width,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: 0
+  - Max: 16384
+  - Min: 0
+  - Step: 1
+*/
     pub height: Height,
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Default: true
+*/
     pub capture_on_queue: CaptureOnQueue,
 }
 impl<
