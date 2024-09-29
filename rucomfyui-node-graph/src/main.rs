@@ -41,6 +41,7 @@ pub struct Application {
     tokio_input_tx: Sender<TokioInputEvent>,
     tokio_output_rx: Receiver<TokioOutputEvent>,
     _tokio_runtime_thread: JoinHandle<()>,
+    _pump_repaint_thread: JoinHandle<()>,
 
     error: Option<(String, String)>,
 
@@ -64,6 +65,13 @@ impl Application {
             tokio_output_rx,
             _tokio_runtime_thread: std::thread::spawn(move || {
                 tokio_runtime_thread(tokio_input_rx, tokio_output_tx)
+            }),
+            _pump_repaint_thread: std::thread::spawn({
+                let ctx = cc.egui_ctx.clone();
+                move || loop {
+                    ctx.request_repaint();
+                    std::thread::sleep(std::time::Duration::from_millis(50));
+                }
             }),
 
             error: None,
