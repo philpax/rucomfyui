@@ -284,7 +284,6 @@ pub enum FlowValueType {
     },
     Float {
         value: f64,
-        default: f64,
         min: f64,
         max: f64,
         round: Option<f64>,
@@ -301,11 +300,9 @@ impl FlowValueType {
     fn convert_float(value: Option<f64>, typed_meta: Option<&ObjectInputMetaTyped>) -> Self {
         let typed_meta = typed_meta.and_then(|m| m.as_number());
         Self::Float {
-            value: typed_meta
-                .map(|m| f64::from(m.default))
-                .or(value)
+            value: value
+                .or(typed_meta.map(|m| f64::from(m.default)))
                 .unwrap_or(0.0),
-            default: typed_meta.map(|m| m.default.into()).unwrap_or(0.0),
             min: typed_meta.map(|m| m.min.into()).unwrap_or(f64::MIN),
             max: typed_meta.map(|m| m.max.into()).unwrap_or(f64::MAX),
             round: typed_meta.and_then(|m| m.round).and_then(|r| match r {
@@ -395,7 +392,6 @@ impl WidgetValueTrait for FlowValueType {
             }
             FlowValueType::Float {
                 value,
-                default: _,
                 min,
                 max,
                 round,
