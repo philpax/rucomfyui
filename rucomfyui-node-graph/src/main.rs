@@ -248,6 +248,25 @@ fn tokio_runtime_thread(input: Receiver<TokioInputEvent>, output: Sender<TokioOu
 pub struct FlowNodeData {
     template: FlowNodeTemplate,
 }
+impl NodeDataTrait for FlowNodeData {
+    type Response = MyResponse;
+    type UserState = FlowUserState;
+    type DataType = ObjectType;
+    type ValueType = FlowValueType;
+
+    fn bottom_ui(
+        &self,
+        _ui: &mut egui::Ui,
+        _node_id: NodeId,
+        _graph: &Graph<FlowNodeData, ObjectType, FlowValueType>,
+        _user_state: &mut Self::UserState,
+    ) -> Vec<NodeResponse<MyResponse, FlowNodeData>>
+    where
+        MyResponse: UserResponseTrait,
+    {
+        vec![]
+    }
+}
 
 #[derive(Clone, Debug, serde::Serialize, serde::Deserialize, Default, PartialEq)]
 pub enum FlowValueType {
@@ -274,7 +293,6 @@ impl FlowValueType {
             _ => FlowValueType::Other(object_type.clone()),
         }
     }
-
     fn from_object_type_and_input(object_type: &ObjectType, input: &WorkflowInput) -> Self {
         match input {
             WorkflowInput::String(s) => FlowValueType::String(s.clone()),
@@ -285,7 +303,6 @@ impl FlowValueType {
             WorkflowInput::Slot(_, _) => FlowValueType::Other(object_type.clone()),
         }
     }
-
     #[must_use]
     pub fn is_connection_only(&self) -> bool {
         matches!(self, Self::Other(..)) || matches!(self, Self::Unknown)
@@ -295,30 +312,56 @@ impl FlowValueType {
         matches!(self, Self::Array { .. })
     }
 }
+impl WidgetValueTrait for FlowValueType {
+    type Response = MyResponse;
+    type UserState = FlowUserState;
+    type NodeData = FlowNodeData;
+    fn value_widget(
+        &mut self,
+        param_name: &str,
+        _node_id: NodeId,
+        ui: &mut egui::Ui,
+        _user_state: &mut FlowUserState,
+        _node_data: &FlowNodeData,
+    ) -> Vec<MyResponse> {
+        ui.label(param_name);
+        match self {
+            FlowValueType::Array { options, selected } => {
+                egui::ComboBox::new(format!("{param_name}_checkbox"), "")
+                    .selected_text(selected.clone())
+                    .show_ui(ui, |ui| {
+                        for option in options {
+                            ui.selectable_value(selected, option.clone(), option.clone());
+                        }
+                    });
+            }
+            FlowValueType::String(string) => {
+                ui.text_edit_singleline(string);
+            }
+            FlowValueType::Float(v) => {
+                ui.add(DragValue::new(v));
+            }
+            FlowValueType::SignedInt(v) => {
+                ui.add(DragValue::new(v));
+            }
+            FlowValueType::UnsignedInt(v) => {
+                ui.add(DragValue::new(v));
+            }
+            FlowValueType::Boolean(b) => {
+                ui.checkbox(b, "");
+            }
+            FlowValueType::Other(_) => {}
+            FlowValueType::Unknown => {
+                ui.label("Unknown, this should not happen");
+            }
+        }
 
-#[derive(Clone, serde::Serialize, serde::Deserialize)]
-pub struct FlowNodeTemplate(pub Object);
-
-#[derive(Clone, Copy, Debug, PartialEq, Eq)]
-pub enum MyResponse {}
-
-#[derive(Default, serde::Serialize, serde::Deserialize)]
-pub struct FlowUserState {}
-
-impl DataTypeTrait<FlowUserState> for ObjectType {
-    fn data_type_color(&self, _user_state: &mut FlowUserState) -> egui::Color32 {
-        let mut hasher = std::hash::DefaultHasher::new();
-        format!("{self:?}").hash(&mut hasher);
-        let hash = hasher.finish();
-        let hash = (hash % 3600) as f32 / 3600.0;
-        egui::ecolor::Hsva::new(hash, 0.5, 0.5, 1.0).into()
-    }
-
-    fn name(&self) -> Cow<'_, str> {
-        format!("{self:?}").into()
+        Vec::new()
     }
 }
 
+#[derive(Clone, serde::Serialize, serde::Deserialize)]
+pub struct FlowNodeTemplate(pub Object);
 impl NodeTemplateTrait for FlowNodeTemplate {
     type NodeData = FlowNodeData;
     type DataType = ObjectType;
@@ -351,6 +394,26 @@ impl NodeTemplateTrait for FlowNodeTemplate {
         node_id: NodeId,
     ) {
         build_node(self, graph, node_id, None);
+    }
+}
+
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+pub enum MyResponse {}
+
+#[derive(Default, serde::Serialize, serde::Deserialize)]
+pub struct FlowUserState {}
+
+impl DataTypeTrait<FlowUserState> for ObjectType {
+    fn data_type_color(&self, _user_state: &mut FlowUserState) -> egui::Color32 {
+        let mut hasher = std::hash::DefaultHasher::new();
+        format!("{self:?}").hash(&mut hasher);
+        let hash = hasher.finish();
+        let hash = (hash % 3600) as f32 / 3600.0;
+        egui::ecolor::Hsva::new(hash, 0.5, 0.5, 1.0).into()
+    }
+
+    fn name(&self) -> Cow<'_, str> {
+        format!("{self:?}").into()
     }
 }
 
@@ -430,74 +493,7 @@ impl<'a> NodeTemplateIter for AllMyNodeTemplates<'a> {
     }
 }
 
-impl WidgetValueTrait for FlowValueType {
-    type Response = MyResponse;
-    type UserState = FlowUserState;
-    type NodeData = FlowNodeData;
-    fn value_widget(
-        &mut self,
-        param_name: &str,
-        _node_id: NodeId,
-        ui: &mut egui::Ui,
-        _user_state: &mut FlowUserState,
-        _node_data: &FlowNodeData,
-    ) -> Vec<MyResponse> {
-        ui.label(param_name);
-        match self {
-            FlowValueType::Array { options, selected } => {
-                egui::ComboBox::new(format!("{param_name}_checkbox"), "")
-                    .selected_text(selected.clone())
-                    .show_ui(ui, |ui| {
-                        for option in options {
-                            ui.selectable_value(selected, option.clone(), option.clone());
-                        }
-                    });
-            }
-            FlowValueType::String(string) => {
-                ui.text_edit_singleline(string);
-            }
-            FlowValueType::Float(v) => {
-                ui.add(DragValue::new(v));
-            }
-            FlowValueType::SignedInt(v) => {
-                ui.add(DragValue::new(v));
-            }
-            FlowValueType::UnsignedInt(v) => {
-                ui.add(DragValue::new(v));
-            }
-            FlowValueType::Boolean(b) => {
-                ui.checkbox(b, "");
-            }
-            FlowValueType::Other(_) => {}
-            FlowValueType::Unknown => {
-                ui.label("Unknown, this should not happen");
-            }
-        }
-
-        Vec::new()
-    }
-}
-
 impl UserResponseTrait for MyResponse {}
-impl NodeDataTrait for FlowNodeData {
-    type Response = MyResponse;
-    type UserState = FlowUserState;
-    type DataType = ObjectType;
-    type ValueType = FlowValueType;
-
-    fn bottom_ui(
-        &self,
-        _ui: &mut egui::Ui,
-        _node_id: NodeId,
-        _graph: &Graph<FlowNodeData, ObjectType, FlowValueType>,
-        _user_state: &mut Self::UserState,
-    ) -> Vec<NodeResponse<MyResponse, FlowNodeData>>
-    where
-        MyResponse: UserResponseTrait,
-    {
-        vec![]
-    }
-}
 
 type FlowEditorState =
     GraphEditorState<FlowNodeData, ObjectType, FlowValueType, FlowNodeTemplate, FlowUserState>;
