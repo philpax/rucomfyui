@@ -8,7 +8,8 @@ eframe = { version = "0.28", features = ["persistence"] }
 egui_node_graph2 = { version = "0.6.0", features = ["persistence"] }
 anyhow = "1.0"
 serde = "1.0"
-
-rucomfyui = { path = "../" }
 tokio = { workspace = true, features = ["full"] }
 egui-file-dialog = "0.6.1"
+
+# We don't need the typed nodes, so disable them
+rucomfyui = { path = "../", default-features = false }
