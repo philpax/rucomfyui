@@ -148,34 +148,33 @@ impl eframe::App for Application {
             let is_connected = self.object_info.is_some();
             egui::menu::bar(ui, |ui| {
                 egui::widgets::global_dark_light_mode_switch(ui);
-
-                ui.label("ComfyUI address:");
-                ui.text_edit_singleline(&mut self.persisted.comfyui_address);
-                if ui
-                    .add(egui::Button::new(if !is_connected {
-                        "Connect"
-                    } else {
-                        "Disconnect"
-                    }))
-                    .clicked()
-                {
-                    if !is_connected {
-                        self.tokio_input_tx
-                            .send(TokioInputEvent::Connect(
-                                self.persisted.comfyui_address.clone(),
-                            ))
-                            .unwrap();
-                    } else {
-                        self.object_info = None;
+                if is_connected {
+                    if ui.button("Open API workflow").clicked() {
+                        self.file_dialog.select_file();
                     }
                 }
 
                 ui.with_layout(egui::Layout::right_to_left(egui::Align::Center), |ui| {
-                    if is_connected {
-                        if ui.button("Open API workflow").clicked() {
-                            self.file_dialog.select_file();
+                    if ui
+                        .add(egui::Button::new(if !is_connected {
+                            "Connect"
+                        } else {
+                            "Disconnect"
+                        }))
+                        .clicked()
+                    {
+                        if !is_connected {
+                            self.tokio_input_tx
+                                .send(TokioInputEvent::Connect(
+                                    self.persisted.comfyui_address.clone(),
+                                ))
+                                .unwrap();
+                        } else {
+                            self.object_info = None;
                         }
                     }
+                    ui.text_edit_singleline(&mut self.persisted.comfyui_address);
+                    ui.label("ComfyUI address:");
                 });
             });
         });
