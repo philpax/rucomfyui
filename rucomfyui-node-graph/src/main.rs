@@ -5,7 +5,7 @@ use std::{
     path::PathBuf,
     sync::mpsc::{Receiver, Sender},
     thread::JoinHandle,
-    time::Instant,
+    time::{Instant, SystemTime},
 };
 
 use anyhow::Context;
@@ -28,12 +28,14 @@ fn main() {
         eframe::NativeOptions::default(),
         Box::new(|cc| {
             cc.egui_ctx.set_visuals(Visuals::dark());
+            egui_extras::install_image_loaders(&cc.egui_ctx);
             Ok(Box::new(Application::new(cc)))
         }),
     )
     .unwrap();
 }
 
+type NodeToWorkflowNodeMapping = HashMap<NodeId, WorkflowNodeId>;
 pub struct Application {
     persisted: PersistedState,
     user_state: FlowUserState,
@@ -151,11 +153,32 @@ impl Application {
         for event in self.tokio_output_rx.try_iter() {
             match event {
                 TokioOutputEvent::ObjectInfo(oi) => self.object_info = Some(oi),
-                TokioOutputEvent::QueueWorkflowResult(result) => {
-                    println!(
-                        "Received node outputs: {:?}",
-                        result.keys().collect::<Vec<_>>()
-                    );
+                TokioOutputEvent::QueueWorkflowResult((mapping, result)) => {
+                    let now_timestamp = SystemTime::now()
+                        .duration_since(SystemTime::UNIX_EPOCH)
+                        .map(|t| t.as_secs_f64())
+                        .unwrap_or_default();
+                    let reverse_mapping = mapping
+                        .into_iter()
+                        .map(|(k, v)| (v, k))
+                        .collect::<HashMap<_, _>>();
+                    self.user_state.output_images = result
+                        .into_iter()
+                        .filter(|(_, images)| !images.is_empty())
+                        .flat_map(|(workflow_node_id, images)| {
+                            let node_id = *reverse_mapping.get(&workflow_node_id)?;
+                            let images = images
+                                .iter()
+                                .enumerate()
+                                .map(|(i, v)| egui::ImageSource::Bytes {
+                                    uri: format!("bytes://{now_timestamp}_{node_id:?}_{i}.png")
+                                        .into(),
+                                    bytes: v.clone().into(),
+                                })
+                                .collect();
+                            Some((node_id, (images, 0)))
+                        })
+                        .collect();
                     self.last_queue_time = None;
                 }
                 TokioOutputEvent::Error(err) => {
@@ -259,7 +282,7 @@ impl Application {
         }
 
         self.tokio_input_tx
-            .send(TokioInputEvent::QueueWorkflow(g.into_workflow()))
+            .send(TokioInputEvent::QueueWorkflow((mapping, g.into_workflow())))
             .unwrap();
         self.last_queue_time = Some(Instant::now());
     }
@@ -347,7 +370,7 @@ impl eframe::App for Application {
 
 enum TokioInputEvent {
     Connect(String),
-    QueueWorkflow(Workflow),
+    QueueWorkflow((NodeToWorkflowNodeMapping, Workflow)),
 }
 enum TokioOutputError {
     Connection(String),
@@ -355,7 +378,12 @@ enum TokioOutputError {
 }
 enum TokioOutputEvent {
     ObjectInfo(ObjectInfo),
-    QueueWorkflowResult(HashMap<WorkflowNodeId, Vec<rucomfyui::Bytes>>),
+    QueueWorkflowResult(
+        (
+            NodeToWorkflowNodeMapping,
+            HashMap<WorkflowNodeId, Vec<rucomfyui::Bytes>>,
+        ),
+    ),
     Error(TokioOutputError),
 }
 fn tokio_runtime_thread(input: Receiver<TokioInputEvent>, output: Sender<TokioOutputEvent>) {
@@ -382,7 +410,7 @@ fn tokio_runtime_thread(input: Receiver<TokioInputEvent>, output: Sender<TokioOu
                     }
                 }
             }
-            TokioInputEvent::QueueWorkflow(workflow) => {
+            TokioInputEvent::QueueWorkflow((mapping, workflow)) => {
                 let Some(client) = &mut client else {
                     output
                         .send(TokioOutputEvent::Error(TokioOutputError::Connection(
@@ -396,7 +424,7 @@ fn tokio_runtime_thread(input: Receiver<TokioInputEvent>, output: Sender<TokioOu
                 match result {
                     Ok(result) => {
                         output
-                            .send(TokioOutputEvent::QueueWorkflowResult(result))
+                            .send(TokioOutputEvent::QueueWorkflowResult((mapping, result)))
                             .unwrap();
                     }
                     Err(err) => {
@@ -426,14 +454,34 @@ impl NodeDataTrait for FlowNodeData {
 
     fn bottom_ui(
         &self,
-        _ui: &mut egui::Ui,
-        _node_id: NodeId,
+        ui: &mut egui::Ui,
+        node_id: NodeId,
         _graph: &Graph<Self, Self::DataType, Self::ValueType>,
-        _user_state: &mut Self::UserState,
+        user_state: &mut Self::UserState,
     ) -> Vec<NodeResponse<MyResponse, FlowNodeData>>
     where
         MyResponse: UserResponseTrait,
     {
+        if let Some((images, selected)) = user_state.output_images.get_mut(&node_id) {
+            ui.horizontal(|ui| {
+                for idx in 0..images.len() {
+                    if ui
+                        .add(
+                            egui::Button::new(format!("{}", idx + 1))
+                                .small()
+                                .selected(*selected == idx),
+                        )
+                        .clicked()
+                    {
+                        *selected = idx;
+                    }
+                }
+            });
+
+            if let Some(image) = images.get(*selected) {
+                ui.image(image.clone());
+            }
+        }
         vec![]
     }
     fn output_ui(
@@ -726,7 +774,10 @@ impl NodeTemplateTrait for FlowNodeTemplate {
 pub enum MyResponse {}
 
 #[derive(Default, serde::Serialize, serde::Deserialize)]
-pub struct FlowUserState {}
+pub struct FlowUserState {
+    #[serde(skip)]
+    output_images: HashMap<NodeId, (Vec<egui::ImageSource<'static>>, usize)>,
+}
 
 impl DataTypeTrait<FlowUserState> for ObjectType {
     fn data_type_color(&self, _user_state: &mut FlowUserState) -> egui::Color32 {
