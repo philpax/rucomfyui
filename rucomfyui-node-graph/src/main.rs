@@ -96,9 +96,7 @@ impl Application {
                 let template = FlowNodeTemplate(object.clone());
                 let g_node_id = state.graph.add_node(
                     object.display_name.clone(),
-                    FlowNodeData {
-                        template: template.clone(),
-                    },
+                    template.user_data(&mut self.user_state),
                     |g, g_node_id| {
                         let bno = build_node(&template, g, g_node_id, Some(node));
                         for (name, input) in node.inputs.iter() {
@@ -248,6 +246,8 @@ fn tokio_runtime_thread(input: Receiver<TokioInputEvent>, output: Sender<TokioOu
 #[derive(serde::Serialize, serde::Deserialize)]
 pub struct FlowNodeData {
     template: FlowNodeTemplate,
+    input_tooltips: HashMap<String, String>,
+    output_tooltips: HashMap<String, String>,
 }
 impl NodeDataTrait for FlowNodeData {
     type Response = MyResponse;
@@ -278,16 +278,12 @@ impl NodeDataTrait for FlowNodeData {
     where
         Self::Response: UserResponseTrait,
     {
-        let node = graph.nodes.get(node_id).unwrap();
-        let tooltip = node
-            .user_data
-            .template
-            .0
-            .processed_output()
-            .find(|o| o.name == param_name)
-            .and_then(|o| o.tooltip.clone());
         let r = ui.label(param_name);
-        if let Some(tooltip) = tooltip {
+        if let Some(tooltip) = graph
+            .nodes
+            .get(node_id)
+            .and_then(|n| n.user_data.output_tooltips.get(param_name))
+        {
             r.on_hover_text(tooltip);
         }
 
@@ -447,14 +443,8 @@ impl WidgetValueTrait for FlowValueType {
         _user_state: &mut FlowUserState,
         node_data: &FlowNodeData,
     ) -> Vec<MyResponse> {
-        let tooltip = node_data
-            .template
-            .0
-            .all_inputs()
-            .find(|(name, _, _)| *name == param_name)
-            .and_then(|(_, node, _)| node.tooltip());
         let r = ui.label(param_name);
-        if let Some(tooltip) = tooltip {
+        if let Some(tooltip) = node_data.input_tooltips.get(param_name) {
             r.on_hover_text(tooltip);
         }
         match self {
@@ -532,8 +522,20 @@ impl NodeTemplateTrait for FlowNodeTemplate {
         self.node_finder_label(user_state).into()
     }
     fn user_data(&self, _user_state: &mut Self::UserState) -> Self::NodeData {
+        let input_tooltips = self
+            .0
+            .all_inputs()
+            .flat_map(|(name, input, _)| Some((name.to_string(), input.tooltip()?.to_owned())))
+            .collect();
+        let output_tooltips = self
+            .0
+            .processed_output()
+            .flat_map(|o| Some((o.name.to_owned(), o.tooltip?.to_owned())))
+            .collect();
         FlowNodeData {
             template: self.clone(),
+            input_tooltips,
+            output_tooltips,
         }
     }
     fn build_node(
