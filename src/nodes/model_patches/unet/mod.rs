@@ -195,6 +195,133 @@ for HyperTile<Model, TileSize, SwapSize, MaxDepth, ScaleDepth> {
     const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "model_patches/unet";
 }
+///**PatchModelAddDownscale (Kohya Deep Shrink)**: No description.
+#[derive(Clone)]
+pub struct PatchModelAddDownscale<
+    Model: crate::nodes::types::Model,
+    BlockNumber: crate::nodes::types::Int,
+    DownscaleFactor: crate::nodes::types::Float,
+    StartPercent: crate::nodes::types::Float,
+    EndPercent: crate::nodes::types::Float,
+    DownscaleAfterSkip: crate::nodes::types::Boolean,
+    DownscaleMethod: crate::nodes::types::String,
+    UpscaleMethod: crate::nodes::types::String,
+> {
+    ///No documentation.
+    pub model: Model,
+    ///No documentation.
+    pub block_number: BlockNumber,
+    ///No documentation.
+    pub downscale_factor: DownscaleFactor,
+    ///No documentation.
+    pub start_percent: StartPercent,
+    ///No documentation.
+    pub end_percent: EndPercent,
+    ///No documentation.
+    pub downscale_after_skip: DownscaleAfterSkip,
+    ///No documentation.
+    pub downscale_method: DownscaleMethod,
+    ///No documentation.
+    pub upscale_method: UpscaleMethod,
+}
+impl<
+    Model: crate::nodes::types::Model,
+    BlockNumber: crate::nodes::types::Int,
+    DownscaleFactor: crate::nodes::types::Float,
+    StartPercent: crate::nodes::types::Float,
+    EndPercent: crate::nodes::types::Float,
+    DownscaleAfterSkip: crate::nodes::types::Boolean,
+    DownscaleMethod: crate::nodes::types::String,
+    UpscaleMethod: crate::nodes::types::String,
+> PatchModelAddDownscale<
+    Model,
+    BlockNumber,
+    DownscaleFactor,
+    StartPercent,
+    EndPercent,
+    DownscaleAfterSkip,
+    DownscaleMethod,
+    UpscaleMethod,
+> {
+    /// Create a new node.
+    pub fn new(
+        model: Model,
+        block_number: BlockNumber,
+        downscale_factor: DownscaleFactor,
+        start_percent: StartPercent,
+        end_percent: EndPercent,
+        downscale_after_skip: DownscaleAfterSkip,
+        downscale_method: DownscaleMethod,
+        upscale_method: UpscaleMethod,
+    ) -> Self {
+        Self {
+            model,
+            block_number,
+            downscale_factor,
+            start_percent,
+            end_percent,
+            downscale_after_skip,
+            downscale_method,
+            upscale_method,
+        }
+    }
+}
+impl<
+    Model: crate::nodes::types::Model,
+    BlockNumber: crate::nodes::types::Int,
+    DownscaleFactor: crate::nodes::types::Float,
+    StartPercent: crate::nodes::types::Float,
+    EndPercent: crate::nodes::types::Float,
+    DownscaleAfterSkip: crate::nodes::types::Boolean,
+    DownscaleMethod: crate::nodes::types::String,
+    UpscaleMethod: crate::nodes::types::String,
+> crate::nodes::TypedNode
+for PatchModelAddDownscale<
+    Model,
+    BlockNumber,
+    DownscaleFactor,
+    StartPercent,
+    EndPercent,
+    DownscaleAfterSkip,
+    DownscaleMethod,
+    UpscaleMethod,
+> {
+    type Output = crate::nodes::types::ModelOut;
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
+        Self::Output {
+            node_id,
+            node_slot: 0u32,
+        }
+    }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("model".to_string(), self.model.clone().into());
+        output.insert("block_number".to_string(), self.block_number.clone().into());
+        output
+            .insert(
+                "downscale_factor".to_string(),
+                self.downscale_factor.clone().into(),
+            );
+        output.insert("start_percent".to_string(), self.start_percent.clone().into());
+        output.insert("end_percent".to_string(), self.end_percent.clone().into());
+        output
+            .insert(
+                "downscale_after_skip".to_string(),
+                self.downscale_after_skip.clone().into(),
+            );
+        output
+            .insert(
+                "downscale_method".to_string(),
+                self.downscale_method.clone().into(),
+            );
+        output.insert("upscale_method".to_string(), self.upscale_method.clone().into());
+        output
+    }
+    const NAME: &'static str = "PatchModelAddDownscale";
+    const DISPLAY_NAME: &'static str = "PatchModelAddDownscale (Kohya Deep Shrink)";
+    const DESCRIPTION: &'static str = "";
+    const CATEGORY: &'static str = "model_patches/unet";
+}
 ///**PerturbedAttentionGuidance**: No description.
 #[derive(Clone)]
 pub struct PerturbedAttentionGuidance<
@@ -234,6 +361,48 @@ impl<
     }
     const NAME: &'static str = "PerturbedAttentionGuidance";
     const DISPLAY_NAME: &'static str = "PerturbedAttentionGuidance";
+    const DESCRIPTION: &'static str = "";
+    const CATEGORY: &'static str = "model_patches/unet";
+}
+///**TomePatchModel**: No description.
+#[derive(Clone)]
+pub struct TomePatchModel<
+    Model: crate::nodes::types::Model,
+    Ratio: crate::nodes::types::Float,
+> {
+    ///No documentation.
+    pub model: Model,
+    ///No documentation.
+    pub ratio: Ratio,
+}
+impl<
+    Model: crate::nodes::types::Model,
+    Ratio: crate::nodes::types::Float,
+> TomePatchModel<Model, Ratio> {
+    /// Create a new node.
+    pub fn new(model: Model, ratio: Ratio) -> Self {
+        Self { model, ratio }
+    }
+}
+impl<
+    Model: crate::nodes::types::Model,
+    Ratio: crate::nodes::types::Float,
+> crate::nodes::TypedNode for TomePatchModel<Model, Ratio> {
+    type Output = crate::nodes::types::ModelOut;
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
+        Self::Output {
+            node_id,
+            node_slot: 0u32,
+        }
+    }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("model".to_string(), self.model.clone().into());
+        output.insert("ratio".to_string(), self.ratio.clone().into());
+        output
+    }
+    const NAME: &'static str = "TomePatchModel";
+    const DISPLAY_NAME: &'static str = "TomePatchModel";
     const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "model_patches/unet";
 }

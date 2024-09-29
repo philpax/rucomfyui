@@ -332,6 +332,78 @@ impl<
     const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "sampling/custom_sampling/schedulers";
 }
+///**LaplaceScheduler**: No description.
+#[derive(Clone)]
+pub struct LaplaceScheduler<
+    Steps: crate::nodes::types::Int,
+    SigmaMax: crate::nodes::types::Float,
+    SigmaMin: crate::nodes::types::Float,
+    Mu: crate::nodes::types::Float,
+    Beta: crate::nodes::types::Float,
+> {
+    ///No documentation.
+    pub steps: Steps,
+    ///No documentation.
+    pub sigma_max: SigmaMax,
+    ///No documentation.
+    pub sigma_min: SigmaMin,
+    ///No documentation.
+    pub mu: Mu,
+    ///No documentation.
+    pub beta: Beta,
+}
+impl<
+    Steps: crate::nodes::types::Int,
+    SigmaMax: crate::nodes::types::Float,
+    SigmaMin: crate::nodes::types::Float,
+    Mu: crate::nodes::types::Float,
+    Beta: crate::nodes::types::Float,
+> LaplaceScheduler<Steps, SigmaMax, SigmaMin, Mu, Beta> {
+    /// Create a new node.
+    pub fn new(
+        steps: Steps,
+        sigma_max: SigmaMax,
+        sigma_min: SigmaMin,
+        mu: Mu,
+        beta: Beta,
+    ) -> Self {
+        Self {
+            steps,
+            sigma_max,
+            sigma_min,
+            mu,
+            beta,
+        }
+    }
+}
+impl<
+    Steps: crate::nodes::types::Int,
+    SigmaMax: crate::nodes::types::Float,
+    SigmaMin: crate::nodes::types::Float,
+    Mu: crate::nodes::types::Float,
+    Beta: crate::nodes::types::Float,
+> crate::nodes::TypedNode for LaplaceScheduler<Steps, SigmaMax, SigmaMin, Mu, Beta> {
+    type Output = crate::nodes::types::SigmasOut;
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
+        Self::Output {
+            node_id,
+            node_slot: 0u32,
+        }
+    }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("steps".to_string(), self.steps.clone().into());
+        output.insert("sigma_max".to_string(), self.sigma_max.clone().into());
+        output.insert("sigma_min".to_string(), self.sigma_min.clone().into());
+        output.insert("mu".to_string(), self.mu.clone().into());
+        output.insert("beta".to_string(), self.beta.clone().into());
+        output
+    }
+    const NAME: &'static str = "LaplaceScheduler";
+    const DISPLAY_NAME: &'static str = "LaplaceScheduler";
+    const DESCRIPTION: &'static str = "";
+    const CATEGORY: &'static str = "sampling/custom_sampling/schedulers";
+}
 ///**PolyexponentialScheduler**: No description.
 #[derive(Clone)]
 pub struct PolyexponentialScheduler<

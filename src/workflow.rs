@@ -2,7 +2,7 @@
 
 use std::{
     cell::{Ref, RefCell},
-    collections::{HashMap, HashSet, VecDeque},
+    collections::{BTreeMap, HashMap, HashSet, VecDeque},
     fmt::Display,
     str::FromStr,
 };
@@ -17,7 +17,7 @@ use crate::nodes::{types::Out, TypedNode};
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq, Default)]
 pub struct Workflow(
     /// The nodes in the workflow.
-    pub HashMap<WorkflowNodeId, WorkflowNode>,
+    pub BTreeMap<WorkflowNodeId, WorkflowNode>,
 );
 impl Workflow {
     /// Create a new workflow.
@@ -110,7 +110,7 @@ impl Workflow {
 }
 impl FromIterator<(WorkflowNodeId, WorkflowNode)> for Workflow {
     fn from_iter<T: IntoIterator<Item = (WorkflowNodeId, WorkflowNode)>>(iter: T) -> Self {
-        Self(HashMap::from_iter(iter))
+        Self(BTreeMap::from_iter(iter))
     }
 }
 #[cfg(feature = "typed_nodes")]
@@ -214,7 +214,9 @@ impl WorkflowGraph {
 }
 
 /// A workflow node ID.
-#[derive(Debug, Serialize, Deserialize, Copy, Clone, PartialEq, Eq, Hash, Default)]
+#[derive(
+    Debug, Serialize, Deserialize, Copy, Clone, PartialEq, Eq, Hash, Default, PartialOrd, Ord,
+)]
 #[repr(transparent)]
 #[serde(transparent)]
 pub struct WorkflowNodeId(pub u32);

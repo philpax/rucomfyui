@@ -39,7 +39,7 @@ async fn load_or_get_object_info() -> Result<Vec<rucomfyui::object_info::Object>
             let url = std::env::args().nth(1).expect("ComfyUI URL not provided");
             let client = rucomfyui::Client::new(url);
 
-            let object_info = client
+            let mut object_info: Vec<Object> = client
                 .object_info()
                 .await?
                 .values()
@@ -48,7 +48,8 @@ async fn load_or_get_object_info() -> Result<Vec<rucomfyui::object_info::Object>
                 })
                 .cloned()
                 .collect();
-            std::fs::write(path, serde_json::to_string(&object_info)?)?;
+            object_info.sort_by(|a, b| a.name.cmp(&b.name));
+            std::fs::write(path, serde_json::to_string_pretty(&object_info)?)?;
             Ok(object_info)
         }
     }

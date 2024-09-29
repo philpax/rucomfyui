@@ -1,13 +1,13 @@
 //! Information about the objects (nodes, inputs, outputs, etc.) in ComfyUI.
 
-use std::collections::{BTreeMap, HashMap};
+use std::collections::BTreeMap;
 
 use serde::{Deserialize, Serialize};
 
 use crate::{Client, Result};
 
 /// Object info for a ComfyUI instance, where the keys are the object names.
-pub type ObjectInfo = HashMap<String, Object>;
+pub type ObjectInfo = BTreeMap<String, Object>;
 
 impl Client {
     /// Get the object info for this ComfyUI instance, where the keys are the object names.
@@ -40,7 +40,7 @@ pub struct Object {
     /// Note that this is not guaranteed to be in sorted order due to the nature of JSON objects.
     /// Use [`Self::required_inputs`], [`Self::optional_inputs`], or [`Self::all_inputs`] to get
     /// the inputs in the order they should be provided.
-    pub input: ObjectInputBundle<HashMap<String, ObjectInput>>,
+    pub input: ObjectInputBundle<BTreeMap<String, ObjectInput>>,
     /// Order of inputs.
     pub input_order: ObjectInputBundle<Vec<String>>,
 

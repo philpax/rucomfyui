@@ -253,6 +253,76 @@ impl<
     Vae: crate::nodes::types::Vae,
     FilenamePrefix: crate::nodes::types::String,
 > crate::nodes::TypedOutputNode for CheckpointSave<Model, Clip, Vae, FilenamePrefix> {}
+///**ImageOnlyCheckpointSave**: No description.
+#[derive(Clone)]
+pub struct ImageOnlyCheckpointSave<
+    Model: crate::nodes::types::Model,
+    ClipVision: crate::nodes::types::ClipVision,
+    Vae: crate::nodes::types::Vae,
+    FilenamePrefix: crate::nodes::types::String,
+> {
+    ///No documentation.
+    pub model: Model,
+    ///No documentation.
+    pub clip_vision: ClipVision,
+    ///No documentation.
+    pub vae: Vae,
+    ///No documentation.
+    pub filename_prefix: FilenamePrefix,
+}
+impl<
+    Model: crate::nodes::types::Model,
+    ClipVision: crate::nodes::types::ClipVision,
+    Vae: crate::nodes::types::Vae,
+    FilenamePrefix: crate::nodes::types::String,
+> ImageOnlyCheckpointSave<Model, ClipVision, Vae, FilenamePrefix> {
+    /// Create a new node.
+    pub fn new(
+        model: Model,
+        clip_vision: ClipVision,
+        vae: Vae,
+        filename_prefix: FilenamePrefix,
+    ) -> Self {
+        Self {
+            model,
+            clip_vision,
+            vae,
+            filename_prefix,
+        }
+    }
+}
+impl<
+    Model: crate::nodes::types::Model,
+    ClipVision: crate::nodes::types::ClipVision,
+    Vae: crate::nodes::types::Vae,
+    FilenamePrefix: crate::nodes::types::String,
+> crate::nodes::TypedNode
+for ImageOnlyCheckpointSave<Model, ClipVision, Vae, FilenamePrefix> {
+    type Output = WorkflowNodeId;
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
+        node_id
+    }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("model".to_string(), self.model.clone().into());
+        output.insert("clip_vision".to_string(), self.clip_vision.clone().into());
+        output.insert("vae".to_string(), self.vae.clone().into());
+        output
+            .insert("filename_prefix".to_string(), self.filename_prefix.clone().into());
+        output
+    }
+    const NAME: &'static str = "ImageOnlyCheckpointSave";
+    const DISPLAY_NAME: &'static str = "ImageOnlyCheckpointSave";
+    const DESCRIPTION: &'static str = "";
+    const CATEGORY: &'static str = "advanced/model_merging";
+}
+impl<
+    Model: crate::nodes::types::Model,
+    ClipVision: crate::nodes::types::ClipVision,
+    Vae: crate::nodes::types::Vae,
+    FilenamePrefix: crate::nodes::types::String,
+> crate::nodes::TypedOutputNode
+for ImageOnlyCheckpointSave<Model, ClipVision, Vae, FilenamePrefix> {}
 ///**ModelMergeAdd**: No description.
 #[derive(Clone)]
 pub struct ModelMergeAdd<

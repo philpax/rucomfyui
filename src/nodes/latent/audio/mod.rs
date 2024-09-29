@@ -4,18 +4,28 @@ use std::collections::HashMap;
 use crate::workflow::{WorkflowNodeId, WorkflowInput};
 ///**EmptyLatentAudio**: No description.
 #[derive(Clone)]
-pub struct EmptyLatentAudio<Seconds: crate::nodes::types::Float> {
+pub struct EmptyLatentAudio<
+    Seconds: crate::nodes::types::Float,
+    BatchSize: crate::nodes::types::Int,
+> {
     ///No documentation.
     pub seconds: Seconds,
+    ///The number of latent images in the batch.
+    pub batch_size: BatchSize,
 }
-impl<Seconds: crate::nodes::types::Float> EmptyLatentAudio<Seconds> {
+impl<
+    Seconds: crate::nodes::types::Float,
+    BatchSize: crate::nodes::types::Int,
+> EmptyLatentAudio<Seconds, BatchSize> {
     /// Create a new node.
-    pub fn new(seconds: Seconds) -> Self {
-        Self { seconds }
+    pub fn new(seconds: Seconds, batch_size: BatchSize) -> Self {
+        Self { seconds, batch_size }
     }
 }
-impl<Seconds: crate::nodes::types::Float> crate::nodes::TypedNode
-for EmptyLatentAudio<Seconds> {
+impl<
+    Seconds: crate::nodes::types::Float,
+    BatchSize: crate::nodes::types::Int,
+> crate::nodes::TypedNode for EmptyLatentAudio<Seconds, BatchSize> {
     type Output = crate::nodes::types::LatentOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
@@ -26,6 +36,7 @@ for EmptyLatentAudio<Seconds> {
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
         output.insert("seconds".to_string(), self.seconds.clone().into());
+        output.insert("batch_size".to_string(), self.batch_size.clone().into());
         output
     }
     const NAME: &'static str = "EmptyLatentAudio";
