@@ -1,7 +1,7 @@
 //! Workflow graphs for ComfyUI.
 
 use std::{
-    cell::{Ref, RefCell},
+    cell::{Ref, RefCell, RefMut},
     collections::{BTreeMap, HashMap, HashSet, VecDeque},
     fmt::Display,
     str::FromStr,
@@ -175,6 +175,10 @@ impl From<WorkflowGraph> for Workflow {
     }
 }
 impl WorkflowGraph {
+    /// Create a new workflow graph.
+    pub fn new() -> Self {
+        Self::default()
+    }
     /// Add a dynamic node to the workflow.
     pub fn add_dynamic(&self, node: impl Into<WorkflowNode>) -> WorkflowNodeId {
         let id = WorkflowNodeId(self.last_node.borrow().0 + 1);
@@ -182,7 +186,6 @@ impl WorkflowGraph {
         self.last_node.replace(id);
         id
     }
-
     #[cfg(feature = "typed_nodes")]
     /// Add a typed node to the workflow.
     pub fn add<T: TypedNode>(&self, node: T) -> T::Output {
@@ -193,7 +196,6 @@ impl WorkflowGraph {
         });
         node.output(node_id)
     }
-
     #[cfg(feature = "typed_nodes")]
     /// Add a dynamic node to the workflow with the given typed output.
     ///
@@ -201,12 +203,22 @@ impl WorkflowGraph {
     pub fn add_typed_dynamic<Output: TypedOut>(&self, node: impl Into<WorkflowNode>) -> Output {
         Output::provide_node_id(self.add_dynamic(node))
     }
-
     /// Borrow the workflow.
     pub fn borrow(&self) -> Ref<'_, Workflow> {
         self.workflow.borrow()
     }
-
+    /// Mutably borrow the workflow.
+    pub fn borrow_mut(&self) -> RefMut<'_, Workflow> {
+        self.workflow.borrow_mut()
+    }
+    /// Get a node from the workflow, if it exists.
+    pub fn get_node(&self, id: WorkflowNodeId) -> Option<Ref<'_, WorkflowNode>> {
+        Ref::filter_map(self.borrow(), |w| w.0.get(&id)).ok()
+    }
+    /// Mutably get a node from the workflow, if it exists.
+    pub fn get_node_mut(&self, id: WorkflowNodeId) -> Option<RefMut<'_, WorkflowNode>> {
+        RefMut::filter_map(self.borrow_mut(), |w| w.0.get_mut(&id)).ok()
+    }
     /// Consume this type, returning the inner workflow.
     pub fn into_workflow(self) -> Workflow {
         self.workflow.into_inner()
@@ -258,9 +270,13 @@ impl WorkflowNode {
             meta: None,
         }
     }
-    /// Set the inputs for the node.
-    pub fn with_input(mut self, key: impl Into<String>, value: impl Into<WorkflowInput>) -> Self {
+    /// Add an input to the node.
+    pub fn add_input(&mut self, key: impl Into<String>, value: impl Into<WorkflowInput>) {
         self.inputs.insert(key.into(), value.into());
+    }
+    /// Add an input to the node and return the node.
+    pub fn with_input(mut self, key: impl Into<String>, value: impl Into<WorkflowInput>) -> Self {
+        self.add_input(key, value);
         self
     }
     /// Set the metadata for the node.
