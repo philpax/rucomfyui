@@ -581,6 +581,7 @@ fn build_node(
     let mut input_ids = HashMap::new();
     let mut output_ids = vec![];
 
+    let mut sorted_inputs = vec![];
     for (name, input, _required) in template.0.all_inputs() {
         let workflow_input = workflow_node.and_then(|n| n.inputs.get(name));
 
@@ -615,16 +616,22 @@ fn build_node(
             InputParamKind::ConnectionOrConstant
         };
 
-        input_ids.insert(
+        sorted_inputs.push((
             name.to_string(),
-            graph.add_input_param(
-                node_id,
-                name.to_string(),
-                type_.clone(),
-                value_type,
-                input_param_kind,
-                true,
-            ),
+            type_.clone(),
+            value_type,
+            input_param_kind,
+        ));
+    }
+    // Sort inputs by input param kind
+    sorted_inputs.sort_by_key(|(_, _, _, input_param_kind)| match input_param_kind {
+        InputParamKind::ConnectionOnly => 0,
+        InputParamKind::ConnectionOrConstant | InputParamKind::ConstantOnly => 1,
+    });
+    for (name, type_, value_type, input_param_kind) in sorted_inputs {
+        input_ids.insert(
+            name.clone(),
+            graph.add_input_param(node_id, name, type_, value_type, input_param_kind, true),
         );
     }
 
