@@ -4,7 +4,7 @@ use std::collections::HashMap;
 
 use serde::{Deserialize, Serialize};
 
-use crate::{workflow::WorkflowNodeId, Bytes, Client, Result, Workflow};
+use crate::{workflow::WorkflowNodeId, Client, OwnedBytes, Result, Workflow};
 
 impl Client {
     /// Send a workflow to the ComfyUI API.
@@ -26,7 +26,7 @@ impl Client {
     pub async fn easy_queue(
         &self,
         workflow: &Workflow,
-    ) -> Result<HashMap<WorkflowNodeId, Vec<Bytes>>> {
+    ) -> Result<HashMap<WorkflowNodeId, Vec<OwnedBytes>>> {
         let output = self.queue(workflow).await?;
 
         // Poll for output

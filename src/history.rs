@@ -4,7 +4,7 @@ use std::collections::BTreeMap;
 
 use serde::{Deserialize, Serialize};
 
-use crate::{Bytes, Client, Result};
+use crate::{Client, OwnedBytes, Result};
 
 impl Client {
     /// Get the history for this ComfyUI instance.
@@ -77,7 +77,7 @@ impl HistoryImage {
         )
     }
     /// Download the image.
-    pub async fn download(&self, client: &Client) -> Result<Bytes> {
+    pub async fn download(&self, client: &Client) -> Result<OwnedBytes> {
         Ok(client
             .client
             .get(self.url(client))

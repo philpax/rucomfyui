@@ -368,7 +368,7 @@ enum TokioOutputEvent {
     QueueWorkflowResult(
         (
             NodeToWorkflowNodeMapping,
-            HashMap<WorkflowNodeId, Vec<rucomfyui::Bytes>>,
+            HashMap<WorkflowNodeId, Vec<rucomfyui::OwnedBytes>>,
         ),
     ),
     Error(TokioOutputError),

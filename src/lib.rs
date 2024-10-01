@@ -28,7 +28,10 @@ pub enum ClientError {
 pub type Result<T> = std::result::Result<T, ClientError>;
 
 /// An alias around `Vec<u8>` for raw bytes.
-pub type Bytes = Vec<u8>;
+pub type OwnedBytes = Vec<u8>;
+
+/// An alias around `Cow<'a, [u8]>` for borrowed bytes.
+pub type BorrowedBytes<'a> = std::borrow::Cow<'a, [u8]>;
 
 /// Client for the ComfyUI API.
 pub struct Client {
@@ -46,7 +49,11 @@ impl Client {
 }
 impl Client {
     /// Upload a file to the ComfyUI API.
-    pub async fn upload(&self, filename: &str, bytes: Bytes) -> Result<serde_json::Value> {
+    pub async fn upload(
+        &self,
+        filename: &str,
+        bytes: impl Into<BorrowedBytes<'static>>,
+    ) -> Result<serde_json::Value> {
         let form = Form::new()
             .part("image", Part::bytes(bytes).file_name(filename.to_string()))
             .text("type", "input")
