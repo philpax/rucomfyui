@@ -1,0 +1,20 @@
+[package]
+name = "rucomfyui_node_graph"
+version = "0.1.0"
+edition = "2021"
+description = "A recreation of the ComfyUI node graph in Rust using `egui` and `rucomfyui`."
+authors = ["Philpax <me@philpax.me>"]
+license = "MIT"
+
+[dependencies]
+egui = "0.28"
+egui_node_graph2 = { version = "0.6.0", features = ["persistence"] }
+
+# We don't need the typed nodes, so we are opting out of them
+rucomfyui = { path = "../rucomfyui", default-features = false }
+
+serde = { workspace = true, optional = true }
+
+[features]
+default = []
+serde = ["dep:serde"]

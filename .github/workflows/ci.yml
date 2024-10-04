@@ -19,7 +19,7 @@ jobs:
         run: cargo clippy --all --no-default-features -- -D warnings
 
       - name: Run Clippy
-        run: cargo clippy --all -- -D warnings
+        run: cargo clippy --all --all-features -- -D warnings
 
       - name: Run tests with features
         run: cargo test --all

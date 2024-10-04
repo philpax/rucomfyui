@@ -1,13 +1,15 @@
+#![deny(missing_docs)]
+//! A recreation of the ComfyUI node graph in Rust using [`egui`] and [`rucomfyui`].
+//!
+//! Wraps around [`egui_node_graph2`] to provide a node graph editor for [`rucomfyui`].
+
 use std::{
     borrow::Cow,
     collections::HashMap,
     hash::{Hash, Hasher},
 };
 
-use anyhow::Context;
-use eframe::egui;
 use egui_node_graph2::*;
-use serde::{Deserialize, Serialize};
 
 use rucomfyui::{
     object_info::{
@@ -128,7 +130,7 @@ impl ComfyUiNodeGraph {
     }
 
     /// Load a [`Workflow`] into this graph.
-    pub fn load_api_workflow(&mut self, workflow: &Workflow) -> anyhow::Result<()> {
+    pub fn load_api_workflow(&mut self, workflow: &Workflow) -> Result<(), UnknownClassTypeError> {
         let sorted_node_ids = workflow.topological_sort_with_depth();
 
         let mut mapping = HashMap::<WorkflowNodeId, BuildNodeOutput>::new();
@@ -142,11 +144,11 @@ impl ComfyUiNodeGraph {
 
             for node_id in node_ids {
                 let node = workflow.0.get(&node_id).unwrap();
-                let object = self.object_info.get(&node.class_type).with_context(|| {
-                    format!(
-                        "Node {} has unknown class type {}",
-                        node_id.0, node.class_type
-                    )
+                let object = self.object_info.get(&node.class_type).ok_or_else(|| {
+                    UnknownClassTypeError {
+                        node_id,
+                        class_type: node.class_type.clone(),
+                    }
                 })?;
                 let template = FlowNodeTemplate(object.clone());
                 let g_node_id = state.graph.add_node(
@@ -224,7 +226,26 @@ impl ComfyUiNodeGraph {
     }
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Debug)]
+/// Error for when a node has an unknown class type during workflow loading.
+pub struct UnknownClassTypeError {
+    /// The node ID of the node with the unknown class type.
+    pub node_id: WorkflowNodeId,
+    /// The class type of the node.
+    pub class_type: String,
+}
+impl std::fmt::Display for UnknownClassTypeError {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(
+            f,
+            "node {} has unknown class type {}",
+            self.node_id, self.class_type
+        )
+    }
+}
+impl std::error::Error for UnknownClassTypeError {}
+
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 struct FlowNodeData {
     template: FlowNodeTemplate,
     input_tooltips: HashMap<String, String>,
@@ -292,7 +313,8 @@ impl NodeDataTrait for FlowNodeData {
     }
 }
 
-#[derive(Clone, Debug, Serialize, Deserialize, Default, PartialEq)]
+#[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 enum FlowValueType {
     Array {
         options: Vec<String>,
@@ -368,10 +390,7 @@ impl FlowValueType {
                 .unwrap_or(0),
             min: typed_meta.map(|m| i64::from(m.min)).unwrap_or(i64::MIN),
             max: typed_meta.map(|m| i64::from(m.max)).unwrap_or(i64::MAX),
-            step: typed_meta
-                .and_then(|m| m.step)
-                .map(i64::from)
-                .unwrap_or(1),
+            step: typed_meta.and_then(|m| m.step).map(i64::from).unwrap_or(1),
         }
     }
     fn convert_u64(value: Option<u64>, typed_meta: Option<&ObjectInputMetaTyped>) -> Self {
@@ -382,10 +401,7 @@ impl FlowValueType {
                 .unwrap_or(0),
             min: typed_meta.map(|m| u64::from(m.min)).unwrap_or(0),
             max: typed_meta.map(|m| u64::from(m.max)).unwrap_or(u64::MAX),
-            step: typed_meta
-                .and_then(|m| m.step)
-                .map(u64::from)
-                .unwrap_or(1),
+            step: typed_meta.and_then(|m| m.step).map(u64::from).unwrap_or(1),
         }
     }
     fn convert_bool(value: Option<bool>, typed_meta: Option<&ObjectInputMetaTyped>) -> Self {
@@ -517,7 +533,8 @@ impl WidgetValueTrait for FlowValueType {
     }
 }
 
-#[derive(Clone, Serialize, Deserialize)]
+#[derive(Clone)]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 struct FlowNodeTemplate(pub Object);
 impl NodeTemplateTrait for FlowNodeTemplate {
     type NodeData = FlowNodeData;
@@ -566,9 +583,10 @@ impl NodeTemplateTrait for FlowNodeTemplate {
 struct EmptyResponse;
 impl UserResponseTrait for EmptyResponse {}
 
-#[derive(Default, Serialize, Deserialize)]
+#[derive(Default)]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 struct FlowUserState {
-    #[serde(skip)]
+    #[cfg_attr(feature = "serde", serde(skip))]
     output_images: HashMap<NodeId, (Vec<egui::ImageSource<'static>>, usize)>,
 }
 

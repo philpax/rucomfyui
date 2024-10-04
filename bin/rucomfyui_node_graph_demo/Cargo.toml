@@ -1,7 +1,8 @@
 [package]
-name = "rucomfyui_node_graph"
+name = "rucomfyui_node_graph_demo"
 version = "0.1.0"
 edition = "2021"
+description = "A demonstration of how to use `rucomfyui_node_graph` that talks to a ComfyUI server."
 
 [dependencies]
 anyhow = { workspace = true }
@@ -10,8 +11,8 @@ serde = { workspace = true }
 
 # We don't need the typed nodes, so disable them
 rucomfyui = { path = "../../crates/rucomfyui", default-features = false }
+rucomfyui_node_graph = { path = "../../crates/rucomfyui_node_graph", default-features = false }
 
 eframe = { version = "0.28", features = ["persistence"] }
 egui_extras = { version = "0.28", features = ["all_loaders"] }
-egui_node_graph2 = { version = "0.6.0", features = ["persistence"] }
 egui-file-dialog = "0.6.1"

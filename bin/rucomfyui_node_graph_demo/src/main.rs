@@ -8,12 +8,9 @@ use std::{
 
 use anyhow::Context;
 use eframe::egui;
-use library::NodeToWorkflowNodeMapping;
 use serde::{Deserialize, Serialize};
 
 use rucomfyui::{object_info::ObjectInfo, workflow::WorkflowNodeId, Workflow};
-
-mod library;
 
 fn main() {
     eframe::run_native(
@@ -31,7 +28,7 @@ fn main() {
 pub struct Application {
     persisted: PersistedState,
 
-    graph: Option<library::ComfyUiNodeGraph>,
+    graph: Option<rucomfyui_node_graph::ComfyUiNodeGraph>,
 
     tokio_input_tx: Sender<TokioInputEvent>,
     tokio_output_rx: Receiver<TokioOutputEvent>,
@@ -119,7 +116,7 @@ impl Application {
         for event in self.tokio_output_rx.try_iter() {
             match event {
                 TokioOutputEvent::ObjectInfo(oi) => {
-                    self.graph = Some(library::ComfyUiNodeGraph::new(oi));
+                    self.graph = Some(rucomfyui_node_graph::ComfyUiNodeGraph::new(oi));
                 }
                 TokioOutputEvent::QueueWorkflowResult((mapping, result)) => {
                     if let Some(graph) = self.graph.as_mut() {
@@ -302,7 +299,7 @@ impl eframe::App for Application {
 
 enum TokioInputEvent {
     Connect(String),
-    QueueWorkflow((NodeToWorkflowNodeMapping, Workflow)),
+    QueueWorkflow((rucomfyui_node_graph::NodeToWorkflowNodeMapping, Workflow)),
 }
 enum TokioOutputError {
     Connection(String),
@@ -312,7 +309,7 @@ enum TokioOutputEvent {
     ObjectInfo(ObjectInfo),
     QueueWorkflowResult(
         (
-            NodeToWorkflowNodeMapping,
+            rucomfyui_node_graph::NodeToWorkflowNodeMapping,
             HashMap<WorkflowNodeId, Vec<rucomfyui::OwnedBytes>>,
         ),
     ),
