@@ -17,24 +17,28 @@ async fn main() {
 }
 
 async fn run() -> Result<()> {
-    let object_info = load_or_get_object_info().await?;
+    let our_directory = Path::new(file!()).parent().unwrap().parent().unwrap();
+    let rucomfyui_directory = our_directory.parent().unwrap();
+
+    let object_info = load_or_get_object_info(our_directory).await?;
     let category_tree = rucomfyui::object_info::categorize(object_info.iter());
 
-    let out_dir = Path::new("crates/rucomfyui/src/nodes");
-    let _ = std::fs::remove_dir_all(out_dir);
-    std::fs::create_dir_all(out_dir)?;
+    let out_dir = rucomfyui_directory.join("src").join("nodes");
+    let _ = std::fs::remove_dir_all(&out_dir);
+    std::fs::create_dir_all(&out_dir)?;
 
     // Write all.
-    write_category_tree_root(&category_tree, out_dir).context("root")?;
+    write_category_tree_root(&category_tree, &out_dir).context("root")?;
     util::write_tokenstream(&out_dir.join("types.rs"), type_module_definitions()?)?;
     util::write_tokenstream(&out_dir.join("all.rs"), all_nodes(&category_tree, &[])?)?;
 
     Ok(())
 }
 
-async fn load_or_get_object_info() -> Result<Vec<rucomfyui::object_info::Object>> {
-    let path =
-        Path::new(concat!("crates/rucomfyui/", env!("CARGO_PKG_NAME"))).join("object_info.json");
+async fn load_or_get_object_info(
+    our_directory: &Path,
+) -> Result<Vec<rucomfyui::object_info::Object>> {
+    let path = our_directory.join("object_info.json");
     match std::fs::read_to_string(&path) {
         Ok(existing) => Ok(serde_json::from_str(&existing)?),
         Err(_) => {

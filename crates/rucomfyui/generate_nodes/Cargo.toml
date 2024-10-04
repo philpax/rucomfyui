@@ -1,7 +1,8 @@
 [package]
-name = "generate_nodes"
+name = "rucomfyui_generate_nodes"
 version = "0.1.0"
 edition = "2021"
+description = "Internal: generates the typed node Rust definitions from ComfyUI object info."
 
 [dependencies]
 anyhow = { workspace = true }
