@@ -1,0 +1,20 @@
+[package]
+name = "rucomfyui"
+version = "0.1.0"
+edition = "2021"
+description = "A Rust client for ComfyUI, with an emphasis on type safety and ergonomy."
+authors = ["Philpax <me@philpax.me>"]
+license = "MIT"
+
+[dependencies]
+futures = "0.3"
+thiserror = "1.0.63"
+
+serde_json = { workspace = true }
+reqwest = { workspace = true }
+serde = { workspace = true }
+tokio = { workspace = true }
+
+[features]
+default = ["typed_nodes"]
+typed_nodes = []

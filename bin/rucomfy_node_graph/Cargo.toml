@@ -1,5 +1,5 @@
 [package]
-name = "rucomfyui-node-graph"
+name = "rucomfyui_node_graph"
 version = "0.1.0"
 edition = "2021"
 
@@ -13,4 +13,4 @@ tokio = { workspace = true, features = ["full"] }
 egui-file-dialog = "0.6.1"
 
 # We don't need the typed nodes, so disable them
-rucomfyui = { path = "../", default-features = false }
+rucomfyui = { path = "../../crates/rucomfyui", default-features = false }

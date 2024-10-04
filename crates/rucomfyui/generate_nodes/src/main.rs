@@ -20,7 +20,7 @@ async fn run() -> Result<()> {
     let object_info = load_or_get_object_info().await?;
     let category_tree = rucomfyui::object_info::categorize(object_info.iter());
 
-    let out_dir = Path::new("src/nodes");
+    let out_dir = Path::new("crates/rucomfyui/src/nodes");
     let _ = std::fs::remove_dir_all(out_dir);
     std::fs::create_dir_all(out_dir)?;
 
@@ -33,7 +33,8 @@ async fn run() -> Result<()> {
 }
 
 async fn load_or_get_object_info() -> Result<Vec<rucomfyui::object_info::Object>> {
-    let path = Path::new(env!("CARGO_PKG_NAME")).join("object_info.json");
+    let path =
+        Path::new(concat!("crates/rucomfyui/", env!("CARGO_PKG_NAME"))).join("object_info.json");
     match std::fs::read_to_string(&path) {
         Ok(existing) => Ok(serde_json::from_str(&existing)?),
         Err(_) => {
