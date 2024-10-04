@@ -4,17 +4,17 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
-serde_json = { workspace = true }
+anyhow = { workspace = true }
 reqwest = { workspace = true }
 serde = { workspace = true }
+serde_json = { workspace = true }
 tokio = { workspace = true, features = ["full"] }
+
+# Yes, we're using the client we're generating files for. Wacky, right?
+rucomfyui = { path = "../", default-features = false }
 
 quote = "1.0.37"
 prettyplease = "0.2.22"
 syn = "2.0.77"
 proc-macro2 = "1.0.86"
 convert_case = "0.6.0"
-anyhow = "1.0.89"
-
-# Yes, we're using the client we're generating files for. Wacky, right?
-rucomfyui = { path = "../", default-features = false }
