@@ -102,7 +102,7 @@ fn type_module_definitions() -> Result<TokenStream> {
             let name = util::name_to_ident(&format!("{ty:?}"), true)?;
 
             let output_doc = format!("A node output of type [`{ty:?}`].");
-            let output_name = util::object_type_struct_ident(&ty);
+            let output_name = util::object_type_struct_ident(ty);
             Ok(quote! {
                 #[doc = #doc]
                 pub trait #name : Clone + Into<WorkflowInput> {}
@@ -289,7 +289,7 @@ fn write_node(
     let node_struct = write_node_struct(node, struct_name, &processed_inputs);
     let trait_impl = write_node_trait_impl(
         node,
-        &struct_name,
+        struct_name,
         &processed_inputs,
         node_output_struct_name,
     )?;
@@ -525,28 +525,26 @@ fn write_node_trait_impl(
                 }
             }
         }
-    } else {
-        if node.output_node {
-            // Output nodes terminate the workflow and do not produce any
-            // output, so we return just the node ID.
-            quote! {
-                type Output = WorkflowNodeId;
-                fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
-                    node_id
-                }
+    } else if node.output_node {
+        // Output nodes terminate the workflow and do not produce any
+        // output, so we return just the node ID.
+        quote! {
+            type Output = WorkflowNodeId;
+            fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
+                node_id
             }
-        } else if node.output.len() == 1 {
-            // If it's just a single output, use that type directly
-            let ty = util::object_type_struct_ident(&node.output[0]);
-            quote! {
-                type Output = crate :: nodes :: types :: #ty;
-                fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
-                    Self::Output { node_id, node_slot: 0u32 }
-                }
-            }
-        } else {
-            panic!("`node_output_struct_name` missing, but not a handled case: {node:?}");
         }
+    } else if node.output.len() == 1 {
+        // If it's just a single output, use that type directly
+        let ty = util::object_type_struct_ident(&node.output[0]);
+        quote! {
+            type Output = crate :: nodes :: types :: #ty;
+            fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
+                Self::Output { node_id, node_slot: 0u32 }
+            }
+        }
+    } else {
+        panic!("`node_output_struct_name` missing, but not a handled case: {node:?}");
     };
 
     let output_node_impl = node.output_node.then(|| {

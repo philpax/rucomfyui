@@ -247,11 +247,9 @@ impl eframe::App for Application {
                             "Queued: {:.02}s ago",
                             last_queue_time.elapsed().as_secs_f32()
                         ));
-                    } else {
-                        if ui.button("Queue").clicked() {
-                            if let Err(err) = self.queue() {
-                                self.error = Some(("Queue".to_string(), err.to_string()));
-                            }
+                    } else if ui.button("Queue").clicked() {
+                        if let Err(err) = self.queue() {
+                            self.error = Some(("Queue".to_string(), err.to_string()));
                         }
                     }
                 }

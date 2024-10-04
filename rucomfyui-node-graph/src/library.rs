@@ -370,7 +370,7 @@ impl FlowValueType {
             max: typed_meta.map(|m| i64::from(m.max)).unwrap_or(i64::MAX),
             step: typed_meta
                 .and_then(|m| m.step)
-                .map(|s| i64::from(s))
+                .map(i64::from)
                 .unwrap_or(1),
         }
     }
@@ -384,7 +384,7 @@ impl FlowValueType {
             max: typed_meta.map(|m| u64::from(m.max)).unwrap_or(u64::MAX),
             step: typed_meta
                 .and_then(|m| m.step)
-                .map(|s| u64::from(s))
+                .map(u64::from)
                 .unwrap_or(1),
         }
     }
