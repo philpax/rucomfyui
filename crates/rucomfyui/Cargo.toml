@@ -2,7 +2,7 @@
 name = "rucomfyui"
 version = "0.1.0"
 edition = "2021"
-description = "A Rust client for ComfyUI, with an emphasis on type safety and ergonomy."
+description = "A Rust client for ComfyUI with an emphasis on type safety and ergonomics."
 authors = ["Philpax <me@philpax.me>"]
 license = "MIT"
 
