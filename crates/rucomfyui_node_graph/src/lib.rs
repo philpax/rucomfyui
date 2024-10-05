@@ -1,7 +1,7 @@
 #![deny(missing_docs)]
 //! A recreation of the ComfyUI node graph in Rust using [`egui`] and [`rucomfyui`].
 //!
-//! Wraps around [`egui_node_graph2`] to provide a node graph editor for [`rucomfyui`].
+//! Wraps around [`egui_node_graph2`] to provide a node graph for [`rucomfyui`].
 
 use std::{
     borrow::Cow,
@@ -25,14 +25,18 @@ use rucomfyui::{
 /// Produced by [`ComfyUiNodeGraph::as_workflow_graph_with_mapping`].
 pub type NodeToWorkflowNodeMapping = HashMap<NodeId, WorkflowNodeId>;
 
-/// The main struct for the node graph editor.
+/// The main struct for the node graph.
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub struct ComfyUiNodeGraph {
-    state: FlowEditorState,
-    user_state: FlowUserState,
-    object_info: ObjectInfo,
+    /// The state of the node graph.
+    pub state: FlowEditorState,
+    /// The user state of the node graph.
+    pub user_state: FlowUserState,
+    /// The object info for the node graph.
+    pub object_info: ObjectInfo,
 }
 impl ComfyUiNodeGraph {
-    /// Create a new node graph editor.
+    /// Create a new node graph.
     pub fn new(object_info: ObjectInfo) -> Self {
         Self {
             state: FlowEditorState::default(),
@@ -184,7 +188,7 @@ impl ComfyUiNodeGraph {
         Ok(())
     }
 
-    /// Render the node graph editor in the given [`egui::Ui`].
+    /// Render the node graph in the given [`egui::Ui`].
     pub fn show(&mut self, ui: &mut egui::Ui) {
         let _ = self.state.draw_graph_editor(
             ui,
@@ -198,7 +202,7 @@ impl ComfyUiNodeGraph {
     /// Any node can have images attached to it for display.
     ///
     /// Note that:
-    /// - [`egui_extras::install_image_loaders`] must have been called to register the image loaders
+    /// - `egui_extras::install_image_loaders` must have been called to register the image loaders
     ///   used to display the images.
     /// - this will clear all existing output images.
     ///
@@ -246,7 +250,8 @@ impl std::fmt::Display for UnknownClassTypeError {
 impl std::error::Error for UnknownClassTypeError {}
 
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
-struct FlowNodeData {
+/// The data for a node in the graph.
+pub struct FlowNodeData {
     template: FlowNodeTemplate,
     input_tooltips: HashMap<String, String>,
     output_tooltips: HashMap<String, String>,
@@ -315,37 +320,63 @@ impl NodeDataTrait for FlowNodeData {
 
 #[derive(Clone, Debug, Default, PartialEq)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
-enum FlowValueType {
+/// The value type for a node in the graph.
+pub enum FlowValueType {
+    /// An array of options.
     Array {
+        /// The options.
         options: Vec<String>,
+        /// The selected option.
         selected: String,
     },
+    /// A string.
     String {
+        /// The value.
         value: String,
+        /// Whether the string should be rendered as a multiline text box.
         multiline: bool,
     },
+    /// A floating point number ([`f64`]).
     Float {
+        /// The value.
         value: f64,
+        /// The minimum value.
         min: f64,
+        /// The maximum value.
         max: f64,
+        /// The value to round to increments of.
         round: Option<f64>,
+        /// The amount to increment by.
         step: f64,
     },
+    /// A signed integer ([`i64`]).
     SignedInt {
+        /// The value.
         value: i64,
+        /// The minimum value.
         min: i64,
+        /// The maximum value.
         max: i64,
+        /// The amount to increment by.
         step: i64,
     },
+    /// An unsigned integer ([`u64`]).
     UnsignedInt {
+        /// The value.
         value: u64,
+        /// The minimum value.
         min: u64,
+        /// The maximum value.
         max: u64,
+        /// The amount to increment by.
         step: u64,
     },
+    /// A boolean ([`bool`]).
     Boolean(bool),
+    /// A non-primitive type (i.e. a connection).
     Other(ObjectType),
     #[default]
+    /// An unknown type. Should not occur in practice.
     Unknown,
 }
 impl FlowValueType {
@@ -440,10 +471,12 @@ impl FlowValueType {
     }
 
     #[must_use]
+    /// Returns whether this value type is connection-only.
     pub fn is_connection_only(&self) -> bool {
         matches!(self, Self::Other(..)) || matches!(self, Self::Unknown)
     }
     #[must_use]
+    /// Returns whether this value type is constant-only.
     pub fn is_constant_only(&self) -> bool {
         matches!(self, Self::Array { .. })
             | matches!(self, Self::String { .. })
@@ -535,7 +568,8 @@ impl WidgetValueTrait for FlowValueType {
 
 #[derive(Clone)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
-struct FlowNodeTemplate(pub Object);
+/// The template for a node in the graph.
+pub struct FlowNodeTemplate(pub Object);
 impl NodeTemplateTrait for FlowNodeTemplate {
     type NodeData = FlowNodeData;
     type DataType = ObjectType;
@@ -580,12 +614,16 @@ impl NodeTemplateTrait for FlowNodeTemplate {
 }
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
-struct EmptyResponse;
+/// The response for a node in the graph. Currently empty.
+pub struct EmptyResponse;
 impl UserResponseTrait for EmptyResponse {}
 
 #[derive(Default)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
-struct FlowUserState {
+/// The user state of the node graph.
+///
+/// Currently used to store output images for nodes to display.
+pub struct FlowUserState {
     #[cfg_attr(feature = "serde", serde(skip))]
     output_images: HashMap<NodeId, (Vec<egui::ImageSource<'static>>, usize)>,
 }
@@ -690,5 +728,6 @@ impl<'a> NodeTemplateIter for NodeTemplates<'a> {
     }
 }
 
-type FlowEditorState =
+/// The state of the node graph.
+pub type FlowEditorState =
     GraphEditorState<FlowNodeData, ObjectType, FlowValueType, FlowNodeTemplate, FlowUserState>;

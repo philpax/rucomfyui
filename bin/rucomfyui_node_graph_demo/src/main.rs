@@ -8,7 +8,6 @@ use std::{
 
 use anyhow::Context;
 use eframe::egui;
-use serde::{Deserialize, Serialize};
 
 use rucomfyui::{object_info::ObjectInfo, workflow::WorkflowNodeId, Workflow};
 
@@ -25,38 +24,60 @@ fn main() {
     .unwrap();
 }
 
+/// The main application as an [`eframe::App`].
 pub struct Application {
-    persisted: PersistedState,
+    /// The address of the ComfyUI server.
+    comfyui_address: String,
 
+    /// The current graph; available when connected to ComfyUI.
     graph: Option<rucomfyui_node_graph::ComfyUiNodeGraph>,
 
+    /// The input channel to the [`tokio`] runtime thread.
     tokio_input_tx: Sender<TokioInputEvent>,
+    /// The output channel from the [`tokio`] runtime thread.
     tokio_output_rx: Receiver<TokioOutputEvent>,
+    /// The [`tokio`] runtime thread.
     _tokio_runtime_thread: JoinHandle<()>,
+    /// A thread responsible for issuing repaint requests periodically
+    /// to ensure that any UI changes are reflected, even when the user
+    /// is not interacting with the UI.
     _pump_repaint_thread: JoinHandle<()>,
 
+    /// The current error, if any. Will be displayed.
     error: Option<(String, String)>,
 
+    /// The file dialog.
     file_dialog: egui_file_dialog::FileDialog,
+    /// The current mode for the file dialog.
     file_mode: FileMode,
 
+    /// The time at which the last queue was issued.
     last_queue_time: Option<Instant>,
 }
+/// The current mode for the file dialog.
 enum FileMode {
     None,
     Load,
     Save,
 }
 impl Application {
+    /// Create a new application.
     pub fn new(cc: &eframe::CreationContext<'_>) -> Self {
         let mut file_dialog = egui_file_dialog::FileDialog::new();
-        let persisted = PersistedState::load(cc, &mut file_dialog);
 
         let (tokio_input_tx, tokio_input_rx) = std::sync::mpsc::channel();
         let (tokio_output_tx, tokio_output_rx) = std::sync::mpsc::channel();
 
+        if let Some(storage) = cc.storage {
+            *file_dialog.storage_mut() =
+                eframe::get_value(storage, "file_dialog").unwrap_or_default();
+        }
+
         Self {
-            persisted,
+            comfyui_address: cc
+                .storage
+                .and_then(|s| eframe::get_value(s, "comfyui_address"))
+                .unwrap_or_else(|| "http://127.0.0.1:8188".to_string()),
 
             graph: None,
 
@@ -81,7 +102,100 @@ impl Application {
             last_queue_time: None,
         }
     }
+}
+impl eframe::App for Application {
+    /// Save the application state to the given storage.
+    ///
+    /// Note that the graph state is not serialized: it cannot be easily stored within
+    /// the [`eframe`] paradigm as the object info it depends on will not be available
+    /// at deserialization time.
+    fn save(&mut self, storage: &mut dyn eframe::Storage) {
+        eframe::set_value(storage, "comfyui_address", &self.comfyui_address);
+        eframe::set_value(storage, "file_dialog", self.file_dialog.storage_mut());
+    }
 
+    /// Update the application and render the UI.
+    fn update(&mut self, ctx: &egui::Context, _frame: &mut eframe::Frame) {
+        if self.process_incoming_events() {
+            ctx.request_repaint();
+        }
+
+        egui::TopBottomPanel::top("top").show(ctx, |ui| {
+            let is_connected = self.graph.is_some();
+            egui::menu::bar(ui, |ui| {
+                egui::widgets::global_dark_light_mode_switch(ui);
+                if is_connected {
+                    ui.menu_button("File", |ui| {
+                        if ui.button("Open API workflow").clicked() {
+                            self.file_mode = FileMode::Load;
+                            self.file_dialog.select_file();
+                        }
+
+                        if ui.button("Save API workflow").clicked() {
+                            self.file_mode = FileMode::Save;
+                            self.file_dialog.save_file();
+                        }
+                    });
+
+                    if let Some(last_queue_time) = self.last_queue_time {
+                        ui.label(format!(
+                            "Queued: {:.02}s ago",
+                            last_queue_time.elapsed().as_secs_f32()
+                        ));
+                    } else if ui.button("Queue").clicked() {
+                        if let Err(err) = self.queue() {
+                            self.error = Some(("Queue".to_string(), err.to_string()));
+                        }
+                    }
+                }
+
+                ui.with_layout(egui::Layout::right_to_left(egui::Align::Center), |ui| {
+                    if ui
+                        .add(egui::Button::new(if !is_connected {
+                            "Connect"
+                        } else {
+                            "Disconnect"
+                        }))
+                        .clicked()
+                    {
+                        if !is_connected {
+                            self.connect();
+                        } else {
+                            self.disconnect();
+                        }
+                    }
+                    ui.text_edit_singleline(&mut self.comfyui_address);
+                    ui.label("ComfyUI address:");
+                });
+            });
+        });
+        egui::CentralPanel::default().show(ctx, |ui| {
+            if let Some(graph) = self.graph.as_mut() {
+                graph.show(ui);
+            } else {
+                ui.label(
+                    egui::RichText::new("Not connected to ComfyUI")
+                        .text_style(egui::TextStyle::Heading),
+                );
+                Default::default()
+            }
+        });
+
+        if let Some((category, error)) = self.error.clone() {
+            egui::Window::new("Error").show(ctx, |ui| {
+                ui.label(egui::RichText::new(category).strong());
+                ui.label(error);
+                if ui.button("Close").clicked() {
+                    self.error = None;
+                }
+            });
+        }
+
+        self.file_dialog.update(ctx);
+    }
+}
+impl Application {
+    /// Load the given file into the current graph.
     fn api_load(&mut self, path: PathBuf) -> anyhow::Result<()> {
         let workflow = rucomfyui::Workflow::from_json(
             &std::fs::read_to_string(path).context("Failed to read file")?,
@@ -96,6 +210,7 @@ impl Application {
         Ok(())
     }
 
+    /// Save the current graph to the given path.
     fn api_save(&self, path: PathBuf) -> anyhow::Result<()> {
         std::fs::write(
             path,
@@ -109,6 +224,7 @@ impl Application {
         Ok(())
     }
 
+    /// Process incoming events and return whether a repaint is needed.
     fn process_incoming_events(&mut self) -> bool {
         let mut needs_repaint = false;
 
@@ -183,18 +299,19 @@ impl Application {
         needs_repaint
     }
 
+    /// Connect to ComfyUI at the address specified in [`Self::comfyui_address`].
     fn connect(&mut self) {
         self.tokio_input_tx
-            .send(TokioInputEvent::Connect(
-                self.persisted.comfyui_address.clone(),
-            ))
+            .send(TokioInputEvent::Connect(self.comfyui_address.clone()))
             .unwrap();
     }
 
+    /// Disconnect from ComfyUI.
     fn disconnect(&mut self) {
         self.graph = None;
     }
 
+    /// Queue the current workflow.
     fn queue(&mut self) -> anyhow::Result<()> {
         let (graph, mapping) = self
             .graph
@@ -212,108 +329,35 @@ impl Application {
         Ok(())
     }
 }
-impl eframe::App for Application {
-    fn save(&mut self, storage: &mut dyn eframe::Storage) {
-        self.persisted.save(storage, &mut self.file_dialog);
-    }
 
-    fn update(&mut self, ctx: &egui::Context, _frame: &mut eframe::Frame) {
-        if self.process_incoming_events() {
-            ctx.request_repaint();
-        }
-
-        egui::TopBottomPanel::top("top").show(ctx, |ui| {
-            let is_connected = self.graph.is_some();
-            egui::menu::bar(ui, |ui| {
-                egui::widgets::global_dark_light_mode_switch(ui);
-                if is_connected {
-                    ui.menu_button("File", |ui| {
-                        if ui.button("Open API workflow").clicked() {
-                            self.file_mode = FileMode::Load;
-                            self.file_dialog.select_file();
-                        }
-
-                        if ui.button("Save API workflow").clicked() {
-                            self.file_mode = FileMode::Save;
-                            self.file_dialog.save_file();
-                        }
-                    });
-
-                    if let Some(last_queue_time) = self.last_queue_time {
-                        ui.label(format!(
-                            "Queued: {:.02}s ago",
-                            last_queue_time.elapsed().as_secs_f32()
-                        ));
-                    } else if ui.button("Queue").clicked() {
-                        if let Err(err) = self.queue() {
-                            self.error = Some(("Queue".to_string(), err.to_string()));
-                        }
-                    }
-                }
-
-                ui.with_layout(egui::Layout::right_to_left(egui::Align::Center), |ui| {
-                    if ui
-                        .add(egui::Button::new(if !is_connected {
-                            "Connect"
-                        } else {
-                            "Disconnect"
-                        }))
-                        .clicked()
-                    {
-                        if !is_connected {
-                            self.connect();
-                        } else {
-                            self.disconnect();
-                        }
-                    }
-                    ui.text_edit_singleline(&mut self.persisted.comfyui_address);
-                    ui.label("ComfyUI address:");
-                });
-            });
-        });
-        egui::CentralPanel::default().show(ctx, |ui| {
-            if let Some(graph) = self.graph.as_mut() {
-                graph.show(ui);
-            } else {
-                ui.label(
-                    egui::RichText::new("Not connected to ComfyUI")
-                        .text_style(egui::TextStyle::Heading),
-                );
-                Default::default()
-            }
-        });
-
-        if let Some((category, error)) = self.error.clone() {
-            egui::Window::new("Error").show(ctx, |ui| {
-                ui.label(egui::RichText::new(category).strong());
-                ui.label(error);
-                if ui.button("Close").clicked() {
-                    self.error = None;
-                }
-            });
-        }
-
-        self.file_dialog.update(ctx);
-    }
-}
-
+/// Input to the `tokio` runtime thread.
 enum TokioInputEvent {
+    /// Connect to ComfyUI at the given address and obtain object info.
     Connect(String),
+    /// Queue the given workflow with a mapping that can be returned back to the
+    /// caller to map the output images to the correct nodes.
     QueueWorkflow((rucomfyui_node_graph::NodeToWorkflowNodeMapping, Workflow)),
 }
-enum TokioOutputError {
-    Connection(String),
-    Queue(String),
-}
+/// Output from the `tokio` runtime thread.
 enum TokioOutputEvent {
+    /// We have successfully connected and obtained object info.
     ObjectInfo(ObjectInfo),
+    /// We have successfully executed the workflow and obtained output images.
     QueueWorkflowResult(
         (
             rucomfyui_node_graph::NodeToWorkflowNodeMapping,
             HashMap<WorkflowNodeId, Vec<rucomfyui::OwnedBytes>>,
         ),
     ),
+    /// Some error occurred.
     Error(TokioOutputError),
+}
+/// Error that can occur when sending output from the `tokio` runtime thread.
+enum TokioOutputError {
+    /// Error connecting to ComfyUI.
+    Connection(String),
+    /// Error queuing the workflow.
+    Queue(String),
 }
 fn tokio_runtime_thread(input: Receiver<TokioInputEvent>, output: Sender<TokioOutputEvent>) {
     let rt = tokio::runtime::Runtime::new().unwrap();
@@ -365,44 +409,6 @@ fn tokio_runtime_thread(input: Receiver<TokioInputEvent>, output: Sender<TokioOu
                     }
                 }
             }
-        }
-    }
-}
-
-#[derive(Serialize, Deserialize)]
-struct PersistedState {
-    pub comfyui_address: String,
-}
-impl PersistedState {
-    pub fn load(
-        cc: &eframe::CreationContext<'_>,
-        file_dialog: &mut egui_file_dialog::FileDialog,
-    ) -> Self {
-        let default = Self::default();
-        if let Some(storage) = cc.storage {
-            *file_dialog.storage_mut() =
-                eframe::get_value(storage, "file_dialog").unwrap_or_default();
-            Self {
-                comfyui_address: eframe::get_value(storage, "comfyui_address")
-                    .unwrap_or(default.comfyui_address),
-            }
-        } else {
-            default
-        }
-    }
-    pub fn save(
-        &self,
-        storage: &mut dyn eframe::Storage,
-        file_dialog: &mut egui_file_dialog::FileDialog,
-    ) {
-        eframe::set_value(storage, "comfyui_address", &self.comfyui_address);
-        eframe::set_value(storage, "file_dialog", file_dialog.storage_mut());
-    }
-}
-impl Default for PersistedState {
-    fn default() -> Self {
-        Self {
-            comfyui_address: "http://127.0.0.1:8188".to_string(),
         }
     }
 }

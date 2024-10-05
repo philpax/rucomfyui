@@ -7,7 +7,6 @@ description = "A demonstration of how to use `rucomfyui_node_graph` that talks t
 [dependencies]
 anyhow = { workspace = true }
 tokio = { workspace = true, features = ["full"] }
-serde = { workspace = true }
 
 # We don't need the typed nodes, so disable them
 rucomfyui = { path = "../../crates/rucomfyui", default-features = false }
