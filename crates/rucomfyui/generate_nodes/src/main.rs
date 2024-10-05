@@ -107,7 +107,7 @@ fn type_module_definitions() -> Result<TokenStream> {
             let name = util::name_to_ident(&format!("{ty:?}"), true)?;
 
             let output_doc = format!("A node output of type [`{ty:?}`].");
-            let output_name = util::object_type_struct_ident(ty);
+            let output_name = util::object_type_out_struct_ident(ty);
             Ok(quote! {
                 #[doc = #doc]
                 pub trait #name : Clone + Into<WorkflowInput> {}
@@ -346,7 +346,7 @@ fn write_node_struct(
             let generic_name = &input.generic_name;
             let ty = &input.generic_ty;
             let default = if input.optional {
-                let output_struct_name = util::object_type_struct_ident(&input.ty);
+                let output_struct_name = util::object_type_out_struct_ident(&input.ty);
                 quote! { = crate :: nodes :: types :: #output_struct_name }
             } else {
                 quote! {}
@@ -514,7 +514,7 @@ fn write_node_trait_impl(
             .enumerate()
             .map(|(i, output)| {
                 let name = util::name_to_ident(output.name, false)?;
-                let ty = util::object_type_struct_ident(&output.ty);
+                let ty = util::object_type_out_struct_ident(&output.ty);
                 let i = i as u32;
                 Ok(quote! {
                     #name: crate :: nodes :: types :: #ty { node_id, node_slot: #i }
@@ -541,7 +541,7 @@ fn write_node_trait_impl(
         }
     } else if node.output.len() == 1 {
         // If it's just a single output, use that type directly
-        let ty = util::object_type_struct_ident(&node.output[0]);
+        let ty = util::object_type_out_struct_ident(&node.output[0]);
         quote! {
             type Output = crate :: nodes :: types :: #ty;
             fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
@@ -627,7 +627,7 @@ fn write_node_output_struct(
         .processed_output()
         .map(|output| {
             let name = util::name_to_ident(output.name, false)?;
-            let ty = util::object_type_struct_ident(&output.ty);
+            let ty = util::object_type_out_struct_ident(&output.ty);
             let doc = output.tooltip.unwrap_or("No documentation.");
             Ok(quote! {
                 #[doc = #doc]

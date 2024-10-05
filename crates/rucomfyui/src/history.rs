@@ -28,6 +28,7 @@ pub struct History {
     /// Data.
     pub data: BTreeMap<String, HistoryData>,
 }
+
 #[derive(Serialize, Deserialize, Debug, Clone)]
 /// Data for a queued prompt.
 pub struct HistoryData {
@@ -36,6 +37,7 @@ pub struct HistoryData {
     /// Status.
     pub status: Status,
 }
+
 #[derive(Serialize, Deserialize, Debug, Clone)]
 /// Status of a queued prompt.
 pub struct Status {
@@ -44,6 +46,7 @@ pub struct Status {
     /// Status string.
     pub status_str: String,
 }
+
 #[derive(Serialize, Deserialize, Debug, Clone)]
 /// Output of a queued prompt.
 pub struct HistoryOutputs {
@@ -51,12 +54,14 @@ pub struct HistoryOutputs {
     /// Nodes.
     pub nodes: BTreeMap<String, HistoryNodeOutput>,
 }
+
 #[derive(Serialize, Deserialize, Debug, Clone)]
 /// Output of a node in the history.
 pub struct HistoryNodeOutput {
     /// Images.
     pub images: Vec<HistoryImage>,
 }
+
 #[derive(Serialize, Deserialize, Debug, Clone)]
 /// Image in the history.
 pub struct HistoryImage {

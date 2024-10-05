@@ -169,6 +169,7 @@ impl eframe::App for Application {
                 });
             });
         });
+
         egui::CentralPanel::default().show(ctx, |ui| {
             if let Some(graph) = self.graph.as_mut() {
                 graph.show(ui);
