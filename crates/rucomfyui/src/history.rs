@@ -4,20 +4,20 @@ use std::collections::BTreeMap;
 
 use serde::{Deserialize, Serialize};
 
-use crate::{Client, OwnedBytes, Result};
+use crate::{error::parse_response, Client, OwnedBytes, Result};
 
 impl Client {
     /// Get the history for this ComfyUI instance.
     ///
     /// Used by [`Self::easy_queue`] to poll and retrieve the results of a queued prompt.
     pub async fn history(&self, max_items: u32) -> Result<History> {
-        Ok(self
-            .client
-            .get(format!("{}/history?max_items={max_items}", self.api_base))
-            .send()
-            .await?
-            .json()
-            .await?)
+        parse_response(
+            self.client
+                .get(format!("{}/history?max_items={max_items}", self.api_base))
+                .send()
+                .await?,
+        )
+        .await
     }
 }
 

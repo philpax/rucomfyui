@@ -4,7 +4,9 @@ use std::collections::HashMap;
 
 use serde::{Deserialize, Serialize};
 
-use crate::{workflow::WorkflowNodeId, Client, OwnedBytes, Result, Workflow};
+use crate::{
+    error::parse_response, workflow::WorkflowNodeId, Client, OwnedBytes, Result, Workflow,
+};
 
 impl Client {
     /// Send a workflow to the ComfyUI API.
@@ -12,14 +14,14 @@ impl Client {
         let payload = serde_json::json!({
             "prompt": workflow,
         });
-        Ok(self
-            .client
-            .post(format!("{}/prompt", self.api_base))
-            .json(&payload)
-            .send()
-            .await?
-            .json()
-            .await?)
+        parse_response(
+            self.client
+                .post(format!("{}/prompt", self.api_base))
+                .json(&payload)
+                .send()
+                .await?,
+        )
+        .await
     }
 
     /// Helper function that prompts with a workflow, polls for the result, and then returns all output images.

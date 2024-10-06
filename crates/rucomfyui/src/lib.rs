@@ -1,8 +1,8 @@
 //! A Rust client for ComfyUI with an emphasis on type safety and ergonomics.
 #![deny(missing_docs)]
 
+use error::parse_response;
 use reqwest::multipart::{Form, Part};
-use thiserror::Error;
 
 pub mod history;
 pub mod object_info;
@@ -14,16 +14,9 @@ pub use workflow::{Workflow, WorkflowGraph};
 #[cfg(feature = "typed_nodes")]
 pub mod nodes;
 
-#[derive(Error, Debug)]
-/// Errors that can occur when using the client.
-pub enum ClientError {
-    #[error("reqwest error: {0}")]
-    /// Reqwest error.
-    Reqwest(#[from] reqwest::Error),
-    #[error("parse error: {0}")]
-    /// Parse int error.
-    ParseInt(#[from] std::num::ParseIntError),
-}
+pub mod error;
+pub use error::ClientError;
+
 /// Result type for the client.
 pub type Result<T> = std::result::Result<T, ClientError>;
 
@@ -59,13 +52,13 @@ impl Client {
             .text("type", "input")
             .text("overwrite", "true");
 
-        Ok(self
-            .client
-            .post(format!("{}/upload/image", self.api_base))
-            .multipart(form)
-            .send()
-            .await?
-            .json()
-            .await?)
+        parse_response(
+            self.client
+                .post(format!("{}/upload/image", self.api_base))
+                .multipart(form)
+                .send()
+                .await?,
+        )
+        .await
     }
 }
