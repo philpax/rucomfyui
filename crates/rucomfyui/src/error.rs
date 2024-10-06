@@ -296,7 +296,7 @@ impl NodeError {
             .get("errors")?
             .as_array()?
             .iter()
-            .filter_map(|e| ValidationError::from_value(e))
+            .filter_map(ValidationError::from_value)
             .collect();
         let dependent_outputs = error
             .get("dependent_outputs")?
@@ -319,10 +319,7 @@ pub(crate) async fn parse_response<T: serde::de::DeserializeOwned>(
 ) -> Result<T, ClientError> {
     let value: serde_json::Value = response.json().await?;
     if let Some(object) = value.as_object() {
-        if let Some(error) = object
-            .get("error")
-            .and_then(|e| ValidationError::from_value(e))
-        {
+        if let Some(error) = object.get("error").and_then(ValidationError::from_value) {
             let node_errors = object
                 .get("node_errors")
                 .and_then(|v| v.as_object())
