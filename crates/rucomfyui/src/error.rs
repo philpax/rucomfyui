@@ -33,28 +33,249 @@ pub enum ClientError {
     },
 }
 
-#[derive(Error, Debug, Deserialize)]
-/// ComfyUI failed to validate the request.
-#[serde(tag = "type")]
-pub enum ValidationError {
-    /// An error occurred, but this library does not know how to handle it.
-    #[error("unknown error: {type_}: {message}: {details}")]
-    #[serde(untagged)]
-    Unknown {
-        /// The type of error.
-        #[serde(rename = "type")]
-        type_: String,
-        /// The error message.
-        message: String,
-        /// Additional details.
-        details: String,
-        /// Extra info.
-        extra_info: serde_json::Value,
-    },
+#[derive(Debug, Deserialize)]
+/// An error occurred, but this library does not know how to handle it.
+pub struct UnknownValidationError {
+    /// The type of error.
+    #[serde(rename = "type")]
+    pub type_: String,
+    /// The error message.
+    pub message: String,
+    /// Additional details.
+    pub details: String,
+    /// Extra info.
+    pub extra_info: serde_json::Value,
 }
+impl std::fmt::Display for UnknownValidationError {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(
+            f,
+            "{}: {} (details: {})",
+            self.type_, self.message, self.details
+        )
+    }
+}
+
+#[derive(Error, Debug)]
+/// ComfyUI failed to validate the request.
+pub enum ValidationError {
+    /// A required input was missing.
+    #[error("required input missing: {input_name}")]
+    RequiredInputMissing {
+        /// The original message.
+        message: String,
+        /// The name of the missing input.
+        input_name: String,
+    },
+
+    /// An input was incorrectly specified; it must be a length-2 list of `[node_id, slot_index]`.
+    #[error("bad linked input: {input_name}")]
+    BadLinkedInput {
+        /// The original message.
+        message: String,
+        /// The name of the input.
+        input_name: String,
+        /// The configuration of the input.
+        input_config: serde_json::Value,
+        /// The received value.
+        received_value: serde_json::Value,
+    },
+
+    /// The return type of a linked node doesn't match the expected input type.
+    #[error("return type mismatch: {input_name}, expected {expected_type}, got {received_type}")]
+    ReturnTypeMismatch {
+        /// The original message.
+        message: String,
+        /// The name of the input.
+        input_name: String,
+        /// The configuration of the input.
+        input_config: serde_json::Value,
+        /// The type that was received.
+        received_type: String,
+        /// The type that was expected.
+        expected_type: String,
+        /// The value from the linked node.
+        linked_node: Vec<serde_json::Value>,
+    },
+
+    /// An exception occurred during the validation of an inner node.
+    #[error("exception during inner validation: {input_name}")]
+    ExceptionDuringInnerValidation {
+        /// The original message.
+        message: String,
+        /// The name of the input.
+        input_name: String,
+        /// The configuration of the input.
+        input_config: serde_json::Value,
+        /// The exception message.
+        exception_message: String,
+        /// The type of the exception.
+        exception_type: String,
+        /// The traceback of the exception.
+        traceback: Vec<String>,
+        /// The value from the linked node.
+        linked_node: Vec<serde_json::Value>,
+    },
+
+    /// Failed to convert an input value to the expected type.
+    #[error("invalid input type: {input_name}")]
+    InvalidInputType {
+        /// The original message.
+        message: String,
+        /// The name of the input.
+        input_name: String,
+        /// The configuration of the input.
+        input_config: serde_json::Value,
+        /// The received value.
+        received_value: serde_json::Value,
+        /// The exception message.
+        exception_message: String,
+    },
+
+    /// The input value is smaller than the minimum allowed value.
+    #[error("value smaller than min: {input_name}")]
+    ValueSmallerThanMin {
+        /// The original message.
+        message: String,
+        /// The name of the input.
+        input_name: String,
+        /// The configuration of the input.
+        input_config: serde_json::Value,
+        /// The received value.
+        received_value: serde_json::Value,
+    },
+
+    /// The input value is bigger than the maximum allowed value.
+    #[error("value bigger than max: {input_name}")]
+    ValueBiggerThanMax {
+        /// The original message.
+        message: String,
+        /// The name of the input.
+        input_name: String,
+        /// The configuration of the input.
+        input_config: serde_json::Value,
+        /// The received value.
+        received_value: serde_json::Value,
+    },
+
+    /// The input value is not in the list of allowed values.
+    #[error("value not in list: {input_name}")]
+    ValueNotInList {
+        /// The original message.
+        message: String,
+        /// The name of the input.
+        input_name: String,
+        /// The configuration of the input.
+        input_config: Option<serde_json::Value>,
+        /// The received value.
+        received_value: serde_json::Value,
+    },
+
+    /// Custom validation defined by the node failed.
+    #[error("custom validation failed: {input_name}")]
+    CustomValidationFailed {
+        /// The original message.
+        message: String,
+        /// The name of the input.
+        input_name: String,
+        /// Additional details about the validation failure.
+        details: String,
+    },
+
+    /// The prompt has no outputs.
+    #[error("prompt has no outputs")]
+    PromptNoOutputs,
+
+    /// At least one prompt output failed validation.
+    #[error("at least one prompt output failed validation")]
+    PromptOutputsFailedValidation {
+        /// Details about the validation failures.
+        details: String,
+    },
+
+    #[error("unknown error: {0}")]
+    /// An error occurred, but this library does not know how to handle it.
+    Unknown(UnknownValidationError),
+}
+
 impl ValidationError {
     pub(crate) fn from_value(value: &serde_json::Value) -> Option<Self> {
-        serde_json::from_value(value.clone()).ok()
+        let unknown_error: UnknownValidationError = serde_json::from_value(value.clone()).ok()?;
+
+        let info = &unknown_error.extra_info;
+        match unknown_error.type_.as_str() {
+            "required_input_missing" => Some(ValidationError::RequiredInputMissing {
+                message: unknown_error.message,
+                input_name: info.get("input_name")?.as_str()?.to_string(),
+            }),
+            "bad_linked_input" => Some(ValidationError::BadLinkedInput {
+                message: unknown_error.message,
+                input_name: info.get("input_name")?.as_str()?.to_string(),
+                input_config: info.get("input_config")?.clone(),
+                received_value: info.get("received_value")?.clone(),
+            }),
+            "return_type_mismatch" => Some(ValidationError::ReturnTypeMismatch {
+                message: unknown_error.message,
+                input_name: info.get("input_name")?.as_str()?.to_string(),
+                input_config: info.get("input_config")?.clone(),
+                received_type: info.get("received_type")?.as_str()?.to_string(),
+                expected_type: info.get("input_config")?[0].as_str()?.to_string(),
+                linked_node: info.get("linked_node")?.as_array()?.clone(),
+            }),
+            "exception_during_inner_validation" => {
+                Some(ValidationError::ExceptionDuringInnerValidation {
+                    message: unknown_error.message,
+                    input_name: info.get("input_name")?.as_str()?.to_string(),
+                    input_config: info.get("input_config")?.clone(),
+                    exception_message: info.get("exception_message")?.as_str()?.to_string(),
+                    exception_type: info.get("exception_type")?.as_str()?.to_string(),
+                    traceback: info
+                        .get("traceback")?
+                        .as_array()?
+                        .iter()
+                        .map(|v| v.as_str().unwrap().to_string())
+                        .collect(),
+                    linked_node: info.get("linked_node")?.as_array()?.clone(),
+                })
+            }
+            "invalid_input_type" => Some(ValidationError::InvalidInputType {
+                message: unknown_error.message,
+                input_name: info.get("input_name")?.as_str()?.to_string(),
+                input_config: info.get("input_config")?.clone(),
+                received_value: info.get("received_value")?.clone(),
+                exception_message: info.get("exception_message")?.as_str()?.to_string(),
+            }),
+            "value_smaller_than_min" => Some(ValidationError::ValueSmallerThanMin {
+                message: unknown_error.message,
+                input_name: info.get("input_name")?.as_str()?.to_string(),
+                input_config: info.get("input_config")?.clone(),
+                received_value: info.get("received_value")?.clone(),
+            }),
+            "value_bigger_than_max" => Some(ValidationError::ValueBiggerThanMax {
+                message: unknown_error.message,
+                input_name: info.get("input_name")?.as_str()?.to_string(),
+                input_config: info.get("input_config")?.clone(),
+                received_value: info.get("received_value")?.clone(),
+            }),
+            "value_not_in_list" => Some(ValidationError::ValueNotInList {
+                message: unknown_error.message,
+                input_name: info.get("input_name")?.as_str()?.to_string(),
+                input_config: info.get("input_config").cloned(),
+                received_value: info.get("received_value")?.clone(),
+            }),
+            "custom_validation_failed" => Some(ValidationError::CustomValidationFailed {
+                message: unknown_error.message,
+                input_name: info.get("input_name")?.as_str()?.to_string(),
+                details: unknown_error.details,
+            }),
+            "prompt_no_outputs" => Some(ValidationError::PromptNoOutputs),
+            "prompt_outputs_failed_validation" => {
+                Some(ValidationError::PromptOutputsFailedValidation {
+                    details: unknown_error.details,
+                })
+            }
+            _ => Some(ValidationError::Unknown(unknown_error)),
+        }
     }
 }
 
