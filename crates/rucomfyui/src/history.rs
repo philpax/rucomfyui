@@ -59,7 +59,11 @@ pub struct HistoryOutputs {
 /// Output of a node in the history.
 pub struct HistoryNodeOutput {
     /// Images.
+    #[serde(default)]
     pub images: Vec<HistoryImage>,
+    /// Text.
+    #[serde(default)]
+    pub text: Vec<String>,
 }
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
