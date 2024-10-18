@@ -9,7 +9,7 @@ pub mod object_info;
 pub mod queue;
 pub mod workflow;
 
-pub use workflow::{Workflow, WorkflowGraph};
+pub use workflow::{Workflow, WorkflowGraph, WorkflowNodeId};
 
 #[cfg(feature = "typed_nodes")]
 pub mod nodes;
