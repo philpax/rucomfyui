@@ -4,6 +4,13 @@ use crate::workflow::{WorkflowInput, WorkflowNodeId};
 pub trait Out: Sized {
     /// Create an output from a dynamic node. Use carefully.
     fn from_dynamic(node_id: WorkflowNodeId, node_slot: u32) -> Self;
+    /// Convert the output to a dynamic input.
+    fn into_input(self) -> WorkflowInput;
+}
+impl<T: Out> From<T> for WorkflowInput {
+    fn from(value: T) -> Self {
+        value.into_input()
+    }
 }
 /// A generic output with no specific type. Can be used when you
 /// don't care about the output type.
@@ -16,15 +23,12 @@ pub struct UntypedOut {
     /// The node's output slot.
     pub node_slot: u32,
 }
-impl<T: From<UntypedOut>> Out for T {
+impl Out for UntypedOut {
     fn from_dynamic(node_id: WorkflowNodeId, node_slot: u32) -> Self {
-        T::from(UntypedOut { node_id, node_slot })
+        Self { node_id, node_slot }
     }
-}
-impl<T: Into<UntypedOut>> From<T> for WorkflowInput {
-    fn from(value: T) -> Self {
-        let value: UntypedOut = value.into();
-        value.node_id.to_input_with_slot(value.node_slot)
+    fn into_input(self) -> WorkflowInput {
+        self.node_id.to_input_with_slot(self.node_slot)
     }
 }
 ///A value of ComfyUI type `AUDIO`.
@@ -32,14 +36,12 @@ pub trait Audio: Clone + Into<WorkflowInput> {}
 ///A node output of type [`Audio`].
 #[derive(Clone, Copy)]
 pub struct AudioOut(pub UntypedOut);
-impl From<UntypedOut> for AudioOut {
-    fn from(value: UntypedOut) -> Self {
-        Self(value)
+impl Out for AudioOut {
+    fn from_dynamic(node_id: WorkflowNodeId, node_slot: u32) -> Self {
+        Self(UntypedOut::from_dynamic(node_id, node_slot))
     }
-}
-impl From<AudioOut> for UntypedOut {
-    fn from(value: AudioOut) -> Self {
-        value.0
+    fn into_input(self) -> WorkflowInput {
+        self.0.into_input()
     }
 }
 impl Audio for AudioOut {}
@@ -48,14 +50,12 @@ pub trait Boolean: Clone + Into<WorkflowInput> {}
 ///A node output of type [`Boolean`].
 #[derive(Clone, Copy)]
 pub struct BooleanOut(pub UntypedOut);
-impl From<UntypedOut> for BooleanOut {
-    fn from(value: UntypedOut) -> Self {
-        Self(value)
+impl Out for BooleanOut {
+    fn from_dynamic(node_id: WorkflowNodeId, node_slot: u32) -> Self {
+        Self(UntypedOut::from_dynamic(node_id, node_slot))
     }
-}
-impl From<BooleanOut> for UntypedOut {
-    fn from(value: BooleanOut) -> Self {
-        value.0
+    fn into_input(self) -> WorkflowInput {
+        self.0.into_input()
     }
 }
 impl Boolean for BooleanOut {}
@@ -64,14 +64,12 @@ pub trait ClipVisionOutput: Clone + Into<WorkflowInput> {}
 ///A node output of type [`ClipVisionOutput`].
 #[derive(Clone, Copy)]
 pub struct ClipVisionOutputOut(pub UntypedOut);
-impl From<UntypedOut> for ClipVisionOutputOut {
-    fn from(value: UntypedOut) -> Self {
-        Self(value)
+impl Out for ClipVisionOutputOut {
+    fn from_dynamic(node_id: WorkflowNodeId, node_slot: u32) -> Self {
+        Self(UntypedOut::from_dynamic(node_id, node_slot))
     }
-}
-impl From<ClipVisionOutputOut> for UntypedOut {
-    fn from(value: ClipVisionOutputOut) -> Self {
-        value.0
+    fn into_input(self) -> WorkflowInput {
+        self.0.into_input()
     }
 }
 impl ClipVisionOutput for ClipVisionOutputOut {}
@@ -80,14 +78,12 @@ pub trait ClipVision: Clone + Into<WorkflowInput> {}
 ///A node output of type [`ClipVision`].
 #[derive(Clone, Copy)]
 pub struct ClipVisionOut(pub UntypedOut);
-impl From<UntypedOut> for ClipVisionOut {
-    fn from(value: UntypedOut) -> Self {
-        Self(value)
+impl Out for ClipVisionOut {
+    fn from_dynamic(node_id: WorkflowNodeId, node_slot: u32) -> Self {
+        Self(UntypedOut::from_dynamic(node_id, node_slot))
     }
-}
-impl From<ClipVisionOut> for UntypedOut {
-    fn from(value: ClipVisionOut) -> Self {
-        value.0
+    fn into_input(self) -> WorkflowInput {
+        self.0.into_input()
     }
 }
 impl ClipVision for ClipVisionOut {}
@@ -96,14 +92,12 @@ pub trait Clip: Clone + Into<WorkflowInput> {}
 ///A node output of type [`Clip`].
 #[derive(Clone, Copy)]
 pub struct ClipOut(pub UntypedOut);
-impl From<UntypedOut> for ClipOut {
-    fn from(value: UntypedOut) -> Self {
-        Self(value)
+impl Out for ClipOut {
+    fn from_dynamic(node_id: WorkflowNodeId, node_slot: u32) -> Self {
+        Self(UntypedOut::from_dynamic(node_id, node_slot))
     }
-}
-impl From<ClipOut> for UntypedOut {
-    fn from(value: ClipOut) -> Self {
-        value.0
+    fn into_input(self) -> WorkflowInput {
+        self.0.into_input()
     }
 }
 impl Clip for ClipOut {}
@@ -112,14 +106,12 @@ pub trait Conditioning: Clone + Into<WorkflowInput> {}
 ///A node output of type [`Conditioning`].
 #[derive(Clone, Copy)]
 pub struct ConditioningOut(pub UntypedOut);
-impl From<UntypedOut> for ConditioningOut {
-    fn from(value: UntypedOut) -> Self {
-        Self(value)
+impl Out for ConditioningOut {
+    fn from_dynamic(node_id: WorkflowNodeId, node_slot: u32) -> Self {
+        Self(UntypedOut::from_dynamic(node_id, node_slot))
     }
-}
-impl From<ConditioningOut> for UntypedOut {
-    fn from(value: ConditioningOut) -> Self {
-        value.0
+    fn into_input(self) -> WorkflowInput {
+        self.0.into_input()
     }
 }
 impl Conditioning for ConditioningOut {}
@@ -128,14 +120,12 @@ pub trait ControlNet: Clone + Into<WorkflowInput> {}
 ///A node output of type [`ControlNet`].
 #[derive(Clone, Copy)]
 pub struct ControlNetOut(pub UntypedOut);
-impl From<UntypedOut> for ControlNetOut {
-    fn from(value: UntypedOut) -> Self {
-        Self(value)
+impl Out for ControlNetOut {
+    fn from_dynamic(node_id: WorkflowNodeId, node_slot: u32) -> Self {
+        Self(UntypedOut::from_dynamic(node_id, node_slot))
     }
-}
-impl From<ControlNetOut> for UntypedOut {
-    fn from(value: ControlNetOut) -> Self {
-        value.0
+    fn into_input(self) -> WorkflowInput {
+        self.0.into_input()
     }
 }
 impl ControlNet for ControlNetOut {}
@@ -144,14 +134,12 @@ pub trait Float: Clone + Into<WorkflowInput> {}
 ///A node output of type [`Float`].
 #[derive(Clone, Copy)]
 pub struct FloatOut(pub UntypedOut);
-impl From<UntypedOut> for FloatOut {
-    fn from(value: UntypedOut) -> Self {
-        Self(value)
+impl Out for FloatOut {
+    fn from_dynamic(node_id: WorkflowNodeId, node_slot: u32) -> Self {
+        Self(UntypedOut::from_dynamic(node_id, node_slot))
     }
-}
-impl From<FloatOut> for UntypedOut {
-    fn from(value: FloatOut) -> Self {
-        value.0
+    fn into_input(self) -> WorkflowInput {
+        self.0.into_input()
     }
 }
 impl Float for FloatOut {}
@@ -160,14 +148,12 @@ pub trait Gligen: Clone + Into<WorkflowInput> {}
 ///A node output of type [`Gligen`].
 #[derive(Clone, Copy)]
 pub struct GligenOut(pub UntypedOut);
-impl From<UntypedOut> for GligenOut {
-    fn from(value: UntypedOut) -> Self {
-        Self(value)
+impl Out for GligenOut {
+    fn from_dynamic(node_id: WorkflowNodeId, node_slot: u32) -> Self {
+        Self(UntypedOut::from_dynamic(node_id, node_slot))
     }
-}
-impl From<GligenOut> for UntypedOut {
-    fn from(value: GligenOut) -> Self {
-        value.0
+    fn into_input(self) -> WorkflowInput {
+        self.0.into_input()
     }
 }
 impl Gligen for GligenOut {}
@@ -176,14 +162,12 @@ pub trait Guider: Clone + Into<WorkflowInput> {}
 ///A node output of type [`Guider`].
 #[derive(Clone, Copy)]
 pub struct GuiderOut(pub UntypedOut);
-impl From<UntypedOut> for GuiderOut {
-    fn from(value: UntypedOut) -> Self {
-        Self(value)
+impl Out for GuiderOut {
+    fn from_dynamic(node_id: WorkflowNodeId, node_slot: u32) -> Self {
+        Self(UntypedOut::from_dynamic(node_id, node_slot))
     }
-}
-impl From<GuiderOut> for UntypedOut {
-    fn from(value: GuiderOut) -> Self {
-        value.0
+    fn into_input(self) -> WorkflowInput {
+        self.0.into_input()
     }
 }
 impl Guider for GuiderOut {}
@@ -192,14 +176,12 @@ pub trait Image: Clone + Into<WorkflowInput> {}
 ///A node output of type [`Image`].
 #[derive(Clone, Copy)]
 pub struct ImageOut(pub UntypedOut);
-impl From<UntypedOut> for ImageOut {
-    fn from(value: UntypedOut) -> Self {
-        Self(value)
+impl Out for ImageOut {
+    fn from_dynamic(node_id: WorkflowNodeId, node_slot: u32) -> Self {
+        Self(UntypedOut::from_dynamic(node_id, node_slot))
     }
-}
-impl From<ImageOut> for UntypedOut {
-    fn from(value: ImageOut) -> Self {
-        value.0
+    fn into_input(self) -> WorkflowInput {
+        self.0.into_input()
     }
 }
 impl Image for ImageOut {}
@@ -208,14 +190,12 @@ pub trait InpaintModel: Clone + Into<WorkflowInput> {}
 ///A node output of type [`InpaintModel`].
 #[derive(Clone, Copy)]
 pub struct InpaintModelOut(pub UntypedOut);
-impl From<UntypedOut> for InpaintModelOut {
-    fn from(value: UntypedOut) -> Self {
-        Self(value)
+impl Out for InpaintModelOut {
+    fn from_dynamic(node_id: WorkflowNodeId, node_slot: u32) -> Self {
+        Self(UntypedOut::from_dynamic(node_id, node_slot))
     }
-}
-impl From<InpaintModelOut> for UntypedOut {
-    fn from(value: InpaintModelOut) -> Self {
-        value.0
+    fn into_input(self) -> WorkflowInput {
+        self.0.into_input()
     }
 }
 impl InpaintModel for InpaintModelOut {}
@@ -224,14 +204,12 @@ pub trait InpaintPatch: Clone + Into<WorkflowInput> {}
 ///A node output of type [`InpaintPatch`].
 #[derive(Clone, Copy)]
 pub struct InpaintPatchOut(pub UntypedOut);
-impl From<UntypedOut> for InpaintPatchOut {
-    fn from(value: UntypedOut) -> Self {
-        Self(value)
+impl Out for InpaintPatchOut {
+    fn from_dynamic(node_id: WorkflowNodeId, node_slot: u32) -> Self {
+        Self(UntypedOut::from_dynamic(node_id, node_slot))
     }
-}
-impl From<InpaintPatchOut> for UntypedOut {
-    fn from(value: InpaintPatchOut) -> Self {
-        value.0
+    fn into_input(self) -> WorkflowInput {
+        self.0.into_input()
     }
 }
 impl InpaintPatch for InpaintPatchOut {}
@@ -240,14 +218,12 @@ pub trait Int: Clone + Into<WorkflowInput> {}
 ///A node output of type [`Int`].
 #[derive(Clone, Copy)]
 pub struct IntOut(pub UntypedOut);
-impl From<UntypedOut> for IntOut {
-    fn from(value: UntypedOut) -> Self {
-        Self(value)
+impl Out for IntOut {
+    fn from_dynamic(node_id: WorkflowNodeId, node_slot: u32) -> Self {
+        Self(UntypedOut::from_dynamic(node_id, node_slot))
     }
-}
-impl From<IntOut> for UntypedOut {
-    fn from(value: IntOut) -> Self {
-        value.0
+    fn into_input(self) -> WorkflowInput {
+        self.0.into_input()
     }
 }
 impl Int for IntOut {}
@@ -256,14 +232,12 @@ pub trait Latent: Clone + Into<WorkflowInput> {}
 ///A node output of type [`Latent`].
 #[derive(Clone, Copy)]
 pub struct LatentOut(pub UntypedOut);
-impl From<UntypedOut> for LatentOut {
-    fn from(value: UntypedOut) -> Self {
-        Self(value)
+impl Out for LatentOut {
+    fn from_dynamic(node_id: WorkflowNodeId, node_slot: u32) -> Self {
+        Self(UntypedOut::from_dynamic(node_id, node_slot))
     }
-}
-impl From<LatentOut> for UntypedOut {
-    fn from(value: LatentOut) -> Self {
-        value.0
+    fn into_input(self) -> WorkflowInput {
+        self.0.into_input()
     }
 }
 impl Latent for LatentOut {}
@@ -272,14 +246,12 @@ pub trait LatentOperation: Clone + Into<WorkflowInput> {}
 ///A node output of type [`LatentOperation`].
 #[derive(Clone, Copy)]
 pub struct LatentOperationOut(pub UntypedOut);
-impl From<UntypedOut> for LatentOperationOut {
-    fn from(value: UntypedOut) -> Self {
-        Self(value)
+impl Out for LatentOperationOut {
+    fn from_dynamic(node_id: WorkflowNodeId, node_slot: u32) -> Self {
+        Self(UntypedOut::from_dynamic(node_id, node_slot))
     }
-}
-impl From<LatentOperationOut> for UntypedOut {
-    fn from(value: LatentOperationOut) -> Self {
-        value.0
+    fn into_input(self) -> WorkflowInput {
+        self.0.into_input()
     }
 }
 impl LatentOperation for LatentOperationOut {}
@@ -288,14 +260,12 @@ pub trait Mask: Clone + Into<WorkflowInput> {}
 ///A node output of type [`Mask`].
 #[derive(Clone, Copy)]
 pub struct MaskOut(pub UntypedOut);
-impl From<UntypedOut> for MaskOut {
-    fn from(value: UntypedOut) -> Self {
-        Self(value)
+impl Out for MaskOut {
+    fn from_dynamic(node_id: WorkflowNodeId, node_slot: u32) -> Self {
+        Self(UntypedOut::from_dynamic(node_id, node_slot))
     }
-}
-impl From<MaskOut> for UntypedOut {
-    fn from(value: MaskOut) -> Self {
-        value.0
+    fn into_input(self) -> WorkflowInput {
+        self.0.into_input()
     }
 }
 impl Mask for MaskOut {}
@@ -304,14 +274,12 @@ pub trait Model: Clone + Into<WorkflowInput> {}
 ///A node output of type [`Model`].
 #[derive(Clone, Copy)]
 pub struct ModelOut(pub UntypedOut);
-impl From<UntypedOut> for ModelOut {
-    fn from(value: UntypedOut) -> Self {
-        Self(value)
+impl Out for ModelOut {
+    fn from_dynamic(node_id: WorkflowNodeId, node_slot: u32) -> Self {
+        Self(UntypedOut::from_dynamic(node_id, node_slot))
     }
-}
-impl From<ModelOut> for UntypedOut {
-    fn from(value: ModelOut) -> Self {
-        value.0
+    fn into_input(self) -> WorkflowInput {
+        self.0.into_input()
     }
 }
 impl Model for ModelOut {}
@@ -320,14 +288,12 @@ pub trait Noise: Clone + Into<WorkflowInput> {}
 ///A node output of type [`Noise`].
 #[derive(Clone, Copy)]
 pub struct NoiseOut(pub UntypedOut);
-impl From<UntypedOut> for NoiseOut {
-    fn from(value: UntypedOut) -> Self {
-        Self(value)
+impl Out for NoiseOut {
+    fn from_dynamic(node_id: WorkflowNodeId, node_slot: u32) -> Self {
+        Self(UntypedOut::from_dynamic(node_id, node_slot))
     }
-}
-impl From<NoiseOut> for UntypedOut {
-    fn from(value: NoiseOut) -> Self {
-        value.0
+    fn into_input(self) -> WorkflowInput {
+        self.0.into_input()
     }
 }
 impl Noise for NoiseOut {}
@@ -336,14 +302,12 @@ pub trait Photomaker: Clone + Into<WorkflowInput> {}
 ///A node output of type [`Photomaker`].
 #[derive(Clone, Copy)]
 pub struct PhotomakerOut(pub UntypedOut);
-impl From<UntypedOut> for PhotomakerOut {
-    fn from(value: UntypedOut) -> Self {
-        Self(value)
+impl Out for PhotomakerOut {
+    fn from_dynamic(node_id: WorkflowNodeId, node_slot: u32) -> Self {
+        Self(UntypedOut::from_dynamic(node_id, node_slot))
     }
-}
-impl From<PhotomakerOut> for UntypedOut {
-    fn from(value: PhotomakerOut) -> Self {
-        value.0
+    fn into_input(self) -> WorkflowInput {
+        self.0.into_input()
     }
 }
 impl Photomaker for PhotomakerOut {}
@@ -352,14 +316,12 @@ pub trait Sampler: Clone + Into<WorkflowInput> {}
 ///A node output of type [`Sampler`].
 #[derive(Clone, Copy)]
 pub struct SamplerOut(pub UntypedOut);
-impl From<UntypedOut> for SamplerOut {
-    fn from(value: UntypedOut) -> Self {
-        Self(value)
+impl Out for SamplerOut {
+    fn from_dynamic(node_id: WorkflowNodeId, node_slot: u32) -> Self {
+        Self(UntypedOut::from_dynamic(node_id, node_slot))
     }
-}
-impl From<SamplerOut> for UntypedOut {
-    fn from(value: SamplerOut) -> Self {
-        value.0
+    fn into_input(self) -> WorkflowInput {
+        self.0.into_input()
     }
 }
 impl Sampler for SamplerOut {}
@@ -368,14 +330,12 @@ pub trait String: Clone + Into<WorkflowInput> {}
 ///A node output of type [`String`].
 #[derive(Clone, Copy)]
 pub struct StringOut(pub UntypedOut);
-impl From<UntypedOut> for StringOut {
-    fn from(value: UntypedOut) -> Self {
-        Self(value)
+impl Out for StringOut {
+    fn from_dynamic(node_id: WorkflowNodeId, node_slot: u32) -> Self {
+        Self(UntypedOut::from_dynamic(node_id, node_slot))
     }
-}
-impl From<StringOut> for UntypedOut {
-    fn from(value: StringOut) -> Self {
-        value.0
+    fn into_input(self) -> WorkflowInput {
+        self.0.into_input()
     }
 }
 impl String for StringOut {}
@@ -384,14 +344,12 @@ pub trait Sigmas: Clone + Into<WorkflowInput> {}
 ///A node output of type [`Sigmas`].
 #[derive(Clone, Copy)]
 pub struct SigmasOut(pub UntypedOut);
-impl From<UntypedOut> for SigmasOut {
-    fn from(value: UntypedOut) -> Self {
-        Self(value)
+impl Out for SigmasOut {
+    fn from_dynamic(node_id: WorkflowNodeId, node_slot: u32) -> Self {
+        Self(UntypedOut::from_dynamic(node_id, node_slot))
     }
-}
-impl From<SigmasOut> for UntypedOut {
-    fn from(value: SigmasOut) -> Self {
-        value.0
+    fn into_input(self) -> WorkflowInput {
+        self.0.into_input()
     }
 }
 impl Sigmas for SigmasOut {}
@@ -400,14 +358,12 @@ pub trait StyleModel: Clone + Into<WorkflowInput> {}
 ///A node output of type [`StyleModel`].
 #[derive(Clone, Copy)]
 pub struct StyleModelOut(pub UntypedOut);
-impl From<UntypedOut> for StyleModelOut {
-    fn from(value: UntypedOut) -> Self {
-        Self(value)
+impl Out for StyleModelOut {
+    fn from_dynamic(node_id: WorkflowNodeId, node_slot: u32) -> Self {
+        Self(UntypedOut::from_dynamic(node_id, node_slot))
     }
-}
-impl From<StyleModelOut> for UntypedOut {
-    fn from(value: StyleModelOut) -> Self {
-        value.0
+    fn into_input(self) -> WorkflowInput {
+        self.0.into_input()
     }
 }
 impl StyleModel for StyleModelOut {}
@@ -416,14 +372,12 @@ pub trait UpscaleModel: Clone + Into<WorkflowInput> {}
 ///A node output of type [`UpscaleModel`].
 #[derive(Clone, Copy)]
 pub struct UpscaleModelOut(pub UntypedOut);
-impl From<UntypedOut> for UpscaleModelOut {
-    fn from(value: UntypedOut) -> Self {
-        Self(value)
+impl Out for UpscaleModelOut {
+    fn from_dynamic(node_id: WorkflowNodeId, node_slot: u32) -> Self {
+        Self(UntypedOut::from_dynamic(node_id, node_slot))
     }
-}
-impl From<UpscaleModelOut> for UntypedOut {
-    fn from(value: UpscaleModelOut) -> Self {
-        value.0
+    fn into_input(self) -> WorkflowInput {
+        self.0.into_input()
     }
 }
 impl UpscaleModel for UpscaleModelOut {}
@@ -432,14 +386,12 @@ pub trait Vae: Clone + Into<WorkflowInput> {}
 ///A node output of type [`Vae`].
 #[derive(Clone, Copy)]
 pub struct VaeOut(pub UntypedOut);
-impl From<UntypedOut> for VaeOut {
-    fn from(value: UntypedOut) -> Self {
-        Self(value)
+impl Out for VaeOut {
+    fn from_dynamic(node_id: WorkflowNodeId, node_slot: u32) -> Self {
+        Self(UntypedOut::from_dynamic(node_id, node_slot))
     }
-}
-impl From<VaeOut> for UntypedOut {
-    fn from(value: VaeOut) -> Self {
-        value.0
+    fn into_input(self) -> WorkflowInput {
+        self.0.into_input()
     }
 }
 impl Vae for VaeOut {}
@@ -448,14 +400,12 @@ pub trait Webcam: Clone + Into<WorkflowInput> {}
 ///A node output of type [`Webcam`].
 #[derive(Clone, Copy)]
 pub struct WebcamOut(pub UntypedOut);
-impl From<UntypedOut> for WebcamOut {
-    fn from(value: UntypedOut) -> Self {
-        Self(value)
+impl Out for WebcamOut {
+    fn from_dynamic(node_id: WorkflowNodeId, node_slot: u32) -> Self {
+        Self(UntypedOut::from_dynamic(node_id, node_slot))
     }
-}
-impl From<WebcamOut> for UntypedOut {
-    fn from(value: WebcamOut) -> Self {
-        value.0
+    fn into_input(self) -> WorkflowInput {
+        self.0.into_input()
     }
 }
 impl Webcam for WebcamOut {}

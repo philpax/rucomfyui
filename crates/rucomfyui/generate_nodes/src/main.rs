@@ -115,14 +115,12 @@ fn type_module_definitions() -> Result<TokenStream> {
                 #[doc = #output_doc]
                 #[derive(Clone, Copy)]
                 pub struct #output_name(pub UntypedOut);
-                impl From<UntypedOut> for #output_name {
-                    fn from(value: UntypedOut) -> Self {
-                        Self(value)
+                impl Out for #output_name {
+                    fn from_dynamic(node_id: WorkflowNodeId, node_slot: u32) -> Self {
+                        Self(UntypedOut::from_dynamic(node_id, node_slot))
                     }
-                }
-                impl From<#output_name> for UntypedOut {
-                    fn from(value: #output_name) -> Self {
-                        value.0
+                    fn into_input(self) -> WorkflowInput {
+                        self.0.into_input()
                     }
                 }
                 impl #name for #output_name {}
@@ -138,6 +136,13 @@ fn type_module_definitions() -> Result<TokenStream> {
         pub trait Out: Sized {
             /// Create an output from a dynamic node. Use carefully.
             fn from_dynamic(node_id: WorkflowNodeId, node_slot: u32) -> Self;
+            /// Convert the output to a dynamic input.
+            fn into_input(self) -> WorkflowInput;
+        }
+        impl<T: Out> From<T> for WorkflowInput {
+            fn from(value: T) -> Self {
+                value.into_input()
+            }
         }
 
         /// A generic output with no specific type. Can be used when you
@@ -151,15 +156,12 @@ fn type_module_definitions() -> Result<TokenStream> {
             /// The node's output slot.
             pub node_slot: u32,
         }
-        impl<T: From<UntypedOut>> Out for T {
+        impl Out for UntypedOut {
             fn from_dynamic(node_id: WorkflowNodeId, node_slot: u32) -> Self {
-                T::from(UntypedOut { node_id, node_slot })
+                Self { node_id, node_slot }
             }
-        }
-        impl<T: Into<UntypedOut>> From<T> for WorkflowInput {
-            fn from(value: T) -> Self {
-                let value: UntypedOut = value.into();
-                value.node_id.to_input_with_slot(value.node_slot)
+            fn into_input(self) -> WorkflowInput {
+                self.node_id.to_input_with_slot(self.node_slot)
             }
         }
 
