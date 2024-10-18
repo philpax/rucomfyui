@@ -283,12 +283,12 @@ impl Application {
                             &now_timestamp.to_string(),
                             result
                                 .into_iter()
-                                .filter(|(_, images)| !images.is_empty())
-                                .flat_map(|(workflow_node_id, images)| {
+                                .filter(|(_, output)| !output.images.is_empty())
+                                .flat_map(|(workflow_node_id, output)| {
                                     reverse_mapping
                                         .get(&workflow_node_id)
                                         .copied()
-                                        .map(|id| (id, images))
+                                        .map(|id| (id, output.images))
                                 }),
                         );
                     }
@@ -388,7 +388,7 @@ enum TokioOutputEvent {
     QueueWorkflowResult(
         (
             rucomfyui_node_graph::NodeToWorkflowNodeMapping,
-            HashMap<WorkflowNodeId, Vec<rucomfyui::OwnedBytes>>,
+            HashMap<WorkflowNodeId, rucomfyui::queue::EasyQueueNodeOutput>,
         ),
     ),
     /// Some error occurred.

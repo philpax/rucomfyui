@@ -28,7 +28,7 @@ impl Client {
     pub async fn easy_queue(
         &self,
         workflow: &Workflow,
-    ) -> Result<HashMap<WorkflowNodeId, Vec<OwnedBytes>>> {
+    ) -> Result<HashMap<WorkflowNodeId, EasyQueueNodeOutput>> {
         let output = self.queue(workflow).await?;
 
         // Poll for output
@@ -44,11 +44,15 @@ impl Client {
 
         let mut output = HashMap::new();
         for (node_name, node_output) in history_output.nodes {
-            let outputs = futures::future::try_join_all(
+            let images = futures::future::try_join_all(
                 node_output.images.iter().map(|out| out.download(self)),
             )
             .await?;
-            output.insert(node_name.parse::<WorkflowNodeId>()?, outputs);
+            let texts = node_output.text;
+            output.insert(
+                node_name.parse::<WorkflowNodeId>()?,
+                EasyQueueNodeOutput { images, texts },
+            );
         }
         Ok(output)
     }
@@ -58,9 +62,18 @@ impl Client {
 /// Result of the queueing of a prompt.
 pub struct QueueResult {
     /// Node errors.
-    node_errors: serde_json::Value,
+    pub node_errors: serde_json::Value,
     /// Number.
-    number: u32,
+    pub number: u32,
     /// Prompt ID.
-    prompt_id: String,
+    pub prompt_id: String,
+}
+
+#[derive(Debug)]
+/// Output of a node in [`Client::easy_queue`].
+pub struct EasyQueueNodeOutput {
+    /// Images.
+    pub images: Vec<OwnedBytes>,
+    /// Texts.
+    pub texts: Vec<String>,
 }
