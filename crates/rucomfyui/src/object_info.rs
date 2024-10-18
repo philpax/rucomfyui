@@ -428,11 +428,28 @@ impl std::fmt::Display for ObjectInputMetaTypedRoundValue {
     }
 }
 
-#[derive(Debug, Serialize, Deserialize, Clone, PartialEq, Eq)]
-#[serde(rename_all = "SCREAMING_SNAKE_CASE")]
-/// Type of an object.
-#[allow(missing_docs)]
-pub enum ObjectType {
+macro_rules! define_object_type {
+    ($($ot:ident),*) => {
+        #[derive(Debug, Serialize, Deserialize, Clone, PartialEq, Eq)]
+        #[serde(rename_all = "SCREAMING_SNAKE_CASE")]
+        /// Type of an object.
+        #[allow(missing_docs)]
+        pub enum ObjectType {
+            $($ot,)*
+            #[serde(untagged)]
+            Other(String),
+        }
+        impl ObjectType {
+            /// All object types excluding [`ObjectType::Other`].
+            ///
+            /// This should include all standard ComfyUI types.
+            pub const ALL: &[ObjectType] = &[
+                $(Self::$ot,)*
+            ];
+        }
+    }
+}
+define_object_type! {
     Audio,
     Boolean,
     ClipVisionOutput,
@@ -459,43 +476,7 @@ pub enum ObjectType {
     StyleModel,
     UpscaleModel,
     Vae,
-    Webcam,
-    #[serde(untagged)]
-    Other(String),
-}
-impl ObjectType {
-    /// All object types excluding [`ObjectType::Other`].
-    ///
-    /// This should include all standard ComfyUI types.
-    pub const ALL: &[ObjectType] = &[
-        Self::Audio,
-        Self::Boolean,
-        Self::ClipVisionOutput,
-        Self::ClipVision,
-        Self::Clip,
-        Self::Conditioning,
-        Self::ControlNet,
-        Self::Float,
-        Self::Gligen,
-        Self::Guider,
-        Self::Image,
-        Self::InpaintModel,
-        Self::InpaintPatch,
-        Self::Int,
-        Self::Latent,
-        Self::LatentOperation,
-        Self::Mask,
-        Self::Model,
-        Self::Noise,
-        Self::Photomaker,
-        Self::Sampler,
-        Self::String,
-        Self::Sigmas,
-        Self::StyleModel,
-        Self::UpscaleModel,
-        Self::Vae,
-        Self::Webcam,
-    ];
+    Webcam
 }
 
 /// A tree of objects based on their categories.
