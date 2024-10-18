@@ -446,11 +446,11 @@ pub fn build_node(
             ObjectInputType::Array(vec) => (
                 ObjectType::String,
                 FlowValueType::Array {
-                    options: vec.clone(),
+                    options: vec.iter().map(|v| v.as_str().to_string()).collect(),
                     selected: workflow_input
                         .and_then(|i| i.as_str())
                         .map(|s| s.to_string())
-                        .or_else(|| vec.first().cloned())
+                        .or_else(|| vec.first().cloned().map(String::from))
                         .unwrap_or_default(),
                 },
             ),

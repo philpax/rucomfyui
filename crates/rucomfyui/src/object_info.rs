@@ -160,7 +160,7 @@ pub enum ObjectInputType {
     /// [`Self::as_type`] will return `Some(ObjectType::String)` for these to ensure that
     /// downstream code can still pass values in. If this is not desired, you can check
     /// for the array type and handle it appropriately.
-    Array(Vec<String>),
+    Array(Vec<ObjectInputTypeArrayValue>),
     /// Typed input.
     Typed(ObjectType),
 }
@@ -178,6 +178,40 @@ impl ObjectInputType {
             // but we treat array types as strings so they can be specified in
             // the workflow
             Self::Array(_) => Some(&ObjectType::String),
+        }
+    }
+}
+
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq, Eq)]
+#[serde(untagged)]
+/// Value of an array input.
+pub enum ObjectInputTypeArrayValue {
+    /// String value. This is the standard type for array values.
+    String(String),
+    /// Content with an optional image.
+    ///
+    /// Not sure what this means; it appears in the `ckpt_name` input for `CheckpointLoader|pysssss`.
+    ContentImage {
+        /// Content.
+        content: String,
+        /// Optional image.
+        image: Option<String>,
+    },
+}
+impl From<ObjectInputTypeArrayValue> for String {
+    fn from(value: ObjectInputTypeArrayValue) -> Self {
+        match value {
+            ObjectInputTypeArrayValue::String(v) => v,
+            ObjectInputTypeArrayValue::ContentImage { content, .. } => content,
+        }
+    }
+}
+impl ObjectInputTypeArrayValue {
+    /// Get the content as a borrowed string.
+    pub fn as_str(&self) -> &str {
+        match self {
+            Self::String(v) => v.as_str(),
+            Self::ContentImage { content, .. } => content.as_str(),
         }
     }
 }
