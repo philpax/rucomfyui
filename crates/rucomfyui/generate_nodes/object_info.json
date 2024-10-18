@@ -4990,6 +4990,78 @@
     "output_tooltips": []
   },
   {
+    "name": "LatentApplyOperation",
+    "display_name": "LatentApplyOperation",
+    "description": "",
+    "python_module": "comfy_extras.nodes_latent",
+    "category": "latent/advanced/operations",
+    "input": {
+      "required": {
+        "operation": [
+          "LATENT_OPERATION"
+        ],
+        "samples": [
+          "LATENT"
+        ]
+      },
+      "optional": null
+    },
+    "input_order": {
+      "required": [
+        "samples",
+        "operation"
+      ],
+      "optional": null
+    },
+    "output": [
+      "LATENT"
+    ],
+    "output_is_list": [
+      false
+    ],
+    "output_name": [
+      "LATENT"
+    ],
+    "output_node": false,
+    "output_tooltips": []
+  },
+  {
+    "name": "LatentApplyOperationCFG",
+    "display_name": "LatentApplyOperationCFG",
+    "description": "",
+    "python_module": "comfy_extras.nodes_latent",
+    "category": "latent/advanced/operations",
+    "input": {
+      "required": {
+        "model": [
+          "MODEL"
+        ],
+        "operation": [
+          "LATENT_OPERATION"
+        ]
+      },
+      "optional": null
+    },
+    "input_order": {
+      "required": [
+        "model",
+        "operation"
+      ],
+      "optional": null
+    },
+    "output": [
+      "MODEL"
+    ],
+    "output_is_list": [
+      false
+    ],
+    "output_name": [
+      "MODEL"
+    ],
+    "output_node": false,
+    "output_tooltips": []
+  },
+  {
     "name": "LatentBatch",
     "display_name": "LatentBatch",
     "description": "",
@@ -5462,6 +5534,106 @@
     ],
     "output_name": [
       "LATENT"
+    ],
+    "output_node": false,
+    "output_tooltips": []
+  },
+  {
+    "name": "LatentOperationSharpen",
+    "display_name": "LatentOperationSharpen",
+    "description": "",
+    "python_module": "comfy_extras.nodes_latent",
+    "category": "latent/advanced/operations",
+    "input": {
+      "required": {
+        "alpha": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 0.1,
+            "max": 5.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "sharpen_radius": [
+          "INT",
+          {
+            "tooltip": null,
+            "default": 9,
+            "max": 31,
+            "min": 1,
+            "step": 1
+          }
+        ],
+        "sigma": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 10.0,
+            "min": 0.1,
+            "step": 0.1
+          }
+        ]
+      },
+      "optional": null
+    },
+    "input_order": {
+      "required": [
+        "sharpen_radius",
+        "sigma",
+        "alpha"
+      ],
+      "optional": null
+    },
+    "output": [
+      "LATENT_OPERATION"
+    ],
+    "output_is_list": [
+      false
+    ],
+    "output_name": [
+      "LATENT_OPERATION"
+    ],
+    "output_node": false,
+    "output_tooltips": []
+  },
+  {
+    "name": "LatentOperationTonemapReinhard",
+    "display_name": "LatentOperationTonemapReinhard",
+    "description": "",
+    "python_module": "comfy_extras.nodes_latent",
+    "category": "latent/advanced/operations",
+    "input": {
+      "required": {
+        "multiplier": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 100.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ]
+      },
+      "optional": null
+    },
+    "input_order": {
+      "required": [
+        "multiplier"
+      ],
+      "optional": null
+    },
+    "output": [
+      "LATENT_OPERATION"
+    ],
+    "output_is_list": [
+      false
+    ],
+    "output_name": [
+      "LATENT_OPERATION"
     ],
     "output_node": false,
     "output_tooltips": []
@@ -11562,6 +11734,7 @@
           [
             "default",
             "fp8_e4m3fn",
+            "fp8_e4m3fn_fast",
             "fp8_e5m2"
           ]
         ]

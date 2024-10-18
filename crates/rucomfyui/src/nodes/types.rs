@@ -320,6 +320,27 @@ impl From<LatentOut> for WorkflowInput {
     }
 }
 impl Latent for LatentOut {}
+///A value of ComfyUI type `LATENT_OPERATION`.
+pub trait LatentOperation: Clone + Into<WorkflowInput> {}
+///A node output of type [`LatentOperation`].
+#[derive(Clone, Copy)]
+pub struct LatentOperationOut {
+    /// The ID of the node that produced the output.
+    pub node_id: WorkflowNodeId,
+    /// The node's output slot.
+    pub node_slot: u32,
+}
+impl Out for LatentOperationOut {
+    fn from_dynamic(node_id: WorkflowNodeId, node_slot: u32) -> Self {
+        Self { node_id, node_slot }
+    }
+}
+impl From<LatentOperationOut> for WorkflowInput {
+    fn from(value: LatentOperationOut) -> Self {
+        value.node_id.to_input_with_slot(value.node_slot)
+    }
+}
+impl LatentOperation for LatentOperationOut {}
 ///A value of ComfyUI type `MASK`.
 pub trait Mask: Clone + Into<WorkflowInput> {}
 ///A node output of type [`Mask`].
