@@ -1,6 +1,6 @@
 use std::path::Path;
 
-use anyhow::Result;
+use anyhow::{Context, Result};
 use convert_case::{Case, Casing};
 use proc_macro2::TokenStream;
 use rucomfyui::object_info::ObjectType;
@@ -40,5 +40,8 @@ pub fn name_to_ident(name: &str, pascal_case: bool) -> Result<syn::Ident> {
 
 /// A helper function to get the output struct ident for the given [`ObjectType`].
 pub fn object_type_out_struct_ident(ty: &ObjectType) -> syn::Ident {
+    if let ObjectType::Other(ty) = ty {
+        panic!("Unexpected other type: {ty:?}");
+    }
     name_to_ident(&format!("{ty:?}Out"), true).unwrap()
 }
