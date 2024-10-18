@@ -35,10 +35,7 @@ pub fn name_to_ident(name: &str, pascal_case: bool) -> Result<syn::Ident> {
         name = "type_".to_string();
     }
 
-    // This is pretty nasty, and I'd want to avoid it in "production" code,
-    // but given we're just generating code, it's fine.
-    std::panic::catch_unwind(|| quote::format_ident!("{name}"))
-        .map_err(|e| anyhow::anyhow!("Error parsing {name}: {:?}", e.downcast_ref::<&str>()))
+    syn::parse_str::<syn::Ident>(&name).with_context(|| format!("Error parsing {name}"))
 }
 
 /// A helper function to get the output struct ident for the given [`ObjectType`].
