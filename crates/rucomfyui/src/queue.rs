@@ -31,10 +31,11 @@ impl Client {
     ) -> Result<HashMap<WorkflowNodeId, EasyQueueNodeOutput>> {
         let output = self.queue(workflow).await?;
 
-        // Poll for output
+        // Poll for the prompt's completion.
+        let prompt_id = output.prompt_id;
         let history_output = loop {
-            let history = self.history(10).await?;
-            if let Some(history_data) = history.data.get(&output.prompt_id) {
+            let history = self.history_for_prompt(&prompt_id).await?;
+            if let Some(history_data) = history.data.get(&prompt_id) {
                 if history_data.status.completed {
                     break history_data.outputs.clone();
                 }
@@ -42,6 +43,7 @@ impl Client {
             tokio::time::sleep(std::time::Duration::from_millis(100)).await;
         };
 
+        // Convert output to `EasyQueueNodeOutput`.
         let mut output = HashMap::new();
         for (node_name, node_output) in history_output.nodes {
             let images = futures::future::try_join_all(
