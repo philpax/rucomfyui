@@ -53,6 +53,13 @@ pub struct Application {
 
     /// The time at which the last queue was issued.
     last_queue_time: Option<Instant>,
+
+    /// Whether the settings window is open.
+    settings_open: bool,
+    /// Whether to allow insecure HTTPS.
+    allow_insecure_https: bool,
+    /// The authorization token to pass (`Bearer {authorization_token}` in the `Authorization` header).
+    authorization_token: String,
 }
 /// The current mode for the file dialog.
 enum FileMode {
@@ -100,6 +107,16 @@ impl Application {
             file_mode: FileMode::None,
 
             last_queue_time: None,
+
+            settings_open: false,
+            allow_insecure_https: cc
+                .storage
+                .and_then(|s| eframe::get_value(s, "allow_insecure_https"))
+                .unwrap_or_default(),
+            authorization_token: cc
+                .storage
+                .and_then(|s| eframe::get_value(s, "authorization_token"))
+                .unwrap_or_default(),
         }
     }
 }
@@ -110,8 +127,10 @@ impl eframe::App for Application {
     /// the [`eframe`] paradigm as the object info it depends on will not be available
     /// at deserialization time.
     fn save(&mut self, storage: &mut dyn eframe::Storage) {
-        eframe::set_value(storage, "comfyui_address", &self.comfyui_address);
         eframe::set_value(storage, "file_dialog", self.file_dialog.storage_mut());
+        eframe::set_value(storage, "comfyui_address", &self.comfyui_address);
+        eframe::set_value(storage, "allow_insecure_https", &self.allow_insecure_https);
+        eframe::set_value(storage, "authorization_token", &self.authorization_token);
     }
 
     /// Update the application and render the UI.
@@ -164,6 +183,9 @@ impl eframe::App for Application {
                             self.disconnect();
                         }
                     }
+                    if ui.button("⛭").clicked() {
+                        self.settings_open = !self.settings_open;
+                    }
                     ui.text_edit_singleline(&mut self.comfyui_address);
                     ui.label("ComfyUI address:");
                 });
@@ -190,6 +212,17 @@ impl eframe::App for Application {
                     self.error = None;
                 }
             });
+        }
+
+        if self.settings_open {
+            egui::Window::new("Settings")
+                .open(&mut self.settings_open)
+                .show(ctx, |ui| {
+                    ui.label("Allow insecure HTTPS:");
+                    ui.checkbox(&mut self.allow_insecure_https, "");
+                    ui.label("Authorization token:");
+                    ui.text_edit_singleline(&mut self.authorization_token);
+                });
         }
 
         self.file_dialog.update(ctx);
@@ -303,7 +336,11 @@ impl Application {
     /// Connect to ComfyUI at the address specified in [`Self::comfyui_address`].
     fn connect(&mut self) {
         self.tokio_input_tx
-            .send(TokioInputEvent::Connect(self.comfyui_address.clone()))
+            .send(TokioInputEvent::Connect {
+                address: self.comfyui_address.clone(),
+                allow_insecure_https: self.allow_insecure_https,
+                authorization_token: self.authorization_token.clone(),
+            })
             .unwrap();
     }
 
@@ -334,7 +371,11 @@ impl Application {
 /// Input to the `tokio` runtime thread.
 enum TokioInputEvent {
     /// Connect to ComfyUI at the given address and obtain object info.
-    Connect(String),
+    Connect {
+        address: String,
+        allow_insecure_https: bool,
+        authorization_token: String,
+    },
     /// Queue the given workflow with a mapping that can be returned back to the
     /// caller to map the output images to the correct nodes.
     QueueWorkflow((rucomfyui_node_graph::NodeToWorkflowNodeMapping, Workflow)),
@@ -365,8 +406,38 @@ fn tokio_runtime_thread(input: Receiver<TokioInputEvent>, output: Sender<TokioOu
     let mut client = None;
     for event in input.iter() {
         match event {
-            TokioInputEvent::Connect(address) => {
-                let temp_client = rucomfyui::Client::new(address);
+            TokioInputEvent::Connect {
+                address,
+                allow_insecure_https,
+                authorization_token,
+            } => {
+                let reqwest_client = {
+                    let reqwest_client = reqwest::Client::builder();
+                    let reqwest_client = if allow_insecure_https {
+                        reqwest_client.danger_accept_invalid_certs(true)
+                    } else {
+                        reqwest_client
+                    };
+                    let reqwest_client = if !authorization_token.is_empty() {
+                        reqwest_client.default_headers(
+                            std::iter::once((
+                                reqwest::header::AUTHORIZATION,
+                                reqwest::header::HeaderValue::from_str(&format!(
+                                    "Bearer {authorization_token}"
+                                ))
+                                .expect("Failed to create header value"),
+                            ))
+                            .collect(),
+                        )
+                    } else {
+                        reqwest_client
+                    };
+                    reqwest_client
+                        .build()
+                        .expect("Failed to build reqwest client")
+                };
+                let temp_client = rucomfyui::Client::new_with_client(address, reqwest_client);
+
                 let object_info = rt.block_on(async { temp_client.object_info().await });
                 match object_info {
                     Ok(object_info) => {
