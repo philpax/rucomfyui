@@ -1,7 +1,10 @@
 //!`samplers` definitions/categories.
 #![allow(unused_imports, clippy::too_many_arguments, clippy::new_without_default)]
 use std::collections::HashMap;
-use crate::workflow::{WorkflowNodeId, WorkflowInput};
+use crate::{
+    workflow::{WorkflowNodeId, WorkflowInput},
+    nodes::types::Out,
+};
 ///**KSamplerSelect**: No description.
 #[derive(Clone)]
 pub struct KSamplerSelect<SamplerName: crate::nodes::types::String> {
@@ -18,10 +21,7 @@ impl<SamplerName: crate::nodes::types::String> crate::nodes::TypedNode
 for KSamplerSelect<SamplerName> {
     type Output = crate::nodes::types::SamplerOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
-        Self::Output {
-            node_id,
-            node_slot: 0u32,
-        }
+        Self::Output::from_dynamic(node_id, 0)
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
@@ -222,10 +222,7 @@ for SamplerDpmAdaptative<
 > {
     type Output = crate::nodes::types::SamplerOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
-        Self::Output {
-            node_id,
-            node_slot: 0u32,
-        }
+        Self::Output::from_dynamic(node_id, 0)
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
@@ -308,10 +305,7 @@ impl<
 > crate::nodes::TypedNode for SamplerDpmpp2MSde<SolverType, Eta, SNoise, NoiseDevice> {
     type Output = crate::nodes::types::SamplerOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
-        Self::Output {
-            node_id,
-            node_slot: 0u32,
-        }
+        Self::Output::from_dynamic(node_id, 0)
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
@@ -368,10 +362,7 @@ impl<
 > crate::nodes::TypedNode for SamplerDpmpp2SAncestral<Eta, SNoise> {
     type Output = crate::nodes::types::SamplerOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
-        Self::Output {
-            node_id,
-            node_slot: 0u32,
-        }
+        Self::Output::from_dynamic(node_id, 0)
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
@@ -431,10 +422,7 @@ impl<
 > crate::nodes::TypedNode for SamplerDpmpp3MSde<Eta, SNoise, NoiseDevice> {
     type Output = crate::nodes::types::SamplerOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
-        Self::Output {
-            node_id,
-            node_slot: 0u32,
-        }
+        Self::Output::from_dynamic(node_id, 0)
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
@@ -513,10 +501,7 @@ impl<
 > crate::nodes::TypedNode for SamplerDpmppSde<Eta, SNoise, R, NoiseDevice> {
     type Output = crate::nodes::types::SamplerOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
-        Self::Output {
-            node_id,
-            node_slot: 0u32,
-        }
+        Self::Output::from_dynamic(node_id, 0)
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
@@ -573,10 +558,7 @@ impl<
 > crate::nodes::TypedNode for SamplerEulerAncestral<Eta, SNoise> {
     type Output = crate::nodes::types::SamplerOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
-        Self::Output {
-            node_id,
-            node_slot: 0u32,
-        }
+        Self::Output::from_dynamic(node_id, 0)
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
@@ -631,10 +613,7 @@ impl<
 > crate::nodes::TypedNode for SamplerEulerAncestralCfgpp<Eta, SNoise> {
     type Output = crate::nodes::types::SamplerOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
-        Self::Output {
-            node_id,
-            node_slot: 0u32,
-        }
+        Self::Output::from_dynamic(node_id, 0)
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
@@ -700,10 +679,7 @@ impl<
 > crate::nodes::TypedNode for SamplerLcmUpscale<ScaleRatio, ScaleSteps, UpscaleMethod> {
     type Output = crate::nodes::types::SamplerOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
-        Self::Output {
-            node_id,
-            node_slot: 0u32,
-        }
+        Self::Output::from_dynamic(node_id, 0)
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
@@ -738,10 +714,7 @@ impl<Order: crate::nodes::types::Int> SamplerLms<Order> {
 impl<Order: crate::nodes::types::Int> crate::nodes::TypedNode for SamplerLms<Order> {
     type Output = crate::nodes::types::SamplerOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
-        Self::Output {
-            node_id,
-            node_slot: 0u32,
-        }
+        Self::Output::from_dynamic(node_id, 0)
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();

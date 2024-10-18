@@ -1,7 +1,10 @@
 //!`custom_sampling` definitions/categories.
 #![allow(unused_imports, clippy::too_many_arguments, clippy::new_without_default)]
 use std::collections::HashMap;
-use crate::workflow::{WorkflowNodeId, WorkflowInput};
+use crate::{
+    workflow::{WorkflowNodeId, WorkflowInput},
+    nodes::types::Out,
+};
 pub mod guiders;
 pub mod noise;
 pub mod samplers;
@@ -147,14 +150,8 @@ for SamplerCustom<
     type Output = out::SamplerCustomOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            output: crate::nodes::types::LatentOut {
-                node_id,
-                node_slot: 0u32,
-            },
-            denoised_output: crate::nodes::types::LatentOut {
-                node_id,
-                node_slot: 1u32,
-            },
+            output: crate::nodes::types::LatentOut::from_dynamic(node_id, 0u32),
+            denoised_output: crate::nodes::types::LatentOut::from_dynamic(node_id, 1u32),
         }
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
@@ -230,14 +227,8 @@ for SamplerCustomAdvanced<Noise, Guider, Sampler, Sigmas, LatentImage> {
     type Output = out::SamplerCustomAdvancedOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            output: crate::nodes::types::LatentOut {
-                node_id,
-                node_slot: 0u32,
-            },
-            denoised_output: crate::nodes::types::LatentOut {
-                node_id,
-                node_slot: 1u32,
-            },
+            output: crate::nodes::types::LatentOut::from_dynamic(node_id, 0u32),
+            denoised_output: crate::nodes::types::LatentOut::from_dynamic(node_id, 1u32),
         }
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {

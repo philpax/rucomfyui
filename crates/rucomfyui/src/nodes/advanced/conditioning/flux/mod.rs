@@ -1,7 +1,10 @@
 //!`flux` definitions/categories.
 #![allow(unused_imports, clippy::too_many_arguments, clippy::new_without_default)]
 use std::collections::HashMap;
-use crate::workflow::{WorkflowNodeId, WorkflowInput};
+use crate::{
+    workflow::{WorkflowNodeId, WorkflowInput},
+    nodes::types::Out,
+};
 ///**CLIPTextEncodeFlux**: No description.
 #[derive(Clone)]
 pub struct ClipTextEncodeFlux<
@@ -60,10 +63,7 @@ impl<
 > crate::nodes::TypedNode for ClipTextEncodeFlux<Clip, ClipL, T5Xxl, Guidance> {
     type Output = crate::nodes::types::ConditioningOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
-        Self::Output {
-            node_id,
-            node_slot: 0u32,
-        }
+        Self::Output::from_dynamic(node_id, 0)
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
@@ -111,10 +111,7 @@ impl<
 > crate::nodes::TypedNode for FluxGuidance<Conditioning, Guidance> {
     type Output = crate::nodes::types::ConditioningOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
-        Self::Output {
-            node_id,
-            node_slot: 0u32,
-        }
+        Self::Output::from_dynamic(node_id, 0)
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();

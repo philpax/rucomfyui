@@ -1,7 +1,10 @@
 //!`latent` definitions/categories.
 #![allow(unused_imports, clippy::too_many_arguments, clippy::new_without_default)]
 use std::collections::HashMap;
-use crate::workflow::{WorkflowNodeId, WorkflowInput};
+use crate::{
+    workflow::{WorkflowNodeId, WorkflowInput},
+    nodes::types::Out,
+};
 pub mod advanced;
 pub mod audio;
 pub mod batch;
@@ -60,10 +63,7 @@ impl<
 > crate::nodes::TypedNode for EmptyLatentImage<Width, Height, BatchSize> {
     type Output = crate::nodes::types::LatentOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
-        Self::Output {
-            node_id,
-            node_slot: 0u32,
-        }
+        Self::Output::from_dynamic(node_id, 0)
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
@@ -151,10 +151,7 @@ impl<
 > crate::nodes::TypedNode for LatentComposite<SamplesTo, SamplesFrom, X, Y, Feather> {
     type Output = crate::nodes::types::LatentOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
-        Self::Output {
-            node_id,
-            node_slot: 0u32,
-        }
+        Self::Output::from_dynamic(node_id, 0)
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
@@ -249,10 +246,7 @@ impl<
 for LatentCompositeMasked<Destination, Source, X, Y, ResizeSource, Mask> {
     type Output = crate::nodes::types::LatentOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
-        Self::Output {
-            node_id,
-            node_slot: 0u32,
-        }
+        Self::Output::from_dynamic(node_id, 0)
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
@@ -339,10 +333,7 @@ impl<
 for LatentUpscale<Samples, UpscaleMethod, Width, Height, Crop> {
     type Output = crate::nodes::types::LatentOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
-        Self::Output {
-            node_id,
-            node_slot: 0u32,
-        }
+        Self::Output::from_dynamic(node_id, 0)
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
@@ -404,10 +395,7 @@ impl<
 > crate::nodes::TypedNode for LatentUpscaleBy<Samples, UpscaleMethod, ScaleBy> {
     type Output = crate::nodes::types::LatentOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
-        Self::Output {
-            node_id,
-            node_slot: 0u32,
-        }
+        Self::Output::from_dynamic(node_id, 0)
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
@@ -447,10 +435,7 @@ impl<
 > crate::nodes::TypedNode for VaeDecode<Samples, Vae> {
     type Output = crate::nodes::types::ImageOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
-        Self::Output {
-            node_id,
-            node_slot: 0u32,
-        }
+        Self::Output::from_dynamic(node_id, 0)
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
@@ -486,10 +471,7 @@ impl<
 > crate::nodes::TypedNode for VaeEncode<Pixels, Vae> {
     type Output = crate::nodes::types::LatentOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
-        Self::Output {
-            node_id,
-            node_slot: 0u32,
-        }
+        Self::Output::from_dynamic(node_id, 0)
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();

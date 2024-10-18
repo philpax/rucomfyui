@@ -1,7 +1,10 @@
 //!`3d_models` definitions/categories.
 #![allow(unused_imports, clippy::too_many_arguments, clippy::new_without_default)]
 use std::collections::HashMap;
-use crate::workflow::{WorkflowNodeId, WorkflowInput};
+use crate::{
+    workflow::{WorkflowNodeId, WorkflowInput},
+    nodes::types::Out,
+};
 /// Output types for nodes.
 pub mod out {
     ///Output for [`Sv3DConditioning`](super::Sv3DConditioning).
@@ -132,18 +135,9 @@ for Sv3DConditioning<ClipVision, InitImage, Vae, Width, Height, VideoFrames, Ele
     type Output = out::Sv3DConditioningOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            positive: crate::nodes::types::ConditioningOut {
-                node_id,
-                node_slot: 0u32,
-            },
-            negative: crate::nodes::types::ConditioningOut {
-                node_id,
-                node_slot: 1u32,
-            },
-            latent: crate::nodes::types::LatentOut {
-                node_id,
-                node_slot: 2u32,
-            },
+            positive: crate::nodes::types::ConditioningOut::from_dynamic(node_id, 0u32),
+            negative: crate::nodes::types::ConditioningOut::from_dynamic(node_id, 1u32),
+            latent: crate::nodes::types::LatentOut::from_dynamic(node_id, 2u32),
         }
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
@@ -292,18 +286,9 @@ for StableZero123Conditioning<
     type Output = out::StableZero123ConditioningOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            positive: crate::nodes::types::ConditioningOut {
-                node_id,
-                node_slot: 0u32,
-            },
-            negative: crate::nodes::types::ConditioningOut {
-                node_id,
-                node_slot: 1u32,
-            },
-            latent: crate::nodes::types::LatentOut {
-                node_id,
-                node_slot: 2u32,
-            },
+            positive: crate::nodes::types::ConditioningOut::from_dynamic(node_id, 0u32),
+            negative: crate::nodes::types::ConditioningOut::from_dynamic(node_id, 1u32),
+            latent: crate::nodes::types::LatentOut::from_dynamic(node_id, 2u32),
         }
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
@@ -487,18 +472,9 @@ for StableZero123ConditioningBatched<
     type Output = out::StableZero123ConditioningBatchedOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            positive: crate::nodes::types::ConditioningOut {
-                node_id,
-                node_slot: 0u32,
-            },
-            negative: crate::nodes::types::ConditioningOut {
-                node_id,
-                node_slot: 1u32,
-            },
-            latent: crate::nodes::types::LatentOut {
-                node_id,
-                node_slot: 2u32,
-            },
+            positive: crate::nodes::types::ConditioningOut::from_dynamic(node_id, 0u32),
+            negative: crate::nodes::types::ConditioningOut::from_dynamic(node_id, 1u32),
+            latent: crate::nodes::types::LatentOut::from_dynamic(node_id, 2u32),
         }
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {

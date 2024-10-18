@@ -1,7 +1,10 @@
 //!`loaders` definitions/categories.
 #![allow(unused_imports, clippy::too_many_arguments, clippy::new_without_default)]
 use std::collections::HashMap;
-use crate::workflow::{WorkflowNodeId, WorkflowInput};
+use crate::{
+    workflow::{WorkflowNodeId, WorkflowInput},
+    nodes::types::Out,
+};
 pub mod video_models;
 /// Output types for nodes.
 pub mod out {
@@ -52,10 +55,7 @@ impl<ClipName: crate::nodes::types::String> crate::nodes::TypedNode
 for ClipVisionLoader<ClipName> {
     type Output = crate::nodes::types::ClipVisionOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
-        Self::Output {
-            node_id,
-            node_slot: 0u32,
-        }
+        Self::Output::from_dynamic(node_id, 0)
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
@@ -84,18 +84,9 @@ for CheckpointLoaderSimple<CkptName> {
     type Output = out::CheckpointLoaderSimpleOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            model: crate::nodes::types::ModelOut {
-                node_id,
-                node_slot: 0u32,
-            },
-            clip: crate::nodes::types::ClipOut {
-                node_id,
-                node_slot: 1u32,
-            },
-            vae: crate::nodes::types::VaeOut {
-                node_id,
-                node_slot: 2u32,
-            },
+            model: crate::nodes::types::ModelOut::from_dynamic(node_id, 0u32),
+            clip: crate::nodes::types::ClipOut::from_dynamic(node_id, 1u32),
+            vae: crate::nodes::types::VaeOut::from_dynamic(node_id, 2u32),
         }
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
@@ -124,10 +115,7 @@ impl<ControlNetName: crate::nodes::types::String> crate::nodes::TypedNode
 for ControlNetLoader<ControlNetName> {
     type Output = crate::nodes::types::ControlNetOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
-        Self::Output {
-            node_id,
-            node_slot: 0u32,
-        }
+        Self::Output::from_dynamic(node_id, 0)
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
@@ -169,10 +157,7 @@ impl<
 > crate::nodes::TypedNode for DiffControlNetLoader<Model, ControlNetName> {
     type Output = crate::nodes::types::ControlNetOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
-        Self::Output {
-            node_id,
-            node_slot: 0u32,
-        }
+        Self::Output::from_dynamic(node_id, 0)
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
@@ -205,10 +190,7 @@ impl<GligenName: crate::nodes::types::String> crate::nodes::TypedNode
 for GligenLoader<GligenName> {
     type Output = crate::nodes::types::GligenOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
-        Self::Output {
-            node_id,
-            node_slot: 0u32,
-        }
+        Self::Output::from_dynamic(node_id, 0)
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
@@ -266,10 +248,7 @@ impl<
 > crate::nodes::TypedNode for HypernetworkLoader<Model, HypernetworkName, Strength> {
     type Output = crate::nodes::types::ModelOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
-        Self::Output {
-            node_id,
-            node_slot: 0u32,
-        }
+        Self::Output::from_dynamic(node_id, 0)
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
@@ -356,14 +335,8 @@ for LoraLoader<Model, Clip, LoraName, StrengthModel, StrengthClip> {
     type Output = out::LoraLoaderOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            model: crate::nodes::types::ModelOut {
-                node_id,
-                node_slot: 0u32,
-            },
-            clip: crate::nodes::types::ClipOut {
-                node_id,
-                node_slot: 1u32,
-            },
+            model: crate::nodes::types::ModelOut::from_dynamic(node_id, 0u32),
+            clip: crate::nodes::types::ClipOut::from_dynamic(node_id, 1u32),
         }
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
@@ -426,10 +399,7 @@ impl<
 > crate::nodes::TypedNode for LoraLoaderModelOnly<Model, LoraName, StrengthModel> {
     type Output = crate::nodes::types::ModelOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
-        Self::Output {
-            node_id,
-            node_slot: 0u32,
-        }
+        Self::Output::from_dynamic(node_id, 0)
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
@@ -459,10 +429,7 @@ impl<StyleModelName: crate::nodes::types::String> crate::nodes::TypedNode
 for StyleModelLoader<StyleModelName> {
     type Output = crate::nodes::types::StyleModelOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
-        Self::Output {
-            node_id,
-            node_slot: 0u32,
-        }
+        Self::Output::from_dynamic(node_id, 0)
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
@@ -494,10 +461,7 @@ impl<ModelName: crate::nodes::types::String> crate::nodes::TypedNode
 for UpscaleModelLoader<ModelName> {
     type Output = crate::nodes::types::UpscaleModelOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
-        Self::Output {
-            node_id,
-            node_slot: 0u32,
-        }
+        Self::Output::from_dynamic(node_id, 0)
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
@@ -525,10 +489,7 @@ impl<VaeName: crate::nodes::types::String> crate::nodes::TypedNode
 for VaeLoader<VaeName> {
     type Output = crate::nodes::types::VaeOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
-        Self::Output {
-            node_id,
-            node_slot: 0u32,
-        }
+        Self::Output::from_dynamic(node_id, 0)
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
@@ -557,22 +518,10 @@ for UnClipCheckpointLoader<CkptName> {
     type Output = out::UnClipCheckpointLoaderOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            model: crate::nodes::types::ModelOut {
-                node_id,
-                node_slot: 0u32,
-            },
-            clip: crate::nodes::types::ClipOut {
-                node_id,
-                node_slot: 1u32,
-            },
-            vae: crate::nodes::types::VaeOut {
-                node_id,
-                node_slot: 2u32,
-            },
-            clip_vision: crate::nodes::types::ClipVisionOut {
-                node_id,
-                node_slot: 3u32,
-            },
+            model: crate::nodes::types::ModelOut::from_dynamic(node_id, 0u32),
+            clip: crate::nodes::types::ClipOut::from_dynamic(node_id, 1u32),
+            vae: crate::nodes::types::VaeOut::from_dynamic(node_id, 2u32),
+            clip_vision: crate::nodes::types::ClipVisionOut::from_dynamic(node_id, 3u32),
         }
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {

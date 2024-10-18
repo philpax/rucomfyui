@@ -1,7 +1,10 @@
 //!`image` definitions/categories.
 #![allow(unused_imports, clippy::too_many_arguments, clippy::new_without_default)]
 use std::collections::HashMap;
-use crate::workflow::{WorkflowNodeId, WorkflowInput};
+use crate::{
+    workflow::{WorkflowNodeId, WorkflowInput},
+    nodes::types::Out,
+};
 pub mod animation;
 pub mod batch;
 pub mod postprocessing;
@@ -101,10 +104,7 @@ impl<
 > crate::nodes::TypedNode for EmptyImage<Width, Height, BatchSize, Color> {
     type Output = crate::nodes::types::ImageOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
-        Self::Output {
-            node_id,
-            node_slot: 0u32,
-        }
+        Self::Output::from_dynamic(node_id, 0)
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
@@ -145,10 +145,7 @@ impl<
 > crate::nodes::TypedNode for ImageBatch<Image1, Image2> {
     type Output = crate::nodes::types::ImageOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
-        Self::Output {
-            node_id,
-            node_slot: 0u32,
-        }
+        Self::Output::from_dynamic(node_id, 0)
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
@@ -240,10 +237,7 @@ impl<
 for ImageCompositeMasked<Destination, Source, X, Y, ResizeSource, Mask> {
     type Output = crate::nodes::types::ImageOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
-        Self::Output {
-            node_id,
-            node_slot: 0u32,
-        }
+        Self::Output::from_dynamic(node_id, 0)
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
@@ -277,10 +271,7 @@ impl<Image: crate::nodes::types::Image> ImageInvert<Image> {
 impl<Image: crate::nodes::types::Image> crate::nodes::TypedNode for ImageInvert<Image> {
     type Output = crate::nodes::types::ImageOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
-        Self::Output {
-            node_id,
-            node_slot: 0u32,
-        }
+        Self::Output::from_dynamic(node_id, 0)
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
@@ -389,14 +380,8 @@ for ImagePadForOutpaint<Image, Left, Top, Right, Bottom, Feathering> {
     type Output = out::ImagePadForOutpaintOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            image: crate::nodes::types::ImageOut {
-                node_id,
-                node_slot: 0u32,
-            },
-            mask: crate::nodes::types::MaskOut {
-                node_id,
-                node_slot: 1u32,
-            },
+            image: crate::nodes::types::ImageOut::from_dynamic(node_id, 0u32),
+            mask: crate::nodes::types::MaskOut::from_dynamic(node_id, 1u32),
         }
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
@@ -434,14 +419,8 @@ impl<Image: crate::nodes::types::String> crate::nodes::TypedNode for LoadImage<I
     type Output = out::LoadImageOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            image: crate::nodes::types::ImageOut {
-                node_id,
-                node_slot: 0u32,
-            },
-            mask: crate::nodes::types::MaskOut {
-                node_id,
-                node_slot: 1u32,
-            },
+            image: crate::nodes::types::ImageOut::from_dynamic(node_id, 0u32),
+            mask: crate::nodes::types::MaskOut::from_dynamic(node_id, 1u32),
         }
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
@@ -596,10 +575,7 @@ impl<
 > crate::nodes::TypedNode for WebcamCapture<Image, Width, Height, CaptureOnQueue> {
     type Output = crate::nodes::types::ImageOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
-        Self::Output {
-            node_id,
-            node_slot: 0u32,
-        }
+        Self::Output::from_dynamic(node_id, 0)
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();

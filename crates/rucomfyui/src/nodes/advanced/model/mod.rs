@@ -1,7 +1,10 @@
 //!`model` definitions/categories.
 #![allow(unused_imports, clippy::too_many_arguments, clippy::new_without_default)]
 use std::collections::HashMap;
-use crate::workflow::{WorkflowNodeId, WorkflowInput};
+use crate::{
+    workflow::{WorkflowNodeId, WorkflowInput},
+    nodes::types::Out,
+};
 ///**ModelSamplingAuraFlow**: No description.
 #[derive(Clone)]
 pub struct ModelSamplingAuraFlow<
@@ -35,10 +38,7 @@ impl<
 > crate::nodes::TypedNode for ModelSamplingAuraFlow<Model, Shift> {
     type Output = crate::nodes::types::ModelOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
-        Self::Output {
-            node_id,
-            node_slot: 0u32,
-        }
+        Self::Output::from_dynamic(node_id, 0)
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
@@ -114,10 +114,7 @@ impl<
 for ModelSamplingContinuousEdm<Model, Sampling, SigmaMax, SigmaMin> {
     type Output = crate::nodes::types::ModelOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
-        Self::Output {
-            node_id,
-            node_slot: 0u32,
-        }
+        Self::Output::from_dynamic(node_id, 0)
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
@@ -195,10 +192,7 @@ impl<
 for ModelSamplingContinuousV<Model, Sampling, SigmaMax, SigmaMin> {
     type Output = crate::nodes::types::ModelOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
-        Self::Output {
-            node_id,
-            node_slot: 0u32,
-        }
+        Self::Output::from_dynamic(node_id, 0)
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
@@ -248,10 +242,7 @@ impl<
 > crate::nodes::TypedNode for ModelSamplingDiscrete<Model, Sampling, Zsnr> {
     type Output = crate::nodes::types::ModelOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
-        Self::Output {
-            node_id,
-            node_slot: 0u32,
-        }
+        Self::Output::from_dynamic(node_id, 0)
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
@@ -347,10 +338,7 @@ impl<
 for ModelSamplingFlux<Model, MaxShift, BaseShift, Width, Height> {
     type Output = crate::nodes::types::ModelOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
-        Self::Output {
-            node_id,
-            node_slot: 0u32,
-        }
+        Self::Output::from_dynamic(node_id, 0)
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
@@ -399,10 +387,7 @@ impl<
 > crate::nodes::TypedNode for ModelSamplingSd3<Model, Shift> {
     type Output = crate::nodes::types::ModelOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
-        Self::Output {
-            node_id,
-            node_slot: 0u32,
-        }
+        Self::Output::from_dynamic(node_id, 0)
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
@@ -448,10 +433,7 @@ impl<
 > crate::nodes::TypedNode for ModelSamplingStableCascade<Model, Shift> {
     type Output = crate::nodes::types::ModelOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
-        Self::Output {
-            node_id,
-            node_slot: 0u32,
-        }
+        Self::Output::from_dynamic(node_id, 0)
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
@@ -497,10 +479,7 @@ impl<
 > crate::nodes::TypedNode for RescaleCfg<Model, Multiplier> {
     type Output = crate::nodes::types::ModelOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
-        Self::Output {
-            node_id,
-            node_slot: 0u32,
-        }
+        Self::Output::from_dynamic(node_id, 0)
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();

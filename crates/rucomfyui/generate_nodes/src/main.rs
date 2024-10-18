@@ -114,20 +114,15 @@ fn type_module_definitions() -> Result<TokenStream> {
 
                 #[doc = #output_doc]
                 #[derive(Clone, Copy)]
-                pub struct #output_name {
-                    /// The ID of the node that produced the output.
-                    pub node_id: WorkflowNodeId,
-                    /// The node's output slot.
-                    pub node_slot: u32,
-                }
-                impl Out for #output_name {
-                    fn from_dynamic(node_id: WorkflowNodeId, node_slot: u32) -> Self {
-                        Self { node_id, node_slot }
+                pub struct #output_name(pub UntypedOut);
+                impl From<UntypedOut> for #output_name {
+                    fn from(value: UntypedOut) -> Self {
+                        Self(value)
                     }
                 }
-                impl From<#output_name> for WorkflowInput {
+                impl From<#output_name> for UntypedOut {
                     fn from(value: #output_name) -> Self {
-                        value.node_id.to_input_with_slot(value.node_slot)
+                        value.0
                     }
                 }
                 impl #name for #output_name {}
@@ -143,6 +138,29 @@ fn type_module_definitions() -> Result<TokenStream> {
         pub trait Out: Sized {
             /// Create an output from a dynamic node. Use carefully.
             fn from_dynamic(node_id: WorkflowNodeId, node_slot: u32) -> Self;
+        }
+
+        /// A generic output with no specific type. Can be used when you
+        /// don't care about the output type.
+        ///
+        /// Wrapped by the type-safe output types.
+        #[derive(Clone, Copy)]
+        pub struct UntypedOut {
+            /// The ID of the node that produced the output.
+            pub node_id: WorkflowNodeId,
+            /// The node's output slot.
+            pub node_slot: u32,
+        }
+        impl<T: From<UntypedOut>> Out for T {
+            fn from_dynamic(node_id: WorkflowNodeId, node_slot: u32) -> Self {
+                T::from(UntypedOut { node_id, node_slot })
+            }
+        }
+        impl<T: Into<UntypedOut>> From<T> for WorkflowInput {
+            fn from(value: T) -> Self {
+                let value: UntypedOut = value.into();
+                value.node_id.to_input_with_slot(value.node_slot)
+            }
         }
 
         #(#types)*
@@ -271,7 +289,7 @@ fn write_category_tree((name, tree): (&str, &CategoryTree), directory: &Path) ->
 
         use std::collections::HashMap;
 
-        use crate::workflow::{WorkflowNodeId, WorkflowInput};
+        use crate::{workflow::{WorkflowNodeId, WorkflowInput}, nodes::types::Out};
 
         #(#modules)*
 
@@ -517,7 +535,7 @@ fn write_node_trait_impl(
                 let ty = util::object_type_out_struct_ident(&output.ty);
                 let i = i as u32;
                 Ok(quote! {
-                    #name: crate :: nodes :: types :: #ty { node_id, node_slot: #i }
+                    #name: crate :: nodes :: types :: #ty :: from_dynamic(node_id, #i)
                 })
             })
             .collect::<Result<Vec<_>>>()?;
@@ -545,7 +563,7 @@ fn write_node_trait_impl(
         quote! {
             type Output = crate :: nodes :: types :: #ty;
             fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
-                Self::Output { node_id, node_slot: 0u32 }
+                Self::Output::from_dynamic(node_id, 0)
             }
         }
     } else {

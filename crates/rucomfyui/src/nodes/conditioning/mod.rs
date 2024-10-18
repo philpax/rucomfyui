@@ -1,7 +1,10 @@
 //!`conditioning` definitions/categories.
 #![allow(unused_imports, clippy::too_many_arguments, clippy::new_without_default)]
 use std::collections::HashMap;
-use crate::workflow::{WorkflowNodeId, WorkflowInput};
+use crate::{
+    workflow::{WorkflowNodeId, WorkflowInput},
+    nodes::types::Out,
+};
 pub mod n_3_d_models;
 pub mod controlnet;
 pub mod gligen;
@@ -44,10 +47,7 @@ impl<
 > crate::nodes::TypedNode for ClipSetLastLayer<Clip, StopAtClipLayer> {
     type Output = crate::nodes::types::ClipOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
-        Self::Output {
-            node_id,
-            node_slot: 0u32,
-        }
+        Self::Output::from_dynamic(node_id, 0)
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
@@ -95,10 +95,7 @@ impl<
 > crate::nodes::TypedNode for ClipTextEncode<Text, Clip> {
     type Output = crate::nodes::types::ConditioningOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
-        Self::Output {
-            node_id,
-            node_slot: 0u32,
-        }
+        Self::Output::from_dynamic(node_id, 0)
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
@@ -137,10 +134,7 @@ impl<
 > crate::nodes::TypedNode for ClipVisionEncode<ClipVision, Image> {
     type Output = crate::nodes::types::ClipVisionOutputOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
-        Self::Output {
-            node_id,
-            node_slot: 0u32,
-        }
+        Self::Output::from_dynamic(node_id, 0)
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
@@ -200,10 +194,7 @@ impl<
 for ConditioningAverage<ConditioningTo, ConditioningFrom, ConditioningToStrength> {
     type Output = crate::nodes::types::ConditioningOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
-        Self::Output {
-            node_id,
-            node_slot: 0u32,
-        }
+        Self::Output::from_dynamic(node_id, 0)
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
@@ -255,10 +246,7 @@ impl<
 > crate::nodes::TypedNode for ConditioningCombine<Conditioning1, Conditioning2> {
     type Output = crate::nodes::types::ConditioningOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
-        Self::Output {
-            node_id,
-            node_slot: 0u32,
-        }
+        Self::Output::from_dynamic(node_id, 0)
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
@@ -303,10 +291,7 @@ impl<
 > crate::nodes::TypedNode for ConditioningConcat<ConditioningTo, ConditioningFrom> {
     type Output = crate::nodes::types::ConditioningOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
-        Self::Output {
-            node_id,
-            node_slot: 0u32,
-        }
+        Self::Output::from_dynamic(node_id, 0)
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
@@ -420,10 +405,7 @@ impl<
 for ConditioningSetArea<Conditioning, Width, Height, X, Y, Strength> {
     type Output = crate::nodes::types::ConditioningOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
-        Self::Output {
-            node_id,
-            node_slot: 0u32,
-        }
+        Self::Output::from_dynamic(node_id, 0)
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
@@ -536,10 +518,7 @@ impl<
 for ConditioningSetAreaPercentage<Conditioning, Width, Height, X, Y, Strength> {
     type Output = crate::nodes::types::ConditioningOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
-        Self::Output {
-            node_id,
-            node_slot: 0u32,
-        }
+        Self::Output::from_dynamic(node_id, 0)
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
@@ -589,10 +568,7 @@ impl<
 > crate::nodes::TypedNode for ConditioningSetAreaStrength<Conditioning, Strength> {
     type Output = crate::nodes::types::ConditioningOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
-        Self::Output {
-            node_id,
-            node_slot: 0u32,
-        }
+        Self::Output::from_dynamic(node_id, 0)
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
@@ -659,10 +635,7 @@ impl<
 for ConditioningSetMask<Conditioning, Mask, Strength, SetCondArea> {
     type Output = crate::nodes::types::ConditioningOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
-        Self::Output {
-            node_id,
-            node_slot: 0u32,
-        }
+        Self::Output::from_dynamic(node_id, 0)
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
@@ -738,10 +711,7 @@ impl<
 for UnClipConditioning<Conditioning, ClipVisionOutput, Strength, NoiseAugmentation> {
     type Output = crate::nodes::types::ConditioningOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
-        Self::Output {
-            node_id,
-            node_slot: 0u32,
-        }
+        Self::Output::from_dynamic(node_id, 0)
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();

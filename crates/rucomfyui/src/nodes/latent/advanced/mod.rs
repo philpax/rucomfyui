@@ -1,7 +1,10 @@
 //!`advanced` definitions/categories.
 #![allow(unused_imports, clippy::too_many_arguments, clippy::new_without_default)]
 use std::collections::HashMap;
-use crate::workflow::{WorkflowNodeId, WorkflowInput};
+use crate::{
+    workflow::{WorkflowNodeId, WorkflowInput},
+    nodes::types::Out,
+};
 pub mod operations;
 ///**LatentAdd**: No description.
 #[derive(Clone)]
@@ -29,10 +32,7 @@ impl<
 > crate::nodes::TypedNode for LatentAdd<Samples1, Samples2> {
     type Output = crate::nodes::types::LatentOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
-        Self::Output {
-            node_id,
-            node_slot: 0u32,
-        }
+        Self::Output::from_dynamic(node_id, 0)
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
@@ -75,10 +75,7 @@ impl<
 > crate::nodes::TypedNode for LatentBatchSeedBehavior<Samples, SeedBehavior> {
     type Output = crate::nodes::types::LatentOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
-        Self::Output {
-            node_id,
-            node_slot: 0u32,
-        }
+        Self::Output::from_dynamic(node_id, 0)
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
@@ -133,10 +130,7 @@ impl<
 > crate::nodes::TypedNode for LatentInterpolate<Samples1, Samples2, Ratio> {
     type Output = crate::nodes::types::LatentOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
-        Self::Output {
-            node_id,
-            node_slot: 0u32,
-        }
+        Self::Output::from_dynamic(node_id, 0)
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
@@ -183,10 +177,7 @@ impl<
 > crate::nodes::TypedNode for LatentMultiply<Samples, Multiplier> {
     type Output = crate::nodes::types::LatentOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
-        Self::Output {
-            node_id,
-            node_slot: 0u32,
-        }
+        Self::Output::from_dynamic(node_id, 0)
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
@@ -225,10 +216,7 @@ impl<
 > crate::nodes::TypedNode for LatentSubtract<Samples1, Samples2> {
     type Output = crate::nodes::types::LatentOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
-        Self::Output {
-            node_id,
-            node_slot: 0u32,
-        }
+        Self::Output::from_dynamic(node_id, 0)
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();

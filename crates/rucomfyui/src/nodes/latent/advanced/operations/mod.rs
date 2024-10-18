@@ -1,7 +1,10 @@
 //!`operations` definitions/categories.
 #![allow(unused_imports, clippy::too_many_arguments, clippy::new_without_default)]
 use std::collections::HashMap;
-use crate::workflow::{WorkflowNodeId, WorkflowInput};
+use crate::{
+    workflow::{WorkflowNodeId, WorkflowInput},
+    nodes::types::Out,
+};
 ///**LatentApplyOperation**: No description.
 #[derive(Clone)]
 pub struct LatentApplyOperation<
@@ -28,10 +31,7 @@ impl<
 > crate::nodes::TypedNode for LatentApplyOperation<Samples, Operation> {
     type Output = crate::nodes::types::LatentOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
-        Self::Output {
-            node_id,
-            node_slot: 0u32,
-        }
+        Self::Output::from_dynamic(node_id, 0)
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
@@ -70,10 +70,7 @@ impl<
 > crate::nodes::TypedNode for LatentApplyOperationCfg<Model, Operation> {
     type Output = crate::nodes::types::ModelOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
-        Self::Output {
-            node_id,
-            node_slot: 0u32,
-        }
+        Self::Output::from_dynamic(node_id, 0)
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
@@ -142,10 +139,7 @@ impl<
 > crate::nodes::TypedNode for LatentOperationSharpen<SharpenRadius, Sigma, Alpha> {
     type Output = crate::nodes::types::LatentOperationOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
-        Self::Output {
-            node_id,
-            node_slot: 0u32,
-        }
+        Self::Output::from_dynamic(node_id, 0)
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
@@ -182,10 +176,7 @@ impl<Multiplier: crate::nodes::types::Float> crate::nodes::TypedNode
 for LatentOperationTonemapReinhard<Multiplier> {
     type Output = crate::nodes::types::LatentOperationOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
-        Self::Output {
-            node_id,
-            node_slot: 0u32,
-        }
+        Self::Output::from_dynamic(node_id, 0)
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();

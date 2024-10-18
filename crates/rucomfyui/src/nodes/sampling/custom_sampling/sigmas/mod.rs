@@ -1,7 +1,10 @@
 //!`sigmas` definitions/categories.
 #![allow(unused_imports, clippy::too_many_arguments, clippy::new_without_default)]
 use std::collections::HashMap;
-use crate::workflow::{WorkflowNodeId, WorkflowInput};
+use crate::{
+    workflow::{WorkflowNodeId, WorkflowInput},
+    nodes::types::Out,
+};
 /// Output types for nodes.
 pub mod out {
     ///Output for [`SplitSigmas`](super::SplitSigmas).
@@ -37,10 +40,7 @@ impl<Sigmas: crate::nodes::types::Sigmas> crate::nodes::TypedNode
 for FlipSigmas<Sigmas> {
     type Output = crate::nodes::types::SigmasOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
-        Self::Output {
-            node_id,
-            node_slot: 0u32,
-        }
+        Self::Output::from_dynamic(node_id, 0)
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
@@ -85,14 +85,8 @@ impl<
     type Output = out::SplitSigmasOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            high_sigmas: crate::nodes::types::SigmasOut {
-                node_id,
-                node_slot: 0u32,
-            },
-            low_sigmas: crate::nodes::types::SigmasOut {
-                node_id,
-                node_slot: 1u32,
-            },
+            high_sigmas: crate::nodes::types::SigmasOut::from_dynamic(node_id, 0u32),
+            low_sigmas: crate::nodes::types::SigmasOut::from_dynamic(node_id, 1u32),
         }
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
@@ -140,14 +134,8 @@ impl<
     type Output = out::SplitSigmasDenoiseOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            high_sigmas: crate::nodes::types::SigmasOut {
-                node_id,
-                node_slot: 0u32,
-            },
-            low_sigmas: crate::nodes::types::SigmasOut {
-                node_id,
-                node_slot: 1u32,
-            },
+            high_sigmas: crate::nodes::types::SigmasOut::from_dynamic(node_id, 0u32),
+            low_sigmas: crate::nodes::types::SigmasOut::from_dynamic(node_id, 1u32),
         }
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {

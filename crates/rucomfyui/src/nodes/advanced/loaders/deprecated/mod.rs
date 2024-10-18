@@ -1,7 +1,10 @@
 //!`deprecated` definitions/categories.
 #![allow(unused_imports, clippy::too_many_arguments, clippy::new_without_default)]
 use std::collections::HashMap;
-use crate::workflow::{WorkflowNodeId, WorkflowInput};
+use crate::{
+    workflow::{WorkflowNodeId, WorkflowInput},
+    nodes::types::Out,
+};
 /// Output types for nodes.
 pub mod out {
     ///Output for [`DiffusersLoader`](super::DiffusersLoader).
@@ -32,18 +35,9 @@ for DiffusersLoader<ModelPath> {
     type Output = out::DiffusersLoaderOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            model: crate::nodes::types::ModelOut {
-                node_id,
-                node_slot: 0u32,
-            },
-            clip: crate::nodes::types::ClipOut {
-                node_id,
-                node_slot: 1u32,
-            },
-            vae: crate::nodes::types::VaeOut {
-                node_id,
-                node_slot: 2u32,
-            },
+            model: crate::nodes::types::ModelOut::from_dynamic(node_id, 0u32),
+            clip: crate::nodes::types::ClipOut::from_dynamic(node_id, 1u32),
+            vae: crate::nodes::types::VaeOut::from_dynamic(node_id, 2u32),
         }
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {

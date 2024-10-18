@@ -1,7 +1,10 @@
 //!`loaders` definitions/categories.
 #![allow(unused_imports, clippy::too_many_arguments, clippy::new_without_default)]
 use std::collections::HashMap;
-use crate::workflow::{WorkflowNodeId, WorkflowInput};
+use crate::{
+    workflow::{WorkflowNodeId, WorkflowInput},
+    nodes::types::Out,
+};
 pub mod deprecated;
 /// Output types for nodes.
 pub mod out {
@@ -42,10 +45,7 @@ impl<
 > crate::nodes::TypedNode for ClipLoader<ClipName, Type> {
     type Output = crate::nodes::types::ClipOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
-        Self::Output {
-            node_id,
-            node_slot: 0u32,
-        }
+        Self::Output::from_dynamic(node_id, 0)
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
@@ -85,18 +85,9 @@ impl<
     type Output = out::CheckpointLoaderOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            model: crate::nodes::types::ModelOut {
-                node_id,
-                node_slot: 0u32,
-            },
-            clip: crate::nodes::types::ClipOut {
-                node_id,
-                node_slot: 1u32,
-            },
-            vae: crate::nodes::types::VaeOut {
-                node_id,
-                node_slot: 2u32,
-            },
+            model: crate::nodes::types::ModelOut::from_dynamic(node_id, 0u32),
+            clip: crate::nodes::types::ClipOut::from_dynamic(node_id, 1u32),
+            vae: crate::nodes::types::VaeOut::from_dynamic(node_id, 2u32),
         }
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
@@ -145,10 +136,7 @@ impl<
 > crate::nodes::TypedNode for DualClipLoader<ClipName1, ClipName2, Type> {
     type Output = crate::nodes::types::ClipOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
-        Self::Output {
-            node_id,
-            node_slot: 0u32,
-        }
+        Self::Output::from_dynamic(node_id, 0)
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
@@ -201,10 +189,7 @@ impl<
 > crate::nodes::TypedNode for TripleClipLoader<ClipName1, ClipName2, ClipName3> {
     type Output = crate::nodes::types::ClipOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
-        Self::Output {
-            node_id,
-            node_slot: 0u32,
-        }
+        Self::Output::from_dynamic(node_id, 0)
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
@@ -244,10 +229,7 @@ impl<
 > crate::nodes::TypedNode for UnetLoader<UnetName, WeightDtype> {
     type Output = crate::nodes::types::ModelOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
-        Self::Output {
-            node_id,
-            node_slot: 0u32,
-        }
+        Self::Output::from_dynamic(node_id, 0)
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();

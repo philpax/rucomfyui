@@ -1,7 +1,10 @@
 //!`schedulers` definitions/categories.
 #![allow(unused_imports, clippy::too_many_arguments, clippy::new_without_default)]
 use std::collections::HashMap;
-use crate::workflow::{WorkflowNodeId, WorkflowInput};
+use crate::{
+    workflow::{WorkflowNodeId, WorkflowInput},
+    nodes::types::Out,
+};
 ///**AlignYourStepsScheduler**: No description.
 #[derive(Clone)]
 pub struct AlignYourStepsScheduler<
@@ -46,10 +49,7 @@ impl<
 > crate::nodes::TypedNode for AlignYourStepsScheduler<ModelType, Steps, Denoise> {
     type Output = crate::nodes::types::SigmasOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
-        Self::Output {
-            node_id,
-            node_slot: 0u32,
-        }
+        Self::Output::from_dynamic(node_id, 0)
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
@@ -122,10 +122,7 @@ impl<
 > crate::nodes::TypedNode for BasicScheduler<Model, Scheduler, Steps, Denoise> {
     type Output = crate::nodes::types::SigmasOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
-        Self::Output {
-            node_id,
-            node_slot: 0u32,
-        }
+        Self::Output::from_dynamic(node_id, 0)
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
@@ -198,10 +195,7 @@ impl<
 > crate::nodes::TypedNode for BetaSamplingScheduler<Model, Steps, Alpha, Beta> {
     type Output = crate::nodes::types::SigmasOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
-        Self::Output {
-            node_id,
-            node_slot: 0u32,
-        }
+        Self::Output::from_dynamic(node_id, 0)
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
@@ -273,10 +267,7 @@ impl<
 > crate::nodes::TypedNode for ExponentialScheduler<Steps, SigmaMax, SigmaMin> {
     type Output = crate::nodes::types::SigmasOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
-        Self::Output {
-            node_id,
-            node_slot: 0u32,
-        }
+        Self::Output::from_dynamic(node_id, 0)
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
@@ -341,10 +332,7 @@ impl<
 > crate::nodes::TypedNode for GitsScheduler<Coeff, Steps, Denoise> {
     type Output = crate::nodes::types::SigmasOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
-        Self::Output {
-            node_id,
-            node_slot: 0u32,
-        }
+        Self::Output::from_dynamic(node_id, 0)
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
@@ -434,10 +422,7 @@ impl<
 > crate::nodes::TypedNode for KarrasScheduler<Steps, SigmaMax, SigmaMin, Rho> {
     type Output = crate::nodes::types::SigmasOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
-        Self::Output {
-            node_id,
-            node_slot: 0u32,
-        }
+        Self::Output::from_dynamic(node_id, 0)
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
@@ -543,10 +528,7 @@ impl<
 > crate::nodes::TypedNode for LaplaceScheduler<Steps, SigmaMax, SigmaMin, Mu, Beta> {
     type Output = crate::nodes::types::SigmasOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
-        Self::Output {
-            node_id,
-            node_slot: 0u32,
-        }
+        Self::Output::from_dynamic(node_id, 0)
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
@@ -638,10 +620,7 @@ impl<
 > crate::nodes::TypedNode for PolyexponentialScheduler<Steps, SigmaMax, SigmaMin, Rho> {
     type Output = crate::nodes::types::SigmasOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
-        Self::Output {
-            node_id,
-            node_slot: 0u32,
-        }
+        Self::Output::from_dynamic(node_id, 0)
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
@@ -700,10 +679,7 @@ impl<
 > crate::nodes::TypedNode for SdTurboScheduler<Model, Steps, Denoise> {
     type Output = crate::nodes::types::SigmasOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
-        Self::Output {
-            node_id,
-            node_slot: 0u32,
-        }
+        Self::Output::from_dynamic(node_id, 0)
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
@@ -788,10 +764,7 @@ impl<
 > crate::nodes::TypedNode for VpScheduler<Steps, BetaD, BetaMin, EpsS> {
     type Output = crate::nodes::types::SigmasOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
-        Self::Output {
-            node_id,
-            node_slot: 0u32,
-        }
+        Self::Output::from_dynamic(node_id, 0)
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();

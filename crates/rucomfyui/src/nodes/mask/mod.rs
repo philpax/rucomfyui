@@ -1,7 +1,10 @@
 //!`mask` definitions/categories.
 #![allow(unused_imports, clippy::too_many_arguments, clippy::new_without_default)]
 use std::collections::HashMap;
-use crate::workflow::{WorkflowNodeId, WorkflowInput};
+use crate::{
+    workflow::{WorkflowNodeId, WorkflowInput},
+    nodes::types::Out,
+};
 pub mod compositing;
 ///**CropMask**: No description.
 #[derive(Clone)]
@@ -72,10 +75,7 @@ impl<
 > crate::nodes::TypedNode for CropMask<Mask, X, Y, Width, Height> {
     type Output = crate::nodes::types::MaskOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
-        Self::Output {
-            node_id,
-            node_slot: 0u32,
-        }
+        Self::Output::from_dynamic(node_id, 0)
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
@@ -166,10 +166,7 @@ impl<
 > crate::nodes::TypedNode for FeatherMask<Mask, Left, Top, Right, Bottom> {
     type Output = crate::nodes::types::MaskOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
-        Self::Output {
-            node_id,
-            node_slot: 0u32,
-        }
+        Self::Output::from_dynamic(node_id, 0)
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
@@ -231,10 +228,7 @@ impl<
 > crate::nodes::TypedNode for GrowMask<Mask, Expand, TaperedCorners> {
     type Output = crate::nodes::types::MaskOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
-        Self::Output {
-            node_id,
-            node_slot: 0u32,
-        }
+        Self::Output::from_dynamic(node_id, 0)
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
@@ -283,10 +277,7 @@ impl<
 > crate::nodes::TypedNode for ImageColorToMask<Image, Color> {
     type Output = crate::nodes::types::MaskOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
-        Self::Output {
-            node_id,
-            node_slot: 0u32,
-        }
+        Self::Output::from_dynamic(node_id, 0)
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
@@ -325,10 +316,7 @@ impl<
 > crate::nodes::TypedNode for ImageToMask<Image, Channel> {
     type Output = crate::nodes::types::MaskOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
-        Self::Output {
-            node_id,
-            node_slot: 0u32,
-        }
+        Self::Output::from_dynamic(node_id, 0)
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
@@ -356,10 +344,7 @@ impl<Mask: crate::nodes::types::Mask> InvertMask<Mask> {
 impl<Mask: crate::nodes::types::Mask> crate::nodes::TypedNode for InvertMask<Mask> {
     type Output = crate::nodes::types::MaskOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
-        Self::Output {
-            node_id,
-            node_slot: 0u32,
-        }
+        Self::Output::from_dynamic(node_id, 0)
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
@@ -401,10 +386,7 @@ impl<
 > crate::nodes::TypedNode for LoadImageMask<Image, Channel> {
     type Output = crate::nodes::types::MaskOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
-        Self::Output {
-            node_id,
-            node_slot: 0u32,
-        }
+        Self::Output::from_dynamic(node_id, 0)
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
@@ -484,10 +466,7 @@ impl<
 > crate::nodes::TypedNode for MaskComposite<Destination, Source, X, Y, Operation> {
     type Output = crate::nodes::types::MaskOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
-        Self::Output {
-            node_id,
-            node_slot: 0u32,
-        }
+        Self::Output::from_dynamic(node_id, 0)
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
@@ -518,10 +497,7 @@ impl<Mask: crate::nodes::types::Mask> MaskToImage<Mask> {
 impl<Mask: crate::nodes::types::Mask> crate::nodes::TypedNode for MaskToImage<Mask> {
     type Output = crate::nodes::types::ImageOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
-        Self::Output {
-            node_id,
-            node_slot: 0u32,
-        }
+        Self::Output::from_dynamic(node_id, 0)
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
@@ -585,10 +561,7 @@ impl<
 > crate::nodes::TypedNode for SolidMask<Value, Width, Height> {
     type Output = crate::nodes::types::MaskOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
-        Self::Output {
-            node_id,
-            node_slot: 0u32,
-        }
+        Self::Output::from_dynamic(node_id, 0)
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
@@ -635,10 +608,7 @@ impl<
 > crate::nodes::TypedNode for ThresholdMask<Mask, Value> {
     type Output = crate::nodes::types::MaskOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
-        Self::Output {
-            node_id,
-            node_slot: 0u32,
-        }
+        Self::Output::from_dynamic(node_id, 0)
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();

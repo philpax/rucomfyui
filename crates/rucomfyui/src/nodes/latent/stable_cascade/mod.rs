@@ -1,7 +1,10 @@
 //!`stable_cascade` definitions/categories.
 #![allow(unused_imports, clippy::too_many_arguments, clippy::new_without_default)]
 use std::collections::HashMap;
-use crate::workflow::{WorkflowNodeId, WorkflowInput};
+use crate::{
+    workflow::{WorkflowNodeId, WorkflowInput},
+    nodes::types::Out,
+};
 /// Output types for nodes.
 pub mod out {
     ///Output for [`StableCascadeEmptyLatentImage`](super::StableCascadeEmptyLatentImage).
@@ -96,14 +99,8 @@ for StableCascadeEmptyLatentImage<Width, Height, Compression, BatchSize> {
     type Output = out::StableCascadeEmptyLatentImageOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            stage_c: crate::nodes::types::LatentOut {
-                node_id,
-                node_slot: 0u32,
-            },
-            stage_b: crate::nodes::types::LatentOut {
-                node_id,
-                node_slot: 1u32,
-            },
+            stage_c: crate::nodes::types::LatentOut::from_dynamic(node_id, 0u32),
+            stage_b: crate::nodes::types::LatentOut::from_dynamic(node_id, 1u32),
         }
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
@@ -158,14 +155,8 @@ impl<
     type Output = out::StableCascadeStageCVaeEncodeOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
-            stage_c: crate::nodes::types::LatentOut {
-                node_id,
-                node_slot: 0u32,
-            },
-            stage_b: crate::nodes::types::LatentOut {
-                node_id,
-                node_slot: 1u32,
-            },
+            stage_c: crate::nodes::types::LatentOut::from_dynamic(node_id, 0u32),
+            stage_b: crate::nodes::types::LatentOut::from_dynamic(node_id, 1u32),
         }
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
