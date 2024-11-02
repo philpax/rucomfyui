@@ -13,10 +13,11 @@ serde_json = { workspace = true }
 reqwest = { workspace = true }
 serde = { workspace = true }
 thiserror = { workspace = true }
-tokio = { workspace = true }
+futures-timer = { workspace = true }
 
 [dev-dependencies]
 anyhow = { workspace = true }
+tokio = { workspace = true }
 
 [features]
 default = ["typed_nodes"]
