@@ -1,8 +1,6 @@
-#![deny(missing_docs)]
 //! A demo application for [`rucomfyui_node_graph`] that allows you to load and queue workflows to a ComfyUI server.
+#![deny(missing_docs)]
 
-#[cfg(not(target_arch = "wasm32"))]
-use std::path::PathBuf;
 use std::{
     collections::HashMap,
     sync::{
@@ -91,12 +89,7 @@ pub struct Application {
     /// The current error, if any. Will be displayed.
     error: Option<(String, String)>,
 
-    /// The file dialog.
-    #[cfg(not(target_arch = "wasm32"))]
-    file_dialog: egui_file_dialog::FileDialog,
-    /// The current mode for the file dialog.
-    #[cfg(not(target_arch = "wasm32"))]
-    file_mode: FileMode,
+    file_dialog: rfd::AsyncFileDialog,
 
     /// The time at which the last queue was issued.
     last_queue_time: Option<Instant>,
@@ -109,25 +102,9 @@ pub struct Application {
     /// The authorization token to pass (`Bearer {authorization_token}` in the `Authorization` header).
     authorization_token: String,
 }
-/// The current mode for the file dialog.
-#[cfg(not(target_arch = "wasm32"))]
-enum FileMode {
-    None,
-    Load,
-    Save,
-}
 impl Application {
     /// Create a new application.
     pub fn new(cc: &eframe::CreationContext<'_>) -> Self {
-        #[cfg(not(target_arch = "wasm32"))]
-        let mut file_dialog = egui_file_dialog::FileDialog::new();
-
-        #[cfg(not(target_arch = "wasm32"))]
-        if let Some(storage) = cc.storage {
-            *file_dialog.storage_mut() =
-                eframe::get_value(storage, "file_dialog").unwrap_or_default();
-        }
-
         let (async_output_tx, async_output_rx) = std::sync::mpsc::channel();
         Self {
             comfyui_address: cc
@@ -144,10 +121,7 @@ impl Application {
 
             error: None,
 
-            #[cfg(not(target_arch = "wasm32"))]
-            file_dialog,
-            #[cfg(not(target_arch = "wasm32"))]
-            file_mode: FileMode::None,
+            file_dialog: rfd::AsyncFileDialog::new().set_file_name("workflow.json"),
 
             last_queue_time: None,
 
@@ -171,8 +145,6 @@ impl eframe::App for Application {
     /// the [`eframe`] paradigm as the object info it depends on will not be available
     /// at deserialization time.
     fn save(&mut self, storage: &mut dyn eframe::Storage) {
-        #[cfg(not(target_arch = "wasm32"))]
-        eframe::set_value(storage, "file_dialog", self.file_dialog.storage_mut());
         eframe::set_value(storage, "comfyui_address", &self.comfyui_address);
         #[cfg(not(target_arch = "wasm32"))]
         eframe::set_value(storage, "allow_insecure_https", &self.allow_insecure_https);
@@ -182,7 +154,7 @@ impl eframe::App for Application {
     /// Update the application and render the UI.
     fn update(&mut self, ctx: &egui::Context, _frame: &mut eframe::Frame) {
         ctx.request_repaint_after(web_time::Duration::from_millis(100));
-        if self.process_incoming_events() {
+        if self.handle_async_responses() {
             ctx.request_repaint();
         }
 
@@ -191,16 +163,19 @@ impl eframe::App for Application {
             egui::menu::bar(ui, |ui| {
                 egui::widgets::global_theme_preference_switch(ui);
                 if is_connected {
-                    #[cfg(not(target_arch = "wasm32"))]
                     ui.menu_button("File", |ui| {
                         if ui.button("Open API workflow").clicked() {
-                            self.file_mode = FileMode::Load;
-                            self.file_dialog.select_file();
+                            self.async_request(AsyncRequest::LoadWorkflow);
                         }
-
                         if ui.button("Save API workflow").clicked() {
-                            self.file_mode = FileMode::Save;
-                            self.file_dialog.save_file();
+                            match self.api_save() {
+                                Ok(workflow) => {
+                                    self.async_request(AsyncRequest::SaveWorkflow(workflow));
+                                }
+                                Err(err) => {
+                                    self.error = Some(("Save".to_string(), err.to_string()));
+                                }
+                            }
                         }
                     });
 
@@ -275,21 +250,9 @@ impl eframe::App for Application {
                     ui.text_edit_singleline(&mut self.authorization_token);
                 });
         }
-
-        #[cfg(not(target_arch = "wasm32"))]
-        self.file_dialog.update(ctx);
     }
 }
 impl Application {
-    /// Load the given file into the current graph.
-    #[cfg(not(target_arch = "wasm32"))]
-    fn api_load_from_path(&mut self, path: PathBuf) -> anyhow::Result<()> {
-        let workflow = rucomfyui::Workflow::from_json(
-            &std::fs::read_to_string(path).context("Failed to read file")?,
-        )
-        .context("Failed to parse workflow")?;
-        self.api_load(workflow)
-    }
     /// Load the given API workflow into the current graph.
     fn api_load(&mut self, workflow: rucomfyui::Workflow) -> anyhow::Result<()> {
         self.graph
@@ -299,51 +262,13 @@ impl Application {
             .context("Failed to load workflow")?;
         Ok(())
     }
-
-    /// Save the current graph to the given path.
-    #[cfg(not(target_arch = "wasm32"))]
-    fn api_save(&self, path: PathBuf) -> anyhow::Result<()> {
-        std::fs::write(
-            path,
-            self.graph
-                .as_ref()
-                .context("No graph to save")?
-                .save_api_workflow()
-                .to_json()
-                .context("Failed to serialize workflow")?,
-        )?;
-        Ok(())
-    }
-
-    /// Process incoming events and return whether a repaint is needed.
-    #[allow(unused_mut)]
-    fn process_incoming_events(&mut self) -> bool {
-        let mut needs_repaint = self.handle_async_responses();
-
-        // Process file dialog
-        #[cfg(not(target_arch = "wasm32"))]
-        if let Some(path) = self.file_dialog.take_selected() {
-            match self.file_mode {
-                FileMode::None => {
-                    eprintln!("File mode is None, this should not happen. Path: {path:?}");
-                }
-                FileMode::Load => {
-                    if let Err(err) = self.api_load_from_path(path) {
-                        self.error = Some(("File load".to_string(), err.to_string()));
-                        needs_repaint = true;
-                    }
-                }
-                FileMode::Save => {
-                    if let Err(err) = self.api_save(path) {
-                        self.error = Some(("File save".to_string(), err.to_string()));
-                        needs_repaint = true;
-                    }
-                }
-            }
-            self.file_mode = FileMode::None;
-        }
-
-        needs_repaint
+    /// Save the current graph as an API workflow.
+    fn api_save(&self) -> anyhow::Result<rucomfyui::Workflow> {
+        Ok(self
+            .graph
+            .as_ref()
+            .context("No graph to save")?
+            .save_api_workflow())
     }
 
     /// Connect to ComfyUI at the address specified in [`Self::comfyui_address`].
@@ -393,6 +318,10 @@ pub enum AsyncRequest {
     /// Queue the given workflow with a mapping that can be returned back to the
     /// caller to map the output images to the correct nodes.
     QueueWorkflow((rucomfyui_node_graph::NodeToWorkflowNodeMapping, Workflow)),
+    /// Load a workflow from the file dialog.
+    LoadWorkflow,
+    /// Save the current workflow with the file dialog.
+    SaveWorkflow(rucomfyui::Workflow),
 }
 /// Output from the async handler.
 pub enum AsyncResponse {
@@ -407,6 +336,8 @@ pub enum AsyncResponse {
     ),
     /// Some error occurred.
     Error(AsyncOutputError),
+    /// The workflow was loaded from the file dialog.
+    LoadedWorkflow(rucomfyui::Workflow),
 }
 /// Error that can occur when sending output from the async handler.
 pub enum AsyncOutputError {
@@ -414,6 +345,10 @@ pub enum AsyncOutputError {
     Connection(String),
     /// Error queuing the workflow.
     Queue(String),
+    /// Error loading the workflow.
+    Load(String),
+    /// Error saving the workflow.
+    Save(String),
 }
 
 impl Application {
@@ -496,11 +431,63 @@ impl Application {
                     }
                 });
             }
+            AsyncRequest::LoadWorkflow => {
+                let file_dialog = self.file_dialog.clone();
+                let tx = self.async_output_tx.clone();
+                self.runtime.spawn(async move {
+                    let Some(handle) = file_dialog.pick_file().await else {
+                        return;
+                    };
+                    let handler = || async move {
+                        let data = handle.read().await;
+                        anyhow::Ok(
+                            rucomfyui::Workflow::from_json(
+                                std::str::from_utf8(&data).with_context(|| {
+                                    format!("Failed to convert {} to UTF-8", handle.file_name())
+                                })?,
+                            )
+                            .context("Failed to parse workflow")?,
+                        )
+                    };
+                    match handler().await {
+                        Ok(workflow) => {
+                            tx.send(AsyncResponse::LoadedWorkflow(workflow)).unwrap();
+                        }
+                        Err(err) => {
+                            tx.send(AsyncResponse::Error(AsyncOutputError::Load(
+                                err.to_string(),
+                            )))
+                            .unwrap();
+                        }
+                    }
+                });
+            }
+            AsyncRequest::SaveWorkflow(workflow) => {
+                let file_dialog = self.file_dialog.clone();
+                let tx = self.async_output_tx.clone();
+                self.runtime.spawn(async move {
+                    let Some(handle) = file_dialog.save_file().await else {
+                        return;
+                    };
+                    let handler = || async move {
+                        handle
+                            .write(workflow.to_json()?.as_bytes())
+                            .await
+                            .context("Failed to write to file")
+                    };
+                    if let Err(err) = handler().await {
+                        tx.send(AsyncResponse::Error(AsyncOutputError::Save(
+                            err.to_string(),
+                        )))
+                        .unwrap();
+                    }
+                });
+            }
         }
     }
     fn handle_async_responses(&mut self) -> bool {
         let mut needs_repaint = false;
-        let mut load_default_workflow = false;
+        let mut load_workflow = None;
 
         // Process async events
         for event in self.async_output_rx.try_iter() {
@@ -508,7 +495,12 @@ impl Application {
                 AsyncResponse::ObjectInfo(oi, client) => {
                     self.graph = Some(rucomfyui_node_graph::ComfyUiNodeGraph::new(oi));
                     self.client = Some(Arc::new(client));
-                    load_default_workflow = true;
+                    load_workflow = Some(
+                        rucomfyui::Workflow::from_json(include_str!(
+                            "../../../crates/rucomfyui/examples/existing_workflow.json"
+                        ))
+                        .unwrap(),
+                    );
                 }
                 AsyncResponse::QueueWorkflowResult((mapping, result)) => {
                     if let Some(graph) = self.graph.as_mut() {
@@ -543,21 +535,22 @@ impl Application {
                             self.last_queue_time = None;
                             ("Queue".to_string(), err)
                         }
+                        AsyncOutputError::Load(err) => ("Load".to_string(), err),
+                        AsyncOutputError::Save(err) => ("Save".to_string(), err),
                     };
                     self.error = Some(err);
+                }
+                AsyncResponse::LoadedWorkflow(workflow) => {
+                    load_workflow = Some(workflow);
                 }
             }
             needs_repaint = true;
         }
 
-        if load_default_workflow {
-            self.api_load(
-                rucomfyui::Workflow::from_json(include_str!(
-                    "../../../crates/rucomfyui/examples/existing_workflow.json"
-                ))
-                .unwrap(),
-            )
-            .unwrap();
+        if let Some(workflow) = load_workflow {
+            if let Err(err) = self.api_load(workflow) {
+                self.error = Some(("Load".to_string(), err.to_string()));
+            }
         }
 
         needs_repaint

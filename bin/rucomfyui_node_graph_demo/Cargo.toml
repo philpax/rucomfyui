@@ -15,7 +15,7 @@ rucomfyui_node_graph = { path = "../../crates/rucomfyui_node_graph", default-fea
 
 eframe = { version = "0.29", features = ["persistence"] }
 egui_extras = { version = "0.29", features = ["all_loaders"] }
-egui-file-dialog = "0.7.0"
+rfd = "0.15"
 image = { version = "0.25", default-features = false, features = ["png"] }
 
 [target.'cfg(not(target_arch = "wasm32"))'.dependencies]
