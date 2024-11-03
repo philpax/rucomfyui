@@ -1,6 +1,8 @@
 #![deny(missing_docs)]
 //! A demo application for [`rucomfyui_node_graph`] that allows you to load and queue workflows to a ComfyUI server.
 
+#[cfg(not(target_arch = "wasm32"))]
+use std::path::PathBuf;
 use std::{
     collections::HashMap,
     sync::{
@@ -8,8 +10,6 @@ use std::{
         Arc,
     },
 };
-#[cfg(not(target_arch = "wasm32"))]
-use std::{path::PathBuf, thread::JoinHandle};
 use web_time::{Instant, SystemTime};
 
 use anyhow::Context;
@@ -87,11 +87,6 @@ pub struct Application {
     runtime: AsyncRuntime,
     /// The [`rucomfyui`] client.
     client: Option<Arc<rucomfyui::Client>>,
-    /// A thread responsible for issuing repaint requests periodically
-    /// to ensure that any UI changes are reflected, even when the user
-    /// is not interacting with the UI.
-    #[cfg(not(target_arch = "wasm32"))]
-    _pump_repaint_thread: JoinHandle<()>,
 
     /// The current error, if any. Will be displayed.
     error: Option<(String, String)>,
@@ -146,14 +141,6 @@ impl Application {
             async_output_rx,
             runtime: AsyncRuntime::new(),
             client: None,
-            #[cfg(not(target_arch = "wasm32"))]
-            _pump_repaint_thread: std::thread::spawn({
-                let ctx = cc.egui_ctx.clone();
-                move || loop {
-                    ctx.request_repaint();
-                    std::thread::sleep(std::time::Duration::from_millis(50));
-                }
-            }),
 
             error: None,
 
@@ -194,6 +181,7 @@ impl eframe::App for Application {
 
     /// Update the application and render the UI.
     fn update(&mut self, ctx: &egui::Context, _frame: &mut eframe::Frame) {
+        ctx.request_repaint_after(web_time::Duration::from_millis(100));
         if self.process_incoming_events() {
             ctx.request_repaint();
         }
