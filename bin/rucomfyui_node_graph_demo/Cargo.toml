@@ -13,6 +13,7 @@ reqwest = { workspace = true }
 rucomfyui = { path = "../../crates/rucomfyui", default-features = false }
 rucomfyui_node_graph = { path = "../../crates/rucomfyui_node_graph", default-features = false }
 
-eframe = { version = "0.28", features = ["persistence"] }
-egui_extras = { version = "0.28", features = ["all_loaders"] }
-egui-file-dialog = "0.6.1"
+eframe = { version = "0.29", features = ["persistence"] }
+egui_extras = { version = "0.29", features = ["all_loaders"] }
+egui-file-dialog = "0.7.0"
+
