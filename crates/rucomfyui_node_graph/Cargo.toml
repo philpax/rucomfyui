@@ -8,10 +8,7 @@ license = "MIT"
 
 [dependencies]
 egui = "0.29"
-# TODO: Use a released version of egui_node_graph2 once https://github.com/trevyn/egui_node_graph2/issues/4 is fixed
-egui_node_graph2 = { git = "https://github.com/trevyn/egui_node_graph2.git", rev = "3c6eb3c", features = [
-    "persistence",
-] }
+egui_node_graph2 = { version = "0.7", features = ["persistence"] }
 
 # We don't need the typed nodes, so we are opting out of them
 rucomfyui = { path = "../rucomfyui", default-features = false }
