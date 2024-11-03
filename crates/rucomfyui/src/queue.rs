@@ -40,7 +40,7 @@ impl Client {
                     break history_data.outputs.clone();
                 }
             }
-            futures_timer::Delay::new(std::time::Duration::from_millis(100)).await;
+            futures_timer::Delay::new(web_time::Duration::from_millis(100)).await;
         };
 
         // Convert output to `EasyQueueNodeOutput`.
