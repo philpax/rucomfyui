@@ -6,8 +6,8 @@ description = "A demonstration of how to use `rucomfyui_node_graph` that talks t
 
 [dependencies]
 anyhow = { workspace = true }
-tokio = { workspace = true, features = ["full"] }
 reqwest = { workspace = true }
+web-time = { workspace = true }
 
 # We don't need the typed nodes, so disable them
 rucomfyui = { path = "../../crates/rucomfyui", default-features = false }
@@ -16,4 +16,11 @@ rucomfyui_node_graph = { path = "../../crates/rucomfyui_node_graph", default-fea
 eframe = { version = "0.29", features = ["persistence"] }
 egui_extras = { version = "0.29", features = ["all_loaders"] }
 egui-file-dialog = "0.7.0"
+image = { version = "0.25", default-features = false, features = ["png"] }
 
+[target.'cfg(not(target_arch = "wasm32"))'.dependencies]
+tokio = { workspace = true, features = ["full"] }
+
+[target.'cfg(target_arch = "wasm32")'.dependencies]
+wasm-bindgen-futures = "0.4"
+web-sys = "0.3"

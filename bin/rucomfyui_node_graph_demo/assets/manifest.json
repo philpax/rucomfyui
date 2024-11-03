@@ -1,0 +1,10 @@
+{
+  "name": "rucomfyui_node_graph_demo",
+  "short_name": "rucomfyui_node_graph_demo",
+  "lang": "en-US",
+  "id": "/index.html",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "white",
+  "theme_color": "white"
+}
