@@ -300,6 +300,10 @@ impl Application {
             &std::fs::read_to_string(path).context("Failed to read file")?,
         )
         .context("Failed to parse workflow")?;
+        self.api_load(workflow)
+    }
+    /// Load the given API workflow into the current graph.
+    fn api_load(&mut self, workflow: rucomfyui::Workflow) -> anyhow::Result<()> {
         self.graph
             .as_mut()
             .context("No graph to load into")?
@@ -508,6 +512,7 @@ impl Application {
     }
     fn handle_async_responses(&mut self) -> bool {
         let mut needs_repaint = false;
+        let mut load_default_workflow = false;
 
         // Process async events
         for event in self.async_output_rx.try_iter() {
@@ -515,6 +520,7 @@ impl Application {
                 AsyncResponse::ObjectInfo(oi, client) => {
                     self.graph = Some(rucomfyui_node_graph::ComfyUiNodeGraph::new(oi));
                     self.client = Some(Arc::new(client));
+                    load_default_workflow = true;
                 }
                 AsyncResponse::QueueWorkflowResult((mapping, result)) => {
                     if let Some(graph) = self.graph.as_mut() {
@@ -554,6 +560,16 @@ impl Application {
                 }
             }
             needs_repaint = true;
+        }
+
+        if load_default_workflow {
+            self.api_load(
+                rucomfyui::Workflow::from_json(include_str!(
+                    "../../../crates/rucomfyui/examples/existing_workflow.json"
+                ))
+                .unwrap(),
+            )
+            .unwrap();
         }
 
         needs_repaint
