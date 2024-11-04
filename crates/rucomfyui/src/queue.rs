@@ -8,6 +8,16 @@ use crate::{
     error::parse_response, workflow::WorkflowNodeId, Client, OwnedBytes, Result, Workflow,
 };
 
+#[derive(Serialize, Deserialize, Debug)]
+/// Result of the queueing of a prompt.
+pub struct QueueResult {
+    /// Node errors.
+    pub node_errors: serde_json::Value,
+    /// Number.
+    pub number: u32,
+    /// Prompt ID.
+    pub prompt_id: String,
+}
 impl Client {
     /// Send a workflow to the ComfyUI API.
     pub async fn queue(&self, workflow: &Workflow) -> Result<QueueResult> {
@@ -23,7 +33,83 @@ impl Client {
         )
         .await
     }
+}
 
+#[derive(Serialize, Deserialize, Debug, Default)]
+/// The queue of the ComfyUI instance from [`Client::queue`].
+pub struct Queue {
+    /// Running entries.
+    pub running: Vec<QueueEntry>,
+    /// Pending entries.
+    pub pending: Vec<QueueEntry>,
+}
+#[derive(Serialize, Deserialize, Debug)]
+/// An entry in the queue from [`Queue`].
+pub struct QueueEntry {
+    /// The number of the entry in the queue.
+    pub number: usize,
+    /// The ID of the prompt.
+    pub prompt_id: String,
+    /// The workflow that was queued.
+    pub prompt: Workflow,
+    /// Extra data.
+    pub extra_data: serde_json::Value,
+    /// The outputs to execute.
+    pub outputs_to_execute: Vec<WorkflowNodeId>,
+}
+impl Client {
+    /// Get the queue of the ComfyUI instance.
+    pub async fn get_queue(&self) -> Result<Queue> {
+        type ApiQueueEntry = (
+            usize,
+            String,
+            Workflow,
+            serde_json::Value,
+            Vec<WorkflowNodeId>,
+        );
+        #[derive(Deserialize)]
+        struct ApiQueue {
+            queue_running: Vec<ApiQueueEntry>,
+            queue_pending: Vec<ApiQueueEntry>,
+        }
+        fn api_queue_to_queue(api_queue: Vec<ApiQueueEntry>) -> Vec<QueueEntry> {
+            api_queue
+                .into_iter()
+                .map(
+                    |(number, prompt_id, prompt, extra_data, outputs_to_execute)| QueueEntry {
+                        number,
+                        prompt_id,
+                        prompt,
+                        extra_data,
+                        outputs_to_execute,
+                    },
+                )
+                .collect()
+        }
+
+        let api_queue: ApiQueue = parse_response(
+            self.client
+                .get(format!("{}/queue", self.api_base))
+                .send()
+                .await?,
+        )
+        .await?;
+        Ok(Queue {
+            running: api_queue_to_queue(api_queue.queue_running),
+            pending: api_queue_to_queue(api_queue.queue_pending),
+        })
+    }
+}
+
+#[derive(Debug)]
+/// Output of a node in [`Client::easy_queue`].
+pub struct EasyQueueNodeOutput {
+    /// Images.
+    pub images: Vec<OwnedBytes>,
+    /// Texts.
+    pub texts: Vec<String>,
+}
+impl Client {
     /// Helper function that prompts with a workflow, polls for the result, and then returns all output images.
     pub async fn easy_queue(
         &self,
@@ -34,7 +120,7 @@ impl Client {
         // Poll for the prompt's completion.
         let prompt_id = output.prompt_id;
         let history_output = loop {
-            let history = self.history_for_prompt(&prompt_id).await?;
+            let history = self.get_history_for_prompt(&prompt_id).await?;
             if let Some(history_data) = history.data.get(&prompt_id) {
                 if history_data.status.completed {
                     break history_data.outputs.clone();
@@ -58,24 +144,4 @@ impl Client {
         }
         Ok(output)
     }
-}
-
-#[derive(Serialize, Deserialize, Debug)]
-/// Result of the queueing of a prompt.
-pub struct QueueResult {
-    /// Node errors.
-    pub node_errors: serde_json::Value,
-    /// Number.
-    pub number: u32,
-    /// Prompt ID.
-    pub prompt_id: String,
-}
-
-#[derive(Debug)]
-/// Output of a node in [`Client::easy_queue`].
-pub struct EasyQueueNodeOutput {
-    /// Images.
-    pub images: Vec<OwnedBytes>,
-    /// Texts.
-    pub texts: Vec<String>,
 }
