@@ -3,11 +3,11 @@
 use std::{
     cell::{Ref, RefCell, RefMut},
     collections::{BTreeMap, HashMap, HashSet, VecDeque},
-    fmt::Display,
+    fmt::{self, Display},
     str::FromStr,
 };
 
-use serde::{Deserialize, Serialize};
+use serde::{de, Deserialize, Deserializer, Serialize};
 
 #[cfg(feature = "typed_nodes")]
 use crate::nodes::{types::Out, TypedNode};
@@ -230,9 +230,7 @@ impl WorkflowGraph {
 }
 
 /// A workflow node ID.
-#[derive(
-    Debug, Serialize, Deserialize, Copy, Clone, PartialEq, Eq, Hash, Default, PartialOrd, Ord,
-)]
+#[derive(Debug, Serialize, Copy, Clone, PartialEq, Eq, Hash, Default, PartialOrd, Ord)]
 #[repr(transparent)]
 #[serde(transparent)]
 pub struct WorkflowNodeId(pub u32);
@@ -251,6 +249,60 @@ impl FromStr for WorkflowNodeId {
     type Err = std::num::ParseIntError;
     fn from_str(s: &str) -> Result<Self, Self::Err> {
         Ok(Self(s.parse()?))
+    }
+}
+impl<'de> Deserialize<'de> for WorkflowNodeId {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    where
+        D: Deserializer<'de>,
+    {
+        struct WorkflowNodeIdVisitor;
+        impl<'de> de::Visitor<'de> for WorkflowNodeIdVisitor {
+            type Value = WorkflowNodeId;
+
+            fn expecting(&self, formatter: &mut fmt::Formatter) -> fmt::Result {
+                formatter.write_str("an integer or string containing an integer")
+            }
+            fn visit_u32<E>(self, value: u32) -> Result<Self::Value, E>
+            where
+                E: de::Error,
+            {
+                Ok(WorkflowNodeId(value))
+            }
+            fn visit_u64<E>(self, value: u64) -> Result<Self::Value, E>
+            where
+                E: de::Error,
+            {
+                if value <= u32::MAX as u64 {
+                    Ok(WorkflowNodeId(value as u32))
+                } else {
+                    Err(E::custom(format!("integer out of range: {}", value)))
+                }
+            }
+            fn visit_i64<E>(self, value: i64) -> Result<Self::Value, E>
+            where
+                E: de::Error,
+            {
+                if value >= 0 && value <= u32::MAX as i64 {
+                    Ok(WorkflowNodeId(value as u32))
+                } else {
+                    Err(E::custom(format!("integer out of range: {}", value)))
+                }
+            }
+            fn visit_str<E>(self, value: &str) -> Result<Self::Value, E>
+            where
+                E: de::Error,
+            {
+                match value.parse::<u32>() {
+                    Ok(id) => Ok(WorkflowNodeId(id)),
+                    Err(_) => Err(E::custom(format!(
+                        "failed to parse string as integer: {}",
+                        value
+                    ))),
+                }
+            }
+        }
+        deserializer.deserialize_any(WorkflowNodeIdVisitor)
     }
 }
 
