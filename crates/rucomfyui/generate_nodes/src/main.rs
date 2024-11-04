@@ -56,6 +56,20 @@ async fn load_or_get_object_info(
                 .cloned()
                 .collect();
             object_info.sort_by(|a, b| a.name.cmp(&b.name));
+            // Scrub all array type values to improve determinism of results.
+            for object in &mut object_info {
+                for input in object.input.required.values_mut().chain(
+                    object
+                        .input
+                        .optional
+                        .iter_mut()
+                        .flat_map(|v| v.values_mut()),
+                ) {
+                    if let Some(array) = input.as_input_type_mut().as_array_mut() {
+                        array.clear();
+                    }
+                }
+            }
             std::fs::write(path, serde_json::to_string_pretty(&object_info)?)?;
             Ok(object_info)
         }

@@ -132,6 +132,13 @@ impl ObjectInput {
             Self::Input(ty) => &ty.0,
         }
     }
+    /// Get a mutable reference to the [`ObjectInputType`] of the input.
+    pub fn as_input_type_mut(&mut self) -> &mut ObjectInputType {
+        match self {
+            Self::InputWithMeta(ty, _) => ty,
+            Self::Input(ty) => &mut ty.0,
+        }
+    }
     /// The [`ObjectInputMetaTyped`] of the input, if available.
     pub fn as_meta_typed(&self) -> Option<&ObjectInputMetaTyped> {
         match self {
@@ -178,6 +185,13 @@ impl ObjectInputType {
             // but we treat array types as strings so they can be specified in
             // the workflow
             Self::Array(_) => Some(&ObjectType::String),
+        }
+    }
+    /// Get the array value, if this is an array type.
+    pub fn as_array_mut(&mut self) -> Option<&mut Vec<ObjectInputTypeArrayValue>> {
+        match self {
+            Self::Array(v) => Some(v),
+            _ => None,
         }
     }
 }

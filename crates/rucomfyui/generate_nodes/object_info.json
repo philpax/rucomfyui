@@ -18,11 +18,7 @@
           }
         ],
         "model_type": [
-          [
-            "SD1",
-            "SDXL",
-            "SVD"
-          ]
+          []
         ],
         "steps": [
           "INT",
@@ -114,15 +110,7 @@
           "MODEL"
         ],
         "scheduler": [
-          [
-            "normal",
-            "karras",
-            "exponential",
-            "sgm_uniform",
-            "simple",
-            "ddim_uniform",
-            "beta"
-          ]
+          []
         ],
         "steps": [
           "INT",
@@ -287,12 +275,7 @@
           []
         ],
         "type": [
-          [
-            "stable_diffusion",
-            "stable_cascade",
-            "sd3",
-            "stable_audio"
-          ]
+          []
         ]
       },
       "optional": null
@@ -708,10 +691,7 @@
           }
         ],
         "empty_padding": [
-          [
-            "none",
-            "empty_prompt"
-          ]
+          []
         ],
         "t5xxl": [
           "STRING",
@@ -1059,28 +1039,10 @@
     "input": {
       "required": {
         "ckpt_name": [
-          [
-            "aura_flow_0.2.safetensors",
-            "flux1-dev-fp8.safetensors",
-            "sd_xl_base_1.0.safetensors",
-            "sd_xl_base_1.0_0.9vae.safetensors",
-            "sd_xl_turbo_1.0_fp16.safetensors"
-          ]
+          []
         ],
         "config_name": [
-          [
-            "anything_v3.yaml",
-            "v1-inference.yaml",
-            "v1-inference_clip_skip_2.yaml",
-            "v1-inference_clip_skip_2_fp16.yaml",
-            "v1-inference_fp16.yaml",
-            "v1-inpainting-inference.yaml",
-            "v2-inference-v.yaml",
-            "v2-inference-v_fp32.yaml",
-            "v2-inference.yaml",
-            "v2-inference_fp32.yaml",
-            "v2-inpainting-inference.yaml"
-          ]
+          []
         ]
       },
       "optional": null
@@ -1119,13 +1081,7 @@
     "input": {
       "required": {
         "ckpt_name": [
-          [
-            "aura_flow_0.2.safetensors",
-            "flux1-dev-fp8.safetensors",
-            "sd_xl_base_1.0.safetensors",
-            "sd_xl_base_1.0_0.9vae.safetensors",
-            "sd_xl_turbo_1.0_fp16.safetensors"
-          ],
+          [],
           {
             "tooltip": "The name of the checkpoint (model) to load."
           }
@@ -1554,10 +1510,7 @@
           "MASK"
         ],
         "set_cond_area": [
-          [
-            "default",
-            "mask bounds"
-          ]
+          []
         ],
         "strength": [
           "FLOAT",
@@ -1997,11 +1950,7 @@
     "input": {
       "required": {
         "control_net_name": [
-          [
-            "diffusion_pytorch_model.fp16.safetensors",
-            "diffusion_pytorch_model_promax.safetensors",
-            "flux_controlnet_union_pro.safetensors"
-          ]
+          []
         ]
       },
       "optional": null
@@ -2109,11 +2058,7 @@
     "input": {
       "required": {
         "control_net_name": [
-          [
-            "diffusion_pytorch_model.fp16.safetensors",
-            "diffusion_pytorch_model_promax.safetensors",
-            "flux_controlnet_union_pro.safetensors"
-          ]
+          []
         ],
         "model": [
           "MODEL"
@@ -2287,11 +2232,7 @@
           []
         ],
         "type": [
-          [
-            "sdxl",
-            "sd3",
-            "flux"
-          ]
+          []
         ]
       },
       "optional": null
@@ -3332,14 +3273,7 @@
           }
         ],
         "blend_mode": [
-          [
-            "normal",
-            "multiply",
-            "screen",
-            "overlay",
-            "soft_light",
-            "difference"
-          ]
+          []
         ],
         "image1": [
           "IMAGE"
@@ -3710,13 +3644,7 @@
     "input": {
       "required": {
         "ckpt_name": [
-          [
-            "aura_flow_0.2.safetensors",
-            "flux1-dev-fp8.safetensors",
-            "sd_xl_base_1.0.safetensors",
-            "sd_xl_base_1.0_0.9vae.safetensors",
-            "sd_xl_turbo_1.0_fp16.safetensors"
-          ]
+          []
         ]
       },
       "optional": null
@@ -3896,14 +3824,7 @@
           }
         ],
         "dither": [
-          [
-            "none",
-            "floyd-steinberg",
-            "bayer-2",
-            "bayer-4",
-            "bayer-8",
-            "bayer-16"
-          ]
+          []
         ],
         "image": [
           "IMAGE"
@@ -3940,10 +3861,7 @@
     "input": {
       "required": {
         "crop": [
-          [
-            "disabled",
-            "center"
-          ]
+          []
         ],
         "height": [
           "INT",
@@ -3959,13 +3877,7 @@
           "IMAGE"
         ],
         "upscale_method": [
-          [
-            "nearest-exact",
-            "bilinear",
-            "area",
-            "bicubic",
-            "lanczos"
-          ]
+          []
         ],
         "width": [
           "INT",
@@ -4024,13 +3936,7 @@
           }
         ],
         "upscale_method": [
-          [
-            "nearest-exact",
-            "bilinear",
-            "area",
-            "bicubic",
-            "lanczos"
-          ]
+          []
         ]
       },
       "optional": null
@@ -4077,13 +3983,7 @@
           }
         ],
         "upscale_method": [
-          [
-            "nearest-exact",
-            "bilinear",
-            "area",
-            "bicubic",
-            "lanczos"
-          ]
+          []
         ]
       },
       "optional": null
@@ -4182,12 +4082,7 @@
     "input": {
       "required": {
         "channel": [
-          [
-            "red",
-            "green",
-            "blue",
-            "alpha"
-          ]
+          []
         ],
         "image": [
           "IMAGE"
@@ -4476,51 +4371,13 @@
           }
         ],
         "sampler_name": [
-          [
-            "euler",
-            "euler_cfg_pp",
-            "euler_ancestral",
-            "euler_ancestral_cfg_pp",
-            "heun",
-            "heunpp2",
-            "dpm_2",
-            "dpm_2_ancestral",
-            "lms",
-            "dpm_fast",
-            "dpm_adaptive",
-            "dpmpp_2s_ancestral",
-            "dpmpp_2s_ancestral_cfg_pp",
-            "dpmpp_sde",
-            "dpmpp_sde_gpu",
-            "dpmpp_2m",
-            "dpmpp_2m_cfg_pp",
-            "dpmpp_2m_sde",
-            "dpmpp_2m_sde_gpu",
-            "dpmpp_3m_sde",
-            "dpmpp_3m_sde_gpu",
-            "ddpm",
-            "lcm",
-            "ipndm",
-            "ipndm_v",
-            "deis",
-            "ddim",
-            "uni_pc",
-            "uni_pc_bh2"
-          ],
+          [],
           {
             "tooltip": "The algorithm used when sampling, this can affect the quality, speed, and style of the generated output."
           }
         ],
         "scheduler": [
-          [
-            "normal",
-            "karras",
-            "exponential",
-            "sgm_uniform",
-            "simple",
-            "ddim_uniform",
-            "beta"
-          ],
+          [],
           {
             "tooltip": "The scheduler controls how noise is gradually removed to form the image."
           }
@@ -4584,10 +4441,7 @@
     "input": {
       "required": {
         "add_noise": [
-          [
-            "enable",
-            "disable"
-          ]
+          []
         ],
         "cfg": [
           "FLOAT",
@@ -4631,54 +4485,13 @@
           "CONDITIONING"
         ],
         "return_with_leftover_noise": [
-          [
-            "disable",
-            "enable"
-          ]
+          []
         ],
         "sampler_name": [
-          [
-            "euler",
-            "euler_cfg_pp",
-            "euler_ancestral",
-            "euler_ancestral_cfg_pp",
-            "heun",
-            "heunpp2",
-            "dpm_2",
-            "dpm_2_ancestral",
-            "lms",
-            "dpm_fast",
-            "dpm_adaptive",
-            "dpmpp_2s_ancestral",
-            "dpmpp_2s_ancestral_cfg_pp",
-            "dpmpp_sde",
-            "dpmpp_sde_gpu",
-            "dpmpp_2m",
-            "dpmpp_2m_cfg_pp",
-            "dpmpp_2m_sde",
-            "dpmpp_2m_sde_gpu",
-            "dpmpp_3m_sde",
-            "dpmpp_3m_sde_gpu",
-            "ddpm",
-            "lcm",
-            "ipndm",
-            "ipndm_v",
-            "deis",
-            "ddim",
-            "uni_pc",
-            "uni_pc_bh2"
-          ]
+          []
         ],
         "scheduler": [
-          [
-            "normal",
-            "karras",
-            "exponential",
-            "sgm_uniform",
-            "simple",
-            "ddim_uniform",
-            "beta"
-          ]
+          []
         ],
         "start_at_step": [
           "INT",
@@ -4740,37 +4553,7 @@
     "input": {
       "required": {
         "sampler_name": [
-          [
-            "euler",
-            "euler_cfg_pp",
-            "euler_ancestral",
-            "euler_ancestral_cfg_pp",
-            "heun",
-            "heunpp2",
-            "dpm_2",
-            "dpm_2_ancestral",
-            "lms",
-            "dpm_fast",
-            "dpm_adaptive",
-            "dpmpp_2s_ancestral",
-            "dpmpp_2s_ancestral_cfg_pp",
-            "dpmpp_sde",
-            "dpmpp_sde_gpu",
-            "dpmpp_2m",
-            "dpmpp_2m_cfg_pp",
-            "dpmpp_2m_sde",
-            "dpmpp_2m_sde_gpu",
-            "dpmpp_3m_sde",
-            "dpmpp_3m_sde_gpu",
-            "ddpm",
-            "lcm",
-            "ipndm",
-            "ipndm_v",
-            "deis",
-            "ddim",
-            "uni_pc",
-            "uni_pc_bh2"
-          ]
+          []
         ]
       },
       "optional": null
@@ -5109,10 +4892,7 @@
           "LATENT"
         ],
         "seed_behavior": [
-          [
-            "random",
-            "fixed"
-          ],
+          [],
           {
             "tooltip": null,
             "default": "fixed"
@@ -5366,10 +5146,7 @@
     "input": {
       "required": {
         "flip_method": [
-          [
-            "x-axis: vertically",
-            "y-axis: horizontally"
-          ]
+          []
         ],
         "samples": [
           "LATENT"
@@ -5647,12 +5424,7 @@
     "input": {
       "required": {
         "rotation": [
-          [
-            "none",
-            "90 degrees",
-            "180 degrees",
-            "270 degrees"
-          ]
+          []
         ],
         "samples": [
           "LATENT"
@@ -5724,10 +5496,7 @@
     "input": {
       "required": {
         "crop": [
-          [
-            "disabled",
-            "center"
-          ]
+          []
         ],
         "height": [
           "INT",
@@ -5743,13 +5512,7 @@
           "LATENT"
         ],
         "upscale_method": [
-          [
-            "nearest-exact",
-            "bilinear",
-            "area",
-            "bicubic",
-            "bislerp"
-          ]
+          []
         ],
         "width": [
           "INT",
@@ -5808,13 +5571,7 @@
           }
         ],
         "upscale_method": [
-          [
-            "nearest-exact",
-            "bilinear",
-            "area",
-            "bicubic",
-            "bislerp"
-          ]
+          []
         ]
       },
       "optional": null
@@ -5884,17 +5641,7 @@
     "input": {
       "required": {
         "image": [
-          [
-            "Image0017.png",
-            "blob",
-            "comfy-maze-depth.png",
-            "comfy-maze-splat.png",
-            "comfy-maze.png",
-            "depth_output.png",
-            "example.png",
-            "mask_output.png",
-            "render_output.png"
-          ],
+          [],
           {
             "tooltip": null,
             "image_upload": true
@@ -5933,25 +5680,10 @@
     "input": {
       "required": {
         "channel": [
-          [
-            "alpha",
-            "red",
-            "green",
-            "blue"
-          ]
+          []
         ],
         "image": [
-          [
-            "Image0017.png",
-            "blob",
-            "comfy-maze-depth.png",
-            "comfy-maze-splat.png",
-            "comfy-maze.png",
-            "depth_output.png",
-            "example.png",
-            "mask_output.png",
-            "render_output.png"
-          ],
+          [],
           {
             "tooltip": null,
             "image_upload": true
@@ -5994,15 +5726,7 @@
           }
         ],
         "lora_name": [
-          [
-            "Hyper-FLUX.1-dev-8steps-lora.safetensors",
-            "Hyper-SDXL-1step-lora.safetensors",
-            "Little_Tinies.safetensors",
-            "araminta_k_flux_koda.safetensors",
-            "flux_tarot_v1_lora.safetensors",
-            "pixel-art-xl.safetensors",
-            "vintage-ads-flux-1350.safetensors"
-          ],
+          [],
           {
             "tooltip": "The name of the LoRA."
           }
@@ -6073,15 +5797,7 @@
     "input": {
       "required": {
         "lora_name": [
-          [
-            "Hyper-FLUX.1-dev-8steps-lora.safetensors",
-            "Hyper-SDXL-1step-lora.safetensors",
-            "Little_Tinies.safetensors",
-            "araminta_k_flux_koda.safetensors",
-            "flux_tarot_v1_lora.safetensors",
-            "pixel-art-xl.safetensors",
-            "vintage-ads-flux-1350.safetensors"
-          ]
+          []
         ],
         "model": [
           "MODEL"
@@ -6134,14 +5850,7 @@
           "MASK"
         ],
         "operation": [
-          [
-            "multiply",
-            "add",
-            "subtract",
-            "and",
-            "or",
-            "xor"
-          ]
+          []
         ],
         "source": [
           "MASK"
@@ -8604,11 +8313,7 @@
           "MODEL"
         ],
         "sampling": [
-          [
-            "v_prediction",
-            "edm_playground_v2.5",
-            "eps"
-          ]
+          []
         ],
         "sigma_max": [
           "FLOAT",
@@ -8668,9 +8373,7 @@
           "MODEL"
         ],
         "sampling": [
-          [
-            "v_prediction"
-          ]
+          []
         ],
         "sigma_max": [
           "FLOAT",
@@ -8730,12 +8433,7 @@
           "MODEL"
         ],
         "sampling": [
-          [
-            "eps",
-            "v_prediction",
-            "lcm",
-            "x0"
-          ]
+          []
         ],
         "zsnr": [
           "BOOLEAN",
@@ -8985,15 +8683,7 @@
           }
         ],
         "operation": [
-          [
-            "erode",
-            "dilate",
-            "open",
-            "close",
-            "gradient",
-            "bottom_hat",
-            "top_hat"
-          ]
+          []
         ]
       },
       "optional": null
@@ -9054,13 +8744,7 @@
           }
         ],
         "downscale_method": [
-          [
-            "bicubic",
-            "nearest-exact",
-            "bilinear",
-            "area",
-            "bislerp"
-          ]
+          []
         ],
         "end_percent": [
           "FLOAT",
@@ -9086,13 +8770,7 @@
           }
         ],
         "upscale_method": [
-          [
-            "bicubic",
-            "nearest-exact",
-            "bilinear",
-            "area",
-            "bislerp"
-          ]
+          []
         ]
       },
       "optional": null
@@ -9255,26 +8933,7 @@
           "MASK"
         ],
         "mode": [
-          [
-            "ADD",
-            "CLEAR",
-            "DARKEN",
-            "DST",
-            "DST_ATOP",
-            "DST_IN",
-            "DST_OUT",
-            "DST_OVER",
-            "LIGHTEN",
-            "MULTIPLY",
-            "OVERLAY",
-            "SCREEN",
-            "SRC",
-            "SRC_ATOP",
-            "SRC_IN",
-            "SRC_OUT",
-            "SRC_OVER",
-            "XOR"
-          ],
+          [],
           {
             "tooltip": null,
             "default": "DST"
@@ -10237,10 +9896,7 @@
           }
         ],
         "noise_device": [
-          [
-            "gpu",
-            "cpu"
-          ]
+          []
         ],
         "s_noise": [
           "FLOAT",
@@ -10254,10 +9910,7 @@
           }
         ],
         "solver_type": [
-          [
-            "midpoint",
-            "heun"
-          ]
+          []
         ]
       },
       "optional": null
@@ -10355,10 +10008,7 @@
           }
         ],
         "noise_device": [
-          [
-            "gpu",
-            "cpu"
-          ]
+          []
         ],
         "s_noise": [
           "FLOAT",
@@ -10414,10 +10064,7 @@
           }
         ],
         "noise_device": [
-          [
-            "gpu",
-            "cpu"
-          ]
+          []
         ],
         "r": [
           "FLOAT",
@@ -10598,13 +10245,7 @@
           }
         ],
         "upscale_method": [
-          [
-            "bislerp",
-            "nearest-exact",
-            "bilinear",
-            "area",
-            "bicubic"
-          ]
+          []
         ]
       },
       "optional": null
@@ -10758,11 +10399,7 @@
           }
         ],
         "method": [
-          [
-            "default",
-            "fastest",
-            "slowest"
-          ]
+          []
         ],
         "quality": [
           "INT",
@@ -10912,17 +10549,7 @@
           "CONTROL_NET"
         ],
         "type": [
-          [
-            "auto",
-            "openpose",
-            "depth",
-            "hed/pidi/scribble/ted",
-            "canny/lineart/anime_lineart/mlsd",
-            "normal",
-            "segment",
-            "tile",
-            "repaint"
-          ]
+          []
         ]
       },
       "optional": null
@@ -11731,12 +11358,7 @@
           []
         ],
         "weight_dtype": [
-          [
-            "default",
-            "fp8_e4m3fn",
-            "fp8_e4m3fn_fast",
-            "fp8_e5m2"
-          ]
+          []
         ]
       },
       "optional": null
@@ -12297,13 +11919,7 @@
     "input": {
       "required": {
         "ckpt_name": [
-          [
-            "aura_flow_0.2.safetensors",
-            "flux1-dev-fp8.safetensors",
-            "sd_xl_base_1.0.safetensors",
-            "sd_xl_base_1.0_0.9vae.safetensors",
-            "sd_xl_turbo_1.0_fp16.safetensors"
-          ]
+          []
         ]
       },
       "optional": null
