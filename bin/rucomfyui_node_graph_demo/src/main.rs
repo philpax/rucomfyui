@@ -13,7 +13,7 @@ use web_time::{Instant, SystemTime};
 use anyhow::Context;
 use eframe::egui;
 
-use rucomfyui::{object_info::ObjectInfo, workflow::WorkflowNodeId};
+use rucomfyui::{object_info::ObjectInfo, queue::QueueEntry, workflow::WorkflowNodeId};
 
 #[cfg(not(target_arch = "wasm32"))]
 fn main() {
@@ -89,10 +89,18 @@ pub struct Application {
     /// The current error, if any. Will be displayed.
     error: Option<(String, String)>,
 
+    /// The file dialog for loading and saving workflows.
     file_dialog: rfd::AsyncFileDialog,
 
-    /// The time at which the last queue was issued.
-    last_queue_time: Option<Instant>,
+    /// The queue for this application.
+    queue: rucomfyui::queue::Queue,
+    /// The time at which the queue was last updated.
+    last_queue_update_time: Instant,
+    /// The workflow that is currently being viewed.
+    viewed_workflow: Option<rucomfyui_node_graph::ComfyUiNodeGraph>,
+
+    /// The time at which the last prompt was queued.
+    last_prompt_queue_time: Option<Instant>,
 
     /// Whether the settings window is open.
     settings_open: bool,
@@ -123,7 +131,11 @@ impl Application {
 
             file_dialog: rfd::AsyncFileDialog::new().set_file_name("workflow.json"),
 
-            last_queue_time: None,
+            queue: rucomfyui::queue::Queue::default(),
+            last_queue_update_time: Instant::now(),
+            viewed_workflow: None,
+
+            last_prompt_queue_time: None,
 
             settings_open: false,
             #[cfg(not(target_arch = "wasm32"))]
@@ -154,6 +166,23 @@ impl eframe::App for Application {
     /// Update the application and render the UI.
     fn update(&mut self, ctx: &egui::Context, _frame: &mut eframe::Frame) {
         ctx.request_repaint_after(web_time::Duration::from_millis(100));
+
+        if let Some(client) = self.client.as_ref() {
+            if self.last_queue_update_time.elapsed().as_millis() > 100 {
+                let tx = self.async_output_tx.clone();
+                let client = client.clone();
+                self.runtime.spawn(async move {
+                    let queue = client.get_queue().await;
+                    tx.send(match queue {
+                        Ok(queue) => AsyncResponse::Queue(queue),
+                        Err(err) => AsyncResponse::error("Queue", err),
+                    })
+                    .unwrap();
+                });
+                self.last_queue_update_time = Instant::now();
+            }
+        }
+
         if self.handle_async_responses() {
             ctx.request_repaint();
         }
@@ -172,7 +201,7 @@ impl eframe::App for Application {
                         }
                     });
 
-                    if let Some(last_queue_time) = self.last_queue_time {
+                    if let Some(last_queue_time) = self.last_prompt_queue_time {
                         ui.label(format!(
                             "Queued: {:.02}s ago",
                             last_queue_time.elapsed().as_secs_f32()
@@ -206,6 +235,65 @@ impl eframe::App for Application {
             });
         });
 
+        if let Some(object_info) = self.graph.as_ref().map(|g| &g.object_info) {
+            egui::SidePanel::right("right").show(ctx, |ui| {
+                ui.heading("Queue");
+                fn render_queue(
+                    ui: &mut egui::Ui,
+                    object_info: &ObjectInfo,
+                    queue_name: &str,
+                    queue: &[QueueEntry],
+                    viewed_workflow: &mut Option<rucomfyui_node_graph::ComfyUiNodeGraph>,
+                ) {
+                    egui::CollapsingHeader::new(queue_name)
+                        .default_open(true)
+                        .show(ui, |ui| {
+                            for entry in queue {
+                                ui.group(|ui| {
+                                    ui.label(
+                                        egui::RichText::from(format!(
+                                            "{}: {}",
+                                            entry.number, entry.prompt_id
+                                        ))
+                                        .monospace(),
+                                    );
+                                    ui.horizontal(|ui| {
+                                        if ui.button("View").clicked() {
+                                            let mut graph =
+                                                rucomfyui_node_graph::ComfyUiNodeGraph::new(
+                                                    object_info.clone(),
+                                                );
+                                            graph
+                                                .load_api_workflow(&entry.prompt)
+                                                .expect("Failed to load queued workflow");
+                                            *viewed_workflow = Some(graph);
+                                        }
+                                        if ui.button("Cancel").clicked() {
+                                            todo!("Cancellation not implemented");
+                                        }
+                                    });
+                                });
+                            }
+                        });
+                }
+                let viewed_workflow = &mut self.viewed_workflow;
+                render_queue(
+                    ui,
+                    object_info,
+                    "Running",
+                    &self.queue.running,
+                    viewed_workflow,
+                );
+                render_queue(
+                    ui,
+                    object_info,
+                    "Pending",
+                    &self.queue.pending,
+                    viewed_workflow,
+                );
+            });
+        }
+
         egui::CentralPanel::default().show(ctx, |ui| {
             if let Some(graph) = self.graph.as_mut() {
                 graph.show(ui);
@@ -219,13 +307,30 @@ impl eframe::App for Application {
         });
 
         if let Some((category, error)) = self.error.clone() {
-            egui::Window::new("Error").show(ctx, |ui| {
+            let mut open = true;
+            egui::Window::new("Error").open(&mut open).show(ctx, |ui| {
                 ui.label(egui::RichText::new(category).strong());
                 ui.label(error);
                 if ui.button("Close").clicked() {
                     self.error = None;
                 }
             });
+            if !open {
+                self.error = None;
+            }
+        }
+
+        if let Some(workflow) = self.viewed_workflow.as_mut() {
+            let mut open = true;
+            egui::Window::new("Viewed workflow")
+                .open(&mut open)
+                .show(ctx, |ui| {
+                    // TODO: fix ID conflict with main graph
+                    workflow.show(ui);
+                });
+            if !open {
+                self.viewed_workflow = None;
+            }
         }
 
         if self.settings_open {
@@ -375,7 +480,7 @@ impl Application {
             })
             .unwrap();
         });
-        self.last_queue_time = Some(Instant::now());
+        self.last_prompt_queue_time = Some(Instant::now());
     }
 }
 
@@ -404,6 +509,8 @@ pub enum AsyncResponse {
     },
     /// The workflow was loaded from the file dialog.
     LoadedWorkflow(rucomfyui::Workflow),
+    /// A queue was received.
+    Queue(rucomfyui::queue::Queue),
 }
 impl AsyncResponse {
     /// Create an error response.
@@ -436,7 +543,7 @@ impl Application {
                     );
                 }
                 AsyncResponse::QueueWorkflowResult { mapping, output } => {
-                    self.last_queue_time = None;
+                    self.last_prompt_queue_time = None;
                     let Some(graph) = self.graph.as_mut() else {
                         continue;
                     };
@@ -467,6 +574,9 @@ impl Application {
                 }
                 AsyncResponse::LoadedWorkflow(workflow) => {
                     load_workflow = Some(workflow);
+                }
+                AsyncResponse::Queue(queue) => {
+                    self.queue = queue;
                 }
             }
             needs_repaint = true;

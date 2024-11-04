@@ -2,7 +2,7 @@
 //! to represent the graph and its nodes in terms of [`egui_node_graph2`].
 //!
 //! Provided for serialization and deserialization purposes, as well as
-//! keeping to the general ethos of `egui_node_graph2`.
+//! keeping to the general ethos of [`egui_node_graph2`].
 
 use std::{
     borrow::Cow,
