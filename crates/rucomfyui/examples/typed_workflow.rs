@@ -1,3 +1,4 @@
+#![cfg(feature = "typed_nodes")]
 //! A typed equivalent of the `existing_workflow` example.
 
 use anyhow::Context;

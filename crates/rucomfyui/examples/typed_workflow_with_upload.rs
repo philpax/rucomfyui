@@ -1,3 +1,4 @@
+#![cfg(feature = "typed_nodes")]
 //! This is a variant of the `typed_workflow` example that uploads the output as an input
 //! in a cycle for several steps, demonstrating how to use the typed nodes in a more complex
 //! workflow.

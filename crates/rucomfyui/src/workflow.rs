@@ -257,7 +257,7 @@ impl<'de> Deserialize<'de> for WorkflowNodeId {
         D: Deserializer<'de>,
     {
         struct WorkflowNodeIdVisitor;
-        impl<'de> de::Visitor<'de> for WorkflowNodeIdVisitor {
+        impl de::Visitor<'_> for WorkflowNodeIdVisitor {
             type Value = WorkflowNodeId;
 
             fn expecting(&self, formatter: &mut fmt::Formatter) -> fmt::Result {

@@ -503,7 +503,7 @@ pub fn build_node(
 
 /// The iterator for node templates.
 pub struct NodeTemplates<'a>(pub &'a ObjectInfo);
-impl<'a> NodeTemplateIter for NodeTemplates<'a> {
+impl NodeTemplateIter for NodeTemplates<'_> {
     type Item = FlowNodeTemplate;
 
     fn all_kinds(&self) -> Vec<Self::Item> {

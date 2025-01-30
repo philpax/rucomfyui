@@ -1,3 +1,4 @@
+#![cfg(feature = "typed_nodes")]
 //! This is a variant of the `typed_workflow` example that uses dynamic nodes in the workflow
 //! to demonstrate how typed and dynamic nodes can be used together.
 

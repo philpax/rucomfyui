@@ -182,7 +182,7 @@ fn type_module_definitions() -> Result<TokenStream> {
         #(#types)*
 
         impl String for std::string::String {}
-        impl<'a> String for &'a str {}
+        impl String for &str {}
         impl Float for f32 {}
         impl Float for f64 {}
         impl Int for u32 {}
