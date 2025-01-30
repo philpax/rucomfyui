@@ -171,6 +171,34 @@ impl Out for GuiderOut {
     }
 }
 impl Guider for GuiderOut {}
+///A value of ComfyUI type `HOOKS`.
+pub trait Hooks: Clone + Into<WorkflowInput> {}
+///A node output of type [`Hooks`].
+#[derive(Clone, Copy)]
+pub struct HooksOut(pub UntypedOut);
+impl Out for HooksOut {
+    fn from_dynamic(node_id: WorkflowNodeId, node_slot: u32) -> Self {
+        Self(UntypedOut::from_dynamic(node_id, node_slot))
+    }
+    fn into_input(self) -> WorkflowInput {
+        self.0.into_input()
+    }
+}
+impl Hooks for HooksOut {}
+///A value of ComfyUI type `HOOK_KEYFRAMES`.
+pub trait HookKeyframes: Clone + Into<WorkflowInput> {}
+///A node output of type [`HookKeyframes`].
+#[derive(Clone, Copy)]
+pub struct HookKeyframesOut(pub UntypedOut);
+impl Out for HookKeyframesOut {
+    fn from_dynamic(node_id: WorkflowNodeId, node_slot: u32) -> Self {
+        Self(UntypedOut::from_dynamic(node_id, node_slot))
+    }
+    fn into_input(self) -> WorkflowInput {
+        self.0.into_input()
+    }
+}
+impl HookKeyframes for HookKeyframesOut {}
 ///A value of ComfyUI type `IMAGE`.
 pub trait Image: Clone + Into<WorkflowInput> {}
 ///A node output of type [`Image`].
@@ -367,6 +395,20 @@ impl Out for StyleModelOut {
     }
 }
 impl StyleModel for StyleModelOut {}
+///A value of ComfyUI type `TIMESTEPS_RANGE`.
+pub trait TimestepsRange: Clone + Into<WorkflowInput> {}
+///A node output of type [`TimestepsRange`].
+#[derive(Clone, Copy)]
+pub struct TimestepsRangeOut(pub UntypedOut);
+impl Out for TimestepsRangeOut {
+    fn from_dynamic(node_id: WorkflowNodeId, node_slot: u32) -> Self {
+        Self(UntypedOut::from_dynamic(node_id, node_slot))
+    }
+    fn into_input(self) -> WorkflowInput {
+        self.0.into_input()
+    }
+}
+impl TimestepsRange for TimestepsRangeOut {}
 ///A value of ComfyUI type `UPSCALE_MODEL`.
 pub trait UpscaleModel: Clone + Into<WorkflowInput> {}
 ///A node output of type [`UpscaleModel`].

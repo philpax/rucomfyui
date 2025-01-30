@@ -14,6 +14,17 @@ pub mod stable_cascade;
 pub mod style_model;
 pub mod upscale_diffusion;
 pub mod video_models;
+/// Output types for nodes.
+pub mod out {
+    ///Output for [`ConditioningStableAudio`](super::ConditioningStableAudio).
+    #[derive(Clone)]
+    pub struct ConditioningStableAudioOutput {
+        ///No documentation.
+        pub positive: crate::nodes::types::ConditioningOut,
+        ///No documentation.
+        pub negative: crate::nodes::types::ConditioningOut,
+    }
+}
 ///**CLIP Set Last Layer**: No description.
 #[derive(Clone)]
 pub struct ClipSetLastLayer<
@@ -113,25 +124,30 @@ impl<
 pub struct ClipVisionEncode<
     ClipVision: crate::nodes::types::ClipVision,
     Image: crate::nodes::types::Image,
+    Crop: crate::nodes::types::String,
 > {
     ///No documentation.
     pub clip_vision: ClipVision,
     ///No documentation.
     pub image: Image,
+    ///No documentation.
+    pub crop: Crop,
 }
 impl<
     ClipVision: crate::nodes::types::ClipVision,
     Image: crate::nodes::types::Image,
-> ClipVisionEncode<ClipVision, Image> {
+    Crop: crate::nodes::types::String,
+> ClipVisionEncode<ClipVision, Image, Crop> {
     /// Create a new node.
-    pub fn new(clip_vision: ClipVision, image: Image) -> Self {
-        Self { clip_vision, image }
+    pub fn new(clip_vision: ClipVision, image: Image, crop: Crop) -> Self {
+        Self { clip_vision, image, crop }
     }
 }
 impl<
     ClipVision: crate::nodes::types::ClipVision,
     Image: crate::nodes::types::Image,
-> crate::nodes::TypedNode for ClipVisionEncode<ClipVision, Image> {
+    Crop: crate::nodes::types::String,
+> crate::nodes::TypedNode for ClipVisionEncode<ClipVision, Image, Crop> {
     type Output = crate::nodes::types::ClipVisionOutputOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)
@@ -140,6 +156,7 @@ impl<
         let mut output = HashMap::default();
         output.insert("clip_vision".to_string(), self.clip_vision.clone().into());
         output.insert("image".to_string(), self.image.clone().into());
+        output.insert("crop".to_string(), self.crop.clone().into());
         output
     }
     const NAME: &'static str = "CLIPVisionEncode";
@@ -647,6 +664,85 @@ for ConditioningSetMask<Conditioning, Mask, Strength, SetCondArea> {
     }
     const NAME: &'static str = "ConditioningSetMask";
     const DISPLAY_NAME: &'static str = "Conditioning (Set Mask)";
+    const DESCRIPTION: &'static str = "";
+    const CATEGORY: &'static str = "conditioning";
+}
+///**ConditioningStableAudio**: No description.
+#[derive(Clone)]
+pub struct ConditioningStableAudio<
+    Positive: crate::nodes::types::Conditioning,
+    Negative: crate::nodes::types::Conditioning,
+    SecondsStart: crate::nodes::types::Float,
+    SecondsTotal: crate::nodes::types::Float,
+> {
+    ///No documentation.
+    pub positive: Positive,
+    ///No documentation.
+    pub negative: Negative,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 0
+  - Max: 1000
+  - Min: 0
+  - Step: 0.1
+*/
+    pub seconds_start: SecondsStart,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 47
+  - Max: 1000
+  - Min: 0
+  - Step: 0.1
+*/
+    pub seconds_total: SecondsTotal,
+}
+impl<
+    Positive: crate::nodes::types::Conditioning,
+    Negative: crate::nodes::types::Conditioning,
+    SecondsStart: crate::nodes::types::Float,
+    SecondsTotal: crate::nodes::types::Float,
+> ConditioningStableAudio<Positive, Negative, SecondsStart, SecondsTotal> {
+    /// Create a new node.
+    pub fn new(
+        positive: Positive,
+        negative: Negative,
+        seconds_start: SecondsStart,
+        seconds_total: SecondsTotal,
+    ) -> Self {
+        Self {
+            positive,
+            negative,
+            seconds_start,
+            seconds_total,
+        }
+    }
+}
+impl<
+    Positive: crate::nodes::types::Conditioning,
+    Negative: crate::nodes::types::Conditioning,
+    SecondsStart: crate::nodes::types::Float,
+    SecondsTotal: crate::nodes::types::Float,
+> crate::nodes::TypedNode
+for ConditioningStableAudio<Positive, Negative, SecondsStart, SecondsTotal> {
+    type Output = out::ConditioningStableAudioOutput;
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
+        Self::Output {
+            positive: crate::nodes::types::ConditioningOut::from_dynamic(node_id, 0u32),
+            negative: crate::nodes::types::ConditioningOut::from_dynamic(node_id, 1u32),
+        }
+    }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("positive".to_string(), self.positive.clone().into());
+        output.insert("negative".to_string(), self.negative.clone().into());
+        output.insert("seconds_start".to_string(), self.seconds_start.clone().into());
+        output.insert("seconds_total".to_string(), self.seconds_total.clone().into());
+        output
+    }
+    const NAME: &'static str = "ConditioningStableAudio";
+    const DISPLAY_NAME: &'static str = "ConditioningStableAudio";
     const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "conditioning";
 }

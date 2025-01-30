@@ -19,7 +19,7 @@ pub struct AlignYourStepsScheduler<
 **Metadata**:
   - Default: 10
   - Max: 10000
-  - Min: 10
+  - Min: 1
 */
     pub steps: Steps,
     /**No documentation.
@@ -434,6 +434,117 @@ impl<
     }
     const NAME: &'static str = "KarrasScheduler";
     const DISPLAY_NAME: &'static str = "KarrasScheduler";
+    const DESCRIPTION: &'static str = "";
+    const CATEGORY: &'static str = "sampling/custom_sampling/schedulers";
+}
+///**LTXVScheduler**: No description.
+#[derive(Clone)]
+pub struct LtxvScheduler<
+    Steps: crate::nodes::types::Int,
+    MaxShift: crate::nodes::types::Float,
+    BaseShift: crate::nodes::types::Float,
+    Stretch: crate::nodes::types::Boolean,
+    Terminal: crate::nodes::types::Float,
+    Latent: crate::nodes::types::Latent = crate::nodes::types::LatentOut,
+> {
+    /**No documentation.
+
+**Metadata**:
+  - Default: 20
+  - Max: 10000
+  - Min: 1
+*/
+    pub steps: Steps,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 2.05
+  - Max: 100
+  - Min: 0
+  - Step: 0.01
+*/
+    pub max_shift: MaxShift,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 0.95
+  - Max: 100
+  - Min: 0
+  - Step: 0.01
+*/
+    pub base_shift: BaseShift,
+    /**Stretch the sigmas to be in the range [terminal, 1].
+
+**Metadata**:
+  - Default: true
+*/
+    pub stretch: Stretch,
+    /**The terminal value of the sigmas after stretching.
+
+**Metadata**:
+  - Default: 0.1
+  - Max: 0.99
+  - Min: 0
+  - Step: 0.01
+*/
+    pub terminal: Terminal,
+    ///No documentation.
+    pub latent: Option<Latent>,
+}
+impl<
+    Steps: crate::nodes::types::Int,
+    MaxShift: crate::nodes::types::Float,
+    BaseShift: crate::nodes::types::Float,
+    Stretch: crate::nodes::types::Boolean,
+    Terminal: crate::nodes::types::Float,
+    Latent: crate::nodes::types::Latent,
+> LtxvScheduler<Steps, MaxShift, BaseShift, Stretch, Terminal, Latent> {
+    /// Create a new node.
+    pub fn new(
+        steps: Steps,
+        max_shift: MaxShift,
+        base_shift: BaseShift,
+        stretch: Stretch,
+        terminal: Terminal,
+        latent: Option<Latent>,
+    ) -> Self {
+        Self {
+            steps,
+            max_shift,
+            base_shift,
+            stretch,
+            terminal,
+            latent,
+        }
+    }
+}
+impl<
+    Steps: crate::nodes::types::Int,
+    MaxShift: crate::nodes::types::Float,
+    BaseShift: crate::nodes::types::Float,
+    Stretch: crate::nodes::types::Boolean,
+    Terminal: crate::nodes::types::Float,
+    Latent: crate::nodes::types::Latent,
+> crate::nodes::TypedNode
+for LtxvScheduler<Steps, MaxShift, BaseShift, Stretch, Terminal, Latent> {
+    type Output = crate::nodes::types::SigmasOut;
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
+        Self::Output::from_dynamic(node_id, 0)
+    }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("steps".to_string(), self.steps.clone().into());
+        output.insert("max_shift".to_string(), self.max_shift.clone().into());
+        output.insert("base_shift".to_string(), self.base_shift.clone().into());
+        output.insert("stretch".to_string(), self.stretch.clone().into());
+        output.insert("terminal".to_string(), self.terminal.clone().into());
+        if let Some(v) = &self.latent {
+            output.insert("latent".to_string(), v.clone().into());
+        }
+        output
+    }
+    const NAME: &'static str = "LTXVScheduler";
+    const DISPLAY_NAME: &'static str = "LTXVScheduler";
     const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "sampling/custom_sampling/schedulers";
 }

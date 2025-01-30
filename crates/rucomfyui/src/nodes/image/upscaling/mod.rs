@@ -144,7 +144,7 @@ impl<
     const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "image/upscaling";
 }
-///**ImageScaleToTotalPixels**: No description.
+///**Scale Image to Total Pixels**: No description.
 #[derive(Clone)]
 pub struct ImageScaleToTotalPixels<
     Image: crate::nodes::types::Image,
@@ -200,7 +200,7 @@ impl<
         output
     }
     const NAME: &'static str = "ImageScaleToTotalPixels";
-    const DISPLAY_NAME: &'static str = "ImageScaleToTotalPixels";
+    const DISPLAY_NAME: &'static str = "Scale Image to Total Pixels";
     const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "image/upscaling";
 }

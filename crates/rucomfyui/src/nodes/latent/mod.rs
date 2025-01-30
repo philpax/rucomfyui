@@ -12,6 +12,7 @@ pub mod inpaint;
 pub mod sd_3;
 pub mod stable_cascade;
 pub mod transform;
+pub mod video;
 ///**Empty Latent Image**: Create a new batch of empty latent images to be denoised via sampling.
 #[derive(Clone)]
 pub struct EmptyLatentImage<

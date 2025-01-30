@@ -78,6 +78,34 @@ impl<
     const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "advanced/conditioning/flux";
 }
+///**FluxDisableGuidance**: This node completely disables the guidance embed on Flux and Flux like models
+#[derive(Clone)]
+pub struct FluxDisableGuidance<Conditioning: crate::nodes::types::Conditioning> {
+    ///No documentation.
+    pub conditioning: Conditioning,
+}
+impl<Conditioning: crate::nodes::types::Conditioning> FluxDisableGuidance<Conditioning> {
+    /// Create a new node.
+    pub fn new(conditioning: Conditioning) -> Self {
+        Self { conditioning }
+    }
+}
+impl<Conditioning: crate::nodes::types::Conditioning> crate::nodes::TypedNode
+for FluxDisableGuidance<Conditioning> {
+    type Output = crate::nodes::types::ConditioningOut;
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
+        Self::Output::from_dynamic(node_id, 0)
+    }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("conditioning".to_string(), self.conditioning.clone().into());
+        output
+    }
+    const NAME: &'static str = "FluxDisableGuidance";
+    const DISPLAY_NAME: &'static str = "FluxDisableGuidance";
+    const DESCRIPTION: &'static str = "This node completely disables the guidance embed on Flux and Flux like models";
+    const CATEGORY: &'static str = "advanced/conditioning/flux";
+}
 ///**FluxGuidance**: No description.
 #[derive(Clone)]
 pub struct FluxGuidance<

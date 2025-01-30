@@ -5,7 +5,7 @@ use crate::{
     workflow::{WorkflowNodeId, WorkflowInput},
     nodes::types::Out,
 };
-///**ImageCrop**: No description.
+///**Image Crop**: No description.
 #[derive(Clone)]
 pub struct ImageCrop<
     Image: crate::nodes::types::Image,
@@ -86,7 +86,7 @@ impl<
         output
     }
     const NAME: &'static str = "ImageCrop";
-    const DISPLAY_NAME: &'static str = "ImageCrop";
+    const DISPLAY_NAME: &'static str = "Image Crop";
     const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "image/transform";
 }

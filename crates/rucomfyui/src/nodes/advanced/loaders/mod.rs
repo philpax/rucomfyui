@@ -19,30 +19,35 @@ pub mod out {
         pub vae: crate::nodes::types::VaeOut,
     }
 }
-///**Load CLIP**: No description.
+#[doc = "**Load CLIP**: [Recipes]\n\nstable_diffusion: clip-l\nstable_cascade: clip-g\nsd3: t5 / clip-g / clip-l\nstable_audio: t5\nmochi: t5\ncosmos: old t5 xxl"]
 #[derive(Clone)]
 pub struct ClipLoader<
     ClipName: crate::nodes::types::String,
     Type: crate::nodes::types::String,
+    Device: crate::nodes::types::String = crate::nodes::types::StringOut,
 > {
     ///No documentation.
     pub clip_name: ClipName,
     ///No documentation.
     pub type_: Type,
+    ///No documentation.
+    pub device: Option<Device>,
 }
 impl<
     ClipName: crate::nodes::types::String,
     Type: crate::nodes::types::String,
-> ClipLoader<ClipName, Type> {
+    Device: crate::nodes::types::String,
+> ClipLoader<ClipName, Type, Device> {
     /// Create a new node.
-    pub fn new(clip_name: ClipName, type_: Type) -> Self {
-        Self { clip_name, type_ }
+    pub fn new(clip_name: ClipName, type_: Type, device: Option<Device>) -> Self {
+        Self { clip_name, type_, device }
     }
 }
 impl<
     ClipName: crate::nodes::types::String,
     Type: crate::nodes::types::String,
-> crate::nodes::TypedNode for ClipLoader<ClipName, Type> {
+    Device: crate::nodes::types::String,
+> crate::nodes::TypedNode for ClipLoader<ClipName, Type, Device> {
     type Output = crate::nodes::types::ClipOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)
@@ -51,11 +56,14 @@ impl<
         let mut output = HashMap::default();
         output.insert("clip_name".to_string(), self.clip_name.clone().into());
         output.insert("type".to_string(), self.type_.clone().into());
+        if let Some(v) = &self.device {
+            output.insert("device".to_string(), v.clone().into());
+        }
         output
     }
     const NAME: &'static str = "CLIPLoader";
     const DISPLAY_NAME: &'static str = "Load CLIP";
-    const DESCRIPTION: &'static str = "";
+    const DESCRIPTION: &'static str = "[Recipes]\n\nstable_diffusion: clip-l\nstable_cascade: clip-g\nsd3: t5 / clip-g / clip-l\nstable_audio: t5\nmochi: t5\ncosmos: old t5 xxl";
     const CATEGORY: &'static str = "advanced/loaders";
 }
 ///**Load Checkpoint With Config (DEPRECATED)**: No description.
@@ -101,12 +109,13 @@ impl<
     const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "advanced/loaders";
 }
-///**DualCLIPLoader**: No description.
+#[doc = "**DualCLIPLoader**: [Recipes]\n\nsdxl: clip-l, clip-g\nsd3: clip-l, clip-g / clip-l, t5 / clip-g, t5\nflux: clip-l, t5"]
 #[derive(Clone)]
 pub struct DualClipLoader<
     ClipName1: crate::nodes::types::String,
     ClipName2: crate::nodes::types::String,
     Type: crate::nodes::types::String,
+    Device: crate::nodes::types::String = crate::nodes::types::StringOut,
 > {
     ///No documentation.
     pub clip_name_1: ClipName1,
@@ -114,18 +123,27 @@ pub struct DualClipLoader<
     pub clip_name_2: ClipName2,
     ///No documentation.
     pub type_: Type,
+    ///No documentation.
+    pub device: Option<Device>,
 }
 impl<
     ClipName1: crate::nodes::types::String,
     ClipName2: crate::nodes::types::String,
     Type: crate::nodes::types::String,
-> DualClipLoader<ClipName1, ClipName2, Type> {
+    Device: crate::nodes::types::String,
+> DualClipLoader<ClipName1, ClipName2, Type, Device> {
     /// Create a new node.
-    pub fn new(clip_name_1: ClipName1, clip_name_2: ClipName2, type_: Type) -> Self {
+    pub fn new(
+        clip_name_1: ClipName1,
+        clip_name_2: ClipName2,
+        type_: Type,
+        device: Option<Device>,
+    ) -> Self {
         Self {
             clip_name_1,
             clip_name_2,
             type_,
+            device,
         }
     }
 }
@@ -133,7 +151,8 @@ impl<
     ClipName1: crate::nodes::types::String,
     ClipName2: crate::nodes::types::String,
     Type: crate::nodes::types::String,
-> crate::nodes::TypedNode for DualClipLoader<ClipName1, ClipName2, Type> {
+    Device: crate::nodes::types::String,
+> crate::nodes::TypedNode for DualClipLoader<ClipName1, ClipName2, Type, Device> {
     type Output = crate::nodes::types::ClipOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)
@@ -143,14 +162,17 @@ impl<
         output.insert("clip_name1".to_string(), self.clip_name_1.clone().into());
         output.insert("clip_name2".to_string(), self.clip_name_2.clone().into());
         output.insert("type".to_string(), self.type_.clone().into());
+        if let Some(v) = &self.device {
+            output.insert("device".to_string(), v.clone().into());
+        }
         output
     }
     const NAME: &'static str = "DualCLIPLoader";
     const DISPLAY_NAME: &'static str = "DualCLIPLoader";
-    const DESCRIPTION: &'static str = "";
+    const DESCRIPTION: &'static str = "[Recipes]\n\nsdxl: clip-l, clip-g\nsd3: clip-l, clip-g / clip-l, t5 / clip-g, t5\nflux: clip-l, t5";
     const CATEGORY: &'static str = "advanced/loaders";
 }
-///**TripleCLIPLoader**: No description.
+#[doc = "**TripleCLIPLoader**: [Recipes]\n\nsd3: clip-l, clip-g, t5"]
 #[derive(Clone)]
 pub struct TripleClipLoader<
     ClipName1: crate::nodes::types::String,
@@ -200,7 +222,7 @@ impl<
     }
     const NAME: &'static str = "TripleCLIPLoader";
     const DISPLAY_NAME: &'static str = "TripleCLIPLoader";
-    const DESCRIPTION: &'static str = "";
+    const DESCRIPTION: &'static str = "[Recipes]\n\nsd3: clip-l, clip-g, t5";
     const CATEGORY: &'static str = "advanced/loaders";
 }
 ///**Load Diffusion Model**: No description.

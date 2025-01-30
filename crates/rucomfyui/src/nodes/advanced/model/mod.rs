@@ -354,6 +354,83 @@ for ModelSamplingFlux<Model, MaxShift, BaseShift, Width, Height> {
     const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "advanced/model";
 }
+///**ModelSamplingLTXV**: No description.
+#[derive(Clone)]
+pub struct ModelSamplingLtxv<
+    Model: crate::nodes::types::Model,
+    MaxShift: crate::nodes::types::Float,
+    BaseShift: crate::nodes::types::Float,
+    Latent: crate::nodes::types::Latent = crate::nodes::types::LatentOut,
+> {
+    ///No documentation.
+    pub model: Model,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 2.05
+  - Max: 100
+  - Min: 0
+  - Step: 0.01
+*/
+    pub max_shift: MaxShift,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 0.95
+  - Max: 100
+  - Min: 0
+  - Step: 0.01
+*/
+    pub base_shift: BaseShift,
+    ///No documentation.
+    pub latent: Option<Latent>,
+}
+impl<
+    Model: crate::nodes::types::Model,
+    MaxShift: crate::nodes::types::Float,
+    BaseShift: crate::nodes::types::Float,
+    Latent: crate::nodes::types::Latent,
+> ModelSamplingLtxv<Model, MaxShift, BaseShift, Latent> {
+    /// Create a new node.
+    pub fn new(
+        model: Model,
+        max_shift: MaxShift,
+        base_shift: BaseShift,
+        latent: Option<Latent>,
+    ) -> Self {
+        Self {
+            model,
+            max_shift,
+            base_shift,
+            latent,
+        }
+    }
+}
+impl<
+    Model: crate::nodes::types::Model,
+    MaxShift: crate::nodes::types::Float,
+    BaseShift: crate::nodes::types::Float,
+    Latent: crate::nodes::types::Latent,
+> crate::nodes::TypedNode for ModelSamplingLtxv<Model, MaxShift, BaseShift, Latent> {
+    type Output = crate::nodes::types::ModelOut;
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
+        Self::Output::from_dynamic(node_id, 0)
+    }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("model".to_string(), self.model.clone().into());
+        output.insert("max_shift".to_string(), self.max_shift.clone().into());
+        output.insert("base_shift".to_string(), self.base_shift.clone().into());
+        if let Some(v) = &self.latent {
+            output.insert("latent".to_string(), v.clone().into());
+        }
+        output
+    }
+    const NAME: &'static str = "ModelSamplingLTXV";
+    const DISPLAY_NAME: &'static str = "ModelSamplingLTXV";
+    const DESCRIPTION: &'static str = "";
+    const CATEGORY: &'static str = "advanced/model";
+}
 ///**ModelSamplingSD3**: No description.
 #[derive(Clone)]
 pub struct ModelSamplingSd3<

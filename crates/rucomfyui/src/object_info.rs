@@ -474,6 +474,8 @@ define_object_type! {
     Float,
     Gligen,
     Guider,
+    Hooks,
+    HookKeyframes,
     Image,
     InpaintModel,
     InpaintPatch,
@@ -488,6 +490,7 @@ define_object_type! {
     String,
     Sigmas,
     StyleModel,
+    TimestepsRange,
     UpscaleModel,
     Vae,
     Webcam

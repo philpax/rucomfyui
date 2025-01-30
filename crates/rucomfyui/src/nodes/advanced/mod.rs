@@ -6,6 +6,8 @@ use crate::{
     nodes::types::Out,
 };
 pub mod conditioning;
+pub mod guidance;
+pub mod hooks;
 pub mod loaders;
 pub mod model;
 pub mod model_merging;

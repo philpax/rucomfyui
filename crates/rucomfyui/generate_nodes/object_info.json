@@ -26,7 +26,7 @@
             "tooltip": null,
             "default": 10,
             "max": 10000,
-            "min": 10
+            "min": 1
           }
         ]
       },
@@ -266,7 +266,7 @@
   {
     "name": "CLIPLoader",
     "display_name": "Load CLIP",
-    "description": "",
+    "description": "[Recipes]\n\nstable_diffusion: clip-l\nstable_cascade: clip-g\nsd3: t5 / clip-g / clip-l\nstable_audio: t5\nmochi: t5\ncosmos: old t5 xxl",
     "python_module": "nodes",
     "category": "advanced/loaders",
     "input": {
@@ -278,14 +278,23 @@
           []
         ]
       },
-      "optional": null
+      "optional": {
+        "device": [
+          [],
+          {
+            "tooltip": null
+          }
+        ]
+      }
     },
     "input_order": {
       "required": [
         "clip_name",
         "type"
       ],
-      "optional": null
+      "optional": [
+        "device"
+      ]
     },
     "output": [
       "CLIP"
@@ -664,6 +673,67 @@
     "output_tooltips": []
   },
   {
+    "name": "CLIPTextEncodePixArtAlpha",
+    "display_name": "CLIPTextEncodePixArtAlpha",
+    "description": "Encodes text and sets the resolution conditioning for PixArt Alpha. Does not apply to PixArt Sigma.",
+    "python_module": "comfy_extras.nodes_pixart",
+    "category": "advanced/conditioning",
+    "input": {
+      "required": {
+        "clip": [
+          "CLIP"
+        ],
+        "height": [
+          "INT",
+          {
+            "tooltip": null,
+            "default": 1024.0,
+            "max": 16384,
+            "min": 0
+          }
+        ],
+        "text": [
+          "STRING",
+          {
+            "tooltip": null,
+            "dynamicPrompts": true,
+            "multiline": true
+          }
+        ],
+        "width": [
+          "INT",
+          {
+            "tooltip": null,
+            "default": 1024.0,
+            "max": 16384,
+            "min": 0
+          }
+        ]
+      },
+      "optional": null
+    },
+    "input_order": {
+      "required": [
+        "width",
+        "height",
+        "text",
+        "clip"
+      ],
+      "optional": null
+    },
+    "output": [
+      "CONDITIONING"
+    ],
+    "output_is_list": [
+      false
+    ],
+    "output_name": [
+      "CONDITIONING"
+    ],
+    "output_node": false,
+    "output_tooltips": []
+  },
+  {
     "name": "CLIPTextEncodeSD3",
     "display_name": "CLIPTextEncodeSD3",
     "description": "",
@@ -812,6 +882,7 @@
     },
     "input_order": {
       "required": [
+        "clip",
         "width",
         "height",
         "crop_w",
@@ -819,7 +890,6 @@
         "target_width",
         "target_height",
         "text_g",
-        "clip",
         "text_l"
       ],
       "optional": null
@@ -919,6 +989,9 @@
         "clip_vision": [
           "CLIP_VISION"
         ],
+        "crop": [
+          []
+        ],
         "image": [
           "IMAGE"
         ]
@@ -928,7 +1001,8 @@
     "input_order": {
       "required": [
         "clip_vision",
-        "image"
+        "image",
+        "crop"
       ],
       "optional": null
     },
@@ -1157,6 +1231,146 @@
     "output_is_list": [],
     "output_name": [],
     "output_node": true,
+    "output_tooltips": []
+  },
+  {
+    "name": "CombineHooks2",
+    "display_name": "Combine Hooks [2]",
+    "description": "",
+    "python_module": "comfy_extras.nodes_hooks",
+    "category": "advanced/hooks/combine",
+    "input": {
+      "required": {},
+      "optional": {
+        "hooks_A": [
+          "HOOKS"
+        ],
+        "hooks_B": [
+          "HOOKS"
+        ]
+      }
+    },
+    "input_order": {
+      "required": [],
+      "optional": [
+        "hooks_A",
+        "hooks_B"
+      ]
+    },
+    "output": [
+      "HOOKS"
+    ],
+    "output_is_list": [
+      false
+    ],
+    "output_name": [
+      "HOOKS"
+    ],
+    "output_node": false,
+    "output_tooltips": []
+  },
+  {
+    "name": "CombineHooks4",
+    "display_name": "Combine Hooks [4]",
+    "description": "",
+    "python_module": "comfy_extras.nodes_hooks",
+    "category": "advanced/hooks/combine",
+    "input": {
+      "required": {},
+      "optional": {
+        "hooks_A": [
+          "HOOKS"
+        ],
+        "hooks_B": [
+          "HOOKS"
+        ],
+        "hooks_C": [
+          "HOOKS"
+        ],
+        "hooks_D": [
+          "HOOKS"
+        ]
+      }
+    },
+    "input_order": {
+      "required": [],
+      "optional": [
+        "hooks_A",
+        "hooks_B",
+        "hooks_C",
+        "hooks_D"
+      ]
+    },
+    "output": [
+      "HOOKS"
+    ],
+    "output_is_list": [
+      false
+    ],
+    "output_name": [
+      "HOOKS"
+    ],
+    "output_node": false,
+    "output_tooltips": []
+  },
+  {
+    "name": "CombineHooks8",
+    "display_name": "Combine Hooks [8]",
+    "description": "",
+    "python_module": "comfy_extras.nodes_hooks",
+    "category": "advanced/hooks/combine",
+    "input": {
+      "required": {},
+      "optional": {
+        "hooks_A": [
+          "HOOKS"
+        ],
+        "hooks_B": [
+          "HOOKS"
+        ],
+        "hooks_C": [
+          "HOOKS"
+        ],
+        "hooks_D": [
+          "HOOKS"
+        ],
+        "hooks_E": [
+          "HOOKS"
+        ],
+        "hooks_F": [
+          "HOOKS"
+        ],
+        "hooks_G": [
+          "HOOKS"
+        ],
+        "hooks_H": [
+          "HOOKS"
+        ]
+      }
+    },
+    "input_order": {
+      "required": [],
+      "optional": [
+        "hooks_A",
+        "hooks_B",
+        "hooks_C",
+        "hooks_D",
+        "hooks_E",
+        "hooks_F",
+        "hooks_G",
+        "hooks_H"
+      ]
+    },
+    "output": [
+      "HOOKS"
+    ],
+    "output_is_list": [
+      false
+    ],
+    "output_name": [
+      "HOOKS"
+    ],
+    "output_node": false,
     "output_tooltips": []
   },
   {
@@ -1496,6 +1710,48 @@
     "output_tooltips": []
   },
   {
+    "name": "ConditioningSetDefaultCombine",
+    "display_name": "Cond Set Default Combine",
+    "description": "",
+    "python_module": "comfy_extras.nodes_hooks",
+    "category": "advanced/hooks/cond single",
+    "input": {
+      "required": {
+        "cond": [
+          "CONDITIONING"
+        ],
+        "cond_DEFAULT": [
+          "CONDITIONING"
+        ]
+      },
+      "optional": {
+        "hooks": [
+          "HOOKS"
+        ]
+      }
+    },
+    "input_order": {
+      "required": [
+        "cond",
+        "cond_DEFAULT"
+      ],
+      "optional": [
+        "hooks"
+      ]
+    },
+    "output": [
+      "CONDITIONING"
+    ],
+    "output_is_list": [
+      false
+    ],
+    "output_name": [
+      "CONDITIONING"
+    ],
+    "output_node": false,
+    "output_tooltips": []
+  },
+  {
     "name": "ConditioningSetMask",
     "display_name": "Conditioning (Set Mask)",
     "description": "",
@@ -1533,6 +1789,132 @@
         "set_cond_area"
       ],
       "optional": null
+    },
+    "output": [
+      "CONDITIONING"
+    ],
+    "output_is_list": [
+      false
+    ],
+    "output_name": [
+      "CONDITIONING"
+    ],
+    "output_node": false,
+    "output_tooltips": []
+  },
+  {
+    "name": "ConditioningSetProperties",
+    "display_name": "Cond Set Props",
+    "description": "",
+    "python_module": "comfy_extras.nodes_hooks",
+    "category": "advanced/hooks/cond single",
+    "input": {
+      "required": {
+        "cond_NEW": [
+          "CONDITIONING"
+        ],
+        "set_cond_area": [
+          []
+        ],
+        "strength": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 10.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ]
+      },
+      "optional": {
+        "hooks": [
+          "HOOKS"
+        ],
+        "mask": [
+          "MASK"
+        ],
+        "timesteps": [
+          "TIMESTEPS_RANGE"
+        ]
+      }
+    },
+    "input_order": {
+      "required": [
+        "cond_NEW",
+        "strength",
+        "set_cond_area"
+      ],
+      "optional": [
+        "mask",
+        "hooks",
+        "timesteps"
+      ]
+    },
+    "output": [
+      "CONDITIONING"
+    ],
+    "output_is_list": [
+      false
+    ],
+    "output_name": [
+      "CONDITIONING"
+    ],
+    "output_node": false,
+    "output_tooltips": []
+  },
+  {
+    "name": "ConditioningSetPropertiesAndCombine",
+    "display_name": "Cond Set Props Combine",
+    "description": "",
+    "python_module": "comfy_extras.nodes_hooks",
+    "category": "advanced/hooks/cond single",
+    "input": {
+      "required": {
+        "cond": [
+          "CONDITIONING"
+        ],
+        "cond_NEW": [
+          "CONDITIONING"
+        ],
+        "set_cond_area": [
+          []
+        ],
+        "strength": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 10.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ]
+      },
+      "optional": {
+        "hooks": [
+          "HOOKS"
+        ],
+        "mask": [
+          "MASK"
+        ],
+        "timesteps": [
+          "TIMESTEPS_RANGE"
+        ]
+      }
+    },
+    "input_order": {
+      "required": [
+        "cond",
+        "cond_NEW",
+        "strength",
+        "set_cond_area"
+      ],
+      "optional": [
+        "mask",
+        "hooks",
+        "timesteps"
+      ]
     },
     "output": [
       "CONDITIONING"
@@ -1596,6 +1978,123 @@
     ],
     "output_name": [
       "CONDITIONING"
+    ],
+    "output_node": false,
+    "output_tooltips": []
+  },
+  {
+    "name": "ConditioningStableAudio",
+    "display_name": "ConditioningStableAudio",
+    "description": "",
+    "python_module": "comfy_extras.nodes_audio",
+    "category": "conditioning",
+    "input": {
+      "required": {
+        "negative": [
+          "CONDITIONING"
+        ],
+        "positive": [
+          "CONDITIONING"
+        ],
+        "seconds_start": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 0.0,
+            "max": 1000.0,
+            "min": 0.0,
+            "step": 0.1
+          }
+        ],
+        "seconds_total": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 47.0,
+            "max": 1000.0,
+            "min": 0.0,
+            "step": 0.1
+          }
+        ]
+      },
+      "optional": null
+    },
+    "input_order": {
+      "required": [
+        "positive",
+        "negative",
+        "seconds_start",
+        "seconds_total"
+      ],
+      "optional": null
+    },
+    "output": [
+      "CONDITIONING",
+      "CONDITIONING"
+    ],
+    "output_is_list": [
+      false,
+      false
+    ],
+    "output_name": [
+      "positive",
+      "negative"
+    ],
+    "output_node": false,
+    "output_tooltips": []
+  },
+  {
+    "name": "ConditioningTimestepsRange",
+    "display_name": "Timesteps Range",
+    "description": "",
+    "python_module": "comfy_extras.nodes_hooks",
+    "category": "advanced/hooks",
+    "input": {
+      "required": {
+        "end_percent": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.001
+          }
+        ],
+        "start_percent": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 0.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.001
+          }
+        ]
+      },
+      "optional": null
+    },
+    "input_order": {
+      "required": [
+        "start_percent",
+        "end_percent"
+      ],
+      "optional": null
+    },
+    "output": [
+      "TIMESTEPS_RANGE",
+      "TIMESTEPS_RANGE",
+      "TIMESTEPS_RANGE"
+    ],
+    "output_is_list": [
+      false,
+      false,
+      false
+    ],
+    "output_name": [
+      "TIMESTEPS_RANGE",
+      "BEFORE_RANGE",
+      "AFTER_RANGE"
     ],
     "output_node": false,
     "output_tooltips": []
@@ -1974,6 +2473,537 @@
     "output_tooltips": []
   },
   {
+    "name": "CosmosImageToVideoLatent",
+    "display_name": "CosmosImageToVideoLatent",
+    "description": "",
+    "python_module": "comfy_extras.nodes_cosmos",
+    "category": "conditioning/inpaint",
+    "input": {
+      "required": {
+        "batch_size": [
+          "INT",
+          {
+            "tooltip": null,
+            "default": 1,
+            "max": 4096,
+            "min": 1
+          }
+        ],
+        "height": [
+          "INT",
+          {
+            "tooltip": null,
+            "default": 704,
+            "max": 16384,
+            "min": 16,
+            "step": 16
+          }
+        ],
+        "length": [
+          "INT",
+          {
+            "tooltip": null,
+            "default": 121,
+            "max": 16384,
+            "min": 1,
+            "step": 8
+          }
+        ],
+        "vae": [
+          "VAE"
+        ],
+        "width": [
+          "INT",
+          {
+            "tooltip": null,
+            "default": 1280,
+            "max": 16384,
+            "min": 16,
+            "step": 16
+          }
+        ]
+      },
+      "optional": {
+        "end_image": [
+          "IMAGE"
+        ],
+        "start_image": [
+          "IMAGE"
+        ]
+      }
+    },
+    "input_order": {
+      "required": [
+        "vae",
+        "width",
+        "height",
+        "length",
+        "batch_size"
+      ],
+      "optional": [
+        "start_image",
+        "end_image"
+      ]
+    },
+    "output": [
+      "LATENT"
+    ],
+    "output_is_list": [
+      false
+    ],
+    "output_name": [
+      "LATENT"
+    ],
+    "output_node": false,
+    "output_tooltips": []
+  },
+  {
+    "name": "CreateHookKeyframe",
+    "display_name": "Create Hook Keyframe",
+    "description": "",
+    "python_module": "comfy_extras.nodes_hooks",
+    "category": "advanced/hooks/scheduling",
+    "input": {
+      "required": {
+        "start_percent": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 0.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.001
+          }
+        ],
+        "strength_mult": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 20.0,
+            "min": -20.0,
+            "step": 0.01
+          }
+        ]
+      },
+      "optional": {
+        "prev_hook_kf": [
+          "HOOK_KEYFRAMES"
+        ]
+      }
+    },
+    "input_order": {
+      "required": [
+        "strength_mult",
+        "start_percent"
+      ],
+      "optional": [
+        "prev_hook_kf"
+      ]
+    },
+    "output": [
+      "HOOK_KEYFRAMES"
+    ],
+    "output_is_list": [
+      false
+    ],
+    "output_name": [
+      "HOOK_KF"
+    ],
+    "output_node": false,
+    "output_tooltips": []
+  },
+  {
+    "name": "CreateHookKeyframesFromFloats",
+    "display_name": "Create Hook Keyframes From Floats",
+    "description": "",
+    "python_module": "comfy_extras.nodes_hooks",
+    "category": "advanced/hooks/scheduling",
+    "input": {
+      "required": {
+        "end_percent": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.001
+          }
+        ],
+        "floats_strength": [
+          "FLOATS",
+          {
+            "tooltip": null
+          }
+        ],
+        "print_keyframes": [
+          "BOOLEAN",
+          {
+            "tooltip": null,
+            "default": false
+          }
+        ],
+        "start_percent": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 0.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.001
+          }
+        ]
+      },
+      "optional": {
+        "prev_hook_kf": [
+          "HOOK_KEYFRAMES"
+        ]
+      }
+    },
+    "input_order": {
+      "required": [
+        "floats_strength",
+        "start_percent",
+        "end_percent",
+        "print_keyframes"
+      ],
+      "optional": [
+        "prev_hook_kf"
+      ]
+    },
+    "output": [
+      "HOOK_KEYFRAMES"
+    ],
+    "output_is_list": [
+      false
+    ],
+    "output_name": [
+      "HOOK_KF"
+    ],
+    "output_node": false,
+    "output_tooltips": []
+  },
+  {
+    "name": "CreateHookKeyframesInterpolated",
+    "display_name": "Create Hook Keyframes Interp.",
+    "description": "",
+    "python_module": "comfy_extras.nodes_hooks",
+    "category": "advanced/hooks/scheduling",
+    "input": {
+      "required": {
+        "end_percent": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.001
+          }
+        ],
+        "interpolation": [
+          []
+        ],
+        "keyframes_count": [
+          "INT",
+          {
+            "tooltip": null,
+            "default": 5,
+            "max": 100,
+            "min": 2,
+            "step": 1
+          }
+        ],
+        "print_keyframes": [
+          "BOOLEAN",
+          {
+            "tooltip": null,
+            "default": false
+          }
+        ],
+        "start_percent": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 0.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.001
+          }
+        ],
+        "strength_end": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 10.0,
+            "min": 0.0,
+            "step": 0.001
+          }
+        ],
+        "strength_start": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 10.0,
+            "min": 0.0,
+            "step": 0.001
+          }
+        ]
+      },
+      "optional": {
+        "prev_hook_kf": [
+          "HOOK_KEYFRAMES"
+        ]
+      }
+    },
+    "input_order": {
+      "required": [
+        "strength_start",
+        "strength_end",
+        "interpolation",
+        "start_percent",
+        "end_percent",
+        "keyframes_count",
+        "print_keyframes"
+      ],
+      "optional": [
+        "prev_hook_kf"
+      ]
+    },
+    "output": [
+      "HOOK_KEYFRAMES"
+    ],
+    "output_is_list": [
+      false
+    ],
+    "output_name": [
+      "HOOK_KF"
+    ],
+    "output_node": false,
+    "output_tooltips": []
+  },
+  {
+    "name": "CreateHookLora",
+    "display_name": "Create Hook LoRA",
+    "description": "",
+    "python_module": "comfy_extras.nodes_hooks",
+    "category": "advanced/hooks/create",
+    "input": {
+      "required": {
+        "lora_name": [
+          []
+        ],
+        "strength_clip": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 20.0,
+            "min": -20.0,
+            "step": 0.01
+          }
+        ],
+        "strength_model": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 20.0,
+            "min": -20.0,
+            "step": 0.01
+          }
+        ]
+      },
+      "optional": {
+        "prev_hooks": [
+          "HOOKS"
+        ]
+      }
+    },
+    "input_order": {
+      "required": [
+        "lora_name",
+        "strength_model",
+        "strength_clip"
+      ],
+      "optional": [
+        "prev_hooks"
+      ]
+    },
+    "output": [
+      "HOOKS"
+    ],
+    "output_is_list": [
+      false
+    ],
+    "output_name": [
+      "HOOKS"
+    ],
+    "output_node": false,
+    "output_tooltips": []
+  },
+  {
+    "name": "CreateHookLoraModelOnly",
+    "display_name": "Create Hook LoRA (MO)",
+    "description": "",
+    "python_module": "comfy_extras.nodes_hooks",
+    "category": "advanced/hooks/create",
+    "input": {
+      "required": {
+        "lora_name": [
+          []
+        ],
+        "strength_model": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 20.0,
+            "min": -20.0,
+            "step": 0.01
+          }
+        ]
+      },
+      "optional": {
+        "prev_hooks": [
+          "HOOKS"
+        ]
+      }
+    },
+    "input_order": {
+      "required": [
+        "lora_name",
+        "strength_model"
+      ],
+      "optional": [
+        "prev_hooks"
+      ]
+    },
+    "output": [
+      "HOOKS"
+    ],
+    "output_is_list": [
+      false
+    ],
+    "output_name": [
+      "HOOKS"
+    ],
+    "output_node": false,
+    "output_tooltips": []
+  },
+  {
+    "name": "CreateHookModelAsLora",
+    "display_name": "Create Hook Model as LoRA",
+    "description": "",
+    "python_module": "comfy_extras.nodes_hooks",
+    "category": "advanced/hooks/create",
+    "input": {
+      "required": {
+        "ckpt_name": [
+          []
+        ],
+        "strength_clip": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 20.0,
+            "min": -20.0,
+            "step": 0.01
+          }
+        ],
+        "strength_model": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 20.0,
+            "min": -20.0,
+            "step": 0.01
+          }
+        ]
+      },
+      "optional": {
+        "prev_hooks": [
+          "HOOKS"
+        ]
+      }
+    },
+    "input_order": {
+      "required": [
+        "ckpt_name",
+        "strength_model",
+        "strength_clip"
+      ],
+      "optional": [
+        "prev_hooks"
+      ]
+    },
+    "output": [
+      "HOOKS"
+    ],
+    "output_is_list": [
+      false
+    ],
+    "output_name": [
+      "HOOKS"
+    ],
+    "output_node": false,
+    "output_tooltips": []
+  },
+  {
+    "name": "CreateHookModelAsLoraModelOnly",
+    "display_name": "Create Hook Model as LoRA (MO)",
+    "description": "",
+    "python_module": "comfy_extras.nodes_hooks",
+    "category": "advanced/hooks/create",
+    "input": {
+      "required": {
+        "ckpt_name": [
+          []
+        ],
+        "strength_model": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 20.0,
+            "min": -20.0,
+            "step": 0.01
+          }
+        ]
+      },
+      "optional": {
+        "prev_hooks": [
+          "HOOKS"
+        ]
+      }
+    },
+    "input_order": {
+      "required": [
+        "ckpt_name",
+        "strength_model"
+      ],
+      "optional": [
+        "prev_hooks"
+      ]
+    },
+    "output": [
+      "HOOKS"
+    ],
+    "output_is_list": [
+      false
+    ],
+    "output_name": [
+      "HOOKS"
+    ],
+    "output_node": false,
+    "output_tooltips": []
+  },
+  {
     "name": "CropMask",
     "display_name": "CropMask",
     "description": "",
@@ -2220,7 +3250,7 @@
   {
     "name": "DualCLIPLoader",
     "display_name": "DualCLIPLoader",
-    "description": "",
+    "description": "[Recipes]\n\nsdxl: clip-l, clip-g\nsd3: clip-l, clip-g / clip-l, t5 / clip-g, t5\nflux: clip-l, t5",
     "python_module": "nodes",
     "category": "advanced/loaders",
     "input": {
@@ -2235,7 +3265,14 @@
           []
         ]
       },
-      "optional": null
+      "optional": {
+        "device": [
+          [],
+          {
+            "tooltip": null
+          }
+        ]
+      }
     },
     "input_order": {
       "required": [
@@ -2243,7 +3280,9 @@
         "clip_name2",
         "type"
       ],
-      "optional": null
+      "optional": [
+        "device"
+      ]
     },
     "output": [
       "CLIP"
@@ -2253,6 +3292,148 @@
     ],
     "output_name": [
       "CLIP"
+    ],
+    "output_node": false,
+    "output_tooltips": []
+  },
+  {
+    "name": "EmptyCosmosLatentVideo",
+    "display_name": "EmptyCosmosLatentVideo",
+    "description": "",
+    "python_module": "comfy_extras.nodes_cosmos",
+    "category": "latent/video",
+    "input": {
+      "required": {
+        "batch_size": [
+          "INT",
+          {
+            "tooltip": null,
+            "default": 1,
+            "max": 4096,
+            "min": 1
+          }
+        ],
+        "height": [
+          "INT",
+          {
+            "tooltip": null,
+            "default": 704,
+            "max": 16384,
+            "min": 16,
+            "step": 16
+          }
+        ],
+        "length": [
+          "INT",
+          {
+            "tooltip": null,
+            "default": 121,
+            "max": 16384,
+            "min": 1,
+            "step": 8
+          }
+        ],
+        "width": [
+          "INT",
+          {
+            "tooltip": null,
+            "default": 1280,
+            "max": 16384,
+            "min": 16,
+            "step": 16
+          }
+        ]
+      },
+      "optional": null
+    },
+    "input_order": {
+      "required": [
+        "width",
+        "height",
+        "length",
+        "batch_size"
+      ],
+      "optional": null
+    },
+    "output": [
+      "LATENT"
+    ],
+    "output_is_list": [
+      false
+    ],
+    "output_name": [
+      "LATENT"
+    ],
+    "output_node": false,
+    "output_tooltips": []
+  },
+  {
+    "name": "EmptyHunyuanLatentVideo",
+    "display_name": "EmptyHunyuanLatentVideo",
+    "description": "",
+    "python_module": "comfy_extras.nodes_hunyuan",
+    "category": "latent/video",
+    "input": {
+      "required": {
+        "batch_size": [
+          "INT",
+          {
+            "tooltip": null,
+            "default": 1,
+            "max": 4096,
+            "min": 1
+          }
+        ],
+        "height": [
+          "INT",
+          {
+            "tooltip": null,
+            "default": 480,
+            "max": 16384,
+            "min": 16,
+            "step": 16
+          }
+        ],
+        "length": [
+          "INT",
+          {
+            "tooltip": null,
+            "default": 25,
+            "max": 16384,
+            "min": 1,
+            "step": 4
+          }
+        ],
+        "width": [
+          "INT",
+          {
+            "tooltip": null,
+            "default": 848,
+            "max": 16384,
+            "min": 16,
+            "step": 16
+          }
+        ]
+      },
+      "optional": null
+    },
+    "input_order": {
+      "required": [
+        "width",
+        "height",
+        "length",
+        "batch_size"
+      ],
+      "optional": null
+    },
+    "output": [
+      "LATENT"
+    ],
+    "output_is_list": [
+      false
+    ],
+    "output_name": [
+      "LATENT"
     ],
     "output_node": false,
     "output_tooltips": []
@@ -2325,6 +3506,77 @@
     ],
     "output_name": [
       "IMAGE"
+    ],
+    "output_node": false,
+    "output_tooltips": []
+  },
+  {
+    "name": "EmptyLTXVLatentVideo",
+    "display_name": "EmptyLTXVLatentVideo",
+    "description": "",
+    "python_module": "comfy_extras.nodes_lt",
+    "category": "latent/video/ltxv",
+    "input": {
+      "required": {
+        "batch_size": [
+          "INT",
+          {
+            "tooltip": null,
+            "default": 1,
+            "max": 4096,
+            "min": 1
+          }
+        ],
+        "height": [
+          "INT",
+          {
+            "tooltip": null,
+            "default": 512,
+            "max": 16384,
+            "min": 64,
+            "step": 32
+          }
+        ],
+        "length": [
+          "INT",
+          {
+            "tooltip": null,
+            "default": 97,
+            "max": 16384,
+            "min": 1,
+            "step": 8
+          }
+        ],
+        "width": [
+          "INT",
+          {
+            "tooltip": null,
+            "default": 768,
+            "max": 16384,
+            "min": 64,
+            "step": 32
+          }
+        ]
+      },
+      "optional": null
+    },
+    "input_order": {
+      "required": [
+        "width",
+        "height",
+        "length",
+        "batch_size"
+      ],
+      "optional": null
+    },
+    "output": [
+      "LATENT"
+    ],
+    "output_is_list": [
+      false
+    ],
+    "output_name": [
+      "LATENT"
     ],
     "output_node": false,
     "output_tooltips": []
@@ -2439,6 +3691,77 @@
     "output_tooltips": [
       "The empty latent image batch."
     ]
+  },
+  {
+    "name": "EmptyMochiLatentVideo",
+    "display_name": "EmptyMochiLatentVideo",
+    "description": "",
+    "python_module": "comfy_extras.nodes_mochi",
+    "category": "latent/video",
+    "input": {
+      "required": {
+        "batch_size": [
+          "INT",
+          {
+            "tooltip": null,
+            "default": 1,
+            "max": 4096,
+            "min": 1
+          }
+        ],
+        "height": [
+          "INT",
+          {
+            "tooltip": null,
+            "default": 480,
+            "max": 16384,
+            "min": 16,
+            "step": 16
+          }
+        ],
+        "length": [
+          "INT",
+          {
+            "tooltip": null,
+            "default": 25,
+            "max": 16384,
+            "min": 7,
+            "step": 6
+          }
+        ],
+        "width": [
+          "INT",
+          {
+            "tooltip": null,
+            "default": 848,
+            "max": 16384,
+            "min": 16,
+            "step": 16
+          }
+        ]
+      },
+      "optional": null
+    },
+    "input_order": {
+      "required": [
+        "width",
+        "height",
+        "length",
+        "batch_size"
+      ],
+      "optional": null
+    },
+    "output": [
+      "LATENT"
+    ],
+    "output_is_list": [
+      false
+    ],
+    "output_name": [
+      "LATENT"
+    ],
+    "output_node": false,
+    "output_tooltips": []
   },
   {
     "name": "EmptySD3LatentImage",
@@ -2666,6 +3989,38 @@
     ],
     "output_name": [
       "SIGMAS"
+    ],
+    "output_node": false,
+    "output_tooltips": []
+  },
+  {
+    "name": "FluxDisableGuidance",
+    "display_name": "FluxDisableGuidance",
+    "description": "This node completely disables the guidance embed on Flux and Flux like models",
+    "python_module": "comfy_extras.nodes_flux",
+    "category": "advanced/conditioning/flux",
+    "input": {
+      "required": {
+        "conditioning": [
+          "CONDITIONING"
+        ]
+      },
+      "optional": null
+    },
+    "input_order": {
+      "required": [
+        "conditioning"
+      ],
+      "optional": null
+    },
+    "output": [
+      "CONDITIONING"
+    ],
+    "output_is_list": [
+      false
+    ],
+    "output_name": [
+      "CONDITIONING"
     ],
     "output_node": false,
     "output_tooltips": []
@@ -3256,7 +4611,7 @@
   },
   {
     "name": "ImageBlend",
-    "display_name": "ImageBlend",
+    "display_name": "Image Blend",
     "description": "",
     "python_module": "comfy_extras.nodes_post_processing",
     "category": "image/postprocessing",
@@ -3307,7 +4662,7 @@
   },
   {
     "name": "ImageBlur",
-    "display_name": "ImageBlur",
+    "display_name": "Image Blur",
     "description": "",
     "python_module": "comfy_extras.nodes_post_processing",
     "category": "image/postprocessing",
@@ -3477,7 +4832,7 @@
   },
   {
     "name": "ImageCrop",
-    "display_name": "ImageCrop",
+    "display_name": "Image Crop",
     "description": "",
     "python_module": "comfy_extras.nodes_images",
     "category": "image/transform",
@@ -3807,7 +5162,7 @@
   },
   {
     "name": "ImageQuantize",
-    "display_name": "ImageQuantize",
+    "display_name": "Image Quantize",
     "description": "",
     "python_module": "comfy_extras.nodes_post_processing",
     "category": "image/postprocessing",
@@ -3963,7 +5318,7 @@
   },
   {
     "name": "ImageScaleToTotalPixels",
-    "display_name": "ImageScaleToTotalPixels",
+    "display_name": "Scale Image to Total Pixels",
     "description": "",
     "python_module": "comfy_extras.nodes_post_processing",
     "category": "image/upscaling",
@@ -4010,7 +5365,7 @@
   },
   {
     "name": "ImageSharpen",
-    "display_name": "ImageSharpen",
+    "display_name": "Image Sharpen",
     "description": "",
     "python_module": "comfy_extras.nodes_post_processing",
     "category": "image/postprocessing",
@@ -4159,6 +5514,13 @@
         "negative": [
           "CONDITIONING"
         ],
+        "noise_mask": [
+          "BOOLEAN",
+          {
+            "tooltip": "Add a noise mask to the latent so sampling will only happen within the mask. Might improve results or completely break things depending on the model.",
+            "default": true
+          }
+        ],
         "pixels": [
           "IMAGE"
         ],
@@ -4177,7 +5539,8 @@
         "negative",
         "vae",
         "pixels",
-        "mask"
+        "mask",
+        "noise_mask"
       ],
       "optional": null
     },
@@ -4637,6 +6000,245 @@
         "rho"
       ],
       "optional": null
+    },
+    "output": [
+      "SIGMAS"
+    ],
+    "output_is_list": [
+      false
+    ],
+    "output_name": [
+      "SIGMAS"
+    ],
+    "output_node": false,
+    "output_tooltips": []
+  },
+  {
+    "name": "LTXVConditioning",
+    "display_name": "LTXVConditioning",
+    "description": "",
+    "python_module": "comfy_extras.nodes_lt",
+    "category": "conditioning/video_models",
+    "input": {
+      "required": {
+        "frame_rate": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 25.0,
+            "max": 1000.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "negative": [
+          "CONDITIONING"
+        ],
+        "positive": [
+          "CONDITIONING"
+        ]
+      },
+      "optional": null
+    },
+    "input_order": {
+      "required": [
+        "positive",
+        "negative",
+        "frame_rate"
+      ],
+      "optional": null
+    },
+    "output": [
+      "CONDITIONING",
+      "CONDITIONING"
+    ],
+    "output_is_list": [
+      false,
+      false
+    ],
+    "output_name": [
+      "positive",
+      "negative"
+    ],
+    "output_node": false,
+    "output_tooltips": []
+  },
+  {
+    "name": "LTXVImgToVideo",
+    "display_name": "LTXVImgToVideo",
+    "description": "",
+    "python_module": "comfy_extras.nodes_lt",
+    "category": "conditioning/video_models",
+    "input": {
+      "required": {
+        "batch_size": [
+          "INT",
+          {
+            "tooltip": null,
+            "default": 1,
+            "max": 4096,
+            "min": 1
+          }
+        ],
+        "height": [
+          "INT",
+          {
+            "tooltip": null,
+            "default": 512,
+            "max": 16384,
+            "min": 64,
+            "step": 32
+          }
+        ],
+        "image": [
+          "IMAGE"
+        ],
+        "image_noise_scale": [
+          "FLOAT",
+          {
+            "tooltip": "Amount of noise to apply on conditioning image latent.",
+            "default": 0.15,
+            "max": 1.0,
+            "min": 0,
+            "step": 0.01
+          }
+        ],
+        "length": [
+          "INT",
+          {
+            "tooltip": null,
+            "default": 97,
+            "max": 16384,
+            "min": 9,
+            "step": 8
+          }
+        ],
+        "negative": [
+          "CONDITIONING"
+        ],
+        "positive": [
+          "CONDITIONING"
+        ],
+        "vae": [
+          "VAE"
+        ],
+        "width": [
+          "INT",
+          {
+            "tooltip": null,
+            "default": 768,
+            "max": 16384,
+            "min": 64,
+            "step": 32
+          }
+        ]
+      },
+      "optional": null
+    },
+    "input_order": {
+      "required": [
+        "positive",
+        "negative",
+        "vae",
+        "image",
+        "width",
+        "height",
+        "length",
+        "batch_size",
+        "image_noise_scale"
+      ],
+      "optional": null
+    },
+    "output": [
+      "CONDITIONING",
+      "CONDITIONING",
+      "LATENT"
+    ],
+    "output_is_list": [
+      false,
+      false,
+      false
+    ],
+    "output_name": [
+      "positive",
+      "negative",
+      "latent"
+    ],
+    "output_node": false,
+    "output_tooltips": []
+  },
+  {
+    "name": "LTXVScheduler",
+    "display_name": "LTXVScheduler",
+    "description": "",
+    "python_module": "comfy_extras.nodes_lt",
+    "category": "sampling/custom_sampling/schedulers",
+    "input": {
+      "required": {
+        "base_shift": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 0.95,
+            "max": 100.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "max_shift": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 2.05,
+            "max": 100.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "steps": [
+          "INT",
+          {
+            "tooltip": null,
+            "default": 20,
+            "max": 10000,
+            "min": 1
+          }
+        ],
+        "stretch": [
+          "BOOLEAN",
+          {
+            "tooltip": "Stretch the sigmas to be in the range [terminal, 1].",
+            "default": true
+          }
+        ],
+        "terminal": [
+          "FLOAT",
+          {
+            "tooltip": "The terminal value of the sigmas after stretching.",
+            "default": 0.1,
+            "max": 0.99,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ]
+      },
+      "optional": {
+        "latent": [
+          "LATENT"
+        ]
+      }
+    },
+    "input_order": {
+      "required": [
+        "steps",
+        "max_shift",
+        "base_shift",
+        "stretch",
+        "terminal"
+      ],
+      "optional": [
+        "latent"
+      ]
     },
     "output": [
       "SIGMAS"
@@ -5597,6 +7199,232 @@
     "output_tooltips": []
   },
   {
+    "name": "Load3D",
+    "display_name": "Load 3D",
+    "description": "",
+    "python_module": "comfy_extras.nodes_load_3d",
+    "category": "3d",
+    "input": {
+      "required": {
+        "bg_color": [
+          "STRING",
+          {
+            "tooltip": null,
+            "multiline": false,
+            "default": "#000000"
+          }
+        ],
+        "fov": [
+          "INT",
+          {
+            "tooltip": null,
+            "default": 75,
+            "max": 150,
+            "min": 10,
+            "step": 1
+          }
+        ],
+        "height": [
+          "INT",
+          {
+            "tooltip": null,
+            "default": 1024,
+            "max": 4096,
+            "min": 1,
+            "step": 1
+          }
+        ],
+        "image": [
+          "LOAD_3D",
+          {
+            "tooltip": null
+          }
+        ],
+        "light_intensity": [
+          "INT",
+          {
+            "tooltip": null,
+            "default": 10,
+            "max": 20,
+            "min": 1,
+            "step": 1
+          }
+        ],
+        "material": [
+          []
+        ],
+        "model_file": [
+          [],
+          {
+            "tooltip": null
+          }
+        ],
+        "up_direction": [
+          []
+        ],
+        "width": [
+          "INT",
+          {
+            "tooltip": null,
+            "default": 1024,
+            "max": 4096,
+            "min": 1,
+            "step": 1
+          }
+        ]
+      },
+      "optional": null
+    },
+    "input_order": {
+      "required": [
+        "model_file",
+        "image",
+        "width",
+        "height",
+        "material",
+        "bg_color",
+        "light_intensity",
+        "up_direction",
+        "fov"
+      ],
+      "optional": null
+    },
+    "output": [
+      "IMAGE",
+      "MASK",
+      "STRING"
+    ],
+    "output_is_list": [
+      false,
+      false,
+      false
+    ],
+    "output_name": [
+      "image",
+      "mask",
+      "mesh_path"
+    ],
+    "output_node": false,
+    "output_tooltips": []
+  },
+  {
+    "name": "Load3DAnimation",
+    "display_name": "Load 3D - Animation",
+    "description": "",
+    "python_module": "comfy_extras.nodes_load_3d",
+    "category": "3d",
+    "input": {
+      "required": {
+        "animation_speed": [
+          [],
+          {
+            "tooltip": null,
+            "default": "1"
+          }
+        ],
+        "bg_color": [
+          "STRING",
+          {
+            "tooltip": null,
+            "multiline": false,
+            "default": "#000000"
+          }
+        ],
+        "fov": [
+          "INT",
+          {
+            "tooltip": null,
+            "default": 75,
+            "max": 150,
+            "min": 10,
+            "step": 1
+          }
+        ],
+        "height": [
+          "INT",
+          {
+            "tooltip": null,
+            "default": 1024,
+            "max": 4096,
+            "min": 1,
+            "step": 1
+          }
+        ],
+        "image": [
+          "LOAD_3D_ANIMATION",
+          {
+            "tooltip": null
+          }
+        ],
+        "light_intensity": [
+          "INT",
+          {
+            "tooltip": null,
+            "default": 10,
+            "max": 20,
+            "min": 1,
+            "step": 1
+          }
+        ],
+        "material": [
+          []
+        ],
+        "model_file": [
+          [],
+          {
+            "tooltip": null
+          }
+        ],
+        "up_direction": [
+          []
+        ],
+        "width": [
+          "INT",
+          {
+            "tooltip": null,
+            "default": 1024,
+            "max": 4096,
+            "min": 1,
+            "step": 1
+          }
+        ]
+      },
+      "optional": null
+    },
+    "input_order": {
+      "required": [
+        "model_file",
+        "image",
+        "width",
+        "height",
+        "material",
+        "bg_color",
+        "light_intensity",
+        "up_direction",
+        "animation_speed",
+        "fov"
+      ],
+      "optional": null
+    },
+    "output": [
+      "IMAGE",
+      "MASK",
+      "STRING"
+    ],
+    "output_is_list": [
+      false,
+      false,
+      false
+    ],
+    "output_name": [
+      "image",
+      "mask",
+      "mesh_path"
+    ],
+    "output_node": false,
+    "output_tooltips": []
+  },
+  {
     "name": "LoadAudio",
     "display_name": "LoadAudio",
     "description": "",
@@ -5953,6 +7781,515 @@
       "required": [
         "model1",
         "model2"
+      ],
+      "optional": null
+    },
+    "output": [
+      "MODEL"
+    ],
+    "output_is_list": [
+      false
+    ],
+    "output_name": [
+      "MODEL"
+    ],
+    "output_node": false,
+    "output_tooltips": []
+  },
+  {
+    "name": "ModelMergeAuraflow",
+    "display_name": "ModelMergeAuraflow",
+    "description": "",
+    "python_module": "comfy_extras.nodes_model_merging_model_specific",
+    "category": "advanced/model_merging/model_specific",
+    "input": {
+      "required": {
+        "cond_seq_linear.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "double_layers.0.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "double_layers.1.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "double_layers.2.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "double_layers.3.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "final_linear.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "init_x_linear.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "modF.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "model1": [
+          "MODEL"
+        ],
+        "model2": [
+          "MODEL"
+        ],
+        "positional_encoding": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "register_tokens": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "single_layers.0.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "single_layers.1.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "single_layers.10.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "single_layers.11.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "single_layers.12.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "single_layers.13.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "single_layers.14.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "single_layers.15.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "single_layers.16.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "single_layers.17.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "single_layers.18.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "single_layers.19.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "single_layers.2.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "single_layers.20.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "single_layers.21.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "single_layers.22.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "single_layers.23.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "single_layers.24.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "single_layers.25.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "single_layers.26.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "single_layers.27.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "single_layers.28.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "single_layers.29.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "single_layers.3.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "single_layers.30.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "single_layers.31.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "single_layers.4.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "single_layers.5.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "single_layers.6.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "single_layers.7.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "single_layers.8.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "single_layers.9.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "t_embedder.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ]
+      },
+      "optional": null
+    },
+    "input_order": {
+      "required": [
+        "model1",
+        "model2",
+        "init_x_linear.",
+        "positional_encoding",
+        "cond_seq_linear.",
+        "register_tokens",
+        "t_embedder.",
+        "double_layers.0.",
+        "double_layers.1.",
+        "double_layers.2.",
+        "double_layers.3.",
+        "single_layers.0.",
+        "single_layers.1.",
+        "single_layers.2.",
+        "single_layers.3.",
+        "single_layers.4.",
+        "single_layers.5.",
+        "single_layers.6.",
+        "single_layers.7.",
+        "single_layers.8.",
+        "single_layers.9.",
+        "single_layers.10.",
+        "single_layers.11.",
+        "single_layers.12.",
+        "single_layers.13.",
+        "single_layers.14.",
+        "single_layers.15.",
+        "single_layers.16.",
+        "single_layers.17.",
+        "single_layers.18.",
+        "single_layers.19.",
+        "single_layers.20.",
+        "single_layers.21.",
+        "single_layers.22.",
+        "single_layers.23.",
+        "single_layers.24.",
+        "single_layers.25.",
+        "single_layers.26.",
+        "single_layers.27.",
+        "single_layers.28.",
+        "single_layers.29.",
+        "single_layers.30.",
+        "single_layers.31.",
+        "modF.",
+        "final_linear."
       ],
       "optional": null
     },
@@ -6767,6 +9104,1024 @@
     "output_tooltips": []
   },
   {
+    "name": "ModelMergeLTXV",
+    "display_name": "ModelMergeLTXV",
+    "description": "",
+    "python_module": "comfy_extras.nodes_model_merging_model_specific",
+    "category": "advanced/model_merging/model_specific",
+    "input": {
+      "required": {
+        "adaln_single.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "caption_projection.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "model1": [
+          "MODEL"
+        ],
+        "model2": [
+          "MODEL"
+        ],
+        "patchify_proj.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "proj_out.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "scale_shift_table": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "transformer_blocks.0.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "transformer_blocks.1.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "transformer_blocks.10.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "transformer_blocks.11.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "transformer_blocks.12.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "transformer_blocks.13.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "transformer_blocks.14.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "transformer_blocks.15.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "transformer_blocks.16.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "transformer_blocks.17.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "transformer_blocks.18.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "transformer_blocks.19.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "transformer_blocks.2.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "transformer_blocks.20.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "transformer_blocks.21.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "transformer_blocks.22.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "transformer_blocks.23.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "transformer_blocks.24.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "transformer_blocks.25.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "transformer_blocks.26.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "transformer_blocks.27.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "transformer_blocks.3.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "transformer_blocks.4.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "transformer_blocks.5.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "transformer_blocks.6.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "transformer_blocks.7.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "transformer_blocks.8.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "transformer_blocks.9.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ]
+      },
+      "optional": null
+    },
+    "input_order": {
+      "required": [
+        "model1",
+        "model2",
+        "patchify_proj.",
+        "adaln_single.",
+        "caption_projection.",
+        "transformer_blocks.0.",
+        "transformer_blocks.1.",
+        "transformer_blocks.2.",
+        "transformer_blocks.3.",
+        "transformer_blocks.4.",
+        "transformer_blocks.5.",
+        "transformer_blocks.6.",
+        "transformer_blocks.7.",
+        "transformer_blocks.8.",
+        "transformer_blocks.9.",
+        "transformer_blocks.10.",
+        "transformer_blocks.11.",
+        "transformer_blocks.12.",
+        "transformer_blocks.13.",
+        "transformer_blocks.14.",
+        "transformer_blocks.15.",
+        "transformer_blocks.16.",
+        "transformer_blocks.17.",
+        "transformer_blocks.18.",
+        "transformer_blocks.19.",
+        "transformer_blocks.20.",
+        "transformer_blocks.21.",
+        "transformer_blocks.22.",
+        "transformer_blocks.23.",
+        "transformer_blocks.24.",
+        "transformer_blocks.25.",
+        "transformer_blocks.26.",
+        "transformer_blocks.27.",
+        "scale_shift_table",
+        "proj_out."
+      ],
+      "optional": null
+    },
+    "output": [
+      "MODEL"
+    ],
+    "output_is_list": [
+      false
+    ],
+    "output_name": [
+      "MODEL"
+    ],
+    "output_node": false,
+    "output_tooltips": []
+  },
+  {
+    "name": "ModelMergeMochiPreview",
+    "display_name": "ModelMergeMochiPreview",
+    "description": "",
+    "python_module": "comfy_extras.nodes_model_merging_model_specific",
+    "category": "advanced/model_merging/model_specific",
+    "input": {
+      "required": {
+        "blocks.0.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "blocks.1.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "blocks.10.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "blocks.11.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "blocks.12.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "blocks.13.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "blocks.14.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "blocks.15.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "blocks.16.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "blocks.17.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "blocks.18.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "blocks.19.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "blocks.2.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "blocks.20.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "blocks.21.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "blocks.22.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "blocks.23.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "blocks.24.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "blocks.25.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "blocks.26.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "blocks.27.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "blocks.28.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "blocks.29.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "blocks.3.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "blocks.30.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "blocks.31.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "blocks.32.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "blocks.33.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "blocks.34.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "blocks.35.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "blocks.36.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "blocks.37.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "blocks.38.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "blocks.39.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "blocks.4.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "blocks.40.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "blocks.41.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "blocks.42.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "blocks.43.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "blocks.44.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "blocks.45.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "blocks.46.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "blocks.47.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "blocks.5.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "blocks.6.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "blocks.7.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "blocks.8.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "blocks.9.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "final_layer.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "model1": [
+          "MODEL"
+        ],
+        "model2": [
+          "MODEL"
+        ],
+        "pos_frequencies.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "t5_y_embedder.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "t5_yproj.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "t_embedder.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ]
+      },
+      "optional": null
+    },
+    "input_order": {
+      "required": [
+        "model1",
+        "model2",
+        "pos_frequencies.",
+        "t_embedder.",
+        "t5_y_embedder.",
+        "t5_yproj.",
+        "blocks.0.",
+        "blocks.1.",
+        "blocks.2.",
+        "blocks.3.",
+        "blocks.4.",
+        "blocks.5.",
+        "blocks.6.",
+        "blocks.7.",
+        "blocks.8.",
+        "blocks.9.",
+        "blocks.10.",
+        "blocks.11.",
+        "blocks.12.",
+        "blocks.13.",
+        "blocks.14.",
+        "blocks.15.",
+        "blocks.16.",
+        "blocks.17.",
+        "blocks.18.",
+        "blocks.19.",
+        "blocks.20.",
+        "blocks.21.",
+        "blocks.22.",
+        "blocks.23.",
+        "blocks.24.",
+        "blocks.25.",
+        "blocks.26.",
+        "blocks.27.",
+        "blocks.28.",
+        "blocks.29.",
+        "blocks.30.",
+        "blocks.31.",
+        "blocks.32.",
+        "blocks.33.",
+        "blocks.34.",
+        "blocks.35.",
+        "blocks.36.",
+        "blocks.37.",
+        "blocks.38.",
+        "blocks.39.",
+        "blocks.40.",
+        "blocks.41.",
+        "blocks.42.",
+        "blocks.43.",
+        "blocks.44.",
+        "blocks.45.",
+        "blocks.46.",
+        "blocks.47.",
+        "final_layer."
+      ],
+      "optional": null
+    },
+    "output": [
+      "MODEL"
+    ],
+    "output_is_list": [
+      false
+    ],
+    "output_name": [
+      "MODEL"
+    ],
+    "output_node": false,
+    "output_tooltips": []
+  },
+  {
     "name": "ModelMergeSD1",
     "display_name": "ModelMergeSD1",
     "description": "",
@@ -7483,6 +10838,526 @@
         "output_blocks.10.",
         "output_blocks.11.",
         "out."
+      ],
+      "optional": null
+    },
+    "output": [
+      "MODEL"
+    ],
+    "output_is_list": [
+      false
+    ],
+    "output_name": [
+      "MODEL"
+    ],
+    "output_node": false,
+    "output_tooltips": []
+  },
+  {
+    "name": "ModelMergeSD35_Large",
+    "display_name": "ModelMergeSD35_Large",
+    "description": "",
+    "python_module": "comfy_extras.nodes_model_merging_model_specific",
+    "category": "advanced/model_merging/model_specific",
+    "input": {
+      "required": {
+        "context_embedder.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "final_layer.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "joint_blocks.0.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "joint_blocks.1.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "joint_blocks.10.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "joint_blocks.11.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "joint_blocks.12.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "joint_blocks.13.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "joint_blocks.14.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "joint_blocks.15.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "joint_blocks.16.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "joint_blocks.17.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "joint_blocks.18.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "joint_blocks.19.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "joint_blocks.2.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "joint_blocks.20.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "joint_blocks.21.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "joint_blocks.22.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "joint_blocks.23.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "joint_blocks.24.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "joint_blocks.25.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "joint_blocks.26.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "joint_blocks.27.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "joint_blocks.28.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "joint_blocks.29.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "joint_blocks.3.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "joint_blocks.30.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "joint_blocks.31.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "joint_blocks.32.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "joint_blocks.33.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "joint_blocks.34.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "joint_blocks.35.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "joint_blocks.36.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "joint_blocks.37.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "joint_blocks.4.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "joint_blocks.5.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "joint_blocks.6.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "joint_blocks.7.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "joint_blocks.8.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "joint_blocks.9.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "model1": [
+          "MODEL"
+        ],
+        "model2": [
+          "MODEL"
+        ],
+        "pos_embed.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "t_embedder.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "x_embedder.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "y_embedder.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ]
+      },
+      "optional": null
+    },
+    "input_order": {
+      "required": [
+        "model1",
+        "model2",
+        "pos_embed.",
+        "x_embedder.",
+        "context_embedder.",
+        "y_embedder.",
+        "t_embedder.",
+        "joint_blocks.0.",
+        "joint_blocks.1.",
+        "joint_blocks.2.",
+        "joint_blocks.3.",
+        "joint_blocks.4.",
+        "joint_blocks.5.",
+        "joint_blocks.6.",
+        "joint_blocks.7.",
+        "joint_blocks.8.",
+        "joint_blocks.9.",
+        "joint_blocks.10.",
+        "joint_blocks.11.",
+        "joint_blocks.12.",
+        "joint_blocks.13.",
+        "joint_blocks.14.",
+        "joint_blocks.15.",
+        "joint_blocks.16.",
+        "joint_blocks.17.",
+        "joint_blocks.18.",
+        "joint_blocks.19.",
+        "joint_blocks.20.",
+        "joint_blocks.21.",
+        "joint_blocks.22.",
+        "joint_blocks.23.",
+        "joint_blocks.24.",
+        "joint_blocks.25.",
+        "joint_blocks.26.",
+        "joint_blocks.27.",
+        "joint_blocks.28.",
+        "joint_blocks.29.",
+        "joint_blocks.30.",
+        "joint_blocks.31.",
+        "joint_blocks.32.",
+        "joint_blocks.33.",
+        "joint_blocks.34.",
+        "joint_blocks.35.",
+        "joint_blocks.36.",
+        "joint_blocks.37.",
+        "final_layer."
       ],
       "optional": null
     },
@@ -8542,6 +12417,66 @@
     "output_tooltips": []
   },
   {
+    "name": "ModelSamplingLTXV",
+    "display_name": "ModelSamplingLTXV",
+    "description": "",
+    "python_module": "comfy_extras.nodes_lt",
+    "category": "advanced/model",
+    "input": {
+      "required": {
+        "base_shift": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 0.95,
+            "max": 100.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "max_shift": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 2.05,
+            "max": 100.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "model": [
+          "MODEL"
+        ]
+      },
+      "optional": {
+        "latent": [
+          "LATENT"
+        ]
+      }
+    },
+    "input_order": {
+      "required": [
+        "model",
+        "max_shift",
+        "base_shift"
+      ],
+      "optional": [
+        "latent"
+      ]
+    },
+    "output": [
+      "MODEL"
+    ],
+    "output_is_list": [
+      false
+    ],
+    "output_name": [
+      "MODEL"
+    ],
+    "output_node": false,
+    "output_tooltips": []
+  },
+  {
     "name": "ModelSamplingSD3",
     "display_name": "ModelSamplingSD3",
     "description": "",
@@ -8704,6 +12639,250 @@
     ],
     "output_name": [
       "IMAGE"
+    ],
+    "output_node": false,
+    "output_tooltips": []
+  },
+  {
+    "name": "PairConditioningCombine",
+    "display_name": "Cond Pair Combine",
+    "description": "",
+    "python_module": "comfy_extras.nodes_hooks",
+    "category": "advanced/hooks/cond pair",
+    "input": {
+      "required": {
+        "negative_A": [
+          "CONDITIONING"
+        ],
+        "negative_B": [
+          "CONDITIONING"
+        ],
+        "positive_A": [
+          "CONDITIONING"
+        ],
+        "positive_B": [
+          "CONDITIONING"
+        ]
+      },
+      "optional": null
+    },
+    "input_order": {
+      "required": [
+        "positive_A",
+        "negative_A",
+        "positive_B",
+        "negative_B"
+      ],
+      "optional": null
+    },
+    "output": [
+      "CONDITIONING",
+      "CONDITIONING"
+    ],
+    "output_is_list": [
+      false,
+      false
+    ],
+    "output_name": [
+      "positive",
+      "negative"
+    ],
+    "output_node": false,
+    "output_tooltips": []
+  },
+  {
+    "name": "PairConditioningSetDefaultCombine",
+    "display_name": "Cond Pair Set Default Combine",
+    "description": "",
+    "python_module": "comfy_extras.nodes_hooks",
+    "category": "advanced/hooks/cond pair",
+    "input": {
+      "required": {
+        "negative": [
+          "CONDITIONING"
+        ],
+        "negative_DEFAULT": [
+          "CONDITIONING"
+        ],
+        "positive": [
+          "CONDITIONING"
+        ],
+        "positive_DEFAULT": [
+          "CONDITIONING"
+        ]
+      },
+      "optional": {
+        "hooks": [
+          "HOOKS"
+        ]
+      }
+    },
+    "input_order": {
+      "required": [
+        "positive",
+        "negative",
+        "positive_DEFAULT",
+        "negative_DEFAULT"
+      ],
+      "optional": [
+        "hooks"
+      ]
+    },
+    "output": [
+      "CONDITIONING",
+      "CONDITIONING"
+    ],
+    "output_is_list": [
+      false,
+      false
+    ],
+    "output_name": [
+      "positive",
+      "negative"
+    ],
+    "output_node": false,
+    "output_tooltips": []
+  },
+  {
+    "name": "PairConditioningSetProperties",
+    "display_name": "Cond Pair Set Props",
+    "description": "",
+    "python_module": "comfy_extras.nodes_hooks",
+    "category": "advanced/hooks/cond pair",
+    "input": {
+      "required": {
+        "negative_NEW": [
+          "CONDITIONING"
+        ],
+        "positive_NEW": [
+          "CONDITIONING"
+        ],
+        "set_cond_area": [
+          []
+        ],
+        "strength": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 10.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ]
+      },
+      "optional": {
+        "hooks": [
+          "HOOKS"
+        ],
+        "mask": [
+          "MASK"
+        ],
+        "timesteps": [
+          "TIMESTEPS_RANGE"
+        ]
+      }
+    },
+    "input_order": {
+      "required": [
+        "positive_NEW",
+        "negative_NEW",
+        "strength",
+        "set_cond_area"
+      ],
+      "optional": [
+        "mask",
+        "hooks",
+        "timesteps"
+      ]
+    },
+    "output": [
+      "CONDITIONING",
+      "CONDITIONING"
+    ],
+    "output_is_list": [
+      false,
+      false
+    ],
+    "output_name": [
+      "positive",
+      "negative"
+    ],
+    "output_node": false,
+    "output_tooltips": []
+  },
+  {
+    "name": "PairConditioningSetPropertiesAndCombine",
+    "display_name": "Cond Pair Set Props Combine",
+    "description": "",
+    "python_module": "comfy_extras.nodes_hooks",
+    "category": "advanced/hooks/cond pair",
+    "input": {
+      "required": {
+        "negative": [
+          "CONDITIONING"
+        ],
+        "negative_NEW": [
+          "CONDITIONING"
+        ],
+        "positive": [
+          "CONDITIONING"
+        ],
+        "positive_NEW": [
+          "CONDITIONING"
+        ],
+        "set_cond_area": [
+          []
+        ],
+        "strength": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 10.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ]
+      },
+      "optional": {
+        "hooks": [
+          "HOOKS"
+        ],
+        "mask": [
+          "MASK"
+        ],
+        "timesteps": [
+          "TIMESTEPS_RANGE"
+        ]
+      }
+    },
+    "input_order": {
+      "required": [
+        "positive",
+        "negative",
+        "positive_NEW",
+        "negative_NEW",
+        "strength",
+        "set_cond_area"
+      ],
+      "optional": [
+        "mask",
+        "hooks",
+        "timesteps"
+      ]
+    },
+    "output": [
+      "CONDITIONING",
+      "CONDITIONING"
+    ],
+    "output_is_list": [
+      false,
+      false
+    ],
+    "output_name": [
+      "positive",
+      "negative"
     ],
     "output_node": false,
     "output_tooltips": []
@@ -8971,6 +13150,76 @@
       "MASK"
     ],
     "output_node": false,
+    "output_tooltips": []
+  },
+  {
+    "name": "Preview3D",
+    "display_name": "Preview 3D",
+    "description": "",
+    "python_module": "comfy_extras.nodes_load_3d",
+    "category": "3d",
+    "input": {
+      "required": {
+        "bg_color": [
+          "STRING",
+          {
+            "tooltip": null,
+            "multiline": false,
+            "default": "#000000"
+          }
+        ],
+        "fov": [
+          "INT",
+          {
+            "tooltip": null,
+            "default": 75,
+            "max": 150,
+            "min": 10,
+            "step": 1
+          }
+        ],
+        "light_intensity": [
+          "INT",
+          {
+            "tooltip": null,
+            "default": 10,
+            "max": 20,
+            "min": 1,
+            "step": 1
+          }
+        ],
+        "material": [
+          []
+        ],
+        "model_file": [
+          "STRING",
+          {
+            "tooltip": null,
+            "multiline": false,
+            "default": ""
+          }
+        ],
+        "up_direction": [
+          []
+        ]
+      },
+      "optional": null
+    },
+    "input_order": {
+      "required": [
+        "model_file",
+        "material",
+        "bg_color",
+        "light_intensity",
+        "up_direction",
+        "fov"
+      ],
+      "optional": null
+    },
+    "output": [],
+    "output_is_list": [],
+    "output_name": [],
+    "output_node": true,
     "output_tooltips": []
   },
   {
@@ -10502,6 +14751,142 @@
     "output_tooltips": []
   },
   {
+    "name": "SetClipHooks",
+    "display_name": "Set CLIP Hooks",
+    "description": "",
+    "python_module": "comfy_extras.nodes_hooks",
+    "category": "advanced/hooks/clip",
+    "input": {
+      "required": {
+        "apply_to_conds": [
+          "BOOLEAN",
+          {
+            "tooltip": null,
+            "default": true
+          }
+        ],
+        "clip": [
+          "CLIP"
+        ],
+        "schedule_clip": [
+          "BOOLEAN",
+          {
+            "tooltip": null,
+            "default": false
+          }
+        ]
+      },
+      "optional": {
+        "hooks": [
+          "HOOKS"
+        ]
+      }
+    },
+    "input_order": {
+      "required": [
+        "clip",
+        "apply_to_conds",
+        "schedule_clip"
+      ],
+      "optional": [
+        "hooks"
+      ]
+    },
+    "output": [
+      "CLIP"
+    ],
+    "output_is_list": [
+      false
+    ],
+    "output_name": [
+      "CLIP"
+    ],
+    "output_node": false,
+    "output_tooltips": []
+  },
+  {
+    "name": "SetFirstSigma",
+    "display_name": "SetFirstSigma",
+    "description": "",
+    "python_module": "comfy_extras.nodes_custom_sampler",
+    "category": "sampling/custom_sampling/sigmas",
+    "input": {
+      "required": {
+        "sigma": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 136.0,
+            "max": 20000.0,
+            "min": 0.0,
+            "round": false,
+            "step": 0.001
+          }
+        ],
+        "sigmas": [
+          "SIGMAS"
+        ]
+      },
+      "optional": null
+    },
+    "input_order": {
+      "required": [
+        "sigmas",
+        "sigma"
+      ],
+      "optional": null
+    },
+    "output": [
+      "SIGMAS"
+    ],
+    "output_is_list": [
+      false
+    ],
+    "output_name": [
+      "SIGMAS"
+    ],
+    "output_node": false,
+    "output_tooltips": []
+  },
+  {
+    "name": "SetHookKeyframes",
+    "display_name": "Set Hook Keyframes",
+    "description": "",
+    "python_module": "comfy_extras.nodes_hooks",
+    "category": "advanced/hooks/scheduling",
+    "input": {
+      "required": {
+        "hooks": [
+          "HOOKS"
+        ]
+      },
+      "optional": {
+        "hook_kf": [
+          "HOOK_KEYFRAMES"
+        ]
+      }
+    },
+    "input_order": {
+      "required": [
+        "hooks"
+      ],
+      "optional": [
+        "hook_kf"
+      ]
+    },
+    "output": [
+      "HOOKS"
+    ],
+    "output_is_list": [
+      false
+    ],
+    "output_name": [
+      "HOOKS"
+    ],
+    "output_node": false,
+    "output_tooltips": []
+  },
+  {
     "name": "SetLatentNoiseMask",
     "display_name": "Set Latent Noise Mask",
     "description": "",
@@ -10569,6 +14954,174 @@
     ],
     "output_name": [
       "CONTROL_NET"
+    ],
+    "output_node": false,
+    "output_tooltips": []
+  },
+  {
+    "name": "SkipLayerGuidanceDiT",
+    "display_name": "SkipLayerGuidanceDiT",
+    "description": "Generic version of SkipLayerGuidance node that can be used on every DiT model.",
+    "python_module": "comfy_extras.nodes_slg",
+    "category": "advanced/guidance",
+    "input": {
+      "required": {
+        "double_layers": [
+          "STRING",
+          {
+            "tooltip": null,
+            "multiline": false,
+            "default": "7, 8, 9"
+          }
+        ],
+        "end_percent": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 0.15,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.001
+          }
+        ],
+        "model": [
+          "MODEL"
+        ],
+        "rescaling_scale": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 0.0,
+            "max": 10.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "scale": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 3.0,
+            "max": 10.0,
+            "min": 0.0,
+            "step": 0.1
+          }
+        ],
+        "single_layers": [
+          "STRING",
+          {
+            "tooltip": null,
+            "multiline": false,
+            "default": "7, 8, 9"
+          }
+        ],
+        "start_percent": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 0.01,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.001
+          }
+        ]
+      },
+      "optional": null
+    },
+    "input_order": {
+      "required": [
+        "model",
+        "double_layers",
+        "single_layers",
+        "scale",
+        "start_percent",
+        "end_percent",
+        "rescaling_scale"
+      ],
+      "optional": null
+    },
+    "output": [
+      "MODEL"
+    ],
+    "output_is_list": [
+      false
+    ],
+    "output_name": [
+      "MODEL"
+    ],
+    "output_node": false,
+    "output_tooltips": []
+  },
+  {
+    "name": "SkipLayerGuidanceSD3",
+    "display_name": "SkipLayerGuidanceSD3",
+    "description": "Generic version of SkipLayerGuidance node that can be used on every DiT model.",
+    "python_module": "comfy_extras.nodes_sd3",
+    "category": "advanced/guidance",
+    "input": {
+      "required": {
+        "end_percent": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 0.15,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.001
+          }
+        ],
+        "layers": [
+          "STRING",
+          {
+            "tooltip": null,
+            "multiline": false,
+            "default": "7, 8, 9"
+          }
+        ],
+        "model": [
+          "MODEL"
+        ],
+        "scale": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 3.0,
+            "max": 10.0,
+            "min": 0.0,
+            "step": 0.1
+          }
+        ],
+        "start_percent": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 0.01,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.001
+          }
+        ]
+      },
+      "optional": null
+    },
+    "input_order": {
+      "required": [
+        "model",
+        "layers",
+        "scale",
+        "start_percent",
+        "end_percent"
+      ],
+      "optional": null
+    },
+    "output": [
+      "MODEL"
+    ],
+    "output_is_list": [
+      false
+    ],
+    "output_name": [
+      "MODEL"
     ],
     "output_node": false,
     "output_tooltips": []
@@ -11162,6 +15715,19 @@
         "conditioning": [
           "CONDITIONING"
         ],
+        "strength": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 10.0,
+            "min": 0.0,
+            "step": 0.001
+          }
+        ],
+        "strength_type": [
+          []
+        ],
         "style_model": [
           "STYLE_MODEL"
         ]
@@ -11172,7 +15738,9 @@
       "required": [
         "conditioning",
         "style_model",
-        "clip_vision_output"
+        "clip_vision_output",
+        "strength",
+        "strength_type"
       ],
       "optional": null
     },
@@ -11309,7 +15877,7 @@
   {
     "name": "TripleCLIPLoader",
     "display_name": "TripleCLIPLoader",
-    "description": "",
+    "description": "[Recipes]\n\nsd3: clip-l, clip-g, t5",
     "python_module": "comfy_extras.nodes_sd3",
     "category": "advanced/loaders",
     "input": {

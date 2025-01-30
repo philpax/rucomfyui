@@ -5,7 +5,7 @@ use crate::{
     workflow::{WorkflowNodeId, WorkflowInput},
     nodes::types::Out,
 };
-///**ImageBlend**: No description.
+///**Image Blend**: No description.
 #[derive(Clone)]
 pub struct ImageBlend<
     Image1: crate::nodes::types::Image,
@@ -69,11 +69,11 @@ impl<
         output
     }
     const NAME: &'static str = "ImageBlend";
-    const DISPLAY_NAME: &'static str = "ImageBlend";
+    const DISPLAY_NAME: &'static str = "Image Blend";
     const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "image/postprocessing";
 }
-///**ImageBlur**: No description.
+///**Image Blur**: No description.
 #[derive(Clone)]
 pub struct ImageBlur<
     Image: crate::nodes::types::Image,
@@ -128,11 +128,11 @@ impl<
         output
     }
     const NAME: &'static str = "ImageBlur";
-    const DISPLAY_NAME: &'static str = "ImageBlur";
+    const DISPLAY_NAME: &'static str = "Image Blur";
     const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "image/postprocessing";
 }
-///**ImageQuantize**: No description.
+///**Image Quantize**: No description.
 #[derive(Clone)]
 pub struct ImageQuantize<
     Image: crate::nodes::types::Image,
@@ -180,11 +180,11 @@ impl<
         output
     }
     const NAME: &'static str = "ImageQuantize";
-    const DISPLAY_NAME: &'static str = "ImageQuantize";
+    const DISPLAY_NAME: &'static str = "Image Quantize";
     const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "image/postprocessing";
 }
-///**ImageSharpen**: No description.
+///**Image Sharpen**: No description.
 #[derive(Clone)]
 pub struct ImageSharpen<
     Image: crate::nodes::types::Image,
@@ -262,7 +262,7 @@ impl<
         output
     }
     const NAME: &'static str = "ImageSharpen";
-    const DISPLAY_NAME: &'static str = "ImageSharpen";
+    const DISPLAY_NAME: &'static str = "Image Sharpen";
     const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "image/postprocessing";
 }

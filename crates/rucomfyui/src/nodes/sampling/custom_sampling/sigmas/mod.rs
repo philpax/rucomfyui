@@ -52,6 +52,53 @@ for FlipSigmas<Sigmas> {
     const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "sampling/custom_sampling/sigmas";
 }
+///**SetFirstSigma**: No description.
+#[derive(Clone)]
+pub struct SetFirstSigma<
+    Sigmas: crate::nodes::types::Sigmas,
+    Sigma: crate::nodes::types::Float,
+> {
+    ///No documentation.
+    pub sigmas: Sigmas,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 136
+  - Max: 20000
+  - Min: 0
+  - Round: false
+  - Step: 0.001
+*/
+    pub sigma: Sigma,
+}
+impl<
+    Sigmas: crate::nodes::types::Sigmas,
+    Sigma: crate::nodes::types::Float,
+> SetFirstSigma<Sigmas, Sigma> {
+    /// Create a new node.
+    pub fn new(sigmas: Sigmas, sigma: Sigma) -> Self {
+        Self { sigmas, sigma }
+    }
+}
+impl<
+    Sigmas: crate::nodes::types::Sigmas,
+    Sigma: crate::nodes::types::Float,
+> crate::nodes::TypedNode for SetFirstSigma<Sigmas, Sigma> {
+    type Output = crate::nodes::types::SigmasOut;
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
+        Self::Output::from_dynamic(node_id, 0)
+    }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("sigmas".to_string(), self.sigmas.clone().into());
+        output.insert("sigma".to_string(), self.sigma.clone().into());
+        output
+    }
+    const NAME: &'static str = "SetFirstSigma";
+    const DISPLAY_NAME: &'static str = "SetFirstSigma";
+    const DESCRIPTION: &'static str = "";
+    const CATEGORY: &'static str = "sampling/custom_sampling/sigmas";
+}
 ///**SplitSigmas**: No description.
 #[derive(Clone)]
 pub struct SplitSigmas<

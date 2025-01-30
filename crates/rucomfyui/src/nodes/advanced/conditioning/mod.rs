@@ -61,6 +61,74 @@ impl<
     const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "advanced/conditioning";
 }
+///**CLIPTextEncodePixArtAlpha**: Encodes text and sets the resolution conditioning for PixArt Alpha. Does not apply to PixArt Sigma.
+#[derive(Clone)]
+pub struct ClipTextEncodePixArtAlpha<
+    Width: crate::nodes::types::Int,
+    Height: crate::nodes::types::Int,
+    Text: crate::nodes::types::String,
+    Clip: crate::nodes::types::Clip,
+> {
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1024
+  - Max: 16384
+  - Min: 0
+*/
+    pub width: Width,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1024
+  - Max: 16384
+  - Min: 0
+*/
+    pub height: Height,
+    /**No documentation.
+
+**Metadata**:
+  - Dynamic prompts: true
+  - Multiline: true
+*/
+    pub text: Text,
+    ///No documentation.
+    pub clip: Clip,
+}
+impl<
+    Width: crate::nodes::types::Int,
+    Height: crate::nodes::types::Int,
+    Text: crate::nodes::types::String,
+    Clip: crate::nodes::types::Clip,
+> ClipTextEncodePixArtAlpha<Width, Height, Text, Clip> {
+    /// Create a new node.
+    pub fn new(width: Width, height: Height, text: Text, clip: Clip) -> Self {
+        Self { width, height, text, clip }
+    }
+}
+impl<
+    Width: crate::nodes::types::Int,
+    Height: crate::nodes::types::Int,
+    Text: crate::nodes::types::String,
+    Clip: crate::nodes::types::Clip,
+> crate::nodes::TypedNode for ClipTextEncodePixArtAlpha<Width, Height, Text, Clip> {
+    type Output = crate::nodes::types::ConditioningOut;
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
+        Self::Output::from_dynamic(node_id, 0)
+    }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("width".to_string(), self.width.clone().into());
+        output.insert("height".to_string(), self.height.clone().into());
+        output.insert("text".to_string(), self.text.clone().into());
+        output.insert("clip".to_string(), self.clip.clone().into());
+        output
+    }
+    const NAME: &'static str = "CLIPTextEncodePixArtAlpha";
+    const DISPLAY_NAME: &'static str = "CLIPTextEncodePixArtAlpha";
+    const DESCRIPTION: &'static str = "Encodes text and sets the resolution conditioning for PixArt Alpha. Does not apply to PixArt Sigma.";
+    const CATEGORY: &'static str = "advanced/conditioning";
+}
 ///**CLIPTextEncodeSD3**: No description.
 #[derive(Clone)]
 pub struct ClipTextEncodeSd3<
@@ -149,6 +217,7 @@ for ClipTextEncodeSd3<Clip, ClipL, ClipG, T5Xxl, EmptyPadding> {
 ///**CLIPTextEncodeSDXL**: No description.
 #[derive(Clone)]
 pub struct ClipTextEncodeSdxl<
+    Clip: crate::nodes::types::Clip,
     Width: crate::nodes::types::Int,
     Height: crate::nodes::types::Int,
     CropW: crate::nodes::types::Int,
@@ -156,9 +225,10 @@ pub struct ClipTextEncodeSdxl<
     TargetWidth: crate::nodes::types::Int,
     TargetHeight: crate::nodes::types::Int,
     TextG: crate::nodes::types::String,
-    Clip: crate::nodes::types::Clip,
     TextL: crate::nodes::types::String,
 > {
+    ///No documentation.
+    pub clip: Clip,
     /**No documentation.
 
 **Metadata**:
@@ -214,8 +284,6 @@ pub struct ClipTextEncodeSdxl<
   - Multiline: true
 */
     pub text_g: TextG,
-    ///No documentation.
-    pub clip: Clip,
     /**No documentation.
 
 **Metadata**:
@@ -225,6 +293,7 @@ pub struct ClipTextEncodeSdxl<
     pub text_l: TextL,
 }
 impl<
+    Clip: crate::nodes::types::Clip,
     Width: crate::nodes::types::Int,
     Height: crate::nodes::types::Int,
     CropW: crate::nodes::types::Int,
@@ -232,9 +301,9 @@ impl<
     TargetWidth: crate::nodes::types::Int,
     TargetHeight: crate::nodes::types::Int,
     TextG: crate::nodes::types::String,
-    Clip: crate::nodes::types::Clip,
     TextL: crate::nodes::types::String,
 > ClipTextEncodeSdxl<
+    Clip,
     Width,
     Height,
     CropW,
@@ -242,11 +311,11 @@ impl<
     TargetWidth,
     TargetHeight,
     TextG,
-    Clip,
     TextL,
 > {
     /// Create a new node.
     pub fn new(
+        clip: Clip,
         width: Width,
         height: Height,
         crop_w: CropW,
@@ -254,10 +323,10 @@ impl<
         target_width: TargetWidth,
         target_height: TargetHeight,
         text_g: TextG,
-        clip: Clip,
         text_l: TextL,
     ) -> Self {
         Self {
+            clip,
             width,
             height,
             crop_w,
@@ -265,12 +334,12 @@ impl<
             target_width,
             target_height,
             text_g,
-            clip,
             text_l,
         }
     }
 }
 impl<
+    Clip: crate::nodes::types::Clip,
     Width: crate::nodes::types::Int,
     Height: crate::nodes::types::Int,
     CropW: crate::nodes::types::Int,
@@ -278,10 +347,10 @@ impl<
     TargetWidth: crate::nodes::types::Int,
     TargetHeight: crate::nodes::types::Int,
     TextG: crate::nodes::types::String,
-    Clip: crate::nodes::types::Clip,
     TextL: crate::nodes::types::String,
 > crate::nodes::TypedNode
 for ClipTextEncodeSdxl<
+    Clip,
     Width,
     Height,
     CropW,
@@ -289,7 +358,6 @@ for ClipTextEncodeSdxl<
     TargetWidth,
     TargetHeight,
     TextG,
-    Clip,
     TextL,
 > {
     type Output = crate::nodes::types::ConditioningOut;
@@ -298,6 +366,7 @@ for ClipTextEncodeSdxl<
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
+        output.insert("clip".to_string(), self.clip.clone().into());
         output.insert("width".to_string(), self.width.clone().into());
         output.insert("height".to_string(), self.height.clone().into());
         output.insert("crop_w".to_string(), self.crop_w.clone().into());
@@ -305,7 +374,6 @@ for ClipTextEncodeSdxl<
         output.insert("target_width".to_string(), self.target_width.clone().into());
         output.insert("target_height".to_string(), self.target_height.clone().into());
         output.insert("text_g".to_string(), self.text_g.clone().into());
-        output.insert("clip".to_string(), self.clip.clone().into());
         output.insert("text_l".to_string(), self.text_l.clone().into());
         output
     }
