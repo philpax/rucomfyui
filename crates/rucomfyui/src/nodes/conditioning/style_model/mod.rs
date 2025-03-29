@@ -8,18 +8,18 @@ use crate::{
 ///**Apply Style Model**: No description.
 #[derive(Clone)]
 pub struct StyleModelApply<
-    Conditioning: crate::nodes::types::Conditioning,
-    StyleModel: crate::nodes::types::StyleModel,
-    ClipVisionOutput: crate::nodes::types::ClipVisionOutput,
-    Strength: crate::nodes::types::Float,
-    StrengthType: crate::nodes::types::String,
+    ConditioningParam: crate::nodes::types::Conditioning,
+    StyleModelParam: crate::nodes::types::StyleModel,
+    ClipVisionOutputParam: crate::nodes::types::ClipVisionOutput,
+    StrengthParam: crate::nodes::types::Float,
+    StrengthTypeParam: crate::nodes::types::String,
 > {
     ///No documentation.
-    pub conditioning: Conditioning,
+    pub conditioning: ConditioningParam,
     ///No documentation.
-    pub style_model: StyleModel,
+    pub style_model: StyleModelParam,
     ///No documentation.
-    pub clip_vision_output: ClipVisionOutput,
+    pub clip_vision_output: ClipVisionOutputParam,
     /**No documentation.
 
 **Metadata**:
@@ -28,24 +28,30 @@ pub struct StyleModelApply<
   - Min: 0
   - Step: 0.001
 */
-    pub strength: Strength,
+    pub strength: StrengthParam,
     ///No documentation.
-    pub strength_type: StrengthType,
+    pub strength_type: StrengthTypeParam,
 }
 impl<
-    Conditioning: crate::nodes::types::Conditioning,
-    StyleModel: crate::nodes::types::StyleModel,
-    ClipVisionOutput: crate::nodes::types::ClipVisionOutput,
-    Strength: crate::nodes::types::Float,
-    StrengthType: crate::nodes::types::String,
-> StyleModelApply<Conditioning, StyleModel, ClipVisionOutput, Strength, StrengthType> {
+    ConditioningParam: crate::nodes::types::Conditioning,
+    StyleModelParam: crate::nodes::types::StyleModel,
+    ClipVisionOutputParam: crate::nodes::types::ClipVisionOutput,
+    StrengthParam: crate::nodes::types::Float,
+    StrengthTypeParam: crate::nodes::types::String,
+> StyleModelApply<
+    ConditioningParam,
+    StyleModelParam,
+    ClipVisionOutputParam,
+    StrengthParam,
+    StrengthTypeParam,
+> {
     /// Create a new node.
     pub fn new(
-        conditioning: Conditioning,
-        style_model: StyleModel,
-        clip_vision_output: ClipVisionOutput,
-        strength: Strength,
-        strength_type: StrengthType,
+        conditioning: ConditioningParam,
+        style_model: StyleModelParam,
+        clip_vision_output: ClipVisionOutputParam,
+        strength: StrengthParam,
+        strength_type: StrengthTypeParam,
     ) -> Self {
         Self {
             conditioning,
@@ -57,13 +63,19 @@ impl<
     }
 }
 impl<
-    Conditioning: crate::nodes::types::Conditioning,
-    StyleModel: crate::nodes::types::StyleModel,
-    ClipVisionOutput: crate::nodes::types::ClipVisionOutput,
-    Strength: crate::nodes::types::Float,
-    StrengthType: crate::nodes::types::String,
+    ConditioningParam: crate::nodes::types::Conditioning,
+    StyleModelParam: crate::nodes::types::StyleModel,
+    ClipVisionOutputParam: crate::nodes::types::ClipVisionOutput,
+    StrengthParam: crate::nodes::types::Float,
+    StrengthTypeParam: crate::nodes::types::String,
 > crate::nodes::TypedNode
-for StyleModelApply<Conditioning, StyleModel, ClipVisionOutput, Strength, StrengthType> {
+for StyleModelApply<
+    ConditioningParam,
+    StyleModelParam,
+    ClipVisionOutputParam,
+    StrengthParam,
+    StrengthTypeParam,
+> {
     type Output = crate::nodes::types::ConditioningOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)

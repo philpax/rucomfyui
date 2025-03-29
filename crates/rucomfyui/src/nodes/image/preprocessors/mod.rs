@@ -8,12 +8,12 @@ use crate::{
 ///**Canny**: No description.
 #[derive(Clone)]
 pub struct Canny<
-    Image: crate::nodes::types::Image,
-    LowThreshold: crate::nodes::types::Float,
-    HighThreshold: crate::nodes::types::Float,
+    ImageParam: crate::nodes::types::Image,
+    LowThresholdParam: crate::nodes::types::Float,
+    HighThresholdParam: crate::nodes::types::Float,
 > {
     ///No documentation.
-    pub image: Image,
+    pub image: ImageParam,
     /**No documentation.
 
 **Metadata**:
@@ -22,7 +22,7 @@ pub struct Canny<
   - Min: 0.01
   - Step: 0.01
 */
-    pub low_threshold: LowThreshold,
+    pub low_threshold: LowThresholdParam,
     /**No documentation.
 
 **Metadata**:
@@ -31,18 +31,18 @@ pub struct Canny<
   - Min: 0.01
   - Step: 0.01
 */
-    pub high_threshold: HighThreshold,
+    pub high_threshold: HighThresholdParam,
 }
 impl<
-    Image: crate::nodes::types::Image,
-    LowThreshold: crate::nodes::types::Float,
-    HighThreshold: crate::nodes::types::Float,
-> Canny<Image, LowThreshold, HighThreshold> {
+    ImageParam: crate::nodes::types::Image,
+    LowThresholdParam: crate::nodes::types::Float,
+    HighThresholdParam: crate::nodes::types::Float,
+> Canny<ImageParam, LowThresholdParam, HighThresholdParam> {
     /// Create a new node.
     pub fn new(
-        image: Image,
-        low_threshold: LowThreshold,
-        high_threshold: HighThreshold,
+        image: ImageParam,
+        low_threshold: LowThresholdParam,
+        high_threshold: HighThresholdParam,
     ) -> Self {
         Self {
             image,
@@ -52,10 +52,10 @@ impl<
     }
 }
 impl<
-    Image: crate::nodes::types::Image,
-    LowThreshold: crate::nodes::types::Float,
-    HighThreshold: crate::nodes::types::Float,
-> crate::nodes::TypedNode for Canny<Image, LowThreshold, HighThreshold> {
+    ImageParam: crate::nodes::types::Image,
+    LowThresholdParam: crate::nodes::types::Float,
+    HighThresholdParam: crate::nodes::types::Float,
+> crate::nodes::TypedNode for Canny<ImageParam, LowThresholdParam, HighThresholdParam> {
     type Output = crate::nodes::types::ImageOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)

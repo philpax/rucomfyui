@@ -41,20 +41,20 @@ pub mod out {
 ///**SV3D_Conditioning**: No description.
 #[derive(Clone)]
 pub struct Sv3DConditioning<
-    ClipVision: crate::nodes::types::ClipVision,
-    InitImage: crate::nodes::types::Image,
-    Vae: crate::nodes::types::Vae,
-    Width: crate::nodes::types::Int,
-    Height: crate::nodes::types::Int,
-    VideoFrames: crate::nodes::types::Int,
-    Elevation: crate::nodes::types::Float,
+    ClipVisionParam: crate::nodes::types::ClipVision,
+    InitImageParam: crate::nodes::types::Image,
+    VaeParam: crate::nodes::types::Vae,
+    WidthParam: crate::nodes::types::Int,
+    HeightParam: crate::nodes::types::Int,
+    VideoFramesParam: crate::nodes::types::Int,
+    ElevationParam: crate::nodes::types::Float,
 > {
     ///No documentation.
-    pub clip_vision: ClipVision,
+    pub clip_vision: ClipVisionParam,
     ///No documentation.
-    pub init_image: InitImage,
+    pub init_image: InitImageParam,
     ///No documentation.
-    pub vae: Vae,
+    pub vae: VaeParam,
     /**No documentation.
 
 **Metadata**:
@@ -63,7 +63,7 @@ pub struct Sv3DConditioning<
   - Min: 16
   - Step: 8
 */
-    pub width: Width,
+    pub width: WidthParam,
     /**No documentation.
 
 **Metadata**:
@@ -72,7 +72,7 @@ pub struct Sv3DConditioning<
   - Min: 16
   - Step: 8
 */
-    pub height: Height,
+    pub height: HeightParam,
     /**No documentation.
 
 **Metadata**:
@@ -80,7 +80,7 @@ pub struct Sv3DConditioning<
   - Max: 4096
   - Min: 1
 */
-    pub video_frames: VideoFrames,
+    pub video_frames: VideoFramesParam,
     /**No documentation.
 
 **Metadata**:
@@ -90,26 +90,34 @@ pub struct Sv3DConditioning<
   - Round: false
   - Step: 0.1
 */
-    pub elevation: Elevation,
+    pub elevation: ElevationParam,
 }
 impl<
-    ClipVision: crate::nodes::types::ClipVision,
-    InitImage: crate::nodes::types::Image,
-    Vae: crate::nodes::types::Vae,
-    Width: crate::nodes::types::Int,
-    Height: crate::nodes::types::Int,
-    VideoFrames: crate::nodes::types::Int,
-    Elevation: crate::nodes::types::Float,
-> Sv3DConditioning<ClipVision, InitImage, Vae, Width, Height, VideoFrames, Elevation> {
+    ClipVisionParam: crate::nodes::types::ClipVision,
+    InitImageParam: crate::nodes::types::Image,
+    VaeParam: crate::nodes::types::Vae,
+    WidthParam: crate::nodes::types::Int,
+    HeightParam: crate::nodes::types::Int,
+    VideoFramesParam: crate::nodes::types::Int,
+    ElevationParam: crate::nodes::types::Float,
+> Sv3DConditioning<
+    ClipVisionParam,
+    InitImageParam,
+    VaeParam,
+    WidthParam,
+    HeightParam,
+    VideoFramesParam,
+    ElevationParam,
+> {
     /// Create a new node.
     pub fn new(
-        clip_vision: ClipVision,
-        init_image: InitImage,
-        vae: Vae,
-        width: Width,
-        height: Height,
-        video_frames: VideoFrames,
-        elevation: Elevation,
+        clip_vision: ClipVisionParam,
+        init_image: InitImageParam,
+        vae: VaeParam,
+        width: WidthParam,
+        height: HeightParam,
+        video_frames: VideoFramesParam,
+        elevation: ElevationParam,
     ) -> Self {
         Self {
             clip_vision,
@@ -123,15 +131,23 @@ impl<
     }
 }
 impl<
-    ClipVision: crate::nodes::types::ClipVision,
-    InitImage: crate::nodes::types::Image,
-    Vae: crate::nodes::types::Vae,
-    Width: crate::nodes::types::Int,
-    Height: crate::nodes::types::Int,
-    VideoFrames: crate::nodes::types::Int,
-    Elevation: crate::nodes::types::Float,
+    ClipVisionParam: crate::nodes::types::ClipVision,
+    InitImageParam: crate::nodes::types::Image,
+    VaeParam: crate::nodes::types::Vae,
+    WidthParam: crate::nodes::types::Int,
+    HeightParam: crate::nodes::types::Int,
+    VideoFramesParam: crate::nodes::types::Int,
+    ElevationParam: crate::nodes::types::Float,
 > crate::nodes::TypedNode
-for Sv3DConditioning<ClipVision, InitImage, Vae, Width, Height, VideoFrames, Elevation> {
+for Sv3DConditioning<
+    ClipVisionParam,
+    InitImageParam,
+    VaeParam,
+    WidthParam,
+    HeightParam,
+    VideoFramesParam,
+    ElevationParam,
+> {
     type Output = out::Sv3DConditioningOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
@@ -159,21 +175,21 @@ for Sv3DConditioning<ClipVision, InitImage, Vae, Width, Height, VideoFrames, Ele
 ///**StableZero123_Conditioning**: No description.
 #[derive(Clone)]
 pub struct StableZero123Conditioning<
-    ClipVision: crate::nodes::types::ClipVision,
-    InitImage: crate::nodes::types::Image,
-    Vae: crate::nodes::types::Vae,
-    Width: crate::nodes::types::Int,
-    Height: crate::nodes::types::Int,
-    BatchSize: crate::nodes::types::Int,
-    Elevation: crate::nodes::types::Float,
-    Azimuth: crate::nodes::types::Float,
+    ClipVisionParam: crate::nodes::types::ClipVision,
+    InitImageParam: crate::nodes::types::Image,
+    VaeParam: crate::nodes::types::Vae,
+    WidthParam: crate::nodes::types::Int,
+    HeightParam: crate::nodes::types::Int,
+    BatchSizeParam: crate::nodes::types::Int,
+    ElevationParam: crate::nodes::types::Float,
+    AzimuthParam: crate::nodes::types::Float,
 > {
     ///No documentation.
-    pub clip_vision: ClipVision,
+    pub clip_vision: ClipVisionParam,
     ///No documentation.
-    pub init_image: InitImage,
+    pub init_image: InitImageParam,
     ///No documentation.
-    pub vae: Vae,
+    pub vae: VaeParam,
     /**No documentation.
 
 **Metadata**:
@@ -182,7 +198,7 @@ pub struct StableZero123Conditioning<
   - Min: 16
   - Step: 8
 */
-    pub width: Width,
+    pub width: WidthParam,
     /**No documentation.
 
 **Metadata**:
@@ -191,7 +207,7 @@ pub struct StableZero123Conditioning<
   - Min: 16
   - Step: 8
 */
-    pub height: Height,
+    pub height: HeightParam,
     /**No documentation.
 
 **Metadata**:
@@ -199,7 +215,7 @@ pub struct StableZero123Conditioning<
   - Max: 4096
   - Min: 1
 */
-    pub batch_size: BatchSize,
+    pub batch_size: BatchSizeParam,
     /**No documentation.
 
 **Metadata**:
@@ -209,7 +225,7 @@ pub struct StableZero123Conditioning<
   - Round: false
   - Step: 0.1
 */
-    pub elevation: Elevation,
+    pub elevation: ElevationParam,
     /**No documentation.
 
 **Metadata**:
@@ -219,37 +235,37 @@ pub struct StableZero123Conditioning<
   - Round: false
   - Step: 0.1
 */
-    pub azimuth: Azimuth,
+    pub azimuth: AzimuthParam,
 }
 impl<
-    ClipVision: crate::nodes::types::ClipVision,
-    InitImage: crate::nodes::types::Image,
-    Vae: crate::nodes::types::Vae,
-    Width: crate::nodes::types::Int,
-    Height: crate::nodes::types::Int,
-    BatchSize: crate::nodes::types::Int,
-    Elevation: crate::nodes::types::Float,
-    Azimuth: crate::nodes::types::Float,
+    ClipVisionParam: crate::nodes::types::ClipVision,
+    InitImageParam: crate::nodes::types::Image,
+    VaeParam: crate::nodes::types::Vae,
+    WidthParam: crate::nodes::types::Int,
+    HeightParam: crate::nodes::types::Int,
+    BatchSizeParam: crate::nodes::types::Int,
+    ElevationParam: crate::nodes::types::Float,
+    AzimuthParam: crate::nodes::types::Float,
 > StableZero123Conditioning<
-    ClipVision,
-    InitImage,
-    Vae,
-    Width,
-    Height,
-    BatchSize,
-    Elevation,
-    Azimuth,
+    ClipVisionParam,
+    InitImageParam,
+    VaeParam,
+    WidthParam,
+    HeightParam,
+    BatchSizeParam,
+    ElevationParam,
+    AzimuthParam,
 > {
     /// Create a new node.
     pub fn new(
-        clip_vision: ClipVision,
-        init_image: InitImage,
-        vae: Vae,
-        width: Width,
-        height: Height,
-        batch_size: BatchSize,
-        elevation: Elevation,
-        azimuth: Azimuth,
+        clip_vision: ClipVisionParam,
+        init_image: InitImageParam,
+        vae: VaeParam,
+        width: WidthParam,
+        height: HeightParam,
+        batch_size: BatchSizeParam,
+        elevation: ElevationParam,
+        azimuth: AzimuthParam,
     ) -> Self {
         Self {
             clip_vision,
@@ -264,24 +280,24 @@ impl<
     }
 }
 impl<
-    ClipVision: crate::nodes::types::ClipVision,
-    InitImage: crate::nodes::types::Image,
-    Vae: crate::nodes::types::Vae,
-    Width: crate::nodes::types::Int,
-    Height: crate::nodes::types::Int,
-    BatchSize: crate::nodes::types::Int,
-    Elevation: crate::nodes::types::Float,
-    Azimuth: crate::nodes::types::Float,
+    ClipVisionParam: crate::nodes::types::ClipVision,
+    InitImageParam: crate::nodes::types::Image,
+    VaeParam: crate::nodes::types::Vae,
+    WidthParam: crate::nodes::types::Int,
+    HeightParam: crate::nodes::types::Int,
+    BatchSizeParam: crate::nodes::types::Int,
+    ElevationParam: crate::nodes::types::Float,
+    AzimuthParam: crate::nodes::types::Float,
 > crate::nodes::TypedNode
 for StableZero123Conditioning<
-    ClipVision,
-    InitImage,
-    Vae,
-    Width,
-    Height,
-    BatchSize,
-    Elevation,
-    Azimuth,
+    ClipVisionParam,
+    InitImageParam,
+    VaeParam,
+    WidthParam,
+    HeightParam,
+    BatchSizeParam,
+    ElevationParam,
+    AzimuthParam,
 > {
     type Output = out::StableZero123ConditioningOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
@@ -311,23 +327,23 @@ for StableZero123Conditioning<
 ///**StableZero123_Conditioning_Batched**: No description.
 #[derive(Clone)]
 pub struct StableZero123ConditioningBatched<
-    ClipVision: crate::nodes::types::ClipVision,
-    InitImage: crate::nodes::types::Image,
-    Vae: crate::nodes::types::Vae,
-    Width: crate::nodes::types::Int,
-    Height: crate::nodes::types::Int,
-    BatchSize: crate::nodes::types::Int,
-    Elevation: crate::nodes::types::Float,
-    Azimuth: crate::nodes::types::Float,
-    ElevationBatchIncrement: crate::nodes::types::Float,
-    AzimuthBatchIncrement: crate::nodes::types::Float,
+    ClipVisionParam: crate::nodes::types::ClipVision,
+    InitImageParam: crate::nodes::types::Image,
+    VaeParam: crate::nodes::types::Vae,
+    WidthParam: crate::nodes::types::Int,
+    HeightParam: crate::nodes::types::Int,
+    BatchSizeParam: crate::nodes::types::Int,
+    ElevationParam: crate::nodes::types::Float,
+    AzimuthParam: crate::nodes::types::Float,
+    ElevationBatchIncrementParam: crate::nodes::types::Float,
+    AzimuthBatchIncrementParam: crate::nodes::types::Float,
 > {
     ///No documentation.
-    pub clip_vision: ClipVision,
+    pub clip_vision: ClipVisionParam,
     ///No documentation.
-    pub init_image: InitImage,
+    pub init_image: InitImageParam,
     ///No documentation.
-    pub vae: Vae,
+    pub vae: VaeParam,
     /**No documentation.
 
 **Metadata**:
@@ -336,7 +352,7 @@ pub struct StableZero123ConditioningBatched<
   - Min: 16
   - Step: 8
 */
-    pub width: Width,
+    pub width: WidthParam,
     /**No documentation.
 
 **Metadata**:
@@ -345,7 +361,7 @@ pub struct StableZero123ConditioningBatched<
   - Min: 16
   - Step: 8
 */
-    pub height: Height,
+    pub height: HeightParam,
     /**No documentation.
 
 **Metadata**:
@@ -353,7 +369,7 @@ pub struct StableZero123ConditioningBatched<
   - Max: 4096
   - Min: 1
 */
-    pub batch_size: BatchSize,
+    pub batch_size: BatchSizeParam,
     /**No documentation.
 
 **Metadata**:
@@ -363,7 +379,7 @@ pub struct StableZero123ConditioningBatched<
   - Round: false
   - Step: 0.1
 */
-    pub elevation: Elevation,
+    pub elevation: ElevationParam,
     /**No documentation.
 
 **Metadata**:
@@ -373,7 +389,7 @@ pub struct StableZero123ConditioningBatched<
   - Round: false
   - Step: 0.1
 */
-    pub azimuth: Azimuth,
+    pub azimuth: AzimuthParam,
     /**No documentation.
 
 **Metadata**:
@@ -383,7 +399,7 @@ pub struct StableZero123ConditioningBatched<
   - Round: false
   - Step: 0.1
 */
-    pub elevation_batch_increment: ElevationBatchIncrement,
+    pub elevation_batch_increment: ElevationBatchIncrementParam,
     /**No documentation.
 
 **Metadata**:
@@ -393,43 +409,43 @@ pub struct StableZero123ConditioningBatched<
   - Round: false
   - Step: 0.1
 */
-    pub azimuth_batch_increment: AzimuthBatchIncrement,
+    pub azimuth_batch_increment: AzimuthBatchIncrementParam,
 }
 impl<
-    ClipVision: crate::nodes::types::ClipVision,
-    InitImage: crate::nodes::types::Image,
-    Vae: crate::nodes::types::Vae,
-    Width: crate::nodes::types::Int,
-    Height: crate::nodes::types::Int,
-    BatchSize: crate::nodes::types::Int,
-    Elevation: crate::nodes::types::Float,
-    Azimuth: crate::nodes::types::Float,
-    ElevationBatchIncrement: crate::nodes::types::Float,
-    AzimuthBatchIncrement: crate::nodes::types::Float,
+    ClipVisionParam: crate::nodes::types::ClipVision,
+    InitImageParam: crate::nodes::types::Image,
+    VaeParam: crate::nodes::types::Vae,
+    WidthParam: crate::nodes::types::Int,
+    HeightParam: crate::nodes::types::Int,
+    BatchSizeParam: crate::nodes::types::Int,
+    ElevationParam: crate::nodes::types::Float,
+    AzimuthParam: crate::nodes::types::Float,
+    ElevationBatchIncrementParam: crate::nodes::types::Float,
+    AzimuthBatchIncrementParam: crate::nodes::types::Float,
 > StableZero123ConditioningBatched<
-    ClipVision,
-    InitImage,
-    Vae,
-    Width,
-    Height,
-    BatchSize,
-    Elevation,
-    Azimuth,
-    ElevationBatchIncrement,
-    AzimuthBatchIncrement,
+    ClipVisionParam,
+    InitImageParam,
+    VaeParam,
+    WidthParam,
+    HeightParam,
+    BatchSizeParam,
+    ElevationParam,
+    AzimuthParam,
+    ElevationBatchIncrementParam,
+    AzimuthBatchIncrementParam,
 > {
     /// Create a new node.
     pub fn new(
-        clip_vision: ClipVision,
-        init_image: InitImage,
-        vae: Vae,
-        width: Width,
-        height: Height,
-        batch_size: BatchSize,
-        elevation: Elevation,
-        azimuth: Azimuth,
-        elevation_batch_increment: ElevationBatchIncrement,
-        azimuth_batch_increment: AzimuthBatchIncrement,
+        clip_vision: ClipVisionParam,
+        init_image: InitImageParam,
+        vae: VaeParam,
+        width: WidthParam,
+        height: HeightParam,
+        batch_size: BatchSizeParam,
+        elevation: ElevationParam,
+        azimuth: AzimuthParam,
+        elevation_batch_increment: ElevationBatchIncrementParam,
+        azimuth_batch_increment: AzimuthBatchIncrementParam,
     ) -> Self {
         Self {
             clip_vision,
@@ -446,28 +462,28 @@ impl<
     }
 }
 impl<
-    ClipVision: crate::nodes::types::ClipVision,
-    InitImage: crate::nodes::types::Image,
-    Vae: crate::nodes::types::Vae,
-    Width: crate::nodes::types::Int,
-    Height: crate::nodes::types::Int,
-    BatchSize: crate::nodes::types::Int,
-    Elevation: crate::nodes::types::Float,
-    Azimuth: crate::nodes::types::Float,
-    ElevationBatchIncrement: crate::nodes::types::Float,
-    AzimuthBatchIncrement: crate::nodes::types::Float,
+    ClipVisionParam: crate::nodes::types::ClipVision,
+    InitImageParam: crate::nodes::types::Image,
+    VaeParam: crate::nodes::types::Vae,
+    WidthParam: crate::nodes::types::Int,
+    HeightParam: crate::nodes::types::Int,
+    BatchSizeParam: crate::nodes::types::Int,
+    ElevationParam: crate::nodes::types::Float,
+    AzimuthParam: crate::nodes::types::Float,
+    ElevationBatchIncrementParam: crate::nodes::types::Float,
+    AzimuthBatchIncrementParam: crate::nodes::types::Float,
 > crate::nodes::TypedNode
 for StableZero123ConditioningBatched<
-    ClipVision,
-    InitImage,
-    Vae,
-    Width,
-    Height,
-    BatchSize,
-    Elevation,
-    Azimuth,
-    ElevationBatchIncrement,
-    AzimuthBatchIncrement,
+    ClipVisionParam,
+    InitImageParam,
+    VaeParam,
+    WidthParam,
+    HeightParam,
+    BatchSizeParam,
+    ElevationParam,
+    AzimuthParam,
+    ElevationBatchIncrementParam,
+    AzimuthBatchIncrementParam,
 > {
     type Output = out::StableZero123ConditioningBatchedOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {

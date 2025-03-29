@@ -8,27 +8,27 @@ use crate::{
 ///**LatentApplyOperation**: No description.
 #[derive(Clone)]
 pub struct LatentApplyOperation<
-    Samples: crate::nodes::types::Latent,
-    Operation: crate::nodes::types::LatentOperation,
+    SamplesParam: crate::nodes::types::Latent,
+    OperationParam: crate::nodes::types::LatentOperation,
 > {
     ///No documentation.
-    pub samples: Samples,
+    pub samples: SamplesParam,
     ///No documentation.
-    pub operation: Operation,
+    pub operation: OperationParam,
 }
 impl<
-    Samples: crate::nodes::types::Latent,
-    Operation: crate::nodes::types::LatentOperation,
-> LatentApplyOperation<Samples, Operation> {
+    SamplesParam: crate::nodes::types::Latent,
+    OperationParam: crate::nodes::types::LatentOperation,
+> LatentApplyOperation<SamplesParam, OperationParam> {
     /// Create a new node.
-    pub fn new(samples: Samples, operation: Operation) -> Self {
+    pub fn new(samples: SamplesParam, operation: OperationParam) -> Self {
         Self { samples, operation }
     }
 }
 impl<
-    Samples: crate::nodes::types::Latent,
-    Operation: crate::nodes::types::LatentOperation,
-> crate::nodes::TypedNode for LatentApplyOperation<Samples, Operation> {
+    SamplesParam: crate::nodes::types::Latent,
+    OperationParam: crate::nodes::types::LatentOperation,
+> crate::nodes::TypedNode for LatentApplyOperation<SamplesParam, OperationParam> {
     type Output = crate::nodes::types::LatentOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)
@@ -47,27 +47,27 @@ impl<
 ///**LatentApplyOperationCFG**: No description.
 #[derive(Clone)]
 pub struct LatentApplyOperationCfg<
-    Model: crate::nodes::types::Model,
-    Operation: crate::nodes::types::LatentOperation,
+    ModelParam: crate::nodes::types::Model,
+    OperationParam: crate::nodes::types::LatentOperation,
 > {
     ///No documentation.
-    pub model: Model,
+    pub model: ModelParam,
     ///No documentation.
-    pub operation: Operation,
+    pub operation: OperationParam,
 }
 impl<
-    Model: crate::nodes::types::Model,
-    Operation: crate::nodes::types::LatentOperation,
-> LatentApplyOperationCfg<Model, Operation> {
+    ModelParam: crate::nodes::types::Model,
+    OperationParam: crate::nodes::types::LatentOperation,
+> LatentApplyOperationCfg<ModelParam, OperationParam> {
     /// Create a new node.
-    pub fn new(model: Model, operation: Operation) -> Self {
+    pub fn new(model: ModelParam, operation: OperationParam) -> Self {
         Self { model, operation }
     }
 }
 impl<
-    Model: crate::nodes::types::Model,
-    Operation: crate::nodes::types::LatentOperation,
-> crate::nodes::TypedNode for LatentApplyOperationCfg<Model, Operation> {
+    ModelParam: crate::nodes::types::Model,
+    OperationParam: crate::nodes::types::LatentOperation,
+> crate::nodes::TypedNode for LatentApplyOperationCfg<ModelParam, OperationParam> {
     type Output = crate::nodes::types::ModelOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)
@@ -86,9 +86,9 @@ impl<
 ///**LatentOperationSharpen**: No description.
 #[derive(Clone)]
 pub struct LatentOperationSharpen<
-    SharpenRadius: crate::nodes::types::Int,
-    Sigma: crate::nodes::types::Float,
-    Alpha: crate::nodes::types::Float,
+    SharpenRadiusParam: crate::nodes::types::Int,
+    SigmaParam: crate::nodes::types::Float,
+    AlphaParam: crate::nodes::types::Float,
 > {
     /**No documentation.
 
@@ -98,7 +98,7 @@ pub struct LatentOperationSharpen<
   - Min: 1
   - Step: 1
 */
-    pub sharpen_radius: SharpenRadius,
+    pub sharpen_radius: SharpenRadiusParam,
     /**No documentation.
 
 **Metadata**:
@@ -107,7 +107,7 @@ pub struct LatentOperationSharpen<
   - Min: 0.1
   - Step: 0.1
 */
-    pub sigma: Sigma,
+    pub sigma: SigmaParam,
     /**No documentation.
 
 **Metadata**:
@@ -116,15 +116,19 @@ pub struct LatentOperationSharpen<
   - Min: 0
   - Step: 0.01
 */
-    pub alpha: Alpha,
+    pub alpha: AlphaParam,
 }
 impl<
-    SharpenRadius: crate::nodes::types::Int,
-    Sigma: crate::nodes::types::Float,
-    Alpha: crate::nodes::types::Float,
-> LatentOperationSharpen<SharpenRadius, Sigma, Alpha> {
+    SharpenRadiusParam: crate::nodes::types::Int,
+    SigmaParam: crate::nodes::types::Float,
+    AlphaParam: crate::nodes::types::Float,
+> LatentOperationSharpen<SharpenRadiusParam, SigmaParam, AlphaParam> {
     /// Create a new node.
-    pub fn new(sharpen_radius: SharpenRadius, sigma: Sigma, alpha: Alpha) -> Self {
+    pub fn new(
+        sharpen_radius: SharpenRadiusParam,
+        sigma: SigmaParam,
+        alpha: AlphaParam,
+    ) -> Self {
         Self {
             sharpen_radius,
             sigma,
@@ -133,10 +137,11 @@ impl<
     }
 }
 impl<
-    SharpenRadius: crate::nodes::types::Int,
-    Sigma: crate::nodes::types::Float,
-    Alpha: crate::nodes::types::Float,
-> crate::nodes::TypedNode for LatentOperationSharpen<SharpenRadius, Sigma, Alpha> {
+    SharpenRadiusParam: crate::nodes::types::Int,
+    SigmaParam: crate::nodes::types::Float,
+    AlphaParam: crate::nodes::types::Float,
+> crate::nodes::TypedNode
+for LatentOperationSharpen<SharpenRadiusParam, SigmaParam, AlphaParam> {
     type Output = crate::nodes::types::LatentOperationOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)
@@ -155,7 +160,7 @@ impl<
 }
 ///**LatentOperationTonemapReinhard**: No description.
 #[derive(Clone)]
-pub struct LatentOperationTonemapReinhard<Multiplier: crate::nodes::types::Float> {
+pub struct LatentOperationTonemapReinhard<MultiplierParam: crate::nodes::types::Float> {
     /**No documentation.
 
 **Metadata**:
@@ -164,16 +169,18 @@ pub struct LatentOperationTonemapReinhard<Multiplier: crate::nodes::types::Float
   - Min: 0
   - Step: 0.01
 */
-    pub multiplier: Multiplier,
+    pub multiplier: MultiplierParam,
 }
-impl<Multiplier: crate::nodes::types::Float> LatentOperationTonemapReinhard<Multiplier> {
+impl<
+    MultiplierParam: crate::nodes::types::Float,
+> LatentOperationTonemapReinhard<MultiplierParam> {
     /// Create a new node.
-    pub fn new(multiplier: Multiplier) -> Self {
+    pub fn new(multiplier: MultiplierParam) -> Self {
         Self { multiplier }
     }
 }
-impl<Multiplier: crate::nodes::types::Float> crate::nodes::TypedNode
-for LatentOperationTonemapReinhard<Multiplier> {
+impl<MultiplierParam: crate::nodes::types::Float> crate::nodes::TypedNode
+for LatentOperationTonemapReinhard<MultiplierParam> {
     type Output = crate::nodes::types::LatentOperationOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)

@@ -113,21 +113,22 @@ pub mod out {
 ///**Hunyuan3Dv2Conditioning**: No description.
 #[derive(Clone)]
 pub struct Hunyuan3Dv2Conditioning<
-    ClipVisionOutput: crate::nodes::types::ClipVisionOutput,
+    ClipVisionOutputParam: crate::nodes::types::ClipVisionOutput,
 > {
     ///No documentation.
-    pub clip_vision_output: ClipVisionOutput,
+    pub clip_vision_output: ClipVisionOutputParam,
 }
 impl<
-    ClipVisionOutput: crate::nodes::types::ClipVisionOutput,
-> Hunyuan3Dv2Conditioning<ClipVisionOutput> {
+    ClipVisionOutputParam: crate::nodes::types::ClipVisionOutput,
+> Hunyuan3Dv2Conditioning<ClipVisionOutputParam> {
     /// Create a new node.
-    pub fn new(clip_vision_output: ClipVisionOutput) -> Self {
+    pub fn new(clip_vision_output: ClipVisionOutputParam) -> Self {
         Self { clip_vision_output }
     }
 }
-impl<ClipVisionOutput: crate::nodes::types::ClipVisionOutput> crate::nodes::TypedNode
-for Hunyuan3Dv2Conditioning<ClipVisionOutput> {
+impl<
+    ClipVisionOutputParam: crate::nodes::types::ClipVisionOutput,
+> crate::nodes::TypedNode for Hunyuan3Dv2Conditioning<ClipVisionOutputParam> {
     type Output = out::Hunyuan3Dv2ConditioningOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
@@ -152,47 +153,47 @@ for Hunyuan3Dv2Conditioning<ClipVisionOutput> {
 ///**Hunyuan3Dv2ConditioningMultiView**: No description.
 #[derive(Clone)]
 pub struct Hunyuan3Dv2ConditioningMultiView<
-    Front: crate::nodes::types::ClipVisionOutput
+    FrontParam: crate::nodes::types::ClipVisionOutput
         = crate::nodes::types::ClipVisionOutputOut,
-    Left: crate::nodes::types::ClipVisionOutput
+    LeftParam: crate::nodes::types::ClipVisionOutput
         = crate::nodes::types::ClipVisionOutputOut,
-    Back: crate::nodes::types::ClipVisionOutput
+    BackParam: crate::nodes::types::ClipVisionOutput
         = crate::nodes::types::ClipVisionOutputOut,
-    Right: crate::nodes::types::ClipVisionOutput
+    RightParam: crate::nodes::types::ClipVisionOutput
         = crate::nodes::types::ClipVisionOutputOut,
 > {
     ///No documentation.
-    pub front: Option<Front>,
+    pub front: Option<FrontParam>,
     ///No documentation.
-    pub left: Option<Left>,
+    pub left: Option<LeftParam>,
     ///No documentation.
-    pub back: Option<Back>,
+    pub back: Option<BackParam>,
     ///No documentation.
-    pub right: Option<Right>,
+    pub right: Option<RightParam>,
 }
 impl<
-    Front: crate::nodes::types::ClipVisionOutput,
-    Left: crate::nodes::types::ClipVisionOutput,
-    Back: crate::nodes::types::ClipVisionOutput,
-    Right: crate::nodes::types::ClipVisionOutput,
-> Hunyuan3Dv2ConditioningMultiView<Front, Left, Back, Right> {
+    FrontParam: crate::nodes::types::ClipVisionOutput,
+    LeftParam: crate::nodes::types::ClipVisionOutput,
+    BackParam: crate::nodes::types::ClipVisionOutput,
+    RightParam: crate::nodes::types::ClipVisionOutput,
+> Hunyuan3Dv2ConditioningMultiView<FrontParam, LeftParam, BackParam, RightParam> {
     /// Create a new node.
     pub fn new(
-        front: Option<Front>,
-        left: Option<Left>,
-        back: Option<Back>,
-        right: Option<Right>,
+        front: Option<FrontParam>,
+        left: Option<LeftParam>,
+        back: Option<BackParam>,
+        right: Option<RightParam>,
     ) -> Self {
         Self { front, left, back, right }
     }
 }
 impl<
-    Front: crate::nodes::types::ClipVisionOutput,
-    Left: crate::nodes::types::ClipVisionOutput,
-    Back: crate::nodes::types::ClipVisionOutput,
-    Right: crate::nodes::types::ClipVisionOutput,
+    FrontParam: crate::nodes::types::ClipVisionOutput,
+    LeftParam: crate::nodes::types::ClipVisionOutput,
+    BackParam: crate::nodes::types::ClipVisionOutput,
+    RightParam: crate::nodes::types::ClipVisionOutput,
 > crate::nodes::TypedNode
-for Hunyuan3Dv2ConditioningMultiView<Front, Left, Back, Right> {
+for Hunyuan3Dv2ConditioningMultiView<FrontParam, LeftParam, BackParam, RightParam> {
     type Output = out::Hunyuan3Dv2ConditioningMultiViewOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
@@ -224,19 +225,19 @@ for Hunyuan3Dv2ConditioningMultiView<Front, Left, Back, Right> {
 ///**HunyuanImageToVideo**: No description.
 #[derive(Clone)]
 pub struct HunyuanImageToVideo<
-    Positive: crate::nodes::types::Conditioning,
-    Vae: crate::nodes::types::Vae,
-    Width: crate::nodes::types::Int,
-    Height: crate::nodes::types::Int,
-    Length: crate::nodes::types::Int,
-    BatchSize: crate::nodes::types::Int,
-    GuidanceType: crate::nodes::types::String,
-    StartImage: crate::nodes::types::Image = crate::nodes::types::ImageOut,
+    PositiveParam: crate::nodes::types::Conditioning,
+    VaeParam: crate::nodes::types::Vae,
+    WidthParam: crate::nodes::types::Int,
+    HeightParam: crate::nodes::types::Int,
+    LengthParam: crate::nodes::types::Int,
+    BatchSizeParam: crate::nodes::types::Int,
+    GuidanceTypeParam: crate::nodes::types::String,
+    StartImageParam: crate::nodes::types::Image = crate::nodes::types::ImageOut,
 > {
     ///No documentation.
-    pub positive: Positive,
+    pub positive: PositiveParam,
     ///No documentation.
-    pub vae: Vae,
+    pub vae: VaeParam,
     /**No documentation.
 
 **Metadata**:
@@ -245,7 +246,7 @@ pub struct HunyuanImageToVideo<
   - Min: 16
   - Step: 16
 */
-    pub width: Width,
+    pub width: WidthParam,
     /**No documentation.
 
 **Metadata**:
@@ -254,7 +255,7 @@ pub struct HunyuanImageToVideo<
   - Min: 16
   - Step: 16
 */
-    pub height: Height,
+    pub height: HeightParam,
     /**No documentation.
 
 **Metadata**:
@@ -263,7 +264,7 @@ pub struct HunyuanImageToVideo<
   - Min: 1
   - Step: 4
 */
-    pub length: Length,
+    pub length: LengthParam,
     /**No documentation.
 
 **Metadata**:
@@ -271,41 +272,41 @@ pub struct HunyuanImageToVideo<
   - Max: 4096
   - Min: 1
 */
-    pub batch_size: BatchSize,
+    pub batch_size: BatchSizeParam,
     ///No documentation.
-    pub guidance_type: GuidanceType,
+    pub guidance_type: GuidanceTypeParam,
     ///No documentation.
-    pub start_image: Option<StartImage>,
+    pub start_image: Option<StartImageParam>,
 }
 impl<
-    Positive: crate::nodes::types::Conditioning,
-    Vae: crate::nodes::types::Vae,
-    Width: crate::nodes::types::Int,
-    Height: crate::nodes::types::Int,
-    Length: crate::nodes::types::Int,
-    BatchSize: crate::nodes::types::Int,
-    GuidanceType: crate::nodes::types::String,
-    StartImage: crate::nodes::types::Image,
+    PositiveParam: crate::nodes::types::Conditioning,
+    VaeParam: crate::nodes::types::Vae,
+    WidthParam: crate::nodes::types::Int,
+    HeightParam: crate::nodes::types::Int,
+    LengthParam: crate::nodes::types::Int,
+    BatchSizeParam: crate::nodes::types::Int,
+    GuidanceTypeParam: crate::nodes::types::String,
+    StartImageParam: crate::nodes::types::Image,
 > HunyuanImageToVideo<
-    Positive,
-    Vae,
-    Width,
-    Height,
-    Length,
-    BatchSize,
-    GuidanceType,
-    StartImage,
+    PositiveParam,
+    VaeParam,
+    WidthParam,
+    HeightParam,
+    LengthParam,
+    BatchSizeParam,
+    GuidanceTypeParam,
+    StartImageParam,
 > {
     /// Create a new node.
     pub fn new(
-        positive: Positive,
-        vae: Vae,
-        width: Width,
-        height: Height,
-        length: Length,
-        batch_size: BatchSize,
-        guidance_type: GuidanceType,
-        start_image: Option<StartImage>,
+        positive: PositiveParam,
+        vae: VaeParam,
+        width: WidthParam,
+        height: HeightParam,
+        length: LengthParam,
+        batch_size: BatchSizeParam,
+        guidance_type: GuidanceTypeParam,
+        start_image: Option<StartImageParam>,
     ) -> Self {
         Self {
             positive,
@@ -320,24 +321,24 @@ impl<
     }
 }
 impl<
-    Positive: crate::nodes::types::Conditioning,
-    Vae: crate::nodes::types::Vae,
-    Width: crate::nodes::types::Int,
-    Height: crate::nodes::types::Int,
-    Length: crate::nodes::types::Int,
-    BatchSize: crate::nodes::types::Int,
-    GuidanceType: crate::nodes::types::String,
-    StartImage: crate::nodes::types::Image,
+    PositiveParam: crate::nodes::types::Conditioning,
+    VaeParam: crate::nodes::types::Vae,
+    WidthParam: crate::nodes::types::Int,
+    HeightParam: crate::nodes::types::Int,
+    LengthParam: crate::nodes::types::Int,
+    BatchSizeParam: crate::nodes::types::Int,
+    GuidanceTypeParam: crate::nodes::types::String,
+    StartImageParam: crate::nodes::types::Image,
 > crate::nodes::TypedNode
 for HunyuanImageToVideo<
-    Positive,
-    Vae,
-    Width,
-    Height,
-    Length,
-    BatchSize,
-    GuidanceType,
-    StartImage,
+    PositiveParam,
+    VaeParam,
+    WidthParam,
+    HeightParam,
+    LengthParam,
+    BatchSizeParam,
+    GuidanceTypeParam,
+    StartImageParam,
 > {
     type Output = out::HunyuanImageToVideoOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
@@ -368,24 +369,24 @@ for HunyuanImageToVideo<
 ///**LTXVAddGuide**: No description.
 #[derive(Clone)]
 pub struct LtxvAddGuide<
-    Positive: crate::nodes::types::Conditioning,
-    Negative: crate::nodes::types::Conditioning,
-    Vae: crate::nodes::types::Vae,
-    Latent: crate::nodes::types::Latent,
-    Image: crate::nodes::types::Image,
-    FrameIdx: crate::nodes::types::Int,
-    Strength: crate::nodes::types::Float,
+    PositiveParam: crate::nodes::types::Conditioning,
+    NegativeParam: crate::nodes::types::Conditioning,
+    VaeParam: crate::nodes::types::Vae,
+    LatentParam: crate::nodes::types::Latent,
+    ImageParam: crate::nodes::types::Image,
+    FrameIdxParam: crate::nodes::types::Int,
+    StrengthParam: crate::nodes::types::Float,
 > {
     ///No documentation.
-    pub positive: Positive,
+    pub positive: PositiveParam,
     ///No documentation.
-    pub negative: Negative,
+    pub negative: NegativeParam,
     ///No documentation.
-    pub vae: Vae,
+    pub vae: VaeParam,
     ///No documentation.
-    pub latent: Latent,
+    pub latent: LatentParam,
     ///Image or video to condition the latent video on. Must be 8*n + 1 frames.If the video is not 8*n + 1 frames, it will be cropped to the nearest 8*n + 1 frames.
-    pub image: Image,
+    pub image: ImageParam,
     /**Frame index to start the conditioning at. For single-frame images or videos with 1-8 frames, any frame_idx value is acceptable. For videos with 9+ frames, frame_idx must be divisible by 8, otherwise it will be rounded down to the nearest multiple of 8. Negative values are counted from the end of the video.
 
 **Metadata**:
@@ -393,7 +394,7 @@ pub struct LtxvAddGuide<
   - Max: 9999
   - Min: -9999
 */
-    pub frame_idx: FrameIdx,
+    pub frame_idx: FrameIdxParam,
     /**No documentation.
 
 **Metadata**:
@@ -402,26 +403,34 @@ pub struct LtxvAddGuide<
   - Min: 0
   - Step: 0.01
 */
-    pub strength: Strength,
+    pub strength: StrengthParam,
 }
 impl<
-    Positive: crate::nodes::types::Conditioning,
-    Negative: crate::nodes::types::Conditioning,
-    Vae: crate::nodes::types::Vae,
-    Latent: crate::nodes::types::Latent,
-    Image: crate::nodes::types::Image,
-    FrameIdx: crate::nodes::types::Int,
-    Strength: crate::nodes::types::Float,
-> LtxvAddGuide<Positive, Negative, Vae, Latent, Image, FrameIdx, Strength> {
+    PositiveParam: crate::nodes::types::Conditioning,
+    NegativeParam: crate::nodes::types::Conditioning,
+    VaeParam: crate::nodes::types::Vae,
+    LatentParam: crate::nodes::types::Latent,
+    ImageParam: crate::nodes::types::Image,
+    FrameIdxParam: crate::nodes::types::Int,
+    StrengthParam: crate::nodes::types::Float,
+> LtxvAddGuide<
+    PositiveParam,
+    NegativeParam,
+    VaeParam,
+    LatentParam,
+    ImageParam,
+    FrameIdxParam,
+    StrengthParam,
+> {
     /// Create a new node.
     pub fn new(
-        positive: Positive,
-        negative: Negative,
-        vae: Vae,
-        latent: Latent,
-        image: Image,
-        frame_idx: FrameIdx,
-        strength: Strength,
+        positive: PositiveParam,
+        negative: NegativeParam,
+        vae: VaeParam,
+        latent: LatentParam,
+        image: ImageParam,
+        frame_idx: FrameIdxParam,
+        strength: StrengthParam,
     ) -> Self {
         Self {
             positive,
@@ -435,15 +444,23 @@ impl<
     }
 }
 impl<
-    Positive: crate::nodes::types::Conditioning,
-    Negative: crate::nodes::types::Conditioning,
-    Vae: crate::nodes::types::Vae,
-    Latent: crate::nodes::types::Latent,
-    Image: crate::nodes::types::Image,
-    FrameIdx: crate::nodes::types::Int,
-    Strength: crate::nodes::types::Float,
+    PositiveParam: crate::nodes::types::Conditioning,
+    NegativeParam: crate::nodes::types::Conditioning,
+    VaeParam: crate::nodes::types::Vae,
+    LatentParam: crate::nodes::types::Latent,
+    ImageParam: crate::nodes::types::Image,
+    FrameIdxParam: crate::nodes::types::Int,
+    StrengthParam: crate::nodes::types::Float,
 > crate::nodes::TypedNode
-for LtxvAddGuide<Positive, Negative, Vae, Latent, Image, FrameIdx, Strength> {
+for LtxvAddGuide<
+    PositiveParam,
+    NegativeParam,
+    VaeParam,
+    LatentParam,
+    ImageParam,
+    FrameIdxParam,
+    StrengthParam,
+> {
     type Output = out::LtxvAddGuideOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
@@ -471,14 +488,14 @@ for LtxvAddGuide<Positive, Negative, Vae, Latent, Image, FrameIdx, Strength> {
 ///**LTXVConditioning**: No description.
 #[derive(Clone)]
 pub struct LtxvConditioning<
-    Positive: crate::nodes::types::Conditioning,
-    Negative: crate::nodes::types::Conditioning,
-    FrameRate: crate::nodes::types::Float,
+    PositiveParam: crate::nodes::types::Conditioning,
+    NegativeParam: crate::nodes::types::Conditioning,
+    FrameRateParam: crate::nodes::types::Float,
 > {
     ///No documentation.
-    pub positive: Positive,
+    pub positive: PositiveParam,
     ///No documentation.
-    pub negative: Negative,
+    pub negative: NegativeParam,
     /**No documentation.
 
 **Metadata**:
@@ -487,15 +504,19 @@ pub struct LtxvConditioning<
   - Min: 0
   - Step: 0.01
 */
-    pub frame_rate: FrameRate,
+    pub frame_rate: FrameRateParam,
 }
 impl<
-    Positive: crate::nodes::types::Conditioning,
-    Negative: crate::nodes::types::Conditioning,
-    FrameRate: crate::nodes::types::Float,
-> LtxvConditioning<Positive, Negative, FrameRate> {
+    PositiveParam: crate::nodes::types::Conditioning,
+    NegativeParam: crate::nodes::types::Conditioning,
+    FrameRateParam: crate::nodes::types::Float,
+> LtxvConditioning<PositiveParam, NegativeParam, FrameRateParam> {
     /// Create a new node.
-    pub fn new(positive: Positive, negative: Negative, frame_rate: FrameRate) -> Self {
+    pub fn new(
+        positive: PositiveParam,
+        negative: NegativeParam,
+        frame_rate: FrameRateParam,
+    ) -> Self {
         Self {
             positive,
             negative,
@@ -504,10 +525,11 @@ impl<
     }
 }
 impl<
-    Positive: crate::nodes::types::Conditioning,
-    Negative: crate::nodes::types::Conditioning,
-    FrameRate: crate::nodes::types::Float,
-> crate::nodes::TypedNode for LtxvConditioning<Positive, Negative, FrameRate> {
+    PositiveParam: crate::nodes::types::Conditioning,
+    NegativeParam: crate::nodes::types::Conditioning,
+    FrameRateParam: crate::nodes::types::Float,
+> crate::nodes::TypedNode
+for LtxvConditioning<PositiveParam, NegativeParam, FrameRateParam> {
     type Output = out::LtxvConditioningOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
@@ -530,32 +552,36 @@ impl<
 ///**LTXVCropGuides**: No description.
 #[derive(Clone)]
 pub struct LtxvCropGuides<
-    Positive: crate::nodes::types::Conditioning,
-    Negative: crate::nodes::types::Conditioning,
-    Latent: crate::nodes::types::Latent,
+    PositiveParam: crate::nodes::types::Conditioning,
+    NegativeParam: crate::nodes::types::Conditioning,
+    LatentParam: crate::nodes::types::Latent,
 > {
     ///No documentation.
-    pub positive: Positive,
+    pub positive: PositiveParam,
     ///No documentation.
-    pub negative: Negative,
+    pub negative: NegativeParam,
     ///No documentation.
-    pub latent: Latent,
+    pub latent: LatentParam,
 }
 impl<
-    Positive: crate::nodes::types::Conditioning,
-    Negative: crate::nodes::types::Conditioning,
-    Latent: crate::nodes::types::Latent,
-> LtxvCropGuides<Positive, Negative, Latent> {
+    PositiveParam: crate::nodes::types::Conditioning,
+    NegativeParam: crate::nodes::types::Conditioning,
+    LatentParam: crate::nodes::types::Latent,
+> LtxvCropGuides<PositiveParam, NegativeParam, LatentParam> {
     /// Create a new node.
-    pub fn new(positive: Positive, negative: Negative, latent: Latent) -> Self {
+    pub fn new(
+        positive: PositiveParam,
+        negative: NegativeParam,
+        latent: LatentParam,
+    ) -> Self {
         Self { positive, negative, latent }
     }
 }
 impl<
-    Positive: crate::nodes::types::Conditioning,
-    Negative: crate::nodes::types::Conditioning,
-    Latent: crate::nodes::types::Latent,
-> crate::nodes::TypedNode for LtxvCropGuides<Positive, Negative, Latent> {
+    PositiveParam: crate::nodes::types::Conditioning,
+    NegativeParam: crate::nodes::types::Conditioning,
+    LatentParam: crate::nodes::types::Latent,
+> crate::nodes::TypedNode for LtxvCropGuides<PositiveParam, NegativeParam, LatentParam> {
     type Output = out::LtxvCropGuidesOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
@@ -579,23 +605,23 @@ impl<
 ///**LTXVImgToVideo**: No description.
 #[derive(Clone)]
 pub struct LtxvImgToVideo<
-    Positive: crate::nodes::types::Conditioning,
-    Negative: crate::nodes::types::Conditioning,
-    Vae: crate::nodes::types::Vae,
-    Image: crate::nodes::types::Image,
-    Width: crate::nodes::types::Int,
-    Height: crate::nodes::types::Int,
-    Length: crate::nodes::types::Int,
-    BatchSize: crate::nodes::types::Int,
+    PositiveParam: crate::nodes::types::Conditioning,
+    NegativeParam: crate::nodes::types::Conditioning,
+    VaeParam: crate::nodes::types::Vae,
+    ImageParam: crate::nodes::types::Image,
+    WidthParam: crate::nodes::types::Int,
+    HeightParam: crate::nodes::types::Int,
+    LengthParam: crate::nodes::types::Int,
+    BatchSizeParam: crate::nodes::types::Int,
 > {
     ///No documentation.
-    pub positive: Positive,
+    pub positive: PositiveParam,
     ///No documentation.
-    pub negative: Negative,
+    pub negative: NegativeParam,
     ///No documentation.
-    pub vae: Vae,
+    pub vae: VaeParam,
     ///No documentation.
-    pub image: Image,
+    pub image: ImageParam,
     /**No documentation.
 
 **Metadata**:
@@ -604,7 +630,7 @@ pub struct LtxvImgToVideo<
   - Min: 64
   - Step: 32
 */
-    pub width: Width,
+    pub width: WidthParam,
     /**No documentation.
 
 **Metadata**:
@@ -613,7 +639,7 @@ pub struct LtxvImgToVideo<
   - Min: 64
   - Step: 32
 */
-    pub height: Height,
+    pub height: HeightParam,
     /**No documentation.
 
 **Metadata**:
@@ -622,7 +648,7 @@ pub struct LtxvImgToVideo<
   - Min: 9
   - Step: 8
 */
-    pub length: Length,
+    pub length: LengthParam,
     /**No documentation.
 
 **Metadata**:
@@ -630,28 +656,37 @@ pub struct LtxvImgToVideo<
   - Max: 4096
   - Min: 1
 */
-    pub batch_size: BatchSize,
+    pub batch_size: BatchSizeParam,
 }
 impl<
-    Positive: crate::nodes::types::Conditioning,
-    Negative: crate::nodes::types::Conditioning,
-    Vae: crate::nodes::types::Vae,
-    Image: crate::nodes::types::Image,
-    Width: crate::nodes::types::Int,
-    Height: crate::nodes::types::Int,
-    Length: crate::nodes::types::Int,
-    BatchSize: crate::nodes::types::Int,
-> LtxvImgToVideo<Positive, Negative, Vae, Image, Width, Height, Length, BatchSize> {
+    PositiveParam: crate::nodes::types::Conditioning,
+    NegativeParam: crate::nodes::types::Conditioning,
+    VaeParam: crate::nodes::types::Vae,
+    ImageParam: crate::nodes::types::Image,
+    WidthParam: crate::nodes::types::Int,
+    HeightParam: crate::nodes::types::Int,
+    LengthParam: crate::nodes::types::Int,
+    BatchSizeParam: crate::nodes::types::Int,
+> LtxvImgToVideo<
+    PositiveParam,
+    NegativeParam,
+    VaeParam,
+    ImageParam,
+    WidthParam,
+    HeightParam,
+    LengthParam,
+    BatchSizeParam,
+> {
     /// Create a new node.
     pub fn new(
-        positive: Positive,
-        negative: Negative,
-        vae: Vae,
-        image: Image,
-        width: Width,
-        height: Height,
-        length: Length,
-        batch_size: BatchSize,
+        positive: PositiveParam,
+        negative: NegativeParam,
+        vae: VaeParam,
+        image: ImageParam,
+        width: WidthParam,
+        height: HeightParam,
+        length: LengthParam,
+        batch_size: BatchSizeParam,
     ) -> Self {
         Self {
             positive,
@@ -666,16 +701,25 @@ impl<
     }
 }
 impl<
-    Positive: crate::nodes::types::Conditioning,
-    Negative: crate::nodes::types::Conditioning,
-    Vae: crate::nodes::types::Vae,
-    Image: crate::nodes::types::Image,
-    Width: crate::nodes::types::Int,
-    Height: crate::nodes::types::Int,
-    Length: crate::nodes::types::Int,
-    BatchSize: crate::nodes::types::Int,
+    PositiveParam: crate::nodes::types::Conditioning,
+    NegativeParam: crate::nodes::types::Conditioning,
+    VaeParam: crate::nodes::types::Vae,
+    ImageParam: crate::nodes::types::Image,
+    WidthParam: crate::nodes::types::Int,
+    HeightParam: crate::nodes::types::Int,
+    LengthParam: crate::nodes::types::Int,
+    BatchSizeParam: crate::nodes::types::Int,
 > crate::nodes::TypedNode
-for LtxvImgToVideo<Positive, Negative, Vae, Image, Width, Height, Length, BatchSize> {
+for LtxvImgToVideo<
+    PositiveParam,
+    NegativeParam,
+    VaeParam,
+    ImageParam,
+    WidthParam,
+    HeightParam,
+    LengthParam,
+    BatchSizeParam,
+> {
     type Output = out::LtxvImgToVideoOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
@@ -704,22 +748,22 @@ for LtxvImgToVideo<Positive, Negative, Vae, Image, Width, Height, Length, BatchS
 ///**SVD_img2vid_Conditioning**: No description.
 #[derive(Clone)]
 pub struct SvdImg2VidConditioning<
-    ClipVision: crate::nodes::types::ClipVision,
-    InitImage: crate::nodes::types::Image,
-    Vae: crate::nodes::types::Vae,
-    Width: crate::nodes::types::Int,
-    Height: crate::nodes::types::Int,
-    VideoFrames: crate::nodes::types::Int,
-    MotionBucketId: crate::nodes::types::Int,
-    Fps: crate::nodes::types::Int,
-    AugmentationLevel: crate::nodes::types::Float,
+    ClipVisionParam: crate::nodes::types::ClipVision,
+    InitImageParam: crate::nodes::types::Image,
+    VaeParam: crate::nodes::types::Vae,
+    WidthParam: crate::nodes::types::Int,
+    HeightParam: crate::nodes::types::Int,
+    VideoFramesParam: crate::nodes::types::Int,
+    MotionBucketIdParam: crate::nodes::types::Int,
+    FpsParam: crate::nodes::types::Int,
+    AugmentationLevelParam: crate::nodes::types::Float,
 > {
     ///No documentation.
-    pub clip_vision: ClipVision,
+    pub clip_vision: ClipVisionParam,
     ///No documentation.
-    pub init_image: InitImage,
+    pub init_image: InitImageParam,
     ///No documentation.
-    pub vae: Vae,
+    pub vae: VaeParam,
     /**No documentation.
 
 **Metadata**:
@@ -728,7 +772,7 @@ pub struct SvdImg2VidConditioning<
   - Min: 16
   - Step: 8
 */
-    pub width: Width,
+    pub width: WidthParam,
     /**No documentation.
 
 **Metadata**:
@@ -737,7 +781,7 @@ pub struct SvdImg2VidConditioning<
   - Min: 16
   - Step: 8
 */
-    pub height: Height,
+    pub height: HeightParam,
     /**No documentation.
 
 **Metadata**:
@@ -745,7 +789,7 @@ pub struct SvdImg2VidConditioning<
   - Max: 4096
   - Min: 1
 */
-    pub video_frames: VideoFrames,
+    pub video_frames: VideoFramesParam,
     /**No documentation.
 
 **Metadata**:
@@ -753,7 +797,7 @@ pub struct SvdImg2VidConditioning<
   - Max: 1023
   - Min: 1
 */
-    pub motion_bucket_id: MotionBucketId,
+    pub motion_bucket_id: MotionBucketIdParam,
     /**No documentation.
 
 **Metadata**:
@@ -761,7 +805,7 @@ pub struct SvdImg2VidConditioning<
   - Max: 1024
   - Min: 1
 */
-    pub fps: Fps,
+    pub fps: FpsParam,
     /**No documentation.
 
 **Metadata**:
@@ -770,40 +814,40 @@ pub struct SvdImg2VidConditioning<
   - Min: 0
   - Step: 0.01
 */
-    pub augmentation_level: AugmentationLevel,
+    pub augmentation_level: AugmentationLevelParam,
 }
 impl<
-    ClipVision: crate::nodes::types::ClipVision,
-    InitImage: crate::nodes::types::Image,
-    Vae: crate::nodes::types::Vae,
-    Width: crate::nodes::types::Int,
-    Height: crate::nodes::types::Int,
-    VideoFrames: crate::nodes::types::Int,
-    MotionBucketId: crate::nodes::types::Int,
-    Fps: crate::nodes::types::Int,
-    AugmentationLevel: crate::nodes::types::Float,
+    ClipVisionParam: crate::nodes::types::ClipVision,
+    InitImageParam: crate::nodes::types::Image,
+    VaeParam: crate::nodes::types::Vae,
+    WidthParam: crate::nodes::types::Int,
+    HeightParam: crate::nodes::types::Int,
+    VideoFramesParam: crate::nodes::types::Int,
+    MotionBucketIdParam: crate::nodes::types::Int,
+    FpsParam: crate::nodes::types::Int,
+    AugmentationLevelParam: crate::nodes::types::Float,
 > SvdImg2VidConditioning<
-    ClipVision,
-    InitImage,
-    Vae,
-    Width,
-    Height,
-    VideoFrames,
-    MotionBucketId,
-    Fps,
-    AugmentationLevel,
+    ClipVisionParam,
+    InitImageParam,
+    VaeParam,
+    WidthParam,
+    HeightParam,
+    VideoFramesParam,
+    MotionBucketIdParam,
+    FpsParam,
+    AugmentationLevelParam,
 > {
     /// Create a new node.
     pub fn new(
-        clip_vision: ClipVision,
-        init_image: InitImage,
-        vae: Vae,
-        width: Width,
-        height: Height,
-        video_frames: VideoFrames,
-        motion_bucket_id: MotionBucketId,
-        fps: Fps,
-        augmentation_level: AugmentationLevel,
+        clip_vision: ClipVisionParam,
+        init_image: InitImageParam,
+        vae: VaeParam,
+        width: WidthParam,
+        height: HeightParam,
+        video_frames: VideoFramesParam,
+        motion_bucket_id: MotionBucketIdParam,
+        fps: FpsParam,
+        augmentation_level: AugmentationLevelParam,
     ) -> Self {
         Self {
             clip_vision,
@@ -819,26 +863,26 @@ impl<
     }
 }
 impl<
-    ClipVision: crate::nodes::types::ClipVision,
-    InitImage: crate::nodes::types::Image,
-    Vae: crate::nodes::types::Vae,
-    Width: crate::nodes::types::Int,
-    Height: crate::nodes::types::Int,
-    VideoFrames: crate::nodes::types::Int,
-    MotionBucketId: crate::nodes::types::Int,
-    Fps: crate::nodes::types::Int,
-    AugmentationLevel: crate::nodes::types::Float,
+    ClipVisionParam: crate::nodes::types::ClipVision,
+    InitImageParam: crate::nodes::types::Image,
+    VaeParam: crate::nodes::types::Vae,
+    WidthParam: crate::nodes::types::Int,
+    HeightParam: crate::nodes::types::Int,
+    VideoFramesParam: crate::nodes::types::Int,
+    MotionBucketIdParam: crate::nodes::types::Int,
+    FpsParam: crate::nodes::types::Int,
+    AugmentationLevelParam: crate::nodes::types::Float,
 > crate::nodes::TypedNode
 for SvdImg2VidConditioning<
-    ClipVision,
-    InitImage,
-    Vae,
-    Width,
-    Height,
-    VideoFrames,
-    MotionBucketId,
-    Fps,
-    AugmentationLevel,
+    ClipVisionParam,
+    InitImageParam,
+    VaeParam,
+    WidthParam,
+    HeightParam,
+    VideoFramesParam,
+    MotionBucketIdParam,
+    FpsParam,
+    AugmentationLevelParam,
 > {
     type Output = out::SvdImg2VidConditioningOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
@@ -877,24 +921,24 @@ for SvdImg2VidConditioning<
 ///**WanFunControlToVideo**: No description.
 #[derive(Clone)]
 pub struct WanFunControlToVideo<
-    Positive: crate::nodes::types::Conditioning,
-    Negative: crate::nodes::types::Conditioning,
-    Vae: crate::nodes::types::Vae,
-    Width: crate::nodes::types::Int,
-    Height: crate::nodes::types::Int,
-    Length: crate::nodes::types::Int,
-    BatchSize: crate::nodes::types::Int,
-    ClipVisionOutput: crate::nodes::types::ClipVisionOutput
+    PositiveParam: crate::nodes::types::Conditioning,
+    NegativeParam: crate::nodes::types::Conditioning,
+    VaeParam: crate::nodes::types::Vae,
+    WidthParam: crate::nodes::types::Int,
+    HeightParam: crate::nodes::types::Int,
+    LengthParam: crate::nodes::types::Int,
+    BatchSizeParam: crate::nodes::types::Int,
+    ClipVisionOutputParam: crate::nodes::types::ClipVisionOutput
         = crate::nodes::types::ClipVisionOutputOut,
-    StartImage: crate::nodes::types::Image = crate::nodes::types::ImageOut,
-    ControlVideo: crate::nodes::types::Image = crate::nodes::types::ImageOut,
+    StartImageParam: crate::nodes::types::Image = crate::nodes::types::ImageOut,
+    ControlVideoParam: crate::nodes::types::Image = crate::nodes::types::ImageOut,
 > {
     ///No documentation.
-    pub positive: Positive,
+    pub positive: PositiveParam,
     ///No documentation.
-    pub negative: Negative,
+    pub negative: NegativeParam,
     ///No documentation.
-    pub vae: Vae,
+    pub vae: VaeParam,
     /**No documentation.
 
 **Metadata**:
@@ -903,7 +947,7 @@ pub struct WanFunControlToVideo<
   - Min: 16
   - Step: 16
 */
-    pub width: Width,
+    pub width: WidthParam,
     /**No documentation.
 
 **Metadata**:
@@ -912,7 +956,7 @@ pub struct WanFunControlToVideo<
   - Min: 16
   - Step: 16
 */
-    pub height: Height,
+    pub height: HeightParam,
     /**No documentation.
 
 **Metadata**:
@@ -921,7 +965,7 @@ pub struct WanFunControlToVideo<
   - Min: 1
   - Step: 4
 */
-    pub length: Length,
+    pub length: LengthParam,
     /**No documentation.
 
 **Metadata**:
@@ -929,49 +973,49 @@ pub struct WanFunControlToVideo<
   - Max: 4096
   - Min: 1
 */
-    pub batch_size: BatchSize,
+    pub batch_size: BatchSizeParam,
     ///No documentation.
-    pub clip_vision_output: Option<ClipVisionOutput>,
+    pub clip_vision_output: Option<ClipVisionOutputParam>,
     ///No documentation.
-    pub start_image: Option<StartImage>,
+    pub start_image: Option<StartImageParam>,
     ///No documentation.
-    pub control_video: Option<ControlVideo>,
+    pub control_video: Option<ControlVideoParam>,
 }
 impl<
-    Positive: crate::nodes::types::Conditioning,
-    Negative: crate::nodes::types::Conditioning,
-    Vae: crate::nodes::types::Vae,
-    Width: crate::nodes::types::Int,
-    Height: crate::nodes::types::Int,
-    Length: crate::nodes::types::Int,
-    BatchSize: crate::nodes::types::Int,
-    ClipVisionOutput: crate::nodes::types::ClipVisionOutput,
-    StartImage: crate::nodes::types::Image,
-    ControlVideo: crate::nodes::types::Image,
+    PositiveParam: crate::nodes::types::Conditioning,
+    NegativeParam: crate::nodes::types::Conditioning,
+    VaeParam: crate::nodes::types::Vae,
+    WidthParam: crate::nodes::types::Int,
+    HeightParam: crate::nodes::types::Int,
+    LengthParam: crate::nodes::types::Int,
+    BatchSizeParam: crate::nodes::types::Int,
+    ClipVisionOutputParam: crate::nodes::types::ClipVisionOutput,
+    StartImageParam: crate::nodes::types::Image,
+    ControlVideoParam: crate::nodes::types::Image,
 > WanFunControlToVideo<
-    Positive,
-    Negative,
-    Vae,
-    Width,
-    Height,
-    Length,
-    BatchSize,
-    ClipVisionOutput,
-    StartImage,
-    ControlVideo,
+    PositiveParam,
+    NegativeParam,
+    VaeParam,
+    WidthParam,
+    HeightParam,
+    LengthParam,
+    BatchSizeParam,
+    ClipVisionOutputParam,
+    StartImageParam,
+    ControlVideoParam,
 > {
     /// Create a new node.
     pub fn new(
-        positive: Positive,
-        negative: Negative,
-        vae: Vae,
-        width: Width,
-        height: Height,
-        length: Length,
-        batch_size: BatchSize,
-        clip_vision_output: Option<ClipVisionOutput>,
-        start_image: Option<StartImage>,
-        control_video: Option<ControlVideo>,
+        positive: PositiveParam,
+        negative: NegativeParam,
+        vae: VaeParam,
+        width: WidthParam,
+        height: HeightParam,
+        length: LengthParam,
+        batch_size: BatchSizeParam,
+        clip_vision_output: Option<ClipVisionOutputParam>,
+        start_image: Option<StartImageParam>,
+        control_video: Option<ControlVideoParam>,
     ) -> Self {
         Self {
             positive,
@@ -988,28 +1032,28 @@ impl<
     }
 }
 impl<
-    Positive: crate::nodes::types::Conditioning,
-    Negative: crate::nodes::types::Conditioning,
-    Vae: crate::nodes::types::Vae,
-    Width: crate::nodes::types::Int,
-    Height: crate::nodes::types::Int,
-    Length: crate::nodes::types::Int,
-    BatchSize: crate::nodes::types::Int,
-    ClipVisionOutput: crate::nodes::types::ClipVisionOutput,
-    StartImage: crate::nodes::types::Image,
-    ControlVideo: crate::nodes::types::Image,
+    PositiveParam: crate::nodes::types::Conditioning,
+    NegativeParam: crate::nodes::types::Conditioning,
+    VaeParam: crate::nodes::types::Vae,
+    WidthParam: crate::nodes::types::Int,
+    HeightParam: crate::nodes::types::Int,
+    LengthParam: crate::nodes::types::Int,
+    BatchSizeParam: crate::nodes::types::Int,
+    ClipVisionOutputParam: crate::nodes::types::ClipVisionOutput,
+    StartImageParam: crate::nodes::types::Image,
+    ControlVideoParam: crate::nodes::types::Image,
 > crate::nodes::TypedNode
 for WanFunControlToVideo<
-    Positive,
-    Negative,
-    Vae,
-    Width,
-    Height,
-    Length,
-    BatchSize,
-    ClipVisionOutput,
-    StartImage,
-    ControlVideo,
+    PositiveParam,
+    NegativeParam,
+    VaeParam,
+    WidthParam,
+    HeightParam,
+    LengthParam,
+    BatchSizeParam,
+    ClipVisionOutputParam,
+    StartImageParam,
+    ControlVideoParam,
 > {
     type Output = out::WanFunControlToVideoOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
@@ -1047,24 +1091,24 @@ for WanFunControlToVideo<
 ///**WanFunInpaintToVideo**: No description.
 #[derive(Clone)]
 pub struct WanFunInpaintToVideo<
-    Positive: crate::nodes::types::Conditioning,
-    Negative: crate::nodes::types::Conditioning,
-    Vae: crate::nodes::types::Vae,
-    Width: crate::nodes::types::Int,
-    Height: crate::nodes::types::Int,
-    Length: crate::nodes::types::Int,
-    BatchSize: crate::nodes::types::Int,
-    ClipVisionOutput: crate::nodes::types::ClipVisionOutput
+    PositiveParam: crate::nodes::types::Conditioning,
+    NegativeParam: crate::nodes::types::Conditioning,
+    VaeParam: crate::nodes::types::Vae,
+    WidthParam: crate::nodes::types::Int,
+    HeightParam: crate::nodes::types::Int,
+    LengthParam: crate::nodes::types::Int,
+    BatchSizeParam: crate::nodes::types::Int,
+    ClipVisionOutputParam: crate::nodes::types::ClipVisionOutput
         = crate::nodes::types::ClipVisionOutputOut,
-    StartImage: crate::nodes::types::Image = crate::nodes::types::ImageOut,
-    EndImage: crate::nodes::types::Image = crate::nodes::types::ImageOut,
+    StartImageParam: crate::nodes::types::Image = crate::nodes::types::ImageOut,
+    EndImageParam: crate::nodes::types::Image = crate::nodes::types::ImageOut,
 > {
     ///No documentation.
-    pub positive: Positive,
+    pub positive: PositiveParam,
     ///No documentation.
-    pub negative: Negative,
+    pub negative: NegativeParam,
     ///No documentation.
-    pub vae: Vae,
+    pub vae: VaeParam,
     /**No documentation.
 
 **Metadata**:
@@ -1073,7 +1117,7 @@ pub struct WanFunInpaintToVideo<
   - Min: 16
   - Step: 16
 */
-    pub width: Width,
+    pub width: WidthParam,
     /**No documentation.
 
 **Metadata**:
@@ -1082,7 +1126,7 @@ pub struct WanFunInpaintToVideo<
   - Min: 16
   - Step: 16
 */
-    pub height: Height,
+    pub height: HeightParam,
     /**No documentation.
 
 **Metadata**:
@@ -1091,7 +1135,7 @@ pub struct WanFunInpaintToVideo<
   - Min: 1
   - Step: 4
 */
-    pub length: Length,
+    pub length: LengthParam,
     /**No documentation.
 
 **Metadata**:
@@ -1099,49 +1143,49 @@ pub struct WanFunInpaintToVideo<
   - Max: 4096
   - Min: 1
 */
-    pub batch_size: BatchSize,
+    pub batch_size: BatchSizeParam,
     ///No documentation.
-    pub clip_vision_output: Option<ClipVisionOutput>,
+    pub clip_vision_output: Option<ClipVisionOutputParam>,
     ///No documentation.
-    pub start_image: Option<StartImage>,
+    pub start_image: Option<StartImageParam>,
     ///No documentation.
-    pub end_image: Option<EndImage>,
+    pub end_image: Option<EndImageParam>,
 }
 impl<
-    Positive: crate::nodes::types::Conditioning,
-    Negative: crate::nodes::types::Conditioning,
-    Vae: crate::nodes::types::Vae,
-    Width: crate::nodes::types::Int,
-    Height: crate::nodes::types::Int,
-    Length: crate::nodes::types::Int,
-    BatchSize: crate::nodes::types::Int,
-    ClipVisionOutput: crate::nodes::types::ClipVisionOutput,
-    StartImage: crate::nodes::types::Image,
-    EndImage: crate::nodes::types::Image,
+    PositiveParam: crate::nodes::types::Conditioning,
+    NegativeParam: crate::nodes::types::Conditioning,
+    VaeParam: crate::nodes::types::Vae,
+    WidthParam: crate::nodes::types::Int,
+    HeightParam: crate::nodes::types::Int,
+    LengthParam: crate::nodes::types::Int,
+    BatchSizeParam: crate::nodes::types::Int,
+    ClipVisionOutputParam: crate::nodes::types::ClipVisionOutput,
+    StartImageParam: crate::nodes::types::Image,
+    EndImageParam: crate::nodes::types::Image,
 > WanFunInpaintToVideo<
-    Positive,
-    Negative,
-    Vae,
-    Width,
-    Height,
-    Length,
-    BatchSize,
-    ClipVisionOutput,
-    StartImage,
-    EndImage,
+    PositiveParam,
+    NegativeParam,
+    VaeParam,
+    WidthParam,
+    HeightParam,
+    LengthParam,
+    BatchSizeParam,
+    ClipVisionOutputParam,
+    StartImageParam,
+    EndImageParam,
 > {
     /// Create a new node.
     pub fn new(
-        positive: Positive,
-        negative: Negative,
-        vae: Vae,
-        width: Width,
-        height: Height,
-        length: Length,
-        batch_size: BatchSize,
-        clip_vision_output: Option<ClipVisionOutput>,
-        start_image: Option<StartImage>,
-        end_image: Option<EndImage>,
+        positive: PositiveParam,
+        negative: NegativeParam,
+        vae: VaeParam,
+        width: WidthParam,
+        height: HeightParam,
+        length: LengthParam,
+        batch_size: BatchSizeParam,
+        clip_vision_output: Option<ClipVisionOutputParam>,
+        start_image: Option<StartImageParam>,
+        end_image: Option<EndImageParam>,
     ) -> Self {
         Self {
             positive,
@@ -1158,28 +1202,28 @@ impl<
     }
 }
 impl<
-    Positive: crate::nodes::types::Conditioning,
-    Negative: crate::nodes::types::Conditioning,
-    Vae: crate::nodes::types::Vae,
-    Width: crate::nodes::types::Int,
-    Height: crate::nodes::types::Int,
-    Length: crate::nodes::types::Int,
-    BatchSize: crate::nodes::types::Int,
-    ClipVisionOutput: crate::nodes::types::ClipVisionOutput,
-    StartImage: crate::nodes::types::Image,
-    EndImage: crate::nodes::types::Image,
+    PositiveParam: crate::nodes::types::Conditioning,
+    NegativeParam: crate::nodes::types::Conditioning,
+    VaeParam: crate::nodes::types::Vae,
+    WidthParam: crate::nodes::types::Int,
+    HeightParam: crate::nodes::types::Int,
+    LengthParam: crate::nodes::types::Int,
+    BatchSizeParam: crate::nodes::types::Int,
+    ClipVisionOutputParam: crate::nodes::types::ClipVisionOutput,
+    StartImageParam: crate::nodes::types::Image,
+    EndImageParam: crate::nodes::types::Image,
 > crate::nodes::TypedNode
 for WanFunInpaintToVideo<
-    Positive,
-    Negative,
-    Vae,
-    Width,
-    Height,
-    Length,
-    BatchSize,
-    ClipVisionOutput,
-    StartImage,
-    EndImage,
+    PositiveParam,
+    NegativeParam,
+    VaeParam,
+    WidthParam,
+    HeightParam,
+    LengthParam,
+    BatchSizeParam,
+    ClipVisionOutputParam,
+    StartImageParam,
+    EndImageParam,
 > {
     type Output = out::WanFunInpaintToVideoOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
@@ -1217,23 +1261,23 @@ for WanFunInpaintToVideo<
 ///**WanImageToVideo**: No description.
 #[derive(Clone)]
 pub struct WanImageToVideo<
-    Positive: crate::nodes::types::Conditioning,
-    Negative: crate::nodes::types::Conditioning,
-    Vae: crate::nodes::types::Vae,
-    Width: crate::nodes::types::Int,
-    Height: crate::nodes::types::Int,
-    Length: crate::nodes::types::Int,
-    BatchSize: crate::nodes::types::Int,
-    ClipVisionOutput: crate::nodes::types::ClipVisionOutput
+    PositiveParam: crate::nodes::types::Conditioning,
+    NegativeParam: crate::nodes::types::Conditioning,
+    VaeParam: crate::nodes::types::Vae,
+    WidthParam: crate::nodes::types::Int,
+    HeightParam: crate::nodes::types::Int,
+    LengthParam: crate::nodes::types::Int,
+    BatchSizeParam: crate::nodes::types::Int,
+    ClipVisionOutputParam: crate::nodes::types::ClipVisionOutput
         = crate::nodes::types::ClipVisionOutputOut,
-    StartImage: crate::nodes::types::Image = crate::nodes::types::ImageOut,
+    StartImageParam: crate::nodes::types::Image = crate::nodes::types::ImageOut,
 > {
     ///No documentation.
-    pub positive: Positive,
+    pub positive: PositiveParam,
     ///No documentation.
-    pub negative: Negative,
+    pub negative: NegativeParam,
     ///No documentation.
-    pub vae: Vae,
+    pub vae: VaeParam,
     /**No documentation.
 
 **Metadata**:
@@ -1242,7 +1286,7 @@ pub struct WanImageToVideo<
   - Min: 16
   - Step: 16
 */
-    pub width: Width,
+    pub width: WidthParam,
     /**No documentation.
 
 **Metadata**:
@@ -1251,7 +1295,7 @@ pub struct WanImageToVideo<
   - Min: 16
   - Step: 16
 */
-    pub height: Height,
+    pub height: HeightParam,
     /**No documentation.
 
 **Metadata**:
@@ -1260,7 +1304,7 @@ pub struct WanImageToVideo<
   - Min: 1
   - Step: 4
 */
-    pub length: Length,
+    pub length: LengthParam,
     /**No documentation.
 
 **Metadata**:
@@ -1268,44 +1312,44 @@ pub struct WanImageToVideo<
   - Max: 4096
   - Min: 1
 */
-    pub batch_size: BatchSize,
+    pub batch_size: BatchSizeParam,
     ///No documentation.
-    pub clip_vision_output: Option<ClipVisionOutput>,
+    pub clip_vision_output: Option<ClipVisionOutputParam>,
     ///No documentation.
-    pub start_image: Option<StartImage>,
+    pub start_image: Option<StartImageParam>,
 }
 impl<
-    Positive: crate::nodes::types::Conditioning,
-    Negative: crate::nodes::types::Conditioning,
-    Vae: crate::nodes::types::Vae,
-    Width: crate::nodes::types::Int,
-    Height: crate::nodes::types::Int,
-    Length: crate::nodes::types::Int,
-    BatchSize: crate::nodes::types::Int,
-    ClipVisionOutput: crate::nodes::types::ClipVisionOutput,
-    StartImage: crate::nodes::types::Image,
+    PositiveParam: crate::nodes::types::Conditioning,
+    NegativeParam: crate::nodes::types::Conditioning,
+    VaeParam: crate::nodes::types::Vae,
+    WidthParam: crate::nodes::types::Int,
+    HeightParam: crate::nodes::types::Int,
+    LengthParam: crate::nodes::types::Int,
+    BatchSizeParam: crate::nodes::types::Int,
+    ClipVisionOutputParam: crate::nodes::types::ClipVisionOutput,
+    StartImageParam: crate::nodes::types::Image,
 > WanImageToVideo<
-    Positive,
-    Negative,
-    Vae,
-    Width,
-    Height,
-    Length,
-    BatchSize,
-    ClipVisionOutput,
-    StartImage,
+    PositiveParam,
+    NegativeParam,
+    VaeParam,
+    WidthParam,
+    HeightParam,
+    LengthParam,
+    BatchSizeParam,
+    ClipVisionOutputParam,
+    StartImageParam,
 > {
     /// Create a new node.
     pub fn new(
-        positive: Positive,
-        negative: Negative,
-        vae: Vae,
-        width: Width,
-        height: Height,
-        length: Length,
-        batch_size: BatchSize,
-        clip_vision_output: Option<ClipVisionOutput>,
-        start_image: Option<StartImage>,
+        positive: PositiveParam,
+        negative: NegativeParam,
+        vae: VaeParam,
+        width: WidthParam,
+        height: HeightParam,
+        length: LengthParam,
+        batch_size: BatchSizeParam,
+        clip_vision_output: Option<ClipVisionOutputParam>,
+        start_image: Option<StartImageParam>,
     ) -> Self {
         Self {
             positive,
@@ -1321,26 +1365,26 @@ impl<
     }
 }
 impl<
-    Positive: crate::nodes::types::Conditioning,
-    Negative: crate::nodes::types::Conditioning,
-    Vae: crate::nodes::types::Vae,
-    Width: crate::nodes::types::Int,
-    Height: crate::nodes::types::Int,
-    Length: crate::nodes::types::Int,
-    BatchSize: crate::nodes::types::Int,
-    ClipVisionOutput: crate::nodes::types::ClipVisionOutput,
-    StartImage: crate::nodes::types::Image,
+    PositiveParam: crate::nodes::types::Conditioning,
+    NegativeParam: crate::nodes::types::Conditioning,
+    VaeParam: crate::nodes::types::Vae,
+    WidthParam: crate::nodes::types::Int,
+    HeightParam: crate::nodes::types::Int,
+    LengthParam: crate::nodes::types::Int,
+    BatchSizeParam: crate::nodes::types::Int,
+    ClipVisionOutputParam: crate::nodes::types::ClipVisionOutput,
+    StartImageParam: crate::nodes::types::Image,
 > crate::nodes::TypedNode
 for WanImageToVideo<
-    Positive,
-    Negative,
-    Vae,
-    Width,
-    Height,
-    Length,
-    BatchSize,
-    ClipVisionOutput,
-    StartImage,
+    PositiveParam,
+    NegativeParam,
+    VaeParam,
+    WidthParam,
+    HeightParam,
+    LengthParam,
+    BatchSizeParam,
+    ClipVisionOutputParam,
+    StartImageParam,
 > {
     type Output = out::WanImageToVideoOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {

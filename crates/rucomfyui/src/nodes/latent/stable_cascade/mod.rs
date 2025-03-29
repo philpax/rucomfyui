@@ -27,10 +27,10 @@ pub mod out {
 ///**StableCascade_EmptyLatentImage**: No description.
 #[derive(Clone)]
 pub struct StableCascadeEmptyLatentImage<
-    Width: crate::nodes::types::Int,
-    Height: crate::nodes::types::Int,
-    Compression: crate::nodes::types::Int,
-    BatchSize: crate::nodes::types::Int,
+    WidthParam: crate::nodes::types::Int,
+    HeightParam: crate::nodes::types::Int,
+    CompressionParam: crate::nodes::types::Int,
+    BatchSizeParam: crate::nodes::types::Int,
 > {
     /**No documentation.
 
@@ -40,7 +40,7 @@ pub struct StableCascadeEmptyLatentImage<
   - Min: 256
   - Step: 8
 */
-    pub width: Width,
+    pub width: WidthParam,
     /**No documentation.
 
 **Metadata**:
@@ -49,7 +49,7 @@ pub struct StableCascadeEmptyLatentImage<
   - Min: 256
   - Step: 8
 */
-    pub height: Height,
+    pub height: HeightParam,
     /**No documentation.
 
 **Metadata**:
@@ -58,7 +58,7 @@ pub struct StableCascadeEmptyLatentImage<
   - Min: 4
   - Step: 1
 */
-    pub compression: Compression,
+    pub compression: CompressionParam,
     /**No documentation.
 
 **Metadata**:
@@ -66,20 +66,25 @@ pub struct StableCascadeEmptyLatentImage<
   - Max: 4096
   - Min: 1
 */
-    pub batch_size: BatchSize,
+    pub batch_size: BatchSizeParam,
 }
 impl<
-    Width: crate::nodes::types::Int,
-    Height: crate::nodes::types::Int,
-    Compression: crate::nodes::types::Int,
-    BatchSize: crate::nodes::types::Int,
-> StableCascadeEmptyLatentImage<Width, Height, Compression, BatchSize> {
+    WidthParam: crate::nodes::types::Int,
+    HeightParam: crate::nodes::types::Int,
+    CompressionParam: crate::nodes::types::Int,
+    BatchSizeParam: crate::nodes::types::Int,
+> StableCascadeEmptyLatentImage<
+    WidthParam,
+    HeightParam,
+    CompressionParam,
+    BatchSizeParam,
+> {
     /// Create a new node.
     pub fn new(
-        width: Width,
-        height: Height,
-        compression: Compression,
-        batch_size: BatchSize,
+        width: WidthParam,
+        height: HeightParam,
+        compression: CompressionParam,
+        batch_size: BatchSizeParam,
     ) -> Self {
         Self {
             width,
@@ -90,12 +95,17 @@ impl<
     }
 }
 impl<
-    Width: crate::nodes::types::Int,
-    Height: crate::nodes::types::Int,
-    Compression: crate::nodes::types::Int,
-    BatchSize: crate::nodes::types::Int,
+    WidthParam: crate::nodes::types::Int,
+    HeightParam: crate::nodes::types::Int,
+    CompressionParam: crate::nodes::types::Int,
+    BatchSizeParam: crate::nodes::types::Int,
 > crate::nodes::TypedNode
-for StableCascadeEmptyLatentImage<Width, Height, Compression, BatchSize> {
+for StableCascadeEmptyLatentImage<
+    WidthParam,
+    HeightParam,
+    CompressionParam,
+    BatchSizeParam,
+> {
     type Output = out::StableCascadeEmptyLatentImageOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
@@ -119,14 +129,14 @@ for StableCascadeEmptyLatentImage<Width, Height, Compression, BatchSize> {
 ///**StableCascade_StageC_VAEEncode**: No description.
 #[derive(Clone)]
 pub struct StableCascadeStageCVaeEncode<
-    Image: crate::nodes::types::Image,
-    Vae: crate::nodes::types::Vae,
-    Compression: crate::nodes::types::Int,
+    ImageParam: crate::nodes::types::Image,
+    VaeParam: crate::nodes::types::Vae,
+    CompressionParam: crate::nodes::types::Int,
 > {
     ///No documentation.
-    pub image: Image,
+    pub image: ImageParam,
     ///No documentation.
-    pub vae: Vae,
+    pub vae: VaeParam,
     /**No documentation.
 
 **Metadata**:
@@ -135,23 +145,24 @@ pub struct StableCascadeStageCVaeEncode<
   - Min: 4
   - Step: 1
 */
-    pub compression: Compression,
+    pub compression: CompressionParam,
 }
 impl<
-    Image: crate::nodes::types::Image,
-    Vae: crate::nodes::types::Vae,
-    Compression: crate::nodes::types::Int,
-> StableCascadeStageCVaeEncode<Image, Vae, Compression> {
+    ImageParam: crate::nodes::types::Image,
+    VaeParam: crate::nodes::types::Vae,
+    CompressionParam: crate::nodes::types::Int,
+> StableCascadeStageCVaeEncode<ImageParam, VaeParam, CompressionParam> {
     /// Create a new node.
-    pub fn new(image: Image, vae: Vae, compression: Compression) -> Self {
+    pub fn new(image: ImageParam, vae: VaeParam, compression: CompressionParam) -> Self {
         Self { image, vae, compression }
     }
 }
 impl<
-    Image: crate::nodes::types::Image,
-    Vae: crate::nodes::types::Vae,
-    Compression: crate::nodes::types::Int,
-> crate::nodes::TypedNode for StableCascadeStageCVaeEncode<Image, Vae, Compression> {
+    ImageParam: crate::nodes::types::Image,
+    VaeParam: crate::nodes::types::Vae,
+    CompressionParam: crate::nodes::types::Int,
+> crate::nodes::TypedNode
+for StableCascadeStageCVaeEncode<ImageParam, VaeParam, CompressionParam> {
     type Output = out::StableCascadeStageCVaeEncodeOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {

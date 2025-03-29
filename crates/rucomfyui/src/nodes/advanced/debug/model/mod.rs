@@ -8,27 +8,27 @@ use crate::{
 ///**ModelComputeDtype**: No description.
 #[derive(Clone)]
 pub struct ModelComputeDtype<
-    Model: crate::nodes::types::Model,
-    Dtype: crate::nodes::types::String,
+    ModelParam: crate::nodes::types::Model,
+    DtypeParam: crate::nodes::types::String,
 > {
     ///No documentation.
-    pub model: Model,
+    pub model: ModelParam,
     ///No documentation.
-    pub dtype: Dtype,
+    pub dtype: DtypeParam,
 }
 impl<
-    Model: crate::nodes::types::Model,
-    Dtype: crate::nodes::types::String,
-> ModelComputeDtype<Model, Dtype> {
+    ModelParam: crate::nodes::types::Model,
+    DtypeParam: crate::nodes::types::String,
+> ModelComputeDtype<ModelParam, DtypeParam> {
     /// Create a new node.
-    pub fn new(model: Model, dtype: Dtype) -> Self {
+    pub fn new(model: ModelParam, dtype: DtypeParam) -> Self {
         Self { model, dtype }
     }
 }
 impl<
-    Model: crate::nodes::types::Model,
-    Dtype: crate::nodes::types::String,
-> crate::nodes::TypedNode for ModelComputeDtype<Model, Dtype> {
+    ModelParam: crate::nodes::types::Model,
+    DtypeParam: crate::nodes::types::String,
+> crate::nodes::TypedNode for ModelComputeDtype<ModelParam, DtypeParam> {
     type Output = crate::nodes::types::ModelOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)

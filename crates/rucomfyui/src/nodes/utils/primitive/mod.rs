@@ -7,18 +7,18 @@ use crate::{
 };
 ///**Boolean**: No description.
 #[derive(Clone)]
-pub struct PrimitiveBoolean<Value: crate::nodes::types::Boolean> {
+pub struct PrimitiveBoolean<ValueParam: crate::nodes::types::Boolean> {
     ///No documentation.
-    pub value: Value,
+    pub value: ValueParam,
 }
-impl<Value: crate::nodes::types::Boolean> PrimitiveBoolean<Value> {
+impl<ValueParam: crate::nodes::types::Boolean> PrimitiveBoolean<ValueParam> {
     /// Create a new node.
-    pub fn new(value: Value) -> Self {
+    pub fn new(value: ValueParam) -> Self {
         Self { value }
     }
 }
-impl<Value: crate::nodes::types::Boolean> crate::nodes::TypedNode
-for PrimitiveBoolean<Value> {
+impl<ValueParam: crate::nodes::types::Boolean> crate::nodes::TypedNode
+for PrimitiveBoolean<ValueParam> {
     type Output = crate::nodes::types::BooleanOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)
@@ -35,18 +35,18 @@ for PrimitiveBoolean<Value> {
 }
 ///**Float**: No description.
 #[derive(Clone)]
-pub struct PrimitiveFloat<Value: crate::nodes::types::Float> {
+pub struct PrimitiveFloat<ValueParam: crate::nodes::types::Float> {
     ///No documentation.
-    pub value: Value,
+    pub value: ValueParam,
 }
-impl<Value: crate::nodes::types::Float> PrimitiveFloat<Value> {
+impl<ValueParam: crate::nodes::types::Float> PrimitiveFloat<ValueParam> {
     /// Create a new node.
-    pub fn new(value: Value) -> Self {
+    pub fn new(value: ValueParam) -> Self {
         Self { value }
     }
 }
-impl<Value: crate::nodes::types::Float> crate::nodes::TypedNode
-for PrimitiveFloat<Value> {
+impl<ValueParam: crate::nodes::types::Float> crate::nodes::TypedNode
+for PrimitiveFloat<ValueParam> {
     type Output = crate::nodes::types::FloatOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)
@@ -63,17 +63,18 @@ for PrimitiveFloat<Value> {
 }
 ///**Int**: No description.
 #[derive(Clone)]
-pub struct PrimitiveInt<Value: crate::nodes::types::Int> {
+pub struct PrimitiveInt<ValueParam: crate::nodes::types::Int> {
     ///No documentation.
-    pub value: Value,
+    pub value: ValueParam,
 }
-impl<Value: crate::nodes::types::Int> PrimitiveInt<Value> {
+impl<ValueParam: crate::nodes::types::Int> PrimitiveInt<ValueParam> {
     /// Create a new node.
-    pub fn new(value: Value) -> Self {
+    pub fn new(value: ValueParam) -> Self {
         Self { value }
     }
 }
-impl<Value: crate::nodes::types::Int> crate::nodes::TypedNode for PrimitiveInt<Value> {
+impl<ValueParam: crate::nodes::types::Int> crate::nodes::TypedNode
+for PrimitiveInt<ValueParam> {
     type Output = crate::nodes::types::IntOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)
@@ -90,18 +91,18 @@ impl<Value: crate::nodes::types::Int> crate::nodes::TypedNode for PrimitiveInt<V
 }
 ///**String**: No description.
 #[derive(Clone)]
-pub struct PrimitiveString<Value: crate::nodes::types::String> {
+pub struct PrimitiveString<ValueParam: crate::nodes::types::String> {
     ///No documentation.
-    pub value: Value,
+    pub value: ValueParam,
 }
-impl<Value: crate::nodes::types::String> PrimitiveString<Value> {
+impl<ValueParam: crate::nodes::types::String> PrimitiveString<ValueParam> {
     /// Create a new node.
-    pub fn new(value: Value) -> Self {
+    pub fn new(value: ValueParam) -> Self {
         Self { value }
     }
 }
-impl<Value: crate::nodes::types::String> crate::nodes::TypedNode
-for PrimitiveString<Value> {
+impl<ValueParam: crate::nodes::types::String> crate::nodes::TypedNode
+for PrimitiveString<ValueParam> {
     type Output = crate::nodes::types::StringOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)

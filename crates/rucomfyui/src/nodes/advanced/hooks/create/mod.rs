@@ -8,13 +8,13 @@ use crate::{
 ///**Create Hook LoRA**: No description.
 #[derive(Clone)]
 pub struct CreateHookLora<
-    LoraName: crate::nodes::types::String,
-    StrengthModel: crate::nodes::types::Float,
-    StrengthClip: crate::nodes::types::Float,
-    PrevHooks: crate::nodes::types::Hooks = crate::nodes::types::HooksOut,
+    LoraNameParam: crate::nodes::types::String,
+    StrengthModelParam: crate::nodes::types::Float,
+    StrengthClipParam: crate::nodes::types::Float,
+    PrevHooksParam: crate::nodes::types::Hooks = crate::nodes::types::HooksOut,
 > {
     ///No documentation.
-    pub lora_name: LoraName,
+    pub lora_name: LoraNameParam,
     /**No documentation.
 
 **Metadata**:
@@ -23,7 +23,7 @@ pub struct CreateHookLora<
   - Min: -20
   - Step: 0.01
 */
-    pub strength_model: StrengthModel,
+    pub strength_model: StrengthModelParam,
     /**No documentation.
 
 **Metadata**:
@@ -32,22 +32,22 @@ pub struct CreateHookLora<
   - Min: -20
   - Step: 0.01
 */
-    pub strength_clip: StrengthClip,
+    pub strength_clip: StrengthClipParam,
     ///No documentation.
-    pub prev_hooks: Option<PrevHooks>,
+    pub prev_hooks: Option<PrevHooksParam>,
 }
 impl<
-    LoraName: crate::nodes::types::String,
-    StrengthModel: crate::nodes::types::Float,
-    StrengthClip: crate::nodes::types::Float,
-    PrevHooks: crate::nodes::types::Hooks,
-> CreateHookLora<LoraName, StrengthModel, StrengthClip, PrevHooks> {
+    LoraNameParam: crate::nodes::types::String,
+    StrengthModelParam: crate::nodes::types::Float,
+    StrengthClipParam: crate::nodes::types::Float,
+    PrevHooksParam: crate::nodes::types::Hooks,
+> CreateHookLora<LoraNameParam, StrengthModelParam, StrengthClipParam, PrevHooksParam> {
     /// Create a new node.
     pub fn new(
-        lora_name: LoraName,
-        strength_model: StrengthModel,
-        strength_clip: StrengthClip,
-        prev_hooks: Option<PrevHooks>,
+        lora_name: LoraNameParam,
+        strength_model: StrengthModelParam,
+        strength_clip: StrengthClipParam,
+        prev_hooks: Option<PrevHooksParam>,
     ) -> Self {
         Self {
             lora_name,
@@ -58,12 +58,17 @@ impl<
     }
 }
 impl<
-    LoraName: crate::nodes::types::String,
-    StrengthModel: crate::nodes::types::Float,
-    StrengthClip: crate::nodes::types::Float,
-    PrevHooks: crate::nodes::types::Hooks,
+    LoraNameParam: crate::nodes::types::String,
+    StrengthModelParam: crate::nodes::types::Float,
+    StrengthClipParam: crate::nodes::types::Float,
+    PrevHooksParam: crate::nodes::types::Hooks,
 > crate::nodes::TypedNode
-for CreateHookLora<LoraName, StrengthModel, StrengthClip, PrevHooks> {
+for CreateHookLora<
+    LoraNameParam,
+    StrengthModelParam,
+    StrengthClipParam,
+    PrevHooksParam,
+> {
     type Output = crate::nodes::types::HooksOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)
@@ -86,12 +91,12 @@ for CreateHookLora<LoraName, StrengthModel, StrengthClip, PrevHooks> {
 ///**Create Hook LoRA (MO)**: No description.
 #[derive(Clone)]
 pub struct CreateHookLoraModelOnly<
-    LoraName: crate::nodes::types::String,
-    StrengthModel: crate::nodes::types::Float,
-    PrevHooks: crate::nodes::types::Hooks = crate::nodes::types::HooksOut,
+    LoraNameParam: crate::nodes::types::String,
+    StrengthModelParam: crate::nodes::types::Float,
+    PrevHooksParam: crate::nodes::types::Hooks = crate::nodes::types::HooksOut,
 > {
     ///No documentation.
-    pub lora_name: LoraName,
+    pub lora_name: LoraNameParam,
     /**No documentation.
 
 **Metadata**:
@@ -100,20 +105,20 @@ pub struct CreateHookLoraModelOnly<
   - Min: -20
   - Step: 0.01
 */
-    pub strength_model: StrengthModel,
+    pub strength_model: StrengthModelParam,
     ///No documentation.
-    pub prev_hooks: Option<PrevHooks>,
+    pub prev_hooks: Option<PrevHooksParam>,
 }
 impl<
-    LoraName: crate::nodes::types::String,
-    StrengthModel: crate::nodes::types::Float,
-    PrevHooks: crate::nodes::types::Hooks,
-> CreateHookLoraModelOnly<LoraName, StrengthModel, PrevHooks> {
+    LoraNameParam: crate::nodes::types::String,
+    StrengthModelParam: crate::nodes::types::Float,
+    PrevHooksParam: crate::nodes::types::Hooks,
+> CreateHookLoraModelOnly<LoraNameParam, StrengthModelParam, PrevHooksParam> {
     /// Create a new node.
     pub fn new(
-        lora_name: LoraName,
-        strength_model: StrengthModel,
-        prev_hooks: Option<PrevHooks>,
+        lora_name: LoraNameParam,
+        strength_model: StrengthModelParam,
+        prev_hooks: Option<PrevHooksParam>,
     ) -> Self {
         Self {
             lora_name,
@@ -123,11 +128,11 @@ impl<
     }
 }
 impl<
-    LoraName: crate::nodes::types::String,
-    StrengthModel: crate::nodes::types::Float,
-    PrevHooks: crate::nodes::types::Hooks,
+    LoraNameParam: crate::nodes::types::String,
+    StrengthModelParam: crate::nodes::types::Float,
+    PrevHooksParam: crate::nodes::types::Hooks,
 > crate::nodes::TypedNode
-for CreateHookLoraModelOnly<LoraName, StrengthModel, PrevHooks> {
+for CreateHookLoraModelOnly<LoraNameParam, StrengthModelParam, PrevHooksParam> {
     type Output = crate::nodes::types::HooksOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)
@@ -149,13 +154,13 @@ for CreateHookLoraModelOnly<LoraName, StrengthModel, PrevHooks> {
 ///**Create Hook Model as LoRA**: No description.
 #[derive(Clone)]
 pub struct CreateHookModelAsLora<
-    CkptName: crate::nodes::types::String,
-    StrengthModel: crate::nodes::types::Float,
-    StrengthClip: crate::nodes::types::Float,
-    PrevHooks: crate::nodes::types::Hooks = crate::nodes::types::HooksOut,
+    CkptNameParam: crate::nodes::types::String,
+    StrengthModelParam: crate::nodes::types::Float,
+    StrengthClipParam: crate::nodes::types::Float,
+    PrevHooksParam: crate::nodes::types::Hooks = crate::nodes::types::HooksOut,
 > {
     ///No documentation.
-    pub ckpt_name: CkptName,
+    pub ckpt_name: CkptNameParam,
     /**No documentation.
 
 **Metadata**:
@@ -164,7 +169,7 @@ pub struct CreateHookModelAsLora<
   - Min: -20
   - Step: 0.01
 */
-    pub strength_model: StrengthModel,
+    pub strength_model: StrengthModelParam,
     /**No documentation.
 
 **Metadata**:
@@ -173,22 +178,27 @@ pub struct CreateHookModelAsLora<
   - Min: -20
   - Step: 0.01
 */
-    pub strength_clip: StrengthClip,
+    pub strength_clip: StrengthClipParam,
     ///No documentation.
-    pub prev_hooks: Option<PrevHooks>,
+    pub prev_hooks: Option<PrevHooksParam>,
 }
 impl<
-    CkptName: crate::nodes::types::String,
-    StrengthModel: crate::nodes::types::Float,
-    StrengthClip: crate::nodes::types::Float,
-    PrevHooks: crate::nodes::types::Hooks,
-> CreateHookModelAsLora<CkptName, StrengthModel, StrengthClip, PrevHooks> {
+    CkptNameParam: crate::nodes::types::String,
+    StrengthModelParam: crate::nodes::types::Float,
+    StrengthClipParam: crate::nodes::types::Float,
+    PrevHooksParam: crate::nodes::types::Hooks,
+> CreateHookModelAsLora<
+    CkptNameParam,
+    StrengthModelParam,
+    StrengthClipParam,
+    PrevHooksParam,
+> {
     /// Create a new node.
     pub fn new(
-        ckpt_name: CkptName,
-        strength_model: StrengthModel,
-        strength_clip: StrengthClip,
-        prev_hooks: Option<PrevHooks>,
+        ckpt_name: CkptNameParam,
+        strength_model: StrengthModelParam,
+        strength_clip: StrengthClipParam,
+        prev_hooks: Option<PrevHooksParam>,
     ) -> Self {
         Self {
             ckpt_name,
@@ -199,12 +209,17 @@ impl<
     }
 }
 impl<
-    CkptName: crate::nodes::types::String,
-    StrengthModel: crate::nodes::types::Float,
-    StrengthClip: crate::nodes::types::Float,
-    PrevHooks: crate::nodes::types::Hooks,
+    CkptNameParam: crate::nodes::types::String,
+    StrengthModelParam: crate::nodes::types::Float,
+    StrengthClipParam: crate::nodes::types::Float,
+    PrevHooksParam: crate::nodes::types::Hooks,
 > crate::nodes::TypedNode
-for CreateHookModelAsLora<CkptName, StrengthModel, StrengthClip, PrevHooks> {
+for CreateHookModelAsLora<
+    CkptNameParam,
+    StrengthModelParam,
+    StrengthClipParam,
+    PrevHooksParam,
+> {
     type Output = crate::nodes::types::HooksOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)
@@ -227,12 +242,12 @@ for CreateHookModelAsLora<CkptName, StrengthModel, StrengthClip, PrevHooks> {
 ///**Create Hook Model as LoRA (MO)**: No description.
 #[derive(Clone)]
 pub struct CreateHookModelAsLoraModelOnly<
-    CkptName: crate::nodes::types::String,
-    StrengthModel: crate::nodes::types::Float,
-    PrevHooks: crate::nodes::types::Hooks = crate::nodes::types::HooksOut,
+    CkptNameParam: crate::nodes::types::String,
+    StrengthModelParam: crate::nodes::types::Float,
+    PrevHooksParam: crate::nodes::types::Hooks = crate::nodes::types::HooksOut,
 > {
     ///No documentation.
-    pub ckpt_name: CkptName,
+    pub ckpt_name: CkptNameParam,
     /**No documentation.
 
 **Metadata**:
@@ -241,20 +256,20 @@ pub struct CreateHookModelAsLoraModelOnly<
   - Min: -20
   - Step: 0.01
 */
-    pub strength_model: StrengthModel,
+    pub strength_model: StrengthModelParam,
     ///No documentation.
-    pub prev_hooks: Option<PrevHooks>,
+    pub prev_hooks: Option<PrevHooksParam>,
 }
 impl<
-    CkptName: crate::nodes::types::String,
-    StrengthModel: crate::nodes::types::Float,
-    PrevHooks: crate::nodes::types::Hooks,
-> CreateHookModelAsLoraModelOnly<CkptName, StrengthModel, PrevHooks> {
+    CkptNameParam: crate::nodes::types::String,
+    StrengthModelParam: crate::nodes::types::Float,
+    PrevHooksParam: crate::nodes::types::Hooks,
+> CreateHookModelAsLoraModelOnly<CkptNameParam, StrengthModelParam, PrevHooksParam> {
     /// Create a new node.
     pub fn new(
-        ckpt_name: CkptName,
-        strength_model: StrengthModel,
-        prev_hooks: Option<PrevHooks>,
+        ckpt_name: CkptNameParam,
+        strength_model: StrengthModelParam,
+        prev_hooks: Option<PrevHooksParam>,
     ) -> Self {
         Self {
             ckpt_name,
@@ -264,11 +279,11 @@ impl<
     }
 }
 impl<
-    CkptName: crate::nodes::types::String,
-    StrengthModel: crate::nodes::types::Float,
-    PrevHooks: crate::nodes::types::Hooks,
+    CkptNameParam: crate::nodes::types::String,
+    StrengthModelParam: crate::nodes::types::Float,
+    PrevHooksParam: crate::nodes::types::Hooks,
 > crate::nodes::TypedNode
-for CreateHookModelAsLoraModelOnly<CkptName, StrengthModel, PrevHooks> {
+for CreateHookModelAsLoraModelOnly<CkptNameParam, StrengthModelParam, PrevHooksParam> {
     type Output = crate::nodes::types::HooksOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)

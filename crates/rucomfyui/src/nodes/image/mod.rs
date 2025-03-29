@@ -42,10 +42,10 @@ pub mod out {
 ///**EmptyImage**: No description.
 #[derive(Clone)]
 pub struct EmptyImage<
-    Width: crate::nodes::types::Int,
-    Height: crate::nodes::types::Int,
-    BatchSize: crate::nodes::types::Int,
-    Color: crate::nodes::types::Int,
+    WidthParam: crate::nodes::types::Int,
+    HeightParam: crate::nodes::types::Int,
+    BatchSizeParam: crate::nodes::types::Int,
+    ColorParam: crate::nodes::types::Int,
 > {
     /**No documentation.
 
@@ -55,7 +55,7 @@ pub struct EmptyImage<
   - Min: 1
   - Step: 1
 */
-    pub width: Width,
+    pub width: WidthParam,
     /**No documentation.
 
 **Metadata**:
@@ -64,7 +64,7 @@ pub struct EmptyImage<
   - Min: 1
   - Step: 1
 */
-    pub height: Height,
+    pub height: HeightParam,
     /**No documentation.
 
 **Metadata**:
@@ -72,7 +72,7 @@ pub struct EmptyImage<
   - Max: 4096
   - Min: 1
 */
-    pub batch_size: BatchSize,
+    pub batch_size: BatchSizeParam,
     /**No documentation.
 
 **Metadata**:
@@ -82,20 +82,20 @@ pub struct EmptyImage<
   - Min: 0
   - Step: 1
 */
-    pub color: Color,
+    pub color: ColorParam,
 }
 impl<
-    Width: crate::nodes::types::Int,
-    Height: crate::nodes::types::Int,
-    BatchSize: crate::nodes::types::Int,
-    Color: crate::nodes::types::Int,
-> EmptyImage<Width, Height, BatchSize, Color> {
+    WidthParam: crate::nodes::types::Int,
+    HeightParam: crate::nodes::types::Int,
+    BatchSizeParam: crate::nodes::types::Int,
+    ColorParam: crate::nodes::types::Int,
+> EmptyImage<WidthParam, HeightParam, BatchSizeParam, ColorParam> {
     /// Create a new node.
     pub fn new(
-        width: Width,
-        height: Height,
-        batch_size: BatchSize,
-        color: Color,
+        width: WidthParam,
+        height: HeightParam,
+        batch_size: BatchSizeParam,
+        color: ColorParam,
     ) -> Self {
         Self {
             width,
@@ -106,11 +106,12 @@ impl<
     }
 }
 impl<
-    Width: crate::nodes::types::Int,
-    Height: crate::nodes::types::Int,
-    BatchSize: crate::nodes::types::Int,
-    Color: crate::nodes::types::Int,
-> crate::nodes::TypedNode for EmptyImage<Width, Height, BatchSize, Color> {
+    WidthParam: crate::nodes::types::Int,
+    HeightParam: crate::nodes::types::Int,
+    BatchSizeParam: crate::nodes::types::Int,
+    ColorParam: crate::nodes::types::Int,
+> crate::nodes::TypedNode
+for EmptyImage<WidthParam, HeightParam, BatchSizeParam, ColorParam> {
     type Output = crate::nodes::types::ImageOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)
@@ -131,27 +132,27 @@ impl<
 ///**Batch Images**: No description.
 #[derive(Clone)]
 pub struct ImageBatch<
-    Image1: crate::nodes::types::Image,
-    Image2: crate::nodes::types::Image,
+    Image1Param: crate::nodes::types::Image,
+    Image2Param: crate::nodes::types::Image,
 > {
     ///No documentation.
-    pub image_1: Image1,
+    pub image_1: Image1Param,
     ///No documentation.
-    pub image_2: Image2,
+    pub image_2: Image2Param,
 }
 impl<
-    Image1: crate::nodes::types::Image,
-    Image2: crate::nodes::types::Image,
-> ImageBatch<Image1, Image2> {
+    Image1Param: crate::nodes::types::Image,
+    Image2Param: crate::nodes::types::Image,
+> ImageBatch<Image1Param, Image2Param> {
     /// Create a new node.
-    pub fn new(image_1: Image1, image_2: Image2) -> Self {
+    pub fn new(image_1: Image1Param, image_2: Image2Param) -> Self {
         Self { image_1, image_2 }
     }
 }
 impl<
-    Image1: crate::nodes::types::Image,
-    Image2: crate::nodes::types::Image,
-> crate::nodes::TypedNode for ImageBatch<Image1, Image2> {
+    Image1Param: crate::nodes::types::Image,
+    Image2Param: crate::nodes::types::Image,
+> crate::nodes::TypedNode for ImageBatch<Image1Param, Image2Param> {
     type Output = crate::nodes::types::ImageOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)
@@ -170,17 +171,17 @@ impl<
 ///**ImageCompositeMasked**: No description.
 #[derive(Clone)]
 pub struct ImageCompositeMasked<
-    Destination: crate::nodes::types::Image,
-    Source: crate::nodes::types::Image,
-    X: crate::nodes::types::Int,
-    Y: crate::nodes::types::Int,
-    ResizeSource: crate::nodes::types::Boolean,
-    Mask: crate::nodes::types::Mask = crate::nodes::types::MaskOut,
+    DestinationParam: crate::nodes::types::Image,
+    SourceParam: crate::nodes::types::Image,
+    XParam: crate::nodes::types::Int,
+    YParam: crate::nodes::types::Int,
+    ResizeSourceParam: crate::nodes::types::Boolean,
+    MaskParam: crate::nodes::types::Mask = crate::nodes::types::MaskOut,
 > {
     ///No documentation.
-    pub destination: Destination,
+    pub destination: DestinationParam,
     ///No documentation.
-    pub source: Source,
+    pub source: SourceParam,
     /**No documentation.
 
 **Metadata**:
@@ -189,7 +190,7 @@ pub struct ImageCompositeMasked<
   - Min: 0
   - Step: 1
 */
-    pub x: X,
+    pub x: XParam,
     /**No documentation.
 
 **Metadata**:
@@ -198,32 +199,39 @@ pub struct ImageCompositeMasked<
   - Min: 0
   - Step: 1
 */
-    pub y: Y,
+    pub y: YParam,
     /**No documentation.
 
 **Metadata**:
   - Default: false
 */
-    pub resize_source: ResizeSource,
+    pub resize_source: ResizeSourceParam,
     ///No documentation.
-    pub mask: Option<Mask>,
+    pub mask: Option<MaskParam>,
 }
 impl<
-    Destination: crate::nodes::types::Image,
-    Source: crate::nodes::types::Image,
-    X: crate::nodes::types::Int,
-    Y: crate::nodes::types::Int,
-    ResizeSource: crate::nodes::types::Boolean,
-    Mask: crate::nodes::types::Mask,
-> ImageCompositeMasked<Destination, Source, X, Y, ResizeSource, Mask> {
+    DestinationParam: crate::nodes::types::Image,
+    SourceParam: crate::nodes::types::Image,
+    XParam: crate::nodes::types::Int,
+    YParam: crate::nodes::types::Int,
+    ResizeSourceParam: crate::nodes::types::Boolean,
+    MaskParam: crate::nodes::types::Mask,
+> ImageCompositeMasked<
+    DestinationParam,
+    SourceParam,
+    XParam,
+    YParam,
+    ResizeSourceParam,
+    MaskParam,
+> {
     /// Create a new node.
     pub fn new(
-        destination: Destination,
-        source: Source,
-        x: X,
-        y: Y,
-        resize_source: ResizeSource,
-        mask: Option<Mask>,
+        destination: DestinationParam,
+        source: SourceParam,
+        x: XParam,
+        y: YParam,
+        resize_source: ResizeSourceParam,
+        mask: Option<MaskParam>,
     ) -> Self {
         Self {
             destination,
@@ -236,14 +244,21 @@ impl<
     }
 }
 impl<
-    Destination: crate::nodes::types::Image,
-    Source: crate::nodes::types::Image,
-    X: crate::nodes::types::Int,
-    Y: crate::nodes::types::Int,
-    ResizeSource: crate::nodes::types::Boolean,
-    Mask: crate::nodes::types::Mask,
+    DestinationParam: crate::nodes::types::Image,
+    SourceParam: crate::nodes::types::Image,
+    XParam: crate::nodes::types::Int,
+    YParam: crate::nodes::types::Int,
+    ResizeSourceParam: crate::nodes::types::Boolean,
+    MaskParam: crate::nodes::types::Mask,
 > crate::nodes::TypedNode
-for ImageCompositeMasked<Destination, Source, X, Y, ResizeSource, Mask> {
+for ImageCompositeMasked<
+    DestinationParam,
+    SourceParam,
+    XParam,
+    YParam,
+    ResizeSourceParam,
+    MaskParam,
+> {
     type Output = crate::nodes::types::ImageOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)
@@ -267,17 +282,18 @@ for ImageCompositeMasked<Destination, Source, X, Y, ResizeSource, Mask> {
 }
 ///**Invert Image**: No description.
 #[derive(Clone)]
-pub struct ImageInvert<Image: crate::nodes::types::Image> {
+pub struct ImageInvert<ImageParam: crate::nodes::types::Image> {
     ///No documentation.
-    pub image: Image,
+    pub image: ImageParam,
 }
-impl<Image: crate::nodes::types::Image> ImageInvert<Image> {
+impl<ImageParam: crate::nodes::types::Image> ImageInvert<ImageParam> {
     /// Create a new node.
-    pub fn new(image: Image) -> Self {
+    pub fn new(image: ImageParam) -> Self {
         Self { image }
     }
 }
-impl<Image: crate::nodes::types::Image> crate::nodes::TypedNode for ImageInvert<Image> {
+impl<ImageParam: crate::nodes::types::Image> crate::nodes::TypedNode
+for ImageInvert<ImageParam> {
     type Output = crate::nodes::types::ImageOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)
@@ -295,15 +311,15 @@ impl<Image: crate::nodes::types::Image> crate::nodes::TypedNode for ImageInvert<
 ///**Pad Image for Outpainting**: No description.
 #[derive(Clone)]
 pub struct ImagePadForOutpaint<
-    Image: crate::nodes::types::Image,
-    Left: crate::nodes::types::Int,
-    Top: crate::nodes::types::Int,
-    Right: crate::nodes::types::Int,
-    Bottom: crate::nodes::types::Int,
-    Feathering: crate::nodes::types::Int,
+    ImageParam: crate::nodes::types::Image,
+    LeftParam: crate::nodes::types::Int,
+    TopParam: crate::nodes::types::Int,
+    RightParam: crate::nodes::types::Int,
+    BottomParam: crate::nodes::types::Int,
+    FeatheringParam: crate::nodes::types::Int,
 > {
     ///No documentation.
-    pub image: Image,
+    pub image: ImageParam,
     /**No documentation.
 
 **Metadata**:
@@ -312,7 +328,7 @@ pub struct ImagePadForOutpaint<
   - Min: 0
   - Step: 8
 */
-    pub left: Left,
+    pub left: LeftParam,
     /**No documentation.
 
 **Metadata**:
@@ -321,7 +337,7 @@ pub struct ImagePadForOutpaint<
   - Min: 0
   - Step: 8
 */
-    pub top: Top,
+    pub top: TopParam,
     /**No documentation.
 
 **Metadata**:
@@ -330,7 +346,7 @@ pub struct ImagePadForOutpaint<
   - Min: 0
   - Step: 8
 */
-    pub right: Right,
+    pub right: RightParam,
     /**No documentation.
 
 **Metadata**:
@@ -339,7 +355,7 @@ pub struct ImagePadForOutpaint<
   - Min: 0
   - Step: 8
 */
-    pub bottom: Bottom,
+    pub bottom: BottomParam,
     /**No documentation.
 
 **Metadata**:
@@ -348,24 +364,31 @@ pub struct ImagePadForOutpaint<
   - Min: 0
   - Step: 1
 */
-    pub feathering: Feathering,
+    pub feathering: FeatheringParam,
 }
 impl<
-    Image: crate::nodes::types::Image,
-    Left: crate::nodes::types::Int,
-    Top: crate::nodes::types::Int,
-    Right: crate::nodes::types::Int,
-    Bottom: crate::nodes::types::Int,
-    Feathering: crate::nodes::types::Int,
-> ImagePadForOutpaint<Image, Left, Top, Right, Bottom, Feathering> {
+    ImageParam: crate::nodes::types::Image,
+    LeftParam: crate::nodes::types::Int,
+    TopParam: crate::nodes::types::Int,
+    RightParam: crate::nodes::types::Int,
+    BottomParam: crate::nodes::types::Int,
+    FeatheringParam: crate::nodes::types::Int,
+> ImagePadForOutpaint<
+    ImageParam,
+    LeftParam,
+    TopParam,
+    RightParam,
+    BottomParam,
+    FeatheringParam,
+> {
     /// Create a new node.
     pub fn new(
-        image: Image,
-        left: Left,
-        top: Top,
-        right: Right,
-        bottom: Bottom,
-        feathering: Feathering,
+        image: ImageParam,
+        left: LeftParam,
+        top: TopParam,
+        right: RightParam,
+        bottom: BottomParam,
+        feathering: FeatheringParam,
     ) -> Self {
         Self {
             image,
@@ -378,14 +401,21 @@ impl<
     }
 }
 impl<
-    Image: crate::nodes::types::Image,
-    Left: crate::nodes::types::Int,
-    Top: crate::nodes::types::Int,
-    Right: crate::nodes::types::Int,
-    Bottom: crate::nodes::types::Int,
-    Feathering: crate::nodes::types::Int,
+    ImageParam: crate::nodes::types::Image,
+    LeftParam: crate::nodes::types::Int,
+    TopParam: crate::nodes::types::Int,
+    RightParam: crate::nodes::types::Int,
+    BottomParam: crate::nodes::types::Int,
+    FeatheringParam: crate::nodes::types::Int,
 > crate::nodes::TypedNode
-for ImagePadForOutpaint<Image, Left, Top, Right, Bottom, Feathering> {
+for ImagePadForOutpaint<
+    ImageParam,
+    LeftParam,
+    TopParam,
+    RightParam,
+    BottomParam,
+    FeatheringParam,
+> {
     type Output = out::ImagePadForOutpaintOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
@@ -411,11 +441,11 @@ for ImagePadForOutpaint<Image, Left, Top, Right, Bottom, Feathering> {
 ///**LTXVPreprocess**: No description.
 #[derive(Clone)]
 pub struct LtxvPreprocess<
-    Image: crate::nodes::types::Image,
-    ImgCompression: crate::nodes::types::Int,
+    ImageParam: crate::nodes::types::Image,
+    ImgCompressionParam: crate::nodes::types::Int,
 > {
     ///No documentation.
-    pub image: Image,
+    pub image: ImageParam,
     /**Amount of compression to apply on image.
 
 **Metadata**:
@@ -423,21 +453,21 @@ pub struct LtxvPreprocess<
   - Max: 100
   - Min: 0
 */
-    pub img_compression: ImgCompression,
+    pub img_compression: ImgCompressionParam,
 }
 impl<
-    Image: crate::nodes::types::Image,
-    ImgCompression: crate::nodes::types::Int,
-> LtxvPreprocess<Image, ImgCompression> {
+    ImageParam: crate::nodes::types::Image,
+    ImgCompressionParam: crate::nodes::types::Int,
+> LtxvPreprocess<ImageParam, ImgCompressionParam> {
     /// Create a new node.
-    pub fn new(image: Image, img_compression: ImgCompression) -> Self {
+    pub fn new(image: ImageParam, img_compression: ImgCompressionParam) -> Self {
         Self { image, img_compression }
     }
 }
 impl<
-    Image: crate::nodes::types::Image,
-    ImgCompression: crate::nodes::types::Int,
-> crate::nodes::TypedNode for LtxvPreprocess<Image, ImgCompression> {
+    ImageParam: crate::nodes::types::Image,
+    ImgCompressionParam: crate::nodes::types::Int,
+> crate::nodes::TypedNode for LtxvPreprocess<ImageParam, ImgCompressionParam> {
     type Output = crate::nodes::types::ImageOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)
@@ -456,21 +486,22 @@ impl<
 }
 ///**Load Image**: No description.
 #[derive(Clone)]
-pub struct LoadImage<Image: crate::nodes::types::String> {
+pub struct LoadImage<ImageParam: crate::nodes::types::String> {
     /**No documentation.
 
 **Metadata**:
   - Image upload: true
 */
-    pub image: Image,
+    pub image: ImageParam,
 }
-impl<Image: crate::nodes::types::String> LoadImage<Image> {
+impl<ImageParam: crate::nodes::types::String> LoadImage<ImageParam> {
     /// Create a new node.
-    pub fn new(image: Image) -> Self {
+    pub fn new(image: ImageParam) -> Self {
         Self { image }
     }
 }
-impl<Image: crate::nodes::types::String> crate::nodes::TypedNode for LoadImage<Image> {
+impl<ImageParam: crate::nodes::types::String> crate::nodes::TypedNode
+for LoadImage<ImageParam> {
     type Output = out::LoadImageOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
@@ -515,18 +546,18 @@ impl crate::nodes::TypedNode for LoadImageOutput {
 }
 ///**Preview Image**: Saves the input images to your ComfyUI output directory.
 #[derive(Clone)]
-pub struct PreviewImage<Images: crate::nodes::types::Image> {
+pub struct PreviewImage<ImagesParam: crate::nodes::types::Image> {
     ///No documentation.
-    pub images: Images,
+    pub images: ImagesParam,
 }
-impl<Images: crate::nodes::types::Image> PreviewImage<Images> {
+impl<ImagesParam: crate::nodes::types::Image> PreviewImage<ImagesParam> {
     /// Create a new node.
-    pub fn new(images: Images) -> Self {
+    pub fn new(images: ImagesParam) -> Self {
         Self { images }
     }
 }
-impl<Images: crate::nodes::types::Image> crate::nodes::TypedNode
-for PreviewImage<Images> {
+impl<ImagesParam: crate::nodes::types::Image> crate::nodes::TypedNode
+for PreviewImage<ImagesParam> {
     type Output = WorkflowNodeId;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         node_id
@@ -541,36 +572,36 @@ for PreviewImage<Images> {
     const DESCRIPTION: &'static str = "Saves the input images to your ComfyUI output directory.";
     const CATEGORY: &'static str = "image";
 }
-impl<Images: crate::nodes::types::Image> crate::nodes::TypedOutputNode
-for PreviewImage<Images> {}
+impl<ImagesParam: crate::nodes::types::Image> crate::nodes::TypedOutputNode
+for PreviewImage<ImagesParam> {}
 ///**Save Image**: Saves the input images to your ComfyUI output directory.
 #[derive(Clone)]
 pub struct SaveImage<
-    Images: crate::nodes::types::Image,
-    FilenamePrefix: crate::nodes::types::String,
+    ImagesParam: crate::nodes::types::Image,
+    FilenamePrefixParam: crate::nodes::types::String,
 > {
     ///The images to save.
-    pub images: Images,
+    pub images: ImagesParam,
     /**The prefix for the file to save. This may include formatting information such as %date:yyyy-MM-dd% or %Empty Latent Image.width% to include values from nodes.
 
 **Metadata**:
   - Default: ComfyUI
 */
-    pub filename_prefix: FilenamePrefix,
+    pub filename_prefix: FilenamePrefixParam,
 }
 impl<
-    Images: crate::nodes::types::Image,
-    FilenamePrefix: crate::nodes::types::String,
-> SaveImage<Images, FilenamePrefix> {
+    ImagesParam: crate::nodes::types::Image,
+    FilenamePrefixParam: crate::nodes::types::String,
+> SaveImage<ImagesParam, FilenamePrefixParam> {
     /// Create a new node.
-    pub fn new(images: Images, filename_prefix: FilenamePrefix) -> Self {
+    pub fn new(images: ImagesParam, filename_prefix: FilenamePrefixParam) -> Self {
         Self { images, filename_prefix }
     }
 }
 impl<
-    Images: crate::nodes::types::Image,
-    FilenamePrefix: crate::nodes::types::String,
-> crate::nodes::TypedNode for SaveImage<Images, FilenamePrefix> {
+    ImagesParam: crate::nodes::types::Image,
+    FilenamePrefixParam: crate::nodes::types::String,
+> crate::nodes::TypedNode for SaveImage<ImagesParam, FilenamePrefixParam> {
     type Output = WorkflowNodeId;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         node_id
@@ -588,19 +619,19 @@ impl<
     const CATEGORY: &'static str = "image";
 }
 impl<
-    Images: crate::nodes::types::Image,
-    FilenamePrefix: crate::nodes::types::String,
-> crate::nodes::TypedOutputNode for SaveImage<Images, FilenamePrefix> {}
+    ImagesParam: crate::nodes::types::Image,
+    FilenamePrefixParam: crate::nodes::types::String,
+> crate::nodes::TypedOutputNode for SaveImage<ImagesParam, FilenamePrefixParam> {}
 ///**Webcam Capture**: No description.
 #[derive(Clone)]
 pub struct WebcamCapture<
-    Image: crate::nodes::types::Webcam,
-    Width: crate::nodes::types::Int,
-    Height: crate::nodes::types::Int,
-    CaptureOnQueue: crate::nodes::types::Boolean,
+    ImageParam: crate::nodes::types::Webcam,
+    WidthParam: crate::nodes::types::Int,
+    HeightParam: crate::nodes::types::Int,
+    CaptureOnQueueParam: crate::nodes::types::Boolean,
 > {
     ///No documentation.
-    pub image: Image,
+    pub image: ImageParam,
     /**No documentation.
 
 **Metadata**:
@@ -609,7 +640,7 @@ pub struct WebcamCapture<
   - Min: 0
   - Step: 1
 */
-    pub width: Width,
+    pub width: WidthParam,
     /**No documentation.
 
 **Metadata**:
@@ -618,26 +649,26 @@ pub struct WebcamCapture<
   - Min: 0
   - Step: 1
 */
-    pub height: Height,
+    pub height: HeightParam,
     /**No documentation.
 
 **Metadata**:
   - Default: true
 */
-    pub capture_on_queue: CaptureOnQueue,
+    pub capture_on_queue: CaptureOnQueueParam,
 }
 impl<
-    Image: crate::nodes::types::Webcam,
-    Width: crate::nodes::types::Int,
-    Height: crate::nodes::types::Int,
-    CaptureOnQueue: crate::nodes::types::Boolean,
-> WebcamCapture<Image, Width, Height, CaptureOnQueue> {
+    ImageParam: crate::nodes::types::Webcam,
+    WidthParam: crate::nodes::types::Int,
+    HeightParam: crate::nodes::types::Int,
+    CaptureOnQueueParam: crate::nodes::types::Boolean,
+> WebcamCapture<ImageParam, WidthParam, HeightParam, CaptureOnQueueParam> {
     /// Create a new node.
     pub fn new(
-        image: Image,
-        width: Width,
-        height: Height,
-        capture_on_queue: CaptureOnQueue,
+        image: ImageParam,
+        width: WidthParam,
+        height: HeightParam,
+        capture_on_queue: CaptureOnQueueParam,
     ) -> Self {
         Self {
             image,
@@ -648,11 +679,12 @@ impl<
     }
 }
 impl<
-    Image: crate::nodes::types::Webcam,
-    Width: crate::nodes::types::Int,
-    Height: crate::nodes::types::Int,
-    CaptureOnQueue: crate::nodes::types::Boolean,
-> crate::nodes::TypedNode for WebcamCapture<Image, Width, Height, CaptureOnQueue> {
+    ImageParam: crate::nodes::types::Webcam,
+    WidthParam: crate::nodes::types::Int,
+    HeightParam: crate::nodes::types::Int,
+    CaptureOnQueueParam: crate::nodes::types::Boolean,
+> crate::nodes::TypedNode
+for WebcamCapture<ImageParam, WidthParam, HeightParam, CaptureOnQueueParam> {
     type Output = crate::nodes::types::ImageOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)

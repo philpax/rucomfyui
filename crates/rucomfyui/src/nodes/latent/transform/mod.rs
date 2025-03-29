@@ -8,14 +8,14 @@ use crate::{
 ///**Crop Latent**: No description.
 #[derive(Clone)]
 pub struct LatentCrop<
-    Samples: crate::nodes::types::Latent,
-    Width: crate::nodes::types::Int,
-    Height: crate::nodes::types::Int,
-    X: crate::nodes::types::Int,
-    Y: crate::nodes::types::Int,
+    SamplesParam: crate::nodes::types::Latent,
+    WidthParam: crate::nodes::types::Int,
+    HeightParam: crate::nodes::types::Int,
+    XParam: crate::nodes::types::Int,
+    YParam: crate::nodes::types::Int,
 > {
     ///No documentation.
-    pub samples: Samples,
+    pub samples: SamplesParam,
     /**No documentation.
 
 **Metadata**:
@@ -24,7 +24,7 @@ pub struct LatentCrop<
   - Min: 64
   - Step: 8
 */
-    pub width: Width,
+    pub width: WidthParam,
     /**No documentation.
 
 **Metadata**:
@@ -33,7 +33,7 @@ pub struct LatentCrop<
   - Min: 64
   - Step: 8
 */
-    pub height: Height,
+    pub height: HeightParam,
     /**No documentation.
 
 **Metadata**:
@@ -42,7 +42,7 @@ pub struct LatentCrop<
   - Min: 0
   - Step: 8
 */
-    pub x: X,
+    pub x: XParam,
     /**No documentation.
 
 **Metadata**:
@@ -51,17 +51,23 @@ pub struct LatentCrop<
   - Min: 0
   - Step: 8
 */
-    pub y: Y,
+    pub y: YParam,
 }
 impl<
-    Samples: crate::nodes::types::Latent,
-    Width: crate::nodes::types::Int,
-    Height: crate::nodes::types::Int,
-    X: crate::nodes::types::Int,
-    Y: crate::nodes::types::Int,
-> LatentCrop<Samples, Width, Height, X, Y> {
+    SamplesParam: crate::nodes::types::Latent,
+    WidthParam: crate::nodes::types::Int,
+    HeightParam: crate::nodes::types::Int,
+    XParam: crate::nodes::types::Int,
+    YParam: crate::nodes::types::Int,
+> LatentCrop<SamplesParam, WidthParam, HeightParam, XParam, YParam> {
     /// Create a new node.
-    pub fn new(samples: Samples, width: Width, height: Height, x: X, y: Y) -> Self {
+    pub fn new(
+        samples: SamplesParam,
+        width: WidthParam,
+        height: HeightParam,
+        x: XParam,
+        y: YParam,
+    ) -> Self {
         Self {
             samples,
             width,
@@ -72,12 +78,13 @@ impl<
     }
 }
 impl<
-    Samples: crate::nodes::types::Latent,
-    Width: crate::nodes::types::Int,
-    Height: crate::nodes::types::Int,
-    X: crate::nodes::types::Int,
-    Y: crate::nodes::types::Int,
-> crate::nodes::TypedNode for LatentCrop<Samples, Width, Height, X, Y> {
+    SamplesParam: crate::nodes::types::Latent,
+    WidthParam: crate::nodes::types::Int,
+    HeightParam: crate::nodes::types::Int,
+    XParam: crate::nodes::types::Int,
+    YParam: crate::nodes::types::Int,
+> crate::nodes::TypedNode
+for LatentCrop<SamplesParam, WidthParam, HeightParam, XParam, YParam> {
     type Output = crate::nodes::types::LatentOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)
@@ -99,27 +106,27 @@ impl<
 ///**Flip Latent**: No description.
 #[derive(Clone)]
 pub struct LatentFlip<
-    Samples: crate::nodes::types::Latent,
-    FlipMethod: crate::nodes::types::String,
+    SamplesParam: crate::nodes::types::Latent,
+    FlipMethodParam: crate::nodes::types::String,
 > {
     ///No documentation.
-    pub samples: Samples,
+    pub samples: SamplesParam,
     ///No documentation.
-    pub flip_method: FlipMethod,
+    pub flip_method: FlipMethodParam,
 }
 impl<
-    Samples: crate::nodes::types::Latent,
-    FlipMethod: crate::nodes::types::String,
-> LatentFlip<Samples, FlipMethod> {
+    SamplesParam: crate::nodes::types::Latent,
+    FlipMethodParam: crate::nodes::types::String,
+> LatentFlip<SamplesParam, FlipMethodParam> {
     /// Create a new node.
-    pub fn new(samples: Samples, flip_method: FlipMethod) -> Self {
+    pub fn new(samples: SamplesParam, flip_method: FlipMethodParam) -> Self {
         Self { samples, flip_method }
     }
 }
 impl<
-    Samples: crate::nodes::types::Latent,
-    FlipMethod: crate::nodes::types::String,
-> crate::nodes::TypedNode for LatentFlip<Samples, FlipMethod> {
+    SamplesParam: crate::nodes::types::Latent,
+    FlipMethodParam: crate::nodes::types::String,
+> crate::nodes::TypedNode for LatentFlip<SamplesParam, FlipMethodParam> {
     type Output = crate::nodes::types::LatentOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)
@@ -138,27 +145,27 @@ impl<
 ///**Rotate Latent**: No description.
 #[derive(Clone)]
 pub struct LatentRotate<
-    Samples: crate::nodes::types::Latent,
-    Rotation: crate::nodes::types::String,
+    SamplesParam: crate::nodes::types::Latent,
+    RotationParam: crate::nodes::types::String,
 > {
     ///No documentation.
-    pub samples: Samples,
+    pub samples: SamplesParam,
     ///No documentation.
-    pub rotation: Rotation,
+    pub rotation: RotationParam,
 }
 impl<
-    Samples: crate::nodes::types::Latent,
-    Rotation: crate::nodes::types::String,
-> LatentRotate<Samples, Rotation> {
+    SamplesParam: crate::nodes::types::Latent,
+    RotationParam: crate::nodes::types::String,
+> LatentRotate<SamplesParam, RotationParam> {
     /// Create a new node.
-    pub fn new(samples: Samples, rotation: Rotation) -> Self {
+    pub fn new(samples: SamplesParam, rotation: RotationParam) -> Self {
         Self { samples, rotation }
     }
 }
 impl<
-    Samples: crate::nodes::types::Latent,
-    Rotation: crate::nodes::types::String,
-> crate::nodes::TypedNode for LatentRotate<Samples, Rotation> {
+    SamplesParam: crate::nodes::types::Latent,
+    RotationParam: crate::nodes::types::String,
+> crate::nodes::TypedNode for LatentRotate<SamplesParam, RotationParam> {
     type Output = crate::nodes::types::LatentOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)

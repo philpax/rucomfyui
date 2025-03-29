@@ -8,11 +8,11 @@ use crate::{
 ///**VideoLinearCFGGuidance**: No description.
 #[derive(Clone)]
 pub struct VideoLinearCfgGuidance<
-    Model: crate::nodes::types::Model,
-    MinCfg: crate::nodes::types::Float,
+    ModelParam: crate::nodes::types::Model,
+    MinCfgParam: crate::nodes::types::Float,
 > {
     ///No documentation.
-    pub model: Model,
+    pub model: ModelParam,
     /**No documentation.
 
 **Metadata**:
@@ -22,21 +22,21 @@ pub struct VideoLinearCfgGuidance<
   - Round: 0.01
   - Step: 0.5
 */
-    pub min_cfg: MinCfg,
+    pub min_cfg: MinCfgParam,
 }
 impl<
-    Model: crate::nodes::types::Model,
-    MinCfg: crate::nodes::types::Float,
-> VideoLinearCfgGuidance<Model, MinCfg> {
+    ModelParam: crate::nodes::types::Model,
+    MinCfgParam: crate::nodes::types::Float,
+> VideoLinearCfgGuidance<ModelParam, MinCfgParam> {
     /// Create a new node.
-    pub fn new(model: Model, min_cfg: MinCfg) -> Self {
+    pub fn new(model: ModelParam, min_cfg: MinCfgParam) -> Self {
         Self { model, min_cfg }
     }
 }
 impl<
-    Model: crate::nodes::types::Model,
-    MinCfg: crate::nodes::types::Float,
-> crate::nodes::TypedNode for VideoLinearCfgGuidance<Model, MinCfg> {
+    ModelParam: crate::nodes::types::Model,
+    MinCfgParam: crate::nodes::types::Float,
+> crate::nodes::TypedNode for VideoLinearCfgGuidance<ModelParam, MinCfgParam> {
     type Output = crate::nodes::types::ModelOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)
@@ -55,11 +55,11 @@ impl<
 ///**VideoTriangleCFGGuidance**: No description.
 #[derive(Clone)]
 pub struct VideoTriangleCfgGuidance<
-    Model: crate::nodes::types::Model,
-    MinCfg: crate::nodes::types::Float,
+    ModelParam: crate::nodes::types::Model,
+    MinCfgParam: crate::nodes::types::Float,
 > {
     ///No documentation.
-    pub model: Model,
+    pub model: ModelParam,
     /**No documentation.
 
 **Metadata**:
@@ -69,21 +69,21 @@ pub struct VideoTriangleCfgGuidance<
   - Round: 0.01
   - Step: 0.5
 */
-    pub min_cfg: MinCfg,
+    pub min_cfg: MinCfgParam,
 }
 impl<
-    Model: crate::nodes::types::Model,
-    MinCfg: crate::nodes::types::Float,
-> VideoTriangleCfgGuidance<Model, MinCfg> {
+    ModelParam: crate::nodes::types::Model,
+    MinCfgParam: crate::nodes::types::Float,
+> VideoTriangleCfgGuidance<ModelParam, MinCfgParam> {
     /// Create a new node.
-    pub fn new(model: Model, min_cfg: MinCfg) -> Self {
+    pub fn new(model: ModelParam, min_cfg: MinCfgParam) -> Self {
         Self { model, min_cfg }
     }
 }
 impl<
-    Model: crate::nodes::types::Model,
-    MinCfg: crate::nodes::types::Float,
-> crate::nodes::TypedNode for VideoTriangleCfgGuidance<Model, MinCfg> {
+    ModelParam: crate::nodes::types::Model,
+    MinCfgParam: crate::nodes::types::Float,
+> crate::nodes::TypedNode for VideoTriangleCfgGuidance<ModelParam, MinCfgParam> {
     type Output = crate::nodes::types::ModelOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)

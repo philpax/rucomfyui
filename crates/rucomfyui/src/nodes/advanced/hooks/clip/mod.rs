@@ -8,40 +8,40 @@ use crate::{
 ///**Set CLIP Hooks**: No description.
 #[derive(Clone)]
 pub struct SetClipHooks<
-    Clip: crate::nodes::types::Clip,
-    ApplyToConds: crate::nodes::types::Boolean,
-    ScheduleClip: crate::nodes::types::Boolean,
-    Hooks: crate::nodes::types::Hooks = crate::nodes::types::HooksOut,
+    ClipParam: crate::nodes::types::Clip,
+    ApplyToCondsParam: crate::nodes::types::Boolean,
+    ScheduleClipParam: crate::nodes::types::Boolean,
+    HooksParam: crate::nodes::types::Hooks = crate::nodes::types::HooksOut,
 > {
     ///No documentation.
-    pub clip: Clip,
+    pub clip: ClipParam,
     /**No documentation.
 
 **Metadata**:
   - Default: true
 */
-    pub apply_to_conds: ApplyToConds,
+    pub apply_to_conds: ApplyToCondsParam,
     /**No documentation.
 
 **Metadata**:
   - Default: false
 */
-    pub schedule_clip: ScheduleClip,
+    pub schedule_clip: ScheduleClipParam,
     ///No documentation.
-    pub hooks: Option<Hooks>,
+    pub hooks: Option<HooksParam>,
 }
 impl<
-    Clip: crate::nodes::types::Clip,
-    ApplyToConds: crate::nodes::types::Boolean,
-    ScheduleClip: crate::nodes::types::Boolean,
-    Hooks: crate::nodes::types::Hooks,
-> SetClipHooks<Clip, ApplyToConds, ScheduleClip, Hooks> {
+    ClipParam: crate::nodes::types::Clip,
+    ApplyToCondsParam: crate::nodes::types::Boolean,
+    ScheduleClipParam: crate::nodes::types::Boolean,
+    HooksParam: crate::nodes::types::Hooks,
+> SetClipHooks<ClipParam, ApplyToCondsParam, ScheduleClipParam, HooksParam> {
     /// Create a new node.
     pub fn new(
-        clip: Clip,
-        apply_to_conds: ApplyToConds,
-        schedule_clip: ScheduleClip,
-        hooks: Option<Hooks>,
+        clip: ClipParam,
+        apply_to_conds: ApplyToCondsParam,
+        schedule_clip: ScheduleClipParam,
+        hooks: Option<HooksParam>,
     ) -> Self {
         Self {
             clip,
@@ -52,11 +52,12 @@ impl<
     }
 }
 impl<
-    Clip: crate::nodes::types::Clip,
-    ApplyToConds: crate::nodes::types::Boolean,
-    ScheduleClip: crate::nodes::types::Boolean,
-    Hooks: crate::nodes::types::Hooks,
-> crate::nodes::TypedNode for SetClipHooks<Clip, ApplyToConds, ScheduleClip, Hooks> {
+    ClipParam: crate::nodes::types::Clip,
+    ApplyToCondsParam: crate::nodes::types::Boolean,
+    ScheduleClipParam: crate::nodes::types::Boolean,
+    HooksParam: crate::nodes::types::Hooks,
+> crate::nodes::TypedNode
+for SetClipHooks<ClipParam, ApplyToCondsParam, ScheduleClipParam, HooksParam> {
     type Output = crate::nodes::types::ClipOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)

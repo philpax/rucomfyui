@@ -8,14 +8,14 @@ use crate::{
 ///**FreeU**: No description.
 #[derive(Clone)]
 pub struct FreeU<
-    Model: crate::nodes::types::Model,
-    B1: crate::nodes::types::Float,
-    B2: crate::nodes::types::Float,
-    S1: crate::nodes::types::Float,
-    S2: crate::nodes::types::Float,
+    ModelParam: crate::nodes::types::Model,
+    B1Param: crate::nodes::types::Float,
+    B2Param: crate::nodes::types::Float,
+    S1Param: crate::nodes::types::Float,
+    S2Param: crate::nodes::types::Float,
 > {
     ///No documentation.
-    pub model: Model,
+    pub model: ModelParam,
     /**No documentation.
 
 **Metadata**:
@@ -24,7 +24,7 @@ pub struct FreeU<
   - Min: 0
   - Step: 0.01
 */
-    pub b_1: B1,
+    pub b_1: B1Param,
     /**No documentation.
 
 **Metadata**:
@@ -33,7 +33,7 @@ pub struct FreeU<
   - Min: 0
   - Step: 0.01
 */
-    pub b_2: B2,
+    pub b_2: B2Param,
     /**No documentation.
 
 **Metadata**:
@@ -42,7 +42,7 @@ pub struct FreeU<
   - Min: 0
   - Step: 0.01
 */
-    pub s_1: S1,
+    pub s_1: S1Param,
     /**No documentation.
 
 **Metadata**:
@@ -51,27 +51,33 @@ pub struct FreeU<
   - Min: 0
   - Step: 0.01
 */
-    pub s_2: S2,
+    pub s_2: S2Param,
 }
 impl<
-    Model: crate::nodes::types::Model,
-    B1: crate::nodes::types::Float,
-    B2: crate::nodes::types::Float,
-    S1: crate::nodes::types::Float,
-    S2: crate::nodes::types::Float,
-> FreeU<Model, B1, B2, S1, S2> {
+    ModelParam: crate::nodes::types::Model,
+    B1Param: crate::nodes::types::Float,
+    B2Param: crate::nodes::types::Float,
+    S1Param: crate::nodes::types::Float,
+    S2Param: crate::nodes::types::Float,
+> FreeU<ModelParam, B1Param, B2Param, S1Param, S2Param> {
     /// Create a new node.
-    pub fn new(model: Model, b_1: B1, b_2: B2, s_1: S1, s_2: S2) -> Self {
+    pub fn new(
+        model: ModelParam,
+        b_1: B1Param,
+        b_2: B2Param,
+        s_1: S1Param,
+        s_2: S2Param,
+    ) -> Self {
         Self { model, b_1, b_2, s_1, s_2 }
     }
 }
 impl<
-    Model: crate::nodes::types::Model,
-    B1: crate::nodes::types::Float,
-    B2: crate::nodes::types::Float,
-    S1: crate::nodes::types::Float,
-    S2: crate::nodes::types::Float,
-> crate::nodes::TypedNode for FreeU<Model, B1, B2, S1, S2> {
+    ModelParam: crate::nodes::types::Model,
+    B1Param: crate::nodes::types::Float,
+    B2Param: crate::nodes::types::Float,
+    S1Param: crate::nodes::types::Float,
+    S2Param: crate::nodes::types::Float,
+> crate::nodes::TypedNode for FreeU<ModelParam, B1Param, B2Param, S1Param, S2Param> {
     type Output = crate::nodes::types::ModelOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)
@@ -93,14 +99,14 @@ impl<
 ///**FreeU_V2**: No description.
 #[derive(Clone)]
 pub struct FreeUV2<
-    Model: crate::nodes::types::Model,
-    B1: crate::nodes::types::Float,
-    B2: crate::nodes::types::Float,
-    S1: crate::nodes::types::Float,
-    S2: crate::nodes::types::Float,
+    ModelParam: crate::nodes::types::Model,
+    B1Param: crate::nodes::types::Float,
+    B2Param: crate::nodes::types::Float,
+    S1Param: crate::nodes::types::Float,
+    S2Param: crate::nodes::types::Float,
 > {
     ///No documentation.
-    pub model: Model,
+    pub model: ModelParam,
     /**No documentation.
 
 **Metadata**:
@@ -109,7 +115,7 @@ pub struct FreeUV2<
   - Min: 0
   - Step: 0.01
 */
-    pub b_1: B1,
+    pub b_1: B1Param,
     /**No documentation.
 
 **Metadata**:
@@ -118,7 +124,7 @@ pub struct FreeUV2<
   - Min: 0
   - Step: 0.01
 */
-    pub b_2: B2,
+    pub b_2: B2Param,
     /**No documentation.
 
 **Metadata**:
@@ -127,7 +133,7 @@ pub struct FreeUV2<
   - Min: 0
   - Step: 0.01
 */
-    pub s_1: S1,
+    pub s_1: S1Param,
     /**No documentation.
 
 **Metadata**:
@@ -136,27 +142,33 @@ pub struct FreeUV2<
   - Min: 0
   - Step: 0.01
 */
-    pub s_2: S2,
+    pub s_2: S2Param,
 }
 impl<
-    Model: crate::nodes::types::Model,
-    B1: crate::nodes::types::Float,
-    B2: crate::nodes::types::Float,
-    S1: crate::nodes::types::Float,
-    S2: crate::nodes::types::Float,
-> FreeUV2<Model, B1, B2, S1, S2> {
+    ModelParam: crate::nodes::types::Model,
+    B1Param: crate::nodes::types::Float,
+    B2Param: crate::nodes::types::Float,
+    S1Param: crate::nodes::types::Float,
+    S2Param: crate::nodes::types::Float,
+> FreeUV2<ModelParam, B1Param, B2Param, S1Param, S2Param> {
     /// Create a new node.
-    pub fn new(model: Model, b_1: B1, b_2: B2, s_1: S1, s_2: S2) -> Self {
+    pub fn new(
+        model: ModelParam,
+        b_1: B1Param,
+        b_2: B2Param,
+        s_1: S1Param,
+        s_2: S2Param,
+    ) -> Self {
         Self { model, b_1, b_2, s_1, s_2 }
     }
 }
 impl<
-    Model: crate::nodes::types::Model,
-    B1: crate::nodes::types::Float,
-    B2: crate::nodes::types::Float,
-    S1: crate::nodes::types::Float,
-    S2: crate::nodes::types::Float,
-> crate::nodes::TypedNode for FreeUV2<Model, B1, B2, S1, S2> {
+    ModelParam: crate::nodes::types::Model,
+    B1Param: crate::nodes::types::Float,
+    B2Param: crate::nodes::types::Float,
+    S1Param: crate::nodes::types::Float,
+    S2Param: crate::nodes::types::Float,
+> crate::nodes::TypedNode for FreeUV2<ModelParam, B1Param, B2Param, S1Param, S2Param> {
     type Output = crate::nodes::types::ModelOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)
@@ -178,14 +190,14 @@ impl<
 ///**HyperTile**: No description.
 #[derive(Clone)]
 pub struct HyperTile<
-    Model: crate::nodes::types::Model,
-    TileSize: crate::nodes::types::Int,
-    SwapSize: crate::nodes::types::Int,
-    MaxDepth: crate::nodes::types::Int,
-    ScaleDepth: crate::nodes::types::Boolean,
+    ModelParam: crate::nodes::types::Model,
+    TileSizeParam: crate::nodes::types::Int,
+    SwapSizeParam: crate::nodes::types::Int,
+    MaxDepthParam: crate::nodes::types::Int,
+    ScaleDepthParam: crate::nodes::types::Boolean,
 > {
     ///No documentation.
-    pub model: Model,
+    pub model: ModelParam,
     /**No documentation.
 
 **Metadata**:
@@ -193,7 +205,7 @@ pub struct HyperTile<
   - Max: 2048
   - Min: 1
 */
-    pub tile_size: TileSize,
+    pub tile_size: TileSizeParam,
     /**No documentation.
 
 **Metadata**:
@@ -201,7 +213,7 @@ pub struct HyperTile<
   - Max: 128
   - Min: 1
 */
-    pub swap_size: SwapSize,
+    pub swap_size: SwapSizeParam,
     /**No documentation.
 
 **Metadata**:
@@ -209,28 +221,28 @@ pub struct HyperTile<
   - Max: 10
   - Min: 0
 */
-    pub max_depth: MaxDepth,
+    pub max_depth: MaxDepthParam,
     /**No documentation.
 
 **Metadata**:
   - Default: false
 */
-    pub scale_depth: ScaleDepth,
+    pub scale_depth: ScaleDepthParam,
 }
 impl<
-    Model: crate::nodes::types::Model,
-    TileSize: crate::nodes::types::Int,
-    SwapSize: crate::nodes::types::Int,
-    MaxDepth: crate::nodes::types::Int,
-    ScaleDepth: crate::nodes::types::Boolean,
-> HyperTile<Model, TileSize, SwapSize, MaxDepth, ScaleDepth> {
+    ModelParam: crate::nodes::types::Model,
+    TileSizeParam: crate::nodes::types::Int,
+    SwapSizeParam: crate::nodes::types::Int,
+    MaxDepthParam: crate::nodes::types::Int,
+    ScaleDepthParam: crate::nodes::types::Boolean,
+> HyperTile<ModelParam, TileSizeParam, SwapSizeParam, MaxDepthParam, ScaleDepthParam> {
     /// Create a new node.
     pub fn new(
-        model: Model,
-        tile_size: TileSize,
-        swap_size: SwapSize,
-        max_depth: MaxDepth,
-        scale_depth: ScaleDepth,
+        model: ModelParam,
+        tile_size: TileSizeParam,
+        swap_size: SwapSizeParam,
+        max_depth: MaxDepthParam,
+        scale_depth: ScaleDepthParam,
     ) -> Self {
         Self {
             model,
@@ -242,13 +254,13 @@ impl<
     }
 }
 impl<
-    Model: crate::nodes::types::Model,
-    TileSize: crate::nodes::types::Int,
-    SwapSize: crate::nodes::types::Int,
-    MaxDepth: crate::nodes::types::Int,
-    ScaleDepth: crate::nodes::types::Boolean,
+    ModelParam: crate::nodes::types::Model,
+    TileSizeParam: crate::nodes::types::Int,
+    SwapSizeParam: crate::nodes::types::Int,
+    MaxDepthParam: crate::nodes::types::Int,
+    ScaleDepthParam: crate::nodes::types::Boolean,
 > crate::nodes::TypedNode
-for HyperTile<Model, TileSize, SwapSize, MaxDepth, ScaleDepth> {
+for HyperTile<ModelParam, TileSizeParam, SwapSizeParam, MaxDepthParam, ScaleDepthParam> {
     type Output = crate::nodes::types::ModelOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)
@@ -270,17 +282,17 @@ for HyperTile<Model, TileSize, SwapSize, MaxDepth, ScaleDepth> {
 ///**PatchModelAddDownscale (Kohya Deep Shrink)**: No description.
 #[derive(Clone)]
 pub struct PatchModelAddDownscale<
-    Model: crate::nodes::types::Model,
-    BlockNumber: crate::nodes::types::Int,
-    DownscaleFactor: crate::nodes::types::Float,
-    StartPercent: crate::nodes::types::Float,
-    EndPercent: crate::nodes::types::Float,
-    DownscaleAfterSkip: crate::nodes::types::Boolean,
-    DownscaleMethod: crate::nodes::types::String,
-    UpscaleMethod: crate::nodes::types::String,
+    ModelParam: crate::nodes::types::Model,
+    BlockNumberParam: crate::nodes::types::Int,
+    DownscaleFactorParam: crate::nodes::types::Float,
+    StartPercentParam: crate::nodes::types::Float,
+    EndPercentParam: crate::nodes::types::Float,
+    DownscaleAfterSkipParam: crate::nodes::types::Boolean,
+    DownscaleMethodParam: crate::nodes::types::String,
+    UpscaleMethodParam: crate::nodes::types::String,
 > {
     ///No documentation.
-    pub model: Model,
+    pub model: ModelParam,
     /**No documentation.
 
 **Metadata**:
@@ -289,7 +301,7 @@ pub struct PatchModelAddDownscale<
   - Min: 1
   - Step: 1
 */
-    pub block_number: BlockNumber,
+    pub block_number: BlockNumberParam,
     /**No documentation.
 
 **Metadata**:
@@ -298,7 +310,7 @@ pub struct PatchModelAddDownscale<
   - Min: 0.1
   - Step: 0.001
 */
-    pub downscale_factor: DownscaleFactor,
+    pub downscale_factor: DownscaleFactorParam,
     /**No documentation.
 
 **Metadata**:
@@ -307,7 +319,7 @@ pub struct PatchModelAddDownscale<
   - Min: 0
   - Step: 0.001
 */
-    pub start_percent: StartPercent,
+    pub start_percent: StartPercentParam,
     /**No documentation.
 
 **Metadata**:
@@ -316,47 +328,47 @@ pub struct PatchModelAddDownscale<
   - Min: 0
   - Step: 0.001
 */
-    pub end_percent: EndPercent,
+    pub end_percent: EndPercentParam,
     /**No documentation.
 
 **Metadata**:
   - Default: true
 */
-    pub downscale_after_skip: DownscaleAfterSkip,
+    pub downscale_after_skip: DownscaleAfterSkipParam,
     ///No documentation.
-    pub downscale_method: DownscaleMethod,
+    pub downscale_method: DownscaleMethodParam,
     ///No documentation.
-    pub upscale_method: UpscaleMethod,
+    pub upscale_method: UpscaleMethodParam,
 }
 impl<
-    Model: crate::nodes::types::Model,
-    BlockNumber: crate::nodes::types::Int,
-    DownscaleFactor: crate::nodes::types::Float,
-    StartPercent: crate::nodes::types::Float,
-    EndPercent: crate::nodes::types::Float,
-    DownscaleAfterSkip: crate::nodes::types::Boolean,
-    DownscaleMethod: crate::nodes::types::String,
-    UpscaleMethod: crate::nodes::types::String,
+    ModelParam: crate::nodes::types::Model,
+    BlockNumberParam: crate::nodes::types::Int,
+    DownscaleFactorParam: crate::nodes::types::Float,
+    StartPercentParam: crate::nodes::types::Float,
+    EndPercentParam: crate::nodes::types::Float,
+    DownscaleAfterSkipParam: crate::nodes::types::Boolean,
+    DownscaleMethodParam: crate::nodes::types::String,
+    UpscaleMethodParam: crate::nodes::types::String,
 > PatchModelAddDownscale<
-    Model,
-    BlockNumber,
-    DownscaleFactor,
-    StartPercent,
-    EndPercent,
-    DownscaleAfterSkip,
-    DownscaleMethod,
-    UpscaleMethod,
+    ModelParam,
+    BlockNumberParam,
+    DownscaleFactorParam,
+    StartPercentParam,
+    EndPercentParam,
+    DownscaleAfterSkipParam,
+    DownscaleMethodParam,
+    UpscaleMethodParam,
 > {
     /// Create a new node.
     pub fn new(
-        model: Model,
-        block_number: BlockNumber,
-        downscale_factor: DownscaleFactor,
-        start_percent: StartPercent,
-        end_percent: EndPercent,
-        downscale_after_skip: DownscaleAfterSkip,
-        downscale_method: DownscaleMethod,
-        upscale_method: UpscaleMethod,
+        model: ModelParam,
+        block_number: BlockNumberParam,
+        downscale_factor: DownscaleFactorParam,
+        start_percent: StartPercentParam,
+        end_percent: EndPercentParam,
+        downscale_after_skip: DownscaleAfterSkipParam,
+        downscale_method: DownscaleMethodParam,
+        upscale_method: UpscaleMethodParam,
     ) -> Self {
         Self {
             model,
@@ -371,24 +383,24 @@ impl<
     }
 }
 impl<
-    Model: crate::nodes::types::Model,
-    BlockNumber: crate::nodes::types::Int,
-    DownscaleFactor: crate::nodes::types::Float,
-    StartPercent: crate::nodes::types::Float,
-    EndPercent: crate::nodes::types::Float,
-    DownscaleAfterSkip: crate::nodes::types::Boolean,
-    DownscaleMethod: crate::nodes::types::String,
-    UpscaleMethod: crate::nodes::types::String,
+    ModelParam: crate::nodes::types::Model,
+    BlockNumberParam: crate::nodes::types::Int,
+    DownscaleFactorParam: crate::nodes::types::Float,
+    StartPercentParam: crate::nodes::types::Float,
+    EndPercentParam: crate::nodes::types::Float,
+    DownscaleAfterSkipParam: crate::nodes::types::Boolean,
+    DownscaleMethodParam: crate::nodes::types::String,
+    UpscaleMethodParam: crate::nodes::types::String,
 > crate::nodes::TypedNode
 for PatchModelAddDownscale<
-    Model,
-    BlockNumber,
-    DownscaleFactor,
-    StartPercent,
-    EndPercent,
-    DownscaleAfterSkip,
-    DownscaleMethod,
-    UpscaleMethod,
+    ModelParam,
+    BlockNumberParam,
+    DownscaleFactorParam,
+    StartPercentParam,
+    EndPercentParam,
+    DownscaleAfterSkipParam,
+    DownscaleMethodParam,
+    UpscaleMethodParam,
 > {
     type Output = crate::nodes::types::ModelOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
@@ -426,11 +438,11 @@ for PatchModelAddDownscale<
 ///**PerturbedAttentionGuidance**: No description.
 #[derive(Clone)]
 pub struct PerturbedAttentionGuidance<
-    Model: crate::nodes::types::Model,
-    Scale: crate::nodes::types::Float,
+    ModelParam: crate::nodes::types::Model,
+    ScaleParam: crate::nodes::types::Float,
 > {
     ///No documentation.
-    pub model: Model,
+    pub model: ModelParam,
     /**No documentation.
 
 **Metadata**:
@@ -440,21 +452,21 @@ pub struct PerturbedAttentionGuidance<
   - Round: 0.01
   - Step: 0.01
 */
-    pub scale: Scale,
+    pub scale: ScaleParam,
 }
 impl<
-    Model: crate::nodes::types::Model,
-    Scale: crate::nodes::types::Float,
-> PerturbedAttentionGuidance<Model, Scale> {
+    ModelParam: crate::nodes::types::Model,
+    ScaleParam: crate::nodes::types::Float,
+> PerturbedAttentionGuidance<ModelParam, ScaleParam> {
     /// Create a new node.
-    pub fn new(model: Model, scale: Scale) -> Self {
+    pub fn new(model: ModelParam, scale: ScaleParam) -> Self {
         Self { model, scale }
     }
 }
 impl<
-    Model: crate::nodes::types::Model,
-    Scale: crate::nodes::types::Float,
-> crate::nodes::TypedNode for PerturbedAttentionGuidance<Model, Scale> {
+    ModelParam: crate::nodes::types::Model,
+    ScaleParam: crate::nodes::types::Float,
+> crate::nodes::TypedNode for PerturbedAttentionGuidance<ModelParam, ScaleParam> {
     type Output = crate::nodes::types::ModelOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)
@@ -473,11 +485,11 @@ impl<
 ///**TomePatchModel**: No description.
 #[derive(Clone)]
 pub struct TomePatchModel<
-    Model: crate::nodes::types::Model,
-    Ratio: crate::nodes::types::Float,
+    ModelParam: crate::nodes::types::Model,
+    RatioParam: crate::nodes::types::Float,
 > {
     ///No documentation.
-    pub model: Model,
+    pub model: ModelParam,
     /**No documentation.
 
 **Metadata**:
@@ -486,21 +498,21 @@ pub struct TomePatchModel<
   - Min: 0
   - Step: 0.01
 */
-    pub ratio: Ratio,
+    pub ratio: RatioParam,
 }
 impl<
-    Model: crate::nodes::types::Model,
-    Ratio: crate::nodes::types::Float,
-> TomePatchModel<Model, Ratio> {
+    ModelParam: crate::nodes::types::Model,
+    RatioParam: crate::nodes::types::Float,
+> TomePatchModel<ModelParam, RatioParam> {
     /// Create a new node.
-    pub fn new(model: Model, ratio: Ratio) -> Self {
+    pub fn new(model: ModelParam, ratio: RatioParam) -> Self {
         Self { model, ratio }
     }
 }
 impl<
-    Model: crate::nodes::types::Model,
-    Ratio: crate::nodes::types::Float,
-> crate::nodes::TypedNode for TomePatchModel<Model, Ratio> {
+    ModelParam: crate::nodes::types::Model,
+    RatioParam: crate::nodes::types::Float,
+> crate::nodes::TypedNode for TomePatchModel<ModelParam, RatioParam> {
     type Output = crate::nodes::types::ModelOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)

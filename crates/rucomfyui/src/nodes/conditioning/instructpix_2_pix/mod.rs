@@ -21,32 +21,32 @@ pub mod out {
 ///**InstructPixToPixConditioning**: No description.
 #[derive(Clone)]
 pub struct InstructPixToPixConditioning<
-    Positive: crate::nodes::types::Conditioning,
-    Negative: crate::nodes::types::Conditioning,
-    Vae: crate::nodes::types::Vae,
-    Pixels: crate::nodes::types::Image,
+    PositiveParam: crate::nodes::types::Conditioning,
+    NegativeParam: crate::nodes::types::Conditioning,
+    VaeParam: crate::nodes::types::Vae,
+    PixelsParam: crate::nodes::types::Image,
 > {
     ///No documentation.
-    pub positive: Positive,
+    pub positive: PositiveParam,
     ///No documentation.
-    pub negative: Negative,
+    pub negative: NegativeParam,
     ///No documentation.
-    pub vae: Vae,
+    pub vae: VaeParam,
     ///No documentation.
-    pub pixels: Pixels,
+    pub pixels: PixelsParam,
 }
 impl<
-    Positive: crate::nodes::types::Conditioning,
-    Negative: crate::nodes::types::Conditioning,
-    Vae: crate::nodes::types::Vae,
-    Pixels: crate::nodes::types::Image,
-> InstructPixToPixConditioning<Positive, Negative, Vae, Pixels> {
+    PositiveParam: crate::nodes::types::Conditioning,
+    NegativeParam: crate::nodes::types::Conditioning,
+    VaeParam: crate::nodes::types::Vae,
+    PixelsParam: crate::nodes::types::Image,
+> InstructPixToPixConditioning<PositiveParam, NegativeParam, VaeParam, PixelsParam> {
     /// Create a new node.
     pub fn new(
-        positive: Positive,
-        negative: Negative,
-        vae: Vae,
-        pixels: Pixels,
+        positive: PositiveParam,
+        negative: NegativeParam,
+        vae: VaeParam,
+        pixels: PixelsParam,
     ) -> Self {
         Self {
             positive,
@@ -57,12 +57,12 @@ impl<
     }
 }
 impl<
-    Positive: crate::nodes::types::Conditioning,
-    Negative: crate::nodes::types::Conditioning,
-    Vae: crate::nodes::types::Vae,
-    Pixels: crate::nodes::types::Image,
+    PositiveParam: crate::nodes::types::Conditioning,
+    NegativeParam: crate::nodes::types::Conditioning,
+    VaeParam: crate::nodes::types::Vae,
+    PixelsParam: crate::nodes::types::Image,
 > crate::nodes::TypedNode
-for InstructPixToPixConditioning<Positive, Negative, Vae, Pixels> {
+for InstructPixToPixConditioning<PositiveParam, NegativeParam, VaeParam, PixelsParam> {
     type Output = out::InstructPixToPixConditioningOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {

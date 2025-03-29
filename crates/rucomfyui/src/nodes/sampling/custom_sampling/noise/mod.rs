@@ -29,7 +29,7 @@ impl crate::nodes::TypedNode for DisableNoise {
 }
 ///**RandomNoise**: No description.
 #[derive(Clone)]
-pub struct RandomNoise<NoiseSeed: crate::nodes::types::Int> {
+pub struct RandomNoise<NoiseSeedParam: crate::nodes::types::Int> {
     /**No documentation.
 
 **Metadata**:
@@ -37,16 +37,16 @@ pub struct RandomNoise<NoiseSeed: crate::nodes::types::Int> {
   - Max: 18446744073709551615
   - Min: 0
 */
-    pub noise_seed: NoiseSeed,
+    pub noise_seed: NoiseSeedParam,
 }
-impl<NoiseSeed: crate::nodes::types::Int> RandomNoise<NoiseSeed> {
+impl<NoiseSeedParam: crate::nodes::types::Int> RandomNoise<NoiseSeedParam> {
     /// Create a new node.
-    pub fn new(noise_seed: NoiseSeed) -> Self {
+    pub fn new(noise_seed: NoiseSeedParam) -> Self {
         Self { noise_seed }
     }
 }
-impl<NoiseSeed: crate::nodes::types::Int> crate::nodes::TypedNode
-for RandomNoise<NoiseSeed> {
+impl<NoiseSeedParam: crate::nodes::types::Int> crate::nodes::TypedNode
+for RandomNoise<NoiseSeedParam> {
     type Output = crate::nodes::types::NoiseOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)

@@ -29,11 +29,11 @@ pub mod out {
 ///**CLIP Set Last Layer**: No description.
 #[derive(Clone)]
 pub struct ClipSetLastLayer<
-    Clip: crate::nodes::types::Clip,
-    StopAtClipLayer: crate::nodes::types::Int,
+    ClipParam: crate::nodes::types::Clip,
+    StopAtClipLayerParam: crate::nodes::types::Int,
 > {
     ///No documentation.
-    pub clip: Clip,
+    pub clip: ClipParam,
     /**No documentation.
 
 **Metadata**:
@@ -42,21 +42,21 @@ pub struct ClipSetLastLayer<
   - Min: -24
   - Step: 1
 */
-    pub stop_at_clip_layer: StopAtClipLayer,
+    pub stop_at_clip_layer: StopAtClipLayerParam,
 }
 impl<
-    Clip: crate::nodes::types::Clip,
-    StopAtClipLayer: crate::nodes::types::Int,
-> ClipSetLastLayer<Clip, StopAtClipLayer> {
+    ClipParam: crate::nodes::types::Clip,
+    StopAtClipLayerParam: crate::nodes::types::Int,
+> ClipSetLastLayer<ClipParam, StopAtClipLayerParam> {
     /// Create a new node.
-    pub fn new(clip: Clip, stop_at_clip_layer: StopAtClipLayer) -> Self {
+    pub fn new(clip: ClipParam, stop_at_clip_layer: StopAtClipLayerParam) -> Self {
         Self { clip, stop_at_clip_layer }
     }
 }
 impl<
-    Clip: crate::nodes::types::Clip,
-    StopAtClipLayer: crate::nodes::types::Int,
-> crate::nodes::TypedNode for ClipSetLastLayer<Clip, StopAtClipLayer> {
+    ClipParam: crate::nodes::types::Clip,
+    StopAtClipLayerParam: crate::nodes::types::Int,
+> crate::nodes::TypedNode for ClipSetLastLayer<ClipParam, StopAtClipLayerParam> {
     type Output = crate::nodes::types::ClipOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)
@@ -79,8 +79,8 @@ impl<
 ///**CLIP Text Encode (Prompt)**: Encodes a text prompt using a CLIP model into an embedding that can be used to guide the diffusion model towards generating specific images.
 #[derive(Clone)]
 pub struct ClipTextEncode<
-    Text: crate::nodes::types::String,
-    Clip: crate::nodes::types::Clip,
+    TextParam: crate::nodes::types::String,
+    ClipParam: crate::nodes::types::Clip,
 > {
     /**The text to be encoded.
 
@@ -88,23 +88,23 @@ pub struct ClipTextEncode<
   - Dynamic prompts: true
   - Multiline: true
 */
-    pub text: Text,
+    pub text: TextParam,
     ///The CLIP model used for encoding the text.
-    pub clip: Clip,
+    pub clip: ClipParam,
 }
 impl<
-    Text: crate::nodes::types::String,
-    Clip: crate::nodes::types::Clip,
-> ClipTextEncode<Text, Clip> {
+    TextParam: crate::nodes::types::String,
+    ClipParam: crate::nodes::types::Clip,
+> ClipTextEncode<TextParam, ClipParam> {
     /// Create a new node.
-    pub fn new(text: Text, clip: Clip) -> Self {
+    pub fn new(text: TextParam, clip: ClipParam) -> Self {
         Self { text, clip }
     }
 }
 impl<
-    Text: crate::nodes::types::String,
-    Clip: crate::nodes::types::Clip,
-> crate::nodes::TypedNode for ClipTextEncode<Text, Clip> {
+    TextParam: crate::nodes::types::String,
+    ClipParam: crate::nodes::types::Clip,
+> crate::nodes::TypedNode for ClipTextEncode<TextParam, ClipParam> {
     type Output = crate::nodes::types::ConditioningOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)
@@ -123,32 +123,32 @@ impl<
 ///**CLIP Text Encode for Lumina2**: Encodes a system prompt and a user prompt using a CLIP model into an embedding that can be used to guide the diffusion model towards generating specific images.
 #[derive(Clone)]
 pub struct ClipTextEncodeLumina2<
-    SystemPrompt: crate::nodes::types::String,
-    UserPrompt: crate::nodes::types::String,
-    Clip: crate::nodes::types::Clip,
+    SystemPromptParam: crate::nodes::types::String,
+    UserPromptParam: crate::nodes::types::String,
+    ClipParam: crate::nodes::types::Clip,
 > {
     ///Lumina2 provide two types of system prompts:Superior: You are an assistant designed to generate superior images with the superior degree of image-text alignment based on textual prompts or user prompts. Alignment: You are an assistant designed to generate high-quality images with the highest degree of image-text alignment based on textual prompts.
-    pub system_prompt: SystemPrompt,
+    pub system_prompt: SystemPromptParam,
     /**The text to be encoded.
 
 **Metadata**:
   - Dynamic prompts: true
   - Multiline: true
 */
-    pub user_prompt: UserPrompt,
+    pub user_prompt: UserPromptParam,
     ///The CLIP model used for encoding the text.
-    pub clip: Clip,
+    pub clip: ClipParam,
 }
 impl<
-    SystemPrompt: crate::nodes::types::String,
-    UserPrompt: crate::nodes::types::String,
-    Clip: crate::nodes::types::Clip,
-> ClipTextEncodeLumina2<SystemPrompt, UserPrompt, Clip> {
+    SystemPromptParam: crate::nodes::types::String,
+    UserPromptParam: crate::nodes::types::String,
+    ClipParam: crate::nodes::types::Clip,
+> ClipTextEncodeLumina2<SystemPromptParam, UserPromptParam, ClipParam> {
     /// Create a new node.
     pub fn new(
-        system_prompt: SystemPrompt,
-        user_prompt: UserPrompt,
-        clip: Clip,
+        system_prompt: SystemPromptParam,
+        user_prompt: UserPromptParam,
+        clip: ClipParam,
     ) -> Self {
         Self {
             system_prompt,
@@ -158,10 +158,11 @@ impl<
     }
 }
 impl<
-    SystemPrompt: crate::nodes::types::String,
-    UserPrompt: crate::nodes::types::String,
-    Clip: crate::nodes::types::Clip,
-> crate::nodes::TypedNode for ClipTextEncodeLumina2<SystemPrompt, UserPrompt, Clip> {
+    SystemPromptParam: crate::nodes::types::String,
+    UserPromptParam: crate::nodes::types::String,
+    ClipParam: crate::nodes::types::Clip,
+> crate::nodes::TypedNode
+for ClipTextEncodeLumina2<SystemPromptParam, UserPromptParam, ClipParam> {
     type Output = crate::nodes::types::ConditioningOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)
@@ -181,32 +182,36 @@ impl<
 ///**CLIP Vision Encode**: No description.
 #[derive(Clone)]
 pub struct ClipVisionEncode<
-    ClipVision: crate::nodes::types::ClipVision,
-    Image: crate::nodes::types::Image,
-    Crop: crate::nodes::types::String,
+    ClipVisionParam: crate::nodes::types::ClipVision,
+    ImageParam: crate::nodes::types::Image,
+    CropParam: crate::nodes::types::String,
 > {
     ///No documentation.
-    pub clip_vision: ClipVision,
+    pub clip_vision: ClipVisionParam,
     ///No documentation.
-    pub image: Image,
+    pub image: ImageParam,
     ///No documentation.
-    pub crop: Crop,
+    pub crop: CropParam,
 }
 impl<
-    ClipVision: crate::nodes::types::ClipVision,
-    Image: crate::nodes::types::Image,
-    Crop: crate::nodes::types::String,
-> ClipVisionEncode<ClipVision, Image, Crop> {
+    ClipVisionParam: crate::nodes::types::ClipVision,
+    ImageParam: crate::nodes::types::Image,
+    CropParam: crate::nodes::types::String,
+> ClipVisionEncode<ClipVisionParam, ImageParam, CropParam> {
     /// Create a new node.
-    pub fn new(clip_vision: ClipVision, image: Image, crop: Crop) -> Self {
+    pub fn new(
+        clip_vision: ClipVisionParam,
+        image: ImageParam,
+        crop: CropParam,
+    ) -> Self {
         Self { clip_vision, image, crop }
     }
 }
 impl<
-    ClipVision: crate::nodes::types::ClipVision,
-    Image: crate::nodes::types::Image,
-    Crop: crate::nodes::types::String,
-> crate::nodes::TypedNode for ClipVisionEncode<ClipVision, Image, Crop> {
+    ClipVisionParam: crate::nodes::types::ClipVision,
+    ImageParam: crate::nodes::types::Image,
+    CropParam: crate::nodes::types::String,
+> crate::nodes::TypedNode for ClipVisionEncode<ClipVisionParam, ImageParam, CropParam> {
     type Output = crate::nodes::types::ClipVisionOutputOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)
@@ -226,14 +231,14 @@ impl<
 ///**ConditioningAverage**: No description.
 #[derive(Clone)]
 pub struct ConditioningAverage<
-    ConditioningTo: crate::nodes::types::Conditioning,
-    ConditioningFrom: crate::nodes::types::Conditioning,
-    ConditioningToStrength: crate::nodes::types::Float,
+    ConditioningToParam: crate::nodes::types::Conditioning,
+    ConditioningFromParam: crate::nodes::types::Conditioning,
+    ConditioningToStrengthParam: crate::nodes::types::Float,
 > {
     ///No documentation.
-    pub conditioning_to: ConditioningTo,
+    pub conditioning_to: ConditioningToParam,
     ///No documentation.
-    pub conditioning_from: ConditioningFrom,
+    pub conditioning_from: ConditioningFromParam,
     /**No documentation.
 
 **Metadata**:
@@ -242,18 +247,22 @@ pub struct ConditioningAverage<
   - Min: 0
   - Step: 0.01
 */
-    pub conditioning_to_strength: ConditioningToStrength,
+    pub conditioning_to_strength: ConditioningToStrengthParam,
 }
 impl<
-    ConditioningTo: crate::nodes::types::Conditioning,
-    ConditioningFrom: crate::nodes::types::Conditioning,
-    ConditioningToStrength: crate::nodes::types::Float,
-> ConditioningAverage<ConditioningTo, ConditioningFrom, ConditioningToStrength> {
+    ConditioningToParam: crate::nodes::types::Conditioning,
+    ConditioningFromParam: crate::nodes::types::Conditioning,
+    ConditioningToStrengthParam: crate::nodes::types::Float,
+> ConditioningAverage<
+    ConditioningToParam,
+    ConditioningFromParam,
+    ConditioningToStrengthParam,
+> {
     /// Create a new node.
     pub fn new(
-        conditioning_to: ConditioningTo,
-        conditioning_from: ConditioningFrom,
-        conditioning_to_strength: ConditioningToStrength,
+        conditioning_to: ConditioningToParam,
+        conditioning_from: ConditioningFromParam,
+        conditioning_to_strength: ConditioningToStrengthParam,
     ) -> Self {
         Self {
             conditioning_to,
@@ -263,11 +272,15 @@ impl<
     }
 }
 impl<
-    ConditioningTo: crate::nodes::types::Conditioning,
-    ConditioningFrom: crate::nodes::types::Conditioning,
-    ConditioningToStrength: crate::nodes::types::Float,
+    ConditioningToParam: crate::nodes::types::Conditioning,
+    ConditioningFromParam: crate::nodes::types::Conditioning,
+    ConditioningToStrengthParam: crate::nodes::types::Float,
 > crate::nodes::TypedNode
-for ConditioningAverage<ConditioningTo, ConditioningFrom, ConditioningToStrength> {
+for ConditioningAverage<
+    ConditioningToParam,
+    ConditioningFromParam,
+    ConditioningToStrengthParam,
+> {
     type Output = crate::nodes::types::ConditioningOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)
@@ -296,20 +309,23 @@ for ConditioningAverage<ConditioningTo, ConditioningFrom, ConditioningToStrength
 ///**Conditioning (Combine)**: No description.
 #[derive(Clone)]
 pub struct ConditioningCombine<
-    Conditioning1: crate::nodes::types::Conditioning,
-    Conditioning2: crate::nodes::types::Conditioning,
+    Conditioning1Param: crate::nodes::types::Conditioning,
+    Conditioning2Param: crate::nodes::types::Conditioning,
 > {
     ///No documentation.
-    pub conditioning_1: Conditioning1,
+    pub conditioning_1: Conditioning1Param,
     ///No documentation.
-    pub conditioning_2: Conditioning2,
+    pub conditioning_2: Conditioning2Param,
 }
 impl<
-    Conditioning1: crate::nodes::types::Conditioning,
-    Conditioning2: crate::nodes::types::Conditioning,
-> ConditioningCombine<Conditioning1, Conditioning2> {
+    Conditioning1Param: crate::nodes::types::Conditioning,
+    Conditioning2Param: crate::nodes::types::Conditioning,
+> ConditioningCombine<Conditioning1Param, Conditioning2Param> {
     /// Create a new node.
-    pub fn new(conditioning_1: Conditioning1, conditioning_2: Conditioning2) -> Self {
+    pub fn new(
+        conditioning_1: Conditioning1Param,
+        conditioning_2: Conditioning2Param,
+    ) -> Self {
         Self {
             conditioning_1,
             conditioning_2,
@@ -317,9 +333,10 @@ impl<
     }
 }
 impl<
-    Conditioning1: crate::nodes::types::Conditioning,
-    Conditioning2: crate::nodes::types::Conditioning,
-> crate::nodes::TypedNode for ConditioningCombine<Conditioning1, Conditioning2> {
+    Conditioning1Param: crate::nodes::types::Conditioning,
+    Conditioning2Param: crate::nodes::types::Conditioning,
+> crate::nodes::TypedNode
+for ConditioningCombine<Conditioning1Param, Conditioning2Param> {
     type Output = crate::nodes::types::ConditioningOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)
@@ -338,22 +355,22 @@ impl<
 ///**Conditioning (Concat)**: No description.
 #[derive(Clone)]
 pub struct ConditioningConcat<
-    ConditioningTo: crate::nodes::types::Conditioning,
-    ConditioningFrom: crate::nodes::types::Conditioning,
+    ConditioningToParam: crate::nodes::types::Conditioning,
+    ConditioningFromParam: crate::nodes::types::Conditioning,
 > {
     ///No documentation.
-    pub conditioning_to: ConditioningTo,
+    pub conditioning_to: ConditioningToParam,
     ///No documentation.
-    pub conditioning_from: ConditioningFrom,
+    pub conditioning_from: ConditioningFromParam,
 }
 impl<
-    ConditioningTo: crate::nodes::types::Conditioning,
-    ConditioningFrom: crate::nodes::types::Conditioning,
-> ConditioningConcat<ConditioningTo, ConditioningFrom> {
+    ConditioningToParam: crate::nodes::types::Conditioning,
+    ConditioningFromParam: crate::nodes::types::Conditioning,
+> ConditioningConcat<ConditioningToParam, ConditioningFromParam> {
     /// Create a new node.
     pub fn new(
-        conditioning_to: ConditioningTo,
-        conditioning_from: ConditioningFrom,
+        conditioning_to: ConditioningToParam,
+        conditioning_from: ConditioningFromParam,
     ) -> Self {
         Self {
             conditioning_to,
@@ -362,9 +379,10 @@ impl<
     }
 }
 impl<
-    ConditioningTo: crate::nodes::types::Conditioning,
-    ConditioningFrom: crate::nodes::types::Conditioning,
-> crate::nodes::TypedNode for ConditioningConcat<ConditioningTo, ConditioningFrom> {
+    ConditioningToParam: crate::nodes::types::Conditioning,
+    ConditioningFromParam: crate::nodes::types::Conditioning,
+> crate::nodes::TypedNode
+for ConditioningConcat<ConditioningToParam, ConditioningFromParam> {
     type Output = crate::nodes::types::ConditioningOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)
@@ -388,15 +406,15 @@ impl<
 ///**Conditioning (Set Area)**: No description.
 #[derive(Clone)]
 pub struct ConditioningSetArea<
-    Conditioning: crate::nodes::types::Conditioning,
-    Width: crate::nodes::types::Int,
-    Height: crate::nodes::types::Int,
-    X: crate::nodes::types::Int,
-    Y: crate::nodes::types::Int,
-    Strength: crate::nodes::types::Float,
+    ConditioningParam: crate::nodes::types::Conditioning,
+    WidthParam: crate::nodes::types::Int,
+    HeightParam: crate::nodes::types::Int,
+    XParam: crate::nodes::types::Int,
+    YParam: crate::nodes::types::Int,
+    StrengthParam: crate::nodes::types::Float,
 > {
     ///No documentation.
-    pub conditioning: Conditioning,
+    pub conditioning: ConditioningParam,
     /**No documentation.
 
 **Metadata**:
@@ -405,7 +423,7 @@ pub struct ConditioningSetArea<
   - Min: 64
   - Step: 8
 */
-    pub width: Width,
+    pub width: WidthParam,
     /**No documentation.
 
 **Metadata**:
@@ -414,7 +432,7 @@ pub struct ConditioningSetArea<
   - Min: 64
   - Step: 8
 */
-    pub height: Height,
+    pub height: HeightParam,
     /**No documentation.
 
 **Metadata**:
@@ -423,7 +441,7 @@ pub struct ConditioningSetArea<
   - Min: 0
   - Step: 8
 */
-    pub x: X,
+    pub x: XParam,
     /**No documentation.
 
 **Metadata**:
@@ -432,7 +450,7 @@ pub struct ConditioningSetArea<
   - Min: 0
   - Step: 8
 */
-    pub y: Y,
+    pub y: YParam,
     /**No documentation.
 
 **Metadata**:
@@ -441,24 +459,31 @@ pub struct ConditioningSetArea<
   - Min: 0
   - Step: 0.01
 */
-    pub strength: Strength,
+    pub strength: StrengthParam,
 }
 impl<
-    Conditioning: crate::nodes::types::Conditioning,
-    Width: crate::nodes::types::Int,
-    Height: crate::nodes::types::Int,
-    X: crate::nodes::types::Int,
-    Y: crate::nodes::types::Int,
-    Strength: crate::nodes::types::Float,
-> ConditioningSetArea<Conditioning, Width, Height, X, Y, Strength> {
+    ConditioningParam: crate::nodes::types::Conditioning,
+    WidthParam: crate::nodes::types::Int,
+    HeightParam: crate::nodes::types::Int,
+    XParam: crate::nodes::types::Int,
+    YParam: crate::nodes::types::Int,
+    StrengthParam: crate::nodes::types::Float,
+> ConditioningSetArea<
+    ConditioningParam,
+    WidthParam,
+    HeightParam,
+    XParam,
+    YParam,
+    StrengthParam,
+> {
     /// Create a new node.
     pub fn new(
-        conditioning: Conditioning,
-        width: Width,
-        height: Height,
-        x: X,
-        y: Y,
-        strength: Strength,
+        conditioning: ConditioningParam,
+        width: WidthParam,
+        height: HeightParam,
+        x: XParam,
+        y: YParam,
+        strength: StrengthParam,
     ) -> Self {
         Self {
             conditioning,
@@ -471,14 +496,21 @@ impl<
     }
 }
 impl<
-    Conditioning: crate::nodes::types::Conditioning,
-    Width: crate::nodes::types::Int,
-    Height: crate::nodes::types::Int,
-    X: crate::nodes::types::Int,
-    Y: crate::nodes::types::Int,
-    Strength: crate::nodes::types::Float,
+    ConditioningParam: crate::nodes::types::Conditioning,
+    WidthParam: crate::nodes::types::Int,
+    HeightParam: crate::nodes::types::Int,
+    XParam: crate::nodes::types::Int,
+    YParam: crate::nodes::types::Int,
+    StrengthParam: crate::nodes::types::Float,
 > crate::nodes::TypedNode
-for ConditioningSetArea<Conditioning, Width, Height, X, Y, Strength> {
+for ConditioningSetArea<
+    ConditioningParam,
+    WidthParam,
+    HeightParam,
+    XParam,
+    YParam,
+    StrengthParam,
+> {
     type Output = crate::nodes::types::ConditioningOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)
@@ -501,15 +533,15 @@ for ConditioningSetArea<Conditioning, Width, Height, X, Y, Strength> {
 ///**Conditioning (Set Area with Percentage)**: No description.
 #[derive(Clone)]
 pub struct ConditioningSetAreaPercentage<
-    Conditioning: crate::nodes::types::Conditioning,
-    Width: crate::nodes::types::Float,
-    Height: crate::nodes::types::Float,
-    X: crate::nodes::types::Float,
-    Y: crate::nodes::types::Float,
-    Strength: crate::nodes::types::Float,
+    ConditioningParam: crate::nodes::types::Conditioning,
+    WidthParam: crate::nodes::types::Float,
+    HeightParam: crate::nodes::types::Float,
+    XParam: crate::nodes::types::Float,
+    YParam: crate::nodes::types::Float,
+    StrengthParam: crate::nodes::types::Float,
 > {
     ///No documentation.
-    pub conditioning: Conditioning,
+    pub conditioning: ConditioningParam,
     /**No documentation.
 
 **Metadata**:
@@ -518,7 +550,7 @@ pub struct ConditioningSetAreaPercentage<
   - Min: 0
   - Step: 0.01
 */
-    pub width: Width,
+    pub width: WidthParam,
     /**No documentation.
 
 **Metadata**:
@@ -527,7 +559,7 @@ pub struct ConditioningSetAreaPercentage<
   - Min: 0
   - Step: 0.01
 */
-    pub height: Height,
+    pub height: HeightParam,
     /**No documentation.
 
 **Metadata**:
@@ -536,7 +568,7 @@ pub struct ConditioningSetAreaPercentage<
   - Min: 0
   - Step: 0.01
 */
-    pub x: X,
+    pub x: XParam,
     /**No documentation.
 
 **Metadata**:
@@ -545,7 +577,7 @@ pub struct ConditioningSetAreaPercentage<
   - Min: 0
   - Step: 0.01
 */
-    pub y: Y,
+    pub y: YParam,
     /**No documentation.
 
 **Metadata**:
@@ -554,24 +586,31 @@ pub struct ConditioningSetAreaPercentage<
   - Min: 0
   - Step: 0.01
 */
-    pub strength: Strength,
+    pub strength: StrengthParam,
 }
 impl<
-    Conditioning: crate::nodes::types::Conditioning,
-    Width: crate::nodes::types::Float,
-    Height: crate::nodes::types::Float,
-    X: crate::nodes::types::Float,
-    Y: crate::nodes::types::Float,
-    Strength: crate::nodes::types::Float,
-> ConditioningSetAreaPercentage<Conditioning, Width, Height, X, Y, Strength> {
+    ConditioningParam: crate::nodes::types::Conditioning,
+    WidthParam: crate::nodes::types::Float,
+    HeightParam: crate::nodes::types::Float,
+    XParam: crate::nodes::types::Float,
+    YParam: crate::nodes::types::Float,
+    StrengthParam: crate::nodes::types::Float,
+> ConditioningSetAreaPercentage<
+    ConditioningParam,
+    WidthParam,
+    HeightParam,
+    XParam,
+    YParam,
+    StrengthParam,
+> {
     /// Create a new node.
     pub fn new(
-        conditioning: Conditioning,
-        width: Width,
-        height: Height,
-        x: X,
-        y: Y,
-        strength: Strength,
+        conditioning: ConditioningParam,
+        width: WidthParam,
+        height: HeightParam,
+        x: XParam,
+        y: YParam,
+        strength: StrengthParam,
     ) -> Self {
         Self {
             conditioning,
@@ -584,14 +623,21 @@ impl<
     }
 }
 impl<
-    Conditioning: crate::nodes::types::Conditioning,
-    Width: crate::nodes::types::Float,
-    Height: crate::nodes::types::Float,
-    X: crate::nodes::types::Float,
-    Y: crate::nodes::types::Float,
-    Strength: crate::nodes::types::Float,
+    ConditioningParam: crate::nodes::types::Conditioning,
+    WidthParam: crate::nodes::types::Float,
+    HeightParam: crate::nodes::types::Float,
+    XParam: crate::nodes::types::Float,
+    YParam: crate::nodes::types::Float,
+    StrengthParam: crate::nodes::types::Float,
 > crate::nodes::TypedNode
-for ConditioningSetAreaPercentage<Conditioning, Width, Height, X, Y, Strength> {
+for ConditioningSetAreaPercentage<
+    ConditioningParam,
+    WidthParam,
+    HeightParam,
+    XParam,
+    YParam,
+    StrengthParam,
+> {
     type Output = crate::nodes::types::ConditioningOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)
@@ -614,17 +660,17 @@ for ConditioningSetAreaPercentage<Conditioning, Width, Height, X, Y, Strength> {
 ///**ConditioningSetAreaPercentageVideo**: No description.
 #[derive(Clone)]
 pub struct ConditioningSetAreaPercentageVideo<
-    Conditioning: crate::nodes::types::Conditioning,
-    Width: crate::nodes::types::Float,
-    Height: crate::nodes::types::Float,
-    Temporal: crate::nodes::types::Float,
-    X: crate::nodes::types::Float,
-    Y: crate::nodes::types::Float,
-    Z: crate::nodes::types::Float,
-    Strength: crate::nodes::types::Float,
+    ConditioningParam: crate::nodes::types::Conditioning,
+    WidthParam: crate::nodes::types::Float,
+    HeightParam: crate::nodes::types::Float,
+    TemporalParam: crate::nodes::types::Float,
+    XParam: crate::nodes::types::Float,
+    YParam: crate::nodes::types::Float,
+    ZParam: crate::nodes::types::Float,
+    StrengthParam: crate::nodes::types::Float,
 > {
     ///No documentation.
-    pub conditioning: Conditioning,
+    pub conditioning: ConditioningParam,
     /**No documentation.
 
 **Metadata**:
@@ -633,7 +679,7 @@ pub struct ConditioningSetAreaPercentageVideo<
   - Min: 0
   - Step: 0.01
 */
-    pub width: Width,
+    pub width: WidthParam,
     /**No documentation.
 
 **Metadata**:
@@ -642,7 +688,7 @@ pub struct ConditioningSetAreaPercentageVideo<
   - Min: 0
   - Step: 0.01
 */
-    pub height: Height,
+    pub height: HeightParam,
     /**No documentation.
 
 **Metadata**:
@@ -651,7 +697,7 @@ pub struct ConditioningSetAreaPercentageVideo<
   - Min: 0
   - Step: 0.01
 */
-    pub temporal: Temporal,
+    pub temporal: TemporalParam,
     /**No documentation.
 
 **Metadata**:
@@ -660,7 +706,7 @@ pub struct ConditioningSetAreaPercentageVideo<
   - Min: 0
   - Step: 0.01
 */
-    pub x: X,
+    pub x: XParam,
     /**No documentation.
 
 **Metadata**:
@@ -669,7 +715,7 @@ pub struct ConditioningSetAreaPercentageVideo<
   - Min: 0
   - Step: 0.01
 */
-    pub y: Y,
+    pub y: YParam,
     /**No documentation.
 
 **Metadata**:
@@ -678,7 +724,7 @@ pub struct ConditioningSetAreaPercentageVideo<
   - Min: 0
   - Step: 0.01
 */
-    pub z: Z,
+    pub z: ZParam,
     /**No documentation.
 
 **Metadata**:
@@ -687,37 +733,37 @@ pub struct ConditioningSetAreaPercentageVideo<
   - Min: 0
   - Step: 0.01
 */
-    pub strength: Strength,
+    pub strength: StrengthParam,
 }
 impl<
-    Conditioning: crate::nodes::types::Conditioning,
-    Width: crate::nodes::types::Float,
-    Height: crate::nodes::types::Float,
-    Temporal: crate::nodes::types::Float,
-    X: crate::nodes::types::Float,
-    Y: crate::nodes::types::Float,
-    Z: crate::nodes::types::Float,
-    Strength: crate::nodes::types::Float,
+    ConditioningParam: crate::nodes::types::Conditioning,
+    WidthParam: crate::nodes::types::Float,
+    HeightParam: crate::nodes::types::Float,
+    TemporalParam: crate::nodes::types::Float,
+    XParam: crate::nodes::types::Float,
+    YParam: crate::nodes::types::Float,
+    ZParam: crate::nodes::types::Float,
+    StrengthParam: crate::nodes::types::Float,
 > ConditioningSetAreaPercentageVideo<
-    Conditioning,
-    Width,
-    Height,
-    Temporal,
-    X,
-    Y,
-    Z,
-    Strength,
+    ConditioningParam,
+    WidthParam,
+    HeightParam,
+    TemporalParam,
+    XParam,
+    YParam,
+    ZParam,
+    StrengthParam,
 > {
     /// Create a new node.
     pub fn new(
-        conditioning: Conditioning,
-        width: Width,
-        height: Height,
-        temporal: Temporal,
-        x: X,
-        y: Y,
-        z: Z,
-        strength: Strength,
+        conditioning: ConditioningParam,
+        width: WidthParam,
+        height: HeightParam,
+        temporal: TemporalParam,
+        x: XParam,
+        y: YParam,
+        z: ZParam,
+        strength: StrengthParam,
     ) -> Self {
         Self {
             conditioning,
@@ -732,24 +778,24 @@ impl<
     }
 }
 impl<
-    Conditioning: crate::nodes::types::Conditioning,
-    Width: crate::nodes::types::Float,
-    Height: crate::nodes::types::Float,
-    Temporal: crate::nodes::types::Float,
-    X: crate::nodes::types::Float,
-    Y: crate::nodes::types::Float,
-    Z: crate::nodes::types::Float,
-    Strength: crate::nodes::types::Float,
+    ConditioningParam: crate::nodes::types::Conditioning,
+    WidthParam: crate::nodes::types::Float,
+    HeightParam: crate::nodes::types::Float,
+    TemporalParam: crate::nodes::types::Float,
+    XParam: crate::nodes::types::Float,
+    YParam: crate::nodes::types::Float,
+    ZParam: crate::nodes::types::Float,
+    StrengthParam: crate::nodes::types::Float,
 > crate::nodes::TypedNode
 for ConditioningSetAreaPercentageVideo<
-    Conditioning,
-    Width,
-    Height,
-    Temporal,
-    X,
-    Y,
-    Z,
-    Strength,
+    ConditioningParam,
+    WidthParam,
+    HeightParam,
+    TemporalParam,
+    XParam,
+    YParam,
+    ZParam,
+    StrengthParam,
 > {
     type Output = crate::nodes::types::ConditioningOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
@@ -775,11 +821,11 @@ for ConditioningSetAreaPercentageVideo<
 ///**ConditioningSetAreaStrength**: No description.
 #[derive(Clone)]
 pub struct ConditioningSetAreaStrength<
-    Conditioning: crate::nodes::types::Conditioning,
-    Strength: crate::nodes::types::Float,
+    ConditioningParam: crate::nodes::types::Conditioning,
+    StrengthParam: crate::nodes::types::Float,
 > {
     ///No documentation.
-    pub conditioning: Conditioning,
+    pub conditioning: ConditioningParam,
     /**No documentation.
 
 **Metadata**:
@@ -788,21 +834,22 @@ pub struct ConditioningSetAreaStrength<
   - Min: 0
   - Step: 0.01
 */
-    pub strength: Strength,
+    pub strength: StrengthParam,
 }
 impl<
-    Conditioning: crate::nodes::types::Conditioning,
-    Strength: crate::nodes::types::Float,
-> ConditioningSetAreaStrength<Conditioning, Strength> {
+    ConditioningParam: crate::nodes::types::Conditioning,
+    StrengthParam: crate::nodes::types::Float,
+> ConditioningSetAreaStrength<ConditioningParam, StrengthParam> {
     /// Create a new node.
-    pub fn new(conditioning: Conditioning, strength: Strength) -> Self {
+    pub fn new(conditioning: ConditioningParam, strength: StrengthParam) -> Self {
         Self { conditioning, strength }
     }
 }
 impl<
-    Conditioning: crate::nodes::types::Conditioning,
-    Strength: crate::nodes::types::Float,
-> crate::nodes::TypedNode for ConditioningSetAreaStrength<Conditioning, Strength> {
+    ConditioningParam: crate::nodes::types::Conditioning,
+    StrengthParam: crate::nodes::types::Float,
+> crate::nodes::TypedNode
+for ConditioningSetAreaStrength<ConditioningParam, StrengthParam> {
     type Output = crate::nodes::types::ConditioningOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)
@@ -821,15 +868,15 @@ impl<
 ///**Conditioning (Set Mask)**: No description.
 #[derive(Clone)]
 pub struct ConditioningSetMask<
-    Conditioning: crate::nodes::types::Conditioning,
-    Mask: crate::nodes::types::Mask,
-    Strength: crate::nodes::types::Float,
-    SetCondArea: crate::nodes::types::String,
+    ConditioningParam: crate::nodes::types::Conditioning,
+    MaskParam: crate::nodes::types::Mask,
+    StrengthParam: crate::nodes::types::Float,
+    SetCondAreaParam: crate::nodes::types::String,
 > {
     ///No documentation.
-    pub conditioning: Conditioning,
+    pub conditioning: ConditioningParam,
     ///No documentation.
-    pub mask: Mask,
+    pub mask: MaskParam,
     /**No documentation.
 
 **Metadata**:
@@ -838,22 +885,22 @@ pub struct ConditioningSetMask<
   - Min: 0
   - Step: 0.01
 */
-    pub strength: Strength,
+    pub strength: StrengthParam,
     ///No documentation.
-    pub set_cond_area: SetCondArea,
+    pub set_cond_area: SetCondAreaParam,
 }
 impl<
-    Conditioning: crate::nodes::types::Conditioning,
-    Mask: crate::nodes::types::Mask,
-    Strength: crate::nodes::types::Float,
-    SetCondArea: crate::nodes::types::String,
-> ConditioningSetMask<Conditioning, Mask, Strength, SetCondArea> {
+    ConditioningParam: crate::nodes::types::Conditioning,
+    MaskParam: crate::nodes::types::Mask,
+    StrengthParam: crate::nodes::types::Float,
+    SetCondAreaParam: crate::nodes::types::String,
+> ConditioningSetMask<ConditioningParam, MaskParam, StrengthParam, SetCondAreaParam> {
     /// Create a new node.
     pub fn new(
-        conditioning: Conditioning,
-        mask: Mask,
-        strength: Strength,
-        set_cond_area: SetCondArea,
+        conditioning: ConditioningParam,
+        mask: MaskParam,
+        strength: StrengthParam,
+        set_cond_area: SetCondAreaParam,
     ) -> Self {
         Self {
             conditioning,
@@ -864,12 +911,12 @@ impl<
     }
 }
 impl<
-    Conditioning: crate::nodes::types::Conditioning,
-    Mask: crate::nodes::types::Mask,
-    Strength: crate::nodes::types::Float,
-    SetCondArea: crate::nodes::types::String,
+    ConditioningParam: crate::nodes::types::Conditioning,
+    MaskParam: crate::nodes::types::Mask,
+    StrengthParam: crate::nodes::types::Float,
+    SetCondAreaParam: crate::nodes::types::String,
 > crate::nodes::TypedNode
-for ConditioningSetMask<Conditioning, Mask, Strength, SetCondArea> {
+for ConditioningSetMask<ConditioningParam, MaskParam, StrengthParam, SetCondAreaParam> {
     type Output = crate::nodes::types::ConditioningOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)
@@ -890,15 +937,15 @@ for ConditioningSetMask<Conditioning, Mask, Strength, SetCondArea> {
 ///**ConditioningStableAudio**: No description.
 #[derive(Clone)]
 pub struct ConditioningStableAudio<
-    Positive: crate::nodes::types::Conditioning,
-    Negative: crate::nodes::types::Conditioning,
-    SecondsStart: crate::nodes::types::Float,
-    SecondsTotal: crate::nodes::types::Float,
+    PositiveParam: crate::nodes::types::Conditioning,
+    NegativeParam: crate::nodes::types::Conditioning,
+    SecondsStartParam: crate::nodes::types::Float,
+    SecondsTotalParam: crate::nodes::types::Float,
 > {
     ///No documentation.
-    pub positive: Positive,
+    pub positive: PositiveParam,
     ///No documentation.
-    pub negative: Negative,
+    pub negative: NegativeParam,
     /**No documentation.
 
 **Metadata**:
@@ -907,7 +954,7 @@ pub struct ConditioningStableAudio<
   - Min: 0
   - Step: 0.1
 */
-    pub seconds_start: SecondsStart,
+    pub seconds_start: SecondsStartParam,
     /**No documentation.
 
 **Metadata**:
@@ -916,20 +963,25 @@ pub struct ConditioningStableAudio<
   - Min: 0
   - Step: 0.1
 */
-    pub seconds_total: SecondsTotal,
+    pub seconds_total: SecondsTotalParam,
 }
 impl<
-    Positive: crate::nodes::types::Conditioning,
-    Negative: crate::nodes::types::Conditioning,
-    SecondsStart: crate::nodes::types::Float,
-    SecondsTotal: crate::nodes::types::Float,
-> ConditioningStableAudio<Positive, Negative, SecondsStart, SecondsTotal> {
+    PositiveParam: crate::nodes::types::Conditioning,
+    NegativeParam: crate::nodes::types::Conditioning,
+    SecondsStartParam: crate::nodes::types::Float,
+    SecondsTotalParam: crate::nodes::types::Float,
+> ConditioningStableAudio<
+    PositiveParam,
+    NegativeParam,
+    SecondsStartParam,
+    SecondsTotalParam,
+> {
     /// Create a new node.
     pub fn new(
-        positive: Positive,
-        negative: Negative,
-        seconds_start: SecondsStart,
-        seconds_total: SecondsTotal,
+        positive: PositiveParam,
+        negative: NegativeParam,
+        seconds_start: SecondsStartParam,
+        seconds_total: SecondsTotalParam,
     ) -> Self {
         Self {
             positive,
@@ -940,12 +992,17 @@ impl<
     }
 }
 impl<
-    Positive: crate::nodes::types::Conditioning,
-    Negative: crate::nodes::types::Conditioning,
-    SecondsStart: crate::nodes::types::Float,
-    SecondsTotal: crate::nodes::types::Float,
+    PositiveParam: crate::nodes::types::Conditioning,
+    NegativeParam: crate::nodes::types::Conditioning,
+    SecondsStartParam: crate::nodes::types::Float,
+    SecondsTotalParam: crate::nodes::types::Float,
 > crate::nodes::TypedNode
-for ConditioningStableAudio<Positive, Negative, SecondsStart, SecondsTotal> {
+for ConditioningStableAudio<
+    PositiveParam,
+    NegativeParam,
+    SecondsStartParam,
+    SecondsTotalParam,
+> {
     type Output = out::ConditioningStableAudioOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
@@ -969,15 +1026,15 @@ for ConditioningStableAudio<Positive, Negative, SecondsStart, SecondsTotal> {
 ///**unCLIPConditioning**: No description.
 #[derive(Clone)]
 pub struct UnClipConditioning<
-    Conditioning: crate::nodes::types::Conditioning,
-    ClipVisionOutput: crate::nodes::types::ClipVisionOutput,
-    Strength: crate::nodes::types::Float,
-    NoiseAugmentation: crate::nodes::types::Float,
+    ConditioningParam: crate::nodes::types::Conditioning,
+    ClipVisionOutputParam: crate::nodes::types::ClipVisionOutput,
+    StrengthParam: crate::nodes::types::Float,
+    NoiseAugmentationParam: crate::nodes::types::Float,
 > {
     ///No documentation.
-    pub conditioning: Conditioning,
+    pub conditioning: ConditioningParam,
     ///No documentation.
-    pub clip_vision_output: ClipVisionOutput,
+    pub clip_vision_output: ClipVisionOutputParam,
     /**No documentation.
 
 **Metadata**:
@@ -986,7 +1043,7 @@ pub struct UnClipConditioning<
   - Min: -10
   - Step: 0.01
 */
-    pub strength: Strength,
+    pub strength: StrengthParam,
     /**No documentation.
 
 **Metadata**:
@@ -995,20 +1052,25 @@ pub struct UnClipConditioning<
   - Min: 0
   - Step: 0.01
 */
-    pub noise_augmentation: NoiseAugmentation,
+    pub noise_augmentation: NoiseAugmentationParam,
 }
 impl<
-    Conditioning: crate::nodes::types::Conditioning,
-    ClipVisionOutput: crate::nodes::types::ClipVisionOutput,
-    Strength: crate::nodes::types::Float,
-    NoiseAugmentation: crate::nodes::types::Float,
-> UnClipConditioning<Conditioning, ClipVisionOutput, Strength, NoiseAugmentation> {
+    ConditioningParam: crate::nodes::types::Conditioning,
+    ClipVisionOutputParam: crate::nodes::types::ClipVisionOutput,
+    StrengthParam: crate::nodes::types::Float,
+    NoiseAugmentationParam: crate::nodes::types::Float,
+> UnClipConditioning<
+    ConditioningParam,
+    ClipVisionOutputParam,
+    StrengthParam,
+    NoiseAugmentationParam,
+> {
     /// Create a new node.
     pub fn new(
-        conditioning: Conditioning,
-        clip_vision_output: ClipVisionOutput,
-        strength: Strength,
-        noise_augmentation: NoiseAugmentation,
+        conditioning: ConditioningParam,
+        clip_vision_output: ClipVisionOutputParam,
+        strength: StrengthParam,
+        noise_augmentation: NoiseAugmentationParam,
     ) -> Self {
         Self {
             conditioning,
@@ -1019,12 +1081,17 @@ impl<
     }
 }
 impl<
-    Conditioning: crate::nodes::types::Conditioning,
-    ClipVisionOutput: crate::nodes::types::ClipVisionOutput,
-    Strength: crate::nodes::types::Float,
-    NoiseAugmentation: crate::nodes::types::Float,
+    ConditioningParam: crate::nodes::types::Conditioning,
+    ClipVisionOutputParam: crate::nodes::types::ClipVisionOutput,
+    StrengthParam: crate::nodes::types::Float,
+    NoiseAugmentationParam: crate::nodes::types::Float,
 > crate::nodes::TypedNode
-for UnClipConditioning<Conditioning, ClipVisionOutput, Strength, NoiseAugmentation> {
+for UnClipConditioning<
+    ConditioningParam,
+    ClipVisionOutputParam,
+    StrengthParam,
+    NoiseAugmentationParam,
+> {
     type Output = crate::nodes::types::ConditioningOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)

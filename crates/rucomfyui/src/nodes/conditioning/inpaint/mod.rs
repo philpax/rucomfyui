@@ -21,16 +21,16 @@ pub mod out {
 ///**CosmosImageToVideoLatent**: No description.
 #[derive(Clone)]
 pub struct CosmosImageToVideoLatent<
-    Vae: crate::nodes::types::Vae,
-    Width: crate::nodes::types::Int,
-    Height: crate::nodes::types::Int,
-    Length: crate::nodes::types::Int,
-    BatchSize: crate::nodes::types::Int,
-    StartImage: crate::nodes::types::Image = crate::nodes::types::ImageOut,
-    EndImage: crate::nodes::types::Image = crate::nodes::types::ImageOut,
+    VaeParam: crate::nodes::types::Vae,
+    WidthParam: crate::nodes::types::Int,
+    HeightParam: crate::nodes::types::Int,
+    LengthParam: crate::nodes::types::Int,
+    BatchSizeParam: crate::nodes::types::Int,
+    StartImageParam: crate::nodes::types::Image = crate::nodes::types::ImageOut,
+    EndImageParam: crate::nodes::types::Image = crate::nodes::types::ImageOut,
 > {
     ///No documentation.
-    pub vae: Vae,
+    pub vae: VaeParam,
     /**No documentation.
 
 **Metadata**:
@@ -39,7 +39,7 @@ pub struct CosmosImageToVideoLatent<
   - Min: 16
   - Step: 16
 */
-    pub width: Width,
+    pub width: WidthParam,
     /**No documentation.
 
 **Metadata**:
@@ -48,7 +48,7 @@ pub struct CosmosImageToVideoLatent<
   - Min: 16
   - Step: 16
 */
-    pub height: Height,
+    pub height: HeightParam,
     /**No documentation.
 
 **Metadata**:
@@ -57,7 +57,7 @@ pub struct CosmosImageToVideoLatent<
   - Min: 1
   - Step: 8
 */
-    pub length: Length,
+    pub length: LengthParam,
     /**No documentation.
 
 **Metadata**:
@@ -65,30 +65,38 @@ pub struct CosmosImageToVideoLatent<
   - Max: 4096
   - Min: 1
 */
-    pub batch_size: BatchSize,
+    pub batch_size: BatchSizeParam,
     ///No documentation.
-    pub start_image: Option<StartImage>,
+    pub start_image: Option<StartImageParam>,
     ///No documentation.
-    pub end_image: Option<EndImage>,
+    pub end_image: Option<EndImageParam>,
 }
 impl<
-    Vae: crate::nodes::types::Vae,
-    Width: crate::nodes::types::Int,
-    Height: crate::nodes::types::Int,
-    Length: crate::nodes::types::Int,
-    BatchSize: crate::nodes::types::Int,
-    StartImage: crate::nodes::types::Image,
-    EndImage: crate::nodes::types::Image,
-> CosmosImageToVideoLatent<Vae, Width, Height, Length, BatchSize, StartImage, EndImage> {
+    VaeParam: crate::nodes::types::Vae,
+    WidthParam: crate::nodes::types::Int,
+    HeightParam: crate::nodes::types::Int,
+    LengthParam: crate::nodes::types::Int,
+    BatchSizeParam: crate::nodes::types::Int,
+    StartImageParam: crate::nodes::types::Image,
+    EndImageParam: crate::nodes::types::Image,
+> CosmosImageToVideoLatent<
+    VaeParam,
+    WidthParam,
+    HeightParam,
+    LengthParam,
+    BatchSizeParam,
+    StartImageParam,
+    EndImageParam,
+> {
     /// Create a new node.
     pub fn new(
-        vae: Vae,
-        width: Width,
-        height: Height,
-        length: Length,
-        batch_size: BatchSize,
-        start_image: Option<StartImage>,
-        end_image: Option<EndImage>,
+        vae: VaeParam,
+        width: WidthParam,
+        height: HeightParam,
+        length: LengthParam,
+        batch_size: BatchSizeParam,
+        start_image: Option<StartImageParam>,
+        end_image: Option<EndImageParam>,
     ) -> Self {
         Self {
             vae,
@@ -102,22 +110,22 @@ impl<
     }
 }
 impl<
-    Vae: crate::nodes::types::Vae,
-    Width: crate::nodes::types::Int,
-    Height: crate::nodes::types::Int,
-    Length: crate::nodes::types::Int,
-    BatchSize: crate::nodes::types::Int,
-    StartImage: crate::nodes::types::Image,
-    EndImage: crate::nodes::types::Image,
+    VaeParam: crate::nodes::types::Vae,
+    WidthParam: crate::nodes::types::Int,
+    HeightParam: crate::nodes::types::Int,
+    LengthParam: crate::nodes::types::Int,
+    BatchSizeParam: crate::nodes::types::Int,
+    StartImageParam: crate::nodes::types::Image,
+    EndImageParam: crate::nodes::types::Image,
 > crate::nodes::TypedNode
 for CosmosImageToVideoLatent<
-    Vae,
-    Width,
-    Height,
-    Length,
-    BatchSize,
-    StartImage,
-    EndImage,
+    VaeParam,
+    WidthParam,
+    HeightParam,
+    LengthParam,
+    BatchSizeParam,
+    StartImageParam,
+    EndImageParam,
 > {
     type Output = crate::nodes::types::LatentOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
@@ -146,46 +154,53 @@ for CosmosImageToVideoLatent<
 ///**InpaintModelConditioning**: No description.
 #[derive(Clone)]
 pub struct InpaintModelConditioning<
-    Positive: crate::nodes::types::Conditioning,
-    Negative: crate::nodes::types::Conditioning,
-    Vae: crate::nodes::types::Vae,
-    Pixels: crate::nodes::types::Image,
-    Mask: crate::nodes::types::Mask,
-    NoiseMask: crate::nodes::types::Boolean,
+    PositiveParam: crate::nodes::types::Conditioning,
+    NegativeParam: crate::nodes::types::Conditioning,
+    VaeParam: crate::nodes::types::Vae,
+    PixelsParam: crate::nodes::types::Image,
+    MaskParam: crate::nodes::types::Mask,
+    NoiseMaskParam: crate::nodes::types::Boolean,
 > {
     ///No documentation.
-    pub positive: Positive,
+    pub positive: PositiveParam,
     ///No documentation.
-    pub negative: Negative,
+    pub negative: NegativeParam,
     ///No documentation.
-    pub vae: Vae,
+    pub vae: VaeParam,
     ///No documentation.
-    pub pixels: Pixels,
+    pub pixels: PixelsParam,
     ///No documentation.
-    pub mask: Mask,
+    pub mask: MaskParam,
     /**Add a noise mask to the latent so sampling will only happen within the mask. Might improve results or completely break things depending on the model.
 
 **Metadata**:
   - Default: true
 */
-    pub noise_mask: NoiseMask,
+    pub noise_mask: NoiseMaskParam,
 }
 impl<
-    Positive: crate::nodes::types::Conditioning,
-    Negative: crate::nodes::types::Conditioning,
-    Vae: crate::nodes::types::Vae,
-    Pixels: crate::nodes::types::Image,
-    Mask: crate::nodes::types::Mask,
-    NoiseMask: crate::nodes::types::Boolean,
-> InpaintModelConditioning<Positive, Negative, Vae, Pixels, Mask, NoiseMask> {
+    PositiveParam: crate::nodes::types::Conditioning,
+    NegativeParam: crate::nodes::types::Conditioning,
+    VaeParam: crate::nodes::types::Vae,
+    PixelsParam: crate::nodes::types::Image,
+    MaskParam: crate::nodes::types::Mask,
+    NoiseMaskParam: crate::nodes::types::Boolean,
+> InpaintModelConditioning<
+    PositiveParam,
+    NegativeParam,
+    VaeParam,
+    PixelsParam,
+    MaskParam,
+    NoiseMaskParam,
+> {
     /// Create a new node.
     pub fn new(
-        positive: Positive,
-        negative: Negative,
-        vae: Vae,
-        pixels: Pixels,
-        mask: Mask,
-        noise_mask: NoiseMask,
+        positive: PositiveParam,
+        negative: NegativeParam,
+        vae: VaeParam,
+        pixels: PixelsParam,
+        mask: MaskParam,
+        noise_mask: NoiseMaskParam,
     ) -> Self {
         Self {
             positive,
@@ -198,14 +213,21 @@ impl<
     }
 }
 impl<
-    Positive: crate::nodes::types::Conditioning,
-    Negative: crate::nodes::types::Conditioning,
-    Vae: crate::nodes::types::Vae,
-    Pixels: crate::nodes::types::Image,
-    Mask: crate::nodes::types::Mask,
-    NoiseMask: crate::nodes::types::Boolean,
+    PositiveParam: crate::nodes::types::Conditioning,
+    NegativeParam: crate::nodes::types::Conditioning,
+    VaeParam: crate::nodes::types::Vae,
+    PixelsParam: crate::nodes::types::Image,
+    MaskParam: crate::nodes::types::Mask,
+    NoiseMaskParam: crate::nodes::types::Boolean,
 > crate::nodes::TypedNode
-for InpaintModelConditioning<Positive, Negative, Vae, Pixels, Mask, NoiseMask> {
+for InpaintModelConditioning<
+    PositiveParam,
+    NegativeParam,
+    VaeParam,
+    PixelsParam,
+    MaskParam,
+    NoiseMaskParam,
+> {
     type Output = out::InpaintModelConditioningOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {

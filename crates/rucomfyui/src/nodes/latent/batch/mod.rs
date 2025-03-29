@@ -8,27 +8,27 @@ use crate::{
 ///**LatentBatch**: No description.
 #[derive(Clone)]
 pub struct LatentBatch<
-    Samples1: crate::nodes::types::Latent,
-    Samples2: crate::nodes::types::Latent,
+    Samples1Param: crate::nodes::types::Latent,
+    Samples2Param: crate::nodes::types::Latent,
 > {
     ///No documentation.
-    pub samples_1: Samples1,
+    pub samples_1: Samples1Param,
     ///No documentation.
-    pub samples_2: Samples2,
+    pub samples_2: Samples2Param,
 }
 impl<
-    Samples1: crate::nodes::types::Latent,
-    Samples2: crate::nodes::types::Latent,
-> LatentBatch<Samples1, Samples2> {
+    Samples1Param: crate::nodes::types::Latent,
+    Samples2Param: crate::nodes::types::Latent,
+> LatentBatch<Samples1Param, Samples2Param> {
     /// Create a new node.
-    pub fn new(samples_1: Samples1, samples_2: Samples2) -> Self {
+    pub fn new(samples_1: Samples1Param, samples_2: Samples2Param) -> Self {
         Self { samples_1, samples_2 }
     }
 }
 impl<
-    Samples1: crate::nodes::types::Latent,
-    Samples2: crate::nodes::types::Latent,
-> crate::nodes::TypedNode for LatentBatch<Samples1, Samples2> {
+    Samples1Param: crate::nodes::types::Latent,
+    Samples2Param: crate::nodes::types::Latent,
+> crate::nodes::TypedNode for LatentBatch<Samples1Param, Samples2Param> {
     type Output = crate::nodes::types::LatentOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)
@@ -47,12 +47,12 @@ impl<
 ///**Latent From Batch**: No description.
 #[derive(Clone)]
 pub struct LatentFromBatch<
-    Samples: crate::nodes::types::Latent,
-    BatchIndex: crate::nodes::types::Int,
-    Length: crate::nodes::types::Int,
+    SamplesParam: crate::nodes::types::Latent,
+    BatchIndexParam: crate::nodes::types::Int,
+    LengthParam: crate::nodes::types::Int,
 > {
     ///No documentation.
-    pub samples: Samples,
+    pub samples: SamplesParam,
     /**No documentation.
 
 **Metadata**:
@@ -60,7 +60,7 @@ pub struct LatentFromBatch<
   - Max: 63
   - Min: 0
 */
-    pub batch_index: BatchIndex,
+    pub batch_index: BatchIndexParam,
     /**No documentation.
 
 **Metadata**:
@@ -68,15 +68,19 @@ pub struct LatentFromBatch<
   - Max: 64
   - Min: 1
 */
-    pub length: Length,
+    pub length: LengthParam,
 }
 impl<
-    Samples: crate::nodes::types::Latent,
-    BatchIndex: crate::nodes::types::Int,
-    Length: crate::nodes::types::Int,
-> LatentFromBatch<Samples, BatchIndex, Length> {
+    SamplesParam: crate::nodes::types::Latent,
+    BatchIndexParam: crate::nodes::types::Int,
+    LengthParam: crate::nodes::types::Int,
+> LatentFromBatch<SamplesParam, BatchIndexParam, LengthParam> {
     /// Create a new node.
-    pub fn new(samples: Samples, batch_index: BatchIndex, length: Length) -> Self {
+    pub fn new(
+        samples: SamplesParam,
+        batch_index: BatchIndexParam,
+        length: LengthParam,
+    ) -> Self {
         Self {
             samples,
             batch_index,
@@ -85,10 +89,11 @@ impl<
     }
 }
 impl<
-    Samples: crate::nodes::types::Latent,
-    BatchIndex: crate::nodes::types::Int,
-    Length: crate::nodes::types::Int,
-> crate::nodes::TypedNode for LatentFromBatch<Samples, BatchIndex, Length> {
+    SamplesParam: crate::nodes::types::Latent,
+    BatchIndexParam: crate::nodes::types::Int,
+    LengthParam: crate::nodes::types::Int,
+> crate::nodes::TypedNode
+for LatentFromBatch<SamplesParam, BatchIndexParam, LengthParam> {
     type Output = crate::nodes::types::LatentOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)
@@ -108,11 +113,11 @@ impl<
 ///**Rebatch Latents**: No description.
 #[derive(Clone)]
 pub struct RebatchLatents<
-    Latents: crate::nodes::types::Latent,
-    BatchSize: crate::nodes::types::Int,
+    LatentsParam: crate::nodes::types::Latent,
+    BatchSizeParam: crate::nodes::types::Int,
 > {
     ///No documentation.
-    pub latents: Latents,
+    pub latents: LatentsParam,
     /**No documentation.
 
 **Metadata**:
@@ -120,21 +125,21 @@ pub struct RebatchLatents<
   - Max: 4096
   - Min: 1
 */
-    pub batch_size: BatchSize,
+    pub batch_size: BatchSizeParam,
 }
 impl<
-    Latents: crate::nodes::types::Latent,
-    BatchSize: crate::nodes::types::Int,
-> RebatchLatents<Latents, BatchSize> {
+    LatentsParam: crate::nodes::types::Latent,
+    BatchSizeParam: crate::nodes::types::Int,
+> RebatchLatents<LatentsParam, BatchSizeParam> {
     /// Create a new node.
-    pub fn new(latents: Latents, batch_size: BatchSize) -> Self {
+    pub fn new(latents: LatentsParam, batch_size: BatchSizeParam) -> Self {
         Self { latents, batch_size }
     }
 }
 impl<
-    Latents: crate::nodes::types::Latent,
-    BatchSize: crate::nodes::types::Int,
-> crate::nodes::TypedNode for RebatchLatents<Latents, BatchSize> {
+    LatentsParam: crate::nodes::types::Latent,
+    BatchSizeParam: crate::nodes::types::Int,
+> crate::nodes::TypedNode for RebatchLatents<LatentsParam, BatchSizeParam> {
     type Output = crate::nodes::types::LatentOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)
@@ -153,11 +158,11 @@ impl<
 ///**Repeat Latent Batch**: No description.
 #[derive(Clone)]
 pub struct RepeatLatentBatch<
-    Samples: crate::nodes::types::Latent,
-    Amount: crate::nodes::types::Int,
+    SamplesParam: crate::nodes::types::Latent,
+    AmountParam: crate::nodes::types::Int,
 > {
     ///No documentation.
-    pub samples: Samples,
+    pub samples: SamplesParam,
     /**No documentation.
 
 **Metadata**:
@@ -165,21 +170,21 @@ pub struct RepeatLatentBatch<
   - Max: 64
   - Min: 1
 */
-    pub amount: Amount,
+    pub amount: AmountParam,
 }
 impl<
-    Samples: crate::nodes::types::Latent,
-    Amount: crate::nodes::types::Int,
-> RepeatLatentBatch<Samples, Amount> {
+    SamplesParam: crate::nodes::types::Latent,
+    AmountParam: crate::nodes::types::Int,
+> RepeatLatentBatch<SamplesParam, AmountParam> {
     /// Create a new node.
-    pub fn new(samples: Samples, amount: Amount) -> Self {
+    pub fn new(samples: SamplesParam, amount: AmountParam) -> Self {
         Self { samples, amount }
     }
 }
 impl<
-    Samples: crate::nodes::types::Latent,
-    Amount: crate::nodes::types::Int,
-> crate::nodes::TypedNode for RepeatLatentBatch<Samples, Amount> {
+    SamplesParam: crate::nodes::types::Latent,
+    AmountParam: crate::nodes::types::Int,
+> crate::nodes::TypedNode for RepeatLatentBatch<SamplesParam, AmountParam> {
     type Output = crate::nodes::types::LatentOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)

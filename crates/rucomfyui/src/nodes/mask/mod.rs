@@ -9,14 +9,14 @@ pub mod compositing;
 ///**CropMask**: No description.
 #[derive(Clone)]
 pub struct CropMask<
-    Mask: crate::nodes::types::Mask,
-    X: crate::nodes::types::Int,
-    Y: crate::nodes::types::Int,
-    Width: crate::nodes::types::Int,
-    Height: crate::nodes::types::Int,
+    MaskParam: crate::nodes::types::Mask,
+    XParam: crate::nodes::types::Int,
+    YParam: crate::nodes::types::Int,
+    WidthParam: crate::nodes::types::Int,
+    HeightParam: crate::nodes::types::Int,
 > {
     ///No documentation.
-    pub mask: Mask,
+    pub mask: MaskParam,
     /**No documentation.
 
 **Metadata**:
@@ -25,7 +25,7 @@ pub struct CropMask<
   - Min: 0
   - Step: 1
 */
-    pub x: X,
+    pub x: XParam,
     /**No documentation.
 
 **Metadata**:
@@ -34,7 +34,7 @@ pub struct CropMask<
   - Min: 0
   - Step: 1
 */
-    pub y: Y,
+    pub y: YParam,
     /**No documentation.
 
 **Metadata**:
@@ -43,7 +43,7 @@ pub struct CropMask<
   - Min: 1
   - Step: 1
 */
-    pub width: Width,
+    pub width: WidthParam,
     /**No documentation.
 
 **Metadata**:
@@ -52,27 +52,34 @@ pub struct CropMask<
   - Min: 1
   - Step: 1
 */
-    pub height: Height,
+    pub height: HeightParam,
 }
 impl<
-    Mask: crate::nodes::types::Mask,
-    X: crate::nodes::types::Int,
-    Y: crate::nodes::types::Int,
-    Width: crate::nodes::types::Int,
-    Height: crate::nodes::types::Int,
-> CropMask<Mask, X, Y, Width, Height> {
+    MaskParam: crate::nodes::types::Mask,
+    XParam: crate::nodes::types::Int,
+    YParam: crate::nodes::types::Int,
+    WidthParam: crate::nodes::types::Int,
+    HeightParam: crate::nodes::types::Int,
+> CropMask<MaskParam, XParam, YParam, WidthParam, HeightParam> {
     /// Create a new node.
-    pub fn new(mask: Mask, x: X, y: Y, width: Width, height: Height) -> Self {
+    pub fn new(
+        mask: MaskParam,
+        x: XParam,
+        y: YParam,
+        width: WidthParam,
+        height: HeightParam,
+    ) -> Self {
         Self { mask, x, y, width, height }
     }
 }
 impl<
-    Mask: crate::nodes::types::Mask,
-    X: crate::nodes::types::Int,
-    Y: crate::nodes::types::Int,
-    Width: crate::nodes::types::Int,
-    Height: crate::nodes::types::Int,
-> crate::nodes::TypedNode for CropMask<Mask, X, Y, Width, Height> {
+    MaskParam: crate::nodes::types::Mask,
+    XParam: crate::nodes::types::Int,
+    YParam: crate::nodes::types::Int,
+    WidthParam: crate::nodes::types::Int,
+    HeightParam: crate::nodes::types::Int,
+> crate::nodes::TypedNode
+for CropMask<MaskParam, XParam, YParam, WidthParam, HeightParam> {
     type Output = crate::nodes::types::MaskOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)
@@ -94,14 +101,14 @@ impl<
 ///**FeatherMask**: No description.
 #[derive(Clone)]
 pub struct FeatherMask<
-    Mask: crate::nodes::types::Mask,
-    Left: crate::nodes::types::Int,
-    Top: crate::nodes::types::Int,
-    Right: crate::nodes::types::Int,
-    Bottom: crate::nodes::types::Int,
+    MaskParam: crate::nodes::types::Mask,
+    LeftParam: crate::nodes::types::Int,
+    TopParam: crate::nodes::types::Int,
+    RightParam: crate::nodes::types::Int,
+    BottomParam: crate::nodes::types::Int,
 > {
     ///No documentation.
-    pub mask: Mask,
+    pub mask: MaskParam,
     /**No documentation.
 
 **Metadata**:
@@ -110,7 +117,7 @@ pub struct FeatherMask<
   - Min: 0
   - Step: 1
 */
-    pub left: Left,
+    pub left: LeftParam,
     /**No documentation.
 
 **Metadata**:
@@ -119,7 +126,7 @@ pub struct FeatherMask<
   - Min: 0
   - Step: 1
 */
-    pub top: Top,
+    pub top: TopParam,
     /**No documentation.
 
 **Metadata**:
@@ -128,7 +135,7 @@ pub struct FeatherMask<
   - Min: 0
   - Step: 1
 */
-    pub right: Right,
+    pub right: RightParam,
     /**No documentation.
 
 **Metadata**:
@@ -137,17 +144,23 @@ pub struct FeatherMask<
   - Min: 0
   - Step: 1
 */
-    pub bottom: Bottom,
+    pub bottom: BottomParam,
 }
 impl<
-    Mask: crate::nodes::types::Mask,
-    Left: crate::nodes::types::Int,
-    Top: crate::nodes::types::Int,
-    Right: crate::nodes::types::Int,
-    Bottom: crate::nodes::types::Int,
-> FeatherMask<Mask, Left, Top, Right, Bottom> {
+    MaskParam: crate::nodes::types::Mask,
+    LeftParam: crate::nodes::types::Int,
+    TopParam: crate::nodes::types::Int,
+    RightParam: crate::nodes::types::Int,
+    BottomParam: crate::nodes::types::Int,
+> FeatherMask<MaskParam, LeftParam, TopParam, RightParam, BottomParam> {
     /// Create a new node.
-    pub fn new(mask: Mask, left: Left, top: Top, right: Right, bottom: Bottom) -> Self {
+    pub fn new(
+        mask: MaskParam,
+        left: LeftParam,
+        top: TopParam,
+        right: RightParam,
+        bottom: BottomParam,
+    ) -> Self {
         Self {
             mask,
             left,
@@ -158,12 +171,13 @@ impl<
     }
 }
 impl<
-    Mask: crate::nodes::types::Mask,
-    Left: crate::nodes::types::Int,
-    Top: crate::nodes::types::Int,
-    Right: crate::nodes::types::Int,
-    Bottom: crate::nodes::types::Int,
-> crate::nodes::TypedNode for FeatherMask<Mask, Left, Top, Right, Bottom> {
+    MaskParam: crate::nodes::types::Mask,
+    LeftParam: crate::nodes::types::Int,
+    TopParam: crate::nodes::types::Int,
+    RightParam: crate::nodes::types::Int,
+    BottomParam: crate::nodes::types::Int,
+> crate::nodes::TypedNode
+for FeatherMask<MaskParam, LeftParam, TopParam, RightParam, BottomParam> {
     type Output = crate::nodes::types::MaskOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)
@@ -185,12 +199,12 @@ impl<
 ///**GrowMask**: No description.
 #[derive(Clone)]
 pub struct GrowMask<
-    Mask: crate::nodes::types::Mask,
-    Expand: crate::nodes::types::Int,
-    TaperedCorners: crate::nodes::types::Boolean,
+    MaskParam: crate::nodes::types::Mask,
+    ExpandParam: crate::nodes::types::Int,
+    TaperedCornersParam: crate::nodes::types::Boolean,
 > {
     ///No documentation.
-    pub mask: Mask,
+    pub mask: MaskParam,
     /**No documentation.
 
 **Metadata**:
@@ -199,21 +213,25 @@ pub struct GrowMask<
   - Min: -16384
   - Step: 1
 */
-    pub expand: Expand,
+    pub expand: ExpandParam,
     /**No documentation.
 
 **Metadata**:
   - Default: true
 */
-    pub tapered_corners: TaperedCorners,
+    pub tapered_corners: TaperedCornersParam,
 }
 impl<
-    Mask: crate::nodes::types::Mask,
-    Expand: crate::nodes::types::Int,
-    TaperedCorners: crate::nodes::types::Boolean,
-> GrowMask<Mask, Expand, TaperedCorners> {
+    MaskParam: crate::nodes::types::Mask,
+    ExpandParam: crate::nodes::types::Int,
+    TaperedCornersParam: crate::nodes::types::Boolean,
+> GrowMask<MaskParam, ExpandParam, TaperedCornersParam> {
     /// Create a new node.
-    pub fn new(mask: Mask, expand: Expand, tapered_corners: TaperedCorners) -> Self {
+    pub fn new(
+        mask: MaskParam,
+        expand: ExpandParam,
+        tapered_corners: TaperedCornersParam,
+    ) -> Self {
         Self {
             mask,
             expand,
@@ -222,10 +240,10 @@ impl<
     }
 }
 impl<
-    Mask: crate::nodes::types::Mask,
-    Expand: crate::nodes::types::Int,
-    TaperedCorners: crate::nodes::types::Boolean,
-> crate::nodes::TypedNode for GrowMask<Mask, Expand, TaperedCorners> {
+    MaskParam: crate::nodes::types::Mask,
+    ExpandParam: crate::nodes::types::Int,
+    TaperedCornersParam: crate::nodes::types::Boolean,
+> crate::nodes::TypedNode for GrowMask<MaskParam, ExpandParam, TaperedCornersParam> {
     type Output = crate::nodes::types::MaskOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)
@@ -246,11 +264,11 @@ impl<
 ///**ImageColorToMask**: No description.
 #[derive(Clone)]
 pub struct ImageColorToMask<
-    Image: crate::nodes::types::Image,
-    Color: crate::nodes::types::Int,
+    ImageParam: crate::nodes::types::Image,
+    ColorParam: crate::nodes::types::Int,
 > {
     ///No documentation.
-    pub image: Image,
+    pub image: ImageParam,
     /**No documentation.
 
 **Metadata**:
@@ -260,21 +278,21 @@ pub struct ImageColorToMask<
   - Min: 0
   - Step: 1
 */
-    pub color: Color,
+    pub color: ColorParam,
 }
 impl<
-    Image: crate::nodes::types::Image,
-    Color: crate::nodes::types::Int,
-> ImageColorToMask<Image, Color> {
+    ImageParam: crate::nodes::types::Image,
+    ColorParam: crate::nodes::types::Int,
+> ImageColorToMask<ImageParam, ColorParam> {
     /// Create a new node.
-    pub fn new(image: Image, color: Color) -> Self {
+    pub fn new(image: ImageParam, color: ColorParam) -> Self {
         Self { image, color }
     }
 }
 impl<
-    Image: crate::nodes::types::Image,
-    Color: crate::nodes::types::Int,
-> crate::nodes::TypedNode for ImageColorToMask<Image, Color> {
+    ImageParam: crate::nodes::types::Image,
+    ColorParam: crate::nodes::types::Int,
+> crate::nodes::TypedNode for ImageColorToMask<ImageParam, ColorParam> {
     type Output = crate::nodes::types::MaskOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)
@@ -293,27 +311,27 @@ impl<
 ///**Convert Image to Mask**: No description.
 #[derive(Clone)]
 pub struct ImageToMask<
-    Image: crate::nodes::types::Image,
-    Channel: crate::nodes::types::String,
+    ImageParam: crate::nodes::types::Image,
+    ChannelParam: crate::nodes::types::String,
 > {
     ///No documentation.
-    pub image: Image,
+    pub image: ImageParam,
     ///No documentation.
-    pub channel: Channel,
+    pub channel: ChannelParam,
 }
 impl<
-    Image: crate::nodes::types::Image,
-    Channel: crate::nodes::types::String,
-> ImageToMask<Image, Channel> {
+    ImageParam: crate::nodes::types::Image,
+    ChannelParam: crate::nodes::types::String,
+> ImageToMask<ImageParam, ChannelParam> {
     /// Create a new node.
-    pub fn new(image: Image, channel: Channel) -> Self {
+    pub fn new(image: ImageParam, channel: ChannelParam) -> Self {
         Self { image, channel }
     }
 }
 impl<
-    Image: crate::nodes::types::Image,
-    Channel: crate::nodes::types::String,
-> crate::nodes::TypedNode for ImageToMask<Image, Channel> {
+    ImageParam: crate::nodes::types::Image,
+    ChannelParam: crate::nodes::types::String,
+> crate::nodes::TypedNode for ImageToMask<ImageParam, ChannelParam> {
     type Output = crate::nodes::types::MaskOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)
@@ -331,17 +349,18 @@ impl<
 }
 ///**InvertMask**: No description.
 #[derive(Clone)]
-pub struct InvertMask<Mask: crate::nodes::types::Mask> {
+pub struct InvertMask<MaskParam: crate::nodes::types::Mask> {
     ///No documentation.
-    pub mask: Mask,
+    pub mask: MaskParam,
 }
-impl<Mask: crate::nodes::types::Mask> InvertMask<Mask> {
+impl<MaskParam: crate::nodes::types::Mask> InvertMask<MaskParam> {
     /// Create a new node.
-    pub fn new(mask: Mask) -> Self {
+    pub fn new(mask: MaskParam) -> Self {
         Self { mask }
     }
 }
-impl<Mask: crate::nodes::types::Mask> crate::nodes::TypedNode for InvertMask<Mask> {
+impl<MaskParam: crate::nodes::types::Mask> crate::nodes::TypedNode
+for InvertMask<MaskParam> {
     type Output = crate::nodes::types::MaskOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)
@@ -359,31 +378,31 @@ impl<Mask: crate::nodes::types::Mask> crate::nodes::TypedNode for InvertMask<Mas
 ///**Load Image (as Mask)**: No description.
 #[derive(Clone)]
 pub struct LoadImageMask<
-    Image: crate::nodes::types::String,
-    Channel: crate::nodes::types::String,
+    ImageParam: crate::nodes::types::String,
+    ChannelParam: crate::nodes::types::String,
 > {
     /**No documentation.
 
 **Metadata**:
   - Image upload: true
 */
-    pub image: Image,
+    pub image: ImageParam,
     ///No documentation.
-    pub channel: Channel,
+    pub channel: ChannelParam,
 }
 impl<
-    Image: crate::nodes::types::String,
-    Channel: crate::nodes::types::String,
-> LoadImageMask<Image, Channel> {
+    ImageParam: crate::nodes::types::String,
+    ChannelParam: crate::nodes::types::String,
+> LoadImageMask<ImageParam, ChannelParam> {
     /// Create a new node.
-    pub fn new(image: Image, channel: Channel) -> Self {
+    pub fn new(image: ImageParam, channel: ChannelParam) -> Self {
         Self { image, channel }
     }
 }
 impl<
-    Image: crate::nodes::types::String,
-    Channel: crate::nodes::types::String,
-> crate::nodes::TypedNode for LoadImageMask<Image, Channel> {
+    ImageParam: crate::nodes::types::String,
+    ChannelParam: crate::nodes::types::String,
+> crate::nodes::TypedNode for LoadImageMask<ImageParam, ChannelParam> {
     type Output = crate::nodes::types::MaskOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)
@@ -402,16 +421,16 @@ impl<
 ///**MaskComposite**: No description.
 #[derive(Clone)]
 pub struct MaskComposite<
-    Destination: crate::nodes::types::Mask,
-    Source: crate::nodes::types::Mask,
-    X: crate::nodes::types::Int,
-    Y: crate::nodes::types::Int,
-    Operation: crate::nodes::types::String,
+    DestinationParam: crate::nodes::types::Mask,
+    SourceParam: crate::nodes::types::Mask,
+    XParam: crate::nodes::types::Int,
+    YParam: crate::nodes::types::Int,
+    OperationParam: crate::nodes::types::String,
 > {
     ///No documentation.
-    pub destination: Destination,
+    pub destination: DestinationParam,
     ///No documentation.
-    pub source: Source,
+    pub source: SourceParam,
     /**No documentation.
 
 **Metadata**:
@@ -420,7 +439,7 @@ pub struct MaskComposite<
   - Min: 0
   - Step: 1
 */
-    pub x: X,
+    pub x: XParam,
     /**No documentation.
 
 **Metadata**:
@@ -429,24 +448,24 @@ pub struct MaskComposite<
   - Min: 0
   - Step: 1
 */
-    pub y: Y,
+    pub y: YParam,
     ///No documentation.
-    pub operation: Operation,
+    pub operation: OperationParam,
 }
 impl<
-    Destination: crate::nodes::types::Mask,
-    Source: crate::nodes::types::Mask,
-    X: crate::nodes::types::Int,
-    Y: crate::nodes::types::Int,
-    Operation: crate::nodes::types::String,
-> MaskComposite<Destination, Source, X, Y, Operation> {
+    DestinationParam: crate::nodes::types::Mask,
+    SourceParam: crate::nodes::types::Mask,
+    XParam: crate::nodes::types::Int,
+    YParam: crate::nodes::types::Int,
+    OperationParam: crate::nodes::types::String,
+> MaskComposite<DestinationParam, SourceParam, XParam, YParam, OperationParam> {
     /// Create a new node.
     pub fn new(
-        destination: Destination,
-        source: Source,
-        x: X,
-        y: Y,
-        operation: Operation,
+        destination: DestinationParam,
+        source: SourceParam,
+        x: XParam,
+        y: YParam,
+        operation: OperationParam,
     ) -> Self {
         Self {
             destination,
@@ -458,12 +477,13 @@ impl<
     }
 }
 impl<
-    Destination: crate::nodes::types::Mask,
-    Source: crate::nodes::types::Mask,
-    X: crate::nodes::types::Int,
-    Y: crate::nodes::types::Int,
-    Operation: crate::nodes::types::String,
-> crate::nodes::TypedNode for MaskComposite<Destination, Source, X, Y, Operation> {
+    DestinationParam: crate::nodes::types::Mask,
+    SourceParam: crate::nodes::types::Mask,
+    XParam: crate::nodes::types::Int,
+    YParam: crate::nodes::types::Int,
+    OperationParam: crate::nodes::types::String,
+> crate::nodes::TypedNode
+for MaskComposite<DestinationParam, SourceParam, XParam, YParam, OperationParam> {
     type Output = crate::nodes::types::MaskOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)
@@ -484,17 +504,18 @@ impl<
 }
 ///**Convert Mask to Image**: No description.
 #[derive(Clone)]
-pub struct MaskToImage<Mask: crate::nodes::types::Mask> {
+pub struct MaskToImage<MaskParam: crate::nodes::types::Mask> {
     ///No documentation.
-    pub mask: Mask,
+    pub mask: MaskParam,
 }
-impl<Mask: crate::nodes::types::Mask> MaskToImage<Mask> {
+impl<MaskParam: crate::nodes::types::Mask> MaskToImage<MaskParam> {
     /// Create a new node.
-    pub fn new(mask: Mask) -> Self {
+    pub fn new(mask: MaskParam) -> Self {
         Self { mask }
     }
 }
-impl<Mask: crate::nodes::types::Mask> crate::nodes::TypedNode for MaskToImage<Mask> {
+impl<MaskParam: crate::nodes::types::Mask> crate::nodes::TypedNode
+for MaskToImage<MaskParam> {
     type Output = crate::nodes::types::ImageOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)
@@ -512,9 +533,9 @@ impl<Mask: crate::nodes::types::Mask> crate::nodes::TypedNode for MaskToImage<Ma
 ///**SolidMask**: No description.
 #[derive(Clone)]
 pub struct SolidMask<
-    Value: crate::nodes::types::Float,
-    Width: crate::nodes::types::Int,
-    Height: crate::nodes::types::Int,
+    ValueParam: crate::nodes::types::Float,
+    WidthParam: crate::nodes::types::Int,
+    HeightParam: crate::nodes::types::Int,
 > {
     /**No documentation.
 
@@ -524,7 +545,7 @@ pub struct SolidMask<
   - Min: 0
   - Step: 0.01
 */
-    pub value: Value,
+    pub value: ValueParam,
     /**No documentation.
 
 **Metadata**:
@@ -533,7 +554,7 @@ pub struct SolidMask<
   - Min: 1
   - Step: 1
 */
-    pub width: Width,
+    pub width: WidthParam,
     /**No documentation.
 
 **Metadata**:
@@ -542,23 +563,23 @@ pub struct SolidMask<
   - Min: 1
   - Step: 1
 */
-    pub height: Height,
+    pub height: HeightParam,
 }
 impl<
-    Value: crate::nodes::types::Float,
-    Width: crate::nodes::types::Int,
-    Height: crate::nodes::types::Int,
-> SolidMask<Value, Width, Height> {
+    ValueParam: crate::nodes::types::Float,
+    WidthParam: crate::nodes::types::Int,
+    HeightParam: crate::nodes::types::Int,
+> SolidMask<ValueParam, WidthParam, HeightParam> {
     /// Create a new node.
-    pub fn new(value: Value, width: Width, height: Height) -> Self {
+    pub fn new(value: ValueParam, width: WidthParam, height: HeightParam) -> Self {
         Self { value, width, height }
     }
 }
 impl<
-    Value: crate::nodes::types::Float,
-    Width: crate::nodes::types::Int,
-    Height: crate::nodes::types::Int,
-> crate::nodes::TypedNode for SolidMask<Value, Width, Height> {
+    ValueParam: crate::nodes::types::Float,
+    WidthParam: crate::nodes::types::Int,
+    HeightParam: crate::nodes::types::Int,
+> crate::nodes::TypedNode for SolidMask<ValueParam, WidthParam, HeightParam> {
     type Output = crate::nodes::types::MaskOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)
@@ -578,11 +599,11 @@ impl<
 ///**ThresholdMask**: No description.
 #[derive(Clone)]
 pub struct ThresholdMask<
-    Mask: crate::nodes::types::Mask,
-    Value: crate::nodes::types::Float,
+    MaskParam: crate::nodes::types::Mask,
+    ValueParam: crate::nodes::types::Float,
 > {
     ///No documentation.
-    pub mask: Mask,
+    pub mask: MaskParam,
     /**No documentation.
 
 **Metadata**:
@@ -591,21 +612,21 @@ pub struct ThresholdMask<
   - Min: 0
   - Step: 0.01
 */
-    pub value: Value,
+    pub value: ValueParam,
 }
 impl<
-    Mask: crate::nodes::types::Mask,
-    Value: crate::nodes::types::Float,
-> ThresholdMask<Mask, Value> {
+    MaskParam: crate::nodes::types::Mask,
+    ValueParam: crate::nodes::types::Float,
+> ThresholdMask<MaskParam, ValueParam> {
     /// Create a new node.
-    pub fn new(mask: Mask, value: Value) -> Self {
+    pub fn new(mask: MaskParam, value: ValueParam) -> Self {
         Self { mask, value }
     }
 }
 impl<
-    Mask: crate::nodes::types::Mask,
-    Value: crate::nodes::types::Float,
-> crate::nodes::TypedNode for ThresholdMask<Mask, Value> {
+    MaskParam: crate::nodes::types::Mask,
+    ValueParam: crate::nodes::types::Float,
+> crate::nodes::TypedNode for ThresholdMask<MaskParam, ValueParam> {
     type Output = crate::nodes::types::MaskOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)

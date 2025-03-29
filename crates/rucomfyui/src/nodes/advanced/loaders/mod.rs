@@ -22,32 +22,36 @@ pub mod out {
 #[doc = "**Load CLIP**: [Recipes]\n\nstable_diffusion: clip-l\nstable_cascade: clip-g\nsd3: t5 xxl/ clip-g / clip-l\nstable_audio: t5 base\nmochi: t5 xxl\ncosmos: old t5 xxl\nlumina2: gemma 2 2B\nwan: umt5 xxl"]
 #[derive(Clone)]
 pub struct ClipLoader<
-    ClipName: crate::nodes::types::String,
-    Type: crate::nodes::types::String,
-    Device: crate::nodes::types::String = crate::nodes::types::StringOut,
+    ClipNameParam: crate::nodes::types::String,
+    TypeParam: crate::nodes::types::String,
+    DeviceParam: crate::nodes::types::String = crate::nodes::types::StringOut,
 > {
     ///No documentation.
-    pub clip_name: ClipName,
+    pub clip_name: ClipNameParam,
     ///No documentation.
-    pub type_: Type,
+    pub type_: TypeParam,
     ///No documentation.
-    pub device: Option<Device>,
+    pub device: Option<DeviceParam>,
 }
 impl<
-    ClipName: crate::nodes::types::String,
-    Type: crate::nodes::types::String,
-    Device: crate::nodes::types::String,
-> ClipLoader<ClipName, Type, Device> {
+    ClipNameParam: crate::nodes::types::String,
+    TypeParam: crate::nodes::types::String,
+    DeviceParam: crate::nodes::types::String,
+> ClipLoader<ClipNameParam, TypeParam, DeviceParam> {
     /// Create a new node.
-    pub fn new(clip_name: ClipName, type_: Type, device: Option<Device>) -> Self {
+    pub fn new(
+        clip_name: ClipNameParam,
+        type_: TypeParam,
+        device: Option<DeviceParam>,
+    ) -> Self {
         Self { clip_name, type_, device }
     }
 }
 impl<
-    ClipName: crate::nodes::types::String,
-    Type: crate::nodes::types::String,
-    Device: crate::nodes::types::String,
-> crate::nodes::TypedNode for ClipLoader<ClipName, Type, Device> {
+    ClipNameParam: crate::nodes::types::String,
+    TypeParam: crate::nodes::types::String,
+    DeviceParam: crate::nodes::types::String,
+> crate::nodes::TypedNode for ClipLoader<ClipNameParam, TypeParam, DeviceParam> {
     type Output = crate::nodes::types::ClipOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)
@@ -69,27 +73,27 @@ impl<
 ///**Load Checkpoint With Config (DEPRECATED)**: No description.
 #[derive(Clone)]
 pub struct CheckpointLoader<
-    ConfigName: crate::nodes::types::String,
-    CkptName: crate::nodes::types::String,
+    ConfigNameParam: crate::nodes::types::String,
+    CkptNameParam: crate::nodes::types::String,
 > {
     ///No documentation.
-    pub config_name: ConfigName,
+    pub config_name: ConfigNameParam,
     ///No documentation.
-    pub ckpt_name: CkptName,
+    pub ckpt_name: CkptNameParam,
 }
 impl<
-    ConfigName: crate::nodes::types::String,
-    CkptName: crate::nodes::types::String,
-> CheckpointLoader<ConfigName, CkptName> {
+    ConfigNameParam: crate::nodes::types::String,
+    CkptNameParam: crate::nodes::types::String,
+> CheckpointLoader<ConfigNameParam, CkptNameParam> {
     /// Create a new node.
-    pub fn new(config_name: ConfigName, ckpt_name: CkptName) -> Self {
+    pub fn new(config_name: ConfigNameParam, ckpt_name: CkptNameParam) -> Self {
         Self { config_name, ckpt_name }
     }
 }
 impl<
-    ConfigName: crate::nodes::types::String,
-    CkptName: crate::nodes::types::String,
-> crate::nodes::TypedNode for CheckpointLoader<ConfigName, CkptName> {
+    ConfigNameParam: crate::nodes::types::String,
+    CkptNameParam: crate::nodes::types::String,
+> crate::nodes::TypedNode for CheckpointLoader<ConfigNameParam, CkptNameParam> {
     type Output = out::CheckpointLoaderOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
@@ -112,32 +116,32 @@ impl<
 #[doc = "**DualCLIPLoader**: [Recipes]\n\nsdxl: clip-l, clip-g\nsd3: clip-l, clip-g / clip-l, t5 / clip-g, t5\nflux: clip-l, t5"]
 #[derive(Clone)]
 pub struct DualClipLoader<
-    ClipName1: crate::nodes::types::String,
-    ClipName2: crate::nodes::types::String,
-    Type: crate::nodes::types::String,
-    Device: crate::nodes::types::String = crate::nodes::types::StringOut,
+    ClipName1Param: crate::nodes::types::String,
+    ClipName2Param: crate::nodes::types::String,
+    TypeParam: crate::nodes::types::String,
+    DeviceParam: crate::nodes::types::String = crate::nodes::types::StringOut,
 > {
     ///No documentation.
-    pub clip_name_1: ClipName1,
+    pub clip_name_1: ClipName1Param,
     ///No documentation.
-    pub clip_name_2: ClipName2,
+    pub clip_name_2: ClipName2Param,
     ///No documentation.
-    pub type_: Type,
+    pub type_: TypeParam,
     ///No documentation.
-    pub device: Option<Device>,
+    pub device: Option<DeviceParam>,
 }
 impl<
-    ClipName1: crate::nodes::types::String,
-    ClipName2: crate::nodes::types::String,
-    Type: crate::nodes::types::String,
-    Device: crate::nodes::types::String,
-> DualClipLoader<ClipName1, ClipName2, Type, Device> {
+    ClipName1Param: crate::nodes::types::String,
+    ClipName2Param: crate::nodes::types::String,
+    TypeParam: crate::nodes::types::String,
+    DeviceParam: crate::nodes::types::String,
+> DualClipLoader<ClipName1Param, ClipName2Param, TypeParam, DeviceParam> {
     /// Create a new node.
     pub fn new(
-        clip_name_1: ClipName1,
-        clip_name_2: ClipName2,
-        type_: Type,
-        device: Option<Device>,
+        clip_name_1: ClipName1Param,
+        clip_name_2: ClipName2Param,
+        type_: TypeParam,
+        device: Option<DeviceParam>,
     ) -> Self {
         Self {
             clip_name_1,
@@ -148,11 +152,12 @@ impl<
     }
 }
 impl<
-    ClipName1: crate::nodes::types::String,
-    ClipName2: crate::nodes::types::String,
-    Type: crate::nodes::types::String,
-    Device: crate::nodes::types::String,
-> crate::nodes::TypedNode for DualClipLoader<ClipName1, ClipName2, Type, Device> {
+    ClipName1Param: crate::nodes::types::String,
+    ClipName2Param: crate::nodes::types::String,
+    TypeParam: crate::nodes::types::String,
+    DeviceParam: crate::nodes::types::String,
+> crate::nodes::TypedNode
+for DualClipLoader<ClipName1Param, ClipName2Param, TypeParam, DeviceParam> {
     type Output = crate::nodes::types::ClipOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)
@@ -175,27 +180,27 @@ impl<
 #[doc = "**TripleCLIPLoader**: [Recipes]\n\nsd3: clip-l, clip-g, t5"]
 #[derive(Clone)]
 pub struct TripleClipLoader<
-    ClipName1: crate::nodes::types::String,
-    ClipName2: crate::nodes::types::String,
-    ClipName3: crate::nodes::types::String,
+    ClipName1Param: crate::nodes::types::String,
+    ClipName2Param: crate::nodes::types::String,
+    ClipName3Param: crate::nodes::types::String,
 > {
     ///No documentation.
-    pub clip_name_1: ClipName1,
+    pub clip_name_1: ClipName1Param,
     ///No documentation.
-    pub clip_name_2: ClipName2,
+    pub clip_name_2: ClipName2Param,
     ///No documentation.
-    pub clip_name_3: ClipName3,
+    pub clip_name_3: ClipName3Param,
 }
 impl<
-    ClipName1: crate::nodes::types::String,
-    ClipName2: crate::nodes::types::String,
-    ClipName3: crate::nodes::types::String,
-> TripleClipLoader<ClipName1, ClipName2, ClipName3> {
+    ClipName1Param: crate::nodes::types::String,
+    ClipName2Param: crate::nodes::types::String,
+    ClipName3Param: crate::nodes::types::String,
+> TripleClipLoader<ClipName1Param, ClipName2Param, ClipName3Param> {
     /// Create a new node.
     pub fn new(
-        clip_name_1: ClipName1,
-        clip_name_2: ClipName2,
-        clip_name_3: ClipName3,
+        clip_name_1: ClipName1Param,
+        clip_name_2: ClipName2Param,
+        clip_name_3: ClipName3Param,
     ) -> Self {
         Self {
             clip_name_1,
@@ -205,10 +210,11 @@ impl<
     }
 }
 impl<
-    ClipName1: crate::nodes::types::String,
-    ClipName2: crate::nodes::types::String,
-    ClipName3: crate::nodes::types::String,
-> crate::nodes::TypedNode for TripleClipLoader<ClipName1, ClipName2, ClipName3> {
+    ClipName1Param: crate::nodes::types::String,
+    ClipName2Param: crate::nodes::types::String,
+    ClipName3Param: crate::nodes::types::String,
+> crate::nodes::TypedNode
+for TripleClipLoader<ClipName1Param, ClipName2Param, ClipName3Param> {
     type Output = crate::nodes::types::ClipOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)
@@ -228,27 +234,27 @@ impl<
 ///**Load Diffusion Model**: No description.
 #[derive(Clone)]
 pub struct UnetLoader<
-    UnetName: crate::nodes::types::String,
-    WeightDtype: crate::nodes::types::String,
+    UnetNameParam: crate::nodes::types::String,
+    WeightDtypeParam: crate::nodes::types::String,
 > {
     ///No documentation.
-    pub unet_name: UnetName,
+    pub unet_name: UnetNameParam,
     ///No documentation.
-    pub weight_dtype: WeightDtype,
+    pub weight_dtype: WeightDtypeParam,
 }
 impl<
-    UnetName: crate::nodes::types::String,
-    WeightDtype: crate::nodes::types::String,
-> UnetLoader<UnetName, WeightDtype> {
+    UnetNameParam: crate::nodes::types::String,
+    WeightDtypeParam: crate::nodes::types::String,
+> UnetLoader<UnetNameParam, WeightDtypeParam> {
     /// Create a new node.
-    pub fn new(unet_name: UnetName, weight_dtype: WeightDtype) -> Self {
+    pub fn new(unet_name: UnetNameParam, weight_dtype: WeightDtypeParam) -> Self {
         Self { unet_name, weight_dtype }
     }
 }
 impl<
-    UnetName: crate::nodes::types::String,
-    WeightDtype: crate::nodes::types::String,
-> crate::nodes::TypedNode for UnetLoader<UnetName, WeightDtype> {
+    UnetNameParam: crate::nodes::types::String,
+    WeightDtypeParam: crate::nodes::types::String,
+> crate::nodes::TypedNode for UnetLoader<UnetNameParam, WeightDtypeParam> {
     type Output = crate::nodes::types::ModelOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)

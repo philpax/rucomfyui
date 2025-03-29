@@ -9,27 +9,27 @@ pub mod model_specific;
 ///**CLIPMergeAdd**: No description.
 #[derive(Clone)]
 pub struct ClipMergeAdd<
-    Clip1: crate::nodes::types::Clip,
-    Clip2: crate::nodes::types::Clip,
+    Clip1Param: crate::nodes::types::Clip,
+    Clip2Param: crate::nodes::types::Clip,
 > {
     ///No documentation.
-    pub clip_1: Clip1,
+    pub clip_1: Clip1Param,
     ///No documentation.
-    pub clip_2: Clip2,
+    pub clip_2: Clip2Param,
 }
 impl<
-    Clip1: crate::nodes::types::Clip,
-    Clip2: crate::nodes::types::Clip,
-> ClipMergeAdd<Clip1, Clip2> {
+    Clip1Param: crate::nodes::types::Clip,
+    Clip2Param: crate::nodes::types::Clip,
+> ClipMergeAdd<Clip1Param, Clip2Param> {
     /// Create a new node.
-    pub fn new(clip_1: Clip1, clip_2: Clip2) -> Self {
+    pub fn new(clip_1: Clip1Param, clip_2: Clip2Param) -> Self {
         Self { clip_1, clip_2 }
     }
 }
 impl<
-    Clip1: crate::nodes::types::Clip,
-    Clip2: crate::nodes::types::Clip,
-> crate::nodes::TypedNode for ClipMergeAdd<Clip1, Clip2> {
+    Clip1Param: crate::nodes::types::Clip,
+    Clip2Param: crate::nodes::types::Clip,
+> crate::nodes::TypedNode for ClipMergeAdd<Clip1Param, Clip2Param> {
     type Output = crate::nodes::types::ClipOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)
@@ -48,14 +48,14 @@ impl<
 ///**CLIPMergeSimple**: No description.
 #[derive(Clone)]
 pub struct ClipMergeSimple<
-    Clip1: crate::nodes::types::Clip,
-    Clip2: crate::nodes::types::Clip,
-    Ratio: crate::nodes::types::Float,
+    Clip1Param: crate::nodes::types::Clip,
+    Clip2Param: crate::nodes::types::Clip,
+    RatioParam: crate::nodes::types::Float,
 > {
     ///No documentation.
-    pub clip_1: Clip1,
+    pub clip_1: Clip1Param,
     ///No documentation.
-    pub clip_2: Clip2,
+    pub clip_2: Clip2Param,
     /**No documentation.
 
 **Metadata**:
@@ -64,23 +64,23 @@ pub struct ClipMergeSimple<
   - Min: 0
   - Step: 0.01
 */
-    pub ratio: Ratio,
+    pub ratio: RatioParam,
 }
 impl<
-    Clip1: crate::nodes::types::Clip,
-    Clip2: crate::nodes::types::Clip,
-    Ratio: crate::nodes::types::Float,
-> ClipMergeSimple<Clip1, Clip2, Ratio> {
+    Clip1Param: crate::nodes::types::Clip,
+    Clip2Param: crate::nodes::types::Clip,
+    RatioParam: crate::nodes::types::Float,
+> ClipMergeSimple<Clip1Param, Clip2Param, RatioParam> {
     /// Create a new node.
-    pub fn new(clip_1: Clip1, clip_2: Clip2, ratio: Ratio) -> Self {
+    pub fn new(clip_1: Clip1Param, clip_2: Clip2Param, ratio: RatioParam) -> Self {
         Self { clip_1, clip_2, ratio }
     }
 }
 impl<
-    Clip1: crate::nodes::types::Clip,
-    Clip2: crate::nodes::types::Clip,
-    Ratio: crate::nodes::types::Float,
-> crate::nodes::TypedNode for ClipMergeSimple<Clip1, Clip2, Ratio> {
+    Clip1Param: crate::nodes::types::Clip,
+    Clip2Param: crate::nodes::types::Clip,
+    RatioParam: crate::nodes::types::Float,
+> crate::nodes::TypedNode for ClipMergeSimple<Clip1Param, Clip2Param, RatioParam> {
     type Output = crate::nodes::types::ClipOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)
@@ -100,14 +100,14 @@ impl<
 ///**CLIPMergeSubtract**: No description.
 #[derive(Clone)]
 pub struct ClipMergeSubtract<
-    Clip1: crate::nodes::types::Clip,
-    Clip2: crate::nodes::types::Clip,
-    Multiplier: crate::nodes::types::Float,
+    Clip1Param: crate::nodes::types::Clip,
+    Clip2Param: crate::nodes::types::Clip,
+    MultiplierParam: crate::nodes::types::Float,
 > {
     ///No documentation.
-    pub clip_1: Clip1,
+    pub clip_1: Clip1Param,
     ///No documentation.
-    pub clip_2: Clip2,
+    pub clip_2: Clip2Param,
     /**No documentation.
 
 **Metadata**:
@@ -116,23 +116,28 @@ pub struct ClipMergeSubtract<
   - Min: -10
   - Step: 0.01
 */
-    pub multiplier: Multiplier,
+    pub multiplier: MultiplierParam,
 }
 impl<
-    Clip1: crate::nodes::types::Clip,
-    Clip2: crate::nodes::types::Clip,
-    Multiplier: crate::nodes::types::Float,
-> ClipMergeSubtract<Clip1, Clip2, Multiplier> {
+    Clip1Param: crate::nodes::types::Clip,
+    Clip2Param: crate::nodes::types::Clip,
+    MultiplierParam: crate::nodes::types::Float,
+> ClipMergeSubtract<Clip1Param, Clip2Param, MultiplierParam> {
     /// Create a new node.
-    pub fn new(clip_1: Clip1, clip_2: Clip2, multiplier: Multiplier) -> Self {
+    pub fn new(
+        clip_1: Clip1Param,
+        clip_2: Clip2Param,
+        multiplier: MultiplierParam,
+    ) -> Self {
         Self { clip_1, clip_2, multiplier }
     }
 }
 impl<
-    Clip1: crate::nodes::types::Clip,
-    Clip2: crate::nodes::types::Clip,
-    Multiplier: crate::nodes::types::Float,
-> crate::nodes::TypedNode for ClipMergeSubtract<Clip1, Clip2, Multiplier> {
+    Clip1Param: crate::nodes::types::Clip,
+    Clip2Param: crate::nodes::types::Clip,
+    MultiplierParam: crate::nodes::types::Float,
+> crate::nodes::TypedNode
+for ClipMergeSubtract<Clip1Param, Clip2Param, MultiplierParam> {
     type Output = crate::nodes::types::ClipOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)
@@ -152,31 +157,31 @@ impl<
 ///**CLIPSave**: No description.
 #[derive(Clone)]
 pub struct ClipSave<
-    Clip: crate::nodes::types::Clip,
-    FilenamePrefix: crate::nodes::types::String,
+    ClipParam: crate::nodes::types::Clip,
+    FilenamePrefixParam: crate::nodes::types::String,
 > {
     ///No documentation.
-    pub clip: Clip,
+    pub clip: ClipParam,
     /**No documentation.
 
 **Metadata**:
   - Default: clip/ComfyUI
 */
-    pub filename_prefix: FilenamePrefix,
+    pub filename_prefix: FilenamePrefixParam,
 }
 impl<
-    Clip: crate::nodes::types::Clip,
-    FilenamePrefix: crate::nodes::types::String,
-> ClipSave<Clip, FilenamePrefix> {
+    ClipParam: crate::nodes::types::Clip,
+    FilenamePrefixParam: crate::nodes::types::String,
+> ClipSave<ClipParam, FilenamePrefixParam> {
     /// Create a new node.
-    pub fn new(clip: Clip, filename_prefix: FilenamePrefix) -> Self {
+    pub fn new(clip: ClipParam, filename_prefix: FilenamePrefixParam) -> Self {
         Self { clip, filename_prefix }
     }
 }
 impl<
-    Clip: crate::nodes::types::Clip,
-    FilenamePrefix: crate::nodes::types::String,
-> crate::nodes::TypedNode for ClipSave<Clip, FilenamePrefix> {
+    ClipParam: crate::nodes::types::Clip,
+    FilenamePrefixParam: crate::nodes::types::String,
+> crate::nodes::TypedNode for ClipSave<ClipParam, FilenamePrefixParam> {
     type Output = WorkflowNodeId;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         node_id
@@ -194,42 +199,42 @@ impl<
     const CATEGORY: &'static str = "advanced/model_merging";
 }
 impl<
-    Clip: crate::nodes::types::Clip,
-    FilenamePrefix: crate::nodes::types::String,
-> crate::nodes::TypedOutputNode for ClipSave<Clip, FilenamePrefix> {}
+    ClipParam: crate::nodes::types::Clip,
+    FilenamePrefixParam: crate::nodes::types::String,
+> crate::nodes::TypedOutputNode for ClipSave<ClipParam, FilenamePrefixParam> {}
 ///**Save Checkpoint**: No description.
 #[derive(Clone)]
 pub struct CheckpointSave<
-    Model: crate::nodes::types::Model,
-    Clip: crate::nodes::types::Clip,
-    Vae: crate::nodes::types::Vae,
-    FilenamePrefix: crate::nodes::types::String,
+    ModelParam: crate::nodes::types::Model,
+    ClipParam: crate::nodes::types::Clip,
+    VaeParam: crate::nodes::types::Vae,
+    FilenamePrefixParam: crate::nodes::types::String,
 > {
     ///No documentation.
-    pub model: Model,
+    pub model: ModelParam,
     ///No documentation.
-    pub clip: Clip,
+    pub clip: ClipParam,
     ///No documentation.
-    pub vae: Vae,
+    pub vae: VaeParam,
     /**No documentation.
 
 **Metadata**:
   - Default: checkpoints/ComfyUI
 */
-    pub filename_prefix: FilenamePrefix,
+    pub filename_prefix: FilenamePrefixParam,
 }
 impl<
-    Model: crate::nodes::types::Model,
-    Clip: crate::nodes::types::Clip,
-    Vae: crate::nodes::types::Vae,
-    FilenamePrefix: crate::nodes::types::String,
-> CheckpointSave<Model, Clip, Vae, FilenamePrefix> {
+    ModelParam: crate::nodes::types::Model,
+    ClipParam: crate::nodes::types::Clip,
+    VaeParam: crate::nodes::types::Vae,
+    FilenamePrefixParam: crate::nodes::types::String,
+> CheckpointSave<ModelParam, ClipParam, VaeParam, FilenamePrefixParam> {
     /// Create a new node.
     pub fn new(
-        model: Model,
-        clip: Clip,
-        vae: Vae,
-        filename_prefix: FilenamePrefix,
+        model: ModelParam,
+        clip: ClipParam,
+        vae: VaeParam,
+        filename_prefix: FilenamePrefixParam,
     ) -> Self {
         Self {
             model,
@@ -240,11 +245,12 @@ impl<
     }
 }
 impl<
-    Model: crate::nodes::types::Model,
-    Clip: crate::nodes::types::Clip,
-    Vae: crate::nodes::types::Vae,
-    FilenamePrefix: crate::nodes::types::String,
-> crate::nodes::TypedNode for CheckpointSave<Model, Clip, Vae, FilenamePrefix> {
+    ModelParam: crate::nodes::types::Model,
+    ClipParam: crate::nodes::types::Clip,
+    VaeParam: crate::nodes::types::Vae,
+    FilenamePrefixParam: crate::nodes::types::String,
+> crate::nodes::TypedNode
+for CheckpointSave<ModelParam, ClipParam, VaeParam, FilenamePrefixParam> {
     type Output = WorkflowNodeId;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         node_id
@@ -264,44 +270,45 @@ impl<
     const CATEGORY: &'static str = "advanced/model_merging";
 }
 impl<
-    Model: crate::nodes::types::Model,
-    Clip: crate::nodes::types::Clip,
-    Vae: crate::nodes::types::Vae,
-    FilenamePrefix: crate::nodes::types::String,
-> crate::nodes::TypedOutputNode for CheckpointSave<Model, Clip, Vae, FilenamePrefix> {}
+    ModelParam: crate::nodes::types::Model,
+    ClipParam: crate::nodes::types::Clip,
+    VaeParam: crate::nodes::types::Vae,
+    FilenamePrefixParam: crate::nodes::types::String,
+> crate::nodes::TypedOutputNode
+for CheckpointSave<ModelParam, ClipParam, VaeParam, FilenamePrefixParam> {}
 ///**ImageOnlyCheckpointSave**: No description.
 #[derive(Clone)]
 pub struct ImageOnlyCheckpointSave<
-    Model: crate::nodes::types::Model,
-    ClipVision: crate::nodes::types::ClipVision,
-    Vae: crate::nodes::types::Vae,
-    FilenamePrefix: crate::nodes::types::String,
+    ModelParam: crate::nodes::types::Model,
+    ClipVisionParam: crate::nodes::types::ClipVision,
+    VaeParam: crate::nodes::types::Vae,
+    FilenamePrefixParam: crate::nodes::types::String,
 > {
     ///No documentation.
-    pub model: Model,
+    pub model: ModelParam,
     ///No documentation.
-    pub clip_vision: ClipVision,
+    pub clip_vision: ClipVisionParam,
     ///No documentation.
-    pub vae: Vae,
+    pub vae: VaeParam,
     /**No documentation.
 
 **Metadata**:
   - Default: checkpoints/ComfyUI
 */
-    pub filename_prefix: FilenamePrefix,
+    pub filename_prefix: FilenamePrefixParam,
 }
 impl<
-    Model: crate::nodes::types::Model,
-    ClipVision: crate::nodes::types::ClipVision,
-    Vae: crate::nodes::types::Vae,
-    FilenamePrefix: crate::nodes::types::String,
-> ImageOnlyCheckpointSave<Model, ClipVision, Vae, FilenamePrefix> {
+    ModelParam: crate::nodes::types::Model,
+    ClipVisionParam: crate::nodes::types::ClipVision,
+    VaeParam: crate::nodes::types::Vae,
+    FilenamePrefixParam: crate::nodes::types::String,
+> ImageOnlyCheckpointSave<ModelParam, ClipVisionParam, VaeParam, FilenamePrefixParam> {
     /// Create a new node.
     pub fn new(
-        model: Model,
-        clip_vision: ClipVision,
-        vae: Vae,
-        filename_prefix: FilenamePrefix,
+        model: ModelParam,
+        clip_vision: ClipVisionParam,
+        vae: VaeParam,
+        filename_prefix: FilenamePrefixParam,
     ) -> Self {
         Self {
             model,
@@ -312,12 +319,12 @@ impl<
     }
 }
 impl<
-    Model: crate::nodes::types::Model,
-    ClipVision: crate::nodes::types::ClipVision,
-    Vae: crate::nodes::types::Vae,
-    FilenamePrefix: crate::nodes::types::String,
+    ModelParam: crate::nodes::types::Model,
+    ClipVisionParam: crate::nodes::types::ClipVision,
+    VaeParam: crate::nodes::types::Vae,
+    FilenamePrefixParam: crate::nodes::types::String,
 > crate::nodes::TypedNode
-for ImageOnlyCheckpointSave<Model, ClipVision, Vae, FilenamePrefix> {
+for ImageOnlyCheckpointSave<ModelParam, ClipVisionParam, VaeParam, FilenamePrefixParam> {
     type Output = WorkflowNodeId;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         node_id
@@ -337,36 +344,36 @@ for ImageOnlyCheckpointSave<Model, ClipVision, Vae, FilenamePrefix> {
     const CATEGORY: &'static str = "advanced/model_merging";
 }
 impl<
-    Model: crate::nodes::types::Model,
-    ClipVision: crate::nodes::types::ClipVision,
-    Vae: crate::nodes::types::Vae,
-    FilenamePrefix: crate::nodes::types::String,
+    ModelParam: crate::nodes::types::Model,
+    ClipVisionParam: crate::nodes::types::ClipVision,
+    VaeParam: crate::nodes::types::Vae,
+    FilenamePrefixParam: crate::nodes::types::String,
 > crate::nodes::TypedOutputNode
-for ImageOnlyCheckpointSave<Model, ClipVision, Vae, FilenamePrefix> {}
+for ImageOnlyCheckpointSave<ModelParam, ClipVisionParam, VaeParam, FilenamePrefixParam> {}
 ///**ModelMergeAdd**: No description.
 #[derive(Clone)]
 pub struct ModelMergeAdd<
-    Model1: crate::nodes::types::Model,
-    Model2: crate::nodes::types::Model,
+    Model1Param: crate::nodes::types::Model,
+    Model2Param: crate::nodes::types::Model,
 > {
     ///No documentation.
-    pub model_1: Model1,
+    pub model_1: Model1Param,
     ///No documentation.
-    pub model_2: Model2,
+    pub model_2: Model2Param,
 }
 impl<
-    Model1: crate::nodes::types::Model,
-    Model2: crate::nodes::types::Model,
-> ModelMergeAdd<Model1, Model2> {
+    Model1Param: crate::nodes::types::Model,
+    Model2Param: crate::nodes::types::Model,
+> ModelMergeAdd<Model1Param, Model2Param> {
     /// Create a new node.
-    pub fn new(model_1: Model1, model_2: Model2) -> Self {
+    pub fn new(model_1: Model1Param, model_2: Model2Param) -> Self {
         Self { model_1, model_2 }
     }
 }
 impl<
-    Model1: crate::nodes::types::Model,
-    Model2: crate::nodes::types::Model,
-> crate::nodes::TypedNode for ModelMergeAdd<Model1, Model2> {
+    Model1Param: crate::nodes::types::Model,
+    Model2Param: crate::nodes::types::Model,
+> crate::nodes::TypedNode for ModelMergeAdd<Model1Param, Model2Param> {
     type Output = crate::nodes::types::ModelOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)
@@ -385,16 +392,16 @@ impl<
 ///**ModelMergeBlocks**: No description.
 #[derive(Clone)]
 pub struct ModelMergeBlocks<
-    Model1: crate::nodes::types::Model,
-    Model2: crate::nodes::types::Model,
-    Input: crate::nodes::types::Float,
-    Middle: crate::nodes::types::Float,
-    Out: crate::nodes::types::Float,
+    Model1Param: crate::nodes::types::Model,
+    Model2Param: crate::nodes::types::Model,
+    InputParam: crate::nodes::types::Float,
+    MiddleParam: crate::nodes::types::Float,
+    OutParam: crate::nodes::types::Float,
 > {
     ///No documentation.
-    pub model_1: Model1,
+    pub model_1: Model1Param,
     ///No documentation.
-    pub model_2: Model2,
+    pub model_2: Model2Param,
     /**No documentation.
 
 **Metadata**:
@@ -403,7 +410,7 @@ pub struct ModelMergeBlocks<
   - Min: 0
   - Step: 0.01
 */
-    pub input: Input,
+    pub input: InputParam,
     /**No documentation.
 
 **Metadata**:
@@ -412,7 +419,7 @@ pub struct ModelMergeBlocks<
   - Min: 0
   - Step: 0.01
 */
-    pub middle: Middle,
+    pub middle: MiddleParam,
     /**No documentation.
 
 **Metadata**:
@@ -421,22 +428,22 @@ pub struct ModelMergeBlocks<
   - Min: 0
   - Step: 0.01
 */
-    pub out: Out,
+    pub out: OutParam,
 }
 impl<
-    Model1: crate::nodes::types::Model,
-    Model2: crate::nodes::types::Model,
-    Input: crate::nodes::types::Float,
-    Middle: crate::nodes::types::Float,
-    Out: crate::nodes::types::Float,
-> ModelMergeBlocks<Model1, Model2, Input, Middle, Out> {
+    Model1Param: crate::nodes::types::Model,
+    Model2Param: crate::nodes::types::Model,
+    InputParam: crate::nodes::types::Float,
+    MiddleParam: crate::nodes::types::Float,
+    OutParam: crate::nodes::types::Float,
+> ModelMergeBlocks<Model1Param, Model2Param, InputParam, MiddleParam, OutParam> {
     /// Create a new node.
     pub fn new(
-        model_1: Model1,
-        model_2: Model2,
-        input: Input,
-        middle: Middle,
-        out: Out,
+        model_1: Model1Param,
+        model_2: Model2Param,
+        input: InputParam,
+        middle: MiddleParam,
+        out: OutParam,
     ) -> Self {
         Self {
             model_1,
@@ -448,12 +455,13 @@ impl<
     }
 }
 impl<
-    Model1: crate::nodes::types::Model,
-    Model2: crate::nodes::types::Model,
-    Input: crate::nodes::types::Float,
-    Middle: crate::nodes::types::Float,
-    Out: crate::nodes::types::Float,
-> crate::nodes::TypedNode for ModelMergeBlocks<Model1, Model2, Input, Middle, Out> {
+    Model1Param: crate::nodes::types::Model,
+    Model2Param: crate::nodes::types::Model,
+    InputParam: crate::nodes::types::Float,
+    MiddleParam: crate::nodes::types::Float,
+    OutParam: crate::nodes::types::Float,
+> crate::nodes::TypedNode
+for ModelMergeBlocks<Model1Param, Model2Param, InputParam, MiddleParam, OutParam> {
     type Output = crate::nodes::types::ModelOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)
@@ -475,14 +483,14 @@ impl<
 ///**ModelMergeSimple**: No description.
 #[derive(Clone)]
 pub struct ModelMergeSimple<
-    Model1: crate::nodes::types::Model,
-    Model2: crate::nodes::types::Model,
-    Ratio: crate::nodes::types::Float,
+    Model1Param: crate::nodes::types::Model,
+    Model2Param: crate::nodes::types::Model,
+    RatioParam: crate::nodes::types::Float,
 > {
     ///No documentation.
-    pub model_1: Model1,
+    pub model_1: Model1Param,
     ///No documentation.
-    pub model_2: Model2,
+    pub model_2: Model2Param,
     /**No documentation.
 
 **Metadata**:
@@ -491,23 +499,23 @@ pub struct ModelMergeSimple<
   - Min: 0
   - Step: 0.01
 */
-    pub ratio: Ratio,
+    pub ratio: RatioParam,
 }
 impl<
-    Model1: crate::nodes::types::Model,
-    Model2: crate::nodes::types::Model,
-    Ratio: crate::nodes::types::Float,
-> ModelMergeSimple<Model1, Model2, Ratio> {
+    Model1Param: crate::nodes::types::Model,
+    Model2Param: crate::nodes::types::Model,
+    RatioParam: crate::nodes::types::Float,
+> ModelMergeSimple<Model1Param, Model2Param, RatioParam> {
     /// Create a new node.
-    pub fn new(model_1: Model1, model_2: Model2, ratio: Ratio) -> Self {
+    pub fn new(model_1: Model1Param, model_2: Model2Param, ratio: RatioParam) -> Self {
         Self { model_1, model_2, ratio }
     }
 }
 impl<
-    Model1: crate::nodes::types::Model,
-    Model2: crate::nodes::types::Model,
-    Ratio: crate::nodes::types::Float,
-> crate::nodes::TypedNode for ModelMergeSimple<Model1, Model2, Ratio> {
+    Model1Param: crate::nodes::types::Model,
+    Model2Param: crate::nodes::types::Model,
+    RatioParam: crate::nodes::types::Float,
+> crate::nodes::TypedNode for ModelMergeSimple<Model1Param, Model2Param, RatioParam> {
     type Output = crate::nodes::types::ModelOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)
@@ -527,14 +535,14 @@ impl<
 ///**ModelMergeSubtract**: No description.
 #[derive(Clone)]
 pub struct ModelMergeSubtract<
-    Model1: crate::nodes::types::Model,
-    Model2: crate::nodes::types::Model,
-    Multiplier: crate::nodes::types::Float,
+    Model1Param: crate::nodes::types::Model,
+    Model2Param: crate::nodes::types::Model,
+    MultiplierParam: crate::nodes::types::Float,
 > {
     ///No documentation.
-    pub model_1: Model1,
+    pub model_1: Model1Param,
     ///No documentation.
-    pub model_2: Model2,
+    pub model_2: Model2Param,
     /**No documentation.
 
 **Metadata**:
@@ -543,15 +551,19 @@ pub struct ModelMergeSubtract<
   - Min: -10
   - Step: 0.01
 */
-    pub multiplier: Multiplier,
+    pub multiplier: MultiplierParam,
 }
 impl<
-    Model1: crate::nodes::types::Model,
-    Model2: crate::nodes::types::Model,
-    Multiplier: crate::nodes::types::Float,
-> ModelMergeSubtract<Model1, Model2, Multiplier> {
+    Model1Param: crate::nodes::types::Model,
+    Model2Param: crate::nodes::types::Model,
+    MultiplierParam: crate::nodes::types::Float,
+> ModelMergeSubtract<Model1Param, Model2Param, MultiplierParam> {
     /// Create a new node.
-    pub fn new(model_1: Model1, model_2: Model2, multiplier: Multiplier) -> Self {
+    pub fn new(
+        model_1: Model1Param,
+        model_2: Model2Param,
+        multiplier: MultiplierParam,
+    ) -> Self {
         Self {
             model_1,
             model_2,
@@ -560,10 +572,11 @@ impl<
     }
 }
 impl<
-    Model1: crate::nodes::types::Model,
-    Model2: crate::nodes::types::Model,
-    Multiplier: crate::nodes::types::Float,
-> crate::nodes::TypedNode for ModelMergeSubtract<Model1, Model2, Multiplier> {
+    Model1Param: crate::nodes::types::Model,
+    Model2Param: crate::nodes::types::Model,
+    MultiplierParam: crate::nodes::types::Float,
+> crate::nodes::TypedNode
+for ModelMergeSubtract<Model1Param, Model2Param, MultiplierParam> {
     type Output = crate::nodes::types::ModelOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)
@@ -583,31 +596,31 @@ impl<
 ///**ModelSave**: No description.
 #[derive(Clone)]
 pub struct ModelSave<
-    Model: crate::nodes::types::Model,
-    FilenamePrefix: crate::nodes::types::String,
+    ModelParam: crate::nodes::types::Model,
+    FilenamePrefixParam: crate::nodes::types::String,
 > {
     ///No documentation.
-    pub model: Model,
+    pub model: ModelParam,
     /**No documentation.
 
 **Metadata**:
   - Default: diffusion_models/ComfyUI
 */
-    pub filename_prefix: FilenamePrefix,
+    pub filename_prefix: FilenamePrefixParam,
 }
 impl<
-    Model: crate::nodes::types::Model,
-    FilenamePrefix: crate::nodes::types::String,
-> ModelSave<Model, FilenamePrefix> {
+    ModelParam: crate::nodes::types::Model,
+    FilenamePrefixParam: crate::nodes::types::String,
+> ModelSave<ModelParam, FilenamePrefixParam> {
     /// Create a new node.
-    pub fn new(model: Model, filename_prefix: FilenamePrefix) -> Self {
+    pub fn new(model: ModelParam, filename_prefix: FilenamePrefixParam) -> Self {
         Self { model, filename_prefix }
     }
 }
 impl<
-    Model: crate::nodes::types::Model,
-    FilenamePrefix: crate::nodes::types::String,
-> crate::nodes::TypedNode for ModelSave<Model, FilenamePrefix> {
+    ModelParam: crate::nodes::types::Model,
+    FilenamePrefixParam: crate::nodes::types::String,
+> crate::nodes::TypedNode for ModelSave<ModelParam, FilenamePrefixParam> {
     type Output = WorkflowNodeId;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         node_id
@@ -625,37 +638,37 @@ impl<
     const CATEGORY: &'static str = "advanced/model_merging";
 }
 impl<
-    Model: crate::nodes::types::Model,
-    FilenamePrefix: crate::nodes::types::String,
-> crate::nodes::TypedOutputNode for ModelSave<Model, FilenamePrefix> {}
+    ModelParam: crate::nodes::types::Model,
+    FilenamePrefixParam: crate::nodes::types::String,
+> crate::nodes::TypedOutputNode for ModelSave<ModelParam, FilenamePrefixParam> {}
 ///**VAESave**: No description.
 #[derive(Clone)]
 pub struct VaeSave<
-    Vae: crate::nodes::types::Vae,
-    FilenamePrefix: crate::nodes::types::String,
+    VaeParam: crate::nodes::types::Vae,
+    FilenamePrefixParam: crate::nodes::types::String,
 > {
     ///No documentation.
-    pub vae: Vae,
+    pub vae: VaeParam,
     /**No documentation.
 
 **Metadata**:
   - Default: vae/ComfyUI_vae
 */
-    pub filename_prefix: FilenamePrefix,
+    pub filename_prefix: FilenamePrefixParam,
 }
 impl<
-    Vae: crate::nodes::types::Vae,
-    FilenamePrefix: crate::nodes::types::String,
-> VaeSave<Vae, FilenamePrefix> {
+    VaeParam: crate::nodes::types::Vae,
+    FilenamePrefixParam: crate::nodes::types::String,
+> VaeSave<VaeParam, FilenamePrefixParam> {
     /// Create a new node.
-    pub fn new(vae: Vae, filename_prefix: FilenamePrefix) -> Self {
+    pub fn new(vae: VaeParam, filename_prefix: FilenamePrefixParam) -> Self {
         Self { vae, filename_prefix }
     }
 }
 impl<
-    Vae: crate::nodes::types::Vae,
-    FilenamePrefix: crate::nodes::types::String,
-> crate::nodes::TypedNode for VaeSave<Vae, FilenamePrefix> {
+    VaeParam: crate::nodes::types::Vae,
+    FilenamePrefixParam: crate::nodes::types::String,
+> crate::nodes::TypedNode for VaeSave<VaeParam, FilenamePrefixParam> {
     type Output = WorkflowNodeId;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         node_id
@@ -673,6 +686,6 @@ impl<
     const CATEGORY: &'static str = "advanced/model_merging";
 }
 impl<
-    Vae: crate::nodes::types::Vae,
-    FilenamePrefix: crate::nodes::types::String,
-> crate::nodes::TypedOutputNode for VaeSave<Vae, FilenamePrefix> {}
+    VaeParam: crate::nodes::types::Vae,
+    FilenamePrefixParam: crate::nodes::types::String,
+> crate::nodes::TypedOutputNode for VaeSave<VaeParam, FilenamePrefixParam> {}

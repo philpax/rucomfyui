@@ -8,19 +8,19 @@ use crate::{
 ///**SaveAnimatedPNG**: No description.
 #[derive(Clone)]
 pub struct SaveAnimatedPng<
-    Images: crate::nodes::types::Image,
-    FilenamePrefix: crate::nodes::types::String,
-    Fps: crate::nodes::types::Float,
-    CompressLevel: crate::nodes::types::Int,
+    ImagesParam: crate::nodes::types::Image,
+    FilenamePrefixParam: crate::nodes::types::String,
+    FpsParam: crate::nodes::types::Float,
+    CompressLevelParam: crate::nodes::types::Int,
 > {
     ///No documentation.
-    pub images: Images,
+    pub images: ImagesParam,
     /**No documentation.
 
 **Metadata**:
   - Default: ComfyUI
 */
-    pub filename_prefix: FilenamePrefix,
+    pub filename_prefix: FilenamePrefixParam,
     /**No documentation.
 
 **Metadata**:
@@ -29,7 +29,7 @@ pub struct SaveAnimatedPng<
   - Min: 0.01
   - Step: 0.01
 */
-    pub fps: Fps,
+    pub fps: FpsParam,
     /**No documentation.
 
 **Metadata**:
@@ -37,20 +37,20 @@ pub struct SaveAnimatedPng<
   - Max: 9
   - Min: 0
 */
-    pub compress_level: CompressLevel,
+    pub compress_level: CompressLevelParam,
 }
 impl<
-    Images: crate::nodes::types::Image,
-    FilenamePrefix: crate::nodes::types::String,
-    Fps: crate::nodes::types::Float,
-    CompressLevel: crate::nodes::types::Int,
-> SaveAnimatedPng<Images, FilenamePrefix, Fps, CompressLevel> {
+    ImagesParam: crate::nodes::types::Image,
+    FilenamePrefixParam: crate::nodes::types::String,
+    FpsParam: crate::nodes::types::Float,
+    CompressLevelParam: crate::nodes::types::Int,
+> SaveAnimatedPng<ImagesParam, FilenamePrefixParam, FpsParam, CompressLevelParam> {
     /// Create a new node.
     pub fn new(
-        images: Images,
-        filename_prefix: FilenamePrefix,
-        fps: Fps,
-        compress_level: CompressLevel,
+        images: ImagesParam,
+        filename_prefix: FilenamePrefixParam,
+        fps: FpsParam,
+        compress_level: CompressLevelParam,
     ) -> Self {
         Self {
             images,
@@ -61,12 +61,12 @@ impl<
     }
 }
 impl<
-    Images: crate::nodes::types::Image,
-    FilenamePrefix: crate::nodes::types::String,
-    Fps: crate::nodes::types::Float,
-    CompressLevel: crate::nodes::types::Int,
+    ImagesParam: crate::nodes::types::Image,
+    FilenamePrefixParam: crate::nodes::types::String,
+    FpsParam: crate::nodes::types::Float,
+    CompressLevelParam: crate::nodes::types::Int,
 > crate::nodes::TypedNode
-for SaveAnimatedPng<Images, FilenamePrefix, Fps, CompressLevel> {
+for SaveAnimatedPng<ImagesParam, FilenamePrefixParam, FpsParam, CompressLevelParam> {
     type Output = WorkflowNodeId;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         node_id
@@ -86,30 +86,30 @@ for SaveAnimatedPng<Images, FilenamePrefix, Fps, CompressLevel> {
     const CATEGORY: &'static str = "image/animation";
 }
 impl<
-    Images: crate::nodes::types::Image,
-    FilenamePrefix: crate::nodes::types::String,
-    Fps: crate::nodes::types::Float,
-    CompressLevel: crate::nodes::types::Int,
+    ImagesParam: crate::nodes::types::Image,
+    FilenamePrefixParam: crate::nodes::types::String,
+    FpsParam: crate::nodes::types::Float,
+    CompressLevelParam: crate::nodes::types::Int,
 > crate::nodes::TypedOutputNode
-for SaveAnimatedPng<Images, FilenamePrefix, Fps, CompressLevel> {}
+for SaveAnimatedPng<ImagesParam, FilenamePrefixParam, FpsParam, CompressLevelParam> {}
 ///**SaveAnimatedWEBP**: No description.
 #[derive(Clone)]
 pub struct SaveAnimatedWebp<
-    Images: crate::nodes::types::Image,
-    FilenamePrefix: crate::nodes::types::String,
-    Fps: crate::nodes::types::Float,
-    Lossless: crate::nodes::types::Boolean,
-    Quality: crate::nodes::types::Int,
-    Method: crate::nodes::types::String,
+    ImagesParam: crate::nodes::types::Image,
+    FilenamePrefixParam: crate::nodes::types::String,
+    FpsParam: crate::nodes::types::Float,
+    LosslessParam: crate::nodes::types::Boolean,
+    QualityParam: crate::nodes::types::Int,
+    MethodParam: crate::nodes::types::String,
 > {
     ///No documentation.
-    pub images: Images,
+    pub images: ImagesParam,
     /**No documentation.
 
 **Metadata**:
   - Default: ComfyUI
 */
-    pub filename_prefix: FilenamePrefix,
+    pub filename_prefix: FilenamePrefixParam,
     /**No documentation.
 
 **Metadata**:
@@ -118,13 +118,13 @@ pub struct SaveAnimatedWebp<
   - Min: 0.01
   - Step: 0.01
 */
-    pub fps: Fps,
+    pub fps: FpsParam,
     /**No documentation.
 
 **Metadata**:
   - Default: true
 */
-    pub lossless: Lossless,
+    pub lossless: LosslessParam,
     /**No documentation.
 
 **Metadata**:
@@ -132,26 +132,33 @@ pub struct SaveAnimatedWebp<
   - Max: 100
   - Min: 0
 */
-    pub quality: Quality,
+    pub quality: QualityParam,
     ///No documentation.
-    pub method: Method,
+    pub method: MethodParam,
 }
 impl<
-    Images: crate::nodes::types::Image,
-    FilenamePrefix: crate::nodes::types::String,
-    Fps: crate::nodes::types::Float,
-    Lossless: crate::nodes::types::Boolean,
-    Quality: crate::nodes::types::Int,
-    Method: crate::nodes::types::String,
-> SaveAnimatedWebp<Images, FilenamePrefix, Fps, Lossless, Quality, Method> {
+    ImagesParam: crate::nodes::types::Image,
+    FilenamePrefixParam: crate::nodes::types::String,
+    FpsParam: crate::nodes::types::Float,
+    LosslessParam: crate::nodes::types::Boolean,
+    QualityParam: crate::nodes::types::Int,
+    MethodParam: crate::nodes::types::String,
+> SaveAnimatedWebp<
+    ImagesParam,
+    FilenamePrefixParam,
+    FpsParam,
+    LosslessParam,
+    QualityParam,
+    MethodParam,
+> {
     /// Create a new node.
     pub fn new(
-        images: Images,
-        filename_prefix: FilenamePrefix,
-        fps: Fps,
-        lossless: Lossless,
-        quality: Quality,
-        method: Method,
+        images: ImagesParam,
+        filename_prefix: FilenamePrefixParam,
+        fps: FpsParam,
+        lossless: LosslessParam,
+        quality: QualityParam,
+        method: MethodParam,
     ) -> Self {
         Self {
             images,
@@ -164,14 +171,21 @@ impl<
     }
 }
 impl<
-    Images: crate::nodes::types::Image,
-    FilenamePrefix: crate::nodes::types::String,
-    Fps: crate::nodes::types::Float,
-    Lossless: crate::nodes::types::Boolean,
-    Quality: crate::nodes::types::Int,
-    Method: crate::nodes::types::String,
+    ImagesParam: crate::nodes::types::Image,
+    FilenamePrefixParam: crate::nodes::types::String,
+    FpsParam: crate::nodes::types::Float,
+    LosslessParam: crate::nodes::types::Boolean,
+    QualityParam: crate::nodes::types::Int,
+    MethodParam: crate::nodes::types::String,
 > crate::nodes::TypedNode
-for SaveAnimatedWebp<Images, FilenamePrefix, Fps, Lossless, Quality, Method> {
+for SaveAnimatedWebp<
+    ImagesParam,
+    FilenamePrefixParam,
+    FpsParam,
+    LosslessParam,
+    QualityParam,
+    MethodParam,
+> {
     type Output = WorkflowNodeId;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         node_id
@@ -193,11 +207,18 @@ for SaveAnimatedWebp<Images, FilenamePrefix, Fps, Lossless, Quality, Method> {
     const CATEGORY: &'static str = "image/animation";
 }
 impl<
-    Images: crate::nodes::types::Image,
-    FilenamePrefix: crate::nodes::types::String,
-    Fps: crate::nodes::types::Float,
-    Lossless: crate::nodes::types::Boolean,
-    Quality: crate::nodes::types::Int,
-    Method: crate::nodes::types::String,
+    ImagesParam: crate::nodes::types::Image,
+    FilenamePrefixParam: crate::nodes::types::String,
+    FpsParam: crate::nodes::types::Float,
+    LosslessParam: crate::nodes::types::Boolean,
+    QualityParam: crate::nodes::types::Int,
+    MethodParam: crate::nodes::types::String,
 > crate::nodes::TypedOutputNode
-for SaveAnimatedWebp<Images, FilenamePrefix, Fps, Lossless, Quality, Method> {}
+for SaveAnimatedWebp<
+    ImagesParam,
+    FilenamePrefixParam,
+    FpsParam,
+    LosslessParam,
+    QualityParam,
+    MethodParam,
+> {}

@@ -8,14 +8,14 @@ use crate::{
 ///**Image Crop**: No description.
 #[derive(Clone)]
 pub struct ImageCrop<
-    Image: crate::nodes::types::Image,
-    Width: crate::nodes::types::Int,
-    Height: crate::nodes::types::Int,
-    X: crate::nodes::types::Int,
-    Y: crate::nodes::types::Int,
+    ImageParam: crate::nodes::types::Image,
+    WidthParam: crate::nodes::types::Int,
+    HeightParam: crate::nodes::types::Int,
+    XParam: crate::nodes::types::Int,
+    YParam: crate::nodes::types::Int,
 > {
     ///No documentation.
-    pub image: Image,
+    pub image: ImageParam,
     /**No documentation.
 
 **Metadata**:
@@ -24,7 +24,7 @@ pub struct ImageCrop<
   - Min: 1
   - Step: 1
 */
-    pub width: Width,
+    pub width: WidthParam,
     /**No documentation.
 
 **Metadata**:
@@ -33,7 +33,7 @@ pub struct ImageCrop<
   - Min: 1
   - Step: 1
 */
-    pub height: Height,
+    pub height: HeightParam,
     /**No documentation.
 
 **Metadata**:
@@ -42,7 +42,7 @@ pub struct ImageCrop<
   - Min: 0
   - Step: 1
 */
-    pub x: X,
+    pub x: XParam,
     /**No documentation.
 
 **Metadata**:
@@ -51,27 +51,34 @@ pub struct ImageCrop<
   - Min: 0
   - Step: 1
 */
-    pub y: Y,
+    pub y: YParam,
 }
 impl<
-    Image: crate::nodes::types::Image,
-    Width: crate::nodes::types::Int,
-    Height: crate::nodes::types::Int,
-    X: crate::nodes::types::Int,
-    Y: crate::nodes::types::Int,
-> ImageCrop<Image, Width, Height, X, Y> {
+    ImageParam: crate::nodes::types::Image,
+    WidthParam: crate::nodes::types::Int,
+    HeightParam: crate::nodes::types::Int,
+    XParam: crate::nodes::types::Int,
+    YParam: crate::nodes::types::Int,
+> ImageCrop<ImageParam, WidthParam, HeightParam, XParam, YParam> {
     /// Create a new node.
-    pub fn new(image: Image, width: Width, height: Height, x: X, y: Y) -> Self {
+    pub fn new(
+        image: ImageParam,
+        width: WidthParam,
+        height: HeightParam,
+        x: XParam,
+        y: YParam,
+    ) -> Self {
         Self { image, width, height, x, y }
     }
 }
 impl<
-    Image: crate::nodes::types::Image,
-    Width: crate::nodes::types::Int,
-    Height: crate::nodes::types::Int,
-    X: crate::nodes::types::Int,
-    Y: crate::nodes::types::Int,
-> crate::nodes::TypedNode for ImageCrop<Image, Width, Height, X, Y> {
+    ImageParam: crate::nodes::types::Image,
+    WidthParam: crate::nodes::types::Int,
+    HeightParam: crate::nodes::types::Int,
+    XParam: crate::nodes::types::Int,
+    YParam: crate::nodes::types::Int,
+> crate::nodes::TypedNode
+for ImageCrop<ImageParam, WidthParam, HeightParam, XParam, YParam> {
     type Output = crate::nodes::types::ImageOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)

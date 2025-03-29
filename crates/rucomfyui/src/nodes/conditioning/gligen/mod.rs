@@ -8,28 +8,28 @@ use crate::{
 ///**GLIGENTextBoxApply**: No description.
 #[derive(Clone)]
 pub struct GligenTextBoxApply<
-    ConditioningTo: crate::nodes::types::Conditioning,
-    Clip: crate::nodes::types::Clip,
-    GligenTextboxModel: crate::nodes::types::Gligen,
-    Text: crate::nodes::types::String,
-    Width: crate::nodes::types::Int,
-    Height: crate::nodes::types::Int,
-    X: crate::nodes::types::Int,
-    Y: crate::nodes::types::Int,
+    ConditioningToParam: crate::nodes::types::Conditioning,
+    ClipParam: crate::nodes::types::Clip,
+    GligenTextboxModelParam: crate::nodes::types::Gligen,
+    TextParam: crate::nodes::types::String,
+    WidthParam: crate::nodes::types::Int,
+    HeightParam: crate::nodes::types::Int,
+    XParam: crate::nodes::types::Int,
+    YParam: crate::nodes::types::Int,
 > {
     ///No documentation.
-    pub conditioning_to: ConditioningTo,
+    pub conditioning_to: ConditioningToParam,
     ///No documentation.
-    pub clip: Clip,
+    pub clip: ClipParam,
     ///No documentation.
-    pub gligen_textbox_model: GligenTextboxModel,
+    pub gligen_textbox_model: GligenTextboxModelParam,
     /**No documentation.
 
 **Metadata**:
   - Dynamic prompts: true
   - Multiline: true
 */
-    pub text: Text,
+    pub text: TextParam,
     /**No documentation.
 
 **Metadata**:
@@ -38,7 +38,7 @@ pub struct GligenTextBoxApply<
   - Min: 8
   - Step: 8
 */
-    pub width: Width,
+    pub width: WidthParam,
     /**No documentation.
 
 **Metadata**:
@@ -47,7 +47,7 @@ pub struct GligenTextBoxApply<
   - Min: 8
   - Step: 8
 */
-    pub height: Height,
+    pub height: HeightParam,
     /**No documentation.
 
 **Metadata**:
@@ -56,7 +56,7 @@ pub struct GligenTextBoxApply<
   - Min: 0
   - Step: 8
 */
-    pub x: X,
+    pub x: XParam,
     /**No documentation.
 
 **Metadata**:
@@ -65,37 +65,37 @@ pub struct GligenTextBoxApply<
   - Min: 0
   - Step: 8
 */
-    pub y: Y,
+    pub y: YParam,
 }
 impl<
-    ConditioningTo: crate::nodes::types::Conditioning,
-    Clip: crate::nodes::types::Clip,
-    GligenTextboxModel: crate::nodes::types::Gligen,
-    Text: crate::nodes::types::String,
-    Width: crate::nodes::types::Int,
-    Height: crate::nodes::types::Int,
-    X: crate::nodes::types::Int,
-    Y: crate::nodes::types::Int,
+    ConditioningToParam: crate::nodes::types::Conditioning,
+    ClipParam: crate::nodes::types::Clip,
+    GligenTextboxModelParam: crate::nodes::types::Gligen,
+    TextParam: crate::nodes::types::String,
+    WidthParam: crate::nodes::types::Int,
+    HeightParam: crate::nodes::types::Int,
+    XParam: crate::nodes::types::Int,
+    YParam: crate::nodes::types::Int,
 > GligenTextBoxApply<
-    ConditioningTo,
-    Clip,
-    GligenTextboxModel,
-    Text,
-    Width,
-    Height,
-    X,
-    Y,
+    ConditioningToParam,
+    ClipParam,
+    GligenTextboxModelParam,
+    TextParam,
+    WidthParam,
+    HeightParam,
+    XParam,
+    YParam,
 > {
     /// Create a new node.
     pub fn new(
-        conditioning_to: ConditioningTo,
-        clip: Clip,
-        gligen_textbox_model: GligenTextboxModel,
-        text: Text,
-        width: Width,
-        height: Height,
-        x: X,
-        y: Y,
+        conditioning_to: ConditioningToParam,
+        clip: ClipParam,
+        gligen_textbox_model: GligenTextboxModelParam,
+        text: TextParam,
+        width: WidthParam,
+        height: HeightParam,
+        x: XParam,
+        y: YParam,
     ) -> Self {
         Self {
             conditioning_to,
@@ -110,24 +110,24 @@ impl<
     }
 }
 impl<
-    ConditioningTo: crate::nodes::types::Conditioning,
-    Clip: crate::nodes::types::Clip,
-    GligenTextboxModel: crate::nodes::types::Gligen,
-    Text: crate::nodes::types::String,
-    Width: crate::nodes::types::Int,
-    Height: crate::nodes::types::Int,
-    X: crate::nodes::types::Int,
-    Y: crate::nodes::types::Int,
+    ConditioningToParam: crate::nodes::types::Conditioning,
+    ClipParam: crate::nodes::types::Clip,
+    GligenTextboxModelParam: crate::nodes::types::Gligen,
+    TextParam: crate::nodes::types::String,
+    WidthParam: crate::nodes::types::Int,
+    HeightParam: crate::nodes::types::Int,
+    XParam: crate::nodes::types::Int,
+    YParam: crate::nodes::types::Int,
 > crate::nodes::TypedNode
 for GligenTextBoxApply<
-    ConditioningTo,
-    Clip,
-    GligenTextboxModel,
-    Text,
-    Width,
-    Height,
-    X,
-    Y,
+    ConditioningToParam,
+    ClipParam,
+    GligenTextboxModelParam,
+    TextParam,
+    WidthParam,
+    HeightParam,
+    XParam,
+    YParam,
 > {
     type Output = crate::nodes::types::ConditioningOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {

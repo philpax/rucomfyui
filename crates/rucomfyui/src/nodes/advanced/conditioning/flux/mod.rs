@@ -8,27 +8,27 @@ use crate::{
 ///**CLIPTextEncodeFlux**: No description.
 #[derive(Clone)]
 pub struct ClipTextEncodeFlux<
-    Clip: crate::nodes::types::Clip,
-    ClipL: crate::nodes::types::String,
-    T5Xxl: crate::nodes::types::String,
-    Guidance: crate::nodes::types::Float,
+    ClipParam: crate::nodes::types::Clip,
+    ClipLParam: crate::nodes::types::String,
+    T5XxlParam: crate::nodes::types::String,
+    GuidanceParam: crate::nodes::types::Float,
 > {
     ///No documentation.
-    pub clip: Clip,
+    pub clip: ClipParam,
     /**No documentation.
 
 **Metadata**:
   - Dynamic prompts: true
   - Multiline: true
 */
-    pub clip_l: ClipL,
+    pub clip_l: ClipLParam,
     /**No documentation.
 
 **Metadata**:
   - Dynamic prompts: true
   - Multiline: true
 */
-    pub t_5_xxl: T5Xxl,
+    pub t_5_xxl: T5XxlParam,
     /**No documentation.
 
 **Metadata**:
@@ -37,16 +37,21 @@ pub struct ClipTextEncodeFlux<
   - Min: 0
   - Step: 0.1
 */
-    pub guidance: Guidance,
+    pub guidance: GuidanceParam,
 }
 impl<
-    Clip: crate::nodes::types::Clip,
-    ClipL: crate::nodes::types::String,
-    T5Xxl: crate::nodes::types::String,
-    Guidance: crate::nodes::types::Float,
-> ClipTextEncodeFlux<Clip, ClipL, T5Xxl, Guidance> {
+    ClipParam: crate::nodes::types::Clip,
+    ClipLParam: crate::nodes::types::String,
+    T5XxlParam: crate::nodes::types::String,
+    GuidanceParam: crate::nodes::types::Float,
+> ClipTextEncodeFlux<ClipParam, ClipLParam, T5XxlParam, GuidanceParam> {
     /// Create a new node.
-    pub fn new(clip: Clip, clip_l: ClipL, t_5_xxl: T5Xxl, guidance: Guidance) -> Self {
+    pub fn new(
+        clip: ClipParam,
+        clip_l: ClipLParam,
+        t_5_xxl: T5XxlParam,
+        guidance: GuidanceParam,
+    ) -> Self {
         Self {
             clip,
             clip_l,
@@ -56,11 +61,12 @@ impl<
     }
 }
 impl<
-    Clip: crate::nodes::types::Clip,
-    ClipL: crate::nodes::types::String,
-    T5Xxl: crate::nodes::types::String,
-    Guidance: crate::nodes::types::Float,
-> crate::nodes::TypedNode for ClipTextEncodeFlux<Clip, ClipL, T5Xxl, Guidance> {
+    ClipParam: crate::nodes::types::Clip,
+    ClipLParam: crate::nodes::types::String,
+    T5XxlParam: crate::nodes::types::String,
+    GuidanceParam: crate::nodes::types::Float,
+> crate::nodes::TypedNode
+for ClipTextEncodeFlux<ClipParam, ClipLParam, T5XxlParam, GuidanceParam> {
     type Output = crate::nodes::types::ConditioningOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)
@@ -80,18 +86,20 @@ impl<
 }
 ///**FluxDisableGuidance**: This node completely disables the guidance embed on Flux and Flux like models
 #[derive(Clone)]
-pub struct FluxDisableGuidance<Conditioning: crate::nodes::types::Conditioning> {
+pub struct FluxDisableGuidance<ConditioningParam: crate::nodes::types::Conditioning> {
     ///No documentation.
-    pub conditioning: Conditioning,
+    pub conditioning: ConditioningParam,
 }
-impl<Conditioning: crate::nodes::types::Conditioning> FluxDisableGuidance<Conditioning> {
+impl<
+    ConditioningParam: crate::nodes::types::Conditioning,
+> FluxDisableGuidance<ConditioningParam> {
     /// Create a new node.
-    pub fn new(conditioning: Conditioning) -> Self {
+    pub fn new(conditioning: ConditioningParam) -> Self {
         Self { conditioning }
     }
 }
-impl<Conditioning: crate::nodes::types::Conditioning> crate::nodes::TypedNode
-for FluxDisableGuidance<Conditioning> {
+impl<ConditioningParam: crate::nodes::types::Conditioning> crate::nodes::TypedNode
+for FluxDisableGuidance<ConditioningParam> {
     type Output = crate::nodes::types::ConditioningOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)
@@ -109,11 +117,11 @@ for FluxDisableGuidance<Conditioning> {
 ///**FluxGuidance**: No description.
 #[derive(Clone)]
 pub struct FluxGuidance<
-    Conditioning: crate::nodes::types::Conditioning,
-    Guidance: crate::nodes::types::Float,
+    ConditioningParam: crate::nodes::types::Conditioning,
+    GuidanceParam: crate::nodes::types::Float,
 > {
     ///No documentation.
-    pub conditioning: Conditioning,
+    pub conditioning: ConditioningParam,
     /**No documentation.
 
 **Metadata**:
@@ -122,21 +130,21 @@ pub struct FluxGuidance<
   - Min: 0
   - Step: 0.1
 */
-    pub guidance: Guidance,
+    pub guidance: GuidanceParam,
 }
 impl<
-    Conditioning: crate::nodes::types::Conditioning,
-    Guidance: crate::nodes::types::Float,
-> FluxGuidance<Conditioning, Guidance> {
+    ConditioningParam: crate::nodes::types::Conditioning,
+    GuidanceParam: crate::nodes::types::Float,
+> FluxGuidance<ConditioningParam, GuidanceParam> {
     /// Create a new node.
-    pub fn new(conditioning: Conditioning, guidance: Guidance) -> Self {
+    pub fn new(conditioning: ConditioningParam, guidance: GuidanceParam) -> Self {
         Self { conditioning, guidance }
     }
 }
 impl<
-    Conditioning: crate::nodes::types::Conditioning,
-    Guidance: crate::nodes::types::Float,
-> crate::nodes::TypedNode for FluxGuidance<Conditioning, Guidance> {
+    ConditioningParam: crate::nodes::types::Conditioning,
+    GuidanceParam: crate::nodes::types::Float,
+> crate::nodes::TypedNode for FluxGuidance<ConditioningParam, GuidanceParam> {
     type Output = crate::nodes::types::ConditioningOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)

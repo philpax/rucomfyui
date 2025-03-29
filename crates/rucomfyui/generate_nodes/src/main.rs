@@ -361,8 +361,8 @@ fn node_processed_inputs(node: &Object) -> Result<Vec<ProcessedInput>> {
                 meta_typed,
                 tooltip: input.tooltip(),
                 ty: ty.clone(),
-                generic_name: util::name_to_ident(name, true).ok()?,
-                generic_ty: util::name_to_ident(&format!("{:?}", ty), true).ok()?,
+                generic_name: util::name_to_ident(&format!("{name}Param"), true).ok()?,
+                generic_ty: util::name_to_ident(&format!("{ty:?}"), true).ok()?,
                 optional: !required,
             })
         })

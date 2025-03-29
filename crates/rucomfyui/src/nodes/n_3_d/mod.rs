@@ -37,12 +37,12 @@ pub mod out {
 ///**Load 3D**: No description.
 #[derive(Clone)]
 pub struct Load3D<
-    ModelFile: crate::nodes::types::String,
-    Width: crate::nodes::types::Int,
-    Height: crate::nodes::types::Int,
+    ModelFileParam: crate::nodes::types::String,
+    WidthParam: crate::nodes::types::Int,
+    HeightParam: crate::nodes::types::Int,
 > {
     ///No documentation.
-    pub model_file: ModelFile,
+    pub model_file: ModelFileParam,
     /**No documentation.
 
 **Metadata**:
@@ -51,7 +51,7 @@ pub struct Load3D<
   - Min: 1
   - Step: 1
 */
-    pub width: Width,
+    pub width: WidthParam,
     /**No documentation.
 
 **Metadata**:
@@ -60,23 +60,27 @@ pub struct Load3D<
   - Min: 1
   - Step: 1
 */
-    pub height: Height,
+    pub height: HeightParam,
 }
 impl<
-    ModelFile: crate::nodes::types::String,
-    Width: crate::nodes::types::Int,
-    Height: crate::nodes::types::Int,
-> Load3D<ModelFile, Width, Height> {
+    ModelFileParam: crate::nodes::types::String,
+    WidthParam: crate::nodes::types::Int,
+    HeightParam: crate::nodes::types::Int,
+> Load3D<ModelFileParam, WidthParam, HeightParam> {
     /// Create a new node.
-    pub fn new(model_file: ModelFile, width: Width, height: Height) -> Self {
+    pub fn new(
+        model_file: ModelFileParam,
+        width: WidthParam,
+        height: HeightParam,
+    ) -> Self {
         Self { model_file, width, height }
     }
 }
 impl<
-    ModelFile: crate::nodes::types::String,
-    Width: crate::nodes::types::Int,
-    Height: crate::nodes::types::Int,
-> crate::nodes::TypedNode for Load3D<ModelFile, Width, Height> {
+    ModelFileParam: crate::nodes::types::String,
+    WidthParam: crate::nodes::types::Int,
+    HeightParam: crate::nodes::types::Int,
+> crate::nodes::TypedNode for Load3D<ModelFileParam, WidthParam, HeightParam> {
     type Output = out::Load3DOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
@@ -102,12 +106,12 @@ impl<
 ///**Load 3D - Animation**: No description.
 #[derive(Clone)]
 pub struct Load3DAnimation<
-    ModelFile: crate::nodes::types::String,
-    Width: crate::nodes::types::Int,
-    Height: crate::nodes::types::Int,
+    ModelFileParam: crate::nodes::types::String,
+    WidthParam: crate::nodes::types::Int,
+    HeightParam: crate::nodes::types::Int,
 > {
     ///No documentation.
-    pub model_file: ModelFile,
+    pub model_file: ModelFileParam,
     /**No documentation.
 
 **Metadata**:
@@ -116,7 +120,7 @@ pub struct Load3DAnimation<
   - Min: 1
   - Step: 1
 */
-    pub width: Width,
+    pub width: WidthParam,
     /**No documentation.
 
 **Metadata**:
@@ -125,23 +129,27 @@ pub struct Load3DAnimation<
   - Min: 1
   - Step: 1
 */
-    pub height: Height,
+    pub height: HeightParam,
 }
 impl<
-    ModelFile: crate::nodes::types::String,
-    Width: crate::nodes::types::Int,
-    Height: crate::nodes::types::Int,
-> Load3DAnimation<ModelFile, Width, Height> {
+    ModelFileParam: crate::nodes::types::String,
+    WidthParam: crate::nodes::types::Int,
+    HeightParam: crate::nodes::types::Int,
+> Load3DAnimation<ModelFileParam, WidthParam, HeightParam> {
     /// Create a new node.
-    pub fn new(model_file: ModelFile, width: Width, height: Height) -> Self {
+    pub fn new(
+        model_file: ModelFileParam,
+        width: WidthParam,
+        height: HeightParam,
+    ) -> Self {
         Self { model_file, width, height }
     }
 }
 impl<
-    ModelFile: crate::nodes::types::String,
-    Width: crate::nodes::types::Int,
-    Height: crate::nodes::types::Int,
-> crate::nodes::TypedNode for Load3DAnimation<ModelFile, Width, Height> {
+    ModelFileParam: crate::nodes::types::String,
+    WidthParam: crate::nodes::types::Int,
+    HeightParam: crate::nodes::types::Int,
+> crate::nodes::TypedNode for Load3DAnimation<ModelFileParam, WidthParam, HeightParam> {
     type Output = out::Load3DAnimationOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
@@ -165,23 +173,23 @@ impl<
 }
 ///**Preview 3D**: No description.
 #[derive(Clone)]
-pub struct Preview3D<ModelFile: crate::nodes::types::String> {
+pub struct Preview3D<ModelFileParam: crate::nodes::types::String> {
     /**No documentation.
 
 **Metadata**:
   - Multiline: false
   - Default:
 */
-    pub model_file: ModelFile,
+    pub model_file: ModelFileParam,
 }
-impl<ModelFile: crate::nodes::types::String> Preview3D<ModelFile> {
+impl<ModelFileParam: crate::nodes::types::String> Preview3D<ModelFileParam> {
     /// Create a new node.
-    pub fn new(model_file: ModelFile) -> Self {
+    pub fn new(model_file: ModelFileParam) -> Self {
         Self { model_file }
     }
 }
-impl<ModelFile: crate::nodes::types::String> crate::nodes::TypedNode
-for Preview3D<ModelFile> {
+impl<ModelFileParam: crate::nodes::types::String> crate::nodes::TypedNode
+for Preview3D<ModelFileParam> {
     type Output = WorkflowNodeId;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         node_id
@@ -196,27 +204,27 @@ for Preview3D<ModelFile> {
     const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "3d";
 }
-impl<ModelFile: crate::nodes::types::String> crate::nodes::TypedOutputNode
-for Preview3D<ModelFile> {}
+impl<ModelFileParam: crate::nodes::types::String> crate::nodes::TypedOutputNode
+for Preview3D<ModelFileParam> {}
 ///**Preview 3D - Animation**: No description.
 #[derive(Clone)]
-pub struct Preview3DAnimation<ModelFile: crate::nodes::types::String> {
+pub struct Preview3DAnimation<ModelFileParam: crate::nodes::types::String> {
     /**No documentation.
 
 **Metadata**:
   - Multiline: false
   - Default:
 */
-    pub model_file: ModelFile,
+    pub model_file: ModelFileParam,
 }
-impl<ModelFile: crate::nodes::types::String> Preview3DAnimation<ModelFile> {
+impl<ModelFileParam: crate::nodes::types::String> Preview3DAnimation<ModelFileParam> {
     /// Create a new node.
-    pub fn new(model_file: ModelFile) -> Self {
+    pub fn new(model_file: ModelFileParam) -> Self {
         Self { model_file }
     }
 }
-impl<ModelFile: crate::nodes::types::String> crate::nodes::TypedNode
-for Preview3DAnimation<ModelFile> {
+impl<ModelFileParam: crate::nodes::types::String> crate::nodes::TypedNode
+for Preview3DAnimation<ModelFileParam> {
     type Output = WorkflowNodeId;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         node_id
@@ -231,36 +239,36 @@ for Preview3DAnimation<ModelFile> {
     const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "3d";
 }
-impl<ModelFile: crate::nodes::types::String> crate::nodes::TypedOutputNode
-for Preview3DAnimation<ModelFile> {}
+impl<ModelFileParam: crate::nodes::types::String> crate::nodes::TypedOutputNode
+for Preview3DAnimation<ModelFileParam> {}
 ///**SaveGLB**: No description.
 #[derive(Clone)]
 pub struct SaveGlb<
-    Mesh: crate::nodes::types::Mesh,
-    FilenamePrefix: crate::nodes::types::String,
+    MeshParam: crate::nodes::types::Mesh,
+    FilenamePrefixParam: crate::nodes::types::String,
 > {
     ///No documentation.
-    pub mesh: Mesh,
+    pub mesh: MeshParam,
     /**No documentation.
 
 **Metadata**:
   - Default: mesh/ComfyUI
 */
-    pub filename_prefix: FilenamePrefix,
+    pub filename_prefix: FilenamePrefixParam,
 }
 impl<
-    Mesh: crate::nodes::types::Mesh,
-    FilenamePrefix: crate::nodes::types::String,
-> SaveGlb<Mesh, FilenamePrefix> {
+    MeshParam: crate::nodes::types::Mesh,
+    FilenamePrefixParam: crate::nodes::types::String,
+> SaveGlb<MeshParam, FilenamePrefixParam> {
     /// Create a new node.
-    pub fn new(mesh: Mesh, filename_prefix: FilenamePrefix) -> Self {
+    pub fn new(mesh: MeshParam, filename_prefix: FilenamePrefixParam) -> Self {
         Self { mesh, filename_prefix }
     }
 }
 impl<
-    Mesh: crate::nodes::types::Mesh,
-    FilenamePrefix: crate::nodes::types::String,
-> crate::nodes::TypedNode for SaveGlb<Mesh, FilenamePrefix> {
+    MeshParam: crate::nodes::types::Mesh,
+    FilenamePrefixParam: crate::nodes::types::String,
+> crate::nodes::TypedNode for SaveGlb<MeshParam, FilenamePrefixParam> {
     type Output = WorkflowNodeId;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         node_id
@@ -278,17 +286,17 @@ impl<
     const CATEGORY: &'static str = "3d";
 }
 impl<
-    Mesh: crate::nodes::types::Mesh,
-    FilenamePrefix: crate::nodes::types::String,
-> crate::nodes::TypedOutputNode for SaveGlb<Mesh, FilenamePrefix> {}
+    MeshParam: crate::nodes::types::Mesh,
+    FilenamePrefixParam: crate::nodes::types::String,
+> crate::nodes::TypedOutputNode for SaveGlb<MeshParam, FilenamePrefixParam> {}
 ///**VoxelToMeshBasic**: No description.
 #[derive(Clone)]
 pub struct VoxelToMeshBasic<
-    Voxel: crate::nodes::types::Voxel,
-    Threshold: crate::nodes::types::Float,
+    VoxelParam: crate::nodes::types::Voxel,
+    ThresholdParam: crate::nodes::types::Float,
 > {
     ///No documentation.
-    pub voxel: Voxel,
+    pub voxel: VoxelParam,
     /**No documentation.
 
 **Metadata**:
@@ -297,21 +305,21 @@ pub struct VoxelToMeshBasic<
   - Min: -1
   - Step: 0.01
 */
-    pub threshold: Threshold,
+    pub threshold: ThresholdParam,
 }
 impl<
-    Voxel: crate::nodes::types::Voxel,
-    Threshold: crate::nodes::types::Float,
-> VoxelToMeshBasic<Voxel, Threshold> {
+    VoxelParam: crate::nodes::types::Voxel,
+    ThresholdParam: crate::nodes::types::Float,
+> VoxelToMeshBasic<VoxelParam, ThresholdParam> {
     /// Create a new node.
-    pub fn new(voxel: Voxel, threshold: Threshold) -> Self {
+    pub fn new(voxel: VoxelParam, threshold: ThresholdParam) -> Self {
         Self { voxel, threshold }
     }
 }
 impl<
-    Voxel: crate::nodes::types::Voxel,
-    Threshold: crate::nodes::types::Float,
-> crate::nodes::TypedNode for VoxelToMeshBasic<Voxel, Threshold> {
+    VoxelParam: crate::nodes::types::Voxel,
+    ThresholdParam: crate::nodes::types::Float,
+> crate::nodes::TypedNode for VoxelToMeshBasic<VoxelParam, ThresholdParam> {
     type Output = crate::nodes::types::MeshOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)

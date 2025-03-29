@@ -8,22 +8,22 @@ use crate::{
 ///**SaveWEBM**: No description.
 #[derive(Clone)]
 pub struct SaveWebm<
-    Images: crate::nodes::types::Image,
-    FilenamePrefix: crate::nodes::types::String,
-    Codec: crate::nodes::types::String,
-    Fps: crate::nodes::types::Float,
-    Crf: crate::nodes::types::Float,
+    ImagesParam: crate::nodes::types::Image,
+    FilenamePrefixParam: crate::nodes::types::String,
+    CodecParam: crate::nodes::types::String,
+    FpsParam: crate::nodes::types::Float,
+    CrfParam: crate::nodes::types::Float,
 > {
     ///No documentation.
-    pub images: Images,
+    pub images: ImagesParam,
     /**No documentation.
 
 **Metadata**:
   - Default: ComfyUI
 */
-    pub filename_prefix: FilenamePrefix,
+    pub filename_prefix: FilenamePrefixParam,
     ///No documentation.
-    pub codec: Codec,
+    pub codec: CodecParam,
     /**No documentation.
 
 **Metadata**:
@@ -32,7 +32,7 @@ pub struct SaveWebm<
   - Min: 0.01
   - Step: 0.01
 */
-    pub fps: Fps,
+    pub fps: FpsParam,
     /**Higher crf means lower quality with a smaller file size, lower crf means higher quality higher filesize.
 
 **Metadata**:
@@ -41,22 +41,22 @@ pub struct SaveWebm<
   - Min: 0
   - Step: 1
 */
-    pub crf: Crf,
+    pub crf: CrfParam,
 }
 impl<
-    Images: crate::nodes::types::Image,
-    FilenamePrefix: crate::nodes::types::String,
-    Codec: crate::nodes::types::String,
-    Fps: crate::nodes::types::Float,
-    Crf: crate::nodes::types::Float,
-> SaveWebm<Images, FilenamePrefix, Codec, Fps, Crf> {
+    ImagesParam: crate::nodes::types::Image,
+    FilenamePrefixParam: crate::nodes::types::String,
+    CodecParam: crate::nodes::types::String,
+    FpsParam: crate::nodes::types::Float,
+    CrfParam: crate::nodes::types::Float,
+> SaveWebm<ImagesParam, FilenamePrefixParam, CodecParam, FpsParam, CrfParam> {
     /// Create a new node.
     pub fn new(
-        images: Images,
-        filename_prefix: FilenamePrefix,
-        codec: Codec,
-        fps: Fps,
-        crf: Crf,
+        images: ImagesParam,
+        filename_prefix: FilenamePrefixParam,
+        codec: CodecParam,
+        fps: FpsParam,
+        crf: CrfParam,
     ) -> Self {
         Self {
             images,
@@ -68,12 +68,13 @@ impl<
     }
 }
 impl<
-    Images: crate::nodes::types::Image,
-    FilenamePrefix: crate::nodes::types::String,
-    Codec: crate::nodes::types::String,
-    Fps: crate::nodes::types::Float,
-    Crf: crate::nodes::types::Float,
-> crate::nodes::TypedNode for SaveWebm<Images, FilenamePrefix, Codec, Fps, Crf> {
+    ImagesParam: crate::nodes::types::Image,
+    FilenamePrefixParam: crate::nodes::types::String,
+    CodecParam: crate::nodes::types::String,
+    FpsParam: crate::nodes::types::Float,
+    CrfParam: crate::nodes::types::Float,
+> crate::nodes::TypedNode
+for SaveWebm<ImagesParam, FilenamePrefixParam, CodecParam, FpsParam, CrfParam> {
     type Output = WorkflowNodeId;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         node_id
@@ -94,9 +95,10 @@ impl<
     const CATEGORY: &'static str = "image/video";
 }
 impl<
-    Images: crate::nodes::types::Image,
-    FilenamePrefix: crate::nodes::types::String,
-    Codec: crate::nodes::types::String,
-    Fps: crate::nodes::types::Float,
-    Crf: crate::nodes::types::Float,
-> crate::nodes::TypedOutputNode for SaveWebm<Images, FilenamePrefix, Codec, Fps, Crf> {}
+    ImagesParam: crate::nodes::types::Image,
+    FilenamePrefixParam: crate::nodes::types::String,
+    CodecParam: crate::nodes::types::String,
+    FpsParam: crate::nodes::types::Float,
+    CrfParam: crate::nodes::types::Float,
+> crate::nodes::TypedOutputNode
+for SaveWebm<ImagesParam, FilenamePrefixParam, CodecParam, FpsParam, CrfParam> {}

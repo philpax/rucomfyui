@@ -27,27 +27,27 @@ pub mod out {
 ///**Join Image with Alpha**: No description.
 #[derive(Clone)]
 pub struct JoinImageWithAlpha<
-    Image: crate::nodes::types::Image,
-    Alpha: crate::nodes::types::Mask,
+    ImageParam: crate::nodes::types::Image,
+    AlphaParam: crate::nodes::types::Mask,
 > {
     ///No documentation.
-    pub image: Image,
+    pub image: ImageParam,
     ///No documentation.
-    pub alpha: Alpha,
+    pub alpha: AlphaParam,
 }
 impl<
-    Image: crate::nodes::types::Image,
-    Alpha: crate::nodes::types::Mask,
-> JoinImageWithAlpha<Image, Alpha> {
+    ImageParam: crate::nodes::types::Image,
+    AlphaParam: crate::nodes::types::Mask,
+> JoinImageWithAlpha<ImageParam, AlphaParam> {
     /// Create a new node.
-    pub fn new(image: Image, alpha: Alpha) -> Self {
+    pub fn new(image: ImageParam, alpha: AlphaParam) -> Self {
         Self { image, alpha }
     }
 }
 impl<
-    Image: crate::nodes::types::Image,
-    Alpha: crate::nodes::types::Mask,
-> crate::nodes::TypedNode for JoinImageWithAlpha<Image, Alpha> {
+    ImageParam: crate::nodes::types::Image,
+    AlphaParam: crate::nodes::types::Mask,
+> crate::nodes::TypedNode for JoinImageWithAlpha<ImageParam, AlphaParam> {
     type Output = crate::nodes::types::ImageOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)
@@ -66,41 +66,47 @@ impl<
 ///**Porter-Duff Image Composite**: No description.
 #[derive(Clone)]
 pub struct PorterDuffImageComposite<
-    Source: crate::nodes::types::Image,
-    SourceAlpha: crate::nodes::types::Mask,
-    Destination: crate::nodes::types::Image,
-    DestinationAlpha: crate::nodes::types::Mask,
-    Mode: crate::nodes::types::String,
+    SourceParam: crate::nodes::types::Image,
+    SourceAlphaParam: crate::nodes::types::Mask,
+    DestinationParam: crate::nodes::types::Image,
+    DestinationAlphaParam: crate::nodes::types::Mask,
+    ModeParam: crate::nodes::types::String,
 > {
     ///No documentation.
-    pub source: Source,
+    pub source: SourceParam,
     ///No documentation.
-    pub source_alpha: SourceAlpha,
+    pub source_alpha: SourceAlphaParam,
     ///No documentation.
-    pub destination: Destination,
+    pub destination: DestinationParam,
     ///No documentation.
-    pub destination_alpha: DestinationAlpha,
+    pub destination_alpha: DestinationAlphaParam,
     /**No documentation.
 
 **Metadata**:
   - Default: DST
 */
-    pub mode: Mode,
+    pub mode: ModeParam,
 }
 impl<
-    Source: crate::nodes::types::Image,
-    SourceAlpha: crate::nodes::types::Mask,
-    Destination: crate::nodes::types::Image,
-    DestinationAlpha: crate::nodes::types::Mask,
-    Mode: crate::nodes::types::String,
-> PorterDuffImageComposite<Source, SourceAlpha, Destination, DestinationAlpha, Mode> {
+    SourceParam: crate::nodes::types::Image,
+    SourceAlphaParam: crate::nodes::types::Mask,
+    DestinationParam: crate::nodes::types::Image,
+    DestinationAlphaParam: crate::nodes::types::Mask,
+    ModeParam: crate::nodes::types::String,
+> PorterDuffImageComposite<
+    SourceParam,
+    SourceAlphaParam,
+    DestinationParam,
+    DestinationAlphaParam,
+    ModeParam,
+> {
     /// Create a new node.
     pub fn new(
-        source: Source,
-        source_alpha: SourceAlpha,
-        destination: Destination,
-        destination_alpha: DestinationAlpha,
-        mode: Mode,
+        source: SourceParam,
+        source_alpha: SourceAlphaParam,
+        destination: DestinationParam,
+        destination_alpha: DestinationAlphaParam,
+        mode: ModeParam,
     ) -> Self {
         Self {
             source,
@@ -112,13 +118,19 @@ impl<
     }
 }
 impl<
-    Source: crate::nodes::types::Image,
-    SourceAlpha: crate::nodes::types::Mask,
-    Destination: crate::nodes::types::Image,
-    DestinationAlpha: crate::nodes::types::Mask,
-    Mode: crate::nodes::types::String,
+    SourceParam: crate::nodes::types::Image,
+    SourceAlphaParam: crate::nodes::types::Mask,
+    DestinationParam: crate::nodes::types::Image,
+    DestinationAlphaParam: crate::nodes::types::Mask,
+    ModeParam: crate::nodes::types::String,
 > crate::nodes::TypedNode
-for PorterDuffImageComposite<Source, SourceAlpha, Destination, DestinationAlpha, Mode> {
+for PorterDuffImageComposite<
+    SourceParam,
+    SourceAlphaParam,
+    DestinationParam,
+    DestinationAlphaParam,
+    ModeParam,
+> {
     type Output = out::PorterDuffImageCompositeOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
@@ -146,18 +158,18 @@ for PorterDuffImageComposite<Source, SourceAlpha, Destination, DestinationAlpha,
 }
 ///**Split Image with Alpha**: No description.
 #[derive(Clone)]
-pub struct SplitImageWithAlpha<Image: crate::nodes::types::Image> {
+pub struct SplitImageWithAlpha<ImageParam: crate::nodes::types::Image> {
     ///No documentation.
-    pub image: Image,
+    pub image: ImageParam,
 }
-impl<Image: crate::nodes::types::Image> SplitImageWithAlpha<Image> {
+impl<ImageParam: crate::nodes::types::Image> SplitImageWithAlpha<ImageParam> {
     /// Create a new node.
-    pub fn new(image: Image) -> Self {
+    pub fn new(image: ImageParam) -> Self {
         Self { image }
     }
 }
-impl<Image: crate::nodes::types::Image> crate::nodes::TypedNode
-for SplitImageWithAlpha<Image> {
+impl<ImageParam: crate::nodes::types::Image> crate::nodes::TypedNode
+for SplitImageWithAlpha<ImageParam> {
     type Output = out::SplitImageWithAlphaOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {

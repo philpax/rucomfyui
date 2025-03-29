@@ -8,10 +8,10 @@ use crate::{
 ///**EmptyLTXVLatentVideo**: No description.
 #[derive(Clone)]
 pub struct EmptyLtxvLatentVideo<
-    Width: crate::nodes::types::Int,
-    Height: crate::nodes::types::Int,
-    Length: crate::nodes::types::Int,
-    BatchSize: crate::nodes::types::Int,
+    WidthParam: crate::nodes::types::Int,
+    HeightParam: crate::nodes::types::Int,
+    LengthParam: crate::nodes::types::Int,
+    BatchSizeParam: crate::nodes::types::Int,
 > {
     /**No documentation.
 
@@ -21,7 +21,7 @@ pub struct EmptyLtxvLatentVideo<
   - Min: 64
   - Step: 32
 */
-    pub width: Width,
+    pub width: WidthParam,
     /**No documentation.
 
 **Metadata**:
@@ -30,7 +30,7 @@ pub struct EmptyLtxvLatentVideo<
   - Min: 64
   - Step: 32
 */
-    pub height: Height,
+    pub height: HeightParam,
     /**No documentation.
 
 **Metadata**:
@@ -39,7 +39,7 @@ pub struct EmptyLtxvLatentVideo<
   - Min: 1
   - Step: 8
 */
-    pub length: Length,
+    pub length: LengthParam,
     /**No documentation.
 
 **Metadata**:
@@ -47,20 +47,20 @@ pub struct EmptyLtxvLatentVideo<
   - Max: 4096
   - Min: 1
 */
-    pub batch_size: BatchSize,
+    pub batch_size: BatchSizeParam,
 }
 impl<
-    Width: crate::nodes::types::Int,
-    Height: crate::nodes::types::Int,
-    Length: crate::nodes::types::Int,
-    BatchSize: crate::nodes::types::Int,
-> EmptyLtxvLatentVideo<Width, Height, Length, BatchSize> {
+    WidthParam: crate::nodes::types::Int,
+    HeightParam: crate::nodes::types::Int,
+    LengthParam: crate::nodes::types::Int,
+    BatchSizeParam: crate::nodes::types::Int,
+> EmptyLtxvLatentVideo<WidthParam, HeightParam, LengthParam, BatchSizeParam> {
     /// Create a new node.
     pub fn new(
-        width: Width,
-        height: Height,
-        length: Length,
-        batch_size: BatchSize,
+        width: WidthParam,
+        height: HeightParam,
+        length: LengthParam,
+        batch_size: BatchSizeParam,
     ) -> Self {
         Self {
             width,
@@ -71,11 +71,12 @@ impl<
     }
 }
 impl<
-    Width: crate::nodes::types::Int,
-    Height: crate::nodes::types::Int,
-    Length: crate::nodes::types::Int,
-    BatchSize: crate::nodes::types::Int,
-> crate::nodes::TypedNode for EmptyLtxvLatentVideo<Width, Height, Length, BatchSize> {
+    WidthParam: crate::nodes::types::Int,
+    HeightParam: crate::nodes::types::Int,
+    LengthParam: crate::nodes::types::Int,
+    BatchSizeParam: crate::nodes::types::Int,
+> crate::nodes::TypedNode
+for EmptyLtxvLatentVideo<WidthParam, HeightParam, LengthParam, BatchSizeParam> {
     type Output = crate::nodes::types::LatentOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)

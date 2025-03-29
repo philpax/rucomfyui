@@ -8,12 +8,12 @@ use crate::{
 ///**AlignYourStepsScheduler**: No description.
 #[derive(Clone)]
 pub struct AlignYourStepsScheduler<
-    ModelType: crate::nodes::types::String,
-    Steps: crate::nodes::types::Int,
-    Denoise: crate::nodes::types::Float,
+    ModelTypeParam: crate::nodes::types::String,
+    StepsParam: crate::nodes::types::Int,
+    DenoiseParam: crate::nodes::types::Float,
 > {
     ///No documentation.
-    pub model_type: ModelType,
+    pub model_type: ModelTypeParam,
     /**No documentation.
 
 **Metadata**:
@@ -21,7 +21,7 @@ pub struct AlignYourStepsScheduler<
   - Max: 10000
   - Min: 1
 */
-    pub steps: Steps,
+    pub steps: StepsParam,
     /**No documentation.
 
 **Metadata**:
@@ -30,23 +30,28 @@ pub struct AlignYourStepsScheduler<
   - Min: 0
   - Step: 0.01
 */
-    pub denoise: Denoise,
+    pub denoise: DenoiseParam,
 }
 impl<
-    ModelType: crate::nodes::types::String,
-    Steps: crate::nodes::types::Int,
-    Denoise: crate::nodes::types::Float,
-> AlignYourStepsScheduler<ModelType, Steps, Denoise> {
+    ModelTypeParam: crate::nodes::types::String,
+    StepsParam: crate::nodes::types::Int,
+    DenoiseParam: crate::nodes::types::Float,
+> AlignYourStepsScheduler<ModelTypeParam, StepsParam, DenoiseParam> {
     /// Create a new node.
-    pub fn new(model_type: ModelType, steps: Steps, denoise: Denoise) -> Self {
+    pub fn new(
+        model_type: ModelTypeParam,
+        steps: StepsParam,
+        denoise: DenoiseParam,
+    ) -> Self {
         Self { model_type, steps, denoise }
     }
 }
 impl<
-    ModelType: crate::nodes::types::String,
-    Steps: crate::nodes::types::Int,
-    Denoise: crate::nodes::types::Float,
-> crate::nodes::TypedNode for AlignYourStepsScheduler<ModelType, Steps, Denoise> {
+    ModelTypeParam: crate::nodes::types::String,
+    StepsParam: crate::nodes::types::Int,
+    DenoiseParam: crate::nodes::types::Float,
+> crate::nodes::TypedNode
+for AlignYourStepsScheduler<ModelTypeParam, StepsParam, DenoiseParam> {
     type Output = crate::nodes::types::SigmasOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)
@@ -66,15 +71,15 @@ impl<
 ///**BasicScheduler**: No description.
 #[derive(Clone)]
 pub struct BasicScheduler<
-    Model: crate::nodes::types::Model,
-    Scheduler: crate::nodes::types::String,
-    Steps: crate::nodes::types::Int,
-    Denoise: crate::nodes::types::Float,
+    ModelParam: crate::nodes::types::Model,
+    SchedulerParam: crate::nodes::types::String,
+    StepsParam: crate::nodes::types::Int,
+    DenoiseParam: crate::nodes::types::Float,
 > {
     ///No documentation.
-    pub model: Model,
+    pub model: ModelParam,
     ///No documentation.
-    pub scheduler: Scheduler,
+    pub scheduler: SchedulerParam,
     /**No documentation.
 
 **Metadata**:
@@ -82,7 +87,7 @@ pub struct BasicScheduler<
   - Max: 10000
   - Min: 1
 */
-    pub steps: Steps,
+    pub steps: StepsParam,
     /**No documentation.
 
 **Metadata**:
@@ -91,20 +96,20 @@ pub struct BasicScheduler<
   - Min: 0
   - Step: 0.01
 */
-    pub denoise: Denoise,
+    pub denoise: DenoiseParam,
 }
 impl<
-    Model: crate::nodes::types::Model,
-    Scheduler: crate::nodes::types::String,
-    Steps: crate::nodes::types::Int,
-    Denoise: crate::nodes::types::Float,
-> BasicScheduler<Model, Scheduler, Steps, Denoise> {
+    ModelParam: crate::nodes::types::Model,
+    SchedulerParam: crate::nodes::types::String,
+    StepsParam: crate::nodes::types::Int,
+    DenoiseParam: crate::nodes::types::Float,
+> BasicScheduler<ModelParam, SchedulerParam, StepsParam, DenoiseParam> {
     /// Create a new node.
     pub fn new(
-        model: Model,
-        scheduler: Scheduler,
-        steps: Steps,
-        denoise: Denoise,
+        model: ModelParam,
+        scheduler: SchedulerParam,
+        steps: StepsParam,
+        denoise: DenoiseParam,
     ) -> Self {
         Self {
             model,
@@ -115,11 +120,12 @@ impl<
     }
 }
 impl<
-    Model: crate::nodes::types::Model,
-    Scheduler: crate::nodes::types::String,
-    Steps: crate::nodes::types::Int,
-    Denoise: crate::nodes::types::Float,
-> crate::nodes::TypedNode for BasicScheduler<Model, Scheduler, Steps, Denoise> {
+    ModelParam: crate::nodes::types::Model,
+    SchedulerParam: crate::nodes::types::String,
+    StepsParam: crate::nodes::types::Int,
+    DenoiseParam: crate::nodes::types::Float,
+> crate::nodes::TypedNode
+for BasicScheduler<ModelParam, SchedulerParam, StepsParam, DenoiseParam> {
     type Output = crate::nodes::types::SigmasOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)
@@ -140,13 +146,13 @@ impl<
 ///**BetaSamplingScheduler**: No description.
 #[derive(Clone)]
 pub struct BetaSamplingScheduler<
-    Model: crate::nodes::types::Model,
-    Steps: crate::nodes::types::Int,
-    Alpha: crate::nodes::types::Float,
-    Beta: crate::nodes::types::Float,
+    ModelParam: crate::nodes::types::Model,
+    StepsParam: crate::nodes::types::Int,
+    AlphaParam: crate::nodes::types::Float,
+    BetaParam: crate::nodes::types::Float,
 > {
     ///No documentation.
-    pub model: Model,
+    pub model: ModelParam,
     /**No documentation.
 
 **Metadata**:
@@ -154,7 +160,7 @@ pub struct BetaSamplingScheduler<
   - Max: 10000
   - Min: 1
 */
-    pub steps: Steps,
+    pub steps: StepsParam,
     /**No documentation.
 
 **Metadata**:
@@ -164,7 +170,7 @@ pub struct BetaSamplingScheduler<
   - Round: false
   - Step: 0.01
 */
-    pub alpha: Alpha,
+    pub alpha: AlphaParam,
     /**No documentation.
 
 **Metadata**:
@@ -174,25 +180,31 @@ pub struct BetaSamplingScheduler<
   - Round: false
   - Step: 0.01
 */
-    pub beta: Beta,
+    pub beta: BetaParam,
 }
 impl<
-    Model: crate::nodes::types::Model,
-    Steps: crate::nodes::types::Int,
-    Alpha: crate::nodes::types::Float,
-    Beta: crate::nodes::types::Float,
-> BetaSamplingScheduler<Model, Steps, Alpha, Beta> {
+    ModelParam: crate::nodes::types::Model,
+    StepsParam: crate::nodes::types::Int,
+    AlphaParam: crate::nodes::types::Float,
+    BetaParam: crate::nodes::types::Float,
+> BetaSamplingScheduler<ModelParam, StepsParam, AlphaParam, BetaParam> {
     /// Create a new node.
-    pub fn new(model: Model, steps: Steps, alpha: Alpha, beta: Beta) -> Self {
+    pub fn new(
+        model: ModelParam,
+        steps: StepsParam,
+        alpha: AlphaParam,
+        beta: BetaParam,
+    ) -> Self {
         Self { model, steps, alpha, beta }
     }
 }
 impl<
-    Model: crate::nodes::types::Model,
-    Steps: crate::nodes::types::Int,
-    Alpha: crate::nodes::types::Float,
-    Beta: crate::nodes::types::Float,
-> crate::nodes::TypedNode for BetaSamplingScheduler<Model, Steps, Alpha, Beta> {
+    ModelParam: crate::nodes::types::Model,
+    StepsParam: crate::nodes::types::Int,
+    AlphaParam: crate::nodes::types::Float,
+    BetaParam: crate::nodes::types::Float,
+> crate::nodes::TypedNode
+for BetaSamplingScheduler<ModelParam, StepsParam, AlphaParam, BetaParam> {
     type Output = crate::nodes::types::SigmasOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)
@@ -213,9 +225,9 @@ impl<
 ///**ExponentialScheduler**: No description.
 #[derive(Clone)]
 pub struct ExponentialScheduler<
-    Steps: crate::nodes::types::Int,
-    SigmaMax: crate::nodes::types::Float,
-    SigmaMin: crate::nodes::types::Float,
+    StepsParam: crate::nodes::types::Int,
+    SigmaMaxParam: crate::nodes::types::Float,
+    SigmaMinParam: crate::nodes::types::Float,
 > {
     /**No documentation.
 
@@ -224,7 +236,7 @@ pub struct ExponentialScheduler<
   - Max: 10000
   - Min: 1
 */
-    pub steps: Steps,
+    pub steps: StepsParam,
     /**No documentation.
 
 **Metadata**:
@@ -234,7 +246,7 @@ pub struct ExponentialScheduler<
   - Round: false
   - Step: 0.01
 */
-    pub sigma_max: SigmaMax,
+    pub sigma_max: SigmaMaxParam,
     /**No documentation.
 
 **Metadata**:
@@ -244,15 +256,19 @@ pub struct ExponentialScheduler<
   - Round: false
   - Step: 0.01
 */
-    pub sigma_min: SigmaMin,
+    pub sigma_min: SigmaMinParam,
 }
 impl<
-    Steps: crate::nodes::types::Int,
-    SigmaMax: crate::nodes::types::Float,
-    SigmaMin: crate::nodes::types::Float,
-> ExponentialScheduler<Steps, SigmaMax, SigmaMin> {
+    StepsParam: crate::nodes::types::Int,
+    SigmaMaxParam: crate::nodes::types::Float,
+    SigmaMinParam: crate::nodes::types::Float,
+> ExponentialScheduler<StepsParam, SigmaMaxParam, SigmaMinParam> {
     /// Create a new node.
-    pub fn new(steps: Steps, sigma_max: SigmaMax, sigma_min: SigmaMin) -> Self {
+    pub fn new(
+        steps: StepsParam,
+        sigma_max: SigmaMaxParam,
+        sigma_min: SigmaMinParam,
+    ) -> Self {
         Self {
             steps,
             sigma_max,
@@ -261,10 +277,11 @@ impl<
     }
 }
 impl<
-    Steps: crate::nodes::types::Int,
-    SigmaMax: crate::nodes::types::Float,
-    SigmaMin: crate::nodes::types::Float,
-> crate::nodes::TypedNode for ExponentialScheduler<Steps, SigmaMax, SigmaMin> {
+    StepsParam: crate::nodes::types::Int,
+    SigmaMaxParam: crate::nodes::types::Float,
+    SigmaMinParam: crate::nodes::types::Float,
+> crate::nodes::TypedNode
+for ExponentialScheduler<StepsParam, SigmaMaxParam, SigmaMinParam> {
     type Output = crate::nodes::types::SigmasOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)
@@ -284,9 +301,9 @@ impl<
 ///**GITSScheduler**: No description.
 #[derive(Clone)]
 pub struct GitsScheduler<
-    Coeff: crate::nodes::types::Float,
-    Steps: crate::nodes::types::Int,
-    Denoise: crate::nodes::types::Float,
+    CoeffParam: crate::nodes::types::Float,
+    StepsParam: crate::nodes::types::Int,
+    DenoiseParam: crate::nodes::types::Float,
 > {
     /**No documentation.
 
@@ -296,7 +313,7 @@ pub struct GitsScheduler<
   - Min: 0.8
   - Step: 0.05
 */
-    pub coeff: Coeff,
+    pub coeff: CoeffParam,
     /**No documentation.
 
 **Metadata**:
@@ -304,7 +321,7 @@ pub struct GitsScheduler<
   - Max: 1000
   - Min: 2
 */
-    pub steps: Steps,
+    pub steps: StepsParam,
     /**No documentation.
 
 **Metadata**:
@@ -313,23 +330,23 @@ pub struct GitsScheduler<
   - Min: 0
   - Step: 0.01
 */
-    pub denoise: Denoise,
+    pub denoise: DenoiseParam,
 }
 impl<
-    Coeff: crate::nodes::types::Float,
-    Steps: crate::nodes::types::Int,
-    Denoise: crate::nodes::types::Float,
-> GitsScheduler<Coeff, Steps, Denoise> {
+    CoeffParam: crate::nodes::types::Float,
+    StepsParam: crate::nodes::types::Int,
+    DenoiseParam: crate::nodes::types::Float,
+> GitsScheduler<CoeffParam, StepsParam, DenoiseParam> {
     /// Create a new node.
-    pub fn new(coeff: Coeff, steps: Steps, denoise: Denoise) -> Self {
+    pub fn new(coeff: CoeffParam, steps: StepsParam, denoise: DenoiseParam) -> Self {
         Self { coeff, steps, denoise }
     }
 }
 impl<
-    Coeff: crate::nodes::types::Float,
-    Steps: crate::nodes::types::Int,
-    Denoise: crate::nodes::types::Float,
-> crate::nodes::TypedNode for GitsScheduler<Coeff, Steps, Denoise> {
+    CoeffParam: crate::nodes::types::Float,
+    StepsParam: crate::nodes::types::Int,
+    DenoiseParam: crate::nodes::types::Float,
+> crate::nodes::TypedNode for GitsScheduler<CoeffParam, StepsParam, DenoiseParam> {
     type Output = crate::nodes::types::SigmasOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)
@@ -349,10 +366,10 @@ impl<
 ///**KarrasScheduler**: No description.
 #[derive(Clone)]
 pub struct KarrasScheduler<
-    Steps: crate::nodes::types::Int,
-    SigmaMax: crate::nodes::types::Float,
-    SigmaMin: crate::nodes::types::Float,
-    Rho: crate::nodes::types::Float,
+    StepsParam: crate::nodes::types::Int,
+    SigmaMaxParam: crate::nodes::types::Float,
+    SigmaMinParam: crate::nodes::types::Float,
+    RhoParam: crate::nodes::types::Float,
 > {
     /**No documentation.
 
@@ -361,7 +378,7 @@ pub struct KarrasScheduler<
   - Max: 10000
   - Min: 1
 */
-    pub steps: Steps,
+    pub steps: StepsParam,
     /**No documentation.
 
 **Metadata**:
@@ -371,7 +388,7 @@ pub struct KarrasScheduler<
   - Round: false
   - Step: 0.01
 */
-    pub sigma_max: SigmaMax,
+    pub sigma_max: SigmaMaxParam,
     /**No documentation.
 
 **Metadata**:
@@ -381,7 +398,7 @@ pub struct KarrasScheduler<
   - Round: false
   - Step: 0.01
 */
-    pub sigma_min: SigmaMin,
+    pub sigma_min: SigmaMinParam,
     /**No documentation.
 
 **Metadata**:
@@ -391,20 +408,20 @@ pub struct KarrasScheduler<
   - Round: false
   - Step: 0.01
 */
-    pub rho: Rho,
+    pub rho: RhoParam,
 }
 impl<
-    Steps: crate::nodes::types::Int,
-    SigmaMax: crate::nodes::types::Float,
-    SigmaMin: crate::nodes::types::Float,
-    Rho: crate::nodes::types::Float,
-> KarrasScheduler<Steps, SigmaMax, SigmaMin, Rho> {
+    StepsParam: crate::nodes::types::Int,
+    SigmaMaxParam: crate::nodes::types::Float,
+    SigmaMinParam: crate::nodes::types::Float,
+    RhoParam: crate::nodes::types::Float,
+> KarrasScheduler<StepsParam, SigmaMaxParam, SigmaMinParam, RhoParam> {
     /// Create a new node.
     pub fn new(
-        steps: Steps,
-        sigma_max: SigmaMax,
-        sigma_min: SigmaMin,
-        rho: Rho,
+        steps: StepsParam,
+        sigma_max: SigmaMaxParam,
+        sigma_min: SigmaMinParam,
+        rho: RhoParam,
     ) -> Self {
         Self {
             steps,
@@ -415,11 +432,12 @@ impl<
     }
 }
 impl<
-    Steps: crate::nodes::types::Int,
-    SigmaMax: crate::nodes::types::Float,
-    SigmaMin: crate::nodes::types::Float,
-    Rho: crate::nodes::types::Float,
-> crate::nodes::TypedNode for KarrasScheduler<Steps, SigmaMax, SigmaMin, Rho> {
+    StepsParam: crate::nodes::types::Int,
+    SigmaMaxParam: crate::nodes::types::Float,
+    SigmaMinParam: crate::nodes::types::Float,
+    RhoParam: crate::nodes::types::Float,
+> crate::nodes::TypedNode
+for KarrasScheduler<StepsParam, SigmaMaxParam, SigmaMinParam, RhoParam> {
     type Output = crate::nodes::types::SigmasOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)
@@ -440,12 +458,12 @@ impl<
 ///**LTXVScheduler**: No description.
 #[derive(Clone)]
 pub struct LtxvScheduler<
-    Steps: crate::nodes::types::Int,
-    MaxShift: crate::nodes::types::Float,
-    BaseShift: crate::nodes::types::Float,
-    Stretch: crate::nodes::types::Boolean,
-    Terminal: crate::nodes::types::Float,
-    Latent: crate::nodes::types::Latent = crate::nodes::types::LatentOut,
+    StepsParam: crate::nodes::types::Int,
+    MaxShiftParam: crate::nodes::types::Float,
+    BaseShiftParam: crate::nodes::types::Float,
+    StretchParam: crate::nodes::types::Boolean,
+    TerminalParam: crate::nodes::types::Float,
+    LatentParam: crate::nodes::types::Latent = crate::nodes::types::LatentOut,
 > {
     /**No documentation.
 
@@ -454,7 +472,7 @@ pub struct LtxvScheduler<
   - Max: 10000
   - Min: 1
 */
-    pub steps: Steps,
+    pub steps: StepsParam,
     /**No documentation.
 
 **Metadata**:
@@ -463,7 +481,7 @@ pub struct LtxvScheduler<
   - Min: 0
   - Step: 0.01
 */
-    pub max_shift: MaxShift,
+    pub max_shift: MaxShiftParam,
     /**No documentation.
 
 **Metadata**:
@@ -472,13 +490,13 @@ pub struct LtxvScheduler<
   - Min: 0
   - Step: 0.01
 */
-    pub base_shift: BaseShift,
+    pub base_shift: BaseShiftParam,
     /**Stretch the sigmas to be in the range [terminal, 1].
 
 **Metadata**:
   - Default: true
 */
-    pub stretch: Stretch,
+    pub stretch: StretchParam,
     /**The terminal value of the sigmas after stretching.
 
 **Metadata**:
@@ -487,26 +505,33 @@ pub struct LtxvScheduler<
   - Min: 0
   - Step: 0.01
 */
-    pub terminal: Terminal,
+    pub terminal: TerminalParam,
     ///No documentation.
-    pub latent: Option<Latent>,
+    pub latent: Option<LatentParam>,
 }
 impl<
-    Steps: crate::nodes::types::Int,
-    MaxShift: crate::nodes::types::Float,
-    BaseShift: crate::nodes::types::Float,
-    Stretch: crate::nodes::types::Boolean,
-    Terminal: crate::nodes::types::Float,
-    Latent: crate::nodes::types::Latent,
-> LtxvScheduler<Steps, MaxShift, BaseShift, Stretch, Terminal, Latent> {
+    StepsParam: crate::nodes::types::Int,
+    MaxShiftParam: crate::nodes::types::Float,
+    BaseShiftParam: crate::nodes::types::Float,
+    StretchParam: crate::nodes::types::Boolean,
+    TerminalParam: crate::nodes::types::Float,
+    LatentParam: crate::nodes::types::Latent,
+> LtxvScheduler<
+    StepsParam,
+    MaxShiftParam,
+    BaseShiftParam,
+    StretchParam,
+    TerminalParam,
+    LatentParam,
+> {
     /// Create a new node.
     pub fn new(
-        steps: Steps,
-        max_shift: MaxShift,
-        base_shift: BaseShift,
-        stretch: Stretch,
-        terminal: Terminal,
-        latent: Option<Latent>,
+        steps: StepsParam,
+        max_shift: MaxShiftParam,
+        base_shift: BaseShiftParam,
+        stretch: StretchParam,
+        terminal: TerminalParam,
+        latent: Option<LatentParam>,
     ) -> Self {
         Self {
             steps,
@@ -519,14 +544,21 @@ impl<
     }
 }
 impl<
-    Steps: crate::nodes::types::Int,
-    MaxShift: crate::nodes::types::Float,
-    BaseShift: crate::nodes::types::Float,
-    Stretch: crate::nodes::types::Boolean,
-    Terminal: crate::nodes::types::Float,
-    Latent: crate::nodes::types::Latent,
+    StepsParam: crate::nodes::types::Int,
+    MaxShiftParam: crate::nodes::types::Float,
+    BaseShiftParam: crate::nodes::types::Float,
+    StretchParam: crate::nodes::types::Boolean,
+    TerminalParam: crate::nodes::types::Float,
+    LatentParam: crate::nodes::types::Latent,
 > crate::nodes::TypedNode
-for LtxvScheduler<Steps, MaxShift, BaseShift, Stretch, Terminal, Latent> {
+for LtxvScheduler<
+    StepsParam,
+    MaxShiftParam,
+    BaseShiftParam,
+    StretchParam,
+    TerminalParam,
+    LatentParam,
+> {
     type Output = crate::nodes::types::SigmasOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)
@@ -551,11 +583,11 @@ for LtxvScheduler<Steps, MaxShift, BaseShift, Stretch, Terminal, Latent> {
 ///**LaplaceScheduler**: No description.
 #[derive(Clone)]
 pub struct LaplaceScheduler<
-    Steps: crate::nodes::types::Int,
-    SigmaMax: crate::nodes::types::Float,
-    SigmaMin: crate::nodes::types::Float,
-    Mu: crate::nodes::types::Float,
-    Beta: crate::nodes::types::Float,
+    StepsParam: crate::nodes::types::Int,
+    SigmaMaxParam: crate::nodes::types::Float,
+    SigmaMinParam: crate::nodes::types::Float,
+    MuParam: crate::nodes::types::Float,
+    BetaParam: crate::nodes::types::Float,
 > {
     /**No documentation.
 
@@ -564,7 +596,7 @@ pub struct LaplaceScheduler<
   - Max: 10000
   - Min: 1
 */
-    pub steps: Steps,
+    pub steps: StepsParam,
     /**No documentation.
 
 **Metadata**:
@@ -574,7 +606,7 @@ pub struct LaplaceScheduler<
   - Round: false
   - Step: 0.01
 */
-    pub sigma_max: SigmaMax,
+    pub sigma_max: SigmaMaxParam,
     /**No documentation.
 
 **Metadata**:
@@ -584,7 +616,7 @@ pub struct LaplaceScheduler<
   - Round: false
   - Step: 0.01
 */
-    pub sigma_min: SigmaMin,
+    pub sigma_min: SigmaMinParam,
     /**No documentation.
 
 **Metadata**:
@@ -594,7 +626,7 @@ pub struct LaplaceScheduler<
   - Round: false
   - Step: 0.1
 */
-    pub mu: Mu,
+    pub mu: MuParam,
     /**No documentation.
 
 **Metadata**:
@@ -604,22 +636,22 @@ pub struct LaplaceScheduler<
   - Round: false
   - Step: 0.1
 */
-    pub beta: Beta,
+    pub beta: BetaParam,
 }
 impl<
-    Steps: crate::nodes::types::Int,
-    SigmaMax: crate::nodes::types::Float,
-    SigmaMin: crate::nodes::types::Float,
-    Mu: crate::nodes::types::Float,
-    Beta: crate::nodes::types::Float,
-> LaplaceScheduler<Steps, SigmaMax, SigmaMin, Mu, Beta> {
+    StepsParam: crate::nodes::types::Int,
+    SigmaMaxParam: crate::nodes::types::Float,
+    SigmaMinParam: crate::nodes::types::Float,
+    MuParam: crate::nodes::types::Float,
+    BetaParam: crate::nodes::types::Float,
+> LaplaceScheduler<StepsParam, SigmaMaxParam, SigmaMinParam, MuParam, BetaParam> {
     /// Create a new node.
     pub fn new(
-        steps: Steps,
-        sigma_max: SigmaMax,
-        sigma_min: SigmaMin,
-        mu: Mu,
-        beta: Beta,
+        steps: StepsParam,
+        sigma_max: SigmaMaxParam,
+        sigma_min: SigmaMinParam,
+        mu: MuParam,
+        beta: BetaParam,
     ) -> Self {
         Self {
             steps,
@@ -631,12 +663,13 @@ impl<
     }
 }
 impl<
-    Steps: crate::nodes::types::Int,
-    SigmaMax: crate::nodes::types::Float,
-    SigmaMin: crate::nodes::types::Float,
-    Mu: crate::nodes::types::Float,
-    Beta: crate::nodes::types::Float,
-> crate::nodes::TypedNode for LaplaceScheduler<Steps, SigmaMax, SigmaMin, Mu, Beta> {
+    StepsParam: crate::nodes::types::Int,
+    SigmaMaxParam: crate::nodes::types::Float,
+    SigmaMinParam: crate::nodes::types::Float,
+    MuParam: crate::nodes::types::Float,
+    BetaParam: crate::nodes::types::Float,
+> crate::nodes::TypedNode
+for LaplaceScheduler<StepsParam, SigmaMaxParam, SigmaMinParam, MuParam, BetaParam> {
     type Output = crate::nodes::types::SigmasOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)
@@ -658,10 +691,10 @@ impl<
 ///**PolyexponentialScheduler**: No description.
 #[derive(Clone)]
 pub struct PolyexponentialScheduler<
-    Steps: crate::nodes::types::Int,
-    SigmaMax: crate::nodes::types::Float,
-    SigmaMin: crate::nodes::types::Float,
-    Rho: crate::nodes::types::Float,
+    StepsParam: crate::nodes::types::Int,
+    SigmaMaxParam: crate::nodes::types::Float,
+    SigmaMinParam: crate::nodes::types::Float,
+    RhoParam: crate::nodes::types::Float,
 > {
     /**No documentation.
 
@@ -670,7 +703,7 @@ pub struct PolyexponentialScheduler<
   - Max: 10000
   - Min: 1
 */
-    pub steps: Steps,
+    pub steps: StepsParam,
     /**No documentation.
 
 **Metadata**:
@@ -680,7 +713,7 @@ pub struct PolyexponentialScheduler<
   - Round: false
   - Step: 0.01
 */
-    pub sigma_max: SigmaMax,
+    pub sigma_max: SigmaMaxParam,
     /**No documentation.
 
 **Metadata**:
@@ -690,7 +723,7 @@ pub struct PolyexponentialScheduler<
   - Round: false
   - Step: 0.01
 */
-    pub sigma_min: SigmaMin,
+    pub sigma_min: SigmaMinParam,
     /**No documentation.
 
 **Metadata**:
@@ -700,20 +733,20 @@ pub struct PolyexponentialScheduler<
   - Round: false
   - Step: 0.01
 */
-    pub rho: Rho,
+    pub rho: RhoParam,
 }
 impl<
-    Steps: crate::nodes::types::Int,
-    SigmaMax: crate::nodes::types::Float,
-    SigmaMin: crate::nodes::types::Float,
-    Rho: crate::nodes::types::Float,
-> PolyexponentialScheduler<Steps, SigmaMax, SigmaMin, Rho> {
+    StepsParam: crate::nodes::types::Int,
+    SigmaMaxParam: crate::nodes::types::Float,
+    SigmaMinParam: crate::nodes::types::Float,
+    RhoParam: crate::nodes::types::Float,
+> PolyexponentialScheduler<StepsParam, SigmaMaxParam, SigmaMinParam, RhoParam> {
     /// Create a new node.
     pub fn new(
-        steps: Steps,
-        sigma_max: SigmaMax,
-        sigma_min: SigmaMin,
-        rho: Rho,
+        steps: StepsParam,
+        sigma_max: SigmaMaxParam,
+        sigma_min: SigmaMinParam,
+        rho: RhoParam,
     ) -> Self {
         Self {
             steps,
@@ -724,11 +757,12 @@ impl<
     }
 }
 impl<
-    Steps: crate::nodes::types::Int,
-    SigmaMax: crate::nodes::types::Float,
-    SigmaMin: crate::nodes::types::Float,
-    Rho: crate::nodes::types::Float,
-> crate::nodes::TypedNode for PolyexponentialScheduler<Steps, SigmaMax, SigmaMin, Rho> {
+    StepsParam: crate::nodes::types::Int,
+    SigmaMaxParam: crate::nodes::types::Float,
+    SigmaMinParam: crate::nodes::types::Float,
+    RhoParam: crate::nodes::types::Float,
+> crate::nodes::TypedNode
+for PolyexponentialScheduler<StepsParam, SigmaMaxParam, SigmaMinParam, RhoParam> {
     type Output = crate::nodes::types::SigmasOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)
@@ -749,12 +783,12 @@ impl<
 ///**SDTurboScheduler**: No description.
 #[derive(Clone)]
 pub struct SdTurboScheduler<
-    Model: crate::nodes::types::Model,
-    Steps: crate::nodes::types::Int,
-    Denoise: crate::nodes::types::Float,
+    ModelParam: crate::nodes::types::Model,
+    StepsParam: crate::nodes::types::Int,
+    DenoiseParam: crate::nodes::types::Float,
 > {
     ///No documentation.
-    pub model: Model,
+    pub model: ModelParam,
     /**No documentation.
 
 **Metadata**:
@@ -762,7 +796,7 @@ pub struct SdTurboScheduler<
   - Max: 10
   - Min: 1
 */
-    pub steps: Steps,
+    pub steps: StepsParam,
     /**No documentation.
 
 **Metadata**:
@@ -771,23 +805,23 @@ pub struct SdTurboScheduler<
   - Min: 0
   - Step: 0.01
 */
-    pub denoise: Denoise,
+    pub denoise: DenoiseParam,
 }
 impl<
-    Model: crate::nodes::types::Model,
-    Steps: crate::nodes::types::Int,
-    Denoise: crate::nodes::types::Float,
-> SdTurboScheduler<Model, Steps, Denoise> {
+    ModelParam: crate::nodes::types::Model,
+    StepsParam: crate::nodes::types::Int,
+    DenoiseParam: crate::nodes::types::Float,
+> SdTurboScheduler<ModelParam, StepsParam, DenoiseParam> {
     /// Create a new node.
-    pub fn new(model: Model, steps: Steps, denoise: Denoise) -> Self {
+    pub fn new(model: ModelParam, steps: StepsParam, denoise: DenoiseParam) -> Self {
         Self { model, steps, denoise }
     }
 }
 impl<
-    Model: crate::nodes::types::Model,
-    Steps: crate::nodes::types::Int,
-    Denoise: crate::nodes::types::Float,
-> crate::nodes::TypedNode for SdTurboScheduler<Model, Steps, Denoise> {
+    ModelParam: crate::nodes::types::Model,
+    StepsParam: crate::nodes::types::Int,
+    DenoiseParam: crate::nodes::types::Float,
+> crate::nodes::TypedNode for SdTurboScheduler<ModelParam, StepsParam, DenoiseParam> {
     type Output = crate::nodes::types::SigmasOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)
@@ -807,10 +841,10 @@ impl<
 ///**VPScheduler**: No description.
 #[derive(Clone)]
 pub struct VpScheduler<
-    Steps: crate::nodes::types::Int,
-    BetaD: crate::nodes::types::Float,
-    BetaMin: crate::nodes::types::Float,
-    EpsS: crate::nodes::types::Float,
+    StepsParam: crate::nodes::types::Int,
+    BetaDParam: crate::nodes::types::Float,
+    BetaMinParam: crate::nodes::types::Float,
+    EpsSParam: crate::nodes::types::Float,
 > {
     /**No documentation.
 
@@ -819,7 +853,7 @@ pub struct VpScheduler<
   - Max: 10000
   - Min: 1
 */
-    pub steps: Steps,
+    pub steps: StepsParam,
     /**No documentation.
 
 **Metadata**:
@@ -829,7 +863,7 @@ pub struct VpScheduler<
   - Round: false
   - Step: 0.01
 */
-    pub beta_d: BetaD,
+    pub beta_d: BetaDParam,
     /**No documentation.
 
 **Metadata**:
@@ -839,7 +873,7 @@ pub struct VpScheduler<
   - Round: false
   - Step: 0.01
 */
-    pub beta_min: BetaMin,
+    pub beta_min: BetaMinParam,
     /**No documentation.
 
 **Metadata**:
@@ -849,16 +883,21 @@ pub struct VpScheduler<
   - Round: false
   - Step: 0.0001
 */
-    pub eps_s: EpsS,
+    pub eps_s: EpsSParam,
 }
 impl<
-    Steps: crate::nodes::types::Int,
-    BetaD: crate::nodes::types::Float,
-    BetaMin: crate::nodes::types::Float,
-    EpsS: crate::nodes::types::Float,
-> VpScheduler<Steps, BetaD, BetaMin, EpsS> {
+    StepsParam: crate::nodes::types::Int,
+    BetaDParam: crate::nodes::types::Float,
+    BetaMinParam: crate::nodes::types::Float,
+    EpsSParam: crate::nodes::types::Float,
+> VpScheduler<StepsParam, BetaDParam, BetaMinParam, EpsSParam> {
     /// Create a new node.
-    pub fn new(steps: Steps, beta_d: BetaD, beta_min: BetaMin, eps_s: EpsS) -> Self {
+    pub fn new(
+        steps: StepsParam,
+        beta_d: BetaDParam,
+        beta_min: BetaMinParam,
+        eps_s: EpsSParam,
+    ) -> Self {
         Self {
             steps,
             beta_d,
@@ -868,11 +907,12 @@ impl<
     }
 }
 impl<
-    Steps: crate::nodes::types::Int,
-    BetaD: crate::nodes::types::Float,
-    BetaMin: crate::nodes::types::Float,
-    EpsS: crate::nodes::types::Float,
-> crate::nodes::TypedNode for VpScheduler<Steps, BetaD, BetaMin, EpsS> {
+    StepsParam: crate::nodes::types::Int,
+    BetaDParam: crate::nodes::types::Float,
+    BetaMinParam: crate::nodes::types::Float,
+    EpsSParam: crate::nodes::types::Float,
+> crate::nodes::TypedNode
+for VpScheduler<StepsParam, BetaDParam, BetaMinParam, EpsSParam> {
     type Output = crate::nodes::types::SigmasOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)

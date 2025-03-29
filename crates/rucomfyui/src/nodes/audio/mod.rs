@@ -7,21 +7,22 @@ use crate::{
 };
 ///**LoadAudio**: No description.
 #[derive(Clone)]
-pub struct LoadAudio<Audio: crate::nodes::types::String> {
+pub struct LoadAudio<AudioParam: crate::nodes::types::String> {
     /**No documentation.
 
 **Metadata**:
   - Audio upload: true
 */
-    pub audio: Audio,
+    pub audio: AudioParam,
 }
-impl<Audio: crate::nodes::types::String> LoadAudio<Audio> {
+impl<AudioParam: crate::nodes::types::String> LoadAudio<AudioParam> {
     /// Create a new node.
-    pub fn new(audio: Audio) -> Self {
+    pub fn new(audio: AudioParam) -> Self {
         Self { audio }
     }
 }
-impl<Audio: crate::nodes::types::String> crate::nodes::TypedNode for LoadAudio<Audio> {
+impl<AudioParam: crate::nodes::types::String> crate::nodes::TypedNode
+for LoadAudio<AudioParam> {
     type Output = crate::nodes::types::AudioOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)
@@ -38,17 +39,18 @@ impl<Audio: crate::nodes::types::String> crate::nodes::TypedNode for LoadAudio<A
 }
 ///**PreviewAudio**: No description.
 #[derive(Clone)]
-pub struct PreviewAudio<Audio: crate::nodes::types::Audio> {
+pub struct PreviewAudio<AudioParam: crate::nodes::types::Audio> {
     ///No documentation.
-    pub audio: Audio,
+    pub audio: AudioParam,
 }
-impl<Audio: crate::nodes::types::Audio> PreviewAudio<Audio> {
+impl<AudioParam: crate::nodes::types::Audio> PreviewAudio<AudioParam> {
     /// Create a new node.
-    pub fn new(audio: Audio) -> Self {
+    pub fn new(audio: AudioParam) -> Self {
         Self { audio }
     }
 }
-impl<Audio: crate::nodes::types::Audio> crate::nodes::TypedNode for PreviewAudio<Audio> {
+impl<AudioParam: crate::nodes::types::Audio> crate::nodes::TypedNode
+for PreviewAudio<AudioParam> {
     type Output = WorkflowNodeId;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         node_id
@@ -63,36 +65,36 @@ impl<Audio: crate::nodes::types::Audio> crate::nodes::TypedNode for PreviewAudio
     const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "audio";
 }
-impl<Audio: crate::nodes::types::Audio> crate::nodes::TypedOutputNode
-for PreviewAudio<Audio> {}
+impl<AudioParam: crate::nodes::types::Audio> crate::nodes::TypedOutputNode
+for PreviewAudio<AudioParam> {}
 ///**SaveAudio**: No description.
 #[derive(Clone)]
 pub struct SaveAudio<
-    Audio: crate::nodes::types::Audio,
-    FilenamePrefix: crate::nodes::types::String,
+    AudioParam: crate::nodes::types::Audio,
+    FilenamePrefixParam: crate::nodes::types::String,
 > {
     ///No documentation.
-    pub audio: Audio,
+    pub audio: AudioParam,
     /**No documentation.
 
 **Metadata**:
   - Default: audio/ComfyUI
 */
-    pub filename_prefix: FilenamePrefix,
+    pub filename_prefix: FilenamePrefixParam,
 }
 impl<
-    Audio: crate::nodes::types::Audio,
-    FilenamePrefix: crate::nodes::types::String,
-> SaveAudio<Audio, FilenamePrefix> {
+    AudioParam: crate::nodes::types::Audio,
+    FilenamePrefixParam: crate::nodes::types::String,
+> SaveAudio<AudioParam, FilenamePrefixParam> {
     /// Create a new node.
-    pub fn new(audio: Audio, filename_prefix: FilenamePrefix) -> Self {
+    pub fn new(audio: AudioParam, filename_prefix: FilenamePrefixParam) -> Self {
         Self { audio, filename_prefix }
     }
 }
 impl<
-    Audio: crate::nodes::types::Audio,
-    FilenamePrefix: crate::nodes::types::String,
-> crate::nodes::TypedNode for SaveAudio<Audio, FilenamePrefix> {
+    AudioParam: crate::nodes::types::Audio,
+    FilenamePrefixParam: crate::nodes::types::String,
+> crate::nodes::TypedNode for SaveAudio<AudioParam, FilenamePrefixParam> {
     type Output = WorkflowNodeId;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         node_id
@@ -110,6 +112,6 @@ impl<
     const CATEGORY: &'static str = "audio";
 }
 impl<
-    Audio: crate::nodes::types::Audio,
-    FilenamePrefix: crate::nodes::types::String,
-> crate::nodes::TypedOutputNode for SaveAudio<Audio, FilenamePrefix> {}
+    AudioParam: crate::nodes::types::Audio,
+    FilenamePrefixParam: crate::nodes::types::String,
+> crate::nodes::TypedOutputNode for SaveAudio<AudioParam, FilenamePrefixParam> {}

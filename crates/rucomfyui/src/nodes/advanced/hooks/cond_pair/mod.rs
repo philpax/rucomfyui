@@ -43,32 +43,37 @@ pub mod out {
 ///**Cond Pair Combine**: No description.
 #[derive(Clone)]
 pub struct PairConditioningCombine<
-    PositiveA: crate::nodes::types::Conditioning,
-    NegativeA: crate::nodes::types::Conditioning,
-    PositiveB: crate::nodes::types::Conditioning,
-    NegativeB: crate::nodes::types::Conditioning,
+    PositiveAParam: crate::nodes::types::Conditioning,
+    NegativeAParam: crate::nodes::types::Conditioning,
+    PositiveBParam: crate::nodes::types::Conditioning,
+    NegativeBParam: crate::nodes::types::Conditioning,
 > {
     ///No documentation.
-    pub positive_a: PositiveA,
+    pub positive_a: PositiveAParam,
     ///No documentation.
-    pub negative_a: NegativeA,
+    pub negative_a: NegativeAParam,
     ///No documentation.
-    pub positive_b: PositiveB,
+    pub positive_b: PositiveBParam,
     ///No documentation.
-    pub negative_b: NegativeB,
+    pub negative_b: NegativeBParam,
 }
 impl<
-    PositiveA: crate::nodes::types::Conditioning,
-    NegativeA: crate::nodes::types::Conditioning,
-    PositiveB: crate::nodes::types::Conditioning,
-    NegativeB: crate::nodes::types::Conditioning,
-> PairConditioningCombine<PositiveA, NegativeA, PositiveB, NegativeB> {
+    PositiveAParam: crate::nodes::types::Conditioning,
+    NegativeAParam: crate::nodes::types::Conditioning,
+    PositiveBParam: crate::nodes::types::Conditioning,
+    NegativeBParam: crate::nodes::types::Conditioning,
+> PairConditioningCombine<
+    PositiveAParam,
+    NegativeAParam,
+    PositiveBParam,
+    NegativeBParam,
+> {
     /// Create a new node.
     pub fn new(
-        positive_a: PositiveA,
-        negative_a: NegativeA,
-        positive_b: PositiveB,
-        negative_b: NegativeB,
+        positive_a: PositiveAParam,
+        negative_a: NegativeAParam,
+        positive_b: PositiveBParam,
+        negative_b: NegativeBParam,
     ) -> Self {
         Self {
             positive_a,
@@ -79,12 +84,17 @@ impl<
     }
 }
 impl<
-    PositiveA: crate::nodes::types::Conditioning,
-    NegativeA: crate::nodes::types::Conditioning,
-    PositiveB: crate::nodes::types::Conditioning,
-    NegativeB: crate::nodes::types::Conditioning,
+    PositiveAParam: crate::nodes::types::Conditioning,
+    NegativeAParam: crate::nodes::types::Conditioning,
+    PositiveBParam: crate::nodes::types::Conditioning,
+    NegativeBParam: crate::nodes::types::Conditioning,
 > crate::nodes::TypedNode
-for PairConditioningCombine<PositiveA, NegativeA, PositiveB, NegativeB> {
+for PairConditioningCombine<
+    PositiveAParam,
+    NegativeAParam,
+    PositiveBParam,
+    NegativeBParam,
+> {
     type Output = out::PairConditioningCombineOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
@@ -108,43 +118,43 @@ for PairConditioningCombine<PositiveA, NegativeA, PositiveB, NegativeB> {
 ///**Cond Pair Set Default Combine**: No description.
 #[derive(Clone)]
 pub struct PairConditioningSetDefaultCombine<
-    Positive: crate::nodes::types::Conditioning,
-    Negative: crate::nodes::types::Conditioning,
-    PositiveDefault: crate::nodes::types::Conditioning,
-    NegativeDefault: crate::nodes::types::Conditioning,
-    Hooks: crate::nodes::types::Hooks = crate::nodes::types::HooksOut,
+    PositiveParam: crate::nodes::types::Conditioning,
+    NegativeParam: crate::nodes::types::Conditioning,
+    PositiveDefaultParam: crate::nodes::types::Conditioning,
+    NegativeDefaultParam: crate::nodes::types::Conditioning,
+    HooksParam: crate::nodes::types::Hooks = crate::nodes::types::HooksOut,
 > {
     ///No documentation.
-    pub positive: Positive,
+    pub positive: PositiveParam,
     ///No documentation.
-    pub negative: Negative,
+    pub negative: NegativeParam,
     ///No documentation.
-    pub positive_default: PositiveDefault,
+    pub positive_default: PositiveDefaultParam,
     ///No documentation.
-    pub negative_default: NegativeDefault,
+    pub negative_default: NegativeDefaultParam,
     ///No documentation.
-    pub hooks: Option<Hooks>,
+    pub hooks: Option<HooksParam>,
 }
 impl<
-    Positive: crate::nodes::types::Conditioning,
-    Negative: crate::nodes::types::Conditioning,
-    PositiveDefault: crate::nodes::types::Conditioning,
-    NegativeDefault: crate::nodes::types::Conditioning,
-    Hooks: crate::nodes::types::Hooks,
+    PositiveParam: crate::nodes::types::Conditioning,
+    NegativeParam: crate::nodes::types::Conditioning,
+    PositiveDefaultParam: crate::nodes::types::Conditioning,
+    NegativeDefaultParam: crate::nodes::types::Conditioning,
+    HooksParam: crate::nodes::types::Hooks,
 > PairConditioningSetDefaultCombine<
-    Positive,
-    Negative,
-    PositiveDefault,
-    NegativeDefault,
-    Hooks,
+    PositiveParam,
+    NegativeParam,
+    PositiveDefaultParam,
+    NegativeDefaultParam,
+    HooksParam,
 > {
     /// Create a new node.
     pub fn new(
-        positive: Positive,
-        negative: Negative,
-        positive_default: PositiveDefault,
-        negative_default: NegativeDefault,
-        hooks: Option<Hooks>,
+        positive: PositiveParam,
+        negative: NegativeParam,
+        positive_default: PositiveDefaultParam,
+        negative_default: NegativeDefaultParam,
+        hooks: Option<HooksParam>,
     ) -> Self {
         Self {
             positive,
@@ -156,18 +166,18 @@ impl<
     }
 }
 impl<
-    Positive: crate::nodes::types::Conditioning,
-    Negative: crate::nodes::types::Conditioning,
-    PositiveDefault: crate::nodes::types::Conditioning,
-    NegativeDefault: crate::nodes::types::Conditioning,
-    Hooks: crate::nodes::types::Hooks,
+    PositiveParam: crate::nodes::types::Conditioning,
+    NegativeParam: crate::nodes::types::Conditioning,
+    PositiveDefaultParam: crate::nodes::types::Conditioning,
+    NegativeDefaultParam: crate::nodes::types::Conditioning,
+    HooksParam: crate::nodes::types::Hooks,
 > crate::nodes::TypedNode
 for PairConditioningSetDefaultCombine<
-    Positive,
-    Negative,
-    PositiveDefault,
-    NegativeDefault,
-    Hooks,
+    PositiveParam,
+    NegativeParam,
+    PositiveDefaultParam,
+    NegativeDefaultParam,
+    HooksParam,
 > {
     type Output = out::PairConditioningSetDefaultCombineOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
@@ -203,19 +213,19 @@ for PairConditioningSetDefaultCombine<
 ///**Cond Pair Set Props**: No description.
 #[derive(Clone)]
 pub struct PairConditioningSetProperties<
-    PositiveNew: crate::nodes::types::Conditioning,
-    NegativeNew: crate::nodes::types::Conditioning,
-    Strength: crate::nodes::types::Float,
-    SetCondArea: crate::nodes::types::String,
-    Mask: crate::nodes::types::Mask = crate::nodes::types::MaskOut,
-    Hooks: crate::nodes::types::Hooks = crate::nodes::types::HooksOut,
-    Timesteps: crate::nodes::types::TimestepsRange
+    PositiveNewParam: crate::nodes::types::Conditioning,
+    NegativeNewParam: crate::nodes::types::Conditioning,
+    StrengthParam: crate::nodes::types::Float,
+    SetCondAreaParam: crate::nodes::types::String,
+    MaskParam: crate::nodes::types::Mask = crate::nodes::types::MaskOut,
+    HooksParam: crate::nodes::types::Hooks = crate::nodes::types::HooksOut,
+    TimestepsParam: crate::nodes::types::TimestepsRange
         = crate::nodes::types::TimestepsRangeOut,
 > {
     ///No documentation.
-    pub positive_new: PositiveNew,
+    pub positive_new: PositiveNewParam,
     ///No documentation.
-    pub negative_new: NegativeNew,
+    pub negative_new: NegativeNewParam,
     /**No documentation.
 
 **Metadata**:
@@ -224,42 +234,42 @@ pub struct PairConditioningSetProperties<
   - Min: 0
   - Step: 0.01
 */
-    pub strength: Strength,
+    pub strength: StrengthParam,
     ///No documentation.
-    pub set_cond_area: SetCondArea,
+    pub set_cond_area: SetCondAreaParam,
     ///No documentation.
-    pub mask: Option<Mask>,
+    pub mask: Option<MaskParam>,
     ///No documentation.
-    pub hooks: Option<Hooks>,
+    pub hooks: Option<HooksParam>,
     ///No documentation.
-    pub timesteps: Option<Timesteps>,
+    pub timesteps: Option<TimestepsParam>,
 }
 impl<
-    PositiveNew: crate::nodes::types::Conditioning,
-    NegativeNew: crate::nodes::types::Conditioning,
-    Strength: crate::nodes::types::Float,
-    SetCondArea: crate::nodes::types::String,
-    Mask: crate::nodes::types::Mask,
-    Hooks: crate::nodes::types::Hooks,
-    Timesteps: crate::nodes::types::TimestepsRange,
+    PositiveNewParam: crate::nodes::types::Conditioning,
+    NegativeNewParam: crate::nodes::types::Conditioning,
+    StrengthParam: crate::nodes::types::Float,
+    SetCondAreaParam: crate::nodes::types::String,
+    MaskParam: crate::nodes::types::Mask,
+    HooksParam: crate::nodes::types::Hooks,
+    TimestepsParam: crate::nodes::types::TimestepsRange,
 > PairConditioningSetProperties<
-    PositiveNew,
-    NegativeNew,
-    Strength,
-    SetCondArea,
-    Mask,
-    Hooks,
-    Timesteps,
+    PositiveNewParam,
+    NegativeNewParam,
+    StrengthParam,
+    SetCondAreaParam,
+    MaskParam,
+    HooksParam,
+    TimestepsParam,
 > {
     /// Create a new node.
     pub fn new(
-        positive_new: PositiveNew,
-        negative_new: NegativeNew,
-        strength: Strength,
-        set_cond_area: SetCondArea,
-        mask: Option<Mask>,
-        hooks: Option<Hooks>,
-        timesteps: Option<Timesteps>,
+        positive_new: PositiveNewParam,
+        negative_new: NegativeNewParam,
+        strength: StrengthParam,
+        set_cond_area: SetCondAreaParam,
+        mask: Option<MaskParam>,
+        hooks: Option<HooksParam>,
+        timesteps: Option<TimestepsParam>,
     ) -> Self {
         Self {
             positive_new,
@@ -273,22 +283,22 @@ impl<
     }
 }
 impl<
-    PositiveNew: crate::nodes::types::Conditioning,
-    NegativeNew: crate::nodes::types::Conditioning,
-    Strength: crate::nodes::types::Float,
-    SetCondArea: crate::nodes::types::String,
-    Mask: crate::nodes::types::Mask,
-    Hooks: crate::nodes::types::Hooks,
-    Timesteps: crate::nodes::types::TimestepsRange,
+    PositiveNewParam: crate::nodes::types::Conditioning,
+    NegativeNewParam: crate::nodes::types::Conditioning,
+    StrengthParam: crate::nodes::types::Float,
+    SetCondAreaParam: crate::nodes::types::String,
+    MaskParam: crate::nodes::types::Mask,
+    HooksParam: crate::nodes::types::Hooks,
+    TimestepsParam: crate::nodes::types::TimestepsRange,
 > crate::nodes::TypedNode
 for PairConditioningSetProperties<
-    PositiveNew,
-    NegativeNew,
-    Strength,
-    SetCondArea,
-    Mask,
-    Hooks,
-    Timesteps,
+    PositiveNewParam,
+    NegativeNewParam,
+    StrengthParam,
+    SetCondAreaParam,
+    MaskParam,
+    HooksParam,
+    TimestepsParam,
 > {
     type Output = out::PairConditioningSetPropertiesOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
@@ -322,25 +332,25 @@ for PairConditioningSetProperties<
 ///**Cond Pair Set Props Combine**: No description.
 #[derive(Clone)]
 pub struct PairConditioningSetPropertiesAndCombine<
-    Positive: crate::nodes::types::Conditioning,
-    Negative: crate::nodes::types::Conditioning,
-    PositiveNew: crate::nodes::types::Conditioning,
-    NegativeNew: crate::nodes::types::Conditioning,
-    Strength: crate::nodes::types::Float,
-    SetCondArea: crate::nodes::types::String,
-    Mask: crate::nodes::types::Mask = crate::nodes::types::MaskOut,
-    Hooks: crate::nodes::types::Hooks = crate::nodes::types::HooksOut,
-    Timesteps: crate::nodes::types::TimestepsRange
+    PositiveParam: crate::nodes::types::Conditioning,
+    NegativeParam: crate::nodes::types::Conditioning,
+    PositiveNewParam: crate::nodes::types::Conditioning,
+    NegativeNewParam: crate::nodes::types::Conditioning,
+    StrengthParam: crate::nodes::types::Float,
+    SetCondAreaParam: crate::nodes::types::String,
+    MaskParam: crate::nodes::types::Mask = crate::nodes::types::MaskOut,
+    HooksParam: crate::nodes::types::Hooks = crate::nodes::types::HooksOut,
+    TimestepsParam: crate::nodes::types::TimestepsRange
         = crate::nodes::types::TimestepsRangeOut,
 > {
     ///No documentation.
-    pub positive: Positive,
+    pub positive: PositiveParam,
     ///No documentation.
-    pub negative: Negative,
+    pub negative: NegativeParam,
     ///No documentation.
-    pub positive_new: PositiveNew,
+    pub positive_new: PositiveNewParam,
     ///No documentation.
-    pub negative_new: NegativeNew,
+    pub negative_new: NegativeNewParam,
     /**No documentation.
 
 **Metadata**:
@@ -349,48 +359,48 @@ pub struct PairConditioningSetPropertiesAndCombine<
   - Min: 0
   - Step: 0.01
 */
-    pub strength: Strength,
+    pub strength: StrengthParam,
     ///No documentation.
-    pub set_cond_area: SetCondArea,
+    pub set_cond_area: SetCondAreaParam,
     ///No documentation.
-    pub mask: Option<Mask>,
+    pub mask: Option<MaskParam>,
     ///No documentation.
-    pub hooks: Option<Hooks>,
+    pub hooks: Option<HooksParam>,
     ///No documentation.
-    pub timesteps: Option<Timesteps>,
+    pub timesteps: Option<TimestepsParam>,
 }
 impl<
-    Positive: crate::nodes::types::Conditioning,
-    Negative: crate::nodes::types::Conditioning,
-    PositiveNew: crate::nodes::types::Conditioning,
-    NegativeNew: crate::nodes::types::Conditioning,
-    Strength: crate::nodes::types::Float,
-    SetCondArea: crate::nodes::types::String,
-    Mask: crate::nodes::types::Mask,
-    Hooks: crate::nodes::types::Hooks,
-    Timesteps: crate::nodes::types::TimestepsRange,
+    PositiveParam: crate::nodes::types::Conditioning,
+    NegativeParam: crate::nodes::types::Conditioning,
+    PositiveNewParam: crate::nodes::types::Conditioning,
+    NegativeNewParam: crate::nodes::types::Conditioning,
+    StrengthParam: crate::nodes::types::Float,
+    SetCondAreaParam: crate::nodes::types::String,
+    MaskParam: crate::nodes::types::Mask,
+    HooksParam: crate::nodes::types::Hooks,
+    TimestepsParam: crate::nodes::types::TimestepsRange,
 > PairConditioningSetPropertiesAndCombine<
-    Positive,
-    Negative,
-    PositiveNew,
-    NegativeNew,
-    Strength,
-    SetCondArea,
-    Mask,
-    Hooks,
-    Timesteps,
+    PositiveParam,
+    NegativeParam,
+    PositiveNewParam,
+    NegativeNewParam,
+    StrengthParam,
+    SetCondAreaParam,
+    MaskParam,
+    HooksParam,
+    TimestepsParam,
 > {
     /// Create a new node.
     pub fn new(
-        positive: Positive,
-        negative: Negative,
-        positive_new: PositiveNew,
-        negative_new: NegativeNew,
-        strength: Strength,
-        set_cond_area: SetCondArea,
-        mask: Option<Mask>,
-        hooks: Option<Hooks>,
-        timesteps: Option<Timesteps>,
+        positive: PositiveParam,
+        negative: NegativeParam,
+        positive_new: PositiveNewParam,
+        negative_new: NegativeNewParam,
+        strength: StrengthParam,
+        set_cond_area: SetCondAreaParam,
+        mask: Option<MaskParam>,
+        hooks: Option<HooksParam>,
+        timesteps: Option<TimestepsParam>,
     ) -> Self {
         Self {
             positive,
@@ -406,26 +416,26 @@ impl<
     }
 }
 impl<
-    Positive: crate::nodes::types::Conditioning,
-    Negative: crate::nodes::types::Conditioning,
-    PositiveNew: crate::nodes::types::Conditioning,
-    NegativeNew: crate::nodes::types::Conditioning,
-    Strength: crate::nodes::types::Float,
-    SetCondArea: crate::nodes::types::String,
-    Mask: crate::nodes::types::Mask,
-    Hooks: crate::nodes::types::Hooks,
-    Timesteps: crate::nodes::types::TimestepsRange,
+    PositiveParam: crate::nodes::types::Conditioning,
+    NegativeParam: crate::nodes::types::Conditioning,
+    PositiveNewParam: crate::nodes::types::Conditioning,
+    NegativeNewParam: crate::nodes::types::Conditioning,
+    StrengthParam: crate::nodes::types::Float,
+    SetCondAreaParam: crate::nodes::types::String,
+    MaskParam: crate::nodes::types::Mask,
+    HooksParam: crate::nodes::types::Hooks,
+    TimestepsParam: crate::nodes::types::TimestepsRange,
 > crate::nodes::TypedNode
 for PairConditioningSetPropertiesAndCombine<
-    Positive,
-    Negative,
-    PositiveNew,
-    NegativeNew,
-    Strength,
-    SetCondArea,
-    Mask,
-    Hooks,
-    Timesteps,
+    PositiveParam,
+    NegativeParam,
+    PositiveNewParam,
+    NegativeNewParam,
+    StrengthParam,
+    SetCondAreaParam,
+    MaskParam,
+    HooksParam,
+    TimestepsParam,
 > {
     type Output = out::PairConditioningSetPropertiesAndCombineOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {

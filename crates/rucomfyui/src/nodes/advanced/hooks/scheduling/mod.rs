@@ -8,9 +8,9 @@ use crate::{
 ///**Create Hook Keyframe**: No description.
 #[derive(Clone)]
 pub struct CreateHookKeyframe<
-    StrengthMult: crate::nodes::types::Float,
-    StartPercent: crate::nodes::types::Float,
-    PrevHookKf: crate::nodes::types::HookKeyframes
+    StrengthMultParam: crate::nodes::types::Float,
+    StartPercentParam: crate::nodes::types::Float,
+    PrevHookKfParam: crate::nodes::types::HookKeyframes
         = crate::nodes::types::HookKeyframesOut,
 > {
     /**No documentation.
@@ -21,7 +21,7 @@ pub struct CreateHookKeyframe<
   - Min: -20
   - Step: 0.01
 */
-    pub strength_mult: StrengthMult,
+    pub strength_mult: StrengthMultParam,
     /**No documentation.
 
 **Metadata**:
@@ -30,20 +30,20 @@ pub struct CreateHookKeyframe<
   - Min: 0
   - Step: 0.001
 */
-    pub start_percent: StartPercent,
+    pub start_percent: StartPercentParam,
     ///No documentation.
-    pub prev_hook_kf: Option<PrevHookKf>,
+    pub prev_hook_kf: Option<PrevHookKfParam>,
 }
 impl<
-    StrengthMult: crate::nodes::types::Float,
-    StartPercent: crate::nodes::types::Float,
-    PrevHookKf: crate::nodes::types::HookKeyframes,
-> CreateHookKeyframe<StrengthMult, StartPercent, PrevHookKf> {
+    StrengthMultParam: crate::nodes::types::Float,
+    StartPercentParam: crate::nodes::types::Float,
+    PrevHookKfParam: crate::nodes::types::HookKeyframes,
+> CreateHookKeyframe<StrengthMultParam, StartPercentParam, PrevHookKfParam> {
     /// Create a new node.
     pub fn new(
-        strength_mult: StrengthMult,
-        start_percent: StartPercent,
-        prev_hook_kf: Option<PrevHookKf>,
+        strength_mult: StrengthMultParam,
+        start_percent: StartPercentParam,
+        prev_hook_kf: Option<PrevHookKfParam>,
     ) -> Self {
         Self {
             strength_mult,
@@ -53,11 +53,11 @@ impl<
     }
 }
 impl<
-    StrengthMult: crate::nodes::types::Float,
-    StartPercent: crate::nodes::types::Float,
-    PrevHookKf: crate::nodes::types::HookKeyframes,
+    StrengthMultParam: crate::nodes::types::Float,
+    StartPercentParam: crate::nodes::types::Float,
+    PrevHookKfParam: crate::nodes::types::HookKeyframes,
 > crate::nodes::TypedNode
-for CreateHookKeyframe<StrengthMult, StartPercent, PrevHookKf> {
+for CreateHookKeyframe<StrengthMultParam, StartPercentParam, PrevHookKfParam> {
     type Output = crate::nodes::types::HookKeyframesOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)
@@ -79,10 +79,10 @@ for CreateHookKeyframe<StrengthMult, StartPercent, PrevHookKf> {
 ///**Create Hook Keyframes From Floats**: No description.
 #[derive(Clone)]
 pub struct CreateHookKeyframesFromFloats<
-    StartPercent: crate::nodes::types::Float,
-    EndPercent: crate::nodes::types::Float,
-    PrintKeyframes: crate::nodes::types::Boolean,
-    PrevHookKf: crate::nodes::types::HookKeyframes
+    StartPercentParam: crate::nodes::types::Float,
+    EndPercentParam: crate::nodes::types::Float,
+    PrintKeyframesParam: crate::nodes::types::Boolean,
+    PrevHookKfParam: crate::nodes::types::HookKeyframes
         = crate::nodes::types::HookKeyframesOut,
 > {
     /**No documentation.
@@ -93,7 +93,7 @@ pub struct CreateHookKeyframesFromFloats<
   - Min: 0
   - Step: 0.001
 */
-    pub start_percent: StartPercent,
+    pub start_percent: StartPercentParam,
     /**No documentation.
 
 **Metadata**:
@@ -102,28 +102,33 @@ pub struct CreateHookKeyframesFromFloats<
   - Min: 0
   - Step: 0.001
 */
-    pub end_percent: EndPercent,
+    pub end_percent: EndPercentParam,
     /**No documentation.
 
 **Metadata**:
   - Default: false
 */
-    pub print_keyframes: PrintKeyframes,
+    pub print_keyframes: PrintKeyframesParam,
     ///No documentation.
-    pub prev_hook_kf: Option<PrevHookKf>,
+    pub prev_hook_kf: Option<PrevHookKfParam>,
 }
 impl<
-    StartPercent: crate::nodes::types::Float,
-    EndPercent: crate::nodes::types::Float,
-    PrintKeyframes: crate::nodes::types::Boolean,
-    PrevHookKf: crate::nodes::types::HookKeyframes,
-> CreateHookKeyframesFromFloats<StartPercent, EndPercent, PrintKeyframes, PrevHookKf> {
+    StartPercentParam: crate::nodes::types::Float,
+    EndPercentParam: crate::nodes::types::Float,
+    PrintKeyframesParam: crate::nodes::types::Boolean,
+    PrevHookKfParam: crate::nodes::types::HookKeyframes,
+> CreateHookKeyframesFromFloats<
+    StartPercentParam,
+    EndPercentParam,
+    PrintKeyframesParam,
+    PrevHookKfParam,
+> {
     /// Create a new node.
     pub fn new(
-        start_percent: StartPercent,
-        end_percent: EndPercent,
-        print_keyframes: PrintKeyframes,
-        prev_hook_kf: Option<PrevHookKf>,
+        start_percent: StartPercentParam,
+        end_percent: EndPercentParam,
+        print_keyframes: PrintKeyframesParam,
+        prev_hook_kf: Option<PrevHookKfParam>,
     ) -> Self {
         Self {
             start_percent,
@@ -134,12 +139,17 @@ impl<
     }
 }
 impl<
-    StartPercent: crate::nodes::types::Float,
-    EndPercent: crate::nodes::types::Float,
-    PrintKeyframes: crate::nodes::types::Boolean,
-    PrevHookKf: crate::nodes::types::HookKeyframes,
+    StartPercentParam: crate::nodes::types::Float,
+    EndPercentParam: crate::nodes::types::Float,
+    PrintKeyframesParam: crate::nodes::types::Boolean,
+    PrevHookKfParam: crate::nodes::types::HookKeyframes,
 > crate::nodes::TypedNode
-for CreateHookKeyframesFromFloats<StartPercent, EndPercent, PrintKeyframes, PrevHookKf> {
+for CreateHookKeyframesFromFloats<
+    StartPercentParam,
+    EndPercentParam,
+    PrintKeyframesParam,
+    PrevHookKfParam,
+> {
     type Output = crate::nodes::types::HookKeyframesOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)
@@ -163,14 +173,14 @@ for CreateHookKeyframesFromFloats<StartPercent, EndPercent, PrintKeyframes, Prev
 ///**Create Hook Keyframes Interp.**: No description.
 #[derive(Clone)]
 pub struct CreateHookKeyframesInterpolated<
-    StrengthStart: crate::nodes::types::Float,
-    StrengthEnd: crate::nodes::types::Float,
-    Interpolation: crate::nodes::types::String,
-    StartPercent: crate::nodes::types::Float,
-    EndPercent: crate::nodes::types::Float,
-    KeyframesCount: crate::nodes::types::Int,
-    PrintKeyframes: crate::nodes::types::Boolean,
-    PrevHookKf: crate::nodes::types::HookKeyframes
+    StrengthStartParam: crate::nodes::types::Float,
+    StrengthEndParam: crate::nodes::types::Float,
+    InterpolationParam: crate::nodes::types::String,
+    StartPercentParam: crate::nodes::types::Float,
+    EndPercentParam: crate::nodes::types::Float,
+    KeyframesCountParam: crate::nodes::types::Int,
+    PrintKeyframesParam: crate::nodes::types::Boolean,
+    PrevHookKfParam: crate::nodes::types::HookKeyframes
         = crate::nodes::types::HookKeyframesOut,
 > {
     /**No documentation.
@@ -181,7 +191,7 @@ pub struct CreateHookKeyframesInterpolated<
   - Min: 0
   - Step: 0.001
 */
-    pub strength_start: StrengthStart,
+    pub strength_start: StrengthStartParam,
     /**No documentation.
 
 **Metadata**:
@@ -190,9 +200,9 @@ pub struct CreateHookKeyframesInterpolated<
   - Min: 0
   - Step: 0.001
 */
-    pub strength_end: StrengthEnd,
+    pub strength_end: StrengthEndParam,
     ///No documentation.
-    pub interpolation: Interpolation,
+    pub interpolation: InterpolationParam,
     /**No documentation.
 
 **Metadata**:
@@ -201,7 +211,7 @@ pub struct CreateHookKeyframesInterpolated<
   - Min: 0
   - Step: 0.001
 */
-    pub start_percent: StartPercent,
+    pub start_percent: StartPercentParam,
     /**No documentation.
 
 **Metadata**:
@@ -210,7 +220,7 @@ pub struct CreateHookKeyframesInterpolated<
   - Min: 0
   - Step: 0.001
 */
-    pub end_percent: EndPercent,
+    pub end_percent: EndPercentParam,
     /**No documentation.
 
 **Metadata**:
@@ -219,45 +229,45 @@ pub struct CreateHookKeyframesInterpolated<
   - Min: 2
   - Step: 1
 */
-    pub keyframes_count: KeyframesCount,
+    pub keyframes_count: KeyframesCountParam,
     /**No documentation.
 
 **Metadata**:
   - Default: false
 */
-    pub print_keyframes: PrintKeyframes,
+    pub print_keyframes: PrintKeyframesParam,
     ///No documentation.
-    pub prev_hook_kf: Option<PrevHookKf>,
+    pub prev_hook_kf: Option<PrevHookKfParam>,
 }
 impl<
-    StrengthStart: crate::nodes::types::Float,
-    StrengthEnd: crate::nodes::types::Float,
-    Interpolation: crate::nodes::types::String,
-    StartPercent: crate::nodes::types::Float,
-    EndPercent: crate::nodes::types::Float,
-    KeyframesCount: crate::nodes::types::Int,
-    PrintKeyframes: crate::nodes::types::Boolean,
-    PrevHookKf: crate::nodes::types::HookKeyframes,
+    StrengthStartParam: crate::nodes::types::Float,
+    StrengthEndParam: crate::nodes::types::Float,
+    InterpolationParam: crate::nodes::types::String,
+    StartPercentParam: crate::nodes::types::Float,
+    EndPercentParam: crate::nodes::types::Float,
+    KeyframesCountParam: crate::nodes::types::Int,
+    PrintKeyframesParam: crate::nodes::types::Boolean,
+    PrevHookKfParam: crate::nodes::types::HookKeyframes,
 > CreateHookKeyframesInterpolated<
-    StrengthStart,
-    StrengthEnd,
-    Interpolation,
-    StartPercent,
-    EndPercent,
-    KeyframesCount,
-    PrintKeyframes,
-    PrevHookKf,
+    StrengthStartParam,
+    StrengthEndParam,
+    InterpolationParam,
+    StartPercentParam,
+    EndPercentParam,
+    KeyframesCountParam,
+    PrintKeyframesParam,
+    PrevHookKfParam,
 > {
     /// Create a new node.
     pub fn new(
-        strength_start: StrengthStart,
-        strength_end: StrengthEnd,
-        interpolation: Interpolation,
-        start_percent: StartPercent,
-        end_percent: EndPercent,
-        keyframes_count: KeyframesCount,
-        print_keyframes: PrintKeyframes,
-        prev_hook_kf: Option<PrevHookKf>,
+        strength_start: StrengthStartParam,
+        strength_end: StrengthEndParam,
+        interpolation: InterpolationParam,
+        start_percent: StartPercentParam,
+        end_percent: EndPercentParam,
+        keyframes_count: KeyframesCountParam,
+        print_keyframes: PrintKeyframesParam,
+        prev_hook_kf: Option<PrevHookKfParam>,
     ) -> Self {
         Self {
             strength_start,
@@ -272,24 +282,24 @@ impl<
     }
 }
 impl<
-    StrengthStart: crate::nodes::types::Float,
-    StrengthEnd: crate::nodes::types::Float,
-    Interpolation: crate::nodes::types::String,
-    StartPercent: crate::nodes::types::Float,
-    EndPercent: crate::nodes::types::Float,
-    KeyframesCount: crate::nodes::types::Int,
-    PrintKeyframes: crate::nodes::types::Boolean,
-    PrevHookKf: crate::nodes::types::HookKeyframes,
+    StrengthStartParam: crate::nodes::types::Float,
+    StrengthEndParam: crate::nodes::types::Float,
+    InterpolationParam: crate::nodes::types::String,
+    StartPercentParam: crate::nodes::types::Float,
+    EndPercentParam: crate::nodes::types::Float,
+    KeyframesCountParam: crate::nodes::types::Int,
+    PrintKeyframesParam: crate::nodes::types::Boolean,
+    PrevHookKfParam: crate::nodes::types::HookKeyframes,
 > crate::nodes::TypedNode
 for CreateHookKeyframesInterpolated<
-    StrengthStart,
-    StrengthEnd,
-    Interpolation,
-    StartPercent,
-    EndPercent,
-    KeyframesCount,
-    PrintKeyframes,
-    PrevHookKf,
+    StrengthStartParam,
+    StrengthEndParam,
+    InterpolationParam,
+    StartPercentParam,
+    EndPercentParam,
+    KeyframesCountParam,
+    PrintKeyframesParam,
+    PrevHookKfParam,
 > {
     type Output = crate::nodes::types::HookKeyframesOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
@@ -319,27 +329,28 @@ for CreateHookKeyframesInterpolated<
 ///**Set Hook Keyframes**: No description.
 #[derive(Clone)]
 pub struct SetHookKeyframes<
-    Hooks: crate::nodes::types::Hooks,
-    HookKf: crate::nodes::types::HookKeyframes = crate::nodes::types::HookKeyframesOut,
+    HooksParam: crate::nodes::types::Hooks,
+    HookKfParam: crate::nodes::types::HookKeyframes
+        = crate::nodes::types::HookKeyframesOut,
 > {
     ///No documentation.
-    pub hooks: Hooks,
+    pub hooks: HooksParam,
     ///No documentation.
-    pub hook_kf: Option<HookKf>,
+    pub hook_kf: Option<HookKfParam>,
 }
 impl<
-    Hooks: crate::nodes::types::Hooks,
-    HookKf: crate::nodes::types::HookKeyframes,
-> SetHookKeyframes<Hooks, HookKf> {
+    HooksParam: crate::nodes::types::Hooks,
+    HookKfParam: crate::nodes::types::HookKeyframes,
+> SetHookKeyframes<HooksParam, HookKfParam> {
     /// Create a new node.
-    pub fn new(hooks: Hooks, hook_kf: Option<HookKf>) -> Self {
+    pub fn new(hooks: HooksParam, hook_kf: Option<HookKfParam>) -> Self {
         Self { hooks, hook_kf }
     }
 }
 impl<
-    Hooks: crate::nodes::types::Hooks,
-    HookKf: crate::nodes::types::HookKeyframes,
-> crate::nodes::TypedNode for SetHookKeyframes<Hooks, HookKf> {
+    HooksParam: crate::nodes::types::Hooks,
+    HookKfParam: crate::nodes::types::HookKeyframes,
+> crate::nodes::TypedNode for SetHookKeyframes<HooksParam, HookKfParam> {
     type Output = crate::nodes::types::HooksOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)

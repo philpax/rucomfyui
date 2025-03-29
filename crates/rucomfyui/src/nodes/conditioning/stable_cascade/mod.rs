@@ -8,27 +8,28 @@ use crate::{
 ///**StableCascade_StageB_Conditioning**: No description.
 #[derive(Clone)]
 pub struct StableCascadeStageBConditioning<
-    Conditioning: crate::nodes::types::Conditioning,
-    StageC: crate::nodes::types::Latent,
+    ConditioningParam: crate::nodes::types::Conditioning,
+    StageCParam: crate::nodes::types::Latent,
 > {
     ///No documentation.
-    pub conditioning: Conditioning,
+    pub conditioning: ConditioningParam,
     ///No documentation.
-    pub stage_c: StageC,
+    pub stage_c: StageCParam,
 }
 impl<
-    Conditioning: crate::nodes::types::Conditioning,
-    StageC: crate::nodes::types::Latent,
-> StableCascadeStageBConditioning<Conditioning, StageC> {
+    ConditioningParam: crate::nodes::types::Conditioning,
+    StageCParam: crate::nodes::types::Latent,
+> StableCascadeStageBConditioning<ConditioningParam, StageCParam> {
     /// Create a new node.
-    pub fn new(conditioning: Conditioning, stage_c: StageC) -> Self {
+    pub fn new(conditioning: ConditioningParam, stage_c: StageCParam) -> Self {
         Self { conditioning, stage_c }
     }
 }
 impl<
-    Conditioning: crate::nodes::types::Conditioning,
-    StageC: crate::nodes::types::Latent,
-> crate::nodes::TypedNode for StableCascadeStageBConditioning<Conditioning, StageC> {
+    ConditioningParam: crate::nodes::types::Conditioning,
+    StageCParam: crate::nodes::types::Latent,
+> crate::nodes::TypedNode
+for StableCascadeStageBConditioning<ConditioningParam, StageCParam> {
     type Output = crate::nodes::types::ConditioningOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)

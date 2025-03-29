@@ -21,12 +21,12 @@ pub mod out {
 ///**ImageFromBatch**: No description.
 #[derive(Clone)]
 pub struct ImageFromBatch<
-    Image: crate::nodes::types::Image,
-    BatchIndex: crate::nodes::types::Int,
-    Length: crate::nodes::types::Int,
+    ImageParam: crate::nodes::types::Image,
+    BatchIndexParam: crate::nodes::types::Int,
+    LengthParam: crate::nodes::types::Int,
 > {
     ///No documentation.
-    pub image: Image,
+    pub image: ImageParam,
     /**No documentation.
 
 **Metadata**:
@@ -34,7 +34,7 @@ pub struct ImageFromBatch<
   - Max: 4095
   - Min: 0
 */
-    pub batch_index: BatchIndex,
+    pub batch_index: BatchIndexParam,
     /**No documentation.
 
 **Metadata**:
@@ -42,23 +42,27 @@ pub struct ImageFromBatch<
   - Max: 4096
   - Min: 1
 */
-    pub length: Length,
+    pub length: LengthParam,
 }
 impl<
-    Image: crate::nodes::types::Image,
-    BatchIndex: crate::nodes::types::Int,
-    Length: crate::nodes::types::Int,
-> ImageFromBatch<Image, BatchIndex, Length> {
+    ImageParam: crate::nodes::types::Image,
+    BatchIndexParam: crate::nodes::types::Int,
+    LengthParam: crate::nodes::types::Int,
+> ImageFromBatch<ImageParam, BatchIndexParam, LengthParam> {
     /// Create a new node.
-    pub fn new(image: Image, batch_index: BatchIndex, length: Length) -> Self {
+    pub fn new(
+        image: ImageParam,
+        batch_index: BatchIndexParam,
+        length: LengthParam,
+    ) -> Self {
         Self { image, batch_index, length }
     }
 }
 impl<
-    Image: crate::nodes::types::Image,
-    BatchIndex: crate::nodes::types::Int,
-    Length: crate::nodes::types::Int,
-> crate::nodes::TypedNode for ImageFromBatch<Image, BatchIndex, Length> {
+    ImageParam: crate::nodes::types::Image,
+    BatchIndexParam: crate::nodes::types::Int,
+    LengthParam: crate::nodes::types::Int,
+> crate::nodes::TypedNode for ImageFromBatch<ImageParam, BatchIndexParam, LengthParam> {
     type Output = crate::nodes::types::ImageOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)
@@ -77,18 +81,18 @@ impl<
 }
 ///**ImageRGBToYUV**: No description.
 #[derive(Clone)]
-pub struct ImageRgbToYuv<Image: crate::nodes::types::Image> {
+pub struct ImageRgbToYuv<ImageParam: crate::nodes::types::Image> {
     ///No documentation.
-    pub image: Image,
+    pub image: ImageParam,
 }
-impl<Image: crate::nodes::types::Image> ImageRgbToYuv<Image> {
+impl<ImageParam: crate::nodes::types::Image> ImageRgbToYuv<ImageParam> {
     /// Create a new node.
-    pub fn new(image: Image) -> Self {
+    pub fn new(image: ImageParam) -> Self {
         Self { image }
     }
 }
-impl<Image: crate::nodes::types::Image> crate::nodes::TypedNode
-for ImageRgbToYuv<Image> {
+impl<ImageParam: crate::nodes::types::Image> crate::nodes::TypedNode
+for ImageRgbToYuv<ImageParam> {
     type Output = out::ImageRgbToYuvOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
@@ -110,32 +114,32 @@ for ImageRgbToYuv<Image> {
 ///**ImageYUVToRGB**: No description.
 #[derive(Clone)]
 pub struct ImageYuvToRgb<
-    Y: crate::nodes::types::Image,
-    U: crate::nodes::types::Image,
-    V: crate::nodes::types::Image,
+    YParam: crate::nodes::types::Image,
+    UParam: crate::nodes::types::Image,
+    VParam: crate::nodes::types::Image,
 > {
     ///No documentation.
-    pub y: Y,
+    pub y: YParam,
     ///No documentation.
-    pub u: U,
+    pub u: UParam,
     ///No documentation.
-    pub v: V,
+    pub v: VParam,
 }
 impl<
-    Y: crate::nodes::types::Image,
-    U: crate::nodes::types::Image,
-    V: crate::nodes::types::Image,
-> ImageYuvToRgb<Y, U, V> {
+    YParam: crate::nodes::types::Image,
+    UParam: crate::nodes::types::Image,
+    VParam: crate::nodes::types::Image,
+> ImageYuvToRgb<YParam, UParam, VParam> {
     /// Create a new node.
-    pub fn new(y: Y, u: U, v: V) -> Self {
+    pub fn new(y: YParam, u: UParam, v: VParam) -> Self {
         Self { y, u, v }
     }
 }
 impl<
-    Y: crate::nodes::types::Image,
-    U: crate::nodes::types::Image,
-    V: crate::nodes::types::Image,
-> crate::nodes::TypedNode for ImageYuvToRgb<Y, U, V> {
+    YParam: crate::nodes::types::Image,
+    UParam: crate::nodes::types::Image,
+    VParam: crate::nodes::types::Image,
+> crate::nodes::TypedNode for ImageYuvToRgb<YParam, UParam, VParam> {
     type Output = crate::nodes::types::ImageOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)
@@ -155,11 +159,11 @@ impl<
 ///**Rebatch Images**: No description.
 #[derive(Clone)]
 pub struct RebatchImages<
-    Images: crate::nodes::types::Image,
-    BatchSize: crate::nodes::types::Int,
+    ImagesParam: crate::nodes::types::Image,
+    BatchSizeParam: crate::nodes::types::Int,
 > {
     ///No documentation.
-    pub images: Images,
+    pub images: ImagesParam,
     /**No documentation.
 
 **Metadata**:
@@ -167,21 +171,21 @@ pub struct RebatchImages<
   - Max: 4096
   - Min: 1
 */
-    pub batch_size: BatchSize,
+    pub batch_size: BatchSizeParam,
 }
 impl<
-    Images: crate::nodes::types::Image,
-    BatchSize: crate::nodes::types::Int,
-> RebatchImages<Images, BatchSize> {
+    ImagesParam: crate::nodes::types::Image,
+    BatchSizeParam: crate::nodes::types::Int,
+> RebatchImages<ImagesParam, BatchSizeParam> {
     /// Create a new node.
-    pub fn new(images: Images, batch_size: BatchSize) -> Self {
+    pub fn new(images: ImagesParam, batch_size: BatchSizeParam) -> Self {
         Self { images, batch_size }
     }
 }
 impl<
-    Images: crate::nodes::types::Image,
-    BatchSize: crate::nodes::types::Int,
-> crate::nodes::TypedNode for RebatchImages<Images, BatchSize> {
+    ImagesParam: crate::nodes::types::Image,
+    BatchSizeParam: crate::nodes::types::Int,
+> crate::nodes::TypedNode for RebatchImages<ImagesParam, BatchSizeParam> {
     type Output = crate::nodes::types::ImageOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)
@@ -200,11 +204,11 @@ impl<
 ///**RepeatImageBatch**: No description.
 #[derive(Clone)]
 pub struct RepeatImageBatch<
-    Image: crate::nodes::types::Image,
-    Amount: crate::nodes::types::Int,
+    ImageParam: crate::nodes::types::Image,
+    AmountParam: crate::nodes::types::Int,
 > {
     ///No documentation.
-    pub image: Image,
+    pub image: ImageParam,
     /**No documentation.
 
 **Metadata**:
@@ -212,21 +216,21 @@ pub struct RepeatImageBatch<
   - Max: 4096
   - Min: 1
 */
-    pub amount: Amount,
+    pub amount: AmountParam,
 }
 impl<
-    Image: crate::nodes::types::Image,
-    Amount: crate::nodes::types::Int,
-> RepeatImageBatch<Image, Amount> {
+    ImageParam: crate::nodes::types::Image,
+    AmountParam: crate::nodes::types::Int,
+> RepeatImageBatch<ImageParam, AmountParam> {
     /// Create a new node.
-    pub fn new(image: Image, amount: Amount) -> Self {
+    pub fn new(image: ImageParam, amount: AmountParam) -> Self {
         Self { image, amount }
     }
 }
 impl<
-    Image: crate::nodes::types::Image,
-    Amount: crate::nodes::types::Int,
-> crate::nodes::TypedNode for RepeatImageBatch<Image, Amount> {
+    ImageParam: crate::nodes::types::Image,
+    AmountParam: crate::nodes::types::Int,
+> crate::nodes::TypedNode for RepeatImageBatch<ImageParam, AmountParam> {
     type Output = crate::nodes::types::ImageOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)

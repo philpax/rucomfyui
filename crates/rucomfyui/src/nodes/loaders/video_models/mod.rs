@@ -20,18 +20,20 @@ pub mod out {
 }
 ///**Image Only Checkpoint Loader (img2vid model)**: No description.
 #[derive(Clone)]
-pub struct ImageOnlyCheckpointLoader<CkptName: crate::nodes::types::String> {
+pub struct ImageOnlyCheckpointLoader<CkptNameParam: crate::nodes::types::String> {
     ///No documentation.
-    pub ckpt_name: CkptName,
+    pub ckpt_name: CkptNameParam,
 }
-impl<CkptName: crate::nodes::types::String> ImageOnlyCheckpointLoader<CkptName> {
+impl<
+    CkptNameParam: crate::nodes::types::String,
+> ImageOnlyCheckpointLoader<CkptNameParam> {
     /// Create a new node.
-    pub fn new(ckpt_name: CkptName) -> Self {
+    pub fn new(ckpt_name: CkptNameParam) -> Self {
         Self { ckpt_name }
     }
 }
-impl<CkptName: crate::nodes::types::String> crate::nodes::TypedNode
-for ImageOnlyCheckpointLoader<CkptName> {
+impl<CkptNameParam: crate::nodes::types::String> crate::nodes::TypedNode
+for ImageOnlyCheckpointLoader<CkptNameParam> {
     type Output = out::ImageOnlyCheckpointLoaderOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {

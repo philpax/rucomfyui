@@ -41,18 +41,18 @@ pub mod out {
 }
 ///**Load CLIP Vision**: No description.
 #[derive(Clone)]
-pub struct ClipVisionLoader<ClipName: crate::nodes::types::String> {
+pub struct ClipVisionLoader<ClipNameParam: crate::nodes::types::String> {
     ///No documentation.
-    pub clip_name: ClipName,
+    pub clip_name: ClipNameParam,
 }
-impl<ClipName: crate::nodes::types::String> ClipVisionLoader<ClipName> {
+impl<ClipNameParam: crate::nodes::types::String> ClipVisionLoader<ClipNameParam> {
     /// Create a new node.
-    pub fn new(clip_name: ClipName) -> Self {
+    pub fn new(clip_name: ClipNameParam) -> Self {
         Self { clip_name }
     }
 }
-impl<ClipName: crate::nodes::types::String> crate::nodes::TypedNode
-for ClipVisionLoader<ClipName> {
+impl<ClipNameParam: crate::nodes::types::String> crate::nodes::TypedNode
+for ClipVisionLoader<ClipNameParam> {
     type Output = crate::nodes::types::ClipVisionOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)
@@ -69,18 +69,18 @@ for ClipVisionLoader<ClipName> {
 }
 ///**Load Checkpoint**: Loads a diffusion model checkpoint, diffusion models are used to denoise latents.
 #[derive(Clone)]
-pub struct CheckpointLoaderSimple<CkptName: crate::nodes::types::String> {
+pub struct CheckpointLoaderSimple<CkptNameParam: crate::nodes::types::String> {
     ///The name of the checkpoint (model) to load.
-    pub ckpt_name: CkptName,
+    pub ckpt_name: CkptNameParam,
 }
-impl<CkptName: crate::nodes::types::String> CheckpointLoaderSimple<CkptName> {
+impl<CkptNameParam: crate::nodes::types::String> CheckpointLoaderSimple<CkptNameParam> {
     /// Create a new node.
-    pub fn new(ckpt_name: CkptName) -> Self {
+    pub fn new(ckpt_name: CkptNameParam) -> Self {
         Self { ckpt_name }
     }
 }
-impl<CkptName: crate::nodes::types::String> crate::nodes::TypedNode
-for CheckpointLoaderSimple<CkptName> {
+impl<CkptNameParam: crate::nodes::types::String> crate::nodes::TypedNode
+for CheckpointLoaderSimple<CkptNameParam> {
     type Output = out::CheckpointLoaderSimpleOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
@@ -101,18 +101,20 @@ for CheckpointLoaderSimple<CkptName> {
 }
 ///**Load ControlNet Model**: No description.
 #[derive(Clone)]
-pub struct ControlNetLoader<ControlNetName: crate::nodes::types::String> {
+pub struct ControlNetLoader<ControlNetNameParam: crate::nodes::types::String> {
     ///No documentation.
-    pub control_net_name: ControlNetName,
+    pub control_net_name: ControlNetNameParam,
 }
-impl<ControlNetName: crate::nodes::types::String> ControlNetLoader<ControlNetName> {
+impl<
+    ControlNetNameParam: crate::nodes::types::String,
+> ControlNetLoader<ControlNetNameParam> {
     /// Create a new node.
-    pub fn new(control_net_name: ControlNetName) -> Self {
+    pub fn new(control_net_name: ControlNetNameParam) -> Self {
         Self { control_net_name }
     }
 }
-impl<ControlNetName: crate::nodes::types::String> crate::nodes::TypedNode
-for ControlNetLoader<ControlNetName> {
+impl<ControlNetNameParam: crate::nodes::types::String> crate::nodes::TypedNode
+for ControlNetLoader<ControlNetNameParam> {
     type Output = crate::nodes::types::ControlNetOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)
@@ -134,27 +136,27 @@ for ControlNetLoader<ControlNetName> {
 ///**Load ControlNet Model (diff)**: No description.
 #[derive(Clone)]
 pub struct DiffControlNetLoader<
-    Model: crate::nodes::types::Model,
-    ControlNetName: crate::nodes::types::String,
+    ModelParam: crate::nodes::types::Model,
+    ControlNetNameParam: crate::nodes::types::String,
 > {
     ///No documentation.
-    pub model: Model,
+    pub model: ModelParam,
     ///No documentation.
-    pub control_net_name: ControlNetName,
+    pub control_net_name: ControlNetNameParam,
 }
 impl<
-    Model: crate::nodes::types::Model,
-    ControlNetName: crate::nodes::types::String,
-> DiffControlNetLoader<Model, ControlNetName> {
+    ModelParam: crate::nodes::types::Model,
+    ControlNetNameParam: crate::nodes::types::String,
+> DiffControlNetLoader<ModelParam, ControlNetNameParam> {
     /// Create a new node.
-    pub fn new(model: Model, control_net_name: ControlNetName) -> Self {
+    pub fn new(model: ModelParam, control_net_name: ControlNetNameParam) -> Self {
         Self { model, control_net_name }
     }
 }
 impl<
-    Model: crate::nodes::types::Model,
-    ControlNetName: crate::nodes::types::String,
-> crate::nodes::TypedNode for DiffControlNetLoader<Model, ControlNetName> {
+    ModelParam: crate::nodes::types::Model,
+    ControlNetNameParam: crate::nodes::types::String,
+> crate::nodes::TypedNode for DiffControlNetLoader<ModelParam, ControlNetNameParam> {
     type Output = crate::nodes::types::ControlNetOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)
@@ -176,18 +178,18 @@ impl<
 }
 ///**GLIGENLoader**: No description.
 #[derive(Clone)]
-pub struct GligenLoader<GligenName: crate::nodes::types::String> {
+pub struct GligenLoader<GligenNameParam: crate::nodes::types::String> {
     ///No documentation.
-    pub gligen_name: GligenName,
+    pub gligen_name: GligenNameParam,
 }
-impl<GligenName: crate::nodes::types::String> GligenLoader<GligenName> {
+impl<GligenNameParam: crate::nodes::types::String> GligenLoader<GligenNameParam> {
     /// Create a new node.
-    pub fn new(gligen_name: GligenName) -> Self {
+    pub fn new(gligen_name: GligenNameParam) -> Self {
         Self { gligen_name }
     }
 }
-impl<GligenName: crate::nodes::types::String> crate::nodes::TypedNode
-for GligenLoader<GligenName> {
+impl<GligenNameParam: crate::nodes::types::String> crate::nodes::TypedNode
+for GligenLoader<GligenNameParam> {
     type Output = crate::nodes::types::GligenOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)
@@ -205,14 +207,14 @@ for GligenLoader<GligenName> {
 ///**HypernetworkLoader**: No description.
 #[derive(Clone)]
 pub struct HypernetworkLoader<
-    Model: crate::nodes::types::Model,
-    HypernetworkName: crate::nodes::types::String,
-    Strength: crate::nodes::types::Float,
+    ModelParam: crate::nodes::types::Model,
+    HypernetworkNameParam: crate::nodes::types::String,
+    StrengthParam: crate::nodes::types::Float,
 > {
     ///No documentation.
-    pub model: Model,
+    pub model: ModelParam,
     ///No documentation.
-    pub hypernetwork_name: HypernetworkName,
+    pub hypernetwork_name: HypernetworkNameParam,
     /**No documentation.
 
 **Metadata**:
@@ -221,18 +223,18 @@ pub struct HypernetworkLoader<
   - Min: -10
   - Step: 0.01
 */
-    pub strength: Strength,
+    pub strength: StrengthParam,
 }
 impl<
-    Model: crate::nodes::types::Model,
-    HypernetworkName: crate::nodes::types::String,
-    Strength: crate::nodes::types::Float,
-> HypernetworkLoader<Model, HypernetworkName, Strength> {
+    ModelParam: crate::nodes::types::Model,
+    HypernetworkNameParam: crate::nodes::types::String,
+    StrengthParam: crate::nodes::types::Float,
+> HypernetworkLoader<ModelParam, HypernetworkNameParam, StrengthParam> {
     /// Create a new node.
     pub fn new(
-        model: Model,
-        hypernetwork_name: HypernetworkName,
-        strength: Strength,
+        model: ModelParam,
+        hypernetwork_name: HypernetworkNameParam,
+        strength: StrengthParam,
     ) -> Self {
         Self {
             model,
@@ -242,10 +244,11 @@ impl<
     }
 }
 impl<
-    Model: crate::nodes::types::Model,
-    HypernetworkName: crate::nodes::types::String,
-    Strength: crate::nodes::types::Float,
-> crate::nodes::TypedNode for HypernetworkLoader<Model, HypernetworkName, Strength> {
+    ModelParam: crate::nodes::types::Model,
+    HypernetworkNameParam: crate::nodes::types::String,
+    StrengthParam: crate::nodes::types::Float,
+> crate::nodes::TypedNode
+for HypernetworkLoader<ModelParam, HypernetworkNameParam, StrengthParam> {
     type Output = crate::nodes::types::ModelOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)
@@ -269,18 +272,18 @@ impl<
 ///**Load LoRA**: LoRAs are used to modify diffusion and CLIP models, altering the way in which latents are denoised such as applying styles. Multiple LoRA nodes can be linked together.
 #[derive(Clone)]
 pub struct LoraLoader<
-    Model: crate::nodes::types::Model,
-    Clip: crate::nodes::types::Clip,
-    LoraName: crate::nodes::types::String,
-    StrengthModel: crate::nodes::types::Float,
-    StrengthClip: crate::nodes::types::Float,
+    ModelParam: crate::nodes::types::Model,
+    ClipParam: crate::nodes::types::Clip,
+    LoraNameParam: crate::nodes::types::String,
+    StrengthModelParam: crate::nodes::types::Float,
+    StrengthClipParam: crate::nodes::types::Float,
 > {
     ///The diffusion model the LoRA will be applied to.
-    pub model: Model,
+    pub model: ModelParam,
     ///The CLIP model the LoRA will be applied to.
-    pub clip: Clip,
+    pub clip: ClipParam,
     ///The name of the LoRA.
-    pub lora_name: LoraName,
+    pub lora_name: LoraNameParam,
     /**How strongly to modify the diffusion model. This value can be negative.
 
 **Metadata**:
@@ -289,7 +292,7 @@ pub struct LoraLoader<
   - Min: -100
   - Step: 0.01
 */
-    pub strength_model: StrengthModel,
+    pub strength_model: StrengthModelParam,
     /**How strongly to modify the CLIP model. This value can be negative.
 
 **Metadata**:
@@ -298,22 +301,28 @@ pub struct LoraLoader<
   - Min: -100
   - Step: 0.01
 */
-    pub strength_clip: StrengthClip,
+    pub strength_clip: StrengthClipParam,
 }
 impl<
-    Model: crate::nodes::types::Model,
-    Clip: crate::nodes::types::Clip,
-    LoraName: crate::nodes::types::String,
-    StrengthModel: crate::nodes::types::Float,
-    StrengthClip: crate::nodes::types::Float,
-> LoraLoader<Model, Clip, LoraName, StrengthModel, StrengthClip> {
+    ModelParam: crate::nodes::types::Model,
+    ClipParam: crate::nodes::types::Clip,
+    LoraNameParam: crate::nodes::types::String,
+    StrengthModelParam: crate::nodes::types::Float,
+    StrengthClipParam: crate::nodes::types::Float,
+> LoraLoader<
+    ModelParam,
+    ClipParam,
+    LoraNameParam,
+    StrengthModelParam,
+    StrengthClipParam,
+> {
     /// Create a new node.
     pub fn new(
-        model: Model,
-        clip: Clip,
-        lora_name: LoraName,
-        strength_model: StrengthModel,
-        strength_clip: StrengthClip,
+        model: ModelParam,
+        clip: ClipParam,
+        lora_name: LoraNameParam,
+        strength_model: StrengthModelParam,
+        strength_clip: StrengthClipParam,
     ) -> Self {
         Self {
             model,
@@ -325,13 +334,19 @@ impl<
     }
 }
 impl<
-    Model: crate::nodes::types::Model,
-    Clip: crate::nodes::types::Clip,
-    LoraName: crate::nodes::types::String,
-    StrengthModel: crate::nodes::types::Float,
-    StrengthClip: crate::nodes::types::Float,
+    ModelParam: crate::nodes::types::Model,
+    ClipParam: crate::nodes::types::Clip,
+    LoraNameParam: crate::nodes::types::String,
+    StrengthModelParam: crate::nodes::types::Float,
+    StrengthClipParam: crate::nodes::types::Float,
 > crate::nodes::TypedNode
-for LoraLoader<Model, Clip, LoraName, StrengthModel, StrengthClip> {
+for LoraLoader<
+    ModelParam,
+    ClipParam,
+    LoraNameParam,
+    StrengthModelParam,
+    StrengthClipParam,
+> {
     type Output = out::LoraLoaderOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
@@ -356,14 +371,14 @@ for LoraLoader<Model, Clip, LoraName, StrengthModel, StrengthClip> {
 ///**LoraLoaderModelOnly**: LoRAs are used to modify diffusion and CLIP models, altering the way in which latents are denoised such as applying styles. Multiple LoRA nodes can be linked together.
 #[derive(Clone)]
 pub struct LoraLoaderModelOnly<
-    Model: crate::nodes::types::Model,
-    LoraName: crate::nodes::types::String,
-    StrengthModel: crate::nodes::types::Float,
+    ModelParam: crate::nodes::types::Model,
+    LoraNameParam: crate::nodes::types::String,
+    StrengthModelParam: crate::nodes::types::Float,
 > {
     ///No documentation.
-    pub model: Model,
+    pub model: ModelParam,
     ///No documentation.
-    pub lora_name: LoraName,
+    pub lora_name: LoraNameParam,
     /**No documentation.
 
 **Metadata**:
@@ -372,18 +387,18 @@ pub struct LoraLoaderModelOnly<
   - Min: -100
   - Step: 0.01
 */
-    pub strength_model: StrengthModel,
+    pub strength_model: StrengthModelParam,
 }
 impl<
-    Model: crate::nodes::types::Model,
-    LoraName: crate::nodes::types::String,
-    StrengthModel: crate::nodes::types::Float,
-> LoraLoaderModelOnly<Model, LoraName, StrengthModel> {
+    ModelParam: crate::nodes::types::Model,
+    LoraNameParam: crate::nodes::types::String,
+    StrengthModelParam: crate::nodes::types::Float,
+> LoraLoaderModelOnly<ModelParam, LoraNameParam, StrengthModelParam> {
     /// Create a new node.
     pub fn new(
-        model: Model,
-        lora_name: LoraName,
-        strength_model: StrengthModel,
+        model: ModelParam,
+        lora_name: LoraNameParam,
+        strength_model: StrengthModelParam,
     ) -> Self {
         Self {
             model,
@@ -393,10 +408,11 @@ impl<
     }
 }
 impl<
-    Model: crate::nodes::types::Model,
-    LoraName: crate::nodes::types::String,
-    StrengthModel: crate::nodes::types::Float,
-> crate::nodes::TypedNode for LoraLoaderModelOnly<Model, LoraName, StrengthModel> {
+    ModelParam: crate::nodes::types::Model,
+    LoraNameParam: crate::nodes::types::String,
+    StrengthModelParam: crate::nodes::types::Float,
+> crate::nodes::TypedNode
+for LoraLoaderModelOnly<ModelParam, LoraNameParam, StrengthModelParam> {
     type Output = crate::nodes::types::ModelOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)
@@ -415,18 +431,20 @@ impl<
 }
 ///**Load Style Model**: No description.
 #[derive(Clone)]
-pub struct StyleModelLoader<StyleModelName: crate::nodes::types::String> {
+pub struct StyleModelLoader<StyleModelNameParam: crate::nodes::types::String> {
     ///No documentation.
-    pub style_model_name: StyleModelName,
+    pub style_model_name: StyleModelNameParam,
 }
-impl<StyleModelName: crate::nodes::types::String> StyleModelLoader<StyleModelName> {
+impl<
+    StyleModelNameParam: crate::nodes::types::String,
+> StyleModelLoader<StyleModelNameParam> {
     /// Create a new node.
-    pub fn new(style_model_name: StyleModelName) -> Self {
+    pub fn new(style_model_name: StyleModelNameParam) -> Self {
         Self { style_model_name }
     }
 }
-impl<StyleModelName: crate::nodes::types::String> crate::nodes::TypedNode
-for StyleModelLoader<StyleModelName> {
+impl<StyleModelNameParam: crate::nodes::types::String> crate::nodes::TypedNode
+for StyleModelLoader<StyleModelNameParam> {
     type Output = crate::nodes::types::StyleModelOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)
@@ -447,18 +465,18 @@ for StyleModelLoader<StyleModelName> {
 }
 ///**Load Upscale Model**: No description.
 #[derive(Clone)]
-pub struct UpscaleModelLoader<ModelName: crate::nodes::types::String> {
+pub struct UpscaleModelLoader<ModelNameParam: crate::nodes::types::String> {
     ///No documentation.
-    pub model_name: ModelName,
+    pub model_name: ModelNameParam,
 }
-impl<ModelName: crate::nodes::types::String> UpscaleModelLoader<ModelName> {
+impl<ModelNameParam: crate::nodes::types::String> UpscaleModelLoader<ModelNameParam> {
     /// Create a new node.
-    pub fn new(model_name: ModelName) -> Self {
+    pub fn new(model_name: ModelNameParam) -> Self {
         Self { model_name }
     }
 }
-impl<ModelName: crate::nodes::types::String> crate::nodes::TypedNode
-for UpscaleModelLoader<ModelName> {
+impl<ModelNameParam: crate::nodes::types::String> crate::nodes::TypedNode
+for UpscaleModelLoader<ModelNameParam> {
     type Output = crate::nodes::types::UpscaleModelOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)
@@ -475,18 +493,18 @@ for UpscaleModelLoader<ModelName> {
 }
 ///**Load VAE**: No description.
 #[derive(Clone)]
-pub struct VaeLoader<VaeName: crate::nodes::types::String> {
+pub struct VaeLoader<VaeNameParam: crate::nodes::types::String> {
     ///No documentation.
-    pub vae_name: VaeName,
+    pub vae_name: VaeNameParam,
 }
-impl<VaeName: crate::nodes::types::String> VaeLoader<VaeName> {
+impl<VaeNameParam: crate::nodes::types::String> VaeLoader<VaeNameParam> {
     /// Create a new node.
-    pub fn new(vae_name: VaeName) -> Self {
+    pub fn new(vae_name: VaeNameParam) -> Self {
         Self { vae_name }
     }
 }
-impl<VaeName: crate::nodes::types::String> crate::nodes::TypedNode
-for VaeLoader<VaeName> {
+impl<VaeNameParam: crate::nodes::types::String> crate::nodes::TypedNode
+for VaeLoader<VaeNameParam> {
     type Output = crate::nodes::types::VaeOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)
@@ -503,18 +521,18 @@ for VaeLoader<VaeName> {
 }
 ///**unCLIPCheckpointLoader**: No description.
 #[derive(Clone)]
-pub struct UnClipCheckpointLoader<CkptName: crate::nodes::types::String> {
+pub struct UnClipCheckpointLoader<CkptNameParam: crate::nodes::types::String> {
     ///No documentation.
-    pub ckpt_name: CkptName,
+    pub ckpt_name: CkptNameParam,
 }
-impl<CkptName: crate::nodes::types::String> UnClipCheckpointLoader<CkptName> {
+impl<CkptNameParam: crate::nodes::types::String> UnClipCheckpointLoader<CkptNameParam> {
     /// Create a new node.
-    pub fn new(ckpt_name: CkptName) -> Self {
+    pub fn new(ckpt_name: CkptNameParam) -> Self {
         Self { ckpt_name }
     }
 }
-impl<CkptName: crate::nodes::types::String> crate::nodes::TypedNode
-for UnClipCheckpointLoader<CkptName> {
+impl<CkptNameParam: crate::nodes::types::String> crate::nodes::TypedNode
+for UnClipCheckpointLoader<CkptNameParam> {
     type Output = out::UnClipCheckpointLoaderOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {

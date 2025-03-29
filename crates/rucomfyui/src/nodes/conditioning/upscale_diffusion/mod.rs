@@ -21,18 +21,18 @@ pub mod out {
 ///**SD_4XUpscale_Conditioning**: No description.
 #[derive(Clone)]
 pub struct Sd4XUpscaleConditioning<
-    Images: crate::nodes::types::Image,
-    Positive: crate::nodes::types::Conditioning,
-    Negative: crate::nodes::types::Conditioning,
-    ScaleRatio: crate::nodes::types::Float,
-    NoiseAugmentation: crate::nodes::types::Float,
+    ImagesParam: crate::nodes::types::Image,
+    PositiveParam: crate::nodes::types::Conditioning,
+    NegativeParam: crate::nodes::types::Conditioning,
+    ScaleRatioParam: crate::nodes::types::Float,
+    NoiseAugmentationParam: crate::nodes::types::Float,
 > {
     ///No documentation.
-    pub images: Images,
+    pub images: ImagesParam,
     ///No documentation.
-    pub positive: Positive,
+    pub positive: PositiveParam,
     ///No documentation.
-    pub negative: Negative,
+    pub negative: NegativeParam,
     /**No documentation.
 
 **Metadata**:
@@ -41,7 +41,7 @@ pub struct Sd4XUpscaleConditioning<
   - Min: 0
   - Step: 0.01
 */
-    pub scale_ratio: ScaleRatio,
+    pub scale_ratio: ScaleRatioParam,
     /**No documentation.
 
 **Metadata**:
@@ -50,22 +50,28 @@ pub struct Sd4XUpscaleConditioning<
   - Min: 0
   - Step: 0.001
 */
-    pub noise_augmentation: NoiseAugmentation,
+    pub noise_augmentation: NoiseAugmentationParam,
 }
 impl<
-    Images: crate::nodes::types::Image,
-    Positive: crate::nodes::types::Conditioning,
-    Negative: crate::nodes::types::Conditioning,
-    ScaleRatio: crate::nodes::types::Float,
-    NoiseAugmentation: crate::nodes::types::Float,
-> Sd4XUpscaleConditioning<Images, Positive, Negative, ScaleRatio, NoiseAugmentation> {
+    ImagesParam: crate::nodes::types::Image,
+    PositiveParam: crate::nodes::types::Conditioning,
+    NegativeParam: crate::nodes::types::Conditioning,
+    ScaleRatioParam: crate::nodes::types::Float,
+    NoiseAugmentationParam: crate::nodes::types::Float,
+> Sd4XUpscaleConditioning<
+    ImagesParam,
+    PositiveParam,
+    NegativeParam,
+    ScaleRatioParam,
+    NoiseAugmentationParam,
+> {
     /// Create a new node.
     pub fn new(
-        images: Images,
-        positive: Positive,
-        negative: Negative,
-        scale_ratio: ScaleRatio,
-        noise_augmentation: NoiseAugmentation,
+        images: ImagesParam,
+        positive: PositiveParam,
+        negative: NegativeParam,
+        scale_ratio: ScaleRatioParam,
+        noise_augmentation: NoiseAugmentationParam,
     ) -> Self {
         Self {
             images,
@@ -77,13 +83,19 @@ impl<
     }
 }
 impl<
-    Images: crate::nodes::types::Image,
-    Positive: crate::nodes::types::Conditioning,
-    Negative: crate::nodes::types::Conditioning,
-    ScaleRatio: crate::nodes::types::Float,
-    NoiseAugmentation: crate::nodes::types::Float,
+    ImagesParam: crate::nodes::types::Image,
+    PositiveParam: crate::nodes::types::Conditioning,
+    NegativeParam: crate::nodes::types::Conditioning,
+    ScaleRatioParam: crate::nodes::types::Float,
+    NoiseAugmentationParam: crate::nodes::types::Float,
 > crate::nodes::TypedNode
-for Sd4XUpscaleConditioning<Images, Positive, Negative, ScaleRatio, NoiseAugmentation> {
+for Sd4XUpscaleConditioning<
+    ImagesParam,
+    PositiveParam,
+    NegativeParam,
+    ScaleRatioParam,
+    NoiseAugmentationParam,
+> {
     type Output = out::Sd4XUpscaleConditioningOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {

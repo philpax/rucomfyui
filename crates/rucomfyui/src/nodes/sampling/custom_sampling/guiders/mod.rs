@@ -8,27 +8,27 @@ use crate::{
 ///**BasicGuider**: No description.
 #[derive(Clone)]
 pub struct BasicGuider<
-    Model: crate::nodes::types::Model,
-    Conditioning: crate::nodes::types::Conditioning,
+    ModelParam: crate::nodes::types::Model,
+    ConditioningParam: crate::nodes::types::Conditioning,
 > {
     ///No documentation.
-    pub model: Model,
+    pub model: ModelParam,
     ///No documentation.
-    pub conditioning: Conditioning,
+    pub conditioning: ConditioningParam,
 }
 impl<
-    Model: crate::nodes::types::Model,
-    Conditioning: crate::nodes::types::Conditioning,
-> BasicGuider<Model, Conditioning> {
+    ModelParam: crate::nodes::types::Model,
+    ConditioningParam: crate::nodes::types::Conditioning,
+> BasicGuider<ModelParam, ConditioningParam> {
     /// Create a new node.
-    pub fn new(model: Model, conditioning: Conditioning) -> Self {
+    pub fn new(model: ModelParam, conditioning: ConditioningParam) -> Self {
         Self { model, conditioning }
     }
 }
 impl<
-    Model: crate::nodes::types::Model,
-    Conditioning: crate::nodes::types::Conditioning,
-> crate::nodes::TypedNode for BasicGuider<Model, Conditioning> {
+    ModelParam: crate::nodes::types::Model,
+    ConditioningParam: crate::nodes::types::Conditioning,
+> crate::nodes::TypedNode for BasicGuider<ModelParam, ConditioningParam> {
     type Output = crate::nodes::types::GuiderOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)
@@ -47,17 +47,17 @@ impl<
 ///**CFGGuider**: No description.
 #[derive(Clone)]
 pub struct CfgGuider<
-    Model: crate::nodes::types::Model,
-    Positive: crate::nodes::types::Conditioning,
-    Negative: crate::nodes::types::Conditioning,
-    Cfg: crate::nodes::types::Float,
+    ModelParam: crate::nodes::types::Model,
+    PositiveParam: crate::nodes::types::Conditioning,
+    NegativeParam: crate::nodes::types::Conditioning,
+    CfgParam: crate::nodes::types::Float,
 > {
     ///No documentation.
-    pub model: Model,
+    pub model: ModelParam,
     ///No documentation.
-    pub positive: Positive,
+    pub positive: PositiveParam,
     ///No documentation.
-    pub negative: Negative,
+    pub negative: NegativeParam,
     /**No documentation.
 
 **Metadata**:
@@ -67,16 +67,21 @@ pub struct CfgGuider<
   - Round: 0.01
   - Step: 0.1
 */
-    pub cfg: Cfg,
+    pub cfg: CfgParam,
 }
 impl<
-    Model: crate::nodes::types::Model,
-    Positive: crate::nodes::types::Conditioning,
-    Negative: crate::nodes::types::Conditioning,
-    Cfg: crate::nodes::types::Float,
-> CfgGuider<Model, Positive, Negative, Cfg> {
+    ModelParam: crate::nodes::types::Model,
+    PositiveParam: crate::nodes::types::Conditioning,
+    NegativeParam: crate::nodes::types::Conditioning,
+    CfgParam: crate::nodes::types::Float,
+> CfgGuider<ModelParam, PositiveParam, NegativeParam, CfgParam> {
     /// Create a new node.
-    pub fn new(model: Model, positive: Positive, negative: Negative, cfg: Cfg) -> Self {
+    pub fn new(
+        model: ModelParam,
+        positive: PositiveParam,
+        negative: NegativeParam,
+        cfg: CfgParam,
+    ) -> Self {
         Self {
             model,
             positive,
@@ -86,11 +91,12 @@ impl<
     }
 }
 impl<
-    Model: crate::nodes::types::Model,
-    Positive: crate::nodes::types::Conditioning,
-    Negative: crate::nodes::types::Conditioning,
-    Cfg: crate::nodes::types::Float,
-> crate::nodes::TypedNode for CfgGuider<Model, Positive, Negative, Cfg> {
+    ModelParam: crate::nodes::types::Model,
+    PositiveParam: crate::nodes::types::Conditioning,
+    NegativeParam: crate::nodes::types::Conditioning,
+    CfgParam: crate::nodes::types::Float,
+> crate::nodes::TypedNode
+for CfgGuider<ModelParam, PositiveParam, NegativeParam, CfgParam> {
     type Output = crate::nodes::types::GuiderOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)
@@ -111,21 +117,21 @@ impl<
 ///**DualCFGGuider**: No description.
 #[derive(Clone)]
 pub struct DualCfgGuider<
-    Model: crate::nodes::types::Model,
-    Cond1: crate::nodes::types::Conditioning,
-    Cond2: crate::nodes::types::Conditioning,
-    Negative: crate::nodes::types::Conditioning,
-    CfgConds: crate::nodes::types::Float,
-    CfgCond2Negative: crate::nodes::types::Float,
+    ModelParam: crate::nodes::types::Model,
+    Cond1Param: crate::nodes::types::Conditioning,
+    Cond2Param: crate::nodes::types::Conditioning,
+    NegativeParam: crate::nodes::types::Conditioning,
+    CfgCondsParam: crate::nodes::types::Float,
+    CfgCond2NegativeParam: crate::nodes::types::Float,
 > {
     ///No documentation.
-    pub model: Model,
+    pub model: ModelParam,
     ///No documentation.
-    pub cond_1: Cond1,
+    pub cond_1: Cond1Param,
     ///No documentation.
-    pub cond_2: Cond2,
+    pub cond_2: Cond2Param,
     ///No documentation.
-    pub negative: Negative,
+    pub negative: NegativeParam,
     /**No documentation.
 
 **Metadata**:
@@ -135,7 +141,7 @@ pub struct DualCfgGuider<
   - Round: 0.01
   - Step: 0.1
 */
-    pub cfg_conds: CfgConds,
+    pub cfg_conds: CfgCondsParam,
     /**No documentation.
 
 **Metadata**:
@@ -145,24 +151,31 @@ pub struct DualCfgGuider<
   - Round: 0.01
   - Step: 0.1
 */
-    pub cfg_cond_2_negative: CfgCond2Negative,
+    pub cfg_cond_2_negative: CfgCond2NegativeParam,
 }
 impl<
-    Model: crate::nodes::types::Model,
-    Cond1: crate::nodes::types::Conditioning,
-    Cond2: crate::nodes::types::Conditioning,
-    Negative: crate::nodes::types::Conditioning,
-    CfgConds: crate::nodes::types::Float,
-    CfgCond2Negative: crate::nodes::types::Float,
-> DualCfgGuider<Model, Cond1, Cond2, Negative, CfgConds, CfgCond2Negative> {
+    ModelParam: crate::nodes::types::Model,
+    Cond1Param: crate::nodes::types::Conditioning,
+    Cond2Param: crate::nodes::types::Conditioning,
+    NegativeParam: crate::nodes::types::Conditioning,
+    CfgCondsParam: crate::nodes::types::Float,
+    CfgCond2NegativeParam: crate::nodes::types::Float,
+> DualCfgGuider<
+    ModelParam,
+    Cond1Param,
+    Cond2Param,
+    NegativeParam,
+    CfgCondsParam,
+    CfgCond2NegativeParam,
+> {
     /// Create a new node.
     pub fn new(
-        model: Model,
-        cond_1: Cond1,
-        cond_2: Cond2,
-        negative: Negative,
-        cfg_conds: CfgConds,
-        cfg_cond_2_negative: CfgCond2Negative,
+        model: ModelParam,
+        cond_1: Cond1Param,
+        cond_2: Cond2Param,
+        negative: NegativeParam,
+        cfg_conds: CfgCondsParam,
+        cfg_cond_2_negative: CfgCond2NegativeParam,
     ) -> Self {
         Self {
             model,
@@ -175,14 +188,21 @@ impl<
     }
 }
 impl<
-    Model: crate::nodes::types::Model,
-    Cond1: crate::nodes::types::Conditioning,
-    Cond2: crate::nodes::types::Conditioning,
-    Negative: crate::nodes::types::Conditioning,
-    CfgConds: crate::nodes::types::Float,
-    CfgCond2Negative: crate::nodes::types::Float,
+    ModelParam: crate::nodes::types::Model,
+    Cond1Param: crate::nodes::types::Conditioning,
+    Cond2Param: crate::nodes::types::Conditioning,
+    NegativeParam: crate::nodes::types::Conditioning,
+    CfgCondsParam: crate::nodes::types::Float,
+    CfgCond2NegativeParam: crate::nodes::types::Float,
 > crate::nodes::TypedNode
-for DualCfgGuider<Model, Cond1, Cond2, Negative, CfgConds, CfgCond2Negative> {
+for DualCfgGuider<
+    ModelParam,
+    Cond1Param,
+    Cond2Param,
+    NegativeParam,
+    CfgCondsParam,
+    CfgCond2NegativeParam,
+> {
     type Output = crate::nodes::types::GuiderOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)

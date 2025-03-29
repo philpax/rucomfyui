@@ -32,24 +32,24 @@ pub mod out {
 ///**SamplerCustom**: No description.
 #[derive(Clone)]
 pub struct SamplerCustom<
-    Model: crate::nodes::types::Model,
-    AddNoise: crate::nodes::types::Boolean,
-    NoiseSeed: crate::nodes::types::Int,
-    Cfg: crate::nodes::types::Float,
-    Positive: crate::nodes::types::Conditioning,
-    Negative: crate::nodes::types::Conditioning,
-    Sampler: crate::nodes::types::Sampler,
-    Sigmas: crate::nodes::types::Sigmas,
-    LatentImage: crate::nodes::types::Latent,
+    ModelParam: crate::nodes::types::Model,
+    AddNoiseParam: crate::nodes::types::Boolean,
+    NoiseSeedParam: crate::nodes::types::Int,
+    CfgParam: crate::nodes::types::Float,
+    PositiveParam: crate::nodes::types::Conditioning,
+    NegativeParam: crate::nodes::types::Conditioning,
+    SamplerParam: crate::nodes::types::Sampler,
+    SigmasParam: crate::nodes::types::Sigmas,
+    LatentImageParam: crate::nodes::types::Latent,
 > {
     ///No documentation.
-    pub model: Model,
+    pub model: ModelParam,
     /**No documentation.
 
 **Metadata**:
   - Default: true
 */
-    pub add_noise: AddNoise,
+    pub add_noise: AddNoiseParam,
     /**No documentation.
 
 **Metadata**:
@@ -57,7 +57,7 @@ pub struct SamplerCustom<
   - Max: 18446744073709551615
   - Min: 0
 */
-    pub noise_seed: NoiseSeed,
+    pub noise_seed: NoiseSeedParam,
     /**No documentation.
 
 **Metadata**:
@@ -67,50 +67,50 @@ pub struct SamplerCustom<
   - Round: 0.01
   - Step: 0.1
 */
-    pub cfg: Cfg,
+    pub cfg: CfgParam,
     ///No documentation.
-    pub positive: Positive,
+    pub positive: PositiveParam,
     ///No documentation.
-    pub negative: Negative,
+    pub negative: NegativeParam,
     ///No documentation.
-    pub sampler: Sampler,
+    pub sampler: SamplerParam,
     ///No documentation.
-    pub sigmas: Sigmas,
+    pub sigmas: SigmasParam,
     ///No documentation.
-    pub latent_image: LatentImage,
+    pub latent_image: LatentImageParam,
 }
 impl<
-    Model: crate::nodes::types::Model,
-    AddNoise: crate::nodes::types::Boolean,
-    NoiseSeed: crate::nodes::types::Int,
-    Cfg: crate::nodes::types::Float,
-    Positive: crate::nodes::types::Conditioning,
-    Negative: crate::nodes::types::Conditioning,
-    Sampler: crate::nodes::types::Sampler,
-    Sigmas: crate::nodes::types::Sigmas,
-    LatentImage: crate::nodes::types::Latent,
+    ModelParam: crate::nodes::types::Model,
+    AddNoiseParam: crate::nodes::types::Boolean,
+    NoiseSeedParam: crate::nodes::types::Int,
+    CfgParam: crate::nodes::types::Float,
+    PositiveParam: crate::nodes::types::Conditioning,
+    NegativeParam: crate::nodes::types::Conditioning,
+    SamplerParam: crate::nodes::types::Sampler,
+    SigmasParam: crate::nodes::types::Sigmas,
+    LatentImageParam: crate::nodes::types::Latent,
 > SamplerCustom<
-    Model,
-    AddNoise,
-    NoiseSeed,
-    Cfg,
-    Positive,
-    Negative,
-    Sampler,
-    Sigmas,
-    LatentImage,
+    ModelParam,
+    AddNoiseParam,
+    NoiseSeedParam,
+    CfgParam,
+    PositiveParam,
+    NegativeParam,
+    SamplerParam,
+    SigmasParam,
+    LatentImageParam,
 > {
     /// Create a new node.
     pub fn new(
-        model: Model,
-        add_noise: AddNoise,
-        noise_seed: NoiseSeed,
-        cfg: Cfg,
-        positive: Positive,
-        negative: Negative,
-        sampler: Sampler,
-        sigmas: Sigmas,
-        latent_image: LatentImage,
+        model: ModelParam,
+        add_noise: AddNoiseParam,
+        noise_seed: NoiseSeedParam,
+        cfg: CfgParam,
+        positive: PositiveParam,
+        negative: NegativeParam,
+        sampler: SamplerParam,
+        sigmas: SigmasParam,
+        latent_image: LatentImageParam,
     ) -> Self {
         Self {
             model,
@@ -126,26 +126,26 @@ impl<
     }
 }
 impl<
-    Model: crate::nodes::types::Model,
-    AddNoise: crate::nodes::types::Boolean,
-    NoiseSeed: crate::nodes::types::Int,
-    Cfg: crate::nodes::types::Float,
-    Positive: crate::nodes::types::Conditioning,
-    Negative: crate::nodes::types::Conditioning,
-    Sampler: crate::nodes::types::Sampler,
-    Sigmas: crate::nodes::types::Sigmas,
-    LatentImage: crate::nodes::types::Latent,
+    ModelParam: crate::nodes::types::Model,
+    AddNoiseParam: crate::nodes::types::Boolean,
+    NoiseSeedParam: crate::nodes::types::Int,
+    CfgParam: crate::nodes::types::Float,
+    PositiveParam: crate::nodes::types::Conditioning,
+    NegativeParam: crate::nodes::types::Conditioning,
+    SamplerParam: crate::nodes::types::Sampler,
+    SigmasParam: crate::nodes::types::Sigmas,
+    LatentImageParam: crate::nodes::types::Latent,
 > crate::nodes::TypedNode
 for SamplerCustom<
-    Model,
-    AddNoise,
-    NoiseSeed,
-    Cfg,
-    Positive,
-    Negative,
-    Sampler,
-    Sigmas,
-    LatentImage,
+    ModelParam,
+    AddNoiseParam,
+    NoiseSeedParam,
+    CfgParam,
+    PositiveParam,
+    NegativeParam,
+    SamplerParam,
+    SigmasParam,
+    LatentImageParam,
 > {
     type Output = out::SamplerCustomOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
@@ -175,37 +175,43 @@ for SamplerCustom<
 ///**SamplerCustomAdvanced**: No description.
 #[derive(Clone)]
 pub struct SamplerCustomAdvanced<
-    Noise: crate::nodes::types::Noise,
-    Guider: crate::nodes::types::Guider,
-    Sampler: crate::nodes::types::Sampler,
-    Sigmas: crate::nodes::types::Sigmas,
-    LatentImage: crate::nodes::types::Latent,
+    NoiseParam: crate::nodes::types::Noise,
+    GuiderParam: crate::nodes::types::Guider,
+    SamplerParam: crate::nodes::types::Sampler,
+    SigmasParam: crate::nodes::types::Sigmas,
+    LatentImageParam: crate::nodes::types::Latent,
 > {
     ///No documentation.
-    pub noise: Noise,
+    pub noise: NoiseParam,
     ///No documentation.
-    pub guider: Guider,
+    pub guider: GuiderParam,
     ///No documentation.
-    pub sampler: Sampler,
+    pub sampler: SamplerParam,
     ///No documentation.
-    pub sigmas: Sigmas,
+    pub sigmas: SigmasParam,
     ///No documentation.
-    pub latent_image: LatentImage,
+    pub latent_image: LatentImageParam,
 }
 impl<
-    Noise: crate::nodes::types::Noise,
-    Guider: crate::nodes::types::Guider,
-    Sampler: crate::nodes::types::Sampler,
-    Sigmas: crate::nodes::types::Sigmas,
-    LatentImage: crate::nodes::types::Latent,
-> SamplerCustomAdvanced<Noise, Guider, Sampler, Sigmas, LatentImage> {
+    NoiseParam: crate::nodes::types::Noise,
+    GuiderParam: crate::nodes::types::Guider,
+    SamplerParam: crate::nodes::types::Sampler,
+    SigmasParam: crate::nodes::types::Sigmas,
+    LatentImageParam: crate::nodes::types::Latent,
+> SamplerCustomAdvanced<
+    NoiseParam,
+    GuiderParam,
+    SamplerParam,
+    SigmasParam,
+    LatentImageParam,
+> {
     /// Create a new node.
     pub fn new(
-        noise: Noise,
-        guider: Guider,
-        sampler: Sampler,
-        sigmas: Sigmas,
-        latent_image: LatentImage,
+        noise: NoiseParam,
+        guider: GuiderParam,
+        sampler: SamplerParam,
+        sigmas: SigmasParam,
+        latent_image: LatentImageParam,
     ) -> Self {
         Self {
             noise,
@@ -217,13 +223,19 @@ impl<
     }
 }
 impl<
-    Noise: crate::nodes::types::Noise,
-    Guider: crate::nodes::types::Guider,
-    Sampler: crate::nodes::types::Sampler,
-    Sigmas: crate::nodes::types::Sigmas,
-    LatentImage: crate::nodes::types::Latent,
+    NoiseParam: crate::nodes::types::Noise,
+    GuiderParam: crate::nodes::types::Guider,
+    SamplerParam: crate::nodes::types::Sampler,
+    SigmasParam: crate::nodes::types::Sigmas,
+    LatentImageParam: crate::nodes::types::Latent,
 > crate::nodes::TypedNode
-for SamplerCustomAdvanced<Noise, Guider, Sampler, Sigmas, LatentImage> {
+for SamplerCustomAdvanced<
+    NoiseParam,
+    GuiderParam,
+    SamplerParam,
+    SigmasParam,
+    LatentImageParam,
+> {
     type Output = out::SamplerCustomAdvancedOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {

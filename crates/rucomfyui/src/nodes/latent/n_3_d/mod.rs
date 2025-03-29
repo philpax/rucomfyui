@@ -8,8 +8,8 @@ use crate::{
 ///**EmptyLatentHunyuan3Dv2**: No description.
 #[derive(Clone)]
 pub struct EmptyLatentHunyuan3Dv2<
-    Resolution: crate::nodes::types::Int,
-    BatchSize: crate::nodes::types::Int,
+    ResolutionParam: crate::nodes::types::Int,
+    BatchSizeParam: crate::nodes::types::Int,
 > {
     /**No documentation.
 
@@ -18,7 +18,7 @@ pub struct EmptyLatentHunyuan3Dv2<
   - Max: 8192
   - Min: 1
 */
-    pub resolution: Resolution,
+    pub resolution: ResolutionParam,
     /**The number of latent images in the batch.
 
 **Metadata**:
@@ -26,21 +26,21 @@ pub struct EmptyLatentHunyuan3Dv2<
   - Max: 4096
   - Min: 1
 */
-    pub batch_size: BatchSize,
+    pub batch_size: BatchSizeParam,
 }
 impl<
-    Resolution: crate::nodes::types::Int,
-    BatchSize: crate::nodes::types::Int,
-> EmptyLatentHunyuan3Dv2<Resolution, BatchSize> {
+    ResolutionParam: crate::nodes::types::Int,
+    BatchSizeParam: crate::nodes::types::Int,
+> EmptyLatentHunyuan3Dv2<ResolutionParam, BatchSizeParam> {
     /// Create a new node.
-    pub fn new(resolution: Resolution, batch_size: BatchSize) -> Self {
+    pub fn new(resolution: ResolutionParam, batch_size: BatchSizeParam) -> Self {
         Self { resolution, batch_size }
     }
 }
 impl<
-    Resolution: crate::nodes::types::Int,
-    BatchSize: crate::nodes::types::Int,
-> crate::nodes::TypedNode for EmptyLatentHunyuan3Dv2<Resolution, BatchSize> {
+    ResolutionParam: crate::nodes::types::Int,
+    BatchSizeParam: crate::nodes::types::Int,
+> crate::nodes::TypedNode for EmptyLatentHunyuan3Dv2<ResolutionParam, BatchSizeParam> {
     type Output = crate::nodes::types::LatentOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)
@@ -59,15 +59,15 @@ impl<
 ///**VAEDecodeHunyuan3D**: No description.
 #[derive(Clone)]
 pub struct VaeDecodeHunyuan3D<
-    Samples: crate::nodes::types::Latent,
-    Vae: crate::nodes::types::Vae,
-    NumChunks: crate::nodes::types::Int,
-    OctreeResolution: crate::nodes::types::Int,
+    SamplesParam: crate::nodes::types::Latent,
+    VaeParam: crate::nodes::types::Vae,
+    NumChunksParam: crate::nodes::types::Int,
+    OctreeResolutionParam: crate::nodes::types::Int,
 > {
     ///No documentation.
-    pub samples: Samples,
+    pub samples: SamplesParam,
     ///No documentation.
-    pub vae: Vae,
+    pub vae: VaeParam,
     /**No documentation.
 
 **Metadata**:
@@ -75,7 +75,7 @@ pub struct VaeDecodeHunyuan3D<
   - Max: 500000
   - Min: 1000
 */
-    pub num_chunks: NumChunks,
+    pub num_chunks: NumChunksParam,
     /**No documentation.
 
 **Metadata**:
@@ -83,20 +83,20 @@ pub struct VaeDecodeHunyuan3D<
   - Max: 512
   - Min: 16
 */
-    pub octree_resolution: OctreeResolution,
+    pub octree_resolution: OctreeResolutionParam,
 }
 impl<
-    Samples: crate::nodes::types::Latent,
-    Vae: crate::nodes::types::Vae,
-    NumChunks: crate::nodes::types::Int,
-    OctreeResolution: crate::nodes::types::Int,
-> VaeDecodeHunyuan3D<Samples, Vae, NumChunks, OctreeResolution> {
+    SamplesParam: crate::nodes::types::Latent,
+    VaeParam: crate::nodes::types::Vae,
+    NumChunksParam: crate::nodes::types::Int,
+    OctreeResolutionParam: crate::nodes::types::Int,
+> VaeDecodeHunyuan3D<SamplesParam, VaeParam, NumChunksParam, OctreeResolutionParam> {
     /// Create a new node.
     pub fn new(
-        samples: Samples,
-        vae: Vae,
-        num_chunks: NumChunks,
-        octree_resolution: OctreeResolution,
+        samples: SamplesParam,
+        vae: VaeParam,
+        num_chunks: NumChunksParam,
+        octree_resolution: OctreeResolutionParam,
     ) -> Self {
         Self {
             samples,
@@ -107,12 +107,12 @@ impl<
     }
 }
 impl<
-    Samples: crate::nodes::types::Latent,
-    Vae: crate::nodes::types::Vae,
-    NumChunks: crate::nodes::types::Int,
-    OctreeResolution: crate::nodes::types::Int,
+    SamplesParam: crate::nodes::types::Latent,
+    VaeParam: crate::nodes::types::Vae,
+    NumChunksParam: crate::nodes::types::Int,
+    OctreeResolutionParam: crate::nodes::types::Int,
 > crate::nodes::TypedNode
-for VaeDecodeHunyuan3D<Samples, Vae, NumChunks, OctreeResolution> {
+for VaeDecodeHunyuan3D<SamplesParam, VaeParam, NumChunksParam, OctreeResolutionParam> {
     type Output = crate::nodes::types::VoxelOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)

@@ -26,18 +26,18 @@ pub mod out {
 }
 ///**FlipSigmas**: No description.
 #[derive(Clone)]
-pub struct FlipSigmas<Sigmas: crate::nodes::types::Sigmas> {
+pub struct FlipSigmas<SigmasParam: crate::nodes::types::Sigmas> {
     ///No documentation.
-    pub sigmas: Sigmas,
+    pub sigmas: SigmasParam,
 }
-impl<Sigmas: crate::nodes::types::Sigmas> FlipSigmas<Sigmas> {
+impl<SigmasParam: crate::nodes::types::Sigmas> FlipSigmas<SigmasParam> {
     /// Create a new node.
-    pub fn new(sigmas: Sigmas) -> Self {
+    pub fn new(sigmas: SigmasParam) -> Self {
         Self { sigmas }
     }
 }
-impl<Sigmas: crate::nodes::types::Sigmas> crate::nodes::TypedNode
-for FlipSigmas<Sigmas> {
+impl<SigmasParam: crate::nodes::types::Sigmas> crate::nodes::TypedNode
+for FlipSigmas<SigmasParam> {
     type Output = crate::nodes::types::SigmasOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)
@@ -55,11 +55,11 @@ for FlipSigmas<Sigmas> {
 ///**SetFirstSigma**: No description.
 #[derive(Clone)]
 pub struct SetFirstSigma<
-    Sigmas: crate::nodes::types::Sigmas,
-    Sigma: crate::nodes::types::Float,
+    SigmasParam: crate::nodes::types::Sigmas,
+    SigmaParam: crate::nodes::types::Float,
 > {
     ///No documentation.
-    pub sigmas: Sigmas,
+    pub sigmas: SigmasParam,
     /**No documentation.
 
 **Metadata**:
@@ -69,21 +69,21 @@ pub struct SetFirstSigma<
   - Round: false
   - Step: 0.001
 */
-    pub sigma: Sigma,
+    pub sigma: SigmaParam,
 }
 impl<
-    Sigmas: crate::nodes::types::Sigmas,
-    Sigma: crate::nodes::types::Float,
-> SetFirstSigma<Sigmas, Sigma> {
+    SigmasParam: crate::nodes::types::Sigmas,
+    SigmaParam: crate::nodes::types::Float,
+> SetFirstSigma<SigmasParam, SigmaParam> {
     /// Create a new node.
-    pub fn new(sigmas: Sigmas, sigma: Sigma) -> Self {
+    pub fn new(sigmas: SigmasParam, sigma: SigmaParam) -> Self {
         Self { sigmas, sigma }
     }
 }
 impl<
-    Sigmas: crate::nodes::types::Sigmas,
-    Sigma: crate::nodes::types::Float,
-> crate::nodes::TypedNode for SetFirstSigma<Sigmas, Sigma> {
+    SigmasParam: crate::nodes::types::Sigmas,
+    SigmaParam: crate::nodes::types::Float,
+> crate::nodes::TypedNode for SetFirstSigma<SigmasParam, SigmaParam> {
     type Output = crate::nodes::types::SigmasOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)
@@ -102,11 +102,11 @@ impl<
 ///**SplitSigmas**: No description.
 #[derive(Clone)]
 pub struct SplitSigmas<
-    Sigmas: crate::nodes::types::Sigmas,
-    Step: crate::nodes::types::Int,
+    SigmasParam: crate::nodes::types::Sigmas,
+    StepParam: crate::nodes::types::Int,
 > {
     ///No documentation.
-    pub sigmas: Sigmas,
+    pub sigmas: SigmasParam,
     /**No documentation.
 
 **Metadata**:
@@ -114,21 +114,21 @@ pub struct SplitSigmas<
   - Max: 10000
   - Min: 0
 */
-    pub step: Step,
+    pub step: StepParam,
 }
 impl<
-    Sigmas: crate::nodes::types::Sigmas,
-    Step: crate::nodes::types::Int,
-> SplitSigmas<Sigmas, Step> {
+    SigmasParam: crate::nodes::types::Sigmas,
+    StepParam: crate::nodes::types::Int,
+> SplitSigmas<SigmasParam, StepParam> {
     /// Create a new node.
-    pub fn new(sigmas: Sigmas, step: Step) -> Self {
+    pub fn new(sigmas: SigmasParam, step: StepParam) -> Self {
         Self { sigmas, step }
     }
 }
 impl<
-    Sigmas: crate::nodes::types::Sigmas,
-    Step: crate::nodes::types::Int,
-> crate::nodes::TypedNode for SplitSigmas<Sigmas, Step> {
+    SigmasParam: crate::nodes::types::Sigmas,
+    StepParam: crate::nodes::types::Int,
+> crate::nodes::TypedNode for SplitSigmas<SigmasParam, StepParam> {
     type Output = out::SplitSigmasOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
@@ -150,11 +150,11 @@ impl<
 ///**SplitSigmasDenoise**: No description.
 #[derive(Clone)]
 pub struct SplitSigmasDenoise<
-    Sigmas: crate::nodes::types::Sigmas,
-    Denoise: crate::nodes::types::Float,
+    SigmasParam: crate::nodes::types::Sigmas,
+    DenoiseParam: crate::nodes::types::Float,
 > {
     ///No documentation.
-    pub sigmas: Sigmas,
+    pub sigmas: SigmasParam,
     /**No documentation.
 
 **Metadata**:
@@ -163,21 +163,21 @@ pub struct SplitSigmasDenoise<
   - Min: 0
   - Step: 0.01
 */
-    pub denoise: Denoise,
+    pub denoise: DenoiseParam,
 }
 impl<
-    Sigmas: crate::nodes::types::Sigmas,
-    Denoise: crate::nodes::types::Float,
-> SplitSigmasDenoise<Sigmas, Denoise> {
+    SigmasParam: crate::nodes::types::Sigmas,
+    DenoiseParam: crate::nodes::types::Float,
+> SplitSigmasDenoise<SigmasParam, DenoiseParam> {
     /// Create a new node.
-    pub fn new(sigmas: Sigmas, denoise: Denoise) -> Self {
+    pub fn new(sigmas: SigmasParam, denoise: DenoiseParam) -> Self {
         Self { sigmas, denoise }
     }
 }
 impl<
-    Sigmas: crate::nodes::types::Sigmas,
-    Denoise: crate::nodes::types::Float,
-> crate::nodes::TypedNode for SplitSigmasDenoise<Sigmas, Denoise> {
+    SigmasParam: crate::nodes::types::Sigmas,
+    DenoiseParam: crate::nodes::types::Float,
+> crate::nodes::TypedNode for SplitSigmasDenoise<SigmasParam, DenoiseParam> {
     type Output = out::SplitSigmasDenoiseOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {

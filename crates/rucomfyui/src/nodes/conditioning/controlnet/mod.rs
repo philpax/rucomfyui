@@ -35,17 +35,17 @@ pub mod out {
 ///**Apply ControlNet (OLD)**: No description.
 #[derive(Clone)]
 pub struct ControlNetApply<
-    Conditioning: crate::nodes::types::Conditioning,
-    ControlNet: crate::nodes::types::ControlNet,
-    Image: crate::nodes::types::Image,
-    Strength: crate::nodes::types::Float,
+    ConditioningParam: crate::nodes::types::Conditioning,
+    ControlNetParam: crate::nodes::types::ControlNet,
+    ImageParam: crate::nodes::types::Image,
+    StrengthParam: crate::nodes::types::Float,
 > {
     ///No documentation.
-    pub conditioning: Conditioning,
+    pub conditioning: ConditioningParam,
     ///No documentation.
-    pub control_net: ControlNet,
+    pub control_net: ControlNetParam,
     ///No documentation.
-    pub image: Image,
+    pub image: ImageParam,
     /**No documentation.
 
 **Metadata**:
@@ -54,20 +54,20 @@ pub struct ControlNetApply<
   - Min: 0
   - Step: 0.01
 */
-    pub strength: Strength,
+    pub strength: StrengthParam,
 }
 impl<
-    Conditioning: crate::nodes::types::Conditioning,
-    ControlNet: crate::nodes::types::ControlNet,
-    Image: crate::nodes::types::Image,
-    Strength: crate::nodes::types::Float,
-> ControlNetApply<Conditioning, ControlNet, Image, Strength> {
+    ConditioningParam: crate::nodes::types::Conditioning,
+    ControlNetParam: crate::nodes::types::ControlNet,
+    ImageParam: crate::nodes::types::Image,
+    StrengthParam: crate::nodes::types::Float,
+> ControlNetApply<ConditioningParam, ControlNetParam, ImageParam, StrengthParam> {
     /// Create a new node.
     pub fn new(
-        conditioning: Conditioning,
-        control_net: ControlNet,
-        image: Image,
-        strength: Strength,
+        conditioning: ConditioningParam,
+        control_net: ControlNetParam,
+        image: ImageParam,
+        strength: StrengthParam,
     ) -> Self {
         Self {
             conditioning,
@@ -78,12 +78,12 @@ impl<
     }
 }
 impl<
-    Conditioning: crate::nodes::types::Conditioning,
-    ControlNet: crate::nodes::types::ControlNet,
-    Image: crate::nodes::types::Image,
-    Strength: crate::nodes::types::Float,
+    ConditioningParam: crate::nodes::types::Conditioning,
+    ControlNetParam: crate::nodes::types::ControlNet,
+    ImageParam: crate::nodes::types::Image,
+    StrengthParam: crate::nodes::types::Float,
 > crate::nodes::TypedNode
-for ControlNetApply<Conditioning, ControlNet, Image, Strength> {
+for ControlNetApply<ConditioningParam, ControlNetParam, ImageParam, StrengthParam> {
     type Output = crate::nodes::types::ConditioningOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)
@@ -104,23 +104,23 @@ for ControlNetApply<Conditioning, ControlNet, Image, Strength> {
 ///**Apply ControlNet**: No description.
 #[derive(Clone)]
 pub struct ControlNetApplyAdvanced<
-    Positive: crate::nodes::types::Conditioning,
-    Negative: crate::nodes::types::Conditioning,
-    ControlNet: crate::nodes::types::ControlNet,
-    Image: crate::nodes::types::Image,
-    Strength: crate::nodes::types::Float,
-    StartPercent: crate::nodes::types::Float,
-    EndPercent: crate::nodes::types::Float,
-    Vae: crate::nodes::types::Vae = crate::nodes::types::VaeOut,
+    PositiveParam: crate::nodes::types::Conditioning,
+    NegativeParam: crate::nodes::types::Conditioning,
+    ControlNetParam: crate::nodes::types::ControlNet,
+    ImageParam: crate::nodes::types::Image,
+    StrengthParam: crate::nodes::types::Float,
+    StartPercentParam: crate::nodes::types::Float,
+    EndPercentParam: crate::nodes::types::Float,
+    VaeParam: crate::nodes::types::Vae = crate::nodes::types::VaeOut,
 > {
     ///No documentation.
-    pub positive: Positive,
+    pub positive: PositiveParam,
     ///No documentation.
-    pub negative: Negative,
+    pub negative: NegativeParam,
     ///No documentation.
-    pub control_net: ControlNet,
+    pub control_net: ControlNetParam,
     ///No documentation.
-    pub image: Image,
+    pub image: ImageParam,
     /**No documentation.
 
 **Metadata**:
@@ -129,7 +129,7 @@ pub struct ControlNetApplyAdvanced<
   - Min: 0
   - Step: 0.01
 */
-    pub strength: Strength,
+    pub strength: StrengthParam,
     /**No documentation.
 
 **Metadata**:
@@ -138,7 +138,7 @@ pub struct ControlNetApplyAdvanced<
   - Min: 0
   - Step: 0.001
 */
-    pub start_percent: StartPercent,
+    pub start_percent: StartPercentParam,
     /**No documentation.
 
 **Metadata**:
@@ -147,39 +147,39 @@ pub struct ControlNetApplyAdvanced<
   - Min: 0
   - Step: 0.001
 */
-    pub end_percent: EndPercent,
+    pub end_percent: EndPercentParam,
     ///No documentation.
-    pub vae: Option<Vae>,
+    pub vae: Option<VaeParam>,
 }
 impl<
-    Positive: crate::nodes::types::Conditioning,
-    Negative: crate::nodes::types::Conditioning,
-    ControlNet: crate::nodes::types::ControlNet,
-    Image: crate::nodes::types::Image,
-    Strength: crate::nodes::types::Float,
-    StartPercent: crate::nodes::types::Float,
-    EndPercent: crate::nodes::types::Float,
-    Vae: crate::nodes::types::Vae,
+    PositiveParam: crate::nodes::types::Conditioning,
+    NegativeParam: crate::nodes::types::Conditioning,
+    ControlNetParam: crate::nodes::types::ControlNet,
+    ImageParam: crate::nodes::types::Image,
+    StrengthParam: crate::nodes::types::Float,
+    StartPercentParam: crate::nodes::types::Float,
+    EndPercentParam: crate::nodes::types::Float,
+    VaeParam: crate::nodes::types::Vae,
 > ControlNetApplyAdvanced<
-    Positive,
-    Negative,
-    ControlNet,
-    Image,
-    Strength,
-    StartPercent,
-    EndPercent,
-    Vae,
+    PositiveParam,
+    NegativeParam,
+    ControlNetParam,
+    ImageParam,
+    StrengthParam,
+    StartPercentParam,
+    EndPercentParam,
+    VaeParam,
 > {
     /// Create a new node.
     pub fn new(
-        positive: Positive,
-        negative: Negative,
-        control_net: ControlNet,
-        image: Image,
-        strength: Strength,
-        start_percent: StartPercent,
-        end_percent: EndPercent,
-        vae: Option<Vae>,
+        positive: PositiveParam,
+        negative: NegativeParam,
+        control_net: ControlNetParam,
+        image: ImageParam,
+        strength: StrengthParam,
+        start_percent: StartPercentParam,
+        end_percent: EndPercentParam,
+        vae: Option<VaeParam>,
     ) -> Self {
         Self {
             positive,
@@ -194,24 +194,24 @@ impl<
     }
 }
 impl<
-    Positive: crate::nodes::types::Conditioning,
-    Negative: crate::nodes::types::Conditioning,
-    ControlNet: crate::nodes::types::ControlNet,
-    Image: crate::nodes::types::Image,
-    Strength: crate::nodes::types::Float,
-    StartPercent: crate::nodes::types::Float,
-    EndPercent: crate::nodes::types::Float,
-    Vae: crate::nodes::types::Vae,
+    PositiveParam: crate::nodes::types::Conditioning,
+    NegativeParam: crate::nodes::types::Conditioning,
+    ControlNetParam: crate::nodes::types::ControlNet,
+    ImageParam: crate::nodes::types::Image,
+    StrengthParam: crate::nodes::types::Float,
+    StartPercentParam: crate::nodes::types::Float,
+    EndPercentParam: crate::nodes::types::Float,
+    VaeParam: crate::nodes::types::Vae,
 > crate::nodes::TypedNode
 for ControlNetApplyAdvanced<
-    Positive,
-    Negative,
-    ControlNet,
-    Image,
-    Strength,
-    StartPercent,
-    EndPercent,
-    Vae,
+    PositiveParam,
+    NegativeParam,
+    ControlNetParam,
+    ImageParam,
+    StrengthParam,
+    StartPercentParam,
+    EndPercentParam,
+    VaeParam,
 > {
     type Output = out::ControlNetApplyAdvancedOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
@@ -242,25 +242,25 @@ for ControlNetApplyAdvanced<
 ///**Apply Controlnet with VAE**: No description.
 #[derive(Clone)]
 pub struct ControlNetApplySd3<
-    Positive: crate::nodes::types::Conditioning,
-    Negative: crate::nodes::types::Conditioning,
-    ControlNet: crate::nodes::types::ControlNet,
-    Vae: crate::nodes::types::Vae,
-    Image: crate::nodes::types::Image,
-    Strength: crate::nodes::types::Float,
-    StartPercent: crate::nodes::types::Float,
-    EndPercent: crate::nodes::types::Float,
+    PositiveParam: crate::nodes::types::Conditioning,
+    NegativeParam: crate::nodes::types::Conditioning,
+    ControlNetParam: crate::nodes::types::ControlNet,
+    VaeParam: crate::nodes::types::Vae,
+    ImageParam: crate::nodes::types::Image,
+    StrengthParam: crate::nodes::types::Float,
+    StartPercentParam: crate::nodes::types::Float,
+    EndPercentParam: crate::nodes::types::Float,
 > {
     ///No documentation.
-    pub positive: Positive,
+    pub positive: PositiveParam,
     ///No documentation.
-    pub negative: Negative,
+    pub negative: NegativeParam,
     ///No documentation.
-    pub control_net: ControlNet,
+    pub control_net: ControlNetParam,
     ///No documentation.
-    pub vae: Vae,
+    pub vae: VaeParam,
     ///No documentation.
-    pub image: Image,
+    pub image: ImageParam,
     /**No documentation.
 
 **Metadata**:
@@ -269,7 +269,7 @@ pub struct ControlNetApplySd3<
   - Min: 0
   - Step: 0.01
 */
-    pub strength: Strength,
+    pub strength: StrengthParam,
     /**No documentation.
 
 **Metadata**:
@@ -278,7 +278,7 @@ pub struct ControlNetApplySd3<
   - Min: 0
   - Step: 0.001
 */
-    pub start_percent: StartPercent,
+    pub start_percent: StartPercentParam,
     /**No documentation.
 
 **Metadata**:
@@ -287,37 +287,37 @@ pub struct ControlNetApplySd3<
   - Min: 0
   - Step: 0.001
 */
-    pub end_percent: EndPercent,
+    pub end_percent: EndPercentParam,
 }
 impl<
-    Positive: crate::nodes::types::Conditioning,
-    Negative: crate::nodes::types::Conditioning,
-    ControlNet: crate::nodes::types::ControlNet,
-    Vae: crate::nodes::types::Vae,
-    Image: crate::nodes::types::Image,
-    Strength: crate::nodes::types::Float,
-    StartPercent: crate::nodes::types::Float,
-    EndPercent: crate::nodes::types::Float,
+    PositiveParam: crate::nodes::types::Conditioning,
+    NegativeParam: crate::nodes::types::Conditioning,
+    ControlNetParam: crate::nodes::types::ControlNet,
+    VaeParam: crate::nodes::types::Vae,
+    ImageParam: crate::nodes::types::Image,
+    StrengthParam: crate::nodes::types::Float,
+    StartPercentParam: crate::nodes::types::Float,
+    EndPercentParam: crate::nodes::types::Float,
 > ControlNetApplySd3<
-    Positive,
-    Negative,
-    ControlNet,
-    Vae,
-    Image,
-    Strength,
-    StartPercent,
-    EndPercent,
+    PositiveParam,
+    NegativeParam,
+    ControlNetParam,
+    VaeParam,
+    ImageParam,
+    StrengthParam,
+    StartPercentParam,
+    EndPercentParam,
 > {
     /// Create a new node.
     pub fn new(
-        positive: Positive,
-        negative: Negative,
-        control_net: ControlNet,
-        vae: Vae,
-        image: Image,
-        strength: Strength,
-        start_percent: StartPercent,
-        end_percent: EndPercent,
+        positive: PositiveParam,
+        negative: NegativeParam,
+        control_net: ControlNetParam,
+        vae: VaeParam,
+        image: ImageParam,
+        strength: StrengthParam,
+        start_percent: StartPercentParam,
+        end_percent: EndPercentParam,
     ) -> Self {
         Self {
             positive,
@@ -332,24 +332,24 @@ impl<
     }
 }
 impl<
-    Positive: crate::nodes::types::Conditioning,
-    Negative: crate::nodes::types::Conditioning,
-    ControlNet: crate::nodes::types::ControlNet,
-    Vae: crate::nodes::types::Vae,
-    Image: crate::nodes::types::Image,
-    Strength: crate::nodes::types::Float,
-    StartPercent: crate::nodes::types::Float,
-    EndPercent: crate::nodes::types::Float,
+    PositiveParam: crate::nodes::types::Conditioning,
+    NegativeParam: crate::nodes::types::Conditioning,
+    ControlNetParam: crate::nodes::types::ControlNet,
+    VaeParam: crate::nodes::types::Vae,
+    ImageParam: crate::nodes::types::Image,
+    StrengthParam: crate::nodes::types::Float,
+    StartPercentParam: crate::nodes::types::Float,
+    EndPercentParam: crate::nodes::types::Float,
 > crate::nodes::TypedNode
 for ControlNetApplySd3<
-    Positive,
-    Negative,
-    ControlNet,
-    Vae,
-    Image,
-    Strength,
-    StartPercent,
-    EndPercent,
+    PositiveParam,
+    NegativeParam,
+    ControlNetParam,
+    VaeParam,
+    ImageParam,
+    StrengthParam,
+    StartPercentParam,
+    EndPercentParam,
 > {
     type Output = out::ControlNetApplySd3Output;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
@@ -378,28 +378,28 @@ for ControlNetApplySd3<
 ///**ControlNetInpaintingAliMamaApply**: No description.
 #[derive(Clone)]
 pub struct ControlNetInpaintingAliMamaApply<
-    Positive: crate::nodes::types::Conditioning,
-    Negative: crate::nodes::types::Conditioning,
-    ControlNet: crate::nodes::types::ControlNet,
-    Vae: crate::nodes::types::Vae,
-    Image: crate::nodes::types::Image,
-    Mask: crate::nodes::types::Mask,
-    Strength: crate::nodes::types::Float,
-    StartPercent: crate::nodes::types::Float,
-    EndPercent: crate::nodes::types::Float,
+    PositiveParam: crate::nodes::types::Conditioning,
+    NegativeParam: crate::nodes::types::Conditioning,
+    ControlNetParam: crate::nodes::types::ControlNet,
+    VaeParam: crate::nodes::types::Vae,
+    ImageParam: crate::nodes::types::Image,
+    MaskParam: crate::nodes::types::Mask,
+    StrengthParam: crate::nodes::types::Float,
+    StartPercentParam: crate::nodes::types::Float,
+    EndPercentParam: crate::nodes::types::Float,
 > {
     ///No documentation.
-    pub positive: Positive,
+    pub positive: PositiveParam,
     ///No documentation.
-    pub negative: Negative,
+    pub negative: NegativeParam,
     ///No documentation.
-    pub control_net: ControlNet,
+    pub control_net: ControlNetParam,
     ///No documentation.
-    pub vae: Vae,
+    pub vae: VaeParam,
     ///No documentation.
-    pub image: Image,
+    pub image: ImageParam,
     ///No documentation.
-    pub mask: Mask,
+    pub mask: MaskParam,
     /**No documentation.
 
 **Metadata**:
@@ -408,7 +408,7 @@ pub struct ControlNetInpaintingAliMamaApply<
   - Min: 0
   - Step: 0.01
 */
-    pub strength: Strength,
+    pub strength: StrengthParam,
     /**No documentation.
 
 **Metadata**:
@@ -417,7 +417,7 @@ pub struct ControlNetInpaintingAliMamaApply<
   - Min: 0
   - Step: 0.001
 */
-    pub start_percent: StartPercent,
+    pub start_percent: StartPercentParam,
     /**No documentation.
 
 **Metadata**:
@@ -426,40 +426,40 @@ pub struct ControlNetInpaintingAliMamaApply<
   - Min: 0
   - Step: 0.001
 */
-    pub end_percent: EndPercent,
+    pub end_percent: EndPercentParam,
 }
 impl<
-    Positive: crate::nodes::types::Conditioning,
-    Negative: crate::nodes::types::Conditioning,
-    ControlNet: crate::nodes::types::ControlNet,
-    Vae: crate::nodes::types::Vae,
-    Image: crate::nodes::types::Image,
-    Mask: crate::nodes::types::Mask,
-    Strength: crate::nodes::types::Float,
-    StartPercent: crate::nodes::types::Float,
-    EndPercent: crate::nodes::types::Float,
+    PositiveParam: crate::nodes::types::Conditioning,
+    NegativeParam: crate::nodes::types::Conditioning,
+    ControlNetParam: crate::nodes::types::ControlNet,
+    VaeParam: crate::nodes::types::Vae,
+    ImageParam: crate::nodes::types::Image,
+    MaskParam: crate::nodes::types::Mask,
+    StrengthParam: crate::nodes::types::Float,
+    StartPercentParam: crate::nodes::types::Float,
+    EndPercentParam: crate::nodes::types::Float,
 > ControlNetInpaintingAliMamaApply<
-    Positive,
-    Negative,
-    ControlNet,
-    Vae,
-    Image,
-    Mask,
-    Strength,
-    StartPercent,
-    EndPercent,
+    PositiveParam,
+    NegativeParam,
+    ControlNetParam,
+    VaeParam,
+    ImageParam,
+    MaskParam,
+    StrengthParam,
+    StartPercentParam,
+    EndPercentParam,
 > {
     /// Create a new node.
     pub fn new(
-        positive: Positive,
-        negative: Negative,
-        control_net: ControlNet,
-        vae: Vae,
-        image: Image,
-        mask: Mask,
-        strength: Strength,
-        start_percent: StartPercent,
-        end_percent: EndPercent,
+        positive: PositiveParam,
+        negative: NegativeParam,
+        control_net: ControlNetParam,
+        vae: VaeParam,
+        image: ImageParam,
+        mask: MaskParam,
+        strength: StrengthParam,
+        start_percent: StartPercentParam,
+        end_percent: EndPercentParam,
     ) -> Self {
         Self {
             positive,
@@ -475,26 +475,26 @@ impl<
     }
 }
 impl<
-    Positive: crate::nodes::types::Conditioning,
-    Negative: crate::nodes::types::Conditioning,
-    ControlNet: crate::nodes::types::ControlNet,
-    Vae: crate::nodes::types::Vae,
-    Image: crate::nodes::types::Image,
-    Mask: crate::nodes::types::Mask,
-    Strength: crate::nodes::types::Float,
-    StartPercent: crate::nodes::types::Float,
-    EndPercent: crate::nodes::types::Float,
+    PositiveParam: crate::nodes::types::Conditioning,
+    NegativeParam: crate::nodes::types::Conditioning,
+    ControlNetParam: crate::nodes::types::ControlNet,
+    VaeParam: crate::nodes::types::Vae,
+    ImageParam: crate::nodes::types::Image,
+    MaskParam: crate::nodes::types::Mask,
+    StrengthParam: crate::nodes::types::Float,
+    StartPercentParam: crate::nodes::types::Float,
+    EndPercentParam: crate::nodes::types::Float,
 > crate::nodes::TypedNode
 for ControlNetInpaintingAliMamaApply<
-    Positive,
-    Negative,
-    ControlNet,
-    Vae,
-    Image,
-    Mask,
-    Strength,
-    StartPercent,
-    EndPercent,
+    PositiveParam,
+    NegativeParam,
+    ControlNetParam,
+    VaeParam,
+    ImageParam,
+    MaskParam,
+    StrengthParam,
+    StartPercentParam,
+    EndPercentParam,
 > {
     type Output = out::ControlNetInpaintingAliMamaApplyOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
@@ -524,27 +524,27 @@ for ControlNetInpaintingAliMamaApply<
 ///**SetUnionControlNetType**: No description.
 #[derive(Clone)]
 pub struct SetUnionControlNetType<
-    ControlNet: crate::nodes::types::ControlNet,
-    Type: crate::nodes::types::String,
+    ControlNetParam: crate::nodes::types::ControlNet,
+    TypeParam: crate::nodes::types::String,
 > {
     ///No documentation.
-    pub control_net: ControlNet,
+    pub control_net: ControlNetParam,
     ///No documentation.
-    pub type_: Type,
+    pub type_: TypeParam,
 }
 impl<
-    ControlNet: crate::nodes::types::ControlNet,
-    Type: crate::nodes::types::String,
-> SetUnionControlNetType<ControlNet, Type> {
+    ControlNetParam: crate::nodes::types::ControlNet,
+    TypeParam: crate::nodes::types::String,
+> SetUnionControlNetType<ControlNetParam, TypeParam> {
     /// Create a new node.
-    pub fn new(control_net: ControlNet, type_: Type) -> Self {
+    pub fn new(control_net: ControlNetParam, type_: TypeParam) -> Self {
         Self { control_net, type_ }
     }
 }
 impl<
-    ControlNet: crate::nodes::types::ControlNet,
-    Type: crate::nodes::types::String,
-> crate::nodes::TypedNode for SetUnionControlNetType<ControlNet, Type> {
+    ControlNetParam: crate::nodes::types::ControlNet,
+    TypeParam: crate::nodes::types::String,
+> crate::nodes::TypedNode for SetUnionControlNetType<ControlNetParam, TypeParam> {
     type Output = crate::nodes::types::ControlNetOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)

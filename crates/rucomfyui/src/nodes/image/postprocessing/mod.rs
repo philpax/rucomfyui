@@ -8,15 +8,15 @@ use crate::{
 ///**Image Blend**: No description.
 #[derive(Clone)]
 pub struct ImageBlend<
-    Image1: crate::nodes::types::Image,
-    Image2: crate::nodes::types::Image,
-    BlendFactor: crate::nodes::types::Float,
-    BlendMode: crate::nodes::types::String,
+    Image1Param: crate::nodes::types::Image,
+    Image2Param: crate::nodes::types::Image,
+    BlendFactorParam: crate::nodes::types::Float,
+    BlendModeParam: crate::nodes::types::String,
 > {
     ///No documentation.
-    pub image_1: Image1,
+    pub image_1: Image1Param,
     ///No documentation.
-    pub image_2: Image2,
+    pub image_2: Image2Param,
     /**No documentation.
 
 **Metadata**:
@@ -25,22 +25,22 @@ pub struct ImageBlend<
   - Min: 0
   - Step: 0.01
 */
-    pub blend_factor: BlendFactor,
+    pub blend_factor: BlendFactorParam,
     ///No documentation.
-    pub blend_mode: BlendMode,
+    pub blend_mode: BlendModeParam,
 }
 impl<
-    Image1: crate::nodes::types::Image,
-    Image2: crate::nodes::types::Image,
-    BlendFactor: crate::nodes::types::Float,
-    BlendMode: crate::nodes::types::String,
-> ImageBlend<Image1, Image2, BlendFactor, BlendMode> {
+    Image1Param: crate::nodes::types::Image,
+    Image2Param: crate::nodes::types::Image,
+    BlendFactorParam: crate::nodes::types::Float,
+    BlendModeParam: crate::nodes::types::String,
+> ImageBlend<Image1Param, Image2Param, BlendFactorParam, BlendModeParam> {
     /// Create a new node.
     pub fn new(
-        image_1: Image1,
-        image_2: Image2,
-        blend_factor: BlendFactor,
-        blend_mode: BlendMode,
+        image_1: Image1Param,
+        image_2: Image2Param,
+        blend_factor: BlendFactorParam,
+        blend_mode: BlendModeParam,
     ) -> Self {
         Self {
             image_1,
@@ -51,11 +51,12 @@ impl<
     }
 }
 impl<
-    Image1: crate::nodes::types::Image,
-    Image2: crate::nodes::types::Image,
-    BlendFactor: crate::nodes::types::Float,
-    BlendMode: crate::nodes::types::String,
-> crate::nodes::TypedNode for ImageBlend<Image1, Image2, BlendFactor, BlendMode> {
+    Image1Param: crate::nodes::types::Image,
+    Image2Param: crate::nodes::types::Image,
+    BlendFactorParam: crate::nodes::types::Float,
+    BlendModeParam: crate::nodes::types::String,
+> crate::nodes::TypedNode
+for ImageBlend<Image1Param, Image2Param, BlendFactorParam, BlendModeParam> {
     type Output = crate::nodes::types::ImageOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)
@@ -76,12 +77,12 @@ impl<
 ///**Image Blur**: No description.
 #[derive(Clone)]
 pub struct ImageBlur<
-    Image: crate::nodes::types::Image,
-    BlurRadius: crate::nodes::types::Int,
-    Sigma: crate::nodes::types::Float,
+    ImageParam: crate::nodes::types::Image,
+    BlurRadiusParam: crate::nodes::types::Int,
+    SigmaParam: crate::nodes::types::Float,
 > {
     ///No documentation.
-    pub image: Image,
+    pub image: ImageParam,
     /**No documentation.
 
 **Metadata**:
@@ -90,7 +91,7 @@ pub struct ImageBlur<
   - Min: 1
   - Step: 1
 */
-    pub blur_radius: BlurRadius,
+    pub blur_radius: BlurRadiusParam,
     /**No documentation.
 
 **Metadata**:
@@ -99,23 +100,27 @@ pub struct ImageBlur<
   - Min: 0.1
   - Step: 0.1
 */
-    pub sigma: Sigma,
+    pub sigma: SigmaParam,
 }
 impl<
-    Image: crate::nodes::types::Image,
-    BlurRadius: crate::nodes::types::Int,
-    Sigma: crate::nodes::types::Float,
-> ImageBlur<Image, BlurRadius, Sigma> {
+    ImageParam: crate::nodes::types::Image,
+    BlurRadiusParam: crate::nodes::types::Int,
+    SigmaParam: crate::nodes::types::Float,
+> ImageBlur<ImageParam, BlurRadiusParam, SigmaParam> {
     /// Create a new node.
-    pub fn new(image: Image, blur_radius: BlurRadius, sigma: Sigma) -> Self {
+    pub fn new(
+        image: ImageParam,
+        blur_radius: BlurRadiusParam,
+        sigma: SigmaParam,
+    ) -> Self {
         Self { image, blur_radius, sigma }
     }
 }
 impl<
-    Image: crate::nodes::types::Image,
-    BlurRadius: crate::nodes::types::Int,
-    Sigma: crate::nodes::types::Float,
-> crate::nodes::TypedNode for ImageBlur<Image, BlurRadius, Sigma> {
+    ImageParam: crate::nodes::types::Image,
+    BlurRadiusParam: crate::nodes::types::Int,
+    SigmaParam: crate::nodes::types::Float,
+> crate::nodes::TypedNode for ImageBlur<ImageParam, BlurRadiusParam, SigmaParam> {
     type Output = crate::nodes::types::ImageOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)
@@ -135,12 +140,12 @@ impl<
 ///**Image Quantize**: No description.
 #[derive(Clone)]
 pub struct ImageQuantize<
-    Image: crate::nodes::types::Image,
-    Colors: crate::nodes::types::Int,
-    Dither: crate::nodes::types::String,
+    ImageParam: crate::nodes::types::Image,
+    ColorsParam: crate::nodes::types::Int,
+    DitherParam: crate::nodes::types::String,
 > {
     ///No documentation.
-    pub image: Image,
+    pub image: ImageParam,
     /**No documentation.
 
 **Metadata**:
@@ -149,25 +154,25 @@ pub struct ImageQuantize<
   - Min: 1
   - Step: 1
 */
-    pub colors: Colors,
+    pub colors: ColorsParam,
     ///No documentation.
-    pub dither: Dither,
+    pub dither: DitherParam,
 }
 impl<
-    Image: crate::nodes::types::Image,
-    Colors: crate::nodes::types::Int,
-    Dither: crate::nodes::types::String,
-> ImageQuantize<Image, Colors, Dither> {
+    ImageParam: crate::nodes::types::Image,
+    ColorsParam: crate::nodes::types::Int,
+    DitherParam: crate::nodes::types::String,
+> ImageQuantize<ImageParam, ColorsParam, DitherParam> {
     /// Create a new node.
-    pub fn new(image: Image, colors: Colors, dither: Dither) -> Self {
+    pub fn new(image: ImageParam, colors: ColorsParam, dither: DitherParam) -> Self {
         Self { image, colors, dither }
     }
 }
 impl<
-    Image: crate::nodes::types::Image,
-    Colors: crate::nodes::types::Int,
-    Dither: crate::nodes::types::String,
-> crate::nodes::TypedNode for ImageQuantize<Image, Colors, Dither> {
+    ImageParam: crate::nodes::types::Image,
+    ColorsParam: crate::nodes::types::Int,
+    DitherParam: crate::nodes::types::String,
+> crate::nodes::TypedNode for ImageQuantize<ImageParam, ColorsParam, DitherParam> {
     type Output = crate::nodes::types::ImageOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)
@@ -187,13 +192,13 @@ impl<
 ///**Image Sharpen**: No description.
 #[derive(Clone)]
 pub struct ImageSharpen<
-    Image: crate::nodes::types::Image,
-    SharpenRadius: crate::nodes::types::Int,
-    Sigma: crate::nodes::types::Float,
-    Alpha: crate::nodes::types::Float,
+    ImageParam: crate::nodes::types::Image,
+    SharpenRadiusParam: crate::nodes::types::Int,
+    SigmaParam: crate::nodes::types::Float,
+    AlphaParam: crate::nodes::types::Float,
 > {
     ///No documentation.
-    pub image: Image,
+    pub image: ImageParam,
     /**No documentation.
 
 **Metadata**:
@@ -202,7 +207,7 @@ pub struct ImageSharpen<
   - Min: 1
   - Step: 1
 */
-    pub sharpen_radius: SharpenRadius,
+    pub sharpen_radius: SharpenRadiusParam,
     /**No documentation.
 
 **Metadata**:
@@ -211,7 +216,7 @@ pub struct ImageSharpen<
   - Min: 0.1
   - Step: 0.01
 */
-    pub sigma: Sigma,
+    pub sigma: SigmaParam,
     /**No documentation.
 
 **Metadata**:
@@ -220,20 +225,20 @@ pub struct ImageSharpen<
   - Min: 0
   - Step: 0.01
 */
-    pub alpha: Alpha,
+    pub alpha: AlphaParam,
 }
 impl<
-    Image: crate::nodes::types::Image,
-    SharpenRadius: crate::nodes::types::Int,
-    Sigma: crate::nodes::types::Float,
-    Alpha: crate::nodes::types::Float,
-> ImageSharpen<Image, SharpenRadius, Sigma, Alpha> {
+    ImageParam: crate::nodes::types::Image,
+    SharpenRadiusParam: crate::nodes::types::Int,
+    SigmaParam: crate::nodes::types::Float,
+    AlphaParam: crate::nodes::types::Float,
+> ImageSharpen<ImageParam, SharpenRadiusParam, SigmaParam, AlphaParam> {
     /// Create a new node.
     pub fn new(
-        image: Image,
-        sharpen_radius: SharpenRadius,
-        sigma: Sigma,
-        alpha: Alpha,
+        image: ImageParam,
+        sharpen_radius: SharpenRadiusParam,
+        sigma: SigmaParam,
+        alpha: AlphaParam,
     ) -> Self {
         Self {
             image,
@@ -244,11 +249,12 @@ impl<
     }
 }
 impl<
-    Image: crate::nodes::types::Image,
-    SharpenRadius: crate::nodes::types::Int,
-    Sigma: crate::nodes::types::Float,
-    Alpha: crate::nodes::types::Float,
-> crate::nodes::TypedNode for ImageSharpen<Image, SharpenRadius, Sigma, Alpha> {
+    ImageParam: crate::nodes::types::Image,
+    SharpenRadiusParam: crate::nodes::types::Int,
+    SigmaParam: crate::nodes::types::Float,
+    AlphaParam: crate::nodes::types::Float,
+> crate::nodes::TypedNode
+for ImageSharpen<ImageParam, SharpenRadiusParam, SigmaParam, AlphaParam> {
     type Output = crate::nodes::types::ImageOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)
@@ -269,14 +275,14 @@ impl<
 ///**ImageMorphology**: No description.
 #[derive(Clone)]
 pub struct Morphology<
-    Image: crate::nodes::types::Image,
-    Operation: crate::nodes::types::String,
-    KernelSize: crate::nodes::types::Int,
+    ImageParam: crate::nodes::types::Image,
+    OperationParam: crate::nodes::types::String,
+    KernelSizeParam: crate::nodes::types::Int,
 > {
     ///No documentation.
-    pub image: Image,
+    pub image: ImageParam,
     ///No documentation.
-    pub operation: Operation,
+    pub operation: OperationParam,
     /**No documentation.
 
 **Metadata**:
@@ -285,15 +291,19 @@ pub struct Morphology<
   - Min: 3
   - Step: 1
 */
-    pub kernel_size: KernelSize,
+    pub kernel_size: KernelSizeParam,
 }
 impl<
-    Image: crate::nodes::types::Image,
-    Operation: crate::nodes::types::String,
-    KernelSize: crate::nodes::types::Int,
-> Morphology<Image, Operation, KernelSize> {
+    ImageParam: crate::nodes::types::Image,
+    OperationParam: crate::nodes::types::String,
+    KernelSizeParam: crate::nodes::types::Int,
+> Morphology<ImageParam, OperationParam, KernelSizeParam> {
     /// Create a new node.
-    pub fn new(image: Image, operation: Operation, kernel_size: KernelSize) -> Self {
+    pub fn new(
+        image: ImageParam,
+        operation: OperationParam,
+        kernel_size: KernelSizeParam,
+    ) -> Self {
         Self {
             image,
             operation,
@@ -302,10 +312,10 @@ impl<
     }
 }
 impl<
-    Image: crate::nodes::types::Image,
-    Operation: crate::nodes::types::String,
-    KernelSize: crate::nodes::types::Int,
-> crate::nodes::TypedNode for Morphology<Image, Operation, KernelSize> {
+    ImageParam: crate::nodes::types::Image,
+    OperationParam: crate::nodes::types::String,
+    KernelSizeParam: crate::nodes::types::Int,
+> crate::nodes::TypedNode for Morphology<ImageParam, OperationParam, KernelSizeParam> {
     type Output = crate::nodes::types::ImageOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)

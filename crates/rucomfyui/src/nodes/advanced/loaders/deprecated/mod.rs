@@ -20,18 +20,18 @@ pub mod out {
 }
 ///**DiffusersLoader**: No description.
 #[derive(Clone)]
-pub struct DiffusersLoader<ModelPath: crate::nodes::types::String> {
+pub struct DiffusersLoader<ModelPathParam: crate::nodes::types::String> {
     ///No documentation.
-    pub model_path: ModelPath,
+    pub model_path: ModelPathParam,
 }
-impl<ModelPath: crate::nodes::types::String> DiffusersLoader<ModelPath> {
+impl<ModelPathParam: crate::nodes::types::String> DiffusersLoader<ModelPathParam> {
     /// Create a new node.
-    pub fn new(model_path: ModelPath) -> Self {
+    pub fn new(model_path: ModelPathParam) -> Self {
         Self { model_path }
     }
 }
-impl<ModelPath: crate::nodes::types::String> crate::nodes::TypedNode
-for DiffusersLoader<ModelPath> {
+impl<ModelPathParam: crate::nodes::types::String> crate::nodes::TypedNode
+for DiffusersLoader<ModelPathParam> {
     type Output = out::DiffusersLoaderOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {

@@ -10,19 +10,19 @@ pub mod video_models;
 ///**KSampler**: Uses the provided model, positive and negative conditioning to denoise the latent image.
 #[derive(Clone)]
 pub struct KSampler<
-    Model: crate::nodes::types::Model,
-    Seed: crate::nodes::types::Int,
-    Steps: crate::nodes::types::Int,
-    Cfg: crate::nodes::types::Float,
-    SamplerName: crate::nodes::types::String,
-    Scheduler: crate::nodes::types::String,
-    Positive: crate::nodes::types::Conditioning,
-    Negative: crate::nodes::types::Conditioning,
-    LatentImage: crate::nodes::types::Latent,
-    Denoise: crate::nodes::types::Float,
+    ModelParam: crate::nodes::types::Model,
+    SeedParam: crate::nodes::types::Int,
+    StepsParam: crate::nodes::types::Int,
+    CfgParam: crate::nodes::types::Float,
+    SamplerNameParam: crate::nodes::types::String,
+    SchedulerParam: crate::nodes::types::String,
+    PositiveParam: crate::nodes::types::Conditioning,
+    NegativeParam: crate::nodes::types::Conditioning,
+    LatentImageParam: crate::nodes::types::Latent,
+    DenoiseParam: crate::nodes::types::Float,
 > {
     ///The model used for denoising the input latent.
-    pub model: Model,
+    pub model: ModelParam,
     /**The random seed used for creating the noise.
 
 **Metadata**:
@@ -30,7 +30,7 @@ pub struct KSampler<
   - Max: 18446744073709551615
   - Min: 0
 */
-    pub seed: Seed,
+    pub seed: SeedParam,
     /**The number of steps used in the denoising process.
 
 **Metadata**:
@@ -38,7 +38,7 @@ pub struct KSampler<
   - Max: 10000
   - Min: 1
 */
-    pub steps: Steps,
+    pub steps: StepsParam,
     /**The Classifier-Free Guidance scale balances creativity and adherence to the prompt. Higher values result in images more closely matching the prompt however too high values will negatively impact quality.
 
 **Metadata**:
@@ -48,17 +48,17 @@ pub struct KSampler<
   - Round: 0.01
   - Step: 0.1
 */
-    pub cfg: Cfg,
+    pub cfg: CfgParam,
     ///The algorithm used when sampling, this can affect the quality, speed, and style of the generated output.
-    pub sampler_name: SamplerName,
+    pub sampler_name: SamplerNameParam,
     ///The scheduler controls how noise is gradually removed to form the image.
-    pub scheduler: Scheduler,
+    pub scheduler: SchedulerParam,
     ///The conditioning describing the attributes you want to include in the image.
-    pub positive: Positive,
+    pub positive: PositiveParam,
     ///The conditioning describing the attributes you want to exclude from the image.
-    pub negative: Negative,
+    pub negative: NegativeParam,
     ///The latent image to denoise.
-    pub latent_image: LatentImage,
+    pub latent_image: LatentImageParam,
     /**The amount of denoising applied, lower values will maintain the structure of the initial image allowing for image to image sampling.
 
 **Metadata**:
@@ -67,43 +67,43 @@ pub struct KSampler<
   - Min: 0
   - Step: 0.01
 */
-    pub denoise: Denoise,
+    pub denoise: DenoiseParam,
 }
 impl<
-    Model: crate::nodes::types::Model,
-    Seed: crate::nodes::types::Int,
-    Steps: crate::nodes::types::Int,
-    Cfg: crate::nodes::types::Float,
-    SamplerName: crate::nodes::types::String,
-    Scheduler: crate::nodes::types::String,
-    Positive: crate::nodes::types::Conditioning,
-    Negative: crate::nodes::types::Conditioning,
-    LatentImage: crate::nodes::types::Latent,
-    Denoise: crate::nodes::types::Float,
+    ModelParam: crate::nodes::types::Model,
+    SeedParam: crate::nodes::types::Int,
+    StepsParam: crate::nodes::types::Int,
+    CfgParam: crate::nodes::types::Float,
+    SamplerNameParam: crate::nodes::types::String,
+    SchedulerParam: crate::nodes::types::String,
+    PositiveParam: crate::nodes::types::Conditioning,
+    NegativeParam: crate::nodes::types::Conditioning,
+    LatentImageParam: crate::nodes::types::Latent,
+    DenoiseParam: crate::nodes::types::Float,
 > KSampler<
-    Model,
-    Seed,
-    Steps,
-    Cfg,
-    SamplerName,
-    Scheduler,
-    Positive,
-    Negative,
-    LatentImage,
-    Denoise,
+    ModelParam,
+    SeedParam,
+    StepsParam,
+    CfgParam,
+    SamplerNameParam,
+    SchedulerParam,
+    PositiveParam,
+    NegativeParam,
+    LatentImageParam,
+    DenoiseParam,
 > {
     /// Create a new node.
     pub fn new(
-        model: Model,
-        seed: Seed,
-        steps: Steps,
-        cfg: Cfg,
-        sampler_name: SamplerName,
-        scheduler: Scheduler,
-        positive: Positive,
-        negative: Negative,
-        latent_image: LatentImage,
-        denoise: Denoise,
+        model: ModelParam,
+        seed: SeedParam,
+        steps: StepsParam,
+        cfg: CfgParam,
+        sampler_name: SamplerNameParam,
+        scheduler: SchedulerParam,
+        positive: PositiveParam,
+        negative: NegativeParam,
+        latent_image: LatentImageParam,
+        denoise: DenoiseParam,
     ) -> Self {
         Self {
             model,
@@ -120,28 +120,28 @@ impl<
     }
 }
 impl<
-    Model: crate::nodes::types::Model,
-    Seed: crate::nodes::types::Int,
-    Steps: crate::nodes::types::Int,
-    Cfg: crate::nodes::types::Float,
-    SamplerName: crate::nodes::types::String,
-    Scheduler: crate::nodes::types::String,
-    Positive: crate::nodes::types::Conditioning,
-    Negative: crate::nodes::types::Conditioning,
-    LatentImage: crate::nodes::types::Latent,
-    Denoise: crate::nodes::types::Float,
+    ModelParam: crate::nodes::types::Model,
+    SeedParam: crate::nodes::types::Int,
+    StepsParam: crate::nodes::types::Int,
+    CfgParam: crate::nodes::types::Float,
+    SamplerNameParam: crate::nodes::types::String,
+    SchedulerParam: crate::nodes::types::String,
+    PositiveParam: crate::nodes::types::Conditioning,
+    NegativeParam: crate::nodes::types::Conditioning,
+    LatentImageParam: crate::nodes::types::Latent,
+    DenoiseParam: crate::nodes::types::Float,
 > crate::nodes::TypedNode
 for KSampler<
-    Model,
-    Seed,
-    Steps,
-    Cfg,
-    SamplerName,
-    Scheduler,
-    Positive,
-    Negative,
-    LatentImage,
-    Denoise,
+    ModelParam,
+    SeedParam,
+    StepsParam,
+    CfgParam,
+    SamplerNameParam,
+    SchedulerParam,
+    PositiveParam,
+    NegativeParam,
+    LatentImageParam,
+    DenoiseParam,
 > {
     type Output = crate::nodes::types::LatentOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
@@ -169,24 +169,24 @@ for KSampler<
 ///**KSampler (Advanced)**: No description.
 #[derive(Clone)]
 pub struct KSamplerAdvanced<
-    Model: crate::nodes::types::Model,
-    AddNoise: crate::nodes::types::String,
-    NoiseSeed: crate::nodes::types::Int,
-    Steps: crate::nodes::types::Int,
-    Cfg: crate::nodes::types::Float,
-    SamplerName: crate::nodes::types::String,
-    Scheduler: crate::nodes::types::String,
-    Positive: crate::nodes::types::Conditioning,
-    Negative: crate::nodes::types::Conditioning,
-    LatentImage: crate::nodes::types::Latent,
-    StartAtStep: crate::nodes::types::Int,
-    EndAtStep: crate::nodes::types::Int,
-    ReturnWithLeftoverNoise: crate::nodes::types::String,
+    ModelParam: crate::nodes::types::Model,
+    AddNoiseParam: crate::nodes::types::String,
+    NoiseSeedParam: crate::nodes::types::Int,
+    StepsParam: crate::nodes::types::Int,
+    CfgParam: crate::nodes::types::Float,
+    SamplerNameParam: crate::nodes::types::String,
+    SchedulerParam: crate::nodes::types::String,
+    PositiveParam: crate::nodes::types::Conditioning,
+    NegativeParam: crate::nodes::types::Conditioning,
+    LatentImageParam: crate::nodes::types::Latent,
+    StartAtStepParam: crate::nodes::types::Int,
+    EndAtStepParam: crate::nodes::types::Int,
+    ReturnWithLeftoverNoiseParam: crate::nodes::types::String,
 > {
     ///No documentation.
-    pub model: Model,
+    pub model: ModelParam,
     ///No documentation.
-    pub add_noise: AddNoise,
+    pub add_noise: AddNoiseParam,
     /**No documentation.
 
 **Metadata**:
@@ -194,7 +194,7 @@ pub struct KSamplerAdvanced<
   - Max: 18446744073709551615
   - Min: 0
 */
-    pub noise_seed: NoiseSeed,
+    pub noise_seed: NoiseSeedParam,
     /**No documentation.
 
 **Metadata**:
@@ -202,7 +202,7 @@ pub struct KSamplerAdvanced<
   - Max: 10000
   - Min: 1
 */
-    pub steps: Steps,
+    pub steps: StepsParam,
     /**No documentation.
 
 **Metadata**:
@@ -212,17 +212,17 @@ pub struct KSamplerAdvanced<
   - Round: 0.01
   - Step: 0.1
 */
-    pub cfg: Cfg,
+    pub cfg: CfgParam,
     ///No documentation.
-    pub sampler_name: SamplerName,
+    pub sampler_name: SamplerNameParam,
     ///No documentation.
-    pub scheduler: Scheduler,
+    pub scheduler: SchedulerParam,
     ///No documentation.
-    pub positive: Positive,
+    pub positive: PositiveParam,
     ///No documentation.
-    pub negative: Negative,
+    pub negative: NegativeParam,
     ///No documentation.
-    pub latent_image: LatentImage,
+    pub latent_image: LatentImageParam,
     /**No documentation.
 
 **Metadata**:
@@ -230,7 +230,7 @@ pub struct KSamplerAdvanced<
   - Max: 10000
   - Min: 0
 */
-    pub start_at_step: StartAtStep,
+    pub start_at_step: StartAtStepParam,
     /**No documentation.
 
 **Metadata**:
@@ -238,54 +238,54 @@ pub struct KSamplerAdvanced<
   - Max: 10000
   - Min: 0
 */
-    pub end_at_step: EndAtStep,
+    pub end_at_step: EndAtStepParam,
     ///No documentation.
-    pub return_with_leftover_noise: ReturnWithLeftoverNoise,
+    pub return_with_leftover_noise: ReturnWithLeftoverNoiseParam,
 }
 impl<
-    Model: crate::nodes::types::Model,
-    AddNoise: crate::nodes::types::String,
-    NoiseSeed: crate::nodes::types::Int,
-    Steps: crate::nodes::types::Int,
-    Cfg: crate::nodes::types::Float,
-    SamplerName: crate::nodes::types::String,
-    Scheduler: crate::nodes::types::String,
-    Positive: crate::nodes::types::Conditioning,
-    Negative: crate::nodes::types::Conditioning,
-    LatentImage: crate::nodes::types::Latent,
-    StartAtStep: crate::nodes::types::Int,
-    EndAtStep: crate::nodes::types::Int,
-    ReturnWithLeftoverNoise: crate::nodes::types::String,
+    ModelParam: crate::nodes::types::Model,
+    AddNoiseParam: crate::nodes::types::String,
+    NoiseSeedParam: crate::nodes::types::Int,
+    StepsParam: crate::nodes::types::Int,
+    CfgParam: crate::nodes::types::Float,
+    SamplerNameParam: crate::nodes::types::String,
+    SchedulerParam: crate::nodes::types::String,
+    PositiveParam: crate::nodes::types::Conditioning,
+    NegativeParam: crate::nodes::types::Conditioning,
+    LatentImageParam: crate::nodes::types::Latent,
+    StartAtStepParam: crate::nodes::types::Int,
+    EndAtStepParam: crate::nodes::types::Int,
+    ReturnWithLeftoverNoiseParam: crate::nodes::types::String,
 > KSamplerAdvanced<
-    Model,
-    AddNoise,
-    NoiseSeed,
-    Steps,
-    Cfg,
-    SamplerName,
-    Scheduler,
-    Positive,
-    Negative,
-    LatentImage,
-    StartAtStep,
-    EndAtStep,
-    ReturnWithLeftoverNoise,
+    ModelParam,
+    AddNoiseParam,
+    NoiseSeedParam,
+    StepsParam,
+    CfgParam,
+    SamplerNameParam,
+    SchedulerParam,
+    PositiveParam,
+    NegativeParam,
+    LatentImageParam,
+    StartAtStepParam,
+    EndAtStepParam,
+    ReturnWithLeftoverNoiseParam,
 > {
     /// Create a new node.
     pub fn new(
-        model: Model,
-        add_noise: AddNoise,
-        noise_seed: NoiseSeed,
-        steps: Steps,
-        cfg: Cfg,
-        sampler_name: SamplerName,
-        scheduler: Scheduler,
-        positive: Positive,
-        negative: Negative,
-        latent_image: LatentImage,
-        start_at_step: StartAtStep,
-        end_at_step: EndAtStep,
-        return_with_leftover_noise: ReturnWithLeftoverNoise,
+        model: ModelParam,
+        add_noise: AddNoiseParam,
+        noise_seed: NoiseSeedParam,
+        steps: StepsParam,
+        cfg: CfgParam,
+        sampler_name: SamplerNameParam,
+        scheduler: SchedulerParam,
+        positive: PositiveParam,
+        negative: NegativeParam,
+        latent_image: LatentImageParam,
+        start_at_step: StartAtStepParam,
+        end_at_step: EndAtStepParam,
+        return_with_leftover_noise: ReturnWithLeftoverNoiseParam,
     ) -> Self {
         Self {
             model,
@@ -305,34 +305,34 @@ impl<
     }
 }
 impl<
-    Model: crate::nodes::types::Model,
-    AddNoise: crate::nodes::types::String,
-    NoiseSeed: crate::nodes::types::Int,
-    Steps: crate::nodes::types::Int,
-    Cfg: crate::nodes::types::Float,
-    SamplerName: crate::nodes::types::String,
-    Scheduler: crate::nodes::types::String,
-    Positive: crate::nodes::types::Conditioning,
-    Negative: crate::nodes::types::Conditioning,
-    LatentImage: crate::nodes::types::Latent,
-    StartAtStep: crate::nodes::types::Int,
-    EndAtStep: crate::nodes::types::Int,
-    ReturnWithLeftoverNoise: crate::nodes::types::String,
+    ModelParam: crate::nodes::types::Model,
+    AddNoiseParam: crate::nodes::types::String,
+    NoiseSeedParam: crate::nodes::types::Int,
+    StepsParam: crate::nodes::types::Int,
+    CfgParam: crate::nodes::types::Float,
+    SamplerNameParam: crate::nodes::types::String,
+    SchedulerParam: crate::nodes::types::String,
+    PositiveParam: crate::nodes::types::Conditioning,
+    NegativeParam: crate::nodes::types::Conditioning,
+    LatentImageParam: crate::nodes::types::Latent,
+    StartAtStepParam: crate::nodes::types::Int,
+    EndAtStepParam: crate::nodes::types::Int,
+    ReturnWithLeftoverNoiseParam: crate::nodes::types::String,
 > crate::nodes::TypedNode
 for KSamplerAdvanced<
-    Model,
-    AddNoise,
-    NoiseSeed,
-    Steps,
-    Cfg,
-    SamplerName,
-    Scheduler,
-    Positive,
-    Negative,
-    LatentImage,
-    StartAtStep,
-    EndAtStep,
-    ReturnWithLeftoverNoise,
+    ModelParam,
+    AddNoiseParam,
+    NoiseSeedParam,
+    StepsParam,
+    CfgParam,
+    SamplerNameParam,
+    SchedulerParam,
+    PositiveParam,
+    NegativeParam,
+    LatentImageParam,
+    StartAtStepParam,
+    EndAtStepParam,
+    ReturnWithLeftoverNoiseParam,
 > {
     type Output = crate::nodes::types::LatentOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {

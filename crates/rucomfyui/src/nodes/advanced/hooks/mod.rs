@@ -27,8 +27,8 @@ pub mod out {
 ///**Timesteps Range**: No description.
 #[derive(Clone)]
 pub struct ConditioningTimestepsRange<
-    StartPercent: crate::nodes::types::Float,
-    EndPercent: crate::nodes::types::Float,
+    StartPercentParam: crate::nodes::types::Float,
+    EndPercentParam: crate::nodes::types::Float,
 > {
     /**No documentation.
 
@@ -38,7 +38,7 @@ pub struct ConditioningTimestepsRange<
   - Min: 0
   - Step: 0.001
 */
-    pub start_percent: StartPercent,
+    pub start_percent: StartPercentParam,
     /**No documentation.
 
 **Metadata**:
@@ -47,21 +47,22 @@ pub struct ConditioningTimestepsRange<
   - Min: 0
   - Step: 0.001
 */
-    pub end_percent: EndPercent,
+    pub end_percent: EndPercentParam,
 }
 impl<
-    StartPercent: crate::nodes::types::Float,
-    EndPercent: crate::nodes::types::Float,
-> ConditioningTimestepsRange<StartPercent, EndPercent> {
+    StartPercentParam: crate::nodes::types::Float,
+    EndPercentParam: crate::nodes::types::Float,
+> ConditioningTimestepsRange<StartPercentParam, EndPercentParam> {
     /// Create a new node.
-    pub fn new(start_percent: StartPercent, end_percent: EndPercent) -> Self {
+    pub fn new(start_percent: StartPercentParam, end_percent: EndPercentParam) -> Self {
         Self { start_percent, end_percent }
     }
 }
 impl<
-    StartPercent: crate::nodes::types::Float,
-    EndPercent: crate::nodes::types::Float,
-> crate::nodes::TypedNode for ConditioningTimestepsRange<StartPercent, EndPercent> {
+    StartPercentParam: crate::nodes::types::Float,
+    EndPercentParam: crate::nodes::types::Float,
+> crate::nodes::TypedNode
+for ConditioningTimestepsRange<StartPercentParam, EndPercentParam> {
     type Output = out::ConditioningTimestepsRangeOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {

@@ -9,27 +9,27 @@ pub mod operations;
 ///**LatentAdd**: No description.
 #[derive(Clone)]
 pub struct LatentAdd<
-    Samples1: crate::nodes::types::Latent,
-    Samples2: crate::nodes::types::Latent,
+    Samples1Param: crate::nodes::types::Latent,
+    Samples2Param: crate::nodes::types::Latent,
 > {
     ///No documentation.
-    pub samples_1: Samples1,
+    pub samples_1: Samples1Param,
     ///No documentation.
-    pub samples_2: Samples2,
+    pub samples_2: Samples2Param,
 }
 impl<
-    Samples1: crate::nodes::types::Latent,
-    Samples2: crate::nodes::types::Latent,
-> LatentAdd<Samples1, Samples2> {
+    Samples1Param: crate::nodes::types::Latent,
+    Samples2Param: crate::nodes::types::Latent,
+> LatentAdd<Samples1Param, Samples2Param> {
     /// Create a new node.
-    pub fn new(samples_1: Samples1, samples_2: Samples2) -> Self {
+    pub fn new(samples_1: Samples1Param, samples_2: Samples2Param) -> Self {
         Self { samples_1, samples_2 }
     }
 }
 impl<
-    Samples1: crate::nodes::types::Latent,
-    Samples2: crate::nodes::types::Latent,
-> crate::nodes::TypedNode for LatentAdd<Samples1, Samples2> {
+    Samples1Param: crate::nodes::types::Latent,
+    Samples2Param: crate::nodes::types::Latent,
+> crate::nodes::TypedNode for LatentAdd<Samples1Param, Samples2Param> {
     type Output = crate::nodes::types::LatentOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)
@@ -48,31 +48,31 @@ impl<
 ///**LatentBatchSeedBehavior**: No description.
 #[derive(Clone)]
 pub struct LatentBatchSeedBehavior<
-    Samples: crate::nodes::types::Latent,
-    SeedBehavior: crate::nodes::types::String,
+    SamplesParam: crate::nodes::types::Latent,
+    SeedBehaviorParam: crate::nodes::types::String,
 > {
     ///No documentation.
-    pub samples: Samples,
+    pub samples: SamplesParam,
     /**No documentation.
 
 **Metadata**:
   - Default: fixed
 */
-    pub seed_behavior: SeedBehavior,
+    pub seed_behavior: SeedBehaviorParam,
 }
 impl<
-    Samples: crate::nodes::types::Latent,
-    SeedBehavior: crate::nodes::types::String,
-> LatentBatchSeedBehavior<Samples, SeedBehavior> {
+    SamplesParam: crate::nodes::types::Latent,
+    SeedBehaviorParam: crate::nodes::types::String,
+> LatentBatchSeedBehavior<SamplesParam, SeedBehaviorParam> {
     /// Create a new node.
-    pub fn new(samples: Samples, seed_behavior: SeedBehavior) -> Self {
+    pub fn new(samples: SamplesParam, seed_behavior: SeedBehaviorParam) -> Self {
         Self { samples, seed_behavior }
     }
 }
 impl<
-    Samples: crate::nodes::types::Latent,
-    SeedBehavior: crate::nodes::types::String,
-> crate::nodes::TypedNode for LatentBatchSeedBehavior<Samples, SeedBehavior> {
+    SamplesParam: crate::nodes::types::Latent,
+    SeedBehaviorParam: crate::nodes::types::String,
+> crate::nodes::TypedNode for LatentBatchSeedBehavior<SamplesParam, SeedBehaviorParam> {
     type Output = crate::nodes::types::LatentOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)
@@ -91,14 +91,14 @@ impl<
 ///**LatentInterpolate**: No description.
 #[derive(Clone)]
 pub struct LatentInterpolate<
-    Samples1: crate::nodes::types::Latent,
-    Samples2: crate::nodes::types::Latent,
-    Ratio: crate::nodes::types::Float,
+    Samples1Param: crate::nodes::types::Latent,
+    Samples2Param: crate::nodes::types::Latent,
+    RatioParam: crate::nodes::types::Float,
 > {
     ///No documentation.
-    pub samples_1: Samples1,
+    pub samples_1: Samples1Param,
     ///No documentation.
-    pub samples_2: Samples2,
+    pub samples_2: Samples2Param,
     /**No documentation.
 
 **Metadata**:
@@ -107,15 +107,19 @@ pub struct LatentInterpolate<
   - Min: 0
   - Step: 0.01
 */
-    pub ratio: Ratio,
+    pub ratio: RatioParam,
 }
 impl<
-    Samples1: crate::nodes::types::Latent,
-    Samples2: crate::nodes::types::Latent,
-    Ratio: crate::nodes::types::Float,
-> LatentInterpolate<Samples1, Samples2, Ratio> {
+    Samples1Param: crate::nodes::types::Latent,
+    Samples2Param: crate::nodes::types::Latent,
+    RatioParam: crate::nodes::types::Float,
+> LatentInterpolate<Samples1Param, Samples2Param, RatioParam> {
     /// Create a new node.
-    pub fn new(samples_1: Samples1, samples_2: Samples2, ratio: Ratio) -> Self {
+    pub fn new(
+        samples_1: Samples1Param,
+        samples_2: Samples2Param,
+        ratio: RatioParam,
+    ) -> Self {
         Self {
             samples_1,
             samples_2,
@@ -124,10 +128,11 @@ impl<
     }
 }
 impl<
-    Samples1: crate::nodes::types::Latent,
-    Samples2: crate::nodes::types::Latent,
-    Ratio: crate::nodes::types::Float,
-> crate::nodes::TypedNode for LatentInterpolate<Samples1, Samples2, Ratio> {
+    Samples1Param: crate::nodes::types::Latent,
+    Samples2Param: crate::nodes::types::Latent,
+    RatioParam: crate::nodes::types::Float,
+> crate::nodes::TypedNode
+for LatentInterpolate<Samples1Param, Samples2Param, RatioParam> {
     type Output = crate::nodes::types::LatentOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)
@@ -147,11 +152,11 @@ impl<
 ///**LatentMultiply**: No description.
 #[derive(Clone)]
 pub struct LatentMultiply<
-    Samples: crate::nodes::types::Latent,
-    Multiplier: crate::nodes::types::Float,
+    SamplesParam: crate::nodes::types::Latent,
+    MultiplierParam: crate::nodes::types::Float,
 > {
     ///No documentation.
-    pub samples: Samples,
+    pub samples: SamplesParam,
     /**No documentation.
 
 **Metadata**:
@@ -160,21 +165,21 @@ pub struct LatentMultiply<
   - Min: -10
   - Step: 0.01
 */
-    pub multiplier: Multiplier,
+    pub multiplier: MultiplierParam,
 }
 impl<
-    Samples: crate::nodes::types::Latent,
-    Multiplier: crate::nodes::types::Float,
-> LatentMultiply<Samples, Multiplier> {
+    SamplesParam: crate::nodes::types::Latent,
+    MultiplierParam: crate::nodes::types::Float,
+> LatentMultiply<SamplesParam, MultiplierParam> {
     /// Create a new node.
-    pub fn new(samples: Samples, multiplier: Multiplier) -> Self {
+    pub fn new(samples: SamplesParam, multiplier: MultiplierParam) -> Self {
         Self { samples, multiplier }
     }
 }
 impl<
-    Samples: crate::nodes::types::Latent,
-    Multiplier: crate::nodes::types::Float,
-> crate::nodes::TypedNode for LatentMultiply<Samples, Multiplier> {
+    SamplesParam: crate::nodes::types::Latent,
+    MultiplierParam: crate::nodes::types::Float,
+> crate::nodes::TypedNode for LatentMultiply<SamplesParam, MultiplierParam> {
     type Output = crate::nodes::types::LatentOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)
@@ -193,27 +198,27 @@ impl<
 ///**LatentSubtract**: No description.
 #[derive(Clone)]
 pub struct LatentSubtract<
-    Samples1: crate::nodes::types::Latent,
-    Samples2: crate::nodes::types::Latent,
+    Samples1Param: crate::nodes::types::Latent,
+    Samples2Param: crate::nodes::types::Latent,
 > {
     ///No documentation.
-    pub samples_1: Samples1,
+    pub samples_1: Samples1Param,
     ///No documentation.
-    pub samples_2: Samples2,
+    pub samples_2: Samples2Param,
 }
 impl<
-    Samples1: crate::nodes::types::Latent,
-    Samples2: crate::nodes::types::Latent,
-> LatentSubtract<Samples1, Samples2> {
+    Samples1Param: crate::nodes::types::Latent,
+    Samples2Param: crate::nodes::types::Latent,
+> LatentSubtract<Samples1Param, Samples2Param> {
     /// Create a new node.
-    pub fn new(samples_1: Samples1, samples_2: Samples2) -> Self {
+    pub fn new(samples_1: Samples1Param, samples_2: Samples2Param) -> Self {
         Self { samples_1, samples_2 }
     }
 }
 impl<
-    Samples1: crate::nodes::types::Latent,
-    Samples2: crate::nodes::types::Latent,
-> crate::nodes::TypedNode for LatentSubtract<Samples1, Samples2> {
+    Samples1Param: crate::nodes::types::Latent,
+    Samples2Param: crate::nodes::types::Latent,
+> crate::nodes::TypedNode for LatentSubtract<Samples1Param, Samples2Param> {
     type Output = crate::nodes::types::LatentOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)

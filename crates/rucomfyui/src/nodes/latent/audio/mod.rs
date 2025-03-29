@@ -8,8 +8,8 @@ use crate::{
 ///**EmptyLatentAudio**: No description.
 #[derive(Clone)]
 pub struct EmptyLatentAudio<
-    Seconds: crate::nodes::types::Float,
-    BatchSize: crate::nodes::types::Int,
+    SecondsParam: crate::nodes::types::Float,
+    BatchSizeParam: crate::nodes::types::Int,
 > {
     /**No documentation.
 
@@ -19,7 +19,7 @@ pub struct EmptyLatentAudio<
   - Min: 1
   - Step: 0.1
 */
-    pub seconds: Seconds,
+    pub seconds: SecondsParam,
     /**The number of latent images in the batch.
 
 **Metadata**:
@@ -27,21 +27,21 @@ pub struct EmptyLatentAudio<
   - Max: 4096
   - Min: 1
 */
-    pub batch_size: BatchSize,
+    pub batch_size: BatchSizeParam,
 }
 impl<
-    Seconds: crate::nodes::types::Float,
-    BatchSize: crate::nodes::types::Int,
-> EmptyLatentAudio<Seconds, BatchSize> {
+    SecondsParam: crate::nodes::types::Float,
+    BatchSizeParam: crate::nodes::types::Int,
+> EmptyLatentAudio<SecondsParam, BatchSizeParam> {
     /// Create a new node.
-    pub fn new(seconds: Seconds, batch_size: BatchSize) -> Self {
+    pub fn new(seconds: SecondsParam, batch_size: BatchSizeParam) -> Self {
         Self { seconds, batch_size }
     }
 }
 impl<
-    Seconds: crate::nodes::types::Float,
-    BatchSize: crate::nodes::types::Int,
-> crate::nodes::TypedNode for EmptyLatentAudio<Seconds, BatchSize> {
+    SecondsParam: crate::nodes::types::Float,
+    BatchSizeParam: crate::nodes::types::Int,
+> crate::nodes::TypedNode for EmptyLatentAudio<SecondsParam, BatchSizeParam> {
     type Output = crate::nodes::types::LatentOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)
@@ -60,27 +60,27 @@ impl<
 ///**VAEDecodeAudio**: No description.
 #[derive(Clone)]
 pub struct VaeDecodeAudio<
-    Samples: crate::nodes::types::Latent,
-    Vae: crate::nodes::types::Vae,
+    SamplesParam: crate::nodes::types::Latent,
+    VaeParam: crate::nodes::types::Vae,
 > {
     ///No documentation.
-    pub samples: Samples,
+    pub samples: SamplesParam,
     ///No documentation.
-    pub vae: Vae,
+    pub vae: VaeParam,
 }
 impl<
-    Samples: crate::nodes::types::Latent,
-    Vae: crate::nodes::types::Vae,
-> VaeDecodeAudio<Samples, Vae> {
+    SamplesParam: crate::nodes::types::Latent,
+    VaeParam: crate::nodes::types::Vae,
+> VaeDecodeAudio<SamplesParam, VaeParam> {
     /// Create a new node.
-    pub fn new(samples: Samples, vae: Vae) -> Self {
+    pub fn new(samples: SamplesParam, vae: VaeParam) -> Self {
         Self { samples, vae }
     }
 }
 impl<
-    Samples: crate::nodes::types::Latent,
-    Vae: crate::nodes::types::Vae,
-> crate::nodes::TypedNode for VaeDecodeAudio<Samples, Vae> {
+    SamplesParam: crate::nodes::types::Latent,
+    VaeParam: crate::nodes::types::Vae,
+> crate::nodes::TypedNode for VaeDecodeAudio<SamplesParam, VaeParam> {
     type Output = crate::nodes::types::AudioOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)
@@ -99,27 +99,27 @@ impl<
 ///**VAEEncodeAudio**: No description.
 #[derive(Clone)]
 pub struct VaeEncodeAudio<
-    Audio: crate::nodes::types::Audio,
-    Vae: crate::nodes::types::Vae,
+    AudioParam: crate::nodes::types::Audio,
+    VaeParam: crate::nodes::types::Vae,
 > {
     ///No documentation.
-    pub audio: Audio,
+    pub audio: AudioParam,
     ///No documentation.
-    pub vae: Vae,
+    pub vae: VaeParam,
 }
 impl<
-    Audio: crate::nodes::types::Audio,
-    Vae: crate::nodes::types::Vae,
-> VaeEncodeAudio<Audio, Vae> {
+    AudioParam: crate::nodes::types::Audio,
+    VaeParam: crate::nodes::types::Vae,
+> VaeEncodeAudio<AudioParam, VaeParam> {
     /// Create a new node.
-    pub fn new(audio: Audio, vae: Vae) -> Self {
+    pub fn new(audio: AudioParam, vae: VaeParam) -> Self {
         Self { audio, vae }
     }
 }
 impl<
-    Audio: crate::nodes::types::Audio,
-    Vae: crate::nodes::types::Vae,
-> crate::nodes::TypedNode for VaeEncodeAudio<Audio, Vae> {
+    AudioParam: crate::nodes::types::Audio,
+    VaeParam: crate::nodes::types::Vae,
+> crate::nodes::TypedNode for VaeEncodeAudio<AudioParam, VaeParam> {
     type Output = crate::nodes::types::LatentOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)

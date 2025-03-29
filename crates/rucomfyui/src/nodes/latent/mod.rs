@@ -17,9 +17,9 @@ pub mod video;
 ///**Empty Latent Image**: Create a new batch of empty latent images to be denoised via sampling.
 #[derive(Clone)]
 pub struct EmptyLatentImage<
-    Width: crate::nodes::types::Int,
-    Height: crate::nodes::types::Int,
-    BatchSize: crate::nodes::types::Int,
+    WidthParam: crate::nodes::types::Int,
+    HeightParam: crate::nodes::types::Int,
+    BatchSizeParam: crate::nodes::types::Int,
 > {
     /**The width of the latent images in pixels.
 
@@ -29,7 +29,7 @@ pub struct EmptyLatentImage<
   - Min: 16
   - Step: 8
 */
-    pub width: Width,
+    pub width: WidthParam,
     /**The height of the latent images in pixels.
 
 **Metadata**:
@@ -38,7 +38,7 @@ pub struct EmptyLatentImage<
   - Min: 16
   - Step: 8
 */
-    pub height: Height,
+    pub height: HeightParam,
     /**The number of latent images in the batch.
 
 **Metadata**:
@@ -46,23 +46,27 @@ pub struct EmptyLatentImage<
   - Max: 4096
   - Min: 1
 */
-    pub batch_size: BatchSize,
+    pub batch_size: BatchSizeParam,
 }
 impl<
-    Width: crate::nodes::types::Int,
-    Height: crate::nodes::types::Int,
-    BatchSize: crate::nodes::types::Int,
-> EmptyLatentImage<Width, Height, BatchSize> {
+    WidthParam: crate::nodes::types::Int,
+    HeightParam: crate::nodes::types::Int,
+    BatchSizeParam: crate::nodes::types::Int,
+> EmptyLatentImage<WidthParam, HeightParam, BatchSizeParam> {
     /// Create a new node.
-    pub fn new(width: Width, height: Height, batch_size: BatchSize) -> Self {
+    pub fn new(
+        width: WidthParam,
+        height: HeightParam,
+        batch_size: BatchSizeParam,
+    ) -> Self {
         Self { width, height, batch_size }
     }
 }
 impl<
-    Width: crate::nodes::types::Int,
-    Height: crate::nodes::types::Int,
-    BatchSize: crate::nodes::types::Int,
-> crate::nodes::TypedNode for EmptyLatentImage<Width, Height, BatchSize> {
+    WidthParam: crate::nodes::types::Int,
+    HeightParam: crate::nodes::types::Int,
+    BatchSizeParam: crate::nodes::types::Int,
+> crate::nodes::TypedNode for EmptyLatentImage<WidthParam, HeightParam, BatchSizeParam> {
     type Output = crate::nodes::types::LatentOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)
@@ -82,16 +86,16 @@ impl<
 ///**Latent Composite**: No description.
 #[derive(Clone)]
 pub struct LatentComposite<
-    SamplesTo: crate::nodes::types::Latent,
-    SamplesFrom: crate::nodes::types::Latent,
-    X: crate::nodes::types::Int,
-    Y: crate::nodes::types::Int,
-    Feather: crate::nodes::types::Int,
+    SamplesToParam: crate::nodes::types::Latent,
+    SamplesFromParam: crate::nodes::types::Latent,
+    XParam: crate::nodes::types::Int,
+    YParam: crate::nodes::types::Int,
+    FeatherParam: crate::nodes::types::Int,
 > {
     ///No documentation.
-    pub samples_to: SamplesTo,
+    pub samples_to: SamplesToParam,
     ///No documentation.
-    pub samples_from: SamplesFrom,
+    pub samples_from: SamplesFromParam,
     /**No documentation.
 
 **Metadata**:
@@ -100,7 +104,7 @@ pub struct LatentComposite<
   - Min: 0
   - Step: 8
 */
-    pub x: X,
+    pub x: XParam,
     /**No documentation.
 
 **Metadata**:
@@ -109,7 +113,7 @@ pub struct LatentComposite<
   - Min: 0
   - Step: 8
 */
-    pub y: Y,
+    pub y: YParam,
     /**No documentation.
 
 **Metadata**:
@@ -118,22 +122,22 @@ pub struct LatentComposite<
   - Min: 0
   - Step: 8
 */
-    pub feather: Feather,
+    pub feather: FeatherParam,
 }
 impl<
-    SamplesTo: crate::nodes::types::Latent,
-    SamplesFrom: crate::nodes::types::Latent,
-    X: crate::nodes::types::Int,
-    Y: crate::nodes::types::Int,
-    Feather: crate::nodes::types::Int,
-> LatentComposite<SamplesTo, SamplesFrom, X, Y, Feather> {
+    SamplesToParam: crate::nodes::types::Latent,
+    SamplesFromParam: crate::nodes::types::Latent,
+    XParam: crate::nodes::types::Int,
+    YParam: crate::nodes::types::Int,
+    FeatherParam: crate::nodes::types::Int,
+> LatentComposite<SamplesToParam, SamplesFromParam, XParam, YParam, FeatherParam> {
     /// Create a new node.
     pub fn new(
-        samples_to: SamplesTo,
-        samples_from: SamplesFrom,
-        x: X,
-        y: Y,
-        feather: Feather,
+        samples_to: SamplesToParam,
+        samples_from: SamplesFromParam,
+        x: XParam,
+        y: YParam,
+        feather: FeatherParam,
     ) -> Self {
         Self {
             samples_to,
@@ -145,12 +149,13 @@ impl<
     }
 }
 impl<
-    SamplesTo: crate::nodes::types::Latent,
-    SamplesFrom: crate::nodes::types::Latent,
-    X: crate::nodes::types::Int,
-    Y: crate::nodes::types::Int,
-    Feather: crate::nodes::types::Int,
-> crate::nodes::TypedNode for LatentComposite<SamplesTo, SamplesFrom, X, Y, Feather> {
+    SamplesToParam: crate::nodes::types::Latent,
+    SamplesFromParam: crate::nodes::types::Latent,
+    XParam: crate::nodes::types::Int,
+    YParam: crate::nodes::types::Int,
+    FeatherParam: crate::nodes::types::Int,
+> crate::nodes::TypedNode
+for LatentComposite<SamplesToParam, SamplesFromParam, XParam, YParam, FeatherParam> {
     type Output = crate::nodes::types::LatentOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)
@@ -172,17 +177,17 @@ impl<
 ///**LatentCompositeMasked**: No description.
 #[derive(Clone)]
 pub struct LatentCompositeMasked<
-    Destination: crate::nodes::types::Latent,
-    Source: crate::nodes::types::Latent,
-    X: crate::nodes::types::Int,
-    Y: crate::nodes::types::Int,
-    ResizeSource: crate::nodes::types::Boolean,
-    Mask: crate::nodes::types::Mask = crate::nodes::types::MaskOut,
+    DestinationParam: crate::nodes::types::Latent,
+    SourceParam: crate::nodes::types::Latent,
+    XParam: crate::nodes::types::Int,
+    YParam: crate::nodes::types::Int,
+    ResizeSourceParam: crate::nodes::types::Boolean,
+    MaskParam: crate::nodes::types::Mask = crate::nodes::types::MaskOut,
 > {
     ///No documentation.
-    pub destination: Destination,
+    pub destination: DestinationParam,
     ///No documentation.
-    pub source: Source,
+    pub source: SourceParam,
     /**No documentation.
 
 **Metadata**:
@@ -191,7 +196,7 @@ pub struct LatentCompositeMasked<
   - Min: 0
   - Step: 8
 */
-    pub x: X,
+    pub x: XParam,
     /**No documentation.
 
 **Metadata**:
@@ -200,32 +205,39 @@ pub struct LatentCompositeMasked<
   - Min: 0
   - Step: 8
 */
-    pub y: Y,
+    pub y: YParam,
     /**No documentation.
 
 **Metadata**:
   - Default: false
 */
-    pub resize_source: ResizeSource,
+    pub resize_source: ResizeSourceParam,
     ///No documentation.
-    pub mask: Option<Mask>,
+    pub mask: Option<MaskParam>,
 }
 impl<
-    Destination: crate::nodes::types::Latent,
-    Source: crate::nodes::types::Latent,
-    X: crate::nodes::types::Int,
-    Y: crate::nodes::types::Int,
-    ResizeSource: crate::nodes::types::Boolean,
-    Mask: crate::nodes::types::Mask,
-> LatentCompositeMasked<Destination, Source, X, Y, ResizeSource, Mask> {
+    DestinationParam: crate::nodes::types::Latent,
+    SourceParam: crate::nodes::types::Latent,
+    XParam: crate::nodes::types::Int,
+    YParam: crate::nodes::types::Int,
+    ResizeSourceParam: crate::nodes::types::Boolean,
+    MaskParam: crate::nodes::types::Mask,
+> LatentCompositeMasked<
+    DestinationParam,
+    SourceParam,
+    XParam,
+    YParam,
+    ResizeSourceParam,
+    MaskParam,
+> {
     /// Create a new node.
     pub fn new(
-        destination: Destination,
-        source: Source,
-        x: X,
-        y: Y,
-        resize_source: ResizeSource,
-        mask: Option<Mask>,
+        destination: DestinationParam,
+        source: SourceParam,
+        x: XParam,
+        y: YParam,
+        resize_source: ResizeSourceParam,
+        mask: Option<MaskParam>,
     ) -> Self {
         Self {
             destination,
@@ -238,14 +250,21 @@ impl<
     }
 }
 impl<
-    Destination: crate::nodes::types::Latent,
-    Source: crate::nodes::types::Latent,
-    X: crate::nodes::types::Int,
-    Y: crate::nodes::types::Int,
-    ResizeSource: crate::nodes::types::Boolean,
-    Mask: crate::nodes::types::Mask,
+    DestinationParam: crate::nodes::types::Latent,
+    SourceParam: crate::nodes::types::Latent,
+    XParam: crate::nodes::types::Int,
+    YParam: crate::nodes::types::Int,
+    ResizeSourceParam: crate::nodes::types::Boolean,
+    MaskParam: crate::nodes::types::Mask,
 > crate::nodes::TypedNode
-for LatentCompositeMasked<Destination, Source, X, Y, ResizeSource, Mask> {
+for LatentCompositeMasked<
+    DestinationParam,
+    SourceParam,
+    XParam,
+    YParam,
+    ResizeSourceParam,
+    MaskParam,
+> {
     type Output = crate::nodes::types::LatentOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)
@@ -270,16 +289,16 @@ for LatentCompositeMasked<Destination, Source, X, Y, ResizeSource, Mask> {
 ///**Upscale Latent**: No description.
 #[derive(Clone)]
 pub struct LatentUpscale<
-    Samples: crate::nodes::types::Latent,
-    UpscaleMethod: crate::nodes::types::String,
-    Width: crate::nodes::types::Int,
-    Height: crate::nodes::types::Int,
-    Crop: crate::nodes::types::String,
+    SamplesParam: crate::nodes::types::Latent,
+    UpscaleMethodParam: crate::nodes::types::String,
+    WidthParam: crate::nodes::types::Int,
+    HeightParam: crate::nodes::types::Int,
+    CropParam: crate::nodes::types::String,
 > {
     ///No documentation.
-    pub samples: Samples,
+    pub samples: SamplesParam,
     ///No documentation.
-    pub upscale_method: UpscaleMethod,
+    pub upscale_method: UpscaleMethodParam,
     /**No documentation.
 
 **Metadata**:
@@ -288,7 +307,7 @@ pub struct LatentUpscale<
   - Min: 0
   - Step: 8
 */
-    pub width: Width,
+    pub width: WidthParam,
     /**No documentation.
 
 **Metadata**:
@@ -297,24 +316,24 @@ pub struct LatentUpscale<
   - Min: 0
   - Step: 8
 */
-    pub height: Height,
+    pub height: HeightParam,
     ///No documentation.
-    pub crop: Crop,
+    pub crop: CropParam,
 }
 impl<
-    Samples: crate::nodes::types::Latent,
-    UpscaleMethod: crate::nodes::types::String,
-    Width: crate::nodes::types::Int,
-    Height: crate::nodes::types::Int,
-    Crop: crate::nodes::types::String,
-> LatentUpscale<Samples, UpscaleMethod, Width, Height, Crop> {
+    SamplesParam: crate::nodes::types::Latent,
+    UpscaleMethodParam: crate::nodes::types::String,
+    WidthParam: crate::nodes::types::Int,
+    HeightParam: crate::nodes::types::Int,
+    CropParam: crate::nodes::types::String,
+> LatentUpscale<SamplesParam, UpscaleMethodParam, WidthParam, HeightParam, CropParam> {
     /// Create a new node.
     pub fn new(
-        samples: Samples,
-        upscale_method: UpscaleMethod,
-        width: Width,
-        height: Height,
-        crop: Crop,
+        samples: SamplesParam,
+        upscale_method: UpscaleMethodParam,
+        width: WidthParam,
+        height: HeightParam,
+        crop: CropParam,
     ) -> Self {
         Self {
             samples,
@@ -326,13 +345,13 @@ impl<
     }
 }
 impl<
-    Samples: crate::nodes::types::Latent,
-    UpscaleMethod: crate::nodes::types::String,
-    Width: crate::nodes::types::Int,
-    Height: crate::nodes::types::Int,
-    Crop: crate::nodes::types::String,
+    SamplesParam: crate::nodes::types::Latent,
+    UpscaleMethodParam: crate::nodes::types::String,
+    WidthParam: crate::nodes::types::Int,
+    HeightParam: crate::nodes::types::Int,
+    CropParam: crate::nodes::types::String,
 > crate::nodes::TypedNode
-for LatentUpscale<Samples, UpscaleMethod, Width, Height, Crop> {
+for LatentUpscale<SamplesParam, UpscaleMethodParam, WidthParam, HeightParam, CropParam> {
     type Output = crate::nodes::types::LatentOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)
@@ -354,14 +373,14 @@ for LatentUpscale<Samples, UpscaleMethod, Width, Height, Crop> {
 ///**Upscale Latent By**: No description.
 #[derive(Clone)]
 pub struct LatentUpscaleBy<
-    Samples: crate::nodes::types::Latent,
-    UpscaleMethod: crate::nodes::types::String,
-    ScaleBy: crate::nodes::types::Float,
+    SamplesParam: crate::nodes::types::Latent,
+    UpscaleMethodParam: crate::nodes::types::String,
+    ScaleByParam: crate::nodes::types::Float,
 > {
     ///No documentation.
-    pub samples: Samples,
+    pub samples: SamplesParam,
     ///No documentation.
-    pub upscale_method: UpscaleMethod,
+    pub upscale_method: UpscaleMethodParam,
     /**No documentation.
 
 **Metadata**:
@@ -370,18 +389,18 @@ pub struct LatentUpscaleBy<
   - Min: 0.01
   - Step: 0.01
 */
-    pub scale_by: ScaleBy,
+    pub scale_by: ScaleByParam,
 }
 impl<
-    Samples: crate::nodes::types::Latent,
-    UpscaleMethod: crate::nodes::types::String,
-    ScaleBy: crate::nodes::types::Float,
-> LatentUpscaleBy<Samples, UpscaleMethod, ScaleBy> {
+    SamplesParam: crate::nodes::types::Latent,
+    UpscaleMethodParam: crate::nodes::types::String,
+    ScaleByParam: crate::nodes::types::Float,
+> LatentUpscaleBy<SamplesParam, UpscaleMethodParam, ScaleByParam> {
     /// Create a new node.
     pub fn new(
-        samples: Samples,
-        upscale_method: UpscaleMethod,
-        scale_by: ScaleBy,
+        samples: SamplesParam,
+        upscale_method: UpscaleMethodParam,
+        scale_by: ScaleByParam,
     ) -> Self {
         Self {
             samples,
@@ -391,10 +410,11 @@ impl<
     }
 }
 impl<
-    Samples: crate::nodes::types::Latent,
-    UpscaleMethod: crate::nodes::types::String,
-    ScaleBy: crate::nodes::types::Float,
-> crate::nodes::TypedNode for LatentUpscaleBy<Samples, UpscaleMethod, ScaleBy> {
+    SamplesParam: crate::nodes::types::Latent,
+    UpscaleMethodParam: crate::nodes::types::String,
+    ScaleByParam: crate::nodes::types::Float,
+> crate::nodes::TypedNode
+for LatentUpscaleBy<SamplesParam, UpscaleMethodParam, ScaleByParam> {
     type Output = crate::nodes::types::LatentOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)
@@ -414,27 +434,27 @@ impl<
 ///**VAE Decode**: Decodes latent images back into pixel space images.
 #[derive(Clone)]
 pub struct VaeDecode<
-    Samples: crate::nodes::types::Latent,
-    Vae: crate::nodes::types::Vae,
+    SamplesParam: crate::nodes::types::Latent,
+    VaeParam: crate::nodes::types::Vae,
 > {
     ///The latent to be decoded.
-    pub samples: Samples,
+    pub samples: SamplesParam,
     ///The VAE model used for decoding the latent.
-    pub vae: Vae,
+    pub vae: VaeParam,
 }
 impl<
-    Samples: crate::nodes::types::Latent,
-    Vae: crate::nodes::types::Vae,
-> VaeDecode<Samples, Vae> {
+    SamplesParam: crate::nodes::types::Latent,
+    VaeParam: crate::nodes::types::Vae,
+> VaeDecode<SamplesParam, VaeParam> {
     /// Create a new node.
-    pub fn new(samples: Samples, vae: Vae) -> Self {
+    pub fn new(samples: SamplesParam, vae: VaeParam) -> Self {
         Self { samples, vae }
     }
 }
 impl<
-    Samples: crate::nodes::types::Latent,
-    Vae: crate::nodes::types::Vae,
-> crate::nodes::TypedNode for VaeDecode<Samples, Vae> {
+    SamplesParam: crate::nodes::types::Latent,
+    VaeParam: crate::nodes::types::Vae,
+> crate::nodes::TypedNode for VaeDecode<SamplesParam, VaeParam> {
     type Output = crate::nodes::types::ImageOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)
@@ -452,25 +472,28 @@ impl<
 }
 ///**VAE Encode**: No description.
 #[derive(Clone)]
-pub struct VaeEncode<Pixels: crate::nodes::types::Image, Vae: crate::nodes::types::Vae> {
+pub struct VaeEncode<
+    PixelsParam: crate::nodes::types::Image,
+    VaeParam: crate::nodes::types::Vae,
+> {
     ///No documentation.
-    pub pixels: Pixels,
+    pub pixels: PixelsParam,
     ///No documentation.
-    pub vae: Vae,
+    pub vae: VaeParam,
 }
 impl<
-    Pixels: crate::nodes::types::Image,
-    Vae: crate::nodes::types::Vae,
-> VaeEncode<Pixels, Vae> {
+    PixelsParam: crate::nodes::types::Image,
+    VaeParam: crate::nodes::types::Vae,
+> VaeEncode<PixelsParam, VaeParam> {
     /// Create a new node.
-    pub fn new(pixels: Pixels, vae: Vae) -> Self {
+    pub fn new(pixels: PixelsParam, vae: VaeParam) -> Self {
         Self { pixels, vae }
     }
 }
 impl<
-    Pixels: crate::nodes::types::Image,
-    Vae: crate::nodes::types::Vae,
-> crate::nodes::TypedNode for VaeEncode<Pixels, Vae> {
+    PixelsParam: crate::nodes::types::Image,
+    VaeParam: crate::nodes::types::Vae,
+> crate::nodes::TypedNode for VaeEncode<PixelsParam, VaeParam> {
     type Output = crate::nodes::types::LatentOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)

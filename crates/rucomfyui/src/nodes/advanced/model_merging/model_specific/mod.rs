@@ -8,56 +8,56 @@ use crate::{
 ///**ModelMergeAuraflow**: No description.
 #[derive(Clone)]
 pub struct ModelMergeAuraflow<
-    Model1: crate::nodes::types::Model,
-    Model2: crate::nodes::types::Model,
-    InitXLinear: crate::nodes::types::Float,
-    PositionalEncoding: crate::nodes::types::Float,
-    CondSeqLinear: crate::nodes::types::Float,
-    RegisterTokens: crate::nodes::types::Float,
-    TEmbedder: crate::nodes::types::Float,
-    DoubleLayers0: crate::nodes::types::Float,
-    DoubleLayers1: crate::nodes::types::Float,
-    DoubleLayers2: crate::nodes::types::Float,
-    DoubleLayers3: crate::nodes::types::Float,
-    SingleLayers0: crate::nodes::types::Float,
-    SingleLayers1: crate::nodes::types::Float,
-    SingleLayers2: crate::nodes::types::Float,
-    SingleLayers3: crate::nodes::types::Float,
-    SingleLayers4: crate::nodes::types::Float,
-    SingleLayers5: crate::nodes::types::Float,
-    SingleLayers6: crate::nodes::types::Float,
-    SingleLayers7: crate::nodes::types::Float,
-    SingleLayers8: crate::nodes::types::Float,
-    SingleLayers9: crate::nodes::types::Float,
-    SingleLayers10: crate::nodes::types::Float,
-    SingleLayers11: crate::nodes::types::Float,
-    SingleLayers12: crate::nodes::types::Float,
-    SingleLayers13: crate::nodes::types::Float,
-    SingleLayers14: crate::nodes::types::Float,
-    SingleLayers15: crate::nodes::types::Float,
-    SingleLayers16: crate::nodes::types::Float,
-    SingleLayers17: crate::nodes::types::Float,
-    SingleLayers18: crate::nodes::types::Float,
-    SingleLayers19: crate::nodes::types::Float,
-    SingleLayers20: crate::nodes::types::Float,
-    SingleLayers21: crate::nodes::types::Float,
-    SingleLayers22: crate::nodes::types::Float,
-    SingleLayers23: crate::nodes::types::Float,
-    SingleLayers24: crate::nodes::types::Float,
-    SingleLayers25: crate::nodes::types::Float,
-    SingleLayers26: crate::nodes::types::Float,
-    SingleLayers27: crate::nodes::types::Float,
-    SingleLayers28: crate::nodes::types::Float,
-    SingleLayers29: crate::nodes::types::Float,
-    SingleLayers30: crate::nodes::types::Float,
-    SingleLayers31: crate::nodes::types::Float,
-    ModF: crate::nodes::types::Float,
-    FinalLinear: crate::nodes::types::Float,
+    Model1Param: crate::nodes::types::Model,
+    Model2Param: crate::nodes::types::Model,
+    InitXLinearParam: crate::nodes::types::Float,
+    PositionalEncodingParam: crate::nodes::types::Float,
+    CondSeqLinearParam: crate::nodes::types::Float,
+    RegisterTokensParam: crate::nodes::types::Float,
+    TEmbedderParam: crate::nodes::types::Float,
+    DoubleLayers0Param: crate::nodes::types::Float,
+    DoubleLayers1Param: crate::nodes::types::Float,
+    DoubleLayers2Param: crate::nodes::types::Float,
+    DoubleLayers3Param: crate::nodes::types::Float,
+    SingleLayers0Param: crate::nodes::types::Float,
+    SingleLayers1Param: crate::nodes::types::Float,
+    SingleLayers2Param: crate::nodes::types::Float,
+    SingleLayers3Param: crate::nodes::types::Float,
+    SingleLayers4Param: crate::nodes::types::Float,
+    SingleLayers5Param: crate::nodes::types::Float,
+    SingleLayers6Param: crate::nodes::types::Float,
+    SingleLayers7Param: crate::nodes::types::Float,
+    SingleLayers8Param: crate::nodes::types::Float,
+    SingleLayers9Param: crate::nodes::types::Float,
+    SingleLayers10Param: crate::nodes::types::Float,
+    SingleLayers11Param: crate::nodes::types::Float,
+    SingleLayers12Param: crate::nodes::types::Float,
+    SingleLayers13Param: crate::nodes::types::Float,
+    SingleLayers14Param: crate::nodes::types::Float,
+    SingleLayers15Param: crate::nodes::types::Float,
+    SingleLayers16Param: crate::nodes::types::Float,
+    SingleLayers17Param: crate::nodes::types::Float,
+    SingleLayers18Param: crate::nodes::types::Float,
+    SingleLayers19Param: crate::nodes::types::Float,
+    SingleLayers20Param: crate::nodes::types::Float,
+    SingleLayers21Param: crate::nodes::types::Float,
+    SingleLayers22Param: crate::nodes::types::Float,
+    SingleLayers23Param: crate::nodes::types::Float,
+    SingleLayers24Param: crate::nodes::types::Float,
+    SingleLayers25Param: crate::nodes::types::Float,
+    SingleLayers26Param: crate::nodes::types::Float,
+    SingleLayers27Param: crate::nodes::types::Float,
+    SingleLayers28Param: crate::nodes::types::Float,
+    SingleLayers29Param: crate::nodes::types::Float,
+    SingleLayers30Param: crate::nodes::types::Float,
+    SingleLayers31Param: crate::nodes::types::Float,
+    ModFParam: crate::nodes::types::Float,
+    FinalLinearParam: crate::nodes::types::Float,
 > {
     ///No documentation.
-    pub model_1: Model1,
+    pub model_1: Model1Param,
     ///No documentation.
-    pub model_2: Model2,
+    pub model_2: Model2Param,
     /**No documentation.
 
 **Metadata**:
@@ -66,7 +66,7 @@ pub struct ModelMergeAuraflow<
   - Min: 0
   - Step: 0.01
 */
-    pub init_x_linear: InitXLinear,
+    pub init_x_linear: InitXLinearParam,
     /**No documentation.
 
 **Metadata**:
@@ -75,7 +75,7 @@ pub struct ModelMergeAuraflow<
   - Min: 0
   - Step: 0.01
 */
-    pub positional_encoding: PositionalEncoding,
+    pub positional_encoding: PositionalEncodingParam,
     /**No documentation.
 
 **Metadata**:
@@ -84,7 +84,7 @@ pub struct ModelMergeAuraflow<
   - Min: 0
   - Step: 0.01
 */
-    pub cond_seq_linear: CondSeqLinear,
+    pub cond_seq_linear: CondSeqLinearParam,
     /**No documentation.
 
 **Metadata**:
@@ -93,7 +93,7 @@ pub struct ModelMergeAuraflow<
   - Min: 0
   - Step: 0.01
 */
-    pub register_tokens: RegisterTokens,
+    pub register_tokens: RegisterTokensParam,
     /**No documentation.
 
 **Metadata**:
@@ -102,7 +102,7 @@ pub struct ModelMergeAuraflow<
   - Min: 0
   - Step: 0.01
 */
-    pub t_embedder: TEmbedder,
+    pub t_embedder: TEmbedderParam,
     /**No documentation.
 
 **Metadata**:
@@ -111,7 +111,7 @@ pub struct ModelMergeAuraflow<
   - Min: 0
   - Step: 0.01
 */
-    pub double_layers_0: DoubleLayers0,
+    pub double_layers_0: DoubleLayers0Param,
     /**No documentation.
 
 **Metadata**:
@@ -120,7 +120,7 @@ pub struct ModelMergeAuraflow<
   - Min: 0
   - Step: 0.01
 */
-    pub double_layers_1: DoubleLayers1,
+    pub double_layers_1: DoubleLayers1Param,
     /**No documentation.
 
 **Metadata**:
@@ -129,7 +129,7 @@ pub struct ModelMergeAuraflow<
   - Min: 0
   - Step: 0.01
 */
-    pub double_layers_2: DoubleLayers2,
+    pub double_layers_2: DoubleLayers2Param,
     /**No documentation.
 
 **Metadata**:
@@ -138,7 +138,7 @@ pub struct ModelMergeAuraflow<
   - Min: 0
   - Step: 0.01
 */
-    pub double_layers_3: DoubleLayers3,
+    pub double_layers_3: DoubleLayers3Param,
     /**No documentation.
 
 **Metadata**:
@@ -147,7 +147,7 @@ pub struct ModelMergeAuraflow<
   - Min: 0
   - Step: 0.01
 */
-    pub single_layers_0: SingleLayers0,
+    pub single_layers_0: SingleLayers0Param,
     /**No documentation.
 
 **Metadata**:
@@ -156,7 +156,7 @@ pub struct ModelMergeAuraflow<
   - Min: 0
   - Step: 0.01
 */
-    pub single_layers_1: SingleLayers1,
+    pub single_layers_1: SingleLayers1Param,
     /**No documentation.
 
 **Metadata**:
@@ -165,7 +165,7 @@ pub struct ModelMergeAuraflow<
   - Min: 0
   - Step: 0.01
 */
-    pub single_layers_2: SingleLayers2,
+    pub single_layers_2: SingleLayers2Param,
     /**No documentation.
 
 **Metadata**:
@@ -174,7 +174,7 @@ pub struct ModelMergeAuraflow<
   - Min: 0
   - Step: 0.01
 */
-    pub single_layers_3: SingleLayers3,
+    pub single_layers_3: SingleLayers3Param,
     /**No documentation.
 
 **Metadata**:
@@ -183,7 +183,7 @@ pub struct ModelMergeAuraflow<
   - Min: 0
   - Step: 0.01
 */
-    pub single_layers_4: SingleLayers4,
+    pub single_layers_4: SingleLayers4Param,
     /**No documentation.
 
 **Metadata**:
@@ -192,7 +192,7 @@ pub struct ModelMergeAuraflow<
   - Min: 0
   - Step: 0.01
 */
-    pub single_layers_5: SingleLayers5,
+    pub single_layers_5: SingleLayers5Param,
     /**No documentation.
 
 **Metadata**:
@@ -201,7 +201,7 @@ pub struct ModelMergeAuraflow<
   - Min: 0
   - Step: 0.01
 */
-    pub single_layers_6: SingleLayers6,
+    pub single_layers_6: SingleLayers6Param,
     /**No documentation.
 
 **Metadata**:
@@ -210,7 +210,7 @@ pub struct ModelMergeAuraflow<
   - Min: 0
   - Step: 0.01
 */
-    pub single_layers_7: SingleLayers7,
+    pub single_layers_7: SingleLayers7Param,
     /**No documentation.
 
 **Metadata**:
@@ -219,7 +219,7 @@ pub struct ModelMergeAuraflow<
   - Min: 0
   - Step: 0.01
 */
-    pub single_layers_8: SingleLayers8,
+    pub single_layers_8: SingleLayers8Param,
     /**No documentation.
 
 **Metadata**:
@@ -228,7 +228,7 @@ pub struct ModelMergeAuraflow<
   - Min: 0
   - Step: 0.01
 */
-    pub single_layers_9: SingleLayers9,
+    pub single_layers_9: SingleLayers9Param,
     /**No documentation.
 
 **Metadata**:
@@ -237,7 +237,7 @@ pub struct ModelMergeAuraflow<
   - Min: 0
   - Step: 0.01
 */
-    pub single_layers_10: SingleLayers10,
+    pub single_layers_10: SingleLayers10Param,
     /**No documentation.
 
 **Metadata**:
@@ -246,7 +246,7 @@ pub struct ModelMergeAuraflow<
   - Min: 0
   - Step: 0.01
 */
-    pub single_layers_11: SingleLayers11,
+    pub single_layers_11: SingleLayers11Param,
     /**No documentation.
 
 **Metadata**:
@@ -255,7 +255,7 @@ pub struct ModelMergeAuraflow<
   - Min: 0
   - Step: 0.01
 */
-    pub single_layers_12: SingleLayers12,
+    pub single_layers_12: SingleLayers12Param,
     /**No documentation.
 
 **Metadata**:
@@ -264,7 +264,7 @@ pub struct ModelMergeAuraflow<
   - Min: 0
   - Step: 0.01
 */
-    pub single_layers_13: SingleLayers13,
+    pub single_layers_13: SingleLayers13Param,
     /**No documentation.
 
 **Metadata**:
@@ -273,7 +273,7 @@ pub struct ModelMergeAuraflow<
   - Min: 0
   - Step: 0.01
 */
-    pub single_layers_14: SingleLayers14,
+    pub single_layers_14: SingleLayers14Param,
     /**No documentation.
 
 **Metadata**:
@@ -282,7 +282,7 @@ pub struct ModelMergeAuraflow<
   - Min: 0
   - Step: 0.01
 */
-    pub single_layers_15: SingleLayers15,
+    pub single_layers_15: SingleLayers15Param,
     /**No documentation.
 
 **Metadata**:
@@ -291,7 +291,7 @@ pub struct ModelMergeAuraflow<
   - Min: 0
   - Step: 0.01
 */
-    pub single_layers_16: SingleLayers16,
+    pub single_layers_16: SingleLayers16Param,
     /**No documentation.
 
 **Metadata**:
@@ -300,7 +300,7 @@ pub struct ModelMergeAuraflow<
   - Min: 0
   - Step: 0.01
 */
-    pub single_layers_17: SingleLayers17,
+    pub single_layers_17: SingleLayers17Param,
     /**No documentation.
 
 **Metadata**:
@@ -309,7 +309,7 @@ pub struct ModelMergeAuraflow<
   - Min: 0
   - Step: 0.01
 */
-    pub single_layers_18: SingleLayers18,
+    pub single_layers_18: SingleLayers18Param,
     /**No documentation.
 
 **Metadata**:
@@ -318,7 +318,7 @@ pub struct ModelMergeAuraflow<
   - Min: 0
   - Step: 0.01
 */
-    pub single_layers_19: SingleLayers19,
+    pub single_layers_19: SingleLayers19Param,
     /**No documentation.
 
 **Metadata**:
@@ -327,7 +327,7 @@ pub struct ModelMergeAuraflow<
   - Min: 0
   - Step: 0.01
 */
-    pub single_layers_20: SingleLayers20,
+    pub single_layers_20: SingleLayers20Param,
     /**No documentation.
 
 **Metadata**:
@@ -336,7 +336,7 @@ pub struct ModelMergeAuraflow<
   - Min: 0
   - Step: 0.01
 */
-    pub single_layers_21: SingleLayers21,
+    pub single_layers_21: SingleLayers21Param,
     /**No documentation.
 
 **Metadata**:
@@ -345,7 +345,7 @@ pub struct ModelMergeAuraflow<
   - Min: 0
   - Step: 0.01
 */
-    pub single_layers_22: SingleLayers22,
+    pub single_layers_22: SingleLayers22Param,
     /**No documentation.
 
 **Metadata**:
@@ -354,7 +354,7 @@ pub struct ModelMergeAuraflow<
   - Min: 0
   - Step: 0.01
 */
-    pub single_layers_23: SingleLayers23,
+    pub single_layers_23: SingleLayers23Param,
     /**No documentation.
 
 **Metadata**:
@@ -363,7 +363,7 @@ pub struct ModelMergeAuraflow<
   - Min: 0
   - Step: 0.01
 */
-    pub single_layers_24: SingleLayers24,
+    pub single_layers_24: SingleLayers24Param,
     /**No documentation.
 
 **Metadata**:
@@ -372,7 +372,7 @@ pub struct ModelMergeAuraflow<
   - Min: 0
   - Step: 0.01
 */
-    pub single_layers_25: SingleLayers25,
+    pub single_layers_25: SingleLayers25Param,
     /**No documentation.
 
 **Metadata**:
@@ -381,7 +381,7 @@ pub struct ModelMergeAuraflow<
   - Min: 0
   - Step: 0.01
 */
-    pub single_layers_26: SingleLayers26,
+    pub single_layers_26: SingleLayers26Param,
     /**No documentation.
 
 **Metadata**:
@@ -390,7 +390,7 @@ pub struct ModelMergeAuraflow<
   - Min: 0
   - Step: 0.01
 */
-    pub single_layers_27: SingleLayers27,
+    pub single_layers_27: SingleLayers27Param,
     /**No documentation.
 
 **Metadata**:
@@ -399,7 +399,7 @@ pub struct ModelMergeAuraflow<
   - Min: 0
   - Step: 0.01
 */
-    pub single_layers_28: SingleLayers28,
+    pub single_layers_28: SingleLayers28Param,
     /**No documentation.
 
 **Metadata**:
@@ -408,7 +408,7 @@ pub struct ModelMergeAuraflow<
   - Min: 0
   - Step: 0.01
 */
-    pub single_layers_29: SingleLayers29,
+    pub single_layers_29: SingleLayers29Param,
     /**No documentation.
 
 **Metadata**:
@@ -417,7 +417,7 @@ pub struct ModelMergeAuraflow<
   - Min: 0
   - Step: 0.01
 */
-    pub single_layers_30: SingleLayers30,
+    pub single_layers_30: SingleLayers30Param,
     /**No documentation.
 
 **Metadata**:
@@ -426,7 +426,7 @@ pub struct ModelMergeAuraflow<
   - Min: 0
   - Step: 0.01
 */
-    pub single_layers_31: SingleLayers31,
+    pub single_layers_31: SingleLayers31Param,
     /**No documentation.
 
 **Metadata**:
@@ -435,7 +435,7 @@ pub struct ModelMergeAuraflow<
   - Min: 0
   - Step: 0.01
 */
-    pub mod_f: ModF,
+    pub mod_f: ModFParam,
     /**No documentation.
 
 **Metadata**:
@@ -444,148 +444,148 @@ pub struct ModelMergeAuraflow<
   - Min: 0
   - Step: 0.01
 */
-    pub final_linear: FinalLinear,
+    pub final_linear: FinalLinearParam,
 }
 impl<
-    Model1: crate::nodes::types::Model,
-    Model2: crate::nodes::types::Model,
-    InitXLinear: crate::nodes::types::Float,
-    PositionalEncoding: crate::nodes::types::Float,
-    CondSeqLinear: crate::nodes::types::Float,
-    RegisterTokens: crate::nodes::types::Float,
-    TEmbedder: crate::nodes::types::Float,
-    DoubleLayers0: crate::nodes::types::Float,
-    DoubleLayers1: crate::nodes::types::Float,
-    DoubleLayers2: crate::nodes::types::Float,
-    DoubleLayers3: crate::nodes::types::Float,
-    SingleLayers0: crate::nodes::types::Float,
-    SingleLayers1: crate::nodes::types::Float,
-    SingleLayers2: crate::nodes::types::Float,
-    SingleLayers3: crate::nodes::types::Float,
-    SingleLayers4: crate::nodes::types::Float,
-    SingleLayers5: crate::nodes::types::Float,
-    SingleLayers6: crate::nodes::types::Float,
-    SingleLayers7: crate::nodes::types::Float,
-    SingleLayers8: crate::nodes::types::Float,
-    SingleLayers9: crate::nodes::types::Float,
-    SingleLayers10: crate::nodes::types::Float,
-    SingleLayers11: crate::nodes::types::Float,
-    SingleLayers12: crate::nodes::types::Float,
-    SingleLayers13: crate::nodes::types::Float,
-    SingleLayers14: crate::nodes::types::Float,
-    SingleLayers15: crate::nodes::types::Float,
-    SingleLayers16: crate::nodes::types::Float,
-    SingleLayers17: crate::nodes::types::Float,
-    SingleLayers18: crate::nodes::types::Float,
-    SingleLayers19: crate::nodes::types::Float,
-    SingleLayers20: crate::nodes::types::Float,
-    SingleLayers21: crate::nodes::types::Float,
-    SingleLayers22: crate::nodes::types::Float,
-    SingleLayers23: crate::nodes::types::Float,
-    SingleLayers24: crate::nodes::types::Float,
-    SingleLayers25: crate::nodes::types::Float,
-    SingleLayers26: crate::nodes::types::Float,
-    SingleLayers27: crate::nodes::types::Float,
-    SingleLayers28: crate::nodes::types::Float,
-    SingleLayers29: crate::nodes::types::Float,
-    SingleLayers30: crate::nodes::types::Float,
-    SingleLayers31: crate::nodes::types::Float,
-    ModF: crate::nodes::types::Float,
-    FinalLinear: crate::nodes::types::Float,
+    Model1Param: crate::nodes::types::Model,
+    Model2Param: crate::nodes::types::Model,
+    InitXLinearParam: crate::nodes::types::Float,
+    PositionalEncodingParam: crate::nodes::types::Float,
+    CondSeqLinearParam: crate::nodes::types::Float,
+    RegisterTokensParam: crate::nodes::types::Float,
+    TEmbedderParam: crate::nodes::types::Float,
+    DoubleLayers0Param: crate::nodes::types::Float,
+    DoubleLayers1Param: crate::nodes::types::Float,
+    DoubleLayers2Param: crate::nodes::types::Float,
+    DoubleLayers3Param: crate::nodes::types::Float,
+    SingleLayers0Param: crate::nodes::types::Float,
+    SingleLayers1Param: crate::nodes::types::Float,
+    SingleLayers2Param: crate::nodes::types::Float,
+    SingleLayers3Param: crate::nodes::types::Float,
+    SingleLayers4Param: crate::nodes::types::Float,
+    SingleLayers5Param: crate::nodes::types::Float,
+    SingleLayers6Param: crate::nodes::types::Float,
+    SingleLayers7Param: crate::nodes::types::Float,
+    SingleLayers8Param: crate::nodes::types::Float,
+    SingleLayers9Param: crate::nodes::types::Float,
+    SingleLayers10Param: crate::nodes::types::Float,
+    SingleLayers11Param: crate::nodes::types::Float,
+    SingleLayers12Param: crate::nodes::types::Float,
+    SingleLayers13Param: crate::nodes::types::Float,
+    SingleLayers14Param: crate::nodes::types::Float,
+    SingleLayers15Param: crate::nodes::types::Float,
+    SingleLayers16Param: crate::nodes::types::Float,
+    SingleLayers17Param: crate::nodes::types::Float,
+    SingleLayers18Param: crate::nodes::types::Float,
+    SingleLayers19Param: crate::nodes::types::Float,
+    SingleLayers20Param: crate::nodes::types::Float,
+    SingleLayers21Param: crate::nodes::types::Float,
+    SingleLayers22Param: crate::nodes::types::Float,
+    SingleLayers23Param: crate::nodes::types::Float,
+    SingleLayers24Param: crate::nodes::types::Float,
+    SingleLayers25Param: crate::nodes::types::Float,
+    SingleLayers26Param: crate::nodes::types::Float,
+    SingleLayers27Param: crate::nodes::types::Float,
+    SingleLayers28Param: crate::nodes::types::Float,
+    SingleLayers29Param: crate::nodes::types::Float,
+    SingleLayers30Param: crate::nodes::types::Float,
+    SingleLayers31Param: crate::nodes::types::Float,
+    ModFParam: crate::nodes::types::Float,
+    FinalLinearParam: crate::nodes::types::Float,
 > ModelMergeAuraflow<
-    Model1,
-    Model2,
-    InitXLinear,
-    PositionalEncoding,
-    CondSeqLinear,
-    RegisterTokens,
-    TEmbedder,
-    DoubleLayers0,
-    DoubleLayers1,
-    DoubleLayers2,
-    DoubleLayers3,
-    SingleLayers0,
-    SingleLayers1,
-    SingleLayers2,
-    SingleLayers3,
-    SingleLayers4,
-    SingleLayers5,
-    SingleLayers6,
-    SingleLayers7,
-    SingleLayers8,
-    SingleLayers9,
-    SingleLayers10,
-    SingleLayers11,
-    SingleLayers12,
-    SingleLayers13,
-    SingleLayers14,
-    SingleLayers15,
-    SingleLayers16,
-    SingleLayers17,
-    SingleLayers18,
-    SingleLayers19,
-    SingleLayers20,
-    SingleLayers21,
-    SingleLayers22,
-    SingleLayers23,
-    SingleLayers24,
-    SingleLayers25,
-    SingleLayers26,
-    SingleLayers27,
-    SingleLayers28,
-    SingleLayers29,
-    SingleLayers30,
-    SingleLayers31,
-    ModF,
-    FinalLinear,
+    Model1Param,
+    Model2Param,
+    InitXLinearParam,
+    PositionalEncodingParam,
+    CondSeqLinearParam,
+    RegisterTokensParam,
+    TEmbedderParam,
+    DoubleLayers0Param,
+    DoubleLayers1Param,
+    DoubleLayers2Param,
+    DoubleLayers3Param,
+    SingleLayers0Param,
+    SingleLayers1Param,
+    SingleLayers2Param,
+    SingleLayers3Param,
+    SingleLayers4Param,
+    SingleLayers5Param,
+    SingleLayers6Param,
+    SingleLayers7Param,
+    SingleLayers8Param,
+    SingleLayers9Param,
+    SingleLayers10Param,
+    SingleLayers11Param,
+    SingleLayers12Param,
+    SingleLayers13Param,
+    SingleLayers14Param,
+    SingleLayers15Param,
+    SingleLayers16Param,
+    SingleLayers17Param,
+    SingleLayers18Param,
+    SingleLayers19Param,
+    SingleLayers20Param,
+    SingleLayers21Param,
+    SingleLayers22Param,
+    SingleLayers23Param,
+    SingleLayers24Param,
+    SingleLayers25Param,
+    SingleLayers26Param,
+    SingleLayers27Param,
+    SingleLayers28Param,
+    SingleLayers29Param,
+    SingleLayers30Param,
+    SingleLayers31Param,
+    ModFParam,
+    FinalLinearParam,
 > {
     /// Create a new node.
     pub fn new(
-        model_1: Model1,
-        model_2: Model2,
-        init_x_linear: InitXLinear,
-        positional_encoding: PositionalEncoding,
-        cond_seq_linear: CondSeqLinear,
-        register_tokens: RegisterTokens,
-        t_embedder: TEmbedder,
-        double_layers_0: DoubleLayers0,
-        double_layers_1: DoubleLayers1,
-        double_layers_2: DoubleLayers2,
-        double_layers_3: DoubleLayers3,
-        single_layers_0: SingleLayers0,
-        single_layers_1: SingleLayers1,
-        single_layers_2: SingleLayers2,
-        single_layers_3: SingleLayers3,
-        single_layers_4: SingleLayers4,
-        single_layers_5: SingleLayers5,
-        single_layers_6: SingleLayers6,
-        single_layers_7: SingleLayers7,
-        single_layers_8: SingleLayers8,
-        single_layers_9: SingleLayers9,
-        single_layers_10: SingleLayers10,
-        single_layers_11: SingleLayers11,
-        single_layers_12: SingleLayers12,
-        single_layers_13: SingleLayers13,
-        single_layers_14: SingleLayers14,
-        single_layers_15: SingleLayers15,
-        single_layers_16: SingleLayers16,
-        single_layers_17: SingleLayers17,
-        single_layers_18: SingleLayers18,
-        single_layers_19: SingleLayers19,
-        single_layers_20: SingleLayers20,
-        single_layers_21: SingleLayers21,
-        single_layers_22: SingleLayers22,
-        single_layers_23: SingleLayers23,
-        single_layers_24: SingleLayers24,
-        single_layers_25: SingleLayers25,
-        single_layers_26: SingleLayers26,
-        single_layers_27: SingleLayers27,
-        single_layers_28: SingleLayers28,
-        single_layers_29: SingleLayers29,
-        single_layers_30: SingleLayers30,
-        single_layers_31: SingleLayers31,
-        mod_f: ModF,
-        final_linear: FinalLinear,
+        model_1: Model1Param,
+        model_2: Model2Param,
+        init_x_linear: InitXLinearParam,
+        positional_encoding: PositionalEncodingParam,
+        cond_seq_linear: CondSeqLinearParam,
+        register_tokens: RegisterTokensParam,
+        t_embedder: TEmbedderParam,
+        double_layers_0: DoubleLayers0Param,
+        double_layers_1: DoubleLayers1Param,
+        double_layers_2: DoubleLayers2Param,
+        double_layers_3: DoubleLayers3Param,
+        single_layers_0: SingleLayers0Param,
+        single_layers_1: SingleLayers1Param,
+        single_layers_2: SingleLayers2Param,
+        single_layers_3: SingleLayers3Param,
+        single_layers_4: SingleLayers4Param,
+        single_layers_5: SingleLayers5Param,
+        single_layers_6: SingleLayers6Param,
+        single_layers_7: SingleLayers7Param,
+        single_layers_8: SingleLayers8Param,
+        single_layers_9: SingleLayers9Param,
+        single_layers_10: SingleLayers10Param,
+        single_layers_11: SingleLayers11Param,
+        single_layers_12: SingleLayers12Param,
+        single_layers_13: SingleLayers13Param,
+        single_layers_14: SingleLayers14Param,
+        single_layers_15: SingleLayers15Param,
+        single_layers_16: SingleLayers16Param,
+        single_layers_17: SingleLayers17Param,
+        single_layers_18: SingleLayers18Param,
+        single_layers_19: SingleLayers19Param,
+        single_layers_20: SingleLayers20Param,
+        single_layers_21: SingleLayers21Param,
+        single_layers_22: SingleLayers22Param,
+        single_layers_23: SingleLayers23Param,
+        single_layers_24: SingleLayers24Param,
+        single_layers_25: SingleLayers25Param,
+        single_layers_26: SingleLayers26Param,
+        single_layers_27: SingleLayers27Param,
+        single_layers_28: SingleLayers28Param,
+        single_layers_29: SingleLayers29Param,
+        single_layers_30: SingleLayers30Param,
+        single_layers_31: SingleLayers31Param,
+        mod_f: ModFParam,
+        final_linear: FinalLinearParam,
     ) -> Self {
         Self {
             model_1,
@@ -637,98 +637,98 @@ impl<
     }
 }
 impl<
-    Model1: crate::nodes::types::Model,
-    Model2: crate::nodes::types::Model,
-    InitXLinear: crate::nodes::types::Float,
-    PositionalEncoding: crate::nodes::types::Float,
-    CondSeqLinear: crate::nodes::types::Float,
-    RegisterTokens: crate::nodes::types::Float,
-    TEmbedder: crate::nodes::types::Float,
-    DoubleLayers0: crate::nodes::types::Float,
-    DoubleLayers1: crate::nodes::types::Float,
-    DoubleLayers2: crate::nodes::types::Float,
-    DoubleLayers3: crate::nodes::types::Float,
-    SingleLayers0: crate::nodes::types::Float,
-    SingleLayers1: crate::nodes::types::Float,
-    SingleLayers2: crate::nodes::types::Float,
-    SingleLayers3: crate::nodes::types::Float,
-    SingleLayers4: crate::nodes::types::Float,
-    SingleLayers5: crate::nodes::types::Float,
-    SingleLayers6: crate::nodes::types::Float,
-    SingleLayers7: crate::nodes::types::Float,
-    SingleLayers8: crate::nodes::types::Float,
-    SingleLayers9: crate::nodes::types::Float,
-    SingleLayers10: crate::nodes::types::Float,
-    SingleLayers11: crate::nodes::types::Float,
-    SingleLayers12: crate::nodes::types::Float,
-    SingleLayers13: crate::nodes::types::Float,
-    SingleLayers14: crate::nodes::types::Float,
-    SingleLayers15: crate::nodes::types::Float,
-    SingleLayers16: crate::nodes::types::Float,
-    SingleLayers17: crate::nodes::types::Float,
-    SingleLayers18: crate::nodes::types::Float,
-    SingleLayers19: crate::nodes::types::Float,
-    SingleLayers20: crate::nodes::types::Float,
-    SingleLayers21: crate::nodes::types::Float,
-    SingleLayers22: crate::nodes::types::Float,
-    SingleLayers23: crate::nodes::types::Float,
-    SingleLayers24: crate::nodes::types::Float,
-    SingleLayers25: crate::nodes::types::Float,
-    SingleLayers26: crate::nodes::types::Float,
-    SingleLayers27: crate::nodes::types::Float,
-    SingleLayers28: crate::nodes::types::Float,
-    SingleLayers29: crate::nodes::types::Float,
-    SingleLayers30: crate::nodes::types::Float,
-    SingleLayers31: crate::nodes::types::Float,
-    ModF: crate::nodes::types::Float,
-    FinalLinear: crate::nodes::types::Float,
+    Model1Param: crate::nodes::types::Model,
+    Model2Param: crate::nodes::types::Model,
+    InitXLinearParam: crate::nodes::types::Float,
+    PositionalEncodingParam: crate::nodes::types::Float,
+    CondSeqLinearParam: crate::nodes::types::Float,
+    RegisterTokensParam: crate::nodes::types::Float,
+    TEmbedderParam: crate::nodes::types::Float,
+    DoubleLayers0Param: crate::nodes::types::Float,
+    DoubleLayers1Param: crate::nodes::types::Float,
+    DoubleLayers2Param: crate::nodes::types::Float,
+    DoubleLayers3Param: crate::nodes::types::Float,
+    SingleLayers0Param: crate::nodes::types::Float,
+    SingleLayers1Param: crate::nodes::types::Float,
+    SingleLayers2Param: crate::nodes::types::Float,
+    SingleLayers3Param: crate::nodes::types::Float,
+    SingleLayers4Param: crate::nodes::types::Float,
+    SingleLayers5Param: crate::nodes::types::Float,
+    SingleLayers6Param: crate::nodes::types::Float,
+    SingleLayers7Param: crate::nodes::types::Float,
+    SingleLayers8Param: crate::nodes::types::Float,
+    SingleLayers9Param: crate::nodes::types::Float,
+    SingleLayers10Param: crate::nodes::types::Float,
+    SingleLayers11Param: crate::nodes::types::Float,
+    SingleLayers12Param: crate::nodes::types::Float,
+    SingleLayers13Param: crate::nodes::types::Float,
+    SingleLayers14Param: crate::nodes::types::Float,
+    SingleLayers15Param: crate::nodes::types::Float,
+    SingleLayers16Param: crate::nodes::types::Float,
+    SingleLayers17Param: crate::nodes::types::Float,
+    SingleLayers18Param: crate::nodes::types::Float,
+    SingleLayers19Param: crate::nodes::types::Float,
+    SingleLayers20Param: crate::nodes::types::Float,
+    SingleLayers21Param: crate::nodes::types::Float,
+    SingleLayers22Param: crate::nodes::types::Float,
+    SingleLayers23Param: crate::nodes::types::Float,
+    SingleLayers24Param: crate::nodes::types::Float,
+    SingleLayers25Param: crate::nodes::types::Float,
+    SingleLayers26Param: crate::nodes::types::Float,
+    SingleLayers27Param: crate::nodes::types::Float,
+    SingleLayers28Param: crate::nodes::types::Float,
+    SingleLayers29Param: crate::nodes::types::Float,
+    SingleLayers30Param: crate::nodes::types::Float,
+    SingleLayers31Param: crate::nodes::types::Float,
+    ModFParam: crate::nodes::types::Float,
+    FinalLinearParam: crate::nodes::types::Float,
 > crate::nodes::TypedNode
 for ModelMergeAuraflow<
-    Model1,
-    Model2,
-    InitXLinear,
-    PositionalEncoding,
-    CondSeqLinear,
-    RegisterTokens,
-    TEmbedder,
-    DoubleLayers0,
-    DoubleLayers1,
-    DoubleLayers2,
-    DoubleLayers3,
-    SingleLayers0,
-    SingleLayers1,
-    SingleLayers2,
-    SingleLayers3,
-    SingleLayers4,
-    SingleLayers5,
-    SingleLayers6,
-    SingleLayers7,
-    SingleLayers8,
-    SingleLayers9,
-    SingleLayers10,
-    SingleLayers11,
-    SingleLayers12,
-    SingleLayers13,
-    SingleLayers14,
-    SingleLayers15,
-    SingleLayers16,
-    SingleLayers17,
-    SingleLayers18,
-    SingleLayers19,
-    SingleLayers20,
-    SingleLayers21,
-    SingleLayers22,
-    SingleLayers23,
-    SingleLayers24,
-    SingleLayers25,
-    SingleLayers26,
-    SingleLayers27,
-    SingleLayers28,
-    SingleLayers29,
-    SingleLayers30,
-    SingleLayers31,
-    ModF,
-    FinalLinear,
+    Model1Param,
+    Model2Param,
+    InitXLinearParam,
+    PositionalEncodingParam,
+    CondSeqLinearParam,
+    RegisterTokensParam,
+    TEmbedderParam,
+    DoubleLayers0Param,
+    DoubleLayers1Param,
+    DoubleLayers2Param,
+    DoubleLayers3Param,
+    SingleLayers0Param,
+    SingleLayers1Param,
+    SingleLayers2Param,
+    SingleLayers3Param,
+    SingleLayers4Param,
+    SingleLayers5Param,
+    SingleLayers6Param,
+    SingleLayers7Param,
+    SingleLayers8Param,
+    SingleLayers9Param,
+    SingleLayers10Param,
+    SingleLayers11Param,
+    SingleLayers12Param,
+    SingleLayers13Param,
+    SingleLayers14Param,
+    SingleLayers15Param,
+    SingleLayers16Param,
+    SingleLayers17Param,
+    SingleLayers18Param,
+    SingleLayers19Param,
+    SingleLayers20Param,
+    SingleLayers21Param,
+    SingleLayers22Param,
+    SingleLayers23Param,
+    SingleLayers24Param,
+    SingleLayers25Param,
+    SingleLayers26Param,
+    SingleLayers27Param,
+    SingleLayers28Param,
+    SingleLayers29Param,
+    SingleLayers30Param,
+    SingleLayers31Param,
+    ModFParam,
+    FinalLinearParam,
 > {
     type Output = crate::nodes::types::ModelOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
@@ -899,55 +899,55 @@ for ModelMergeAuraflow<
 ///**ModelMergeCosmos14B**: No description.
 #[derive(Clone)]
 pub struct ModelMergeCosmos14B<
-    Model1: crate::nodes::types::Model,
-    Model2: crate::nodes::types::Model,
-    PosEmbedder: crate::nodes::types::Float,
-    ExtraPosEmbedder: crate::nodes::types::Float,
-    XEmbedder: crate::nodes::types::Float,
-    TEmbedder: crate::nodes::types::Float,
-    AfflineNorm: crate::nodes::types::Float,
-    BlocksBlock0: crate::nodes::types::Float,
-    BlocksBlock1: crate::nodes::types::Float,
-    BlocksBlock2: crate::nodes::types::Float,
-    BlocksBlock3: crate::nodes::types::Float,
-    BlocksBlock4: crate::nodes::types::Float,
-    BlocksBlock5: crate::nodes::types::Float,
-    BlocksBlock6: crate::nodes::types::Float,
-    BlocksBlock7: crate::nodes::types::Float,
-    BlocksBlock8: crate::nodes::types::Float,
-    BlocksBlock9: crate::nodes::types::Float,
-    BlocksBlock10: crate::nodes::types::Float,
-    BlocksBlock11: crate::nodes::types::Float,
-    BlocksBlock12: crate::nodes::types::Float,
-    BlocksBlock13: crate::nodes::types::Float,
-    BlocksBlock14: crate::nodes::types::Float,
-    BlocksBlock15: crate::nodes::types::Float,
-    BlocksBlock16: crate::nodes::types::Float,
-    BlocksBlock17: crate::nodes::types::Float,
-    BlocksBlock18: crate::nodes::types::Float,
-    BlocksBlock19: crate::nodes::types::Float,
-    BlocksBlock20: crate::nodes::types::Float,
-    BlocksBlock21: crate::nodes::types::Float,
-    BlocksBlock22: crate::nodes::types::Float,
-    BlocksBlock23: crate::nodes::types::Float,
-    BlocksBlock24: crate::nodes::types::Float,
-    BlocksBlock25: crate::nodes::types::Float,
-    BlocksBlock26: crate::nodes::types::Float,
-    BlocksBlock27: crate::nodes::types::Float,
-    BlocksBlock28: crate::nodes::types::Float,
-    BlocksBlock29: crate::nodes::types::Float,
-    BlocksBlock30: crate::nodes::types::Float,
-    BlocksBlock31: crate::nodes::types::Float,
-    BlocksBlock32: crate::nodes::types::Float,
-    BlocksBlock33: crate::nodes::types::Float,
-    BlocksBlock34: crate::nodes::types::Float,
-    BlocksBlock35: crate::nodes::types::Float,
-    FinalLayer: crate::nodes::types::Float,
+    Model1Param: crate::nodes::types::Model,
+    Model2Param: crate::nodes::types::Model,
+    PosEmbedderParam: crate::nodes::types::Float,
+    ExtraPosEmbedderParam: crate::nodes::types::Float,
+    XEmbedderParam: crate::nodes::types::Float,
+    TEmbedderParam: crate::nodes::types::Float,
+    AfflineNormParam: crate::nodes::types::Float,
+    BlocksBlock0Param: crate::nodes::types::Float,
+    BlocksBlock1Param: crate::nodes::types::Float,
+    BlocksBlock2Param: crate::nodes::types::Float,
+    BlocksBlock3Param: crate::nodes::types::Float,
+    BlocksBlock4Param: crate::nodes::types::Float,
+    BlocksBlock5Param: crate::nodes::types::Float,
+    BlocksBlock6Param: crate::nodes::types::Float,
+    BlocksBlock7Param: crate::nodes::types::Float,
+    BlocksBlock8Param: crate::nodes::types::Float,
+    BlocksBlock9Param: crate::nodes::types::Float,
+    BlocksBlock10Param: crate::nodes::types::Float,
+    BlocksBlock11Param: crate::nodes::types::Float,
+    BlocksBlock12Param: crate::nodes::types::Float,
+    BlocksBlock13Param: crate::nodes::types::Float,
+    BlocksBlock14Param: crate::nodes::types::Float,
+    BlocksBlock15Param: crate::nodes::types::Float,
+    BlocksBlock16Param: crate::nodes::types::Float,
+    BlocksBlock17Param: crate::nodes::types::Float,
+    BlocksBlock18Param: crate::nodes::types::Float,
+    BlocksBlock19Param: crate::nodes::types::Float,
+    BlocksBlock20Param: crate::nodes::types::Float,
+    BlocksBlock21Param: crate::nodes::types::Float,
+    BlocksBlock22Param: crate::nodes::types::Float,
+    BlocksBlock23Param: crate::nodes::types::Float,
+    BlocksBlock24Param: crate::nodes::types::Float,
+    BlocksBlock25Param: crate::nodes::types::Float,
+    BlocksBlock26Param: crate::nodes::types::Float,
+    BlocksBlock27Param: crate::nodes::types::Float,
+    BlocksBlock28Param: crate::nodes::types::Float,
+    BlocksBlock29Param: crate::nodes::types::Float,
+    BlocksBlock30Param: crate::nodes::types::Float,
+    BlocksBlock31Param: crate::nodes::types::Float,
+    BlocksBlock32Param: crate::nodes::types::Float,
+    BlocksBlock33Param: crate::nodes::types::Float,
+    BlocksBlock34Param: crate::nodes::types::Float,
+    BlocksBlock35Param: crate::nodes::types::Float,
+    FinalLayerParam: crate::nodes::types::Float,
 > {
     ///No documentation.
-    pub model_1: Model1,
+    pub model_1: Model1Param,
     ///No documentation.
-    pub model_2: Model2,
+    pub model_2: Model2Param,
     /**No documentation.
 
 **Metadata**:
@@ -956,7 +956,7 @@ pub struct ModelMergeCosmos14B<
   - Min: 0
   - Step: 0.01
 */
-    pub pos_embedder: PosEmbedder,
+    pub pos_embedder: PosEmbedderParam,
     /**No documentation.
 
 **Metadata**:
@@ -965,7 +965,7 @@ pub struct ModelMergeCosmos14B<
   - Min: 0
   - Step: 0.01
 */
-    pub extra_pos_embedder: ExtraPosEmbedder,
+    pub extra_pos_embedder: ExtraPosEmbedderParam,
     /**No documentation.
 
 **Metadata**:
@@ -974,7 +974,7 @@ pub struct ModelMergeCosmos14B<
   - Min: 0
   - Step: 0.01
 */
-    pub x_embedder: XEmbedder,
+    pub x_embedder: XEmbedderParam,
     /**No documentation.
 
 **Metadata**:
@@ -983,7 +983,7 @@ pub struct ModelMergeCosmos14B<
   - Min: 0
   - Step: 0.01
 */
-    pub t_embedder: TEmbedder,
+    pub t_embedder: TEmbedderParam,
     /**No documentation.
 
 **Metadata**:
@@ -992,7 +992,7 @@ pub struct ModelMergeCosmos14B<
   - Min: 0
   - Step: 0.01
 */
-    pub affline_norm: AfflineNorm,
+    pub affline_norm: AfflineNormParam,
     /**No documentation.
 
 **Metadata**:
@@ -1001,7 +1001,7 @@ pub struct ModelMergeCosmos14B<
   - Min: 0
   - Step: 0.01
 */
-    pub blocks_block_0: BlocksBlock0,
+    pub blocks_block_0: BlocksBlock0Param,
     /**No documentation.
 
 **Metadata**:
@@ -1010,7 +1010,7 @@ pub struct ModelMergeCosmos14B<
   - Min: 0
   - Step: 0.01
 */
-    pub blocks_block_1: BlocksBlock1,
+    pub blocks_block_1: BlocksBlock1Param,
     /**No documentation.
 
 **Metadata**:
@@ -1019,7 +1019,7 @@ pub struct ModelMergeCosmos14B<
   - Min: 0
   - Step: 0.01
 */
-    pub blocks_block_2: BlocksBlock2,
+    pub blocks_block_2: BlocksBlock2Param,
     /**No documentation.
 
 **Metadata**:
@@ -1028,7 +1028,7 @@ pub struct ModelMergeCosmos14B<
   - Min: 0
   - Step: 0.01
 */
-    pub blocks_block_3: BlocksBlock3,
+    pub blocks_block_3: BlocksBlock3Param,
     /**No documentation.
 
 **Metadata**:
@@ -1037,7 +1037,7 @@ pub struct ModelMergeCosmos14B<
   - Min: 0
   - Step: 0.01
 */
-    pub blocks_block_4: BlocksBlock4,
+    pub blocks_block_4: BlocksBlock4Param,
     /**No documentation.
 
 **Metadata**:
@@ -1046,7 +1046,7 @@ pub struct ModelMergeCosmos14B<
   - Min: 0
   - Step: 0.01
 */
-    pub blocks_block_5: BlocksBlock5,
+    pub blocks_block_5: BlocksBlock5Param,
     /**No documentation.
 
 **Metadata**:
@@ -1055,7 +1055,7 @@ pub struct ModelMergeCosmos14B<
   - Min: 0
   - Step: 0.01
 */
-    pub blocks_block_6: BlocksBlock6,
+    pub blocks_block_6: BlocksBlock6Param,
     /**No documentation.
 
 **Metadata**:
@@ -1064,7 +1064,7 @@ pub struct ModelMergeCosmos14B<
   - Min: 0
   - Step: 0.01
 */
-    pub blocks_block_7: BlocksBlock7,
+    pub blocks_block_7: BlocksBlock7Param,
     /**No documentation.
 
 **Metadata**:
@@ -1073,7 +1073,7 @@ pub struct ModelMergeCosmos14B<
   - Min: 0
   - Step: 0.01
 */
-    pub blocks_block_8: BlocksBlock8,
+    pub blocks_block_8: BlocksBlock8Param,
     /**No documentation.
 
 **Metadata**:
@@ -1082,7 +1082,7 @@ pub struct ModelMergeCosmos14B<
   - Min: 0
   - Step: 0.01
 */
-    pub blocks_block_9: BlocksBlock9,
+    pub blocks_block_9: BlocksBlock9Param,
     /**No documentation.
 
 **Metadata**:
@@ -1091,7 +1091,7 @@ pub struct ModelMergeCosmos14B<
   - Min: 0
   - Step: 0.01
 */
-    pub blocks_block_10: BlocksBlock10,
+    pub blocks_block_10: BlocksBlock10Param,
     /**No documentation.
 
 **Metadata**:
@@ -1100,7 +1100,7 @@ pub struct ModelMergeCosmos14B<
   - Min: 0
   - Step: 0.01
 */
-    pub blocks_block_11: BlocksBlock11,
+    pub blocks_block_11: BlocksBlock11Param,
     /**No documentation.
 
 **Metadata**:
@@ -1109,7 +1109,7 @@ pub struct ModelMergeCosmos14B<
   - Min: 0
   - Step: 0.01
 */
-    pub blocks_block_12: BlocksBlock12,
+    pub blocks_block_12: BlocksBlock12Param,
     /**No documentation.
 
 **Metadata**:
@@ -1118,7 +1118,7 @@ pub struct ModelMergeCosmos14B<
   - Min: 0
   - Step: 0.01
 */
-    pub blocks_block_13: BlocksBlock13,
+    pub blocks_block_13: BlocksBlock13Param,
     /**No documentation.
 
 **Metadata**:
@@ -1127,7 +1127,7 @@ pub struct ModelMergeCosmos14B<
   - Min: 0
   - Step: 0.01
 */
-    pub blocks_block_14: BlocksBlock14,
+    pub blocks_block_14: BlocksBlock14Param,
     /**No documentation.
 
 **Metadata**:
@@ -1136,7 +1136,7 @@ pub struct ModelMergeCosmos14B<
   - Min: 0
   - Step: 0.01
 */
-    pub blocks_block_15: BlocksBlock15,
+    pub blocks_block_15: BlocksBlock15Param,
     /**No documentation.
 
 **Metadata**:
@@ -1145,7 +1145,7 @@ pub struct ModelMergeCosmos14B<
   - Min: 0
   - Step: 0.01
 */
-    pub blocks_block_16: BlocksBlock16,
+    pub blocks_block_16: BlocksBlock16Param,
     /**No documentation.
 
 **Metadata**:
@@ -1154,7 +1154,7 @@ pub struct ModelMergeCosmos14B<
   - Min: 0
   - Step: 0.01
 */
-    pub blocks_block_17: BlocksBlock17,
+    pub blocks_block_17: BlocksBlock17Param,
     /**No documentation.
 
 **Metadata**:
@@ -1163,7 +1163,7 @@ pub struct ModelMergeCosmos14B<
   - Min: 0
   - Step: 0.01
 */
-    pub blocks_block_18: BlocksBlock18,
+    pub blocks_block_18: BlocksBlock18Param,
     /**No documentation.
 
 **Metadata**:
@@ -1172,7 +1172,7 @@ pub struct ModelMergeCosmos14B<
   - Min: 0
   - Step: 0.01
 */
-    pub blocks_block_19: BlocksBlock19,
+    pub blocks_block_19: BlocksBlock19Param,
     /**No documentation.
 
 **Metadata**:
@@ -1181,7 +1181,7 @@ pub struct ModelMergeCosmos14B<
   - Min: 0
   - Step: 0.01
 */
-    pub blocks_block_20: BlocksBlock20,
+    pub blocks_block_20: BlocksBlock20Param,
     /**No documentation.
 
 **Metadata**:
@@ -1190,7 +1190,7 @@ pub struct ModelMergeCosmos14B<
   - Min: 0
   - Step: 0.01
 */
-    pub blocks_block_21: BlocksBlock21,
+    pub blocks_block_21: BlocksBlock21Param,
     /**No documentation.
 
 **Metadata**:
@@ -1199,7 +1199,7 @@ pub struct ModelMergeCosmos14B<
   - Min: 0
   - Step: 0.01
 */
-    pub blocks_block_22: BlocksBlock22,
+    pub blocks_block_22: BlocksBlock22Param,
     /**No documentation.
 
 **Metadata**:
@@ -1208,7 +1208,7 @@ pub struct ModelMergeCosmos14B<
   - Min: 0
   - Step: 0.01
 */
-    pub blocks_block_23: BlocksBlock23,
+    pub blocks_block_23: BlocksBlock23Param,
     /**No documentation.
 
 **Metadata**:
@@ -1217,7 +1217,7 @@ pub struct ModelMergeCosmos14B<
   - Min: 0
   - Step: 0.01
 */
-    pub blocks_block_24: BlocksBlock24,
+    pub blocks_block_24: BlocksBlock24Param,
     /**No documentation.
 
 **Metadata**:
@@ -1226,7 +1226,7 @@ pub struct ModelMergeCosmos14B<
   - Min: 0
   - Step: 0.01
 */
-    pub blocks_block_25: BlocksBlock25,
+    pub blocks_block_25: BlocksBlock25Param,
     /**No documentation.
 
 **Metadata**:
@@ -1235,7 +1235,7 @@ pub struct ModelMergeCosmos14B<
   - Min: 0
   - Step: 0.01
 */
-    pub blocks_block_26: BlocksBlock26,
+    pub blocks_block_26: BlocksBlock26Param,
     /**No documentation.
 
 **Metadata**:
@@ -1244,7 +1244,7 @@ pub struct ModelMergeCosmos14B<
   - Min: 0
   - Step: 0.01
 */
-    pub blocks_block_27: BlocksBlock27,
+    pub blocks_block_27: BlocksBlock27Param,
     /**No documentation.
 
 **Metadata**:
@@ -1253,7 +1253,7 @@ pub struct ModelMergeCosmos14B<
   - Min: 0
   - Step: 0.01
 */
-    pub blocks_block_28: BlocksBlock28,
+    pub blocks_block_28: BlocksBlock28Param,
     /**No documentation.
 
 **Metadata**:
@@ -1262,7 +1262,7 @@ pub struct ModelMergeCosmos14B<
   - Min: 0
   - Step: 0.01
 */
-    pub blocks_block_29: BlocksBlock29,
+    pub blocks_block_29: BlocksBlock29Param,
     /**No documentation.
 
 **Metadata**:
@@ -1271,7 +1271,7 @@ pub struct ModelMergeCosmos14B<
   - Min: 0
   - Step: 0.01
 */
-    pub blocks_block_30: BlocksBlock30,
+    pub blocks_block_30: BlocksBlock30Param,
     /**No documentation.
 
 **Metadata**:
@@ -1280,7 +1280,7 @@ pub struct ModelMergeCosmos14B<
   - Min: 0
   - Step: 0.01
 */
-    pub blocks_block_31: BlocksBlock31,
+    pub blocks_block_31: BlocksBlock31Param,
     /**No documentation.
 
 **Metadata**:
@@ -1289,7 +1289,7 @@ pub struct ModelMergeCosmos14B<
   - Min: 0
   - Step: 0.01
 */
-    pub blocks_block_32: BlocksBlock32,
+    pub blocks_block_32: BlocksBlock32Param,
     /**No documentation.
 
 **Metadata**:
@@ -1298,7 +1298,7 @@ pub struct ModelMergeCosmos14B<
   - Min: 0
   - Step: 0.01
 */
-    pub blocks_block_33: BlocksBlock33,
+    pub blocks_block_33: BlocksBlock33Param,
     /**No documentation.
 
 **Metadata**:
@@ -1307,7 +1307,7 @@ pub struct ModelMergeCosmos14B<
   - Min: 0
   - Step: 0.01
 */
-    pub blocks_block_34: BlocksBlock34,
+    pub blocks_block_34: BlocksBlock34Param,
     /**No documentation.
 
 **Metadata**:
@@ -1316,7 +1316,7 @@ pub struct ModelMergeCosmos14B<
   - Min: 0
   - Step: 0.01
 */
-    pub blocks_block_35: BlocksBlock35,
+    pub blocks_block_35: BlocksBlock35Param,
     /**No documentation.
 
 **Metadata**:
@@ -1325,145 +1325,145 @@ pub struct ModelMergeCosmos14B<
   - Min: 0
   - Step: 0.01
 */
-    pub final_layer: FinalLayer,
+    pub final_layer: FinalLayerParam,
 }
 impl<
-    Model1: crate::nodes::types::Model,
-    Model2: crate::nodes::types::Model,
-    PosEmbedder: crate::nodes::types::Float,
-    ExtraPosEmbedder: crate::nodes::types::Float,
-    XEmbedder: crate::nodes::types::Float,
-    TEmbedder: crate::nodes::types::Float,
-    AfflineNorm: crate::nodes::types::Float,
-    BlocksBlock0: crate::nodes::types::Float,
-    BlocksBlock1: crate::nodes::types::Float,
-    BlocksBlock2: crate::nodes::types::Float,
-    BlocksBlock3: crate::nodes::types::Float,
-    BlocksBlock4: crate::nodes::types::Float,
-    BlocksBlock5: crate::nodes::types::Float,
-    BlocksBlock6: crate::nodes::types::Float,
-    BlocksBlock7: crate::nodes::types::Float,
-    BlocksBlock8: crate::nodes::types::Float,
-    BlocksBlock9: crate::nodes::types::Float,
-    BlocksBlock10: crate::nodes::types::Float,
-    BlocksBlock11: crate::nodes::types::Float,
-    BlocksBlock12: crate::nodes::types::Float,
-    BlocksBlock13: crate::nodes::types::Float,
-    BlocksBlock14: crate::nodes::types::Float,
-    BlocksBlock15: crate::nodes::types::Float,
-    BlocksBlock16: crate::nodes::types::Float,
-    BlocksBlock17: crate::nodes::types::Float,
-    BlocksBlock18: crate::nodes::types::Float,
-    BlocksBlock19: crate::nodes::types::Float,
-    BlocksBlock20: crate::nodes::types::Float,
-    BlocksBlock21: crate::nodes::types::Float,
-    BlocksBlock22: crate::nodes::types::Float,
-    BlocksBlock23: crate::nodes::types::Float,
-    BlocksBlock24: crate::nodes::types::Float,
-    BlocksBlock25: crate::nodes::types::Float,
-    BlocksBlock26: crate::nodes::types::Float,
-    BlocksBlock27: crate::nodes::types::Float,
-    BlocksBlock28: crate::nodes::types::Float,
-    BlocksBlock29: crate::nodes::types::Float,
-    BlocksBlock30: crate::nodes::types::Float,
-    BlocksBlock31: crate::nodes::types::Float,
-    BlocksBlock32: crate::nodes::types::Float,
-    BlocksBlock33: crate::nodes::types::Float,
-    BlocksBlock34: crate::nodes::types::Float,
-    BlocksBlock35: crate::nodes::types::Float,
-    FinalLayer: crate::nodes::types::Float,
+    Model1Param: crate::nodes::types::Model,
+    Model2Param: crate::nodes::types::Model,
+    PosEmbedderParam: crate::nodes::types::Float,
+    ExtraPosEmbedderParam: crate::nodes::types::Float,
+    XEmbedderParam: crate::nodes::types::Float,
+    TEmbedderParam: crate::nodes::types::Float,
+    AfflineNormParam: crate::nodes::types::Float,
+    BlocksBlock0Param: crate::nodes::types::Float,
+    BlocksBlock1Param: crate::nodes::types::Float,
+    BlocksBlock2Param: crate::nodes::types::Float,
+    BlocksBlock3Param: crate::nodes::types::Float,
+    BlocksBlock4Param: crate::nodes::types::Float,
+    BlocksBlock5Param: crate::nodes::types::Float,
+    BlocksBlock6Param: crate::nodes::types::Float,
+    BlocksBlock7Param: crate::nodes::types::Float,
+    BlocksBlock8Param: crate::nodes::types::Float,
+    BlocksBlock9Param: crate::nodes::types::Float,
+    BlocksBlock10Param: crate::nodes::types::Float,
+    BlocksBlock11Param: crate::nodes::types::Float,
+    BlocksBlock12Param: crate::nodes::types::Float,
+    BlocksBlock13Param: crate::nodes::types::Float,
+    BlocksBlock14Param: crate::nodes::types::Float,
+    BlocksBlock15Param: crate::nodes::types::Float,
+    BlocksBlock16Param: crate::nodes::types::Float,
+    BlocksBlock17Param: crate::nodes::types::Float,
+    BlocksBlock18Param: crate::nodes::types::Float,
+    BlocksBlock19Param: crate::nodes::types::Float,
+    BlocksBlock20Param: crate::nodes::types::Float,
+    BlocksBlock21Param: crate::nodes::types::Float,
+    BlocksBlock22Param: crate::nodes::types::Float,
+    BlocksBlock23Param: crate::nodes::types::Float,
+    BlocksBlock24Param: crate::nodes::types::Float,
+    BlocksBlock25Param: crate::nodes::types::Float,
+    BlocksBlock26Param: crate::nodes::types::Float,
+    BlocksBlock27Param: crate::nodes::types::Float,
+    BlocksBlock28Param: crate::nodes::types::Float,
+    BlocksBlock29Param: crate::nodes::types::Float,
+    BlocksBlock30Param: crate::nodes::types::Float,
+    BlocksBlock31Param: crate::nodes::types::Float,
+    BlocksBlock32Param: crate::nodes::types::Float,
+    BlocksBlock33Param: crate::nodes::types::Float,
+    BlocksBlock34Param: crate::nodes::types::Float,
+    BlocksBlock35Param: crate::nodes::types::Float,
+    FinalLayerParam: crate::nodes::types::Float,
 > ModelMergeCosmos14B<
-    Model1,
-    Model2,
-    PosEmbedder,
-    ExtraPosEmbedder,
-    XEmbedder,
-    TEmbedder,
-    AfflineNorm,
-    BlocksBlock0,
-    BlocksBlock1,
-    BlocksBlock2,
-    BlocksBlock3,
-    BlocksBlock4,
-    BlocksBlock5,
-    BlocksBlock6,
-    BlocksBlock7,
-    BlocksBlock8,
-    BlocksBlock9,
-    BlocksBlock10,
-    BlocksBlock11,
-    BlocksBlock12,
-    BlocksBlock13,
-    BlocksBlock14,
-    BlocksBlock15,
-    BlocksBlock16,
-    BlocksBlock17,
-    BlocksBlock18,
-    BlocksBlock19,
-    BlocksBlock20,
-    BlocksBlock21,
-    BlocksBlock22,
-    BlocksBlock23,
-    BlocksBlock24,
-    BlocksBlock25,
-    BlocksBlock26,
-    BlocksBlock27,
-    BlocksBlock28,
-    BlocksBlock29,
-    BlocksBlock30,
-    BlocksBlock31,
-    BlocksBlock32,
-    BlocksBlock33,
-    BlocksBlock34,
-    BlocksBlock35,
-    FinalLayer,
+    Model1Param,
+    Model2Param,
+    PosEmbedderParam,
+    ExtraPosEmbedderParam,
+    XEmbedderParam,
+    TEmbedderParam,
+    AfflineNormParam,
+    BlocksBlock0Param,
+    BlocksBlock1Param,
+    BlocksBlock2Param,
+    BlocksBlock3Param,
+    BlocksBlock4Param,
+    BlocksBlock5Param,
+    BlocksBlock6Param,
+    BlocksBlock7Param,
+    BlocksBlock8Param,
+    BlocksBlock9Param,
+    BlocksBlock10Param,
+    BlocksBlock11Param,
+    BlocksBlock12Param,
+    BlocksBlock13Param,
+    BlocksBlock14Param,
+    BlocksBlock15Param,
+    BlocksBlock16Param,
+    BlocksBlock17Param,
+    BlocksBlock18Param,
+    BlocksBlock19Param,
+    BlocksBlock20Param,
+    BlocksBlock21Param,
+    BlocksBlock22Param,
+    BlocksBlock23Param,
+    BlocksBlock24Param,
+    BlocksBlock25Param,
+    BlocksBlock26Param,
+    BlocksBlock27Param,
+    BlocksBlock28Param,
+    BlocksBlock29Param,
+    BlocksBlock30Param,
+    BlocksBlock31Param,
+    BlocksBlock32Param,
+    BlocksBlock33Param,
+    BlocksBlock34Param,
+    BlocksBlock35Param,
+    FinalLayerParam,
 > {
     /// Create a new node.
     pub fn new(
-        model_1: Model1,
-        model_2: Model2,
-        pos_embedder: PosEmbedder,
-        extra_pos_embedder: ExtraPosEmbedder,
-        x_embedder: XEmbedder,
-        t_embedder: TEmbedder,
-        affline_norm: AfflineNorm,
-        blocks_block_0: BlocksBlock0,
-        blocks_block_1: BlocksBlock1,
-        blocks_block_2: BlocksBlock2,
-        blocks_block_3: BlocksBlock3,
-        blocks_block_4: BlocksBlock4,
-        blocks_block_5: BlocksBlock5,
-        blocks_block_6: BlocksBlock6,
-        blocks_block_7: BlocksBlock7,
-        blocks_block_8: BlocksBlock8,
-        blocks_block_9: BlocksBlock9,
-        blocks_block_10: BlocksBlock10,
-        blocks_block_11: BlocksBlock11,
-        blocks_block_12: BlocksBlock12,
-        blocks_block_13: BlocksBlock13,
-        blocks_block_14: BlocksBlock14,
-        blocks_block_15: BlocksBlock15,
-        blocks_block_16: BlocksBlock16,
-        blocks_block_17: BlocksBlock17,
-        blocks_block_18: BlocksBlock18,
-        blocks_block_19: BlocksBlock19,
-        blocks_block_20: BlocksBlock20,
-        blocks_block_21: BlocksBlock21,
-        blocks_block_22: BlocksBlock22,
-        blocks_block_23: BlocksBlock23,
-        blocks_block_24: BlocksBlock24,
-        blocks_block_25: BlocksBlock25,
-        blocks_block_26: BlocksBlock26,
-        blocks_block_27: BlocksBlock27,
-        blocks_block_28: BlocksBlock28,
-        blocks_block_29: BlocksBlock29,
-        blocks_block_30: BlocksBlock30,
-        blocks_block_31: BlocksBlock31,
-        blocks_block_32: BlocksBlock32,
-        blocks_block_33: BlocksBlock33,
-        blocks_block_34: BlocksBlock34,
-        blocks_block_35: BlocksBlock35,
-        final_layer: FinalLayer,
+        model_1: Model1Param,
+        model_2: Model2Param,
+        pos_embedder: PosEmbedderParam,
+        extra_pos_embedder: ExtraPosEmbedderParam,
+        x_embedder: XEmbedderParam,
+        t_embedder: TEmbedderParam,
+        affline_norm: AfflineNormParam,
+        blocks_block_0: BlocksBlock0Param,
+        blocks_block_1: BlocksBlock1Param,
+        blocks_block_2: BlocksBlock2Param,
+        blocks_block_3: BlocksBlock3Param,
+        blocks_block_4: BlocksBlock4Param,
+        blocks_block_5: BlocksBlock5Param,
+        blocks_block_6: BlocksBlock6Param,
+        blocks_block_7: BlocksBlock7Param,
+        blocks_block_8: BlocksBlock8Param,
+        blocks_block_9: BlocksBlock9Param,
+        blocks_block_10: BlocksBlock10Param,
+        blocks_block_11: BlocksBlock11Param,
+        blocks_block_12: BlocksBlock12Param,
+        blocks_block_13: BlocksBlock13Param,
+        blocks_block_14: BlocksBlock14Param,
+        blocks_block_15: BlocksBlock15Param,
+        blocks_block_16: BlocksBlock16Param,
+        blocks_block_17: BlocksBlock17Param,
+        blocks_block_18: BlocksBlock18Param,
+        blocks_block_19: BlocksBlock19Param,
+        blocks_block_20: BlocksBlock20Param,
+        blocks_block_21: BlocksBlock21Param,
+        blocks_block_22: BlocksBlock22Param,
+        blocks_block_23: BlocksBlock23Param,
+        blocks_block_24: BlocksBlock24Param,
+        blocks_block_25: BlocksBlock25Param,
+        blocks_block_26: BlocksBlock26Param,
+        blocks_block_27: BlocksBlock27Param,
+        blocks_block_28: BlocksBlock28Param,
+        blocks_block_29: BlocksBlock29Param,
+        blocks_block_30: BlocksBlock30Param,
+        blocks_block_31: BlocksBlock31Param,
+        blocks_block_32: BlocksBlock32Param,
+        blocks_block_33: BlocksBlock33Param,
+        blocks_block_34: BlocksBlock34Param,
+        blocks_block_35: BlocksBlock35Param,
+        final_layer: FinalLayerParam,
     ) -> Self {
         Self {
             model_1,
@@ -1514,96 +1514,96 @@ impl<
     }
 }
 impl<
-    Model1: crate::nodes::types::Model,
-    Model2: crate::nodes::types::Model,
-    PosEmbedder: crate::nodes::types::Float,
-    ExtraPosEmbedder: crate::nodes::types::Float,
-    XEmbedder: crate::nodes::types::Float,
-    TEmbedder: crate::nodes::types::Float,
-    AfflineNorm: crate::nodes::types::Float,
-    BlocksBlock0: crate::nodes::types::Float,
-    BlocksBlock1: crate::nodes::types::Float,
-    BlocksBlock2: crate::nodes::types::Float,
-    BlocksBlock3: crate::nodes::types::Float,
-    BlocksBlock4: crate::nodes::types::Float,
-    BlocksBlock5: crate::nodes::types::Float,
-    BlocksBlock6: crate::nodes::types::Float,
-    BlocksBlock7: crate::nodes::types::Float,
-    BlocksBlock8: crate::nodes::types::Float,
-    BlocksBlock9: crate::nodes::types::Float,
-    BlocksBlock10: crate::nodes::types::Float,
-    BlocksBlock11: crate::nodes::types::Float,
-    BlocksBlock12: crate::nodes::types::Float,
-    BlocksBlock13: crate::nodes::types::Float,
-    BlocksBlock14: crate::nodes::types::Float,
-    BlocksBlock15: crate::nodes::types::Float,
-    BlocksBlock16: crate::nodes::types::Float,
-    BlocksBlock17: crate::nodes::types::Float,
-    BlocksBlock18: crate::nodes::types::Float,
-    BlocksBlock19: crate::nodes::types::Float,
-    BlocksBlock20: crate::nodes::types::Float,
-    BlocksBlock21: crate::nodes::types::Float,
-    BlocksBlock22: crate::nodes::types::Float,
-    BlocksBlock23: crate::nodes::types::Float,
-    BlocksBlock24: crate::nodes::types::Float,
-    BlocksBlock25: crate::nodes::types::Float,
-    BlocksBlock26: crate::nodes::types::Float,
-    BlocksBlock27: crate::nodes::types::Float,
-    BlocksBlock28: crate::nodes::types::Float,
-    BlocksBlock29: crate::nodes::types::Float,
-    BlocksBlock30: crate::nodes::types::Float,
-    BlocksBlock31: crate::nodes::types::Float,
-    BlocksBlock32: crate::nodes::types::Float,
-    BlocksBlock33: crate::nodes::types::Float,
-    BlocksBlock34: crate::nodes::types::Float,
-    BlocksBlock35: crate::nodes::types::Float,
-    FinalLayer: crate::nodes::types::Float,
+    Model1Param: crate::nodes::types::Model,
+    Model2Param: crate::nodes::types::Model,
+    PosEmbedderParam: crate::nodes::types::Float,
+    ExtraPosEmbedderParam: crate::nodes::types::Float,
+    XEmbedderParam: crate::nodes::types::Float,
+    TEmbedderParam: crate::nodes::types::Float,
+    AfflineNormParam: crate::nodes::types::Float,
+    BlocksBlock0Param: crate::nodes::types::Float,
+    BlocksBlock1Param: crate::nodes::types::Float,
+    BlocksBlock2Param: crate::nodes::types::Float,
+    BlocksBlock3Param: crate::nodes::types::Float,
+    BlocksBlock4Param: crate::nodes::types::Float,
+    BlocksBlock5Param: crate::nodes::types::Float,
+    BlocksBlock6Param: crate::nodes::types::Float,
+    BlocksBlock7Param: crate::nodes::types::Float,
+    BlocksBlock8Param: crate::nodes::types::Float,
+    BlocksBlock9Param: crate::nodes::types::Float,
+    BlocksBlock10Param: crate::nodes::types::Float,
+    BlocksBlock11Param: crate::nodes::types::Float,
+    BlocksBlock12Param: crate::nodes::types::Float,
+    BlocksBlock13Param: crate::nodes::types::Float,
+    BlocksBlock14Param: crate::nodes::types::Float,
+    BlocksBlock15Param: crate::nodes::types::Float,
+    BlocksBlock16Param: crate::nodes::types::Float,
+    BlocksBlock17Param: crate::nodes::types::Float,
+    BlocksBlock18Param: crate::nodes::types::Float,
+    BlocksBlock19Param: crate::nodes::types::Float,
+    BlocksBlock20Param: crate::nodes::types::Float,
+    BlocksBlock21Param: crate::nodes::types::Float,
+    BlocksBlock22Param: crate::nodes::types::Float,
+    BlocksBlock23Param: crate::nodes::types::Float,
+    BlocksBlock24Param: crate::nodes::types::Float,
+    BlocksBlock25Param: crate::nodes::types::Float,
+    BlocksBlock26Param: crate::nodes::types::Float,
+    BlocksBlock27Param: crate::nodes::types::Float,
+    BlocksBlock28Param: crate::nodes::types::Float,
+    BlocksBlock29Param: crate::nodes::types::Float,
+    BlocksBlock30Param: crate::nodes::types::Float,
+    BlocksBlock31Param: crate::nodes::types::Float,
+    BlocksBlock32Param: crate::nodes::types::Float,
+    BlocksBlock33Param: crate::nodes::types::Float,
+    BlocksBlock34Param: crate::nodes::types::Float,
+    BlocksBlock35Param: crate::nodes::types::Float,
+    FinalLayerParam: crate::nodes::types::Float,
 > crate::nodes::TypedNode
 for ModelMergeCosmos14B<
-    Model1,
-    Model2,
-    PosEmbedder,
-    ExtraPosEmbedder,
-    XEmbedder,
-    TEmbedder,
-    AfflineNorm,
-    BlocksBlock0,
-    BlocksBlock1,
-    BlocksBlock2,
-    BlocksBlock3,
-    BlocksBlock4,
-    BlocksBlock5,
-    BlocksBlock6,
-    BlocksBlock7,
-    BlocksBlock8,
-    BlocksBlock9,
-    BlocksBlock10,
-    BlocksBlock11,
-    BlocksBlock12,
-    BlocksBlock13,
-    BlocksBlock14,
-    BlocksBlock15,
-    BlocksBlock16,
-    BlocksBlock17,
-    BlocksBlock18,
-    BlocksBlock19,
-    BlocksBlock20,
-    BlocksBlock21,
-    BlocksBlock22,
-    BlocksBlock23,
-    BlocksBlock24,
-    BlocksBlock25,
-    BlocksBlock26,
-    BlocksBlock27,
-    BlocksBlock28,
-    BlocksBlock29,
-    BlocksBlock30,
-    BlocksBlock31,
-    BlocksBlock32,
-    BlocksBlock33,
-    BlocksBlock34,
-    BlocksBlock35,
-    FinalLayer,
+    Model1Param,
+    Model2Param,
+    PosEmbedderParam,
+    ExtraPosEmbedderParam,
+    XEmbedderParam,
+    TEmbedderParam,
+    AfflineNormParam,
+    BlocksBlock0Param,
+    BlocksBlock1Param,
+    BlocksBlock2Param,
+    BlocksBlock3Param,
+    BlocksBlock4Param,
+    BlocksBlock5Param,
+    BlocksBlock6Param,
+    BlocksBlock7Param,
+    BlocksBlock8Param,
+    BlocksBlock9Param,
+    BlocksBlock10Param,
+    BlocksBlock11Param,
+    BlocksBlock12Param,
+    BlocksBlock13Param,
+    BlocksBlock14Param,
+    BlocksBlock15Param,
+    BlocksBlock16Param,
+    BlocksBlock17Param,
+    BlocksBlock18Param,
+    BlocksBlock19Param,
+    BlocksBlock20Param,
+    BlocksBlock21Param,
+    BlocksBlock22Param,
+    BlocksBlock23Param,
+    BlocksBlock24Param,
+    BlocksBlock25Param,
+    BlocksBlock26Param,
+    BlocksBlock27Param,
+    BlocksBlock28Param,
+    BlocksBlock29Param,
+    BlocksBlock30Param,
+    BlocksBlock31Param,
+    BlocksBlock32Param,
+    BlocksBlock33Param,
+    BlocksBlock34Param,
+    BlocksBlock35Param,
+    FinalLayerParam,
 > {
     type Output = crate::nodes::types::ModelOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
@@ -1695,47 +1695,47 @@ for ModelMergeCosmos14B<
 ///**ModelMergeCosmos7B**: No description.
 #[derive(Clone)]
 pub struct ModelMergeCosmos7B<
-    Model1: crate::nodes::types::Model,
-    Model2: crate::nodes::types::Model,
-    PosEmbedder: crate::nodes::types::Float,
-    ExtraPosEmbedder: crate::nodes::types::Float,
-    XEmbedder: crate::nodes::types::Float,
-    TEmbedder: crate::nodes::types::Float,
-    AfflineNorm: crate::nodes::types::Float,
-    BlocksBlock0: crate::nodes::types::Float,
-    BlocksBlock1: crate::nodes::types::Float,
-    BlocksBlock2: crate::nodes::types::Float,
-    BlocksBlock3: crate::nodes::types::Float,
-    BlocksBlock4: crate::nodes::types::Float,
-    BlocksBlock5: crate::nodes::types::Float,
-    BlocksBlock6: crate::nodes::types::Float,
-    BlocksBlock7: crate::nodes::types::Float,
-    BlocksBlock8: crate::nodes::types::Float,
-    BlocksBlock9: crate::nodes::types::Float,
-    BlocksBlock10: crate::nodes::types::Float,
-    BlocksBlock11: crate::nodes::types::Float,
-    BlocksBlock12: crate::nodes::types::Float,
-    BlocksBlock13: crate::nodes::types::Float,
-    BlocksBlock14: crate::nodes::types::Float,
-    BlocksBlock15: crate::nodes::types::Float,
-    BlocksBlock16: crate::nodes::types::Float,
-    BlocksBlock17: crate::nodes::types::Float,
-    BlocksBlock18: crate::nodes::types::Float,
-    BlocksBlock19: crate::nodes::types::Float,
-    BlocksBlock20: crate::nodes::types::Float,
-    BlocksBlock21: crate::nodes::types::Float,
-    BlocksBlock22: crate::nodes::types::Float,
-    BlocksBlock23: crate::nodes::types::Float,
-    BlocksBlock24: crate::nodes::types::Float,
-    BlocksBlock25: crate::nodes::types::Float,
-    BlocksBlock26: crate::nodes::types::Float,
-    BlocksBlock27: crate::nodes::types::Float,
-    FinalLayer: crate::nodes::types::Float,
+    Model1Param: crate::nodes::types::Model,
+    Model2Param: crate::nodes::types::Model,
+    PosEmbedderParam: crate::nodes::types::Float,
+    ExtraPosEmbedderParam: crate::nodes::types::Float,
+    XEmbedderParam: crate::nodes::types::Float,
+    TEmbedderParam: crate::nodes::types::Float,
+    AfflineNormParam: crate::nodes::types::Float,
+    BlocksBlock0Param: crate::nodes::types::Float,
+    BlocksBlock1Param: crate::nodes::types::Float,
+    BlocksBlock2Param: crate::nodes::types::Float,
+    BlocksBlock3Param: crate::nodes::types::Float,
+    BlocksBlock4Param: crate::nodes::types::Float,
+    BlocksBlock5Param: crate::nodes::types::Float,
+    BlocksBlock6Param: crate::nodes::types::Float,
+    BlocksBlock7Param: crate::nodes::types::Float,
+    BlocksBlock8Param: crate::nodes::types::Float,
+    BlocksBlock9Param: crate::nodes::types::Float,
+    BlocksBlock10Param: crate::nodes::types::Float,
+    BlocksBlock11Param: crate::nodes::types::Float,
+    BlocksBlock12Param: crate::nodes::types::Float,
+    BlocksBlock13Param: crate::nodes::types::Float,
+    BlocksBlock14Param: crate::nodes::types::Float,
+    BlocksBlock15Param: crate::nodes::types::Float,
+    BlocksBlock16Param: crate::nodes::types::Float,
+    BlocksBlock17Param: crate::nodes::types::Float,
+    BlocksBlock18Param: crate::nodes::types::Float,
+    BlocksBlock19Param: crate::nodes::types::Float,
+    BlocksBlock20Param: crate::nodes::types::Float,
+    BlocksBlock21Param: crate::nodes::types::Float,
+    BlocksBlock22Param: crate::nodes::types::Float,
+    BlocksBlock23Param: crate::nodes::types::Float,
+    BlocksBlock24Param: crate::nodes::types::Float,
+    BlocksBlock25Param: crate::nodes::types::Float,
+    BlocksBlock26Param: crate::nodes::types::Float,
+    BlocksBlock27Param: crate::nodes::types::Float,
+    FinalLayerParam: crate::nodes::types::Float,
 > {
     ///No documentation.
-    pub model_1: Model1,
+    pub model_1: Model1Param,
     ///No documentation.
-    pub model_2: Model2,
+    pub model_2: Model2Param,
     /**No documentation.
 
 **Metadata**:
@@ -1744,7 +1744,7 @@ pub struct ModelMergeCosmos7B<
   - Min: 0
   - Step: 0.01
 */
-    pub pos_embedder: PosEmbedder,
+    pub pos_embedder: PosEmbedderParam,
     /**No documentation.
 
 **Metadata**:
@@ -1753,7 +1753,7 @@ pub struct ModelMergeCosmos7B<
   - Min: 0
   - Step: 0.01
 */
-    pub extra_pos_embedder: ExtraPosEmbedder,
+    pub extra_pos_embedder: ExtraPosEmbedderParam,
     /**No documentation.
 
 **Metadata**:
@@ -1762,7 +1762,7 @@ pub struct ModelMergeCosmos7B<
   - Min: 0
   - Step: 0.01
 */
-    pub x_embedder: XEmbedder,
+    pub x_embedder: XEmbedderParam,
     /**No documentation.
 
 **Metadata**:
@@ -1771,7 +1771,7 @@ pub struct ModelMergeCosmos7B<
   - Min: 0
   - Step: 0.01
 */
-    pub t_embedder: TEmbedder,
+    pub t_embedder: TEmbedderParam,
     /**No documentation.
 
 **Metadata**:
@@ -1780,7 +1780,7 @@ pub struct ModelMergeCosmos7B<
   - Min: 0
   - Step: 0.01
 */
-    pub affline_norm: AfflineNorm,
+    pub affline_norm: AfflineNormParam,
     /**No documentation.
 
 **Metadata**:
@@ -1789,7 +1789,7 @@ pub struct ModelMergeCosmos7B<
   - Min: 0
   - Step: 0.01
 */
-    pub blocks_block_0: BlocksBlock0,
+    pub blocks_block_0: BlocksBlock0Param,
     /**No documentation.
 
 **Metadata**:
@@ -1798,7 +1798,7 @@ pub struct ModelMergeCosmos7B<
   - Min: 0
   - Step: 0.01
 */
-    pub blocks_block_1: BlocksBlock1,
+    pub blocks_block_1: BlocksBlock1Param,
     /**No documentation.
 
 **Metadata**:
@@ -1807,7 +1807,7 @@ pub struct ModelMergeCosmos7B<
   - Min: 0
   - Step: 0.01
 */
-    pub blocks_block_2: BlocksBlock2,
+    pub blocks_block_2: BlocksBlock2Param,
     /**No documentation.
 
 **Metadata**:
@@ -1816,7 +1816,7 @@ pub struct ModelMergeCosmos7B<
   - Min: 0
   - Step: 0.01
 */
-    pub blocks_block_3: BlocksBlock3,
+    pub blocks_block_3: BlocksBlock3Param,
     /**No documentation.
 
 **Metadata**:
@@ -1825,7 +1825,7 @@ pub struct ModelMergeCosmos7B<
   - Min: 0
   - Step: 0.01
 */
-    pub blocks_block_4: BlocksBlock4,
+    pub blocks_block_4: BlocksBlock4Param,
     /**No documentation.
 
 **Metadata**:
@@ -1834,7 +1834,7 @@ pub struct ModelMergeCosmos7B<
   - Min: 0
   - Step: 0.01
 */
-    pub blocks_block_5: BlocksBlock5,
+    pub blocks_block_5: BlocksBlock5Param,
     /**No documentation.
 
 **Metadata**:
@@ -1843,7 +1843,7 @@ pub struct ModelMergeCosmos7B<
   - Min: 0
   - Step: 0.01
 */
-    pub blocks_block_6: BlocksBlock6,
+    pub blocks_block_6: BlocksBlock6Param,
     /**No documentation.
 
 **Metadata**:
@@ -1852,7 +1852,7 @@ pub struct ModelMergeCosmos7B<
   - Min: 0
   - Step: 0.01
 */
-    pub blocks_block_7: BlocksBlock7,
+    pub blocks_block_7: BlocksBlock7Param,
     /**No documentation.
 
 **Metadata**:
@@ -1861,7 +1861,7 @@ pub struct ModelMergeCosmos7B<
   - Min: 0
   - Step: 0.01
 */
-    pub blocks_block_8: BlocksBlock8,
+    pub blocks_block_8: BlocksBlock8Param,
     /**No documentation.
 
 **Metadata**:
@@ -1870,7 +1870,7 @@ pub struct ModelMergeCosmos7B<
   - Min: 0
   - Step: 0.01
 */
-    pub blocks_block_9: BlocksBlock9,
+    pub blocks_block_9: BlocksBlock9Param,
     /**No documentation.
 
 **Metadata**:
@@ -1879,7 +1879,7 @@ pub struct ModelMergeCosmos7B<
   - Min: 0
   - Step: 0.01
 */
-    pub blocks_block_10: BlocksBlock10,
+    pub blocks_block_10: BlocksBlock10Param,
     /**No documentation.
 
 **Metadata**:
@@ -1888,7 +1888,7 @@ pub struct ModelMergeCosmos7B<
   - Min: 0
   - Step: 0.01
 */
-    pub blocks_block_11: BlocksBlock11,
+    pub blocks_block_11: BlocksBlock11Param,
     /**No documentation.
 
 **Metadata**:
@@ -1897,7 +1897,7 @@ pub struct ModelMergeCosmos7B<
   - Min: 0
   - Step: 0.01
 */
-    pub blocks_block_12: BlocksBlock12,
+    pub blocks_block_12: BlocksBlock12Param,
     /**No documentation.
 
 **Metadata**:
@@ -1906,7 +1906,7 @@ pub struct ModelMergeCosmos7B<
   - Min: 0
   - Step: 0.01
 */
-    pub blocks_block_13: BlocksBlock13,
+    pub blocks_block_13: BlocksBlock13Param,
     /**No documentation.
 
 **Metadata**:
@@ -1915,7 +1915,7 @@ pub struct ModelMergeCosmos7B<
   - Min: 0
   - Step: 0.01
 */
-    pub blocks_block_14: BlocksBlock14,
+    pub blocks_block_14: BlocksBlock14Param,
     /**No documentation.
 
 **Metadata**:
@@ -1924,7 +1924,7 @@ pub struct ModelMergeCosmos7B<
   - Min: 0
   - Step: 0.01
 */
-    pub blocks_block_15: BlocksBlock15,
+    pub blocks_block_15: BlocksBlock15Param,
     /**No documentation.
 
 **Metadata**:
@@ -1933,7 +1933,7 @@ pub struct ModelMergeCosmos7B<
   - Min: 0
   - Step: 0.01
 */
-    pub blocks_block_16: BlocksBlock16,
+    pub blocks_block_16: BlocksBlock16Param,
     /**No documentation.
 
 **Metadata**:
@@ -1942,7 +1942,7 @@ pub struct ModelMergeCosmos7B<
   - Min: 0
   - Step: 0.01
 */
-    pub blocks_block_17: BlocksBlock17,
+    pub blocks_block_17: BlocksBlock17Param,
     /**No documentation.
 
 **Metadata**:
@@ -1951,7 +1951,7 @@ pub struct ModelMergeCosmos7B<
   - Min: 0
   - Step: 0.01
 */
-    pub blocks_block_18: BlocksBlock18,
+    pub blocks_block_18: BlocksBlock18Param,
     /**No documentation.
 
 **Metadata**:
@@ -1960,7 +1960,7 @@ pub struct ModelMergeCosmos7B<
   - Min: 0
   - Step: 0.01
 */
-    pub blocks_block_19: BlocksBlock19,
+    pub blocks_block_19: BlocksBlock19Param,
     /**No documentation.
 
 **Metadata**:
@@ -1969,7 +1969,7 @@ pub struct ModelMergeCosmos7B<
   - Min: 0
   - Step: 0.01
 */
-    pub blocks_block_20: BlocksBlock20,
+    pub blocks_block_20: BlocksBlock20Param,
     /**No documentation.
 
 **Metadata**:
@@ -1978,7 +1978,7 @@ pub struct ModelMergeCosmos7B<
   - Min: 0
   - Step: 0.01
 */
-    pub blocks_block_21: BlocksBlock21,
+    pub blocks_block_21: BlocksBlock21Param,
     /**No documentation.
 
 **Metadata**:
@@ -1987,7 +1987,7 @@ pub struct ModelMergeCosmos7B<
   - Min: 0
   - Step: 0.01
 */
-    pub blocks_block_22: BlocksBlock22,
+    pub blocks_block_22: BlocksBlock22Param,
     /**No documentation.
 
 **Metadata**:
@@ -1996,7 +1996,7 @@ pub struct ModelMergeCosmos7B<
   - Min: 0
   - Step: 0.01
 */
-    pub blocks_block_23: BlocksBlock23,
+    pub blocks_block_23: BlocksBlock23Param,
     /**No documentation.
 
 **Metadata**:
@@ -2005,7 +2005,7 @@ pub struct ModelMergeCosmos7B<
   - Min: 0
   - Step: 0.01
 */
-    pub blocks_block_24: BlocksBlock24,
+    pub blocks_block_24: BlocksBlock24Param,
     /**No documentation.
 
 **Metadata**:
@@ -2014,7 +2014,7 @@ pub struct ModelMergeCosmos7B<
   - Min: 0
   - Step: 0.01
 */
-    pub blocks_block_25: BlocksBlock25,
+    pub blocks_block_25: BlocksBlock25Param,
     /**No documentation.
 
 **Metadata**:
@@ -2023,7 +2023,7 @@ pub struct ModelMergeCosmos7B<
   - Min: 0
   - Step: 0.01
 */
-    pub blocks_block_26: BlocksBlock26,
+    pub blocks_block_26: BlocksBlock26Param,
     /**No documentation.
 
 **Metadata**:
@@ -2032,7 +2032,7 @@ pub struct ModelMergeCosmos7B<
   - Min: 0
   - Step: 0.01
 */
-    pub blocks_block_27: BlocksBlock27,
+    pub blocks_block_27: BlocksBlock27Param,
     /**No documentation.
 
 **Metadata**:
@@ -2041,121 +2041,121 @@ pub struct ModelMergeCosmos7B<
   - Min: 0
   - Step: 0.01
 */
-    pub final_layer: FinalLayer,
+    pub final_layer: FinalLayerParam,
 }
 impl<
-    Model1: crate::nodes::types::Model,
-    Model2: crate::nodes::types::Model,
-    PosEmbedder: crate::nodes::types::Float,
-    ExtraPosEmbedder: crate::nodes::types::Float,
-    XEmbedder: crate::nodes::types::Float,
-    TEmbedder: crate::nodes::types::Float,
-    AfflineNorm: crate::nodes::types::Float,
-    BlocksBlock0: crate::nodes::types::Float,
-    BlocksBlock1: crate::nodes::types::Float,
-    BlocksBlock2: crate::nodes::types::Float,
-    BlocksBlock3: crate::nodes::types::Float,
-    BlocksBlock4: crate::nodes::types::Float,
-    BlocksBlock5: crate::nodes::types::Float,
-    BlocksBlock6: crate::nodes::types::Float,
-    BlocksBlock7: crate::nodes::types::Float,
-    BlocksBlock8: crate::nodes::types::Float,
-    BlocksBlock9: crate::nodes::types::Float,
-    BlocksBlock10: crate::nodes::types::Float,
-    BlocksBlock11: crate::nodes::types::Float,
-    BlocksBlock12: crate::nodes::types::Float,
-    BlocksBlock13: crate::nodes::types::Float,
-    BlocksBlock14: crate::nodes::types::Float,
-    BlocksBlock15: crate::nodes::types::Float,
-    BlocksBlock16: crate::nodes::types::Float,
-    BlocksBlock17: crate::nodes::types::Float,
-    BlocksBlock18: crate::nodes::types::Float,
-    BlocksBlock19: crate::nodes::types::Float,
-    BlocksBlock20: crate::nodes::types::Float,
-    BlocksBlock21: crate::nodes::types::Float,
-    BlocksBlock22: crate::nodes::types::Float,
-    BlocksBlock23: crate::nodes::types::Float,
-    BlocksBlock24: crate::nodes::types::Float,
-    BlocksBlock25: crate::nodes::types::Float,
-    BlocksBlock26: crate::nodes::types::Float,
-    BlocksBlock27: crate::nodes::types::Float,
-    FinalLayer: crate::nodes::types::Float,
+    Model1Param: crate::nodes::types::Model,
+    Model2Param: crate::nodes::types::Model,
+    PosEmbedderParam: crate::nodes::types::Float,
+    ExtraPosEmbedderParam: crate::nodes::types::Float,
+    XEmbedderParam: crate::nodes::types::Float,
+    TEmbedderParam: crate::nodes::types::Float,
+    AfflineNormParam: crate::nodes::types::Float,
+    BlocksBlock0Param: crate::nodes::types::Float,
+    BlocksBlock1Param: crate::nodes::types::Float,
+    BlocksBlock2Param: crate::nodes::types::Float,
+    BlocksBlock3Param: crate::nodes::types::Float,
+    BlocksBlock4Param: crate::nodes::types::Float,
+    BlocksBlock5Param: crate::nodes::types::Float,
+    BlocksBlock6Param: crate::nodes::types::Float,
+    BlocksBlock7Param: crate::nodes::types::Float,
+    BlocksBlock8Param: crate::nodes::types::Float,
+    BlocksBlock9Param: crate::nodes::types::Float,
+    BlocksBlock10Param: crate::nodes::types::Float,
+    BlocksBlock11Param: crate::nodes::types::Float,
+    BlocksBlock12Param: crate::nodes::types::Float,
+    BlocksBlock13Param: crate::nodes::types::Float,
+    BlocksBlock14Param: crate::nodes::types::Float,
+    BlocksBlock15Param: crate::nodes::types::Float,
+    BlocksBlock16Param: crate::nodes::types::Float,
+    BlocksBlock17Param: crate::nodes::types::Float,
+    BlocksBlock18Param: crate::nodes::types::Float,
+    BlocksBlock19Param: crate::nodes::types::Float,
+    BlocksBlock20Param: crate::nodes::types::Float,
+    BlocksBlock21Param: crate::nodes::types::Float,
+    BlocksBlock22Param: crate::nodes::types::Float,
+    BlocksBlock23Param: crate::nodes::types::Float,
+    BlocksBlock24Param: crate::nodes::types::Float,
+    BlocksBlock25Param: crate::nodes::types::Float,
+    BlocksBlock26Param: crate::nodes::types::Float,
+    BlocksBlock27Param: crate::nodes::types::Float,
+    FinalLayerParam: crate::nodes::types::Float,
 > ModelMergeCosmos7B<
-    Model1,
-    Model2,
-    PosEmbedder,
-    ExtraPosEmbedder,
-    XEmbedder,
-    TEmbedder,
-    AfflineNorm,
-    BlocksBlock0,
-    BlocksBlock1,
-    BlocksBlock2,
-    BlocksBlock3,
-    BlocksBlock4,
-    BlocksBlock5,
-    BlocksBlock6,
-    BlocksBlock7,
-    BlocksBlock8,
-    BlocksBlock9,
-    BlocksBlock10,
-    BlocksBlock11,
-    BlocksBlock12,
-    BlocksBlock13,
-    BlocksBlock14,
-    BlocksBlock15,
-    BlocksBlock16,
-    BlocksBlock17,
-    BlocksBlock18,
-    BlocksBlock19,
-    BlocksBlock20,
-    BlocksBlock21,
-    BlocksBlock22,
-    BlocksBlock23,
-    BlocksBlock24,
-    BlocksBlock25,
-    BlocksBlock26,
-    BlocksBlock27,
-    FinalLayer,
+    Model1Param,
+    Model2Param,
+    PosEmbedderParam,
+    ExtraPosEmbedderParam,
+    XEmbedderParam,
+    TEmbedderParam,
+    AfflineNormParam,
+    BlocksBlock0Param,
+    BlocksBlock1Param,
+    BlocksBlock2Param,
+    BlocksBlock3Param,
+    BlocksBlock4Param,
+    BlocksBlock5Param,
+    BlocksBlock6Param,
+    BlocksBlock7Param,
+    BlocksBlock8Param,
+    BlocksBlock9Param,
+    BlocksBlock10Param,
+    BlocksBlock11Param,
+    BlocksBlock12Param,
+    BlocksBlock13Param,
+    BlocksBlock14Param,
+    BlocksBlock15Param,
+    BlocksBlock16Param,
+    BlocksBlock17Param,
+    BlocksBlock18Param,
+    BlocksBlock19Param,
+    BlocksBlock20Param,
+    BlocksBlock21Param,
+    BlocksBlock22Param,
+    BlocksBlock23Param,
+    BlocksBlock24Param,
+    BlocksBlock25Param,
+    BlocksBlock26Param,
+    BlocksBlock27Param,
+    FinalLayerParam,
 > {
     /// Create a new node.
     pub fn new(
-        model_1: Model1,
-        model_2: Model2,
-        pos_embedder: PosEmbedder,
-        extra_pos_embedder: ExtraPosEmbedder,
-        x_embedder: XEmbedder,
-        t_embedder: TEmbedder,
-        affline_norm: AfflineNorm,
-        blocks_block_0: BlocksBlock0,
-        blocks_block_1: BlocksBlock1,
-        blocks_block_2: BlocksBlock2,
-        blocks_block_3: BlocksBlock3,
-        blocks_block_4: BlocksBlock4,
-        blocks_block_5: BlocksBlock5,
-        blocks_block_6: BlocksBlock6,
-        blocks_block_7: BlocksBlock7,
-        blocks_block_8: BlocksBlock8,
-        blocks_block_9: BlocksBlock9,
-        blocks_block_10: BlocksBlock10,
-        blocks_block_11: BlocksBlock11,
-        blocks_block_12: BlocksBlock12,
-        blocks_block_13: BlocksBlock13,
-        blocks_block_14: BlocksBlock14,
-        blocks_block_15: BlocksBlock15,
-        blocks_block_16: BlocksBlock16,
-        blocks_block_17: BlocksBlock17,
-        blocks_block_18: BlocksBlock18,
-        blocks_block_19: BlocksBlock19,
-        blocks_block_20: BlocksBlock20,
-        blocks_block_21: BlocksBlock21,
-        blocks_block_22: BlocksBlock22,
-        blocks_block_23: BlocksBlock23,
-        blocks_block_24: BlocksBlock24,
-        blocks_block_25: BlocksBlock25,
-        blocks_block_26: BlocksBlock26,
-        blocks_block_27: BlocksBlock27,
-        final_layer: FinalLayer,
+        model_1: Model1Param,
+        model_2: Model2Param,
+        pos_embedder: PosEmbedderParam,
+        extra_pos_embedder: ExtraPosEmbedderParam,
+        x_embedder: XEmbedderParam,
+        t_embedder: TEmbedderParam,
+        affline_norm: AfflineNormParam,
+        blocks_block_0: BlocksBlock0Param,
+        blocks_block_1: BlocksBlock1Param,
+        blocks_block_2: BlocksBlock2Param,
+        blocks_block_3: BlocksBlock3Param,
+        blocks_block_4: BlocksBlock4Param,
+        blocks_block_5: BlocksBlock5Param,
+        blocks_block_6: BlocksBlock6Param,
+        blocks_block_7: BlocksBlock7Param,
+        blocks_block_8: BlocksBlock8Param,
+        blocks_block_9: BlocksBlock9Param,
+        blocks_block_10: BlocksBlock10Param,
+        blocks_block_11: BlocksBlock11Param,
+        blocks_block_12: BlocksBlock12Param,
+        blocks_block_13: BlocksBlock13Param,
+        blocks_block_14: BlocksBlock14Param,
+        blocks_block_15: BlocksBlock15Param,
+        blocks_block_16: BlocksBlock16Param,
+        blocks_block_17: BlocksBlock17Param,
+        blocks_block_18: BlocksBlock18Param,
+        blocks_block_19: BlocksBlock19Param,
+        blocks_block_20: BlocksBlock20Param,
+        blocks_block_21: BlocksBlock21Param,
+        blocks_block_22: BlocksBlock22Param,
+        blocks_block_23: BlocksBlock23Param,
+        blocks_block_24: BlocksBlock24Param,
+        blocks_block_25: BlocksBlock25Param,
+        blocks_block_26: BlocksBlock26Param,
+        blocks_block_27: BlocksBlock27Param,
+        final_layer: FinalLayerParam,
     ) -> Self {
         Self {
             model_1,
@@ -2198,80 +2198,80 @@ impl<
     }
 }
 impl<
-    Model1: crate::nodes::types::Model,
-    Model2: crate::nodes::types::Model,
-    PosEmbedder: crate::nodes::types::Float,
-    ExtraPosEmbedder: crate::nodes::types::Float,
-    XEmbedder: crate::nodes::types::Float,
-    TEmbedder: crate::nodes::types::Float,
-    AfflineNorm: crate::nodes::types::Float,
-    BlocksBlock0: crate::nodes::types::Float,
-    BlocksBlock1: crate::nodes::types::Float,
-    BlocksBlock2: crate::nodes::types::Float,
-    BlocksBlock3: crate::nodes::types::Float,
-    BlocksBlock4: crate::nodes::types::Float,
-    BlocksBlock5: crate::nodes::types::Float,
-    BlocksBlock6: crate::nodes::types::Float,
-    BlocksBlock7: crate::nodes::types::Float,
-    BlocksBlock8: crate::nodes::types::Float,
-    BlocksBlock9: crate::nodes::types::Float,
-    BlocksBlock10: crate::nodes::types::Float,
-    BlocksBlock11: crate::nodes::types::Float,
-    BlocksBlock12: crate::nodes::types::Float,
-    BlocksBlock13: crate::nodes::types::Float,
-    BlocksBlock14: crate::nodes::types::Float,
-    BlocksBlock15: crate::nodes::types::Float,
-    BlocksBlock16: crate::nodes::types::Float,
-    BlocksBlock17: crate::nodes::types::Float,
-    BlocksBlock18: crate::nodes::types::Float,
-    BlocksBlock19: crate::nodes::types::Float,
-    BlocksBlock20: crate::nodes::types::Float,
-    BlocksBlock21: crate::nodes::types::Float,
-    BlocksBlock22: crate::nodes::types::Float,
-    BlocksBlock23: crate::nodes::types::Float,
-    BlocksBlock24: crate::nodes::types::Float,
-    BlocksBlock25: crate::nodes::types::Float,
-    BlocksBlock26: crate::nodes::types::Float,
-    BlocksBlock27: crate::nodes::types::Float,
-    FinalLayer: crate::nodes::types::Float,
+    Model1Param: crate::nodes::types::Model,
+    Model2Param: crate::nodes::types::Model,
+    PosEmbedderParam: crate::nodes::types::Float,
+    ExtraPosEmbedderParam: crate::nodes::types::Float,
+    XEmbedderParam: crate::nodes::types::Float,
+    TEmbedderParam: crate::nodes::types::Float,
+    AfflineNormParam: crate::nodes::types::Float,
+    BlocksBlock0Param: crate::nodes::types::Float,
+    BlocksBlock1Param: crate::nodes::types::Float,
+    BlocksBlock2Param: crate::nodes::types::Float,
+    BlocksBlock3Param: crate::nodes::types::Float,
+    BlocksBlock4Param: crate::nodes::types::Float,
+    BlocksBlock5Param: crate::nodes::types::Float,
+    BlocksBlock6Param: crate::nodes::types::Float,
+    BlocksBlock7Param: crate::nodes::types::Float,
+    BlocksBlock8Param: crate::nodes::types::Float,
+    BlocksBlock9Param: crate::nodes::types::Float,
+    BlocksBlock10Param: crate::nodes::types::Float,
+    BlocksBlock11Param: crate::nodes::types::Float,
+    BlocksBlock12Param: crate::nodes::types::Float,
+    BlocksBlock13Param: crate::nodes::types::Float,
+    BlocksBlock14Param: crate::nodes::types::Float,
+    BlocksBlock15Param: crate::nodes::types::Float,
+    BlocksBlock16Param: crate::nodes::types::Float,
+    BlocksBlock17Param: crate::nodes::types::Float,
+    BlocksBlock18Param: crate::nodes::types::Float,
+    BlocksBlock19Param: crate::nodes::types::Float,
+    BlocksBlock20Param: crate::nodes::types::Float,
+    BlocksBlock21Param: crate::nodes::types::Float,
+    BlocksBlock22Param: crate::nodes::types::Float,
+    BlocksBlock23Param: crate::nodes::types::Float,
+    BlocksBlock24Param: crate::nodes::types::Float,
+    BlocksBlock25Param: crate::nodes::types::Float,
+    BlocksBlock26Param: crate::nodes::types::Float,
+    BlocksBlock27Param: crate::nodes::types::Float,
+    FinalLayerParam: crate::nodes::types::Float,
 > crate::nodes::TypedNode
 for ModelMergeCosmos7B<
-    Model1,
-    Model2,
-    PosEmbedder,
-    ExtraPosEmbedder,
-    XEmbedder,
-    TEmbedder,
-    AfflineNorm,
-    BlocksBlock0,
-    BlocksBlock1,
-    BlocksBlock2,
-    BlocksBlock3,
-    BlocksBlock4,
-    BlocksBlock5,
-    BlocksBlock6,
-    BlocksBlock7,
-    BlocksBlock8,
-    BlocksBlock9,
-    BlocksBlock10,
-    BlocksBlock11,
-    BlocksBlock12,
-    BlocksBlock13,
-    BlocksBlock14,
-    BlocksBlock15,
-    BlocksBlock16,
-    BlocksBlock17,
-    BlocksBlock18,
-    BlocksBlock19,
-    BlocksBlock20,
-    BlocksBlock21,
-    BlocksBlock22,
-    BlocksBlock23,
-    BlocksBlock24,
-    BlocksBlock25,
-    BlocksBlock26,
-    BlocksBlock27,
-    FinalLayer,
+    Model1Param,
+    Model2Param,
+    PosEmbedderParam,
+    ExtraPosEmbedderParam,
+    XEmbedderParam,
+    TEmbedderParam,
+    AfflineNormParam,
+    BlocksBlock0Param,
+    BlocksBlock1Param,
+    BlocksBlock2Param,
+    BlocksBlock3Param,
+    BlocksBlock4Param,
+    BlocksBlock5Param,
+    BlocksBlock6Param,
+    BlocksBlock7Param,
+    BlocksBlock8Param,
+    BlocksBlock9Param,
+    BlocksBlock10Param,
+    BlocksBlock11Param,
+    BlocksBlock12Param,
+    BlocksBlock13Param,
+    BlocksBlock14Param,
+    BlocksBlock15Param,
+    BlocksBlock16Param,
+    BlocksBlock17Param,
+    BlocksBlock18Param,
+    BlocksBlock19Param,
+    BlocksBlock20Param,
+    BlocksBlock21Param,
+    BlocksBlock22Param,
+    BlocksBlock23Param,
+    BlocksBlock24Param,
+    BlocksBlock25Param,
+    BlocksBlock26Param,
+    BlocksBlock27Param,
+    FinalLayerParam,
 > {
     type Output = crate::nodes::types::ModelOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
@@ -2347,76 +2347,76 @@ for ModelMergeCosmos7B<
 ///**ModelMergeFlux1**: No description.
 #[derive(Clone)]
 pub struct ModelMergeFlux1<
-    Model1: crate::nodes::types::Model,
-    Model2: crate::nodes::types::Model,
-    ImgIn: crate::nodes::types::Float,
-    TimeIn: crate::nodes::types::Float,
-    GuidanceIn: crate::nodes::types::Float,
-    VectorIn: crate::nodes::types::Float,
-    TxtIn: crate::nodes::types::Float,
-    DoubleBlocks0: crate::nodes::types::Float,
-    DoubleBlocks1: crate::nodes::types::Float,
-    DoubleBlocks2: crate::nodes::types::Float,
-    DoubleBlocks3: crate::nodes::types::Float,
-    DoubleBlocks4: crate::nodes::types::Float,
-    DoubleBlocks5: crate::nodes::types::Float,
-    DoubleBlocks6: crate::nodes::types::Float,
-    DoubleBlocks7: crate::nodes::types::Float,
-    DoubleBlocks8: crate::nodes::types::Float,
-    DoubleBlocks9: crate::nodes::types::Float,
-    DoubleBlocks10: crate::nodes::types::Float,
-    DoubleBlocks11: crate::nodes::types::Float,
-    DoubleBlocks12: crate::nodes::types::Float,
-    DoubleBlocks13: crate::nodes::types::Float,
-    DoubleBlocks14: crate::nodes::types::Float,
-    DoubleBlocks15: crate::nodes::types::Float,
-    DoubleBlocks16: crate::nodes::types::Float,
-    DoubleBlocks17: crate::nodes::types::Float,
-    DoubleBlocks18: crate::nodes::types::Float,
-    SingleBlocks0: crate::nodes::types::Float,
-    SingleBlocks1: crate::nodes::types::Float,
-    SingleBlocks2: crate::nodes::types::Float,
-    SingleBlocks3: crate::nodes::types::Float,
-    SingleBlocks4: crate::nodes::types::Float,
-    SingleBlocks5: crate::nodes::types::Float,
-    SingleBlocks6: crate::nodes::types::Float,
-    SingleBlocks7: crate::nodes::types::Float,
-    SingleBlocks8: crate::nodes::types::Float,
-    SingleBlocks9: crate::nodes::types::Float,
-    SingleBlocks10: crate::nodes::types::Float,
-    SingleBlocks11: crate::nodes::types::Float,
-    SingleBlocks12: crate::nodes::types::Float,
-    SingleBlocks13: crate::nodes::types::Float,
-    SingleBlocks14: crate::nodes::types::Float,
-    SingleBlocks15: crate::nodes::types::Float,
-    SingleBlocks16: crate::nodes::types::Float,
-    SingleBlocks17: crate::nodes::types::Float,
-    SingleBlocks18: crate::nodes::types::Float,
-    SingleBlocks19: crate::nodes::types::Float,
-    SingleBlocks20: crate::nodes::types::Float,
-    SingleBlocks21: crate::nodes::types::Float,
-    SingleBlocks22: crate::nodes::types::Float,
-    SingleBlocks23: crate::nodes::types::Float,
-    SingleBlocks24: crate::nodes::types::Float,
-    SingleBlocks25: crate::nodes::types::Float,
-    SingleBlocks26: crate::nodes::types::Float,
-    SingleBlocks27: crate::nodes::types::Float,
-    SingleBlocks28: crate::nodes::types::Float,
-    SingleBlocks29: crate::nodes::types::Float,
-    SingleBlocks30: crate::nodes::types::Float,
-    SingleBlocks31: crate::nodes::types::Float,
-    SingleBlocks32: crate::nodes::types::Float,
-    SingleBlocks33: crate::nodes::types::Float,
-    SingleBlocks34: crate::nodes::types::Float,
-    SingleBlocks35: crate::nodes::types::Float,
-    SingleBlocks36: crate::nodes::types::Float,
-    SingleBlocks37: crate::nodes::types::Float,
-    FinalLayer: crate::nodes::types::Float,
+    Model1Param: crate::nodes::types::Model,
+    Model2Param: crate::nodes::types::Model,
+    ImgInParam: crate::nodes::types::Float,
+    TimeInParam: crate::nodes::types::Float,
+    GuidanceInParam: crate::nodes::types::Float,
+    VectorInParam: crate::nodes::types::Float,
+    TxtInParam: crate::nodes::types::Float,
+    DoubleBlocks0Param: crate::nodes::types::Float,
+    DoubleBlocks1Param: crate::nodes::types::Float,
+    DoubleBlocks2Param: crate::nodes::types::Float,
+    DoubleBlocks3Param: crate::nodes::types::Float,
+    DoubleBlocks4Param: crate::nodes::types::Float,
+    DoubleBlocks5Param: crate::nodes::types::Float,
+    DoubleBlocks6Param: crate::nodes::types::Float,
+    DoubleBlocks7Param: crate::nodes::types::Float,
+    DoubleBlocks8Param: crate::nodes::types::Float,
+    DoubleBlocks9Param: crate::nodes::types::Float,
+    DoubleBlocks10Param: crate::nodes::types::Float,
+    DoubleBlocks11Param: crate::nodes::types::Float,
+    DoubleBlocks12Param: crate::nodes::types::Float,
+    DoubleBlocks13Param: crate::nodes::types::Float,
+    DoubleBlocks14Param: crate::nodes::types::Float,
+    DoubleBlocks15Param: crate::nodes::types::Float,
+    DoubleBlocks16Param: crate::nodes::types::Float,
+    DoubleBlocks17Param: crate::nodes::types::Float,
+    DoubleBlocks18Param: crate::nodes::types::Float,
+    SingleBlocks0Param: crate::nodes::types::Float,
+    SingleBlocks1Param: crate::nodes::types::Float,
+    SingleBlocks2Param: crate::nodes::types::Float,
+    SingleBlocks3Param: crate::nodes::types::Float,
+    SingleBlocks4Param: crate::nodes::types::Float,
+    SingleBlocks5Param: crate::nodes::types::Float,
+    SingleBlocks6Param: crate::nodes::types::Float,
+    SingleBlocks7Param: crate::nodes::types::Float,
+    SingleBlocks8Param: crate::nodes::types::Float,
+    SingleBlocks9Param: crate::nodes::types::Float,
+    SingleBlocks10Param: crate::nodes::types::Float,
+    SingleBlocks11Param: crate::nodes::types::Float,
+    SingleBlocks12Param: crate::nodes::types::Float,
+    SingleBlocks13Param: crate::nodes::types::Float,
+    SingleBlocks14Param: crate::nodes::types::Float,
+    SingleBlocks15Param: crate::nodes::types::Float,
+    SingleBlocks16Param: crate::nodes::types::Float,
+    SingleBlocks17Param: crate::nodes::types::Float,
+    SingleBlocks18Param: crate::nodes::types::Float,
+    SingleBlocks19Param: crate::nodes::types::Float,
+    SingleBlocks20Param: crate::nodes::types::Float,
+    SingleBlocks21Param: crate::nodes::types::Float,
+    SingleBlocks22Param: crate::nodes::types::Float,
+    SingleBlocks23Param: crate::nodes::types::Float,
+    SingleBlocks24Param: crate::nodes::types::Float,
+    SingleBlocks25Param: crate::nodes::types::Float,
+    SingleBlocks26Param: crate::nodes::types::Float,
+    SingleBlocks27Param: crate::nodes::types::Float,
+    SingleBlocks28Param: crate::nodes::types::Float,
+    SingleBlocks29Param: crate::nodes::types::Float,
+    SingleBlocks30Param: crate::nodes::types::Float,
+    SingleBlocks31Param: crate::nodes::types::Float,
+    SingleBlocks32Param: crate::nodes::types::Float,
+    SingleBlocks33Param: crate::nodes::types::Float,
+    SingleBlocks34Param: crate::nodes::types::Float,
+    SingleBlocks35Param: crate::nodes::types::Float,
+    SingleBlocks36Param: crate::nodes::types::Float,
+    SingleBlocks37Param: crate::nodes::types::Float,
+    FinalLayerParam: crate::nodes::types::Float,
 > {
     ///No documentation.
-    pub model_1: Model1,
+    pub model_1: Model1Param,
     ///No documentation.
-    pub model_2: Model2,
+    pub model_2: Model2Param,
     /**No documentation.
 
 **Metadata**:
@@ -2425,7 +2425,7 @@ pub struct ModelMergeFlux1<
   - Min: 0
   - Step: 0.01
 */
-    pub img_in: ImgIn,
+    pub img_in: ImgInParam,
     /**No documentation.
 
 **Metadata**:
@@ -2434,7 +2434,7 @@ pub struct ModelMergeFlux1<
   - Min: 0
   - Step: 0.01
 */
-    pub time_in: TimeIn,
+    pub time_in: TimeInParam,
     /**No documentation.
 
 **Metadata**:
@@ -2443,7 +2443,7 @@ pub struct ModelMergeFlux1<
   - Min: 0
   - Step: 0.01
 */
-    pub guidance_in: GuidanceIn,
+    pub guidance_in: GuidanceInParam,
     /**No documentation.
 
 **Metadata**:
@@ -2452,7 +2452,7 @@ pub struct ModelMergeFlux1<
   - Min: 0
   - Step: 0.01
 */
-    pub vector_in: VectorIn,
+    pub vector_in: VectorInParam,
     /**No documentation.
 
 **Metadata**:
@@ -2461,7 +2461,7 @@ pub struct ModelMergeFlux1<
   - Min: 0
   - Step: 0.01
 */
-    pub txt_in: TxtIn,
+    pub txt_in: TxtInParam,
     /**No documentation.
 
 **Metadata**:
@@ -2470,7 +2470,7 @@ pub struct ModelMergeFlux1<
   - Min: 0
   - Step: 0.01
 */
-    pub double_blocks_0: DoubleBlocks0,
+    pub double_blocks_0: DoubleBlocks0Param,
     /**No documentation.
 
 **Metadata**:
@@ -2479,7 +2479,7 @@ pub struct ModelMergeFlux1<
   - Min: 0
   - Step: 0.01
 */
-    pub double_blocks_1: DoubleBlocks1,
+    pub double_blocks_1: DoubleBlocks1Param,
     /**No documentation.
 
 **Metadata**:
@@ -2488,7 +2488,7 @@ pub struct ModelMergeFlux1<
   - Min: 0
   - Step: 0.01
 */
-    pub double_blocks_2: DoubleBlocks2,
+    pub double_blocks_2: DoubleBlocks2Param,
     /**No documentation.
 
 **Metadata**:
@@ -2497,7 +2497,7 @@ pub struct ModelMergeFlux1<
   - Min: 0
   - Step: 0.01
 */
-    pub double_blocks_3: DoubleBlocks3,
+    pub double_blocks_3: DoubleBlocks3Param,
     /**No documentation.
 
 **Metadata**:
@@ -2506,7 +2506,7 @@ pub struct ModelMergeFlux1<
   - Min: 0
   - Step: 0.01
 */
-    pub double_blocks_4: DoubleBlocks4,
+    pub double_blocks_4: DoubleBlocks4Param,
     /**No documentation.
 
 **Metadata**:
@@ -2515,7 +2515,7 @@ pub struct ModelMergeFlux1<
   - Min: 0
   - Step: 0.01
 */
-    pub double_blocks_5: DoubleBlocks5,
+    pub double_blocks_5: DoubleBlocks5Param,
     /**No documentation.
 
 **Metadata**:
@@ -2524,7 +2524,7 @@ pub struct ModelMergeFlux1<
   - Min: 0
   - Step: 0.01
 */
-    pub double_blocks_6: DoubleBlocks6,
+    pub double_blocks_6: DoubleBlocks6Param,
     /**No documentation.
 
 **Metadata**:
@@ -2533,7 +2533,7 @@ pub struct ModelMergeFlux1<
   - Min: 0
   - Step: 0.01
 */
-    pub double_blocks_7: DoubleBlocks7,
+    pub double_blocks_7: DoubleBlocks7Param,
     /**No documentation.
 
 **Metadata**:
@@ -2542,7 +2542,7 @@ pub struct ModelMergeFlux1<
   - Min: 0
   - Step: 0.01
 */
-    pub double_blocks_8: DoubleBlocks8,
+    pub double_blocks_8: DoubleBlocks8Param,
     /**No documentation.
 
 **Metadata**:
@@ -2551,7 +2551,7 @@ pub struct ModelMergeFlux1<
   - Min: 0
   - Step: 0.01
 */
-    pub double_blocks_9: DoubleBlocks9,
+    pub double_blocks_9: DoubleBlocks9Param,
     /**No documentation.
 
 **Metadata**:
@@ -2560,7 +2560,7 @@ pub struct ModelMergeFlux1<
   - Min: 0
   - Step: 0.01
 */
-    pub double_blocks_10: DoubleBlocks10,
+    pub double_blocks_10: DoubleBlocks10Param,
     /**No documentation.
 
 **Metadata**:
@@ -2569,7 +2569,7 @@ pub struct ModelMergeFlux1<
   - Min: 0
   - Step: 0.01
 */
-    pub double_blocks_11: DoubleBlocks11,
+    pub double_blocks_11: DoubleBlocks11Param,
     /**No documentation.
 
 **Metadata**:
@@ -2578,7 +2578,7 @@ pub struct ModelMergeFlux1<
   - Min: 0
   - Step: 0.01
 */
-    pub double_blocks_12: DoubleBlocks12,
+    pub double_blocks_12: DoubleBlocks12Param,
     /**No documentation.
 
 **Metadata**:
@@ -2587,7 +2587,7 @@ pub struct ModelMergeFlux1<
   - Min: 0
   - Step: 0.01
 */
-    pub double_blocks_13: DoubleBlocks13,
+    pub double_blocks_13: DoubleBlocks13Param,
     /**No documentation.
 
 **Metadata**:
@@ -2596,7 +2596,7 @@ pub struct ModelMergeFlux1<
   - Min: 0
   - Step: 0.01
 */
-    pub double_blocks_14: DoubleBlocks14,
+    pub double_blocks_14: DoubleBlocks14Param,
     /**No documentation.
 
 **Metadata**:
@@ -2605,7 +2605,7 @@ pub struct ModelMergeFlux1<
   - Min: 0
   - Step: 0.01
 */
-    pub double_blocks_15: DoubleBlocks15,
+    pub double_blocks_15: DoubleBlocks15Param,
     /**No documentation.
 
 **Metadata**:
@@ -2614,7 +2614,7 @@ pub struct ModelMergeFlux1<
   - Min: 0
   - Step: 0.01
 */
-    pub double_blocks_16: DoubleBlocks16,
+    pub double_blocks_16: DoubleBlocks16Param,
     /**No documentation.
 
 **Metadata**:
@@ -2623,7 +2623,7 @@ pub struct ModelMergeFlux1<
   - Min: 0
   - Step: 0.01
 */
-    pub double_blocks_17: DoubleBlocks17,
+    pub double_blocks_17: DoubleBlocks17Param,
     /**No documentation.
 
 **Metadata**:
@@ -2632,7 +2632,7 @@ pub struct ModelMergeFlux1<
   - Min: 0
   - Step: 0.01
 */
-    pub double_blocks_18: DoubleBlocks18,
+    pub double_blocks_18: DoubleBlocks18Param,
     /**No documentation.
 
 **Metadata**:
@@ -2641,7 +2641,7 @@ pub struct ModelMergeFlux1<
   - Min: 0
   - Step: 0.01
 */
-    pub single_blocks_0: SingleBlocks0,
+    pub single_blocks_0: SingleBlocks0Param,
     /**No documentation.
 
 **Metadata**:
@@ -2650,7 +2650,7 @@ pub struct ModelMergeFlux1<
   - Min: 0
   - Step: 0.01
 */
-    pub single_blocks_1: SingleBlocks1,
+    pub single_blocks_1: SingleBlocks1Param,
     /**No documentation.
 
 **Metadata**:
@@ -2659,7 +2659,7 @@ pub struct ModelMergeFlux1<
   - Min: 0
   - Step: 0.01
 */
-    pub single_blocks_2: SingleBlocks2,
+    pub single_blocks_2: SingleBlocks2Param,
     /**No documentation.
 
 **Metadata**:
@@ -2668,7 +2668,7 @@ pub struct ModelMergeFlux1<
   - Min: 0
   - Step: 0.01
 */
-    pub single_blocks_3: SingleBlocks3,
+    pub single_blocks_3: SingleBlocks3Param,
     /**No documentation.
 
 **Metadata**:
@@ -2677,7 +2677,7 @@ pub struct ModelMergeFlux1<
   - Min: 0
   - Step: 0.01
 */
-    pub single_blocks_4: SingleBlocks4,
+    pub single_blocks_4: SingleBlocks4Param,
     /**No documentation.
 
 **Metadata**:
@@ -2686,7 +2686,7 @@ pub struct ModelMergeFlux1<
   - Min: 0
   - Step: 0.01
 */
-    pub single_blocks_5: SingleBlocks5,
+    pub single_blocks_5: SingleBlocks5Param,
     /**No documentation.
 
 **Metadata**:
@@ -2695,7 +2695,7 @@ pub struct ModelMergeFlux1<
   - Min: 0
   - Step: 0.01
 */
-    pub single_blocks_6: SingleBlocks6,
+    pub single_blocks_6: SingleBlocks6Param,
     /**No documentation.
 
 **Metadata**:
@@ -2704,7 +2704,7 @@ pub struct ModelMergeFlux1<
   - Min: 0
   - Step: 0.01
 */
-    pub single_blocks_7: SingleBlocks7,
+    pub single_blocks_7: SingleBlocks7Param,
     /**No documentation.
 
 **Metadata**:
@@ -2713,7 +2713,7 @@ pub struct ModelMergeFlux1<
   - Min: 0
   - Step: 0.01
 */
-    pub single_blocks_8: SingleBlocks8,
+    pub single_blocks_8: SingleBlocks8Param,
     /**No documentation.
 
 **Metadata**:
@@ -2722,7 +2722,7 @@ pub struct ModelMergeFlux1<
   - Min: 0
   - Step: 0.01
 */
-    pub single_blocks_9: SingleBlocks9,
+    pub single_blocks_9: SingleBlocks9Param,
     /**No documentation.
 
 **Metadata**:
@@ -2731,7 +2731,7 @@ pub struct ModelMergeFlux1<
   - Min: 0
   - Step: 0.01
 */
-    pub single_blocks_10: SingleBlocks10,
+    pub single_blocks_10: SingleBlocks10Param,
     /**No documentation.
 
 **Metadata**:
@@ -2740,7 +2740,7 @@ pub struct ModelMergeFlux1<
   - Min: 0
   - Step: 0.01
 */
-    pub single_blocks_11: SingleBlocks11,
+    pub single_blocks_11: SingleBlocks11Param,
     /**No documentation.
 
 **Metadata**:
@@ -2749,7 +2749,7 @@ pub struct ModelMergeFlux1<
   - Min: 0
   - Step: 0.01
 */
-    pub single_blocks_12: SingleBlocks12,
+    pub single_blocks_12: SingleBlocks12Param,
     /**No documentation.
 
 **Metadata**:
@@ -2758,7 +2758,7 @@ pub struct ModelMergeFlux1<
   - Min: 0
   - Step: 0.01
 */
-    pub single_blocks_13: SingleBlocks13,
+    pub single_blocks_13: SingleBlocks13Param,
     /**No documentation.
 
 **Metadata**:
@@ -2767,7 +2767,7 @@ pub struct ModelMergeFlux1<
   - Min: 0
   - Step: 0.01
 */
-    pub single_blocks_14: SingleBlocks14,
+    pub single_blocks_14: SingleBlocks14Param,
     /**No documentation.
 
 **Metadata**:
@@ -2776,7 +2776,7 @@ pub struct ModelMergeFlux1<
   - Min: 0
   - Step: 0.01
 */
-    pub single_blocks_15: SingleBlocks15,
+    pub single_blocks_15: SingleBlocks15Param,
     /**No documentation.
 
 **Metadata**:
@@ -2785,7 +2785,7 @@ pub struct ModelMergeFlux1<
   - Min: 0
   - Step: 0.01
 */
-    pub single_blocks_16: SingleBlocks16,
+    pub single_blocks_16: SingleBlocks16Param,
     /**No documentation.
 
 **Metadata**:
@@ -2794,7 +2794,7 @@ pub struct ModelMergeFlux1<
   - Min: 0
   - Step: 0.01
 */
-    pub single_blocks_17: SingleBlocks17,
+    pub single_blocks_17: SingleBlocks17Param,
     /**No documentation.
 
 **Metadata**:
@@ -2803,7 +2803,7 @@ pub struct ModelMergeFlux1<
   - Min: 0
   - Step: 0.01
 */
-    pub single_blocks_18: SingleBlocks18,
+    pub single_blocks_18: SingleBlocks18Param,
     /**No documentation.
 
 **Metadata**:
@@ -2812,7 +2812,7 @@ pub struct ModelMergeFlux1<
   - Min: 0
   - Step: 0.01
 */
-    pub single_blocks_19: SingleBlocks19,
+    pub single_blocks_19: SingleBlocks19Param,
     /**No documentation.
 
 **Metadata**:
@@ -2821,7 +2821,7 @@ pub struct ModelMergeFlux1<
   - Min: 0
   - Step: 0.01
 */
-    pub single_blocks_20: SingleBlocks20,
+    pub single_blocks_20: SingleBlocks20Param,
     /**No documentation.
 
 **Metadata**:
@@ -2830,7 +2830,7 @@ pub struct ModelMergeFlux1<
   - Min: 0
   - Step: 0.01
 */
-    pub single_blocks_21: SingleBlocks21,
+    pub single_blocks_21: SingleBlocks21Param,
     /**No documentation.
 
 **Metadata**:
@@ -2839,7 +2839,7 @@ pub struct ModelMergeFlux1<
   - Min: 0
   - Step: 0.01
 */
-    pub single_blocks_22: SingleBlocks22,
+    pub single_blocks_22: SingleBlocks22Param,
     /**No documentation.
 
 **Metadata**:
@@ -2848,7 +2848,7 @@ pub struct ModelMergeFlux1<
   - Min: 0
   - Step: 0.01
 */
-    pub single_blocks_23: SingleBlocks23,
+    pub single_blocks_23: SingleBlocks23Param,
     /**No documentation.
 
 **Metadata**:
@@ -2857,7 +2857,7 @@ pub struct ModelMergeFlux1<
   - Min: 0
   - Step: 0.01
 */
-    pub single_blocks_24: SingleBlocks24,
+    pub single_blocks_24: SingleBlocks24Param,
     /**No documentation.
 
 **Metadata**:
@@ -2866,7 +2866,7 @@ pub struct ModelMergeFlux1<
   - Min: 0
   - Step: 0.01
 */
-    pub single_blocks_25: SingleBlocks25,
+    pub single_blocks_25: SingleBlocks25Param,
     /**No documentation.
 
 **Metadata**:
@@ -2875,7 +2875,7 @@ pub struct ModelMergeFlux1<
   - Min: 0
   - Step: 0.01
 */
-    pub single_blocks_26: SingleBlocks26,
+    pub single_blocks_26: SingleBlocks26Param,
     /**No documentation.
 
 **Metadata**:
@@ -2884,7 +2884,7 @@ pub struct ModelMergeFlux1<
   - Min: 0
   - Step: 0.01
 */
-    pub single_blocks_27: SingleBlocks27,
+    pub single_blocks_27: SingleBlocks27Param,
     /**No documentation.
 
 **Metadata**:
@@ -2893,7 +2893,7 @@ pub struct ModelMergeFlux1<
   - Min: 0
   - Step: 0.01
 */
-    pub single_blocks_28: SingleBlocks28,
+    pub single_blocks_28: SingleBlocks28Param,
     /**No documentation.
 
 **Metadata**:
@@ -2902,7 +2902,7 @@ pub struct ModelMergeFlux1<
   - Min: 0
   - Step: 0.01
 */
-    pub single_blocks_29: SingleBlocks29,
+    pub single_blocks_29: SingleBlocks29Param,
     /**No documentation.
 
 **Metadata**:
@@ -2911,7 +2911,7 @@ pub struct ModelMergeFlux1<
   - Min: 0
   - Step: 0.01
 */
-    pub single_blocks_30: SingleBlocks30,
+    pub single_blocks_30: SingleBlocks30Param,
     /**No documentation.
 
 **Metadata**:
@@ -2920,7 +2920,7 @@ pub struct ModelMergeFlux1<
   - Min: 0
   - Step: 0.01
 */
-    pub single_blocks_31: SingleBlocks31,
+    pub single_blocks_31: SingleBlocks31Param,
     /**No documentation.
 
 **Metadata**:
@@ -2929,7 +2929,7 @@ pub struct ModelMergeFlux1<
   - Min: 0
   - Step: 0.01
 */
-    pub single_blocks_32: SingleBlocks32,
+    pub single_blocks_32: SingleBlocks32Param,
     /**No documentation.
 
 **Metadata**:
@@ -2938,7 +2938,7 @@ pub struct ModelMergeFlux1<
   - Min: 0
   - Step: 0.01
 */
-    pub single_blocks_33: SingleBlocks33,
+    pub single_blocks_33: SingleBlocks33Param,
     /**No documentation.
 
 **Metadata**:
@@ -2947,7 +2947,7 @@ pub struct ModelMergeFlux1<
   - Min: 0
   - Step: 0.01
 */
-    pub single_blocks_34: SingleBlocks34,
+    pub single_blocks_34: SingleBlocks34Param,
     /**No documentation.
 
 **Metadata**:
@@ -2956,7 +2956,7 @@ pub struct ModelMergeFlux1<
   - Min: 0
   - Step: 0.01
 */
-    pub single_blocks_35: SingleBlocks35,
+    pub single_blocks_35: SingleBlocks35Param,
     /**No documentation.
 
 **Metadata**:
@@ -2965,7 +2965,7 @@ pub struct ModelMergeFlux1<
   - Min: 0
   - Step: 0.01
 */
-    pub single_blocks_36: SingleBlocks36,
+    pub single_blocks_36: SingleBlocks36Param,
     /**No documentation.
 
 **Metadata**:
@@ -2974,7 +2974,7 @@ pub struct ModelMergeFlux1<
   - Min: 0
   - Step: 0.01
 */
-    pub single_blocks_37: SingleBlocks37,
+    pub single_blocks_37: SingleBlocks37Param,
     /**No documentation.
 
 **Metadata**:
@@ -2983,208 +2983,208 @@ pub struct ModelMergeFlux1<
   - Min: 0
   - Step: 0.01
 */
-    pub final_layer: FinalLayer,
+    pub final_layer: FinalLayerParam,
 }
 impl<
-    Model1: crate::nodes::types::Model,
-    Model2: crate::nodes::types::Model,
-    ImgIn: crate::nodes::types::Float,
-    TimeIn: crate::nodes::types::Float,
-    GuidanceIn: crate::nodes::types::Float,
-    VectorIn: crate::nodes::types::Float,
-    TxtIn: crate::nodes::types::Float,
-    DoubleBlocks0: crate::nodes::types::Float,
-    DoubleBlocks1: crate::nodes::types::Float,
-    DoubleBlocks2: crate::nodes::types::Float,
-    DoubleBlocks3: crate::nodes::types::Float,
-    DoubleBlocks4: crate::nodes::types::Float,
-    DoubleBlocks5: crate::nodes::types::Float,
-    DoubleBlocks6: crate::nodes::types::Float,
-    DoubleBlocks7: crate::nodes::types::Float,
-    DoubleBlocks8: crate::nodes::types::Float,
-    DoubleBlocks9: crate::nodes::types::Float,
-    DoubleBlocks10: crate::nodes::types::Float,
-    DoubleBlocks11: crate::nodes::types::Float,
-    DoubleBlocks12: crate::nodes::types::Float,
-    DoubleBlocks13: crate::nodes::types::Float,
-    DoubleBlocks14: crate::nodes::types::Float,
-    DoubleBlocks15: crate::nodes::types::Float,
-    DoubleBlocks16: crate::nodes::types::Float,
-    DoubleBlocks17: crate::nodes::types::Float,
-    DoubleBlocks18: crate::nodes::types::Float,
-    SingleBlocks0: crate::nodes::types::Float,
-    SingleBlocks1: crate::nodes::types::Float,
-    SingleBlocks2: crate::nodes::types::Float,
-    SingleBlocks3: crate::nodes::types::Float,
-    SingleBlocks4: crate::nodes::types::Float,
-    SingleBlocks5: crate::nodes::types::Float,
-    SingleBlocks6: crate::nodes::types::Float,
-    SingleBlocks7: crate::nodes::types::Float,
-    SingleBlocks8: crate::nodes::types::Float,
-    SingleBlocks9: crate::nodes::types::Float,
-    SingleBlocks10: crate::nodes::types::Float,
-    SingleBlocks11: crate::nodes::types::Float,
-    SingleBlocks12: crate::nodes::types::Float,
-    SingleBlocks13: crate::nodes::types::Float,
-    SingleBlocks14: crate::nodes::types::Float,
-    SingleBlocks15: crate::nodes::types::Float,
-    SingleBlocks16: crate::nodes::types::Float,
-    SingleBlocks17: crate::nodes::types::Float,
-    SingleBlocks18: crate::nodes::types::Float,
-    SingleBlocks19: crate::nodes::types::Float,
-    SingleBlocks20: crate::nodes::types::Float,
-    SingleBlocks21: crate::nodes::types::Float,
-    SingleBlocks22: crate::nodes::types::Float,
-    SingleBlocks23: crate::nodes::types::Float,
-    SingleBlocks24: crate::nodes::types::Float,
-    SingleBlocks25: crate::nodes::types::Float,
-    SingleBlocks26: crate::nodes::types::Float,
-    SingleBlocks27: crate::nodes::types::Float,
-    SingleBlocks28: crate::nodes::types::Float,
-    SingleBlocks29: crate::nodes::types::Float,
-    SingleBlocks30: crate::nodes::types::Float,
-    SingleBlocks31: crate::nodes::types::Float,
-    SingleBlocks32: crate::nodes::types::Float,
-    SingleBlocks33: crate::nodes::types::Float,
-    SingleBlocks34: crate::nodes::types::Float,
-    SingleBlocks35: crate::nodes::types::Float,
-    SingleBlocks36: crate::nodes::types::Float,
-    SingleBlocks37: crate::nodes::types::Float,
-    FinalLayer: crate::nodes::types::Float,
+    Model1Param: crate::nodes::types::Model,
+    Model2Param: crate::nodes::types::Model,
+    ImgInParam: crate::nodes::types::Float,
+    TimeInParam: crate::nodes::types::Float,
+    GuidanceInParam: crate::nodes::types::Float,
+    VectorInParam: crate::nodes::types::Float,
+    TxtInParam: crate::nodes::types::Float,
+    DoubleBlocks0Param: crate::nodes::types::Float,
+    DoubleBlocks1Param: crate::nodes::types::Float,
+    DoubleBlocks2Param: crate::nodes::types::Float,
+    DoubleBlocks3Param: crate::nodes::types::Float,
+    DoubleBlocks4Param: crate::nodes::types::Float,
+    DoubleBlocks5Param: crate::nodes::types::Float,
+    DoubleBlocks6Param: crate::nodes::types::Float,
+    DoubleBlocks7Param: crate::nodes::types::Float,
+    DoubleBlocks8Param: crate::nodes::types::Float,
+    DoubleBlocks9Param: crate::nodes::types::Float,
+    DoubleBlocks10Param: crate::nodes::types::Float,
+    DoubleBlocks11Param: crate::nodes::types::Float,
+    DoubleBlocks12Param: crate::nodes::types::Float,
+    DoubleBlocks13Param: crate::nodes::types::Float,
+    DoubleBlocks14Param: crate::nodes::types::Float,
+    DoubleBlocks15Param: crate::nodes::types::Float,
+    DoubleBlocks16Param: crate::nodes::types::Float,
+    DoubleBlocks17Param: crate::nodes::types::Float,
+    DoubleBlocks18Param: crate::nodes::types::Float,
+    SingleBlocks0Param: crate::nodes::types::Float,
+    SingleBlocks1Param: crate::nodes::types::Float,
+    SingleBlocks2Param: crate::nodes::types::Float,
+    SingleBlocks3Param: crate::nodes::types::Float,
+    SingleBlocks4Param: crate::nodes::types::Float,
+    SingleBlocks5Param: crate::nodes::types::Float,
+    SingleBlocks6Param: crate::nodes::types::Float,
+    SingleBlocks7Param: crate::nodes::types::Float,
+    SingleBlocks8Param: crate::nodes::types::Float,
+    SingleBlocks9Param: crate::nodes::types::Float,
+    SingleBlocks10Param: crate::nodes::types::Float,
+    SingleBlocks11Param: crate::nodes::types::Float,
+    SingleBlocks12Param: crate::nodes::types::Float,
+    SingleBlocks13Param: crate::nodes::types::Float,
+    SingleBlocks14Param: crate::nodes::types::Float,
+    SingleBlocks15Param: crate::nodes::types::Float,
+    SingleBlocks16Param: crate::nodes::types::Float,
+    SingleBlocks17Param: crate::nodes::types::Float,
+    SingleBlocks18Param: crate::nodes::types::Float,
+    SingleBlocks19Param: crate::nodes::types::Float,
+    SingleBlocks20Param: crate::nodes::types::Float,
+    SingleBlocks21Param: crate::nodes::types::Float,
+    SingleBlocks22Param: crate::nodes::types::Float,
+    SingleBlocks23Param: crate::nodes::types::Float,
+    SingleBlocks24Param: crate::nodes::types::Float,
+    SingleBlocks25Param: crate::nodes::types::Float,
+    SingleBlocks26Param: crate::nodes::types::Float,
+    SingleBlocks27Param: crate::nodes::types::Float,
+    SingleBlocks28Param: crate::nodes::types::Float,
+    SingleBlocks29Param: crate::nodes::types::Float,
+    SingleBlocks30Param: crate::nodes::types::Float,
+    SingleBlocks31Param: crate::nodes::types::Float,
+    SingleBlocks32Param: crate::nodes::types::Float,
+    SingleBlocks33Param: crate::nodes::types::Float,
+    SingleBlocks34Param: crate::nodes::types::Float,
+    SingleBlocks35Param: crate::nodes::types::Float,
+    SingleBlocks36Param: crate::nodes::types::Float,
+    SingleBlocks37Param: crate::nodes::types::Float,
+    FinalLayerParam: crate::nodes::types::Float,
 > ModelMergeFlux1<
-    Model1,
-    Model2,
-    ImgIn,
-    TimeIn,
-    GuidanceIn,
-    VectorIn,
-    TxtIn,
-    DoubleBlocks0,
-    DoubleBlocks1,
-    DoubleBlocks2,
-    DoubleBlocks3,
-    DoubleBlocks4,
-    DoubleBlocks5,
-    DoubleBlocks6,
-    DoubleBlocks7,
-    DoubleBlocks8,
-    DoubleBlocks9,
-    DoubleBlocks10,
-    DoubleBlocks11,
-    DoubleBlocks12,
-    DoubleBlocks13,
-    DoubleBlocks14,
-    DoubleBlocks15,
-    DoubleBlocks16,
-    DoubleBlocks17,
-    DoubleBlocks18,
-    SingleBlocks0,
-    SingleBlocks1,
-    SingleBlocks2,
-    SingleBlocks3,
-    SingleBlocks4,
-    SingleBlocks5,
-    SingleBlocks6,
-    SingleBlocks7,
-    SingleBlocks8,
-    SingleBlocks9,
-    SingleBlocks10,
-    SingleBlocks11,
-    SingleBlocks12,
-    SingleBlocks13,
-    SingleBlocks14,
-    SingleBlocks15,
-    SingleBlocks16,
-    SingleBlocks17,
-    SingleBlocks18,
-    SingleBlocks19,
-    SingleBlocks20,
-    SingleBlocks21,
-    SingleBlocks22,
-    SingleBlocks23,
-    SingleBlocks24,
-    SingleBlocks25,
-    SingleBlocks26,
-    SingleBlocks27,
-    SingleBlocks28,
-    SingleBlocks29,
-    SingleBlocks30,
-    SingleBlocks31,
-    SingleBlocks32,
-    SingleBlocks33,
-    SingleBlocks34,
-    SingleBlocks35,
-    SingleBlocks36,
-    SingleBlocks37,
-    FinalLayer,
+    Model1Param,
+    Model2Param,
+    ImgInParam,
+    TimeInParam,
+    GuidanceInParam,
+    VectorInParam,
+    TxtInParam,
+    DoubleBlocks0Param,
+    DoubleBlocks1Param,
+    DoubleBlocks2Param,
+    DoubleBlocks3Param,
+    DoubleBlocks4Param,
+    DoubleBlocks5Param,
+    DoubleBlocks6Param,
+    DoubleBlocks7Param,
+    DoubleBlocks8Param,
+    DoubleBlocks9Param,
+    DoubleBlocks10Param,
+    DoubleBlocks11Param,
+    DoubleBlocks12Param,
+    DoubleBlocks13Param,
+    DoubleBlocks14Param,
+    DoubleBlocks15Param,
+    DoubleBlocks16Param,
+    DoubleBlocks17Param,
+    DoubleBlocks18Param,
+    SingleBlocks0Param,
+    SingleBlocks1Param,
+    SingleBlocks2Param,
+    SingleBlocks3Param,
+    SingleBlocks4Param,
+    SingleBlocks5Param,
+    SingleBlocks6Param,
+    SingleBlocks7Param,
+    SingleBlocks8Param,
+    SingleBlocks9Param,
+    SingleBlocks10Param,
+    SingleBlocks11Param,
+    SingleBlocks12Param,
+    SingleBlocks13Param,
+    SingleBlocks14Param,
+    SingleBlocks15Param,
+    SingleBlocks16Param,
+    SingleBlocks17Param,
+    SingleBlocks18Param,
+    SingleBlocks19Param,
+    SingleBlocks20Param,
+    SingleBlocks21Param,
+    SingleBlocks22Param,
+    SingleBlocks23Param,
+    SingleBlocks24Param,
+    SingleBlocks25Param,
+    SingleBlocks26Param,
+    SingleBlocks27Param,
+    SingleBlocks28Param,
+    SingleBlocks29Param,
+    SingleBlocks30Param,
+    SingleBlocks31Param,
+    SingleBlocks32Param,
+    SingleBlocks33Param,
+    SingleBlocks34Param,
+    SingleBlocks35Param,
+    SingleBlocks36Param,
+    SingleBlocks37Param,
+    FinalLayerParam,
 > {
     /// Create a new node.
     pub fn new(
-        model_1: Model1,
-        model_2: Model2,
-        img_in: ImgIn,
-        time_in: TimeIn,
-        guidance_in: GuidanceIn,
-        vector_in: VectorIn,
-        txt_in: TxtIn,
-        double_blocks_0: DoubleBlocks0,
-        double_blocks_1: DoubleBlocks1,
-        double_blocks_2: DoubleBlocks2,
-        double_blocks_3: DoubleBlocks3,
-        double_blocks_4: DoubleBlocks4,
-        double_blocks_5: DoubleBlocks5,
-        double_blocks_6: DoubleBlocks6,
-        double_blocks_7: DoubleBlocks7,
-        double_blocks_8: DoubleBlocks8,
-        double_blocks_9: DoubleBlocks9,
-        double_blocks_10: DoubleBlocks10,
-        double_blocks_11: DoubleBlocks11,
-        double_blocks_12: DoubleBlocks12,
-        double_blocks_13: DoubleBlocks13,
-        double_blocks_14: DoubleBlocks14,
-        double_blocks_15: DoubleBlocks15,
-        double_blocks_16: DoubleBlocks16,
-        double_blocks_17: DoubleBlocks17,
-        double_blocks_18: DoubleBlocks18,
-        single_blocks_0: SingleBlocks0,
-        single_blocks_1: SingleBlocks1,
-        single_blocks_2: SingleBlocks2,
-        single_blocks_3: SingleBlocks3,
-        single_blocks_4: SingleBlocks4,
-        single_blocks_5: SingleBlocks5,
-        single_blocks_6: SingleBlocks6,
-        single_blocks_7: SingleBlocks7,
-        single_blocks_8: SingleBlocks8,
-        single_blocks_9: SingleBlocks9,
-        single_blocks_10: SingleBlocks10,
-        single_blocks_11: SingleBlocks11,
-        single_blocks_12: SingleBlocks12,
-        single_blocks_13: SingleBlocks13,
-        single_blocks_14: SingleBlocks14,
-        single_blocks_15: SingleBlocks15,
-        single_blocks_16: SingleBlocks16,
-        single_blocks_17: SingleBlocks17,
-        single_blocks_18: SingleBlocks18,
-        single_blocks_19: SingleBlocks19,
-        single_blocks_20: SingleBlocks20,
-        single_blocks_21: SingleBlocks21,
-        single_blocks_22: SingleBlocks22,
-        single_blocks_23: SingleBlocks23,
-        single_blocks_24: SingleBlocks24,
-        single_blocks_25: SingleBlocks25,
-        single_blocks_26: SingleBlocks26,
-        single_blocks_27: SingleBlocks27,
-        single_blocks_28: SingleBlocks28,
-        single_blocks_29: SingleBlocks29,
-        single_blocks_30: SingleBlocks30,
-        single_blocks_31: SingleBlocks31,
-        single_blocks_32: SingleBlocks32,
-        single_blocks_33: SingleBlocks33,
-        single_blocks_34: SingleBlocks34,
-        single_blocks_35: SingleBlocks35,
-        single_blocks_36: SingleBlocks36,
-        single_blocks_37: SingleBlocks37,
-        final_layer: FinalLayer,
+        model_1: Model1Param,
+        model_2: Model2Param,
+        img_in: ImgInParam,
+        time_in: TimeInParam,
+        guidance_in: GuidanceInParam,
+        vector_in: VectorInParam,
+        txt_in: TxtInParam,
+        double_blocks_0: DoubleBlocks0Param,
+        double_blocks_1: DoubleBlocks1Param,
+        double_blocks_2: DoubleBlocks2Param,
+        double_blocks_3: DoubleBlocks3Param,
+        double_blocks_4: DoubleBlocks4Param,
+        double_blocks_5: DoubleBlocks5Param,
+        double_blocks_6: DoubleBlocks6Param,
+        double_blocks_7: DoubleBlocks7Param,
+        double_blocks_8: DoubleBlocks8Param,
+        double_blocks_9: DoubleBlocks9Param,
+        double_blocks_10: DoubleBlocks10Param,
+        double_blocks_11: DoubleBlocks11Param,
+        double_blocks_12: DoubleBlocks12Param,
+        double_blocks_13: DoubleBlocks13Param,
+        double_blocks_14: DoubleBlocks14Param,
+        double_blocks_15: DoubleBlocks15Param,
+        double_blocks_16: DoubleBlocks16Param,
+        double_blocks_17: DoubleBlocks17Param,
+        double_blocks_18: DoubleBlocks18Param,
+        single_blocks_0: SingleBlocks0Param,
+        single_blocks_1: SingleBlocks1Param,
+        single_blocks_2: SingleBlocks2Param,
+        single_blocks_3: SingleBlocks3Param,
+        single_blocks_4: SingleBlocks4Param,
+        single_blocks_5: SingleBlocks5Param,
+        single_blocks_6: SingleBlocks6Param,
+        single_blocks_7: SingleBlocks7Param,
+        single_blocks_8: SingleBlocks8Param,
+        single_blocks_9: SingleBlocks9Param,
+        single_blocks_10: SingleBlocks10Param,
+        single_blocks_11: SingleBlocks11Param,
+        single_blocks_12: SingleBlocks12Param,
+        single_blocks_13: SingleBlocks13Param,
+        single_blocks_14: SingleBlocks14Param,
+        single_blocks_15: SingleBlocks15Param,
+        single_blocks_16: SingleBlocks16Param,
+        single_blocks_17: SingleBlocks17Param,
+        single_blocks_18: SingleBlocks18Param,
+        single_blocks_19: SingleBlocks19Param,
+        single_blocks_20: SingleBlocks20Param,
+        single_blocks_21: SingleBlocks21Param,
+        single_blocks_22: SingleBlocks22Param,
+        single_blocks_23: SingleBlocks23Param,
+        single_blocks_24: SingleBlocks24Param,
+        single_blocks_25: SingleBlocks25Param,
+        single_blocks_26: SingleBlocks26Param,
+        single_blocks_27: SingleBlocks27Param,
+        single_blocks_28: SingleBlocks28Param,
+        single_blocks_29: SingleBlocks29Param,
+        single_blocks_30: SingleBlocks30Param,
+        single_blocks_31: SingleBlocks31Param,
+        single_blocks_32: SingleBlocks32Param,
+        single_blocks_33: SingleBlocks33Param,
+        single_blocks_34: SingleBlocks34Param,
+        single_blocks_35: SingleBlocks35Param,
+        single_blocks_36: SingleBlocks36Param,
+        single_blocks_37: SingleBlocks37Param,
+        final_layer: FinalLayerParam,
     ) -> Self {
         Self {
             model_1,
@@ -3256,138 +3256,138 @@ impl<
     }
 }
 impl<
-    Model1: crate::nodes::types::Model,
-    Model2: crate::nodes::types::Model,
-    ImgIn: crate::nodes::types::Float,
-    TimeIn: crate::nodes::types::Float,
-    GuidanceIn: crate::nodes::types::Float,
-    VectorIn: crate::nodes::types::Float,
-    TxtIn: crate::nodes::types::Float,
-    DoubleBlocks0: crate::nodes::types::Float,
-    DoubleBlocks1: crate::nodes::types::Float,
-    DoubleBlocks2: crate::nodes::types::Float,
-    DoubleBlocks3: crate::nodes::types::Float,
-    DoubleBlocks4: crate::nodes::types::Float,
-    DoubleBlocks5: crate::nodes::types::Float,
-    DoubleBlocks6: crate::nodes::types::Float,
-    DoubleBlocks7: crate::nodes::types::Float,
-    DoubleBlocks8: crate::nodes::types::Float,
-    DoubleBlocks9: crate::nodes::types::Float,
-    DoubleBlocks10: crate::nodes::types::Float,
-    DoubleBlocks11: crate::nodes::types::Float,
-    DoubleBlocks12: crate::nodes::types::Float,
-    DoubleBlocks13: crate::nodes::types::Float,
-    DoubleBlocks14: crate::nodes::types::Float,
-    DoubleBlocks15: crate::nodes::types::Float,
-    DoubleBlocks16: crate::nodes::types::Float,
-    DoubleBlocks17: crate::nodes::types::Float,
-    DoubleBlocks18: crate::nodes::types::Float,
-    SingleBlocks0: crate::nodes::types::Float,
-    SingleBlocks1: crate::nodes::types::Float,
-    SingleBlocks2: crate::nodes::types::Float,
-    SingleBlocks3: crate::nodes::types::Float,
-    SingleBlocks4: crate::nodes::types::Float,
-    SingleBlocks5: crate::nodes::types::Float,
-    SingleBlocks6: crate::nodes::types::Float,
-    SingleBlocks7: crate::nodes::types::Float,
-    SingleBlocks8: crate::nodes::types::Float,
-    SingleBlocks9: crate::nodes::types::Float,
-    SingleBlocks10: crate::nodes::types::Float,
-    SingleBlocks11: crate::nodes::types::Float,
-    SingleBlocks12: crate::nodes::types::Float,
-    SingleBlocks13: crate::nodes::types::Float,
-    SingleBlocks14: crate::nodes::types::Float,
-    SingleBlocks15: crate::nodes::types::Float,
-    SingleBlocks16: crate::nodes::types::Float,
-    SingleBlocks17: crate::nodes::types::Float,
-    SingleBlocks18: crate::nodes::types::Float,
-    SingleBlocks19: crate::nodes::types::Float,
-    SingleBlocks20: crate::nodes::types::Float,
-    SingleBlocks21: crate::nodes::types::Float,
-    SingleBlocks22: crate::nodes::types::Float,
-    SingleBlocks23: crate::nodes::types::Float,
-    SingleBlocks24: crate::nodes::types::Float,
-    SingleBlocks25: crate::nodes::types::Float,
-    SingleBlocks26: crate::nodes::types::Float,
-    SingleBlocks27: crate::nodes::types::Float,
-    SingleBlocks28: crate::nodes::types::Float,
-    SingleBlocks29: crate::nodes::types::Float,
-    SingleBlocks30: crate::nodes::types::Float,
-    SingleBlocks31: crate::nodes::types::Float,
-    SingleBlocks32: crate::nodes::types::Float,
-    SingleBlocks33: crate::nodes::types::Float,
-    SingleBlocks34: crate::nodes::types::Float,
-    SingleBlocks35: crate::nodes::types::Float,
-    SingleBlocks36: crate::nodes::types::Float,
-    SingleBlocks37: crate::nodes::types::Float,
-    FinalLayer: crate::nodes::types::Float,
+    Model1Param: crate::nodes::types::Model,
+    Model2Param: crate::nodes::types::Model,
+    ImgInParam: crate::nodes::types::Float,
+    TimeInParam: crate::nodes::types::Float,
+    GuidanceInParam: crate::nodes::types::Float,
+    VectorInParam: crate::nodes::types::Float,
+    TxtInParam: crate::nodes::types::Float,
+    DoubleBlocks0Param: crate::nodes::types::Float,
+    DoubleBlocks1Param: crate::nodes::types::Float,
+    DoubleBlocks2Param: crate::nodes::types::Float,
+    DoubleBlocks3Param: crate::nodes::types::Float,
+    DoubleBlocks4Param: crate::nodes::types::Float,
+    DoubleBlocks5Param: crate::nodes::types::Float,
+    DoubleBlocks6Param: crate::nodes::types::Float,
+    DoubleBlocks7Param: crate::nodes::types::Float,
+    DoubleBlocks8Param: crate::nodes::types::Float,
+    DoubleBlocks9Param: crate::nodes::types::Float,
+    DoubleBlocks10Param: crate::nodes::types::Float,
+    DoubleBlocks11Param: crate::nodes::types::Float,
+    DoubleBlocks12Param: crate::nodes::types::Float,
+    DoubleBlocks13Param: crate::nodes::types::Float,
+    DoubleBlocks14Param: crate::nodes::types::Float,
+    DoubleBlocks15Param: crate::nodes::types::Float,
+    DoubleBlocks16Param: crate::nodes::types::Float,
+    DoubleBlocks17Param: crate::nodes::types::Float,
+    DoubleBlocks18Param: crate::nodes::types::Float,
+    SingleBlocks0Param: crate::nodes::types::Float,
+    SingleBlocks1Param: crate::nodes::types::Float,
+    SingleBlocks2Param: crate::nodes::types::Float,
+    SingleBlocks3Param: crate::nodes::types::Float,
+    SingleBlocks4Param: crate::nodes::types::Float,
+    SingleBlocks5Param: crate::nodes::types::Float,
+    SingleBlocks6Param: crate::nodes::types::Float,
+    SingleBlocks7Param: crate::nodes::types::Float,
+    SingleBlocks8Param: crate::nodes::types::Float,
+    SingleBlocks9Param: crate::nodes::types::Float,
+    SingleBlocks10Param: crate::nodes::types::Float,
+    SingleBlocks11Param: crate::nodes::types::Float,
+    SingleBlocks12Param: crate::nodes::types::Float,
+    SingleBlocks13Param: crate::nodes::types::Float,
+    SingleBlocks14Param: crate::nodes::types::Float,
+    SingleBlocks15Param: crate::nodes::types::Float,
+    SingleBlocks16Param: crate::nodes::types::Float,
+    SingleBlocks17Param: crate::nodes::types::Float,
+    SingleBlocks18Param: crate::nodes::types::Float,
+    SingleBlocks19Param: crate::nodes::types::Float,
+    SingleBlocks20Param: crate::nodes::types::Float,
+    SingleBlocks21Param: crate::nodes::types::Float,
+    SingleBlocks22Param: crate::nodes::types::Float,
+    SingleBlocks23Param: crate::nodes::types::Float,
+    SingleBlocks24Param: crate::nodes::types::Float,
+    SingleBlocks25Param: crate::nodes::types::Float,
+    SingleBlocks26Param: crate::nodes::types::Float,
+    SingleBlocks27Param: crate::nodes::types::Float,
+    SingleBlocks28Param: crate::nodes::types::Float,
+    SingleBlocks29Param: crate::nodes::types::Float,
+    SingleBlocks30Param: crate::nodes::types::Float,
+    SingleBlocks31Param: crate::nodes::types::Float,
+    SingleBlocks32Param: crate::nodes::types::Float,
+    SingleBlocks33Param: crate::nodes::types::Float,
+    SingleBlocks34Param: crate::nodes::types::Float,
+    SingleBlocks35Param: crate::nodes::types::Float,
+    SingleBlocks36Param: crate::nodes::types::Float,
+    SingleBlocks37Param: crate::nodes::types::Float,
+    FinalLayerParam: crate::nodes::types::Float,
 > crate::nodes::TypedNode
 for ModelMergeFlux1<
-    Model1,
-    Model2,
-    ImgIn,
-    TimeIn,
-    GuidanceIn,
-    VectorIn,
-    TxtIn,
-    DoubleBlocks0,
-    DoubleBlocks1,
-    DoubleBlocks2,
-    DoubleBlocks3,
-    DoubleBlocks4,
-    DoubleBlocks5,
-    DoubleBlocks6,
-    DoubleBlocks7,
-    DoubleBlocks8,
-    DoubleBlocks9,
-    DoubleBlocks10,
-    DoubleBlocks11,
-    DoubleBlocks12,
-    DoubleBlocks13,
-    DoubleBlocks14,
-    DoubleBlocks15,
-    DoubleBlocks16,
-    DoubleBlocks17,
-    DoubleBlocks18,
-    SingleBlocks0,
-    SingleBlocks1,
-    SingleBlocks2,
-    SingleBlocks3,
-    SingleBlocks4,
-    SingleBlocks5,
-    SingleBlocks6,
-    SingleBlocks7,
-    SingleBlocks8,
-    SingleBlocks9,
-    SingleBlocks10,
-    SingleBlocks11,
-    SingleBlocks12,
-    SingleBlocks13,
-    SingleBlocks14,
-    SingleBlocks15,
-    SingleBlocks16,
-    SingleBlocks17,
-    SingleBlocks18,
-    SingleBlocks19,
-    SingleBlocks20,
-    SingleBlocks21,
-    SingleBlocks22,
-    SingleBlocks23,
-    SingleBlocks24,
-    SingleBlocks25,
-    SingleBlocks26,
-    SingleBlocks27,
-    SingleBlocks28,
-    SingleBlocks29,
-    SingleBlocks30,
-    SingleBlocks31,
-    SingleBlocks32,
-    SingleBlocks33,
-    SingleBlocks34,
-    SingleBlocks35,
-    SingleBlocks36,
-    SingleBlocks37,
-    FinalLayer,
+    Model1Param,
+    Model2Param,
+    ImgInParam,
+    TimeInParam,
+    GuidanceInParam,
+    VectorInParam,
+    TxtInParam,
+    DoubleBlocks0Param,
+    DoubleBlocks1Param,
+    DoubleBlocks2Param,
+    DoubleBlocks3Param,
+    DoubleBlocks4Param,
+    DoubleBlocks5Param,
+    DoubleBlocks6Param,
+    DoubleBlocks7Param,
+    DoubleBlocks8Param,
+    DoubleBlocks9Param,
+    DoubleBlocks10Param,
+    DoubleBlocks11Param,
+    DoubleBlocks12Param,
+    DoubleBlocks13Param,
+    DoubleBlocks14Param,
+    DoubleBlocks15Param,
+    DoubleBlocks16Param,
+    DoubleBlocks17Param,
+    DoubleBlocks18Param,
+    SingleBlocks0Param,
+    SingleBlocks1Param,
+    SingleBlocks2Param,
+    SingleBlocks3Param,
+    SingleBlocks4Param,
+    SingleBlocks5Param,
+    SingleBlocks6Param,
+    SingleBlocks7Param,
+    SingleBlocks8Param,
+    SingleBlocks9Param,
+    SingleBlocks10Param,
+    SingleBlocks11Param,
+    SingleBlocks12Param,
+    SingleBlocks13Param,
+    SingleBlocks14Param,
+    SingleBlocks15Param,
+    SingleBlocks16Param,
+    SingleBlocks17Param,
+    SingleBlocks18Param,
+    SingleBlocks19Param,
+    SingleBlocks20Param,
+    SingleBlocks21Param,
+    SingleBlocks22Param,
+    SingleBlocks23Param,
+    SingleBlocks24Param,
+    SingleBlocks25Param,
+    SingleBlocks26Param,
+    SingleBlocks27Param,
+    SingleBlocks28Param,
+    SingleBlocks29Param,
+    SingleBlocks30Param,
+    SingleBlocks31Param,
+    SingleBlocks32Param,
+    SingleBlocks33Param,
+    SingleBlocks34Param,
+    SingleBlocks35Param,
+    SingleBlocks36Param,
+    SingleBlocks37Param,
+    FinalLayerParam,
 > {
     type Output = crate::nodes::types::ModelOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
@@ -3638,46 +3638,46 @@ for ModelMergeFlux1<
 ///**ModelMergeLTXV**: No description.
 #[derive(Clone)]
 pub struct ModelMergeLtxv<
-    Model1: crate::nodes::types::Model,
-    Model2: crate::nodes::types::Model,
-    PatchifyProj: crate::nodes::types::Float,
-    AdalnSingle: crate::nodes::types::Float,
-    CaptionProjection: crate::nodes::types::Float,
-    TransformerBlocks0: crate::nodes::types::Float,
-    TransformerBlocks1: crate::nodes::types::Float,
-    TransformerBlocks2: crate::nodes::types::Float,
-    TransformerBlocks3: crate::nodes::types::Float,
-    TransformerBlocks4: crate::nodes::types::Float,
-    TransformerBlocks5: crate::nodes::types::Float,
-    TransformerBlocks6: crate::nodes::types::Float,
-    TransformerBlocks7: crate::nodes::types::Float,
-    TransformerBlocks8: crate::nodes::types::Float,
-    TransformerBlocks9: crate::nodes::types::Float,
-    TransformerBlocks10: crate::nodes::types::Float,
-    TransformerBlocks11: crate::nodes::types::Float,
-    TransformerBlocks12: crate::nodes::types::Float,
-    TransformerBlocks13: crate::nodes::types::Float,
-    TransformerBlocks14: crate::nodes::types::Float,
-    TransformerBlocks15: crate::nodes::types::Float,
-    TransformerBlocks16: crate::nodes::types::Float,
-    TransformerBlocks17: crate::nodes::types::Float,
-    TransformerBlocks18: crate::nodes::types::Float,
-    TransformerBlocks19: crate::nodes::types::Float,
-    TransformerBlocks20: crate::nodes::types::Float,
-    TransformerBlocks21: crate::nodes::types::Float,
-    TransformerBlocks22: crate::nodes::types::Float,
-    TransformerBlocks23: crate::nodes::types::Float,
-    TransformerBlocks24: crate::nodes::types::Float,
-    TransformerBlocks25: crate::nodes::types::Float,
-    TransformerBlocks26: crate::nodes::types::Float,
-    TransformerBlocks27: crate::nodes::types::Float,
-    ScaleShiftTable: crate::nodes::types::Float,
-    ProjOut: crate::nodes::types::Float,
+    Model1Param: crate::nodes::types::Model,
+    Model2Param: crate::nodes::types::Model,
+    PatchifyProjParam: crate::nodes::types::Float,
+    AdalnSingleParam: crate::nodes::types::Float,
+    CaptionProjectionParam: crate::nodes::types::Float,
+    TransformerBlocks0Param: crate::nodes::types::Float,
+    TransformerBlocks1Param: crate::nodes::types::Float,
+    TransformerBlocks2Param: crate::nodes::types::Float,
+    TransformerBlocks3Param: crate::nodes::types::Float,
+    TransformerBlocks4Param: crate::nodes::types::Float,
+    TransformerBlocks5Param: crate::nodes::types::Float,
+    TransformerBlocks6Param: crate::nodes::types::Float,
+    TransformerBlocks7Param: crate::nodes::types::Float,
+    TransformerBlocks8Param: crate::nodes::types::Float,
+    TransformerBlocks9Param: crate::nodes::types::Float,
+    TransformerBlocks10Param: crate::nodes::types::Float,
+    TransformerBlocks11Param: crate::nodes::types::Float,
+    TransformerBlocks12Param: crate::nodes::types::Float,
+    TransformerBlocks13Param: crate::nodes::types::Float,
+    TransformerBlocks14Param: crate::nodes::types::Float,
+    TransformerBlocks15Param: crate::nodes::types::Float,
+    TransformerBlocks16Param: crate::nodes::types::Float,
+    TransformerBlocks17Param: crate::nodes::types::Float,
+    TransformerBlocks18Param: crate::nodes::types::Float,
+    TransformerBlocks19Param: crate::nodes::types::Float,
+    TransformerBlocks20Param: crate::nodes::types::Float,
+    TransformerBlocks21Param: crate::nodes::types::Float,
+    TransformerBlocks22Param: crate::nodes::types::Float,
+    TransformerBlocks23Param: crate::nodes::types::Float,
+    TransformerBlocks24Param: crate::nodes::types::Float,
+    TransformerBlocks25Param: crate::nodes::types::Float,
+    TransformerBlocks26Param: crate::nodes::types::Float,
+    TransformerBlocks27Param: crate::nodes::types::Float,
+    ScaleShiftTableParam: crate::nodes::types::Float,
+    ProjOutParam: crate::nodes::types::Float,
 > {
     ///No documentation.
-    pub model_1: Model1,
+    pub model_1: Model1Param,
     ///No documentation.
-    pub model_2: Model2,
+    pub model_2: Model2Param,
     /**No documentation.
 
 **Metadata**:
@@ -3686,7 +3686,7 @@ pub struct ModelMergeLtxv<
   - Min: 0
   - Step: 0.01
 */
-    pub patchify_proj: PatchifyProj,
+    pub patchify_proj: PatchifyProjParam,
     /**No documentation.
 
 **Metadata**:
@@ -3695,7 +3695,7 @@ pub struct ModelMergeLtxv<
   - Min: 0
   - Step: 0.01
 */
-    pub adaln_single: AdalnSingle,
+    pub adaln_single: AdalnSingleParam,
     /**No documentation.
 
 **Metadata**:
@@ -3704,7 +3704,7 @@ pub struct ModelMergeLtxv<
   - Min: 0
   - Step: 0.01
 */
-    pub caption_projection: CaptionProjection,
+    pub caption_projection: CaptionProjectionParam,
     /**No documentation.
 
 **Metadata**:
@@ -3713,7 +3713,7 @@ pub struct ModelMergeLtxv<
   - Min: 0
   - Step: 0.01
 */
-    pub transformer_blocks_0: TransformerBlocks0,
+    pub transformer_blocks_0: TransformerBlocks0Param,
     /**No documentation.
 
 **Metadata**:
@@ -3722,7 +3722,7 @@ pub struct ModelMergeLtxv<
   - Min: 0
   - Step: 0.01
 */
-    pub transformer_blocks_1: TransformerBlocks1,
+    pub transformer_blocks_1: TransformerBlocks1Param,
     /**No documentation.
 
 **Metadata**:
@@ -3731,7 +3731,7 @@ pub struct ModelMergeLtxv<
   - Min: 0
   - Step: 0.01
 */
-    pub transformer_blocks_2: TransformerBlocks2,
+    pub transformer_blocks_2: TransformerBlocks2Param,
     /**No documentation.
 
 **Metadata**:
@@ -3740,7 +3740,7 @@ pub struct ModelMergeLtxv<
   - Min: 0
   - Step: 0.01
 */
-    pub transformer_blocks_3: TransformerBlocks3,
+    pub transformer_blocks_3: TransformerBlocks3Param,
     /**No documentation.
 
 **Metadata**:
@@ -3749,7 +3749,7 @@ pub struct ModelMergeLtxv<
   - Min: 0
   - Step: 0.01
 */
-    pub transformer_blocks_4: TransformerBlocks4,
+    pub transformer_blocks_4: TransformerBlocks4Param,
     /**No documentation.
 
 **Metadata**:
@@ -3758,7 +3758,7 @@ pub struct ModelMergeLtxv<
   - Min: 0
   - Step: 0.01
 */
-    pub transformer_blocks_5: TransformerBlocks5,
+    pub transformer_blocks_5: TransformerBlocks5Param,
     /**No documentation.
 
 **Metadata**:
@@ -3767,7 +3767,7 @@ pub struct ModelMergeLtxv<
   - Min: 0
   - Step: 0.01
 */
-    pub transformer_blocks_6: TransformerBlocks6,
+    pub transformer_blocks_6: TransformerBlocks6Param,
     /**No documentation.
 
 **Metadata**:
@@ -3776,7 +3776,7 @@ pub struct ModelMergeLtxv<
   - Min: 0
   - Step: 0.01
 */
-    pub transformer_blocks_7: TransformerBlocks7,
+    pub transformer_blocks_7: TransformerBlocks7Param,
     /**No documentation.
 
 **Metadata**:
@@ -3785,7 +3785,7 @@ pub struct ModelMergeLtxv<
   - Min: 0
   - Step: 0.01
 */
-    pub transformer_blocks_8: TransformerBlocks8,
+    pub transformer_blocks_8: TransformerBlocks8Param,
     /**No documentation.
 
 **Metadata**:
@@ -3794,7 +3794,7 @@ pub struct ModelMergeLtxv<
   - Min: 0
   - Step: 0.01
 */
-    pub transformer_blocks_9: TransformerBlocks9,
+    pub transformer_blocks_9: TransformerBlocks9Param,
     /**No documentation.
 
 **Metadata**:
@@ -3803,7 +3803,7 @@ pub struct ModelMergeLtxv<
   - Min: 0
   - Step: 0.01
 */
-    pub transformer_blocks_10: TransformerBlocks10,
+    pub transformer_blocks_10: TransformerBlocks10Param,
     /**No documentation.
 
 **Metadata**:
@@ -3812,7 +3812,7 @@ pub struct ModelMergeLtxv<
   - Min: 0
   - Step: 0.01
 */
-    pub transformer_blocks_11: TransformerBlocks11,
+    pub transformer_blocks_11: TransformerBlocks11Param,
     /**No documentation.
 
 **Metadata**:
@@ -3821,7 +3821,7 @@ pub struct ModelMergeLtxv<
   - Min: 0
   - Step: 0.01
 */
-    pub transformer_blocks_12: TransformerBlocks12,
+    pub transformer_blocks_12: TransformerBlocks12Param,
     /**No documentation.
 
 **Metadata**:
@@ -3830,7 +3830,7 @@ pub struct ModelMergeLtxv<
   - Min: 0
   - Step: 0.01
 */
-    pub transformer_blocks_13: TransformerBlocks13,
+    pub transformer_blocks_13: TransformerBlocks13Param,
     /**No documentation.
 
 **Metadata**:
@@ -3839,7 +3839,7 @@ pub struct ModelMergeLtxv<
   - Min: 0
   - Step: 0.01
 */
-    pub transformer_blocks_14: TransformerBlocks14,
+    pub transformer_blocks_14: TransformerBlocks14Param,
     /**No documentation.
 
 **Metadata**:
@@ -3848,7 +3848,7 @@ pub struct ModelMergeLtxv<
   - Min: 0
   - Step: 0.01
 */
-    pub transformer_blocks_15: TransformerBlocks15,
+    pub transformer_blocks_15: TransformerBlocks15Param,
     /**No documentation.
 
 **Metadata**:
@@ -3857,7 +3857,7 @@ pub struct ModelMergeLtxv<
   - Min: 0
   - Step: 0.01
 */
-    pub transformer_blocks_16: TransformerBlocks16,
+    pub transformer_blocks_16: TransformerBlocks16Param,
     /**No documentation.
 
 **Metadata**:
@@ -3866,7 +3866,7 @@ pub struct ModelMergeLtxv<
   - Min: 0
   - Step: 0.01
 */
-    pub transformer_blocks_17: TransformerBlocks17,
+    pub transformer_blocks_17: TransformerBlocks17Param,
     /**No documentation.
 
 **Metadata**:
@@ -3875,7 +3875,7 @@ pub struct ModelMergeLtxv<
   - Min: 0
   - Step: 0.01
 */
-    pub transformer_blocks_18: TransformerBlocks18,
+    pub transformer_blocks_18: TransformerBlocks18Param,
     /**No documentation.
 
 **Metadata**:
@@ -3884,7 +3884,7 @@ pub struct ModelMergeLtxv<
   - Min: 0
   - Step: 0.01
 */
-    pub transformer_blocks_19: TransformerBlocks19,
+    pub transformer_blocks_19: TransformerBlocks19Param,
     /**No documentation.
 
 **Metadata**:
@@ -3893,7 +3893,7 @@ pub struct ModelMergeLtxv<
   - Min: 0
   - Step: 0.01
 */
-    pub transformer_blocks_20: TransformerBlocks20,
+    pub transformer_blocks_20: TransformerBlocks20Param,
     /**No documentation.
 
 **Metadata**:
@@ -3902,7 +3902,7 @@ pub struct ModelMergeLtxv<
   - Min: 0
   - Step: 0.01
 */
-    pub transformer_blocks_21: TransformerBlocks21,
+    pub transformer_blocks_21: TransformerBlocks21Param,
     /**No documentation.
 
 **Metadata**:
@@ -3911,7 +3911,7 @@ pub struct ModelMergeLtxv<
   - Min: 0
   - Step: 0.01
 */
-    pub transformer_blocks_22: TransformerBlocks22,
+    pub transformer_blocks_22: TransformerBlocks22Param,
     /**No documentation.
 
 **Metadata**:
@@ -3920,7 +3920,7 @@ pub struct ModelMergeLtxv<
   - Min: 0
   - Step: 0.01
 */
-    pub transformer_blocks_23: TransformerBlocks23,
+    pub transformer_blocks_23: TransformerBlocks23Param,
     /**No documentation.
 
 **Metadata**:
@@ -3929,7 +3929,7 @@ pub struct ModelMergeLtxv<
   - Min: 0
   - Step: 0.01
 */
-    pub transformer_blocks_24: TransformerBlocks24,
+    pub transformer_blocks_24: TransformerBlocks24Param,
     /**No documentation.
 
 **Metadata**:
@@ -3938,7 +3938,7 @@ pub struct ModelMergeLtxv<
   - Min: 0
   - Step: 0.01
 */
-    pub transformer_blocks_25: TransformerBlocks25,
+    pub transformer_blocks_25: TransformerBlocks25Param,
     /**No documentation.
 
 **Metadata**:
@@ -3947,7 +3947,7 @@ pub struct ModelMergeLtxv<
   - Min: 0
   - Step: 0.01
 */
-    pub transformer_blocks_26: TransformerBlocks26,
+    pub transformer_blocks_26: TransformerBlocks26Param,
     /**No documentation.
 
 **Metadata**:
@@ -3956,7 +3956,7 @@ pub struct ModelMergeLtxv<
   - Min: 0
   - Step: 0.01
 */
-    pub transformer_blocks_27: TransformerBlocks27,
+    pub transformer_blocks_27: TransformerBlocks27Param,
     /**No documentation.
 
 **Metadata**:
@@ -3965,7 +3965,7 @@ pub struct ModelMergeLtxv<
   - Min: 0
   - Step: 0.01
 */
-    pub scale_shift_table: ScaleShiftTable,
+    pub scale_shift_table: ScaleShiftTableParam,
     /**No documentation.
 
 **Metadata**:
@@ -3974,118 +3974,118 @@ pub struct ModelMergeLtxv<
   - Min: 0
   - Step: 0.01
 */
-    pub proj_out: ProjOut,
+    pub proj_out: ProjOutParam,
 }
 impl<
-    Model1: crate::nodes::types::Model,
-    Model2: crate::nodes::types::Model,
-    PatchifyProj: crate::nodes::types::Float,
-    AdalnSingle: crate::nodes::types::Float,
-    CaptionProjection: crate::nodes::types::Float,
-    TransformerBlocks0: crate::nodes::types::Float,
-    TransformerBlocks1: crate::nodes::types::Float,
-    TransformerBlocks2: crate::nodes::types::Float,
-    TransformerBlocks3: crate::nodes::types::Float,
-    TransformerBlocks4: crate::nodes::types::Float,
-    TransformerBlocks5: crate::nodes::types::Float,
-    TransformerBlocks6: crate::nodes::types::Float,
-    TransformerBlocks7: crate::nodes::types::Float,
-    TransformerBlocks8: crate::nodes::types::Float,
-    TransformerBlocks9: crate::nodes::types::Float,
-    TransformerBlocks10: crate::nodes::types::Float,
-    TransformerBlocks11: crate::nodes::types::Float,
-    TransformerBlocks12: crate::nodes::types::Float,
-    TransformerBlocks13: crate::nodes::types::Float,
-    TransformerBlocks14: crate::nodes::types::Float,
-    TransformerBlocks15: crate::nodes::types::Float,
-    TransformerBlocks16: crate::nodes::types::Float,
-    TransformerBlocks17: crate::nodes::types::Float,
-    TransformerBlocks18: crate::nodes::types::Float,
-    TransformerBlocks19: crate::nodes::types::Float,
-    TransformerBlocks20: crate::nodes::types::Float,
-    TransformerBlocks21: crate::nodes::types::Float,
-    TransformerBlocks22: crate::nodes::types::Float,
-    TransformerBlocks23: crate::nodes::types::Float,
-    TransformerBlocks24: crate::nodes::types::Float,
-    TransformerBlocks25: crate::nodes::types::Float,
-    TransformerBlocks26: crate::nodes::types::Float,
-    TransformerBlocks27: crate::nodes::types::Float,
-    ScaleShiftTable: crate::nodes::types::Float,
-    ProjOut: crate::nodes::types::Float,
+    Model1Param: crate::nodes::types::Model,
+    Model2Param: crate::nodes::types::Model,
+    PatchifyProjParam: crate::nodes::types::Float,
+    AdalnSingleParam: crate::nodes::types::Float,
+    CaptionProjectionParam: crate::nodes::types::Float,
+    TransformerBlocks0Param: crate::nodes::types::Float,
+    TransformerBlocks1Param: crate::nodes::types::Float,
+    TransformerBlocks2Param: crate::nodes::types::Float,
+    TransformerBlocks3Param: crate::nodes::types::Float,
+    TransformerBlocks4Param: crate::nodes::types::Float,
+    TransformerBlocks5Param: crate::nodes::types::Float,
+    TransformerBlocks6Param: crate::nodes::types::Float,
+    TransformerBlocks7Param: crate::nodes::types::Float,
+    TransformerBlocks8Param: crate::nodes::types::Float,
+    TransformerBlocks9Param: crate::nodes::types::Float,
+    TransformerBlocks10Param: crate::nodes::types::Float,
+    TransformerBlocks11Param: crate::nodes::types::Float,
+    TransformerBlocks12Param: crate::nodes::types::Float,
+    TransformerBlocks13Param: crate::nodes::types::Float,
+    TransformerBlocks14Param: crate::nodes::types::Float,
+    TransformerBlocks15Param: crate::nodes::types::Float,
+    TransformerBlocks16Param: crate::nodes::types::Float,
+    TransformerBlocks17Param: crate::nodes::types::Float,
+    TransformerBlocks18Param: crate::nodes::types::Float,
+    TransformerBlocks19Param: crate::nodes::types::Float,
+    TransformerBlocks20Param: crate::nodes::types::Float,
+    TransformerBlocks21Param: crate::nodes::types::Float,
+    TransformerBlocks22Param: crate::nodes::types::Float,
+    TransformerBlocks23Param: crate::nodes::types::Float,
+    TransformerBlocks24Param: crate::nodes::types::Float,
+    TransformerBlocks25Param: crate::nodes::types::Float,
+    TransformerBlocks26Param: crate::nodes::types::Float,
+    TransformerBlocks27Param: crate::nodes::types::Float,
+    ScaleShiftTableParam: crate::nodes::types::Float,
+    ProjOutParam: crate::nodes::types::Float,
 > ModelMergeLtxv<
-    Model1,
-    Model2,
-    PatchifyProj,
-    AdalnSingle,
-    CaptionProjection,
-    TransformerBlocks0,
-    TransformerBlocks1,
-    TransformerBlocks2,
-    TransformerBlocks3,
-    TransformerBlocks4,
-    TransformerBlocks5,
-    TransformerBlocks6,
-    TransformerBlocks7,
-    TransformerBlocks8,
-    TransformerBlocks9,
-    TransformerBlocks10,
-    TransformerBlocks11,
-    TransformerBlocks12,
-    TransformerBlocks13,
-    TransformerBlocks14,
-    TransformerBlocks15,
-    TransformerBlocks16,
-    TransformerBlocks17,
-    TransformerBlocks18,
-    TransformerBlocks19,
-    TransformerBlocks20,
-    TransformerBlocks21,
-    TransformerBlocks22,
-    TransformerBlocks23,
-    TransformerBlocks24,
-    TransformerBlocks25,
-    TransformerBlocks26,
-    TransformerBlocks27,
-    ScaleShiftTable,
-    ProjOut,
+    Model1Param,
+    Model2Param,
+    PatchifyProjParam,
+    AdalnSingleParam,
+    CaptionProjectionParam,
+    TransformerBlocks0Param,
+    TransformerBlocks1Param,
+    TransformerBlocks2Param,
+    TransformerBlocks3Param,
+    TransformerBlocks4Param,
+    TransformerBlocks5Param,
+    TransformerBlocks6Param,
+    TransformerBlocks7Param,
+    TransformerBlocks8Param,
+    TransformerBlocks9Param,
+    TransformerBlocks10Param,
+    TransformerBlocks11Param,
+    TransformerBlocks12Param,
+    TransformerBlocks13Param,
+    TransformerBlocks14Param,
+    TransformerBlocks15Param,
+    TransformerBlocks16Param,
+    TransformerBlocks17Param,
+    TransformerBlocks18Param,
+    TransformerBlocks19Param,
+    TransformerBlocks20Param,
+    TransformerBlocks21Param,
+    TransformerBlocks22Param,
+    TransformerBlocks23Param,
+    TransformerBlocks24Param,
+    TransformerBlocks25Param,
+    TransformerBlocks26Param,
+    TransformerBlocks27Param,
+    ScaleShiftTableParam,
+    ProjOutParam,
 > {
     /// Create a new node.
     pub fn new(
-        model_1: Model1,
-        model_2: Model2,
-        patchify_proj: PatchifyProj,
-        adaln_single: AdalnSingle,
-        caption_projection: CaptionProjection,
-        transformer_blocks_0: TransformerBlocks0,
-        transformer_blocks_1: TransformerBlocks1,
-        transformer_blocks_2: TransformerBlocks2,
-        transformer_blocks_3: TransformerBlocks3,
-        transformer_blocks_4: TransformerBlocks4,
-        transformer_blocks_5: TransformerBlocks5,
-        transformer_blocks_6: TransformerBlocks6,
-        transformer_blocks_7: TransformerBlocks7,
-        transformer_blocks_8: TransformerBlocks8,
-        transformer_blocks_9: TransformerBlocks9,
-        transformer_blocks_10: TransformerBlocks10,
-        transformer_blocks_11: TransformerBlocks11,
-        transformer_blocks_12: TransformerBlocks12,
-        transformer_blocks_13: TransformerBlocks13,
-        transformer_blocks_14: TransformerBlocks14,
-        transformer_blocks_15: TransformerBlocks15,
-        transformer_blocks_16: TransformerBlocks16,
-        transformer_blocks_17: TransformerBlocks17,
-        transformer_blocks_18: TransformerBlocks18,
-        transformer_blocks_19: TransformerBlocks19,
-        transformer_blocks_20: TransformerBlocks20,
-        transformer_blocks_21: TransformerBlocks21,
-        transformer_blocks_22: TransformerBlocks22,
-        transformer_blocks_23: TransformerBlocks23,
-        transformer_blocks_24: TransformerBlocks24,
-        transformer_blocks_25: TransformerBlocks25,
-        transformer_blocks_26: TransformerBlocks26,
-        transformer_blocks_27: TransformerBlocks27,
-        scale_shift_table: ScaleShiftTable,
-        proj_out: ProjOut,
+        model_1: Model1Param,
+        model_2: Model2Param,
+        patchify_proj: PatchifyProjParam,
+        adaln_single: AdalnSingleParam,
+        caption_projection: CaptionProjectionParam,
+        transformer_blocks_0: TransformerBlocks0Param,
+        transformer_blocks_1: TransformerBlocks1Param,
+        transformer_blocks_2: TransformerBlocks2Param,
+        transformer_blocks_3: TransformerBlocks3Param,
+        transformer_blocks_4: TransformerBlocks4Param,
+        transformer_blocks_5: TransformerBlocks5Param,
+        transformer_blocks_6: TransformerBlocks6Param,
+        transformer_blocks_7: TransformerBlocks7Param,
+        transformer_blocks_8: TransformerBlocks8Param,
+        transformer_blocks_9: TransformerBlocks9Param,
+        transformer_blocks_10: TransformerBlocks10Param,
+        transformer_blocks_11: TransformerBlocks11Param,
+        transformer_blocks_12: TransformerBlocks12Param,
+        transformer_blocks_13: TransformerBlocks13Param,
+        transformer_blocks_14: TransformerBlocks14Param,
+        transformer_blocks_15: TransformerBlocks15Param,
+        transformer_blocks_16: TransformerBlocks16Param,
+        transformer_blocks_17: TransformerBlocks17Param,
+        transformer_blocks_18: TransformerBlocks18Param,
+        transformer_blocks_19: TransformerBlocks19Param,
+        transformer_blocks_20: TransformerBlocks20Param,
+        transformer_blocks_21: TransformerBlocks21Param,
+        transformer_blocks_22: TransformerBlocks22Param,
+        transformer_blocks_23: TransformerBlocks23Param,
+        transformer_blocks_24: TransformerBlocks24Param,
+        transformer_blocks_25: TransformerBlocks25Param,
+        transformer_blocks_26: TransformerBlocks26Param,
+        transformer_blocks_27: TransformerBlocks27Param,
+        scale_shift_table: ScaleShiftTableParam,
+        proj_out: ProjOutParam,
     ) -> Self {
         Self {
             model_1,
@@ -4127,78 +4127,78 @@ impl<
     }
 }
 impl<
-    Model1: crate::nodes::types::Model,
-    Model2: crate::nodes::types::Model,
-    PatchifyProj: crate::nodes::types::Float,
-    AdalnSingle: crate::nodes::types::Float,
-    CaptionProjection: crate::nodes::types::Float,
-    TransformerBlocks0: crate::nodes::types::Float,
-    TransformerBlocks1: crate::nodes::types::Float,
-    TransformerBlocks2: crate::nodes::types::Float,
-    TransformerBlocks3: crate::nodes::types::Float,
-    TransformerBlocks4: crate::nodes::types::Float,
-    TransformerBlocks5: crate::nodes::types::Float,
-    TransformerBlocks6: crate::nodes::types::Float,
-    TransformerBlocks7: crate::nodes::types::Float,
-    TransformerBlocks8: crate::nodes::types::Float,
-    TransformerBlocks9: crate::nodes::types::Float,
-    TransformerBlocks10: crate::nodes::types::Float,
-    TransformerBlocks11: crate::nodes::types::Float,
-    TransformerBlocks12: crate::nodes::types::Float,
-    TransformerBlocks13: crate::nodes::types::Float,
-    TransformerBlocks14: crate::nodes::types::Float,
-    TransformerBlocks15: crate::nodes::types::Float,
-    TransformerBlocks16: crate::nodes::types::Float,
-    TransformerBlocks17: crate::nodes::types::Float,
-    TransformerBlocks18: crate::nodes::types::Float,
-    TransformerBlocks19: crate::nodes::types::Float,
-    TransformerBlocks20: crate::nodes::types::Float,
-    TransformerBlocks21: crate::nodes::types::Float,
-    TransformerBlocks22: crate::nodes::types::Float,
-    TransformerBlocks23: crate::nodes::types::Float,
-    TransformerBlocks24: crate::nodes::types::Float,
-    TransformerBlocks25: crate::nodes::types::Float,
-    TransformerBlocks26: crate::nodes::types::Float,
-    TransformerBlocks27: crate::nodes::types::Float,
-    ScaleShiftTable: crate::nodes::types::Float,
-    ProjOut: crate::nodes::types::Float,
+    Model1Param: crate::nodes::types::Model,
+    Model2Param: crate::nodes::types::Model,
+    PatchifyProjParam: crate::nodes::types::Float,
+    AdalnSingleParam: crate::nodes::types::Float,
+    CaptionProjectionParam: crate::nodes::types::Float,
+    TransformerBlocks0Param: crate::nodes::types::Float,
+    TransformerBlocks1Param: crate::nodes::types::Float,
+    TransformerBlocks2Param: crate::nodes::types::Float,
+    TransformerBlocks3Param: crate::nodes::types::Float,
+    TransformerBlocks4Param: crate::nodes::types::Float,
+    TransformerBlocks5Param: crate::nodes::types::Float,
+    TransformerBlocks6Param: crate::nodes::types::Float,
+    TransformerBlocks7Param: crate::nodes::types::Float,
+    TransformerBlocks8Param: crate::nodes::types::Float,
+    TransformerBlocks9Param: crate::nodes::types::Float,
+    TransformerBlocks10Param: crate::nodes::types::Float,
+    TransformerBlocks11Param: crate::nodes::types::Float,
+    TransformerBlocks12Param: crate::nodes::types::Float,
+    TransformerBlocks13Param: crate::nodes::types::Float,
+    TransformerBlocks14Param: crate::nodes::types::Float,
+    TransformerBlocks15Param: crate::nodes::types::Float,
+    TransformerBlocks16Param: crate::nodes::types::Float,
+    TransformerBlocks17Param: crate::nodes::types::Float,
+    TransformerBlocks18Param: crate::nodes::types::Float,
+    TransformerBlocks19Param: crate::nodes::types::Float,
+    TransformerBlocks20Param: crate::nodes::types::Float,
+    TransformerBlocks21Param: crate::nodes::types::Float,
+    TransformerBlocks22Param: crate::nodes::types::Float,
+    TransformerBlocks23Param: crate::nodes::types::Float,
+    TransformerBlocks24Param: crate::nodes::types::Float,
+    TransformerBlocks25Param: crate::nodes::types::Float,
+    TransformerBlocks26Param: crate::nodes::types::Float,
+    TransformerBlocks27Param: crate::nodes::types::Float,
+    ScaleShiftTableParam: crate::nodes::types::Float,
+    ProjOutParam: crate::nodes::types::Float,
 > crate::nodes::TypedNode
 for ModelMergeLtxv<
-    Model1,
-    Model2,
-    PatchifyProj,
-    AdalnSingle,
-    CaptionProjection,
-    TransformerBlocks0,
-    TransformerBlocks1,
-    TransformerBlocks2,
-    TransformerBlocks3,
-    TransformerBlocks4,
-    TransformerBlocks5,
-    TransformerBlocks6,
-    TransformerBlocks7,
-    TransformerBlocks8,
-    TransformerBlocks9,
-    TransformerBlocks10,
-    TransformerBlocks11,
-    TransformerBlocks12,
-    TransformerBlocks13,
-    TransformerBlocks14,
-    TransformerBlocks15,
-    TransformerBlocks16,
-    TransformerBlocks17,
-    TransformerBlocks18,
-    TransformerBlocks19,
-    TransformerBlocks20,
-    TransformerBlocks21,
-    TransformerBlocks22,
-    TransformerBlocks23,
-    TransformerBlocks24,
-    TransformerBlocks25,
-    TransformerBlocks26,
-    TransformerBlocks27,
-    ScaleShiftTable,
-    ProjOut,
+    Model1Param,
+    Model2Param,
+    PatchifyProjParam,
+    AdalnSingleParam,
+    CaptionProjectionParam,
+    TransformerBlocks0Param,
+    TransformerBlocks1Param,
+    TransformerBlocks2Param,
+    TransformerBlocks3Param,
+    TransformerBlocks4Param,
+    TransformerBlocks5Param,
+    TransformerBlocks6Param,
+    TransformerBlocks7Param,
+    TransformerBlocks8Param,
+    TransformerBlocks9Param,
+    TransformerBlocks10Param,
+    TransformerBlocks11Param,
+    TransformerBlocks12Param,
+    TransformerBlocks13Param,
+    TransformerBlocks14Param,
+    TransformerBlocks15Param,
+    TransformerBlocks16Param,
+    TransformerBlocks17Param,
+    TransformerBlocks18Param,
+    TransformerBlocks19Param,
+    TransformerBlocks20Param,
+    TransformerBlocks21Param,
+    TransformerBlocks22Param,
+    TransformerBlocks23Param,
+    TransformerBlocks24Param,
+    TransformerBlocks25Param,
+    TransformerBlocks26Param,
+    TransformerBlocks27Param,
+    ScaleShiftTableParam,
+    ProjOutParam,
 > {
     type Output = crate::nodes::types::ModelOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
@@ -4371,66 +4371,66 @@ for ModelMergeLtxv<
 ///**ModelMergeMochiPreview**: No description.
 #[derive(Clone)]
 pub struct ModelMergeMochiPreview<
-    Model1: crate::nodes::types::Model,
-    Model2: crate::nodes::types::Model,
-    PosFrequencies: crate::nodes::types::Float,
-    TEmbedder: crate::nodes::types::Float,
-    T5YEmbedder: crate::nodes::types::Float,
-    T5Yproj: crate::nodes::types::Float,
-    Blocks0: crate::nodes::types::Float,
-    Blocks1: crate::nodes::types::Float,
-    Blocks2: crate::nodes::types::Float,
-    Blocks3: crate::nodes::types::Float,
-    Blocks4: crate::nodes::types::Float,
-    Blocks5: crate::nodes::types::Float,
-    Blocks6: crate::nodes::types::Float,
-    Blocks7: crate::nodes::types::Float,
-    Blocks8: crate::nodes::types::Float,
-    Blocks9: crate::nodes::types::Float,
-    Blocks10: crate::nodes::types::Float,
-    Blocks11: crate::nodes::types::Float,
-    Blocks12: crate::nodes::types::Float,
-    Blocks13: crate::nodes::types::Float,
-    Blocks14: crate::nodes::types::Float,
-    Blocks15: crate::nodes::types::Float,
-    Blocks16: crate::nodes::types::Float,
-    Blocks17: crate::nodes::types::Float,
-    Blocks18: crate::nodes::types::Float,
-    Blocks19: crate::nodes::types::Float,
-    Blocks20: crate::nodes::types::Float,
-    Blocks21: crate::nodes::types::Float,
-    Blocks22: crate::nodes::types::Float,
-    Blocks23: crate::nodes::types::Float,
-    Blocks24: crate::nodes::types::Float,
-    Blocks25: crate::nodes::types::Float,
-    Blocks26: crate::nodes::types::Float,
-    Blocks27: crate::nodes::types::Float,
-    Blocks28: crate::nodes::types::Float,
-    Blocks29: crate::nodes::types::Float,
-    Blocks30: crate::nodes::types::Float,
-    Blocks31: crate::nodes::types::Float,
-    Blocks32: crate::nodes::types::Float,
-    Blocks33: crate::nodes::types::Float,
-    Blocks34: crate::nodes::types::Float,
-    Blocks35: crate::nodes::types::Float,
-    Blocks36: crate::nodes::types::Float,
-    Blocks37: crate::nodes::types::Float,
-    Blocks38: crate::nodes::types::Float,
-    Blocks39: crate::nodes::types::Float,
-    Blocks40: crate::nodes::types::Float,
-    Blocks41: crate::nodes::types::Float,
-    Blocks42: crate::nodes::types::Float,
-    Blocks43: crate::nodes::types::Float,
-    Blocks44: crate::nodes::types::Float,
-    Blocks45: crate::nodes::types::Float,
-    Blocks46: crate::nodes::types::Float,
-    Blocks47: crate::nodes::types::Float,
-    FinalLayer: crate::nodes::types::Float,
+    Model1Param: crate::nodes::types::Model,
+    Model2Param: crate::nodes::types::Model,
+    PosFrequenciesParam: crate::nodes::types::Float,
+    TEmbedderParam: crate::nodes::types::Float,
+    T5YEmbedderParam: crate::nodes::types::Float,
+    T5YprojParam: crate::nodes::types::Float,
+    Blocks0Param: crate::nodes::types::Float,
+    Blocks1Param: crate::nodes::types::Float,
+    Blocks2Param: crate::nodes::types::Float,
+    Blocks3Param: crate::nodes::types::Float,
+    Blocks4Param: crate::nodes::types::Float,
+    Blocks5Param: crate::nodes::types::Float,
+    Blocks6Param: crate::nodes::types::Float,
+    Blocks7Param: crate::nodes::types::Float,
+    Blocks8Param: crate::nodes::types::Float,
+    Blocks9Param: crate::nodes::types::Float,
+    Blocks10Param: crate::nodes::types::Float,
+    Blocks11Param: crate::nodes::types::Float,
+    Blocks12Param: crate::nodes::types::Float,
+    Blocks13Param: crate::nodes::types::Float,
+    Blocks14Param: crate::nodes::types::Float,
+    Blocks15Param: crate::nodes::types::Float,
+    Blocks16Param: crate::nodes::types::Float,
+    Blocks17Param: crate::nodes::types::Float,
+    Blocks18Param: crate::nodes::types::Float,
+    Blocks19Param: crate::nodes::types::Float,
+    Blocks20Param: crate::nodes::types::Float,
+    Blocks21Param: crate::nodes::types::Float,
+    Blocks22Param: crate::nodes::types::Float,
+    Blocks23Param: crate::nodes::types::Float,
+    Blocks24Param: crate::nodes::types::Float,
+    Blocks25Param: crate::nodes::types::Float,
+    Blocks26Param: crate::nodes::types::Float,
+    Blocks27Param: crate::nodes::types::Float,
+    Blocks28Param: crate::nodes::types::Float,
+    Blocks29Param: crate::nodes::types::Float,
+    Blocks30Param: crate::nodes::types::Float,
+    Blocks31Param: crate::nodes::types::Float,
+    Blocks32Param: crate::nodes::types::Float,
+    Blocks33Param: crate::nodes::types::Float,
+    Blocks34Param: crate::nodes::types::Float,
+    Blocks35Param: crate::nodes::types::Float,
+    Blocks36Param: crate::nodes::types::Float,
+    Blocks37Param: crate::nodes::types::Float,
+    Blocks38Param: crate::nodes::types::Float,
+    Blocks39Param: crate::nodes::types::Float,
+    Blocks40Param: crate::nodes::types::Float,
+    Blocks41Param: crate::nodes::types::Float,
+    Blocks42Param: crate::nodes::types::Float,
+    Blocks43Param: crate::nodes::types::Float,
+    Blocks44Param: crate::nodes::types::Float,
+    Blocks45Param: crate::nodes::types::Float,
+    Blocks46Param: crate::nodes::types::Float,
+    Blocks47Param: crate::nodes::types::Float,
+    FinalLayerParam: crate::nodes::types::Float,
 > {
     ///No documentation.
-    pub model_1: Model1,
+    pub model_1: Model1Param,
     ///No documentation.
-    pub model_2: Model2,
+    pub model_2: Model2Param,
     /**No documentation.
 
 **Metadata**:
@@ -4439,7 +4439,7 @@ pub struct ModelMergeMochiPreview<
   - Min: 0
   - Step: 0.01
 */
-    pub pos_frequencies: PosFrequencies,
+    pub pos_frequencies: PosFrequenciesParam,
     /**No documentation.
 
 **Metadata**:
@@ -4448,7 +4448,7 @@ pub struct ModelMergeMochiPreview<
   - Min: 0
   - Step: 0.01
 */
-    pub t_embedder: TEmbedder,
+    pub t_embedder: TEmbedderParam,
     /**No documentation.
 
 **Metadata**:
@@ -4457,7 +4457,7 @@ pub struct ModelMergeMochiPreview<
   - Min: 0
   - Step: 0.01
 */
-    pub t_5_y_embedder: T5YEmbedder,
+    pub t_5_y_embedder: T5YEmbedderParam,
     /**No documentation.
 
 **Metadata**:
@@ -4466,7 +4466,7 @@ pub struct ModelMergeMochiPreview<
   - Min: 0
   - Step: 0.01
 */
-    pub t_5_yproj: T5Yproj,
+    pub t_5_yproj: T5YprojParam,
     /**No documentation.
 
 **Metadata**:
@@ -4475,7 +4475,7 @@ pub struct ModelMergeMochiPreview<
   - Min: 0
   - Step: 0.01
 */
-    pub blocks_0: Blocks0,
+    pub blocks_0: Blocks0Param,
     /**No documentation.
 
 **Metadata**:
@@ -4484,7 +4484,7 @@ pub struct ModelMergeMochiPreview<
   - Min: 0
   - Step: 0.01
 */
-    pub blocks_1: Blocks1,
+    pub blocks_1: Blocks1Param,
     /**No documentation.
 
 **Metadata**:
@@ -4493,7 +4493,7 @@ pub struct ModelMergeMochiPreview<
   - Min: 0
   - Step: 0.01
 */
-    pub blocks_2: Blocks2,
+    pub blocks_2: Blocks2Param,
     /**No documentation.
 
 **Metadata**:
@@ -4502,7 +4502,7 @@ pub struct ModelMergeMochiPreview<
   - Min: 0
   - Step: 0.01
 */
-    pub blocks_3: Blocks3,
+    pub blocks_3: Blocks3Param,
     /**No documentation.
 
 **Metadata**:
@@ -4511,7 +4511,7 @@ pub struct ModelMergeMochiPreview<
   - Min: 0
   - Step: 0.01
 */
-    pub blocks_4: Blocks4,
+    pub blocks_4: Blocks4Param,
     /**No documentation.
 
 **Metadata**:
@@ -4520,7 +4520,7 @@ pub struct ModelMergeMochiPreview<
   - Min: 0
   - Step: 0.01
 */
-    pub blocks_5: Blocks5,
+    pub blocks_5: Blocks5Param,
     /**No documentation.
 
 **Metadata**:
@@ -4529,7 +4529,7 @@ pub struct ModelMergeMochiPreview<
   - Min: 0
   - Step: 0.01
 */
-    pub blocks_6: Blocks6,
+    pub blocks_6: Blocks6Param,
     /**No documentation.
 
 **Metadata**:
@@ -4538,7 +4538,7 @@ pub struct ModelMergeMochiPreview<
   - Min: 0
   - Step: 0.01
 */
-    pub blocks_7: Blocks7,
+    pub blocks_7: Blocks7Param,
     /**No documentation.
 
 **Metadata**:
@@ -4547,7 +4547,7 @@ pub struct ModelMergeMochiPreview<
   - Min: 0
   - Step: 0.01
 */
-    pub blocks_8: Blocks8,
+    pub blocks_8: Blocks8Param,
     /**No documentation.
 
 **Metadata**:
@@ -4556,7 +4556,7 @@ pub struct ModelMergeMochiPreview<
   - Min: 0
   - Step: 0.01
 */
-    pub blocks_9: Blocks9,
+    pub blocks_9: Blocks9Param,
     /**No documentation.
 
 **Metadata**:
@@ -4565,7 +4565,7 @@ pub struct ModelMergeMochiPreview<
   - Min: 0
   - Step: 0.01
 */
-    pub blocks_10: Blocks10,
+    pub blocks_10: Blocks10Param,
     /**No documentation.
 
 **Metadata**:
@@ -4574,7 +4574,7 @@ pub struct ModelMergeMochiPreview<
   - Min: 0
   - Step: 0.01
 */
-    pub blocks_11: Blocks11,
+    pub blocks_11: Blocks11Param,
     /**No documentation.
 
 **Metadata**:
@@ -4583,7 +4583,7 @@ pub struct ModelMergeMochiPreview<
   - Min: 0
   - Step: 0.01
 */
-    pub blocks_12: Blocks12,
+    pub blocks_12: Blocks12Param,
     /**No documentation.
 
 **Metadata**:
@@ -4592,7 +4592,7 @@ pub struct ModelMergeMochiPreview<
   - Min: 0
   - Step: 0.01
 */
-    pub blocks_13: Blocks13,
+    pub blocks_13: Blocks13Param,
     /**No documentation.
 
 **Metadata**:
@@ -4601,7 +4601,7 @@ pub struct ModelMergeMochiPreview<
   - Min: 0
   - Step: 0.01
 */
-    pub blocks_14: Blocks14,
+    pub blocks_14: Blocks14Param,
     /**No documentation.
 
 **Metadata**:
@@ -4610,7 +4610,7 @@ pub struct ModelMergeMochiPreview<
   - Min: 0
   - Step: 0.01
 */
-    pub blocks_15: Blocks15,
+    pub blocks_15: Blocks15Param,
     /**No documentation.
 
 **Metadata**:
@@ -4619,7 +4619,7 @@ pub struct ModelMergeMochiPreview<
   - Min: 0
   - Step: 0.01
 */
-    pub blocks_16: Blocks16,
+    pub blocks_16: Blocks16Param,
     /**No documentation.
 
 **Metadata**:
@@ -4628,7 +4628,7 @@ pub struct ModelMergeMochiPreview<
   - Min: 0
   - Step: 0.01
 */
-    pub blocks_17: Blocks17,
+    pub blocks_17: Blocks17Param,
     /**No documentation.
 
 **Metadata**:
@@ -4637,7 +4637,7 @@ pub struct ModelMergeMochiPreview<
   - Min: 0
   - Step: 0.01
 */
-    pub blocks_18: Blocks18,
+    pub blocks_18: Blocks18Param,
     /**No documentation.
 
 **Metadata**:
@@ -4646,7 +4646,7 @@ pub struct ModelMergeMochiPreview<
   - Min: 0
   - Step: 0.01
 */
-    pub blocks_19: Blocks19,
+    pub blocks_19: Blocks19Param,
     /**No documentation.
 
 **Metadata**:
@@ -4655,7 +4655,7 @@ pub struct ModelMergeMochiPreview<
   - Min: 0
   - Step: 0.01
 */
-    pub blocks_20: Blocks20,
+    pub blocks_20: Blocks20Param,
     /**No documentation.
 
 **Metadata**:
@@ -4664,7 +4664,7 @@ pub struct ModelMergeMochiPreview<
   - Min: 0
   - Step: 0.01
 */
-    pub blocks_21: Blocks21,
+    pub blocks_21: Blocks21Param,
     /**No documentation.
 
 **Metadata**:
@@ -4673,7 +4673,7 @@ pub struct ModelMergeMochiPreview<
   - Min: 0
   - Step: 0.01
 */
-    pub blocks_22: Blocks22,
+    pub blocks_22: Blocks22Param,
     /**No documentation.
 
 **Metadata**:
@@ -4682,7 +4682,7 @@ pub struct ModelMergeMochiPreview<
   - Min: 0
   - Step: 0.01
 */
-    pub blocks_23: Blocks23,
+    pub blocks_23: Blocks23Param,
     /**No documentation.
 
 **Metadata**:
@@ -4691,7 +4691,7 @@ pub struct ModelMergeMochiPreview<
   - Min: 0
   - Step: 0.01
 */
-    pub blocks_24: Blocks24,
+    pub blocks_24: Blocks24Param,
     /**No documentation.
 
 **Metadata**:
@@ -4700,7 +4700,7 @@ pub struct ModelMergeMochiPreview<
   - Min: 0
   - Step: 0.01
 */
-    pub blocks_25: Blocks25,
+    pub blocks_25: Blocks25Param,
     /**No documentation.
 
 **Metadata**:
@@ -4709,7 +4709,7 @@ pub struct ModelMergeMochiPreview<
   - Min: 0
   - Step: 0.01
 */
-    pub blocks_26: Blocks26,
+    pub blocks_26: Blocks26Param,
     /**No documentation.
 
 **Metadata**:
@@ -4718,7 +4718,7 @@ pub struct ModelMergeMochiPreview<
   - Min: 0
   - Step: 0.01
 */
-    pub blocks_27: Blocks27,
+    pub blocks_27: Blocks27Param,
     /**No documentation.
 
 **Metadata**:
@@ -4727,7 +4727,7 @@ pub struct ModelMergeMochiPreview<
   - Min: 0
   - Step: 0.01
 */
-    pub blocks_28: Blocks28,
+    pub blocks_28: Blocks28Param,
     /**No documentation.
 
 **Metadata**:
@@ -4736,7 +4736,7 @@ pub struct ModelMergeMochiPreview<
   - Min: 0
   - Step: 0.01
 */
-    pub blocks_29: Blocks29,
+    pub blocks_29: Blocks29Param,
     /**No documentation.
 
 **Metadata**:
@@ -4745,7 +4745,7 @@ pub struct ModelMergeMochiPreview<
   - Min: 0
   - Step: 0.01
 */
-    pub blocks_30: Blocks30,
+    pub blocks_30: Blocks30Param,
     /**No documentation.
 
 **Metadata**:
@@ -4754,7 +4754,7 @@ pub struct ModelMergeMochiPreview<
   - Min: 0
   - Step: 0.01
 */
-    pub blocks_31: Blocks31,
+    pub blocks_31: Blocks31Param,
     /**No documentation.
 
 **Metadata**:
@@ -4763,7 +4763,7 @@ pub struct ModelMergeMochiPreview<
   - Min: 0
   - Step: 0.01
 */
-    pub blocks_32: Blocks32,
+    pub blocks_32: Blocks32Param,
     /**No documentation.
 
 **Metadata**:
@@ -4772,7 +4772,7 @@ pub struct ModelMergeMochiPreview<
   - Min: 0
   - Step: 0.01
 */
-    pub blocks_33: Blocks33,
+    pub blocks_33: Blocks33Param,
     /**No documentation.
 
 **Metadata**:
@@ -4781,7 +4781,7 @@ pub struct ModelMergeMochiPreview<
   - Min: 0
   - Step: 0.01
 */
-    pub blocks_34: Blocks34,
+    pub blocks_34: Blocks34Param,
     /**No documentation.
 
 **Metadata**:
@@ -4790,7 +4790,7 @@ pub struct ModelMergeMochiPreview<
   - Min: 0
   - Step: 0.01
 */
-    pub blocks_35: Blocks35,
+    pub blocks_35: Blocks35Param,
     /**No documentation.
 
 **Metadata**:
@@ -4799,7 +4799,7 @@ pub struct ModelMergeMochiPreview<
   - Min: 0
   - Step: 0.01
 */
-    pub blocks_36: Blocks36,
+    pub blocks_36: Blocks36Param,
     /**No documentation.
 
 **Metadata**:
@@ -4808,7 +4808,7 @@ pub struct ModelMergeMochiPreview<
   - Min: 0
   - Step: 0.01
 */
-    pub blocks_37: Blocks37,
+    pub blocks_37: Blocks37Param,
     /**No documentation.
 
 **Metadata**:
@@ -4817,7 +4817,7 @@ pub struct ModelMergeMochiPreview<
   - Min: 0
   - Step: 0.01
 */
-    pub blocks_38: Blocks38,
+    pub blocks_38: Blocks38Param,
     /**No documentation.
 
 **Metadata**:
@@ -4826,7 +4826,7 @@ pub struct ModelMergeMochiPreview<
   - Min: 0
   - Step: 0.01
 */
-    pub blocks_39: Blocks39,
+    pub blocks_39: Blocks39Param,
     /**No documentation.
 
 **Metadata**:
@@ -4835,7 +4835,7 @@ pub struct ModelMergeMochiPreview<
   - Min: 0
   - Step: 0.01
 */
-    pub blocks_40: Blocks40,
+    pub blocks_40: Blocks40Param,
     /**No documentation.
 
 **Metadata**:
@@ -4844,7 +4844,7 @@ pub struct ModelMergeMochiPreview<
   - Min: 0
   - Step: 0.01
 */
-    pub blocks_41: Blocks41,
+    pub blocks_41: Blocks41Param,
     /**No documentation.
 
 **Metadata**:
@@ -4853,7 +4853,7 @@ pub struct ModelMergeMochiPreview<
   - Min: 0
   - Step: 0.01
 */
-    pub blocks_42: Blocks42,
+    pub blocks_42: Blocks42Param,
     /**No documentation.
 
 **Metadata**:
@@ -4862,7 +4862,7 @@ pub struct ModelMergeMochiPreview<
   - Min: 0
   - Step: 0.01
 */
-    pub blocks_43: Blocks43,
+    pub blocks_43: Blocks43Param,
     /**No documentation.
 
 **Metadata**:
@@ -4871,7 +4871,7 @@ pub struct ModelMergeMochiPreview<
   - Min: 0
   - Step: 0.01
 */
-    pub blocks_44: Blocks44,
+    pub blocks_44: Blocks44Param,
     /**No documentation.
 
 **Metadata**:
@@ -4880,7 +4880,7 @@ pub struct ModelMergeMochiPreview<
   - Min: 0
   - Step: 0.01
 */
-    pub blocks_45: Blocks45,
+    pub blocks_45: Blocks45Param,
     /**No documentation.
 
 **Metadata**:
@@ -4889,7 +4889,7 @@ pub struct ModelMergeMochiPreview<
   - Min: 0
   - Step: 0.01
 */
-    pub blocks_46: Blocks46,
+    pub blocks_46: Blocks46Param,
     /**No documentation.
 
 **Metadata**:
@@ -4898,7 +4898,7 @@ pub struct ModelMergeMochiPreview<
   - Min: 0
   - Step: 0.01
 */
-    pub blocks_47: Blocks47,
+    pub blocks_47: Blocks47Param,
     /**No documentation.
 
 **Metadata**:
@@ -4907,178 +4907,178 @@ pub struct ModelMergeMochiPreview<
   - Min: 0
   - Step: 0.01
 */
-    pub final_layer: FinalLayer,
+    pub final_layer: FinalLayerParam,
 }
 impl<
-    Model1: crate::nodes::types::Model,
-    Model2: crate::nodes::types::Model,
-    PosFrequencies: crate::nodes::types::Float,
-    TEmbedder: crate::nodes::types::Float,
-    T5YEmbedder: crate::nodes::types::Float,
-    T5Yproj: crate::nodes::types::Float,
-    Blocks0: crate::nodes::types::Float,
-    Blocks1: crate::nodes::types::Float,
-    Blocks2: crate::nodes::types::Float,
-    Blocks3: crate::nodes::types::Float,
-    Blocks4: crate::nodes::types::Float,
-    Blocks5: crate::nodes::types::Float,
-    Blocks6: crate::nodes::types::Float,
-    Blocks7: crate::nodes::types::Float,
-    Blocks8: crate::nodes::types::Float,
-    Blocks9: crate::nodes::types::Float,
-    Blocks10: crate::nodes::types::Float,
-    Blocks11: crate::nodes::types::Float,
-    Blocks12: crate::nodes::types::Float,
-    Blocks13: crate::nodes::types::Float,
-    Blocks14: crate::nodes::types::Float,
-    Blocks15: crate::nodes::types::Float,
-    Blocks16: crate::nodes::types::Float,
-    Blocks17: crate::nodes::types::Float,
-    Blocks18: crate::nodes::types::Float,
-    Blocks19: crate::nodes::types::Float,
-    Blocks20: crate::nodes::types::Float,
-    Blocks21: crate::nodes::types::Float,
-    Blocks22: crate::nodes::types::Float,
-    Blocks23: crate::nodes::types::Float,
-    Blocks24: crate::nodes::types::Float,
-    Blocks25: crate::nodes::types::Float,
-    Blocks26: crate::nodes::types::Float,
-    Blocks27: crate::nodes::types::Float,
-    Blocks28: crate::nodes::types::Float,
-    Blocks29: crate::nodes::types::Float,
-    Blocks30: crate::nodes::types::Float,
-    Blocks31: crate::nodes::types::Float,
-    Blocks32: crate::nodes::types::Float,
-    Blocks33: crate::nodes::types::Float,
-    Blocks34: crate::nodes::types::Float,
-    Blocks35: crate::nodes::types::Float,
-    Blocks36: crate::nodes::types::Float,
-    Blocks37: crate::nodes::types::Float,
-    Blocks38: crate::nodes::types::Float,
-    Blocks39: crate::nodes::types::Float,
-    Blocks40: crate::nodes::types::Float,
-    Blocks41: crate::nodes::types::Float,
-    Blocks42: crate::nodes::types::Float,
-    Blocks43: crate::nodes::types::Float,
-    Blocks44: crate::nodes::types::Float,
-    Blocks45: crate::nodes::types::Float,
-    Blocks46: crate::nodes::types::Float,
-    Blocks47: crate::nodes::types::Float,
-    FinalLayer: crate::nodes::types::Float,
+    Model1Param: crate::nodes::types::Model,
+    Model2Param: crate::nodes::types::Model,
+    PosFrequenciesParam: crate::nodes::types::Float,
+    TEmbedderParam: crate::nodes::types::Float,
+    T5YEmbedderParam: crate::nodes::types::Float,
+    T5YprojParam: crate::nodes::types::Float,
+    Blocks0Param: crate::nodes::types::Float,
+    Blocks1Param: crate::nodes::types::Float,
+    Blocks2Param: crate::nodes::types::Float,
+    Blocks3Param: crate::nodes::types::Float,
+    Blocks4Param: crate::nodes::types::Float,
+    Blocks5Param: crate::nodes::types::Float,
+    Blocks6Param: crate::nodes::types::Float,
+    Blocks7Param: crate::nodes::types::Float,
+    Blocks8Param: crate::nodes::types::Float,
+    Blocks9Param: crate::nodes::types::Float,
+    Blocks10Param: crate::nodes::types::Float,
+    Blocks11Param: crate::nodes::types::Float,
+    Blocks12Param: crate::nodes::types::Float,
+    Blocks13Param: crate::nodes::types::Float,
+    Blocks14Param: crate::nodes::types::Float,
+    Blocks15Param: crate::nodes::types::Float,
+    Blocks16Param: crate::nodes::types::Float,
+    Blocks17Param: crate::nodes::types::Float,
+    Blocks18Param: crate::nodes::types::Float,
+    Blocks19Param: crate::nodes::types::Float,
+    Blocks20Param: crate::nodes::types::Float,
+    Blocks21Param: crate::nodes::types::Float,
+    Blocks22Param: crate::nodes::types::Float,
+    Blocks23Param: crate::nodes::types::Float,
+    Blocks24Param: crate::nodes::types::Float,
+    Blocks25Param: crate::nodes::types::Float,
+    Blocks26Param: crate::nodes::types::Float,
+    Blocks27Param: crate::nodes::types::Float,
+    Blocks28Param: crate::nodes::types::Float,
+    Blocks29Param: crate::nodes::types::Float,
+    Blocks30Param: crate::nodes::types::Float,
+    Blocks31Param: crate::nodes::types::Float,
+    Blocks32Param: crate::nodes::types::Float,
+    Blocks33Param: crate::nodes::types::Float,
+    Blocks34Param: crate::nodes::types::Float,
+    Blocks35Param: crate::nodes::types::Float,
+    Blocks36Param: crate::nodes::types::Float,
+    Blocks37Param: crate::nodes::types::Float,
+    Blocks38Param: crate::nodes::types::Float,
+    Blocks39Param: crate::nodes::types::Float,
+    Blocks40Param: crate::nodes::types::Float,
+    Blocks41Param: crate::nodes::types::Float,
+    Blocks42Param: crate::nodes::types::Float,
+    Blocks43Param: crate::nodes::types::Float,
+    Blocks44Param: crate::nodes::types::Float,
+    Blocks45Param: crate::nodes::types::Float,
+    Blocks46Param: crate::nodes::types::Float,
+    Blocks47Param: crate::nodes::types::Float,
+    FinalLayerParam: crate::nodes::types::Float,
 > ModelMergeMochiPreview<
-    Model1,
-    Model2,
-    PosFrequencies,
-    TEmbedder,
-    T5YEmbedder,
-    T5Yproj,
-    Blocks0,
-    Blocks1,
-    Blocks2,
-    Blocks3,
-    Blocks4,
-    Blocks5,
-    Blocks6,
-    Blocks7,
-    Blocks8,
-    Blocks9,
-    Blocks10,
-    Blocks11,
-    Blocks12,
-    Blocks13,
-    Blocks14,
-    Blocks15,
-    Blocks16,
-    Blocks17,
-    Blocks18,
-    Blocks19,
-    Blocks20,
-    Blocks21,
-    Blocks22,
-    Blocks23,
-    Blocks24,
-    Blocks25,
-    Blocks26,
-    Blocks27,
-    Blocks28,
-    Blocks29,
-    Blocks30,
-    Blocks31,
-    Blocks32,
-    Blocks33,
-    Blocks34,
-    Blocks35,
-    Blocks36,
-    Blocks37,
-    Blocks38,
-    Blocks39,
-    Blocks40,
-    Blocks41,
-    Blocks42,
-    Blocks43,
-    Blocks44,
-    Blocks45,
-    Blocks46,
-    Blocks47,
-    FinalLayer,
+    Model1Param,
+    Model2Param,
+    PosFrequenciesParam,
+    TEmbedderParam,
+    T5YEmbedderParam,
+    T5YprojParam,
+    Blocks0Param,
+    Blocks1Param,
+    Blocks2Param,
+    Blocks3Param,
+    Blocks4Param,
+    Blocks5Param,
+    Blocks6Param,
+    Blocks7Param,
+    Blocks8Param,
+    Blocks9Param,
+    Blocks10Param,
+    Blocks11Param,
+    Blocks12Param,
+    Blocks13Param,
+    Blocks14Param,
+    Blocks15Param,
+    Blocks16Param,
+    Blocks17Param,
+    Blocks18Param,
+    Blocks19Param,
+    Blocks20Param,
+    Blocks21Param,
+    Blocks22Param,
+    Blocks23Param,
+    Blocks24Param,
+    Blocks25Param,
+    Blocks26Param,
+    Blocks27Param,
+    Blocks28Param,
+    Blocks29Param,
+    Blocks30Param,
+    Blocks31Param,
+    Blocks32Param,
+    Blocks33Param,
+    Blocks34Param,
+    Blocks35Param,
+    Blocks36Param,
+    Blocks37Param,
+    Blocks38Param,
+    Blocks39Param,
+    Blocks40Param,
+    Blocks41Param,
+    Blocks42Param,
+    Blocks43Param,
+    Blocks44Param,
+    Blocks45Param,
+    Blocks46Param,
+    Blocks47Param,
+    FinalLayerParam,
 > {
     /// Create a new node.
     pub fn new(
-        model_1: Model1,
-        model_2: Model2,
-        pos_frequencies: PosFrequencies,
-        t_embedder: TEmbedder,
-        t_5_y_embedder: T5YEmbedder,
-        t_5_yproj: T5Yproj,
-        blocks_0: Blocks0,
-        blocks_1: Blocks1,
-        blocks_2: Blocks2,
-        blocks_3: Blocks3,
-        blocks_4: Blocks4,
-        blocks_5: Blocks5,
-        blocks_6: Blocks6,
-        blocks_7: Blocks7,
-        blocks_8: Blocks8,
-        blocks_9: Blocks9,
-        blocks_10: Blocks10,
-        blocks_11: Blocks11,
-        blocks_12: Blocks12,
-        blocks_13: Blocks13,
-        blocks_14: Blocks14,
-        blocks_15: Blocks15,
-        blocks_16: Blocks16,
-        blocks_17: Blocks17,
-        blocks_18: Blocks18,
-        blocks_19: Blocks19,
-        blocks_20: Blocks20,
-        blocks_21: Blocks21,
-        blocks_22: Blocks22,
-        blocks_23: Blocks23,
-        blocks_24: Blocks24,
-        blocks_25: Blocks25,
-        blocks_26: Blocks26,
-        blocks_27: Blocks27,
-        blocks_28: Blocks28,
-        blocks_29: Blocks29,
-        blocks_30: Blocks30,
-        blocks_31: Blocks31,
-        blocks_32: Blocks32,
-        blocks_33: Blocks33,
-        blocks_34: Blocks34,
-        blocks_35: Blocks35,
-        blocks_36: Blocks36,
-        blocks_37: Blocks37,
-        blocks_38: Blocks38,
-        blocks_39: Blocks39,
-        blocks_40: Blocks40,
-        blocks_41: Blocks41,
-        blocks_42: Blocks42,
-        blocks_43: Blocks43,
-        blocks_44: Blocks44,
-        blocks_45: Blocks45,
-        blocks_46: Blocks46,
-        blocks_47: Blocks47,
-        final_layer: FinalLayer,
+        model_1: Model1Param,
+        model_2: Model2Param,
+        pos_frequencies: PosFrequenciesParam,
+        t_embedder: TEmbedderParam,
+        t_5_y_embedder: T5YEmbedderParam,
+        t_5_yproj: T5YprojParam,
+        blocks_0: Blocks0Param,
+        blocks_1: Blocks1Param,
+        blocks_2: Blocks2Param,
+        blocks_3: Blocks3Param,
+        blocks_4: Blocks4Param,
+        blocks_5: Blocks5Param,
+        blocks_6: Blocks6Param,
+        blocks_7: Blocks7Param,
+        blocks_8: Blocks8Param,
+        blocks_9: Blocks9Param,
+        blocks_10: Blocks10Param,
+        blocks_11: Blocks11Param,
+        blocks_12: Blocks12Param,
+        blocks_13: Blocks13Param,
+        blocks_14: Blocks14Param,
+        blocks_15: Blocks15Param,
+        blocks_16: Blocks16Param,
+        blocks_17: Blocks17Param,
+        blocks_18: Blocks18Param,
+        blocks_19: Blocks19Param,
+        blocks_20: Blocks20Param,
+        blocks_21: Blocks21Param,
+        blocks_22: Blocks22Param,
+        blocks_23: Blocks23Param,
+        blocks_24: Blocks24Param,
+        blocks_25: Blocks25Param,
+        blocks_26: Blocks26Param,
+        blocks_27: Blocks27Param,
+        blocks_28: Blocks28Param,
+        blocks_29: Blocks29Param,
+        blocks_30: Blocks30Param,
+        blocks_31: Blocks31Param,
+        blocks_32: Blocks32Param,
+        blocks_33: Blocks33Param,
+        blocks_34: Blocks34Param,
+        blocks_35: Blocks35Param,
+        blocks_36: Blocks36Param,
+        blocks_37: Blocks37Param,
+        blocks_38: Blocks38Param,
+        blocks_39: Blocks39Param,
+        blocks_40: Blocks40Param,
+        blocks_41: Blocks41Param,
+        blocks_42: Blocks42Param,
+        blocks_43: Blocks43Param,
+        blocks_44: Blocks44Param,
+        blocks_45: Blocks45Param,
+        blocks_46: Blocks46Param,
+        blocks_47: Blocks47Param,
+        final_layer: FinalLayerParam,
     ) -> Self {
         Self {
             model_1,
@@ -5140,118 +5140,118 @@ impl<
     }
 }
 impl<
-    Model1: crate::nodes::types::Model,
-    Model2: crate::nodes::types::Model,
-    PosFrequencies: crate::nodes::types::Float,
-    TEmbedder: crate::nodes::types::Float,
-    T5YEmbedder: crate::nodes::types::Float,
-    T5Yproj: crate::nodes::types::Float,
-    Blocks0: crate::nodes::types::Float,
-    Blocks1: crate::nodes::types::Float,
-    Blocks2: crate::nodes::types::Float,
-    Blocks3: crate::nodes::types::Float,
-    Blocks4: crate::nodes::types::Float,
-    Blocks5: crate::nodes::types::Float,
-    Blocks6: crate::nodes::types::Float,
-    Blocks7: crate::nodes::types::Float,
-    Blocks8: crate::nodes::types::Float,
-    Blocks9: crate::nodes::types::Float,
-    Blocks10: crate::nodes::types::Float,
-    Blocks11: crate::nodes::types::Float,
-    Blocks12: crate::nodes::types::Float,
-    Blocks13: crate::nodes::types::Float,
-    Blocks14: crate::nodes::types::Float,
-    Blocks15: crate::nodes::types::Float,
-    Blocks16: crate::nodes::types::Float,
-    Blocks17: crate::nodes::types::Float,
-    Blocks18: crate::nodes::types::Float,
-    Blocks19: crate::nodes::types::Float,
-    Blocks20: crate::nodes::types::Float,
-    Blocks21: crate::nodes::types::Float,
-    Blocks22: crate::nodes::types::Float,
-    Blocks23: crate::nodes::types::Float,
-    Blocks24: crate::nodes::types::Float,
-    Blocks25: crate::nodes::types::Float,
-    Blocks26: crate::nodes::types::Float,
-    Blocks27: crate::nodes::types::Float,
-    Blocks28: crate::nodes::types::Float,
-    Blocks29: crate::nodes::types::Float,
-    Blocks30: crate::nodes::types::Float,
-    Blocks31: crate::nodes::types::Float,
-    Blocks32: crate::nodes::types::Float,
-    Blocks33: crate::nodes::types::Float,
-    Blocks34: crate::nodes::types::Float,
-    Blocks35: crate::nodes::types::Float,
-    Blocks36: crate::nodes::types::Float,
-    Blocks37: crate::nodes::types::Float,
-    Blocks38: crate::nodes::types::Float,
-    Blocks39: crate::nodes::types::Float,
-    Blocks40: crate::nodes::types::Float,
-    Blocks41: crate::nodes::types::Float,
-    Blocks42: crate::nodes::types::Float,
-    Blocks43: crate::nodes::types::Float,
-    Blocks44: crate::nodes::types::Float,
-    Blocks45: crate::nodes::types::Float,
-    Blocks46: crate::nodes::types::Float,
-    Blocks47: crate::nodes::types::Float,
-    FinalLayer: crate::nodes::types::Float,
+    Model1Param: crate::nodes::types::Model,
+    Model2Param: crate::nodes::types::Model,
+    PosFrequenciesParam: crate::nodes::types::Float,
+    TEmbedderParam: crate::nodes::types::Float,
+    T5YEmbedderParam: crate::nodes::types::Float,
+    T5YprojParam: crate::nodes::types::Float,
+    Blocks0Param: crate::nodes::types::Float,
+    Blocks1Param: crate::nodes::types::Float,
+    Blocks2Param: crate::nodes::types::Float,
+    Blocks3Param: crate::nodes::types::Float,
+    Blocks4Param: crate::nodes::types::Float,
+    Blocks5Param: crate::nodes::types::Float,
+    Blocks6Param: crate::nodes::types::Float,
+    Blocks7Param: crate::nodes::types::Float,
+    Blocks8Param: crate::nodes::types::Float,
+    Blocks9Param: crate::nodes::types::Float,
+    Blocks10Param: crate::nodes::types::Float,
+    Blocks11Param: crate::nodes::types::Float,
+    Blocks12Param: crate::nodes::types::Float,
+    Blocks13Param: crate::nodes::types::Float,
+    Blocks14Param: crate::nodes::types::Float,
+    Blocks15Param: crate::nodes::types::Float,
+    Blocks16Param: crate::nodes::types::Float,
+    Blocks17Param: crate::nodes::types::Float,
+    Blocks18Param: crate::nodes::types::Float,
+    Blocks19Param: crate::nodes::types::Float,
+    Blocks20Param: crate::nodes::types::Float,
+    Blocks21Param: crate::nodes::types::Float,
+    Blocks22Param: crate::nodes::types::Float,
+    Blocks23Param: crate::nodes::types::Float,
+    Blocks24Param: crate::nodes::types::Float,
+    Blocks25Param: crate::nodes::types::Float,
+    Blocks26Param: crate::nodes::types::Float,
+    Blocks27Param: crate::nodes::types::Float,
+    Blocks28Param: crate::nodes::types::Float,
+    Blocks29Param: crate::nodes::types::Float,
+    Blocks30Param: crate::nodes::types::Float,
+    Blocks31Param: crate::nodes::types::Float,
+    Blocks32Param: crate::nodes::types::Float,
+    Blocks33Param: crate::nodes::types::Float,
+    Blocks34Param: crate::nodes::types::Float,
+    Blocks35Param: crate::nodes::types::Float,
+    Blocks36Param: crate::nodes::types::Float,
+    Blocks37Param: crate::nodes::types::Float,
+    Blocks38Param: crate::nodes::types::Float,
+    Blocks39Param: crate::nodes::types::Float,
+    Blocks40Param: crate::nodes::types::Float,
+    Blocks41Param: crate::nodes::types::Float,
+    Blocks42Param: crate::nodes::types::Float,
+    Blocks43Param: crate::nodes::types::Float,
+    Blocks44Param: crate::nodes::types::Float,
+    Blocks45Param: crate::nodes::types::Float,
+    Blocks46Param: crate::nodes::types::Float,
+    Blocks47Param: crate::nodes::types::Float,
+    FinalLayerParam: crate::nodes::types::Float,
 > crate::nodes::TypedNode
 for ModelMergeMochiPreview<
-    Model1,
-    Model2,
-    PosFrequencies,
-    TEmbedder,
-    T5YEmbedder,
-    T5Yproj,
-    Blocks0,
-    Blocks1,
-    Blocks2,
-    Blocks3,
-    Blocks4,
-    Blocks5,
-    Blocks6,
-    Blocks7,
-    Blocks8,
-    Blocks9,
-    Blocks10,
-    Blocks11,
-    Blocks12,
-    Blocks13,
-    Blocks14,
-    Blocks15,
-    Blocks16,
-    Blocks17,
-    Blocks18,
-    Blocks19,
-    Blocks20,
-    Blocks21,
-    Blocks22,
-    Blocks23,
-    Blocks24,
-    Blocks25,
-    Blocks26,
-    Blocks27,
-    Blocks28,
-    Blocks29,
-    Blocks30,
-    Blocks31,
-    Blocks32,
-    Blocks33,
-    Blocks34,
-    Blocks35,
-    Blocks36,
-    Blocks37,
-    Blocks38,
-    Blocks39,
-    Blocks40,
-    Blocks41,
-    Blocks42,
-    Blocks43,
-    Blocks44,
-    Blocks45,
-    Blocks46,
-    Blocks47,
-    FinalLayer,
+    Model1Param,
+    Model2Param,
+    PosFrequenciesParam,
+    TEmbedderParam,
+    T5YEmbedderParam,
+    T5YprojParam,
+    Blocks0Param,
+    Blocks1Param,
+    Blocks2Param,
+    Blocks3Param,
+    Blocks4Param,
+    Blocks5Param,
+    Blocks6Param,
+    Blocks7Param,
+    Blocks8Param,
+    Blocks9Param,
+    Blocks10Param,
+    Blocks11Param,
+    Blocks12Param,
+    Blocks13Param,
+    Blocks14Param,
+    Blocks15Param,
+    Blocks16Param,
+    Blocks17Param,
+    Blocks18Param,
+    Blocks19Param,
+    Blocks20Param,
+    Blocks21Param,
+    Blocks22Param,
+    Blocks23Param,
+    Blocks24Param,
+    Blocks25Param,
+    Blocks26Param,
+    Blocks27Param,
+    Blocks28Param,
+    Blocks29Param,
+    Blocks30Param,
+    Blocks31Param,
+    Blocks32Param,
+    Blocks33Param,
+    Blocks34Param,
+    Blocks35Param,
+    Blocks36Param,
+    Blocks37Param,
+    Blocks38Param,
+    Blocks39Param,
+    Blocks40Param,
+    Blocks41Param,
+    Blocks42Param,
+    Blocks43Param,
+    Blocks44Param,
+    Blocks45Param,
+    Blocks46Param,
+    Blocks47Param,
+    FinalLayerParam,
 > {
     type Output = crate::nodes::types::ModelOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
@@ -5325,43 +5325,43 @@ for ModelMergeMochiPreview<
 ///**ModelMergeSD1**: No description.
 #[derive(Clone)]
 pub struct ModelMergeSd1<
-    Model1: crate::nodes::types::Model,
-    Model2: crate::nodes::types::Model,
-    TimeEmbed: crate::nodes::types::Float,
-    LabelEmb: crate::nodes::types::Float,
-    InputBlocks0: crate::nodes::types::Float,
-    InputBlocks1: crate::nodes::types::Float,
-    InputBlocks2: crate::nodes::types::Float,
-    InputBlocks3: crate::nodes::types::Float,
-    InputBlocks4: crate::nodes::types::Float,
-    InputBlocks5: crate::nodes::types::Float,
-    InputBlocks6: crate::nodes::types::Float,
-    InputBlocks7: crate::nodes::types::Float,
-    InputBlocks8: crate::nodes::types::Float,
-    InputBlocks9: crate::nodes::types::Float,
-    InputBlocks10: crate::nodes::types::Float,
-    InputBlocks11: crate::nodes::types::Float,
-    MiddleBlock0: crate::nodes::types::Float,
-    MiddleBlock1: crate::nodes::types::Float,
-    MiddleBlock2: crate::nodes::types::Float,
-    OutputBlocks0: crate::nodes::types::Float,
-    OutputBlocks1: crate::nodes::types::Float,
-    OutputBlocks2: crate::nodes::types::Float,
-    OutputBlocks3: crate::nodes::types::Float,
-    OutputBlocks4: crate::nodes::types::Float,
-    OutputBlocks5: crate::nodes::types::Float,
-    OutputBlocks6: crate::nodes::types::Float,
-    OutputBlocks7: crate::nodes::types::Float,
-    OutputBlocks8: crate::nodes::types::Float,
-    OutputBlocks9: crate::nodes::types::Float,
-    OutputBlocks10: crate::nodes::types::Float,
-    OutputBlocks11: crate::nodes::types::Float,
-    Out: crate::nodes::types::Float,
+    Model1Param: crate::nodes::types::Model,
+    Model2Param: crate::nodes::types::Model,
+    TimeEmbedParam: crate::nodes::types::Float,
+    LabelEmbParam: crate::nodes::types::Float,
+    InputBlocks0Param: crate::nodes::types::Float,
+    InputBlocks1Param: crate::nodes::types::Float,
+    InputBlocks2Param: crate::nodes::types::Float,
+    InputBlocks3Param: crate::nodes::types::Float,
+    InputBlocks4Param: crate::nodes::types::Float,
+    InputBlocks5Param: crate::nodes::types::Float,
+    InputBlocks6Param: crate::nodes::types::Float,
+    InputBlocks7Param: crate::nodes::types::Float,
+    InputBlocks8Param: crate::nodes::types::Float,
+    InputBlocks9Param: crate::nodes::types::Float,
+    InputBlocks10Param: crate::nodes::types::Float,
+    InputBlocks11Param: crate::nodes::types::Float,
+    MiddleBlock0Param: crate::nodes::types::Float,
+    MiddleBlock1Param: crate::nodes::types::Float,
+    MiddleBlock2Param: crate::nodes::types::Float,
+    OutputBlocks0Param: crate::nodes::types::Float,
+    OutputBlocks1Param: crate::nodes::types::Float,
+    OutputBlocks2Param: crate::nodes::types::Float,
+    OutputBlocks3Param: crate::nodes::types::Float,
+    OutputBlocks4Param: crate::nodes::types::Float,
+    OutputBlocks5Param: crate::nodes::types::Float,
+    OutputBlocks6Param: crate::nodes::types::Float,
+    OutputBlocks7Param: crate::nodes::types::Float,
+    OutputBlocks8Param: crate::nodes::types::Float,
+    OutputBlocks9Param: crate::nodes::types::Float,
+    OutputBlocks10Param: crate::nodes::types::Float,
+    OutputBlocks11Param: crate::nodes::types::Float,
+    OutParam: crate::nodes::types::Float,
 > {
     ///No documentation.
-    pub model_1: Model1,
+    pub model_1: Model1Param,
     ///No documentation.
-    pub model_2: Model2,
+    pub model_2: Model2Param,
     /**No documentation.
 
 **Metadata**:
@@ -5370,7 +5370,7 @@ pub struct ModelMergeSd1<
   - Min: 0
   - Step: 0.01
 */
-    pub time_embed: TimeEmbed,
+    pub time_embed: TimeEmbedParam,
     /**No documentation.
 
 **Metadata**:
@@ -5379,7 +5379,7 @@ pub struct ModelMergeSd1<
   - Min: 0
   - Step: 0.01
 */
-    pub label_emb: LabelEmb,
+    pub label_emb: LabelEmbParam,
     /**No documentation.
 
 **Metadata**:
@@ -5388,7 +5388,7 @@ pub struct ModelMergeSd1<
   - Min: 0
   - Step: 0.01
 */
-    pub input_blocks_0: InputBlocks0,
+    pub input_blocks_0: InputBlocks0Param,
     /**No documentation.
 
 **Metadata**:
@@ -5397,7 +5397,7 @@ pub struct ModelMergeSd1<
   - Min: 0
   - Step: 0.01
 */
-    pub input_blocks_1: InputBlocks1,
+    pub input_blocks_1: InputBlocks1Param,
     /**No documentation.
 
 **Metadata**:
@@ -5406,7 +5406,7 @@ pub struct ModelMergeSd1<
   - Min: 0
   - Step: 0.01
 */
-    pub input_blocks_2: InputBlocks2,
+    pub input_blocks_2: InputBlocks2Param,
     /**No documentation.
 
 **Metadata**:
@@ -5415,7 +5415,7 @@ pub struct ModelMergeSd1<
   - Min: 0
   - Step: 0.01
 */
-    pub input_blocks_3: InputBlocks3,
+    pub input_blocks_3: InputBlocks3Param,
     /**No documentation.
 
 **Metadata**:
@@ -5424,7 +5424,7 @@ pub struct ModelMergeSd1<
   - Min: 0
   - Step: 0.01
 */
-    pub input_blocks_4: InputBlocks4,
+    pub input_blocks_4: InputBlocks4Param,
     /**No documentation.
 
 **Metadata**:
@@ -5433,7 +5433,7 @@ pub struct ModelMergeSd1<
   - Min: 0
   - Step: 0.01
 */
-    pub input_blocks_5: InputBlocks5,
+    pub input_blocks_5: InputBlocks5Param,
     /**No documentation.
 
 **Metadata**:
@@ -5442,7 +5442,7 @@ pub struct ModelMergeSd1<
   - Min: 0
   - Step: 0.01
 */
-    pub input_blocks_6: InputBlocks6,
+    pub input_blocks_6: InputBlocks6Param,
     /**No documentation.
 
 **Metadata**:
@@ -5451,7 +5451,7 @@ pub struct ModelMergeSd1<
   - Min: 0
   - Step: 0.01
 */
-    pub input_blocks_7: InputBlocks7,
+    pub input_blocks_7: InputBlocks7Param,
     /**No documentation.
 
 **Metadata**:
@@ -5460,7 +5460,7 @@ pub struct ModelMergeSd1<
   - Min: 0
   - Step: 0.01
 */
-    pub input_blocks_8: InputBlocks8,
+    pub input_blocks_8: InputBlocks8Param,
     /**No documentation.
 
 **Metadata**:
@@ -5469,7 +5469,7 @@ pub struct ModelMergeSd1<
   - Min: 0
   - Step: 0.01
 */
-    pub input_blocks_9: InputBlocks9,
+    pub input_blocks_9: InputBlocks9Param,
     /**No documentation.
 
 **Metadata**:
@@ -5478,7 +5478,7 @@ pub struct ModelMergeSd1<
   - Min: 0
   - Step: 0.01
 */
-    pub input_blocks_10: InputBlocks10,
+    pub input_blocks_10: InputBlocks10Param,
     /**No documentation.
 
 **Metadata**:
@@ -5487,7 +5487,7 @@ pub struct ModelMergeSd1<
   - Min: 0
   - Step: 0.01
 */
-    pub input_blocks_11: InputBlocks11,
+    pub input_blocks_11: InputBlocks11Param,
     /**No documentation.
 
 **Metadata**:
@@ -5496,7 +5496,7 @@ pub struct ModelMergeSd1<
   - Min: 0
   - Step: 0.01
 */
-    pub middle_block_0: MiddleBlock0,
+    pub middle_block_0: MiddleBlock0Param,
     /**No documentation.
 
 **Metadata**:
@@ -5505,7 +5505,7 @@ pub struct ModelMergeSd1<
   - Min: 0
   - Step: 0.01
 */
-    pub middle_block_1: MiddleBlock1,
+    pub middle_block_1: MiddleBlock1Param,
     /**No documentation.
 
 **Metadata**:
@@ -5514,7 +5514,7 @@ pub struct ModelMergeSd1<
   - Min: 0
   - Step: 0.01
 */
-    pub middle_block_2: MiddleBlock2,
+    pub middle_block_2: MiddleBlock2Param,
     /**No documentation.
 
 **Metadata**:
@@ -5523,7 +5523,7 @@ pub struct ModelMergeSd1<
   - Min: 0
   - Step: 0.01
 */
-    pub output_blocks_0: OutputBlocks0,
+    pub output_blocks_0: OutputBlocks0Param,
     /**No documentation.
 
 **Metadata**:
@@ -5532,7 +5532,7 @@ pub struct ModelMergeSd1<
   - Min: 0
   - Step: 0.01
 */
-    pub output_blocks_1: OutputBlocks1,
+    pub output_blocks_1: OutputBlocks1Param,
     /**No documentation.
 
 **Metadata**:
@@ -5541,7 +5541,7 @@ pub struct ModelMergeSd1<
   - Min: 0
   - Step: 0.01
 */
-    pub output_blocks_2: OutputBlocks2,
+    pub output_blocks_2: OutputBlocks2Param,
     /**No documentation.
 
 **Metadata**:
@@ -5550,7 +5550,7 @@ pub struct ModelMergeSd1<
   - Min: 0
   - Step: 0.01
 */
-    pub output_blocks_3: OutputBlocks3,
+    pub output_blocks_3: OutputBlocks3Param,
     /**No documentation.
 
 **Metadata**:
@@ -5559,7 +5559,7 @@ pub struct ModelMergeSd1<
   - Min: 0
   - Step: 0.01
 */
-    pub output_blocks_4: OutputBlocks4,
+    pub output_blocks_4: OutputBlocks4Param,
     /**No documentation.
 
 **Metadata**:
@@ -5568,7 +5568,7 @@ pub struct ModelMergeSd1<
   - Min: 0
   - Step: 0.01
 */
-    pub output_blocks_5: OutputBlocks5,
+    pub output_blocks_5: OutputBlocks5Param,
     /**No documentation.
 
 **Metadata**:
@@ -5577,7 +5577,7 @@ pub struct ModelMergeSd1<
   - Min: 0
   - Step: 0.01
 */
-    pub output_blocks_6: OutputBlocks6,
+    pub output_blocks_6: OutputBlocks6Param,
     /**No documentation.
 
 **Metadata**:
@@ -5586,7 +5586,7 @@ pub struct ModelMergeSd1<
   - Min: 0
   - Step: 0.01
 */
-    pub output_blocks_7: OutputBlocks7,
+    pub output_blocks_7: OutputBlocks7Param,
     /**No documentation.
 
 **Metadata**:
@@ -5595,7 +5595,7 @@ pub struct ModelMergeSd1<
   - Min: 0
   - Step: 0.01
 */
-    pub output_blocks_8: OutputBlocks8,
+    pub output_blocks_8: OutputBlocks8Param,
     /**No documentation.
 
 **Metadata**:
@@ -5604,7 +5604,7 @@ pub struct ModelMergeSd1<
   - Min: 0
   - Step: 0.01
 */
-    pub output_blocks_9: OutputBlocks9,
+    pub output_blocks_9: OutputBlocks9Param,
     /**No documentation.
 
 **Metadata**:
@@ -5613,7 +5613,7 @@ pub struct ModelMergeSd1<
   - Min: 0
   - Step: 0.01
 */
-    pub output_blocks_10: OutputBlocks10,
+    pub output_blocks_10: OutputBlocks10Param,
     /**No documentation.
 
 **Metadata**:
@@ -5622,7 +5622,7 @@ pub struct ModelMergeSd1<
   - Min: 0
   - Step: 0.01
 */
-    pub output_blocks_11: OutputBlocks11,
+    pub output_blocks_11: OutputBlocks11Param,
     /**No documentation.
 
 **Metadata**:
@@ -5631,109 +5631,109 @@ pub struct ModelMergeSd1<
   - Min: 0
   - Step: 0.01
 */
-    pub out: Out,
+    pub out: OutParam,
 }
 impl<
-    Model1: crate::nodes::types::Model,
-    Model2: crate::nodes::types::Model,
-    TimeEmbed: crate::nodes::types::Float,
-    LabelEmb: crate::nodes::types::Float,
-    InputBlocks0: crate::nodes::types::Float,
-    InputBlocks1: crate::nodes::types::Float,
-    InputBlocks2: crate::nodes::types::Float,
-    InputBlocks3: crate::nodes::types::Float,
-    InputBlocks4: crate::nodes::types::Float,
-    InputBlocks5: crate::nodes::types::Float,
-    InputBlocks6: crate::nodes::types::Float,
-    InputBlocks7: crate::nodes::types::Float,
-    InputBlocks8: crate::nodes::types::Float,
-    InputBlocks9: crate::nodes::types::Float,
-    InputBlocks10: crate::nodes::types::Float,
-    InputBlocks11: crate::nodes::types::Float,
-    MiddleBlock0: crate::nodes::types::Float,
-    MiddleBlock1: crate::nodes::types::Float,
-    MiddleBlock2: crate::nodes::types::Float,
-    OutputBlocks0: crate::nodes::types::Float,
-    OutputBlocks1: crate::nodes::types::Float,
-    OutputBlocks2: crate::nodes::types::Float,
-    OutputBlocks3: crate::nodes::types::Float,
-    OutputBlocks4: crate::nodes::types::Float,
-    OutputBlocks5: crate::nodes::types::Float,
-    OutputBlocks6: crate::nodes::types::Float,
-    OutputBlocks7: crate::nodes::types::Float,
-    OutputBlocks8: crate::nodes::types::Float,
-    OutputBlocks9: crate::nodes::types::Float,
-    OutputBlocks10: crate::nodes::types::Float,
-    OutputBlocks11: crate::nodes::types::Float,
-    Out: crate::nodes::types::Float,
+    Model1Param: crate::nodes::types::Model,
+    Model2Param: crate::nodes::types::Model,
+    TimeEmbedParam: crate::nodes::types::Float,
+    LabelEmbParam: crate::nodes::types::Float,
+    InputBlocks0Param: crate::nodes::types::Float,
+    InputBlocks1Param: crate::nodes::types::Float,
+    InputBlocks2Param: crate::nodes::types::Float,
+    InputBlocks3Param: crate::nodes::types::Float,
+    InputBlocks4Param: crate::nodes::types::Float,
+    InputBlocks5Param: crate::nodes::types::Float,
+    InputBlocks6Param: crate::nodes::types::Float,
+    InputBlocks7Param: crate::nodes::types::Float,
+    InputBlocks8Param: crate::nodes::types::Float,
+    InputBlocks9Param: crate::nodes::types::Float,
+    InputBlocks10Param: crate::nodes::types::Float,
+    InputBlocks11Param: crate::nodes::types::Float,
+    MiddleBlock0Param: crate::nodes::types::Float,
+    MiddleBlock1Param: crate::nodes::types::Float,
+    MiddleBlock2Param: crate::nodes::types::Float,
+    OutputBlocks0Param: crate::nodes::types::Float,
+    OutputBlocks1Param: crate::nodes::types::Float,
+    OutputBlocks2Param: crate::nodes::types::Float,
+    OutputBlocks3Param: crate::nodes::types::Float,
+    OutputBlocks4Param: crate::nodes::types::Float,
+    OutputBlocks5Param: crate::nodes::types::Float,
+    OutputBlocks6Param: crate::nodes::types::Float,
+    OutputBlocks7Param: crate::nodes::types::Float,
+    OutputBlocks8Param: crate::nodes::types::Float,
+    OutputBlocks9Param: crate::nodes::types::Float,
+    OutputBlocks10Param: crate::nodes::types::Float,
+    OutputBlocks11Param: crate::nodes::types::Float,
+    OutParam: crate::nodes::types::Float,
 > ModelMergeSd1<
-    Model1,
-    Model2,
-    TimeEmbed,
-    LabelEmb,
-    InputBlocks0,
-    InputBlocks1,
-    InputBlocks2,
-    InputBlocks3,
-    InputBlocks4,
-    InputBlocks5,
-    InputBlocks6,
-    InputBlocks7,
-    InputBlocks8,
-    InputBlocks9,
-    InputBlocks10,
-    InputBlocks11,
-    MiddleBlock0,
-    MiddleBlock1,
-    MiddleBlock2,
-    OutputBlocks0,
-    OutputBlocks1,
-    OutputBlocks2,
-    OutputBlocks3,
-    OutputBlocks4,
-    OutputBlocks5,
-    OutputBlocks6,
-    OutputBlocks7,
-    OutputBlocks8,
-    OutputBlocks9,
-    OutputBlocks10,
-    OutputBlocks11,
-    Out,
+    Model1Param,
+    Model2Param,
+    TimeEmbedParam,
+    LabelEmbParam,
+    InputBlocks0Param,
+    InputBlocks1Param,
+    InputBlocks2Param,
+    InputBlocks3Param,
+    InputBlocks4Param,
+    InputBlocks5Param,
+    InputBlocks6Param,
+    InputBlocks7Param,
+    InputBlocks8Param,
+    InputBlocks9Param,
+    InputBlocks10Param,
+    InputBlocks11Param,
+    MiddleBlock0Param,
+    MiddleBlock1Param,
+    MiddleBlock2Param,
+    OutputBlocks0Param,
+    OutputBlocks1Param,
+    OutputBlocks2Param,
+    OutputBlocks3Param,
+    OutputBlocks4Param,
+    OutputBlocks5Param,
+    OutputBlocks6Param,
+    OutputBlocks7Param,
+    OutputBlocks8Param,
+    OutputBlocks9Param,
+    OutputBlocks10Param,
+    OutputBlocks11Param,
+    OutParam,
 > {
     /// Create a new node.
     pub fn new(
-        model_1: Model1,
-        model_2: Model2,
-        time_embed: TimeEmbed,
-        label_emb: LabelEmb,
-        input_blocks_0: InputBlocks0,
-        input_blocks_1: InputBlocks1,
-        input_blocks_2: InputBlocks2,
-        input_blocks_3: InputBlocks3,
-        input_blocks_4: InputBlocks4,
-        input_blocks_5: InputBlocks5,
-        input_blocks_6: InputBlocks6,
-        input_blocks_7: InputBlocks7,
-        input_blocks_8: InputBlocks8,
-        input_blocks_9: InputBlocks9,
-        input_blocks_10: InputBlocks10,
-        input_blocks_11: InputBlocks11,
-        middle_block_0: MiddleBlock0,
-        middle_block_1: MiddleBlock1,
-        middle_block_2: MiddleBlock2,
-        output_blocks_0: OutputBlocks0,
-        output_blocks_1: OutputBlocks1,
-        output_blocks_2: OutputBlocks2,
-        output_blocks_3: OutputBlocks3,
-        output_blocks_4: OutputBlocks4,
-        output_blocks_5: OutputBlocks5,
-        output_blocks_6: OutputBlocks6,
-        output_blocks_7: OutputBlocks7,
-        output_blocks_8: OutputBlocks8,
-        output_blocks_9: OutputBlocks9,
-        output_blocks_10: OutputBlocks10,
-        output_blocks_11: OutputBlocks11,
-        out: Out,
+        model_1: Model1Param,
+        model_2: Model2Param,
+        time_embed: TimeEmbedParam,
+        label_emb: LabelEmbParam,
+        input_blocks_0: InputBlocks0Param,
+        input_blocks_1: InputBlocks1Param,
+        input_blocks_2: InputBlocks2Param,
+        input_blocks_3: InputBlocks3Param,
+        input_blocks_4: InputBlocks4Param,
+        input_blocks_5: InputBlocks5Param,
+        input_blocks_6: InputBlocks6Param,
+        input_blocks_7: InputBlocks7Param,
+        input_blocks_8: InputBlocks8Param,
+        input_blocks_9: InputBlocks9Param,
+        input_blocks_10: InputBlocks10Param,
+        input_blocks_11: InputBlocks11Param,
+        middle_block_0: MiddleBlock0Param,
+        middle_block_1: MiddleBlock1Param,
+        middle_block_2: MiddleBlock2Param,
+        output_blocks_0: OutputBlocks0Param,
+        output_blocks_1: OutputBlocks1Param,
+        output_blocks_2: OutputBlocks2Param,
+        output_blocks_3: OutputBlocks3Param,
+        output_blocks_4: OutputBlocks4Param,
+        output_blocks_5: OutputBlocks5Param,
+        output_blocks_6: OutputBlocks6Param,
+        output_blocks_7: OutputBlocks7Param,
+        output_blocks_8: OutputBlocks8Param,
+        output_blocks_9: OutputBlocks9Param,
+        output_blocks_10: OutputBlocks10Param,
+        output_blocks_11: OutputBlocks11Param,
+        out: OutParam,
     ) -> Self {
         Self {
             model_1,
@@ -5772,72 +5772,72 @@ impl<
     }
 }
 impl<
-    Model1: crate::nodes::types::Model,
-    Model2: crate::nodes::types::Model,
-    TimeEmbed: crate::nodes::types::Float,
-    LabelEmb: crate::nodes::types::Float,
-    InputBlocks0: crate::nodes::types::Float,
-    InputBlocks1: crate::nodes::types::Float,
-    InputBlocks2: crate::nodes::types::Float,
-    InputBlocks3: crate::nodes::types::Float,
-    InputBlocks4: crate::nodes::types::Float,
-    InputBlocks5: crate::nodes::types::Float,
-    InputBlocks6: crate::nodes::types::Float,
-    InputBlocks7: crate::nodes::types::Float,
-    InputBlocks8: crate::nodes::types::Float,
-    InputBlocks9: crate::nodes::types::Float,
-    InputBlocks10: crate::nodes::types::Float,
-    InputBlocks11: crate::nodes::types::Float,
-    MiddleBlock0: crate::nodes::types::Float,
-    MiddleBlock1: crate::nodes::types::Float,
-    MiddleBlock2: crate::nodes::types::Float,
-    OutputBlocks0: crate::nodes::types::Float,
-    OutputBlocks1: crate::nodes::types::Float,
-    OutputBlocks2: crate::nodes::types::Float,
-    OutputBlocks3: crate::nodes::types::Float,
-    OutputBlocks4: crate::nodes::types::Float,
-    OutputBlocks5: crate::nodes::types::Float,
-    OutputBlocks6: crate::nodes::types::Float,
-    OutputBlocks7: crate::nodes::types::Float,
-    OutputBlocks8: crate::nodes::types::Float,
-    OutputBlocks9: crate::nodes::types::Float,
-    OutputBlocks10: crate::nodes::types::Float,
-    OutputBlocks11: crate::nodes::types::Float,
-    Out: crate::nodes::types::Float,
+    Model1Param: crate::nodes::types::Model,
+    Model2Param: crate::nodes::types::Model,
+    TimeEmbedParam: crate::nodes::types::Float,
+    LabelEmbParam: crate::nodes::types::Float,
+    InputBlocks0Param: crate::nodes::types::Float,
+    InputBlocks1Param: crate::nodes::types::Float,
+    InputBlocks2Param: crate::nodes::types::Float,
+    InputBlocks3Param: crate::nodes::types::Float,
+    InputBlocks4Param: crate::nodes::types::Float,
+    InputBlocks5Param: crate::nodes::types::Float,
+    InputBlocks6Param: crate::nodes::types::Float,
+    InputBlocks7Param: crate::nodes::types::Float,
+    InputBlocks8Param: crate::nodes::types::Float,
+    InputBlocks9Param: crate::nodes::types::Float,
+    InputBlocks10Param: crate::nodes::types::Float,
+    InputBlocks11Param: crate::nodes::types::Float,
+    MiddleBlock0Param: crate::nodes::types::Float,
+    MiddleBlock1Param: crate::nodes::types::Float,
+    MiddleBlock2Param: crate::nodes::types::Float,
+    OutputBlocks0Param: crate::nodes::types::Float,
+    OutputBlocks1Param: crate::nodes::types::Float,
+    OutputBlocks2Param: crate::nodes::types::Float,
+    OutputBlocks3Param: crate::nodes::types::Float,
+    OutputBlocks4Param: crate::nodes::types::Float,
+    OutputBlocks5Param: crate::nodes::types::Float,
+    OutputBlocks6Param: crate::nodes::types::Float,
+    OutputBlocks7Param: crate::nodes::types::Float,
+    OutputBlocks8Param: crate::nodes::types::Float,
+    OutputBlocks9Param: crate::nodes::types::Float,
+    OutputBlocks10Param: crate::nodes::types::Float,
+    OutputBlocks11Param: crate::nodes::types::Float,
+    OutParam: crate::nodes::types::Float,
 > crate::nodes::TypedNode
 for ModelMergeSd1<
-    Model1,
-    Model2,
-    TimeEmbed,
-    LabelEmb,
-    InputBlocks0,
-    InputBlocks1,
-    InputBlocks2,
-    InputBlocks3,
-    InputBlocks4,
-    InputBlocks5,
-    InputBlocks6,
-    InputBlocks7,
-    InputBlocks8,
-    InputBlocks9,
-    InputBlocks10,
-    InputBlocks11,
-    MiddleBlock0,
-    MiddleBlock1,
-    MiddleBlock2,
-    OutputBlocks0,
-    OutputBlocks1,
-    OutputBlocks2,
-    OutputBlocks3,
-    OutputBlocks4,
-    OutputBlocks5,
-    OutputBlocks6,
-    OutputBlocks7,
-    OutputBlocks8,
-    OutputBlocks9,
-    OutputBlocks10,
-    OutputBlocks11,
-    Out,
+    Model1Param,
+    Model2Param,
+    TimeEmbedParam,
+    LabelEmbParam,
+    InputBlocks0Param,
+    InputBlocks1Param,
+    InputBlocks2Param,
+    InputBlocks3Param,
+    InputBlocks4Param,
+    InputBlocks5Param,
+    InputBlocks6Param,
+    InputBlocks7Param,
+    InputBlocks8Param,
+    InputBlocks9Param,
+    InputBlocks10Param,
+    InputBlocks11Param,
+    MiddleBlock0Param,
+    MiddleBlock1Param,
+    MiddleBlock2Param,
+    OutputBlocks0Param,
+    OutputBlocks1Param,
+    OutputBlocks2Param,
+    OutputBlocks3Param,
+    OutputBlocks4Param,
+    OutputBlocks5Param,
+    OutputBlocks6Param,
+    OutputBlocks7Param,
+    OutputBlocks8Param,
+    OutputBlocks9Param,
+    OutputBlocks10Param,
+    OutputBlocks11Param,
+    OutParam,
 > {
     type Output = crate::nodes::types::ModelOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
@@ -5907,43 +5907,43 @@ for ModelMergeSd1<
 ///**ModelMergeSD2**: No description.
 #[derive(Clone)]
 pub struct ModelMergeSd2<
-    Model1: crate::nodes::types::Model,
-    Model2: crate::nodes::types::Model,
-    TimeEmbed: crate::nodes::types::Float,
-    LabelEmb: crate::nodes::types::Float,
-    InputBlocks0: crate::nodes::types::Float,
-    InputBlocks1: crate::nodes::types::Float,
-    InputBlocks2: crate::nodes::types::Float,
-    InputBlocks3: crate::nodes::types::Float,
-    InputBlocks4: crate::nodes::types::Float,
-    InputBlocks5: crate::nodes::types::Float,
-    InputBlocks6: crate::nodes::types::Float,
-    InputBlocks7: crate::nodes::types::Float,
-    InputBlocks8: crate::nodes::types::Float,
-    InputBlocks9: crate::nodes::types::Float,
-    InputBlocks10: crate::nodes::types::Float,
-    InputBlocks11: crate::nodes::types::Float,
-    MiddleBlock0: crate::nodes::types::Float,
-    MiddleBlock1: crate::nodes::types::Float,
-    MiddleBlock2: crate::nodes::types::Float,
-    OutputBlocks0: crate::nodes::types::Float,
-    OutputBlocks1: crate::nodes::types::Float,
-    OutputBlocks2: crate::nodes::types::Float,
-    OutputBlocks3: crate::nodes::types::Float,
-    OutputBlocks4: crate::nodes::types::Float,
-    OutputBlocks5: crate::nodes::types::Float,
-    OutputBlocks6: crate::nodes::types::Float,
-    OutputBlocks7: crate::nodes::types::Float,
-    OutputBlocks8: crate::nodes::types::Float,
-    OutputBlocks9: crate::nodes::types::Float,
-    OutputBlocks10: crate::nodes::types::Float,
-    OutputBlocks11: crate::nodes::types::Float,
-    Out: crate::nodes::types::Float,
+    Model1Param: crate::nodes::types::Model,
+    Model2Param: crate::nodes::types::Model,
+    TimeEmbedParam: crate::nodes::types::Float,
+    LabelEmbParam: crate::nodes::types::Float,
+    InputBlocks0Param: crate::nodes::types::Float,
+    InputBlocks1Param: crate::nodes::types::Float,
+    InputBlocks2Param: crate::nodes::types::Float,
+    InputBlocks3Param: crate::nodes::types::Float,
+    InputBlocks4Param: crate::nodes::types::Float,
+    InputBlocks5Param: crate::nodes::types::Float,
+    InputBlocks6Param: crate::nodes::types::Float,
+    InputBlocks7Param: crate::nodes::types::Float,
+    InputBlocks8Param: crate::nodes::types::Float,
+    InputBlocks9Param: crate::nodes::types::Float,
+    InputBlocks10Param: crate::nodes::types::Float,
+    InputBlocks11Param: crate::nodes::types::Float,
+    MiddleBlock0Param: crate::nodes::types::Float,
+    MiddleBlock1Param: crate::nodes::types::Float,
+    MiddleBlock2Param: crate::nodes::types::Float,
+    OutputBlocks0Param: crate::nodes::types::Float,
+    OutputBlocks1Param: crate::nodes::types::Float,
+    OutputBlocks2Param: crate::nodes::types::Float,
+    OutputBlocks3Param: crate::nodes::types::Float,
+    OutputBlocks4Param: crate::nodes::types::Float,
+    OutputBlocks5Param: crate::nodes::types::Float,
+    OutputBlocks6Param: crate::nodes::types::Float,
+    OutputBlocks7Param: crate::nodes::types::Float,
+    OutputBlocks8Param: crate::nodes::types::Float,
+    OutputBlocks9Param: crate::nodes::types::Float,
+    OutputBlocks10Param: crate::nodes::types::Float,
+    OutputBlocks11Param: crate::nodes::types::Float,
+    OutParam: crate::nodes::types::Float,
 > {
     ///No documentation.
-    pub model_1: Model1,
+    pub model_1: Model1Param,
     ///No documentation.
-    pub model_2: Model2,
+    pub model_2: Model2Param,
     /**No documentation.
 
 **Metadata**:
@@ -5952,7 +5952,7 @@ pub struct ModelMergeSd2<
   - Min: 0
   - Step: 0.01
 */
-    pub time_embed: TimeEmbed,
+    pub time_embed: TimeEmbedParam,
     /**No documentation.
 
 **Metadata**:
@@ -5961,7 +5961,7 @@ pub struct ModelMergeSd2<
   - Min: 0
   - Step: 0.01
 */
-    pub label_emb: LabelEmb,
+    pub label_emb: LabelEmbParam,
     /**No documentation.
 
 **Metadata**:
@@ -5970,7 +5970,7 @@ pub struct ModelMergeSd2<
   - Min: 0
   - Step: 0.01
 */
-    pub input_blocks_0: InputBlocks0,
+    pub input_blocks_0: InputBlocks0Param,
     /**No documentation.
 
 **Metadata**:
@@ -5979,7 +5979,7 @@ pub struct ModelMergeSd2<
   - Min: 0
   - Step: 0.01
 */
-    pub input_blocks_1: InputBlocks1,
+    pub input_blocks_1: InputBlocks1Param,
     /**No documentation.
 
 **Metadata**:
@@ -5988,7 +5988,7 @@ pub struct ModelMergeSd2<
   - Min: 0
   - Step: 0.01
 */
-    pub input_blocks_2: InputBlocks2,
+    pub input_blocks_2: InputBlocks2Param,
     /**No documentation.
 
 **Metadata**:
@@ -5997,7 +5997,7 @@ pub struct ModelMergeSd2<
   - Min: 0
   - Step: 0.01
 */
-    pub input_blocks_3: InputBlocks3,
+    pub input_blocks_3: InputBlocks3Param,
     /**No documentation.
 
 **Metadata**:
@@ -6006,7 +6006,7 @@ pub struct ModelMergeSd2<
   - Min: 0
   - Step: 0.01
 */
-    pub input_blocks_4: InputBlocks4,
+    pub input_blocks_4: InputBlocks4Param,
     /**No documentation.
 
 **Metadata**:
@@ -6015,7 +6015,7 @@ pub struct ModelMergeSd2<
   - Min: 0
   - Step: 0.01
 */
-    pub input_blocks_5: InputBlocks5,
+    pub input_blocks_5: InputBlocks5Param,
     /**No documentation.
 
 **Metadata**:
@@ -6024,7 +6024,7 @@ pub struct ModelMergeSd2<
   - Min: 0
   - Step: 0.01
 */
-    pub input_blocks_6: InputBlocks6,
+    pub input_blocks_6: InputBlocks6Param,
     /**No documentation.
 
 **Metadata**:
@@ -6033,7 +6033,7 @@ pub struct ModelMergeSd2<
   - Min: 0
   - Step: 0.01
 */
-    pub input_blocks_7: InputBlocks7,
+    pub input_blocks_7: InputBlocks7Param,
     /**No documentation.
 
 **Metadata**:
@@ -6042,7 +6042,7 @@ pub struct ModelMergeSd2<
   - Min: 0
   - Step: 0.01
 */
-    pub input_blocks_8: InputBlocks8,
+    pub input_blocks_8: InputBlocks8Param,
     /**No documentation.
 
 **Metadata**:
@@ -6051,7 +6051,7 @@ pub struct ModelMergeSd2<
   - Min: 0
   - Step: 0.01
 */
-    pub input_blocks_9: InputBlocks9,
+    pub input_blocks_9: InputBlocks9Param,
     /**No documentation.
 
 **Metadata**:
@@ -6060,7 +6060,7 @@ pub struct ModelMergeSd2<
   - Min: 0
   - Step: 0.01
 */
-    pub input_blocks_10: InputBlocks10,
+    pub input_blocks_10: InputBlocks10Param,
     /**No documentation.
 
 **Metadata**:
@@ -6069,7 +6069,7 @@ pub struct ModelMergeSd2<
   - Min: 0
   - Step: 0.01
 */
-    pub input_blocks_11: InputBlocks11,
+    pub input_blocks_11: InputBlocks11Param,
     /**No documentation.
 
 **Metadata**:
@@ -6078,7 +6078,7 @@ pub struct ModelMergeSd2<
   - Min: 0
   - Step: 0.01
 */
-    pub middle_block_0: MiddleBlock0,
+    pub middle_block_0: MiddleBlock0Param,
     /**No documentation.
 
 **Metadata**:
@@ -6087,7 +6087,7 @@ pub struct ModelMergeSd2<
   - Min: 0
   - Step: 0.01
 */
-    pub middle_block_1: MiddleBlock1,
+    pub middle_block_1: MiddleBlock1Param,
     /**No documentation.
 
 **Metadata**:
@@ -6096,7 +6096,7 @@ pub struct ModelMergeSd2<
   - Min: 0
   - Step: 0.01
 */
-    pub middle_block_2: MiddleBlock2,
+    pub middle_block_2: MiddleBlock2Param,
     /**No documentation.
 
 **Metadata**:
@@ -6105,7 +6105,7 @@ pub struct ModelMergeSd2<
   - Min: 0
   - Step: 0.01
 */
-    pub output_blocks_0: OutputBlocks0,
+    pub output_blocks_0: OutputBlocks0Param,
     /**No documentation.
 
 **Metadata**:
@@ -6114,7 +6114,7 @@ pub struct ModelMergeSd2<
   - Min: 0
   - Step: 0.01
 */
-    pub output_blocks_1: OutputBlocks1,
+    pub output_blocks_1: OutputBlocks1Param,
     /**No documentation.
 
 **Metadata**:
@@ -6123,7 +6123,7 @@ pub struct ModelMergeSd2<
   - Min: 0
   - Step: 0.01
 */
-    pub output_blocks_2: OutputBlocks2,
+    pub output_blocks_2: OutputBlocks2Param,
     /**No documentation.
 
 **Metadata**:
@@ -6132,7 +6132,7 @@ pub struct ModelMergeSd2<
   - Min: 0
   - Step: 0.01
 */
-    pub output_blocks_3: OutputBlocks3,
+    pub output_blocks_3: OutputBlocks3Param,
     /**No documentation.
 
 **Metadata**:
@@ -6141,7 +6141,7 @@ pub struct ModelMergeSd2<
   - Min: 0
   - Step: 0.01
 */
-    pub output_blocks_4: OutputBlocks4,
+    pub output_blocks_4: OutputBlocks4Param,
     /**No documentation.
 
 **Metadata**:
@@ -6150,7 +6150,7 @@ pub struct ModelMergeSd2<
   - Min: 0
   - Step: 0.01
 */
-    pub output_blocks_5: OutputBlocks5,
+    pub output_blocks_5: OutputBlocks5Param,
     /**No documentation.
 
 **Metadata**:
@@ -6159,7 +6159,7 @@ pub struct ModelMergeSd2<
   - Min: 0
   - Step: 0.01
 */
-    pub output_blocks_6: OutputBlocks6,
+    pub output_blocks_6: OutputBlocks6Param,
     /**No documentation.
 
 **Metadata**:
@@ -6168,7 +6168,7 @@ pub struct ModelMergeSd2<
   - Min: 0
   - Step: 0.01
 */
-    pub output_blocks_7: OutputBlocks7,
+    pub output_blocks_7: OutputBlocks7Param,
     /**No documentation.
 
 **Metadata**:
@@ -6177,7 +6177,7 @@ pub struct ModelMergeSd2<
   - Min: 0
   - Step: 0.01
 */
-    pub output_blocks_8: OutputBlocks8,
+    pub output_blocks_8: OutputBlocks8Param,
     /**No documentation.
 
 **Metadata**:
@@ -6186,7 +6186,7 @@ pub struct ModelMergeSd2<
   - Min: 0
   - Step: 0.01
 */
-    pub output_blocks_9: OutputBlocks9,
+    pub output_blocks_9: OutputBlocks9Param,
     /**No documentation.
 
 **Metadata**:
@@ -6195,7 +6195,7 @@ pub struct ModelMergeSd2<
   - Min: 0
   - Step: 0.01
 */
-    pub output_blocks_10: OutputBlocks10,
+    pub output_blocks_10: OutputBlocks10Param,
     /**No documentation.
 
 **Metadata**:
@@ -6204,7 +6204,7 @@ pub struct ModelMergeSd2<
   - Min: 0
   - Step: 0.01
 */
-    pub output_blocks_11: OutputBlocks11,
+    pub output_blocks_11: OutputBlocks11Param,
     /**No documentation.
 
 **Metadata**:
@@ -6213,109 +6213,109 @@ pub struct ModelMergeSd2<
   - Min: 0
   - Step: 0.01
 */
-    pub out: Out,
+    pub out: OutParam,
 }
 impl<
-    Model1: crate::nodes::types::Model,
-    Model2: crate::nodes::types::Model,
-    TimeEmbed: crate::nodes::types::Float,
-    LabelEmb: crate::nodes::types::Float,
-    InputBlocks0: crate::nodes::types::Float,
-    InputBlocks1: crate::nodes::types::Float,
-    InputBlocks2: crate::nodes::types::Float,
-    InputBlocks3: crate::nodes::types::Float,
-    InputBlocks4: crate::nodes::types::Float,
-    InputBlocks5: crate::nodes::types::Float,
-    InputBlocks6: crate::nodes::types::Float,
-    InputBlocks7: crate::nodes::types::Float,
-    InputBlocks8: crate::nodes::types::Float,
-    InputBlocks9: crate::nodes::types::Float,
-    InputBlocks10: crate::nodes::types::Float,
-    InputBlocks11: crate::nodes::types::Float,
-    MiddleBlock0: crate::nodes::types::Float,
-    MiddleBlock1: crate::nodes::types::Float,
-    MiddleBlock2: crate::nodes::types::Float,
-    OutputBlocks0: crate::nodes::types::Float,
-    OutputBlocks1: crate::nodes::types::Float,
-    OutputBlocks2: crate::nodes::types::Float,
-    OutputBlocks3: crate::nodes::types::Float,
-    OutputBlocks4: crate::nodes::types::Float,
-    OutputBlocks5: crate::nodes::types::Float,
-    OutputBlocks6: crate::nodes::types::Float,
-    OutputBlocks7: crate::nodes::types::Float,
-    OutputBlocks8: crate::nodes::types::Float,
-    OutputBlocks9: crate::nodes::types::Float,
-    OutputBlocks10: crate::nodes::types::Float,
-    OutputBlocks11: crate::nodes::types::Float,
-    Out: crate::nodes::types::Float,
+    Model1Param: crate::nodes::types::Model,
+    Model2Param: crate::nodes::types::Model,
+    TimeEmbedParam: crate::nodes::types::Float,
+    LabelEmbParam: crate::nodes::types::Float,
+    InputBlocks0Param: crate::nodes::types::Float,
+    InputBlocks1Param: crate::nodes::types::Float,
+    InputBlocks2Param: crate::nodes::types::Float,
+    InputBlocks3Param: crate::nodes::types::Float,
+    InputBlocks4Param: crate::nodes::types::Float,
+    InputBlocks5Param: crate::nodes::types::Float,
+    InputBlocks6Param: crate::nodes::types::Float,
+    InputBlocks7Param: crate::nodes::types::Float,
+    InputBlocks8Param: crate::nodes::types::Float,
+    InputBlocks9Param: crate::nodes::types::Float,
+    InputBlocks10Param: crate::nodes::types::Float,
+    InputBlocks11Param: crate::nodes::types::Float,
+    MiddleBlock0Param: crate::nodes::types::Float,
+    MiddleBlock1Param: crate::nodes::types::Float,
+    MiddleBlock2Param: crate::nodes::types::Float,
+    OutputBlocks0Param: crate::nodes::types::Float,
+    OutputBlocks1Param: crate::nodes::types::Float,
+    OutputBlocks2Param: crate::nodes::types::Float,
+    OutputBlocks3Param: crate::nodes::types::Float,
+    OutputBlocks4Param: crate::nodes::types::Float,
+    OutputBlocks5Param: crate::nodes::types::Float,
+    OutputBlocks6Param: crate::nodes::types::Float,
+    OutputBlocks7Param: crate::nodes::types::Float,
+    OutputBlocks8Param: crate::nodes::types::Float,
+    OutputBlocks9Param: crate::nodes::types::Float,
+    OutputBlocks10Param: crate::nodes::types::Float,
+    OutputBlocks11Param: crate::nodes::types::Float,
+    OutParam: crate::nodes::types::Float,
 > ModelMergeSd2<
-    Model1,
-    Model2,
-    TimeEmbed,
-    LabelEmb,
-    InputBlocks0,
-    InputBlocks1,
-    InputBlocks2,
-    InputBlocks3,
-    InputBlocks4,
-    InputBlocks5,
-    InputBlocks6,
-    InputBlocks7,
-    InputBlocks8,
-    InputBlocks9,
-    InputBlocks10,
-    InputBlocks11,
-    MiddleBlock0,
-    MiddleBlock1,
-    MiddleBlock2,
-    OutputBlocks0,
-    OutputBlocks1,
-    OutputBlocks2,
-    OutputBlocks3,
-    OutputBlocks4,
-    OutputBlocks5,
-    OutputBlocks6,
-    OutputBlocks7,
-    OutputBlocks8,
-    OutputBlocks9,
-    OutputBlocks10,
-    OutputBlocks11,
-    Out,
+    Model1Param,
+    Model2Param,
+    TimeEmbedParam,
+    LabelEmbParam,
+    InputBlocks0Param,
+    InputBlocks1Param,
+    InputBlocks2Param,
+    InputBlocks3Param,
+    InputBlocks4Param,
+    InputBlocks5Param,
+    InputBlocks6Param,
+    InputBlocks7Param,
+    InputBlocks8Param,
+    InputBlocks9Param,
+    InputBlocks10Param,
+    InputBlocks11Param,
+    MiddleBlock0Param,
+    MiddleBlock1Param,
+    MiddleBlock2Param,
+    OutputBlocks0Param,
+    OutputBlocks1Param,
+    OutputBlocks2Param,
+    OutputBlocks3Param,
+    OutputBlocks4Param,
+    OutputBlocks5Param,
+    OutputBlocks6Param,
+    OutputBlocks7Param,
+    OutputBlocks8Param,
+    OutputBlocks9Param,
+    OutputBlocks10Param,
+    OutputBlocks11Param,
+    OutParam,
 > {
     /// Create a new node.
     pub fn new(
-        model_1: Model1,
-        model_2: Model2,
-        time_embed: TimeEmbed,
-        label_emb: LabelEmb,
-        input_blocks_0: InputBlocks0,
-        input_blocks_1: InputBlocks1,
-        input_blocks_2: InputBlocks2,
-        input_blocks_3: InputBlocks3,
-        input_blocks_4: InputBlocks4,
-        input_blocks_5: InputBlocks5,
-        input_blocks_6: InputBlocks6,
-        input_blocks_7: InputBlocks7,
-        input_blocks_8: InputBlocks8,
-        input_blocks_9: InputBlocks9,
-        input_blocks_10: InputBlocks10,
-        input_blocks_11: InputBlocks11,
-        middle_block_0: MiddleBlock0,
-        middle_block_1: MiddleBlock1,
-        middle_block_2: MiddleBlock2,
-        output_blocks_0: OutputBlocks0,
-        output_blocks_1: OutputBlocks1,
-        output_blocks_2: OutputBlocks2,
-        output_blocks_3: OutputBlocks3,
-        output_blocks_4: OutputBlocks4,
-        output_blocks_5: OutputBlocks5,
-        output_blocks_6: OutputBlocks6,
-        output_blocks_7: OutputBlocks7,
-        output_blocks_8: OutputBlocks8,
-        output_blocks_9: OutputBlocks9,
-        output_blocks_10: OutputBlocks10,
-        output_blocks_11: OutputBlocks11,
-        out: Out,
+        model_1: Model1Param,
+        model_2: Model2Param,
+        time_embed: TimeEmbedParam,
+        label_emb: LabelEmbParam,
+        input_blocks_0: InputBlocks0Param,
+        input_blocks_1: InputBlocks1Param,
+        input_blocks_2: InputBlocks2Param,
+        input_blocks_3: InputBlocks3Param,
+        input_blocks_4: InputBlocks4Param,
+        input_blocks_5: InputBlocks5Param,
+        input_blocks_6: InputBlocks6Param,
+        input_blocks_7: InputBlocks7Param,
+        input_blocks_8: InputBlocks8Param,
+        input_blocks_9: InputBlocks9Param,
+        input_blocks_10: InputBlocks10Param,
+        input_blocks_11: InputBlocks11Param,
+        middle_block_0: MiddleBlock0Param,
+        middle_block_1: MiddleBlock1Param,
+        middle_block_2: MiddleBlock2Param,
+        output_blocks_0: OutputBlocks0Param,
+        output_blocks_1: OutputBlocks1Param,
+        output_blocks_2: OutputBlocks2Param,
+        output_blocks_3: OutputBlocks3Param,
+        output_blocks_4: OutputBlocks4Param,
+        output_blocks_5: OutputBlocks5Param,
+        output_blocks_6: OutputBlocks6Param,
+        output_blocks_7: OutputBlocks7Param,
+        output_blocks_8: OutputBlocks8Param,
+        output_blocks_9: OutputBlocks9Param,
+        output_blocks_10: OutputBlocks10Param,
+        output_blocks_11: OutputBlocks11Param,
+        out: OutParam,
     ) -> Self {
         Self {
             model_1,
@@ -6354,72 +6354,72 @@ impl<
     }
 }
 impl<
-    Model1: crate::nodes::types::Model,
-    Model2: crate::nodes::types::Model,
-    TimeEmbed: crate::nodes::types::Float,
-    LabelEmb: crate::nodes::types::Float,
-    InputBlocks0: crate::nodes::types::Float,
-    InputBlocks1: crate::nodes::types::Float,
-    InputBlocks2: crate::nodes::types::Float,
-    InputBlocks3: crate::nodes::types::Float,
-    InputBlocks4: crate::nodes::types::Float,
-    InputBlocks5: crate::nodes::types::Float,
-    InputBlocks6: crate::nodes::types::Float,
-    InputBlocks7: crate::nodes::types::Float,
-    InputBlocks8: crate::nodes::types::Float,
-    InputBlocks9: crate::nodes::types::Float,
-    InputBlocks10: crate::nodes::types::Float,
-    InputBlocks11: crate::nodes::types::Float,
-    MiddleBlock0: crate::nodes::types::Float,
-    MiddleBlock1: crate::nodes::types::Float,
-    MiddleBlock2: crate::nodes::types::Float,
-    OutputBlocks0: crate::nodes::types::Float,
-    OutputBlocks1: crate::nodes::types::Float,
-    OutputBlocks2: crate::nodes::types::Float,
-    OutputBlocks3: crate::nodes::types::Float,
-    OutputBlocks4: crate::nodes::types::Float,
-    OutputBlocks5: crate::nodes::types::Float,
-    OutputBlocks6: crate::nodes::types::Float,
-    OutputBlocks7: crate::nodes::types::Float,
-    OutputBlocks8: crate::nodes::types::Float,
-    OutputBlocks9: crate::nodes::types::Float,
-    OutputBlocks10: crate::nodes::types::Float,
-    OutputBlocks11: crate::nodes::types::Float,
-    Out: crate::nodes::types::Float,
+    Model1Param: crate::nodes::types::Model,
+    Model2Param: crate::nodes::types::Model,
+    TimeEmbedParam: crate::nodes::types::Float,
+    LabelEmbParam: crate::nodes::types::Float,
+    InputBlocks0Param: crate::nodes::types::Float,
+    InputBlocks1Param: crate::nodes::types::Float,
+    InputBlocks2Param: crate::nodes::types::Float,
+    InputBlocks3Param: crate::nodes::types::Float,
+    InputBlocks4Param: crate::nodes::types::Float,
+    InputBlocks5Param: crate::nodes::types::Float,
+    InputBlocks6Param: crate::nodes::types::Float,
+    InputBlocks7Param: crate::nodes::types::Float,
+    InputBlocks8Param: crate::nodes::types::Float,
+    InputBlocks9Param: crate::nodes::types::Float,
+    InputBlocks10Param: crate::nodes::types::Float,
+    InputBlocks11Param: crate::nodes::types::Float,
+    MiddleBlock0Param: crate::nodes::types::Float,
+    MiddleBlock1Param: crate::nodes::types::Float,
+    MiddleBlock2Param: crate::nodes::types::Float,
+    OutputBlocks0Param: crate::nodes::types::Float,
+    OutputBlocks1Param: crate::nodes::types::Float,
+    OutputBlocks2Param: crate::nodes::types::Float,
+    OutputBlocks3Param: crate::nodes::types::Float,
+    OutputBlocks4Param: crate::nodes::types::Float,
+    OutputBlocks5Param: crate::nodes::types::Float,
+    OutputBlocks6Param: crate::nodes::types::Float,
+    OutputBlocks7Param: crate::nodes::types::Float,
+    OutputBlocks8Param: crate::nodes::types::Float,
+    OutputBlocks9Param: crate::nodes::types::Float,
+    OutputBlocks10Param: crate::nodes::types::Float,
+    OutputBlocks11Param: crate::nodes::types::Float,
+    OutParam: crate::nodes::types::Float,
 > crate::nodes::TypedNode
 for ModelMergeSd2<
-    Model1,
-    Model2,
-    TimeEmbed,
-    LabelEmb,
-    InputBlocks0,
-    InputBlocks1,
-    InputBlocks2,
-    InputBlocks3,
-    InputBlocks4,
-    InputBlocks5,
-    InputBlocks6,
-    InputBlocks7,
-    InputBlocks8,
-    InputBlocks9,
-    InputBlocks10,
-    InputBlocks11,
-    MiddleBlock0,
-    MiddleBlock1,
-    MiddleBlock2,
-    OutputBlocks0,
-    OutputBlocks1,
-    OutputBlocks2,
-    OutputBlocks3,
-    OutputBlocks4,
-    OutputBlocks5,
-    OutputBlocks6,
-    OutputBlocks7,
-    OutputBlocks8,
-    OutputBlocks9,
-    OutputBlocks10,
-    OutputBlocks11,
-    Out,
+    Model1Param,
+    Model2Param,
+    TimeEmbedParam,
+    LabelEmbParam,
+    InputBlocks0Param,
+    InputBlocks1Param,
+    InputBlocks2Param,
+    InputBlocks3Param,
+    InputBlocks4Param,
+    InputBlocks5Param,
+    InputBlocks6Param,
+    InputBlocks7Param,
+    InputBlocks8Param,
+    InputBlocks9Param,
+    InputBlocks10Param,
+    InputBlocks11Param,
+    MiddleBlock0Param,
+    MiddleBlock1Param,
+    MiddleBlock2Param,
+    OutputBlocks0Param,
+    OutputBlocks1Param,
+    OutputBlocks2Param,
+    OutputBlocks3Param,
+    OutputBlocks4Param,
+    OutputBlocks5Param,
+    OutputBlocks6Param,
+    OutputBlocks7Param,
+    OutputBlocks8Param,
+    OutputBlocks9Param,
+    OutputBlocks10Param,
+    OutputBlocks11Param,
+    OutParam,
 > {
     type Output = crate::nodes::types::ModelOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
@@ -6489,57 +6489,57 @@ for ModelMergeSd2<
 ///**ModelMergeSD35_Large**: No description.
 #[derive(Clone)]
 pub struct ModelMergeSd35Large<
-    Model1: crate::nodes::types::Model,
-    Model2: crate::nodes::types::Model,
-    PosEmbed: crate::nodes::types::Float,
-    XEmbedder: crate::nodes::types::Float,
-    ContextEmbedder: crate::nodes::types::Float,
-    YEmbedder: crate::nodes::types::Float,
-    TEmbedder: crate::nodes::types::Float,
-    JointBlocks0: crate::nodes::types::Float,
-    JointBlocks1: crate::nodes::types::Float,
-    JointBlocks2: crate::nodes::types::Float,
-    JointBlocks3: crate::nodes::types::Float,
-    JointBlocks4: crate::nodes::types::Float,
-    JointBlocks5: crate::nodes::types::Float,
-    JointBlocks6: crate::nodes::types::Float,
-    JointBlocks7: crate::nodes::types::Float,
-    JointBlocks8: crate::nodes::types::Float,
-    JointBlocks9: crate::nodes::types::Float,
-    JointBlocks10: crate::nodes::types::Float,
-    JointBlocks11: crate::nodes::types::Float,
-    JointBlocks12: crate::nodes::types::Float,
-    JointBlocks13: crate::nodes::types::Float,
-    JointBlocks14: crate::nodes::types::Float,
-    JointBlocks15: crate::nodes::types::Float,
-    JointBlocks16: crate::nodes::types::Float,
-    JointBlocks17: crate::nodes::types::Float,
-    JointBlocks18: crate::nodes::types::Float,
-    JointBlocks19: crate::nodes::types::Float,
-    JointBlocks20: crate::nodes::types::Float,
-    JointBlocks21: crate::nodes::types::Float,
-    JointBlocks22: crate::nodes::types::Float,
-    JointBlocks23: crate::nodes::types::Float,
-    JointBlocks24: crate::nodes::types::Float,
-    JointBlocks25: crate::nodes::types::Float,
-    JointBlocks26: crate::nodes::types::Float,
-    JointBlocks27: crate::nodes::types::Float,
-    JointBlocks28: crate::nodes::types::Float,
-    JointBlocks29: crate::nodes::types::Float,
-    JointBlocks30: crate::nodes::types::Float,
-    JointBlocks31: crate::nodes::types::Float,
-    JointBlocks32: crate::nodes::types::Float,
-    JointBlocks33: crate::nodes::types::Float,
-    JointBlocks34: crate::nodes::types::Float,
-    JointBlocks35: crate::nodes::types::Float,
-    JointBlocks36: crate::nodes::types::Float,
-    JointBlocks37: crate::nodes::types::Float,
-    FinalLayer: crate::nodes::types::Float,
+    Model1Param: crate::nodes::types::Model,
+    Model2Param: crate::nodes::types::Model,
+    PosEmbedParam: crate::nodes::types::Float,
+    XEmbedderParam: crate::nodes::types::Float,
+    ContextEmbedderParam: crate::nodes::types::Float,
+    YEmbedderParam: crate::nodes::types::Float,
+    TEmbedderParam: crate::nodes::types::Float,
+    JointBlocks0Param: crate::nodes::types::Float,
+    JointBlocks1Param: crate::nodes::types::Float,
+    JointBlocks2Param: crate::nodes::types::Float,
+    JointBlocks3Param: crate::nodes::types::Float,
+    JointBlocks4Param: crate::nodes::types::Float,
+    JointBlocks5Param: crate::nodes::types::Float,
+    JointBlocks6Param: crate::nodes::types::Float,
+    JointBlocks7Param: crate::nodes::types::Float,
+    JointBlocks8Param: crate::nodes::types::Float,
+    JointBlocks9Param: crate::nodes::types::Float,
+    JointBlocks10Param: crate::nodes::types::Float,
+    JointBlocks11Param: crate::nodes::types::Float,
+    JointBlocks12Param: crate::nodes::types::Float,
+    JointBlocks13Param: crate::nodes::types::Float,
+    JointBlocks14Param: crate::nodes::types::Float,
+    JointBlocks15Param: crate::nodes::types::Float,
+    JointBlocks16Param: crate::nodes::types::Float,
+    JointBlocks17Param: crate::nodes::types::Float,
+    JointBlocks18Param: crate::nodes::types::Float,
+    JointBlocks19Param: crate::nodes::types::Float,
+    JointBlocks20Param: crate::nodes::types::Float,
+    JointBlocks21Param: crate::nodes::types::Float,
+    JointBlocks22Param: crate::nodes::types::Float,
+    JointBlocks23Param: crate::nodes::types::Float,
+    JointBlocks24Param: crate::nodes::types::Float,
+    JointBlocks25Param: crate::nodes::types::Float,
+    JointBlocks26Param: crate::nodes::types::Float,
+    JointBlocks27Param: crate::nodes::types::Float,
+    JointBlocks28Param: crate::nodes::types::Float,
+    JointBlocks29Param: crate::nodes::types::Float,
+    JointBlocks30Param: crate::nodes::types::Float,
+    JointBlocks31Param: crate::nodes::types::Float,
+    JointBlocks32Param: crate::nodes::types::Float,
+    JointBlocks33Param: crate::nodes::types::Float,
+    JointBlocks34Param: crate::nodes::types::Float,
+    JointBlocks35Param: crate::nodes::types::Float,
+    JointBlocks36Param: crate::nodes::types::Float,
+    JointBlocks37Param: crate::nodes::types::Float,
+    FinalLayerParam: crate::nodes::types::Float,
 > {
     ///No documentation.
-    pub model_1: Model1,
+    pub model_1: Model1Param,
     ///No documentation.
-    pub model_2: Model2,
+    pub model_2: Model2Param,
     /**No documentation.
 
 **Metadata**:
@@ -6548,7 +6548,7 @@ pub struct ModelMergeSd35Large<
   - Min: 0
   - Step: 0.01
 */
-    pub pos_embed: PosEmbed,
+    pub pos_embed: PosEmbedParam,
     /**No documentation.
 
 **Metadata**:
@@ -6557,7 +6557,7 @@ pub struct ModelMergeSd35Large<
   - Min: 0
   - Step: 0.01
 */
-    pub x_embedder: XEmbedder,
+    pub x_embedder: XEmbedderParam,
     /**No documentation.
 
 **Metadata**:
@@ -6566,7 +6566,7 @@ pub struct ModelMergeSd35Large<
   - Min: 0
   - Step: 0.01
 */
-    pub context_embedder: ContextEmbedder,
+    pub context_embedder: ContextEmbedderParam,
     /**No documentation.
 
 **Metadata**:
@@ -6575,7 +6575,7 @@ pub struct ModelMergeSd35Large<
   - Min: 0
   - Step: 0.01
 */
-    pub y_embedder: YEmbedder,
+    pub y_embedder: YEmbedderParam,
     /**No documentation.
 
 **Metadata**:
@@ -6584,7 +6584,7 @@ pub struct ModelMergeSd35Large<
   - Min: 0
   - Step: 0.01
 */
-    pub t_embedder: TEmbedder,
+    pub t_embedder: TEmbedderParam,
     /**No documentation.
 
 **Metadata**:
@@ -6593,7 +6593,7 @@ pub struct ModelMergeSd35Large<
   - Min: 0
   - Step: 0.01
 */
-    pub joint_blocks_0: JointBlocks0,
+    pub joint_blocks_0: JointBlocks0Param,
     /**No documentation.
 
 **Metadata**:
@@ -6602,7 +6602,7 @@ pub struct ModelMergeSd35Large<
   - Min: 0
   - Step: 0.01
 */
-    pub joint_blocks_1: JointBlocks1,
+    pub joint_blocks_1: JointBlocks1Param,
     /**No documentation.
 
 **Metadata**:
@@ -6611,7 +6611,7 @@ pub struct ModelMergeSd35Large<
   - Min: 0
   - Step: 0.01
 */
-    pub joint_blocks_2: JointBlocks2,
+    pub joint_blocks_2: JointBlocks2Param,
     /**No documentation.
 
 **Metadata**:
@@ -6620,7 +6620,7 @@ pub struct ModelMergeSd35Large<
   - Min: 0
   - Step: 0.01
 */
-    pub joint_blocks_3: JointBlocks3,
+    pub joint_blocks_3: JointBlocks3Param,
     /**No documentation.
 
 **Metadata**:
@@ -6629,7 +6629,7 @@ pub struct ModelMergeSd35Large<
   - Min: 0
   - Step: 0.01
 */
-    pub joint_blocks_4: JointBlocks4,
+    pub joint_blocks_4: JointBlocks4Param,
     /**No documentation.
 
 **Metadata**:
@@ -6638,7 +6638,7 @@ pub struct ModelMergeSd35Large<
   - Min: 0
   - Step: 0.01
 */
-    pub joint_blocks_5: JointBlocks5,
+    pub joint_blocks_5: JointBlocks5Param,
     /**No documentation.
 
 **Metadata**:
@@ -6647,7 +6647,7 @@ pub struct ModelMergeSd35Large<
   - Min: 0
   - Step: 0.01
 */
-    pub joint_blocks_6: JointBlocks6,
+    pub joint_blocks_6: JointBlocks6Param,
     /**No documentation.
 
 **Metadata**:
@@ -6656,7 +6656,7 @@ pub struct ModelMergeSd35Large<
   - Min: 0
   - Step: 0.01
 */
-    pub joint_blocks_7: JointBlocks7,
+    pub joint_blocks_7: JointBlocks7Param,
     /**No documentation.
 
 **Metadata**:
@@ -6665,7 +6665,7 @@ pub struct ModelMergeSd35Large<
   - Min: 0
   - Step: 0.01
 */
-    pub joint_blocks_8: JointBlocks8,
+    pub joint_blocks_8: JointBlocks8Param,
     /**No documentation.
 
 **Metadata**:
@@ -6674,7 +6674,7 @@ pub struct ModelMergeSd35Large<
   - Min: 0
   - Step: 0.01
 */
-    pub joint_blocks_9: JointBlocks9,
+    pub joint_blocks_9: JointBlocks9Param,
     /**No documentation.
 
 **Metadata**:
@@ -6683,7 +6683,7 @@ pub struct ModelMergeSd35Large<
   - Min: 0
   - Step: 0.01
 */
-    pub joint_blocks_10: JointBlocks10,
+    pub joint_blocks_10: JointBlocks10Param,
     /**No documentation.
 
 **Metadata**:
@@ -6692,7 +6692,7 @@ pub struct ModelMergeSd35Large<
   - Min: 0
   - Step: 0.01
 */
-    pub joint_blocks_11: JointBlocks11,
+    pub joint_blocks_11: JointBlocks11Param,
     /**No documentation.
 
 **Metadata**:
@@ -6701,7 +6701,7 @@ pub struct ModelMergeSd35Large<
   - Min: 0
   - Step: 0.01
 */
-    pub joint_blocks_12: JointBlocks12,
+    pub joint_blocks_12: JointBlocks12Param,
     /**No documentation.
 
 **Metadata**:
@@ -6710,7 +6710,7 @@ pub struct ModelMergeSd35Large<
   - Min: 0
   - Step: 0.01
 */
-    pub joint_blocks_13: JointBlocks13,
+    pub joint_blocks_13: JointBlocks13Param,
     /**No documentation.
 
 **Metadata**:
@@ -6719,7 +6719,7 @@ pub struct ModelMergeSd35Large<
   - Min: 0
   - Step: 0.01
 */
-    pub joint_blocks_14: JointBlocks14,
+    pub joint_blocks_14: JointBlocks14Param,
     /**No documentation.
 
 **Metadata**:
@@ -6728,7 +6728,7 @@ pub struct ModelMergeSd35Large<
   - Min: 0
   - Step: 0.01
 */
-    pub joint_blocks_15: JointBlocks15,
+    pub joint_blocks_15: JointBlocks15Param,
     /**No documentation.
 
 **Metadata**:
@@ -6737,7 +6737,7 @@ pub struct ModelMergeSd35Large<
   - Min: 0
   - Step: 0.01
 */
-    pub joint_blocks_16: JointBlocks16,
+    pub joint_blocks_16: JointBlocks16Param,
     /**No documentation.
 
 **Metadata**:
@@ -6746,7 +6746,7 @@ pub struct ModelMergeSd35Large<
   - Min: 0
   - Step: 0.01
 */
-    pub joint_blocks_17: JointBlocks17,
+    pub joint_blocks_17: JointBlocks17Param,
     /**No documentation.
 
 **Metadata**:
@@ -6755,7 +6755,7 @@ pub struct ModelMergeSd35Large<
   - Min: 0
   - Step: 0.01
 */
-    pub joint_blocks_18: JointBlocks18,
+    pub joint_blocks_18: JointBlocks18Param,
     /**No documentation.
 
 **Metadata**:
@@ -6764,7 +6764,7 @@ pub struct ModelMergeSd35Large<
   - Min: 0
   - Step: 0.01
 */
-    pub joint_blocks_19: JointBlocks19,
+    pub joint_blocks_19: JointBlocks19Param,
     /**No documentation.
 
 **Metadata**:
@@ -6773,7 +6773,7 @@ pub struct ModelMergeSd35Large<
   - Min: 0
   - Step: 0.01
 */
-    pub joint_blocks_20: JointBlocks20,
+    pub joint_blocks_20: JointBlocks20Param,
     /**No documentation.
 
 **Metadata**:
@@ -6782,7 +6782,7 @@ pub struct ModelMergeSd35Large<
   - Min: 0
   - Step: 0.01
 */
-    pub joint_blocks_21: JointBlocks21,
+    pub joint_blocks_21: JointBlocks21Param,
     /**No documentation.
 
 **Metadata**:
@@ -6791,7 +6791,7 @@ pub struct ModelMergeSd35Large<
   - Min: 0
   - Step: 0.01
 */
-    pub joint_blocks_22: JointBlocks22,
+    pub joint_blocks_22: JointBlocks22Param,
     /**No documentation.
 
 **Metadata**:
@@ -6800,7 +6800,7 @@ pub struct ModelMergeSd35Large<
   - Min: 0
   - Step: 0.01
 */
-    pub joint_blocks_23: JointBlocks23,
+    pub joint_blocks_23: JointBlocks23Param,
     /**No documentation.
 
 **Metadata**:
@@ -6809,7 +6809,7 @@ pub struct ModelMergeSd35Large<
   - Min: 0
   - Step: 0.01
 */
-    pub joint_blocks_24: JointBlocks24,
+    pub joint_blocks_24: JointBlocks24Param,
     /**No documentation.
 
 **Metadata**:
@@ -6818,7 +6818,7 @@ pub struct ModelMergeSd35Large<
   - Min: 0
   - Step: 0.01
 */
-    pub joint_blocks_25: JointBlocks25,
+    pub joint_blocks_25: JointBlocks25Param,
     /**No documentation.
 
 **Metadata**:
@@ -6827,7 +6827,7 @@ pub struct ModelMergeSd35Large<
   - Min: 0
   - Step: 0.01
 */
-    pub joint_blocks_26: JointBlocks26,
+    pub joint_blocks_26: JointBlocks26Param,
     /**No documentation.
 
 **Metadata**:
@@ -6836,7 +6836,7 @@ pub struct ModelMergeSd35Large<
   - Min: 0
   - Step: 0.01
 */
-    pub joint_blocks_27: JointBlocks27,
+    pub joint_blocks_27: JointBlocks27Param,
     /**No documentation.
 
 **Metadata**:
@@ -6845,7 +6845,7 @@ pub struct ModelMergeSd35Large<
   - Min: 0
   - Step: 0.01
 */
-    pub joint_blocks_28: JointBlocks28,
+    pub joint_blocks_28: JointBlocks28Param,
     /**No documentation.
 
 **Metadata**:
@@ -6854,7 +6854,7 @@ pub struct ModelMergeSd35Large<
   - Min: 0
   - Step: 0.01
 */
-    pub joint_blocks_29: JointBlocks29,
+    pub joint_blocks_29: JointBlocks29Param,
     /**No documentation.
 
 **Metadata**:
@@ -6863,7 +6863,7 @@ pub struct ModelMergeSd35Large<
   - Min: 0
   - Step: 0.01
 */
-    pub joint_blocks_30: JointBlocks30,
+    pub joint_blocks_30: JointBlocks30Param,
     /**No documentation.
 
 **Metadata**:
@@ -6872,7 +6872,7 @@ pub struct ModelMergeSd35Large<
   - Min: 0
   - Step: 0.01
 */
-    pub joint_blocks_31: JointBlocks31,
+    pub joint_blocks_31: JointBlocks31Param,
     /**No documentation.
 
 **Metadata**:
@@ -6881,7 +6881,7 @@ pub struct ModelMergeSd35Large<
   - Min: 0
   - Step: 0.01
 */
-    pub joint_blocks_32: JointBlocks32,
+    pub joint_blocks_32: JointBlocks32Param,
     /**No documentation.
 
 **Metadata**:
@@ -6890,7 +6890,7 @@ pub struct ModelMergeSd35Large<
   - Min: 0
   - Step: 0.01
 */
-    pub joint_blocks_33: JointBlocks33,
+    pub joint_blocks_33: JointBlocks33Param,
     /**No documentation.
 
 **Metadata**:
@@ -6899,7 +6899,7 @@ pub struct ModelMergeSd35Large<
   - Min: 0
   - Step: 0.01
 */
-    pub joint_blocks_34: JointBlocks34,
+    pub joint_blocks_34: JointBlocks34Param,
     /**No documentation.
 
 **Metadata**:
@@ -6908,7 +6908,7 @@ pub struct ModelMergeSd35Large<
   - Min: 0
   - Step: 0.01
 */
-    pub joint_blocks_35: JointBlocks35,
+    pub joint_blocks_35: JointBlocks35Param,
     /**No documentation.
 
 **Metadata**:
@@ -6917,7 +6917,7 @@ pub struct ModelMergeSd35Large<
   - Min: 0
   - Step: 0.01
 */
-    pub joint_blocks_36: JointBlocks36,
+    pub joint_blocks_36: JointBlocks36Param,
     /**No documentation.
 
 **Metadata**:
@@ -6926,7 +6926,7 @@ pub struct ModelMergeSd35Large<
   - Min: 0
   - Step: 0.01
 */
-    pub joint_blocks_37: JointBlocks37,
+    pub joint_blocks_37: JointBlocks37Param,
     /**No documentation.
 
 **Metadata**:
@@ -6935,151 +6935,151 @@ pub struct ModelMergeSd35Large<
   - Min: 0
   - Step: 0.01
 */
-    pub final_layer: FinalLayer,
+    pub final_layer: FinalLayerParam,
 }
 impl<
-    Model1: crate::nodes::types::Model,
-    Model2: crate::nodes::types::Model,
-    PosEmbed: crate::nodes::types::Float,
-    XEmbedder: crate::nodes::types::Float,
-    ContextEmbedder: crate::nodes::types::Float,
-    YEmbedder: crate::nodes::types::Float,
-    TEmbedder: crate::nodes::types::Float,
-    JointBlocks0: crate::nodes::types::Float,
-    JointBlocks1: crate::nodes::types::Float,
-    JointBlocks2: crate::nodes::types::Float,
-    JointBlocks3: crate::nodes::types::Float,
-    JointBlocks4: crate::nodes::types::Float,
-    JointBlocks5: crate::nodes::types::Float,
-    JointBlocks6: crate::nodes::types::Float,
-    JointBlocks7: crate::nodes::types::Float,
-    JointBlocks8: crate::nodes::types::Float,
-    JointBlocks9: crate::nodes::types::Float,
-    JointBlocks10: crate::nodes::types::Float,
-    JointBlocks11: crate::nodes::types::Float,
-    JointBlocks12: crate::nodes::types::Float,
-    JointBlocks13: crate::nodes::types::Float,
-    JointBlocks14: crate::nodes::types::Float,
-    JointBlocks15: crate::nodes::types::Float,
-    JointBlocks16: crate::nodes::types::Float,
-    JointBlocks17: crate::nodes::types::Float,
-    JointBlocks18: crate::nodes::types::Float,
-    JointBlocks19: crate::nodes::types::Float,
-    JointBlocks20: crate::nodes::types::Float,
-    JointBlocks21: crate::nodes::types::Float,
-    JointBlocks22: crate::nodes::types::Float,
-    JointBlocks23: crate::nodes::types::Float,
-    JointBlocks24: crate::nodes::types::Float,
-    JointBlocks25: crate::nodes::types::Float,
-    JointBlocks26: crate::nodes::types::Float,
-    JointBlocks27: crate::nodes::types::Float,
-    JointBlocks28: crate::nodes::types::Float,
-    JointBlocks29: crate::nodes::types::Float,
-    JointBlocks30: crate::nodes::types::Float,
-    JointBlocks31: crate::nodes::types::Float,
-    JointBlocks32: crate::nodes::types::Float,
-    JointBlocks33: crate::nodes::types::Float,
-    JointBlocks34: crate::nodes::types::Float,
-    JointBlocks35: crate::nodes::types::Float,
-    JointBlocks36: crate::nodes::types::Float,
-    JointBlocks37: crate::nodes::types::Float,
-    FinalLayer: crate::nodes::types::Float,
+    Model1Param: crate::nodes::types::Model,
+    Model2Param: crate::nodes::types::Model,
+    PosEmbedParam: crate::nodes::types::Float,
+    XEmbedderParam: crate::nodes::types::Float,
+    ContextEmbedderParam: crate::nodes::types::Float,
+    YEmbedderParam: crate::nodes::types::Float,
+    TEmbedderParam: crate::nodes::types::Float,
+    JointBlocks0Param: crate::nodes::types::Float,
+    JointBlocks1Param: crate::nodes::types::Float,
+    JointBlocks2Param: crate::nodes::types::Float,
+    JointBlocks3Param: crate::nodes::types::Float,
+    JointBlocks4Param: crate::nodes::types::Float,
+    JointBlocks5Param: crate::nodes::types::Float,
+    JointBlocks6Param: crate::nodes::types::Float,
+    JointBlocks7Param: crate::nodes::types::Float,
+    JointBlocks8Param: crate::nodes::types::Float,
+    JointBlocks9Param: crate::nodes::types::Float,
+    JointBlocks10Param: crate::nodes::types::Float,
+    JointBlocks11Param: crate::nodes::types::Float,
+    JointBlocks12Param: crate::nodes::types::Float,
+    JointBlocks13Param: crate::nodes::types::Float,
+    JointBlocks14Param: crate::nodes::types::Float,
+    JointBlocks15Param: crate::nodes::types::Float,
+    JointBlocks16Param: crate::nodes::types::Float,
+    JointBlocks17Param: crate::nodes::types::Float,
+    JointBlocks18Param: crate::nodes::types::Float,
+    JointBlocks19Param: crate::nodes::types::Float,
+    JointBlocks20Param: crate::nodes::types::Float,
+    JointBlocks21Param: crate::nodes::types::Float,
+    JointBlocks22Param: crate::nodes::types::Float,
+    JointBlocks23Param: crate::nodes::types::Float,
+    JointBlocks24Param: crate::nodes::types::Float,
+    JointBlocks25Param: crate::nodes::types::Float,
+    JointBlocks26Param: crate::nodes::types::Float,
+    JointBlocks27Param: crate::nodes::types::Float,
+    JointBlocks28Param: crate::nodes::types::Float,
+    JointBlocks29Param: crate::nodes::types::Float,
+    JointBlocks30Param: crate::nodes::types::Float,
+    JointBlocks31Param: crate::nodes::types::Float,
+    JointBlocks32Param: crate::nodes::types::Float,
+    JointBlocks33Param: crate::nodes::types::Float,
+    JointBlocks34Param: crate::nodes::types::Float,
+    JointBlocks35Param: crate::nodes::types::Float,
+    JointBlocks36Param: crate::nodes::types::Float,
+    JointBlocks37Param: crate::nodes::types::Float,
+    FinalLayerParam: crate::nodes::types::Float,
 > ModelMergeSd35Large<
-    Model1,
-    Model2,
-    PosEmbed,
-    XEmbedder,
-    ContextEmbedder,
-    YEmbedder,
-    TEmbedder,
-    JointBlocks0,
-    JointBlocks1,
-    JointBlocks2,
-    JointBlocks3,
-    JointBlocks4,
-    JointBlocks5,
-    JointBlocks6,
-    JointBlocks7,
-    JointBlocks8,
-    JointBlocks9,
-    JointBlocks10,
-    JointBlocks11,
-    JointBlocks12,
-    JointBlocks13,
-    JointBlocks14,
-    JointBlocks15,
-    JointBlocks16,
-    JointBlocks17,
-    JointBlocks18,
-    JointBlocks19,
-    JointBlocks20,
-    JointBlocks21,
-    JointBlocks22,
-    JointBlocks23,
-    JointBlocks24,
-    JointBlocks25,
-    JointBlocks26,
-    JointBlocks27,
-    JointBlocks28,
-    JointBlocks29,
-    JointBlocks30,
-    JointBlocks31,
-    JointBlocks32,
-    JointBlocks33,
-    JointBlocks34,
-    JointBlocks35,
-    JointBlocks36,
-    JointBlocks37,
-    FinalLayer,
+    Model1Param,
+    Model2Param,
+    PosEmbedParam,
+    XEmbedderParam,
+    ContextEmbedderParam,
+    YEmbedderParam,
+    TEmbedderParam,
+    JointBlocks0Param,
+    JointBlocks1Param,
+    JointBlocks2Param,
+    JointBlocks3Param,
+    JointBlocks4Param,
+    JointBlocks5Param,
+    JointBlocks6Param,
+    JointBlocks7Param,
+    JointBlocks8Param,
+    JointBlocks9Param,
+    JointBlocks10Param,
+    JointBlocks11Param,
+    JointBlocks12Param,
+    JointBlocks13Param,
+    JointBlocks14Param,
+    JointBlocks15Param,
+    JointBlocks16Param,
+    JointBlocks17Param,
+    JointBlocks18Param,
+    JointBlocks19Param,
+    JointBlocks20Param,
+    JointBlocks21Param,
+    JointBlocks22Param,
+    JointBlocks23Param,
+    JointBlocks24Param,
+    JointBlocks25Param,
+    JointBlocks26Param,
+    JointBlocks27Param,
+    JointBlocks28Param,
+    JointBlocks29Param,
+    JointBlocks30Param,
+    JointBlocks31Param,
+    JointBlocks32Param,
+    JointBlocks33Param,
+    JointBlocks34Param,
+    JointBlocks35Param,
+    JointBlocks36Param,
+    JointBlocks37Param,
+    FinalLayerParam,
 > {
     /// Create a new node.
     pub fn new(
-        model_1: Model1,
-        model_2: Model2,
-        pos_embed: PosEmbed,
-        x_embedder: XEmbedder,
-        context_embedder: ContextEmbedder,
-        y_embedder: YEmbedder,
-        t_embedder: TEmbedder,
-        joint_blocks_0: JointBlocks0,
-        joint_blocks_1: JointBlocks1,
-        joint_blocks_2: JointBlocks2,
-        joint_blocks_3: JointBlocks3,
-        joint_blocks_4: JointBlocks4,
-        joint_blocks_5: JointBlocks5,
-        joint_blocks_6: JointBlocks6,
-        joint_blocks_7: JointBlocks7,
-        joint_blocks_8: JointBlocks8,
-        joint_blocks_9: JointBlocks9,
-        joint_blocks_10: JointBlocks10,
-        joint_blocks_11: JointBlocks11,
-        joint_blocks_12: JointBlocks12,
-        joint_blocks_13: JointBlocks13,
-        joint_blocks_14: JointBlocks14,
-        joint_blocks_15: JointBlocks15,
-        joint_blocks_16: JointBlocks16,
-        joint_blocks_17: JointBlocks17,
-        joint_blocks_18: JointBlocks18,
-        joint_blocks_19: JointBlocks19,
-        joint_blocks_20: JointBlocks20,
-        joint_blocks_21: JointBlocks21,
-        joint_blocks_22: JointBlocks22,
-        joint_blocks_23: JointBlocks23,
-        joint_blocks_24: JointBlocks24,
-        joint_blocks_25: JointBlocks25,
-        joint_blocks_26: JointBlocks26,
-        joint_blocks_27: JointBlocks27,
-        joint_blocks_28: JointBlocks28,
-        joint_blocks_29: JointBlocks29,
-        joint_blocks_30: JointBlocks30,
-        joint_blocks_31: JointBlocks31,
-        joint_blocks_32: JointBlocks32,
-        joint_blocks_33: JointBlocks33,
-        joint_blocks_34: JointBlocks34,
-        joint_blocks_35: JointBlocks35,
-        joint_blocks_36: JointBlocks36,
-        joint_blocks_37: JointBlocks37,
-        final_layer: FinalLayer,
+        model_1: Model1Param,
+        model_2: Model2Param,
+        pos_embed: PosEmbedParam,
+        x_embedder: XEmbedderParam,
+        context_embedder: ContextEmbedderParam,
+        y_embedder: YEmbedderParam,
+        t_embedder: TEmbedderParam,
+        joint_blocks_0: JointBlocks0Param,
+        joint_blocks_1: JointBlocks1Param,
+        joint_blocks_2: JointBlocks2Param,
+        joint_blocks_3: JointBlocks3Param,
+        joint_blocks_4: JointBlocks4Param,
+        joint_blocks_5: JointBlocks5Param,
+        joint_blocks_6: JointBlocks6Param,
+        joint_blocks_7: JointBlocks7Param,
+        joint_blocks_8: JointBlocks8Param,
+        joint_blocks_9: JointBlocks9Param,
+        joint_blocks_10: JointBlocks10Param,
+        joint_blocks_11: JointBlocks11Param,
+        joint_blocks_12: JointBlocks12Param,
+        joint_blocks_13: JointBlocks13Param,
+        joint_blocks_14: JointBlocks14Param,
+        joint_blocks_15: JointBlocks15Param,
+        joint_blocks_16: JointBlocks16Param,
+        joint_blocks_17: JointBlocks17Param,
+        joint_blocks_18: JointBlocks18Param,
+        joint_blocks_19: JointBlocks19Param,
+        joint_blocks_20: JointBlocks20Param,
+        joint_blocks_21: JointBlocks21Param,
+        joint_blocks_22: JointBlocks22Param,
+        joint_blocks_23: JointBlocks23Param,
+        joint_blocks_24: JointBlocks24Param,
+        joint_blocks_25: JointBlocks25Param,
+        joint_blocks_26: JointBlocks26Param,
+        joint_blocks_27: JointBlocks27Param,
+        joint_blocks_28: JointBlocks28Param,
+        joint_blocks_29: JointBlocks29Param,
+        joint_blocks_30: JointBlocks30Param,
+        joint_blocks_31: JointBlocks31Param,
+        joint_blocks_32: JointBlocks32Param,
+        joint_blocks_33: JointBlocks33Param,
+        joint_blocks_34: JointBlocks34Param,
+        joint_blocks_35: JointBlocks35Param,
+        joint_blocks_36: JointBlocks36Param,
+        joint_blocks_37: JointBlocks37Param,
+        final_layer: FinalLayerParam,
     ) -> Self {
         Self {
             model_1,
@@ -7132,100 +7132,100 @@ impl<
     }
 }
 impl<
-    Model1: crate::nodes::types::Model,
-    Model2: crate::nodes::types::Model,
-    PosEmbed: crate::nodes::types::Float,
-    XEmbedder: crate::nodes::types::Float,
-    ContextEmbedder: crate::nodes::types::Float,
-    YEmbedder: crate::nodes::types::Float,
-    TEmbedder: crate::nodes::types::Float,
-    JointBlocks0: crate::nodes::types::Float,
-    JointBlocks1: crate::nodes::types::Float,
-    JointBlocks2: crate::nodes::types::Float,
-    JointBlocks3: crate::nodes::types::Float,
-    JointBlocks4: crate::nodes::types::Float,
-    JointBlocks5: crate::nodes::types::Float,
-    JointBlocks6: crate::nodes::types::Float,
-    JointBlocks7: crate::nodes::types::Float,
-    JointBlocks8: crate::nodes::types::Float,
-    JointBlocks9: crate::nodes::types::Float,
-    JointBlocks10: crate::nodes::types::Float,
-    JointBlocks11: crate::nodes::types::Float,
-    JointBlocks12: crate::nodes::types::Float,
-    JointBlocks13: crate::nodes::types::Float,
-    JointBlocks14: crate::nodes::types::Float,
-    JointBlocks15: crate::nodes::types::Float,
-    JointBlocks16: crate::nodes::types::Float,
-    JointBlocks17: crate::nodes::types::Float,
-    JointBlocks18: crate::nodes::types::Float,
-    JointBlocks19: crate::nodes::types::Float,
-    JointBlocks20: crate::nodes::types::Float,
-    JointBlocks21: crate::nodes::types::Float,
-    JointBlocks22: crate::nodes::types::Float,
-    JointBlocks23: crate::nodes::types::Float,
-    JointBlocks24: crate::nodes::types::Float,
-    JointBlocks25: crate::nodes::types::Float,
-    JointBlocks26: crate::nodes::types::Float,
-    JointBlocks27: crate::nodes::types::Float,
-    JointBlocks28: crate::nodes::types::Float,
-    JointBlocks29: crate::nodes::types::Float,
-    JointBlocks30: crate::nodes::types::Float,
-    JointBlocks31: crate::nodes::types::Float,
-    JointBlocks32: crate::nodes::types::Float,
-    JointBlocks33: crate::nodes::types::Float,
-    JointBlocks34: crate::nodes::types::Float,
-    JointBlocks35: crate::nodes::types::Float,
-    JointBlocks36: crate::nodes::types::Float,
-    JointBlocks37: crate::nodes::types::Float,
-    FinalLayer: crate::nodes::types::Float,
+    Model1Param: crate::nodes::types::Model,
+    Model2Param: crate::nodes::types::Model,
+    PosEmbedParam: crate::nodes::types::Float,
+    XEmbedderParam: crate::nodes::types::Float,
+    ContextEmbedderParam: crate::nodes::types::Float,
+    YEmbedderParam: crate::nodes::types::Float,
+    TEmbedderParam: crate::nodes::types::Float,
+    JointBlocks0Param: crate::nodes::types::Float,
+    JointBlocks1Param: crate::nodes::types::Float,
+    JointBlocks2Param: crate::nodes::types::Float,
+    JointBlocks3Param: crate::nodes::types::Float,
+    JointBlocks4Param: crate::nodes::types::Float,
+    JointBlocks5Param: crate::nodes::types::Float,
+    JointBlocks6Param: crate::nodes::types::Float,
+    JointBlocks7Param: crate::nodes::types::Float,
+    JointBlocks8Param: crate::nodes::types::Float,
+    JointBlocks9Param: crate::nodes::types::Float,
+    JointBlocks10Param: crate::nodes::types::Float,
+    JointBlocks11Param: crate::nodes::types::Float,
+    JointBlocks12Param: crate::nodes::types::Float,
+    JointBlocks13Param: crate::nodes::types::Float,
+    JointBlocks14Param: crate::nodes::types::Float,
+    JointBlocks15Param: crate::nodes::types::Float,
+    JointBlocks16Param: crate::nodes::types::Float,
+    JointBlocks17Param: crate::nodes::types::Float,
+    JointBlocks18Param: crate::nodes::types::Float,
+    JointBlocks19Param: crate::nodes::types::Float,
+    JointBlocks20Param: crate::nodes::types::Float,
+    JointBlocks21Param: crate::nodes::types::Float,
+    JointBlocks22Param: crate::nodes::types::Float,
+    JointBlocks23Param: crate::nodes::types::Float,
+    JointBlocks24Param: crate::nodes::types::Float,
+    JointBlocks25Param: crate::nodes::types::Float,
+    JointBlocks26Param: crate::nodes::types::Float,
+    JointBlocks27Param: crate::nodes::types::Float,
+    JointBlocks28Param: crate::nodes::types::Float,
+    JointBlocks29Param: crate::nodes::types::Float,
+    JointBlocks30Param: crate::nodes::types::Float,
+    JointBlocks31Param: crate::nodes::types::Float,
+    JointBlocks32Param: crate::nodes::types::Float,
+    JointBlocks33Param: crate::nodes::types::Float,
+    JointBlocks34Param: crate::nodes::types::Float,
+    JointBlocks35Param: crate::nodes::types::Float,
+    JointBlocks36Param: crate::nodes::types::Float,
+    JointBlocks37Param: crate::nodes::types::Float,
+    FinalLayerParam: crate::nodes::types::Float,
 > crate::nodes::TypedNode
 for ModelMergeSd35Large<
-    Model1,
-    Model2,
-    PosEmbed,
-    XEmbedder,
-    ContextEmbedder,
-    YEmbedder,
-    TEmbedder,
-    JointBlocks0,
-    JointBlocks1,
-    JointBlocks2,
-    JointBlocks3,
-    JointBlocks4,
-    JointBlocks5,
-    JointBlocks6,
-    JointBlocks7,
-    JointBlocks8,
-    JointBlocks9,
-    JointBlocks10,
-    JointBlocks11,
-    JointBlocks12,
-    JointBlocks13,
-    JointBlocks14,
-    JointBlocks15,
-    JointBlocks16,
-    JointBlocks17,
-    JointBlocks18,
-    JointBlocks19,
-    JointBlocks20,
-    JointBlocks21,
-    JointBlocks22,
-    JointBlocks23,
-    JointBlocks24,
-    JointBlocks25,
-    JointBlocks26,
-    JointBlocks27,
-    JointBlocks28,
-    JointBlocks29,
-    JointBlocks30,
-    JointBlocks31,
-    JointBlocks32,
-    JointBlocks33,
-    JointBlocks34,
-    JointBlocks35,
-    JointBlocks36,
-    JointBlocks37,
-    FinalLayer,
+    Model1Param,
+    Model2Param,
+    PosEmbedParam,
+    XEmbedderParam,
+    ContextEmbedderParam,
+    YEmbedderParam,
+    TEmbedderParam,
+    JointBlocks0Param,
+    JointBlocks1Param,
+    JointBlocks2Param,
+    JointBlocks3Param,
+    JointBlocks4Param,
+    JointBlocks5Param,
+    JointBlocks6Param,
+    JointBlocks7Param,
+    JointBlocks8Param,
+    JointBlocks9Param,
+    JointBlocks10Param,
+    JointBlocks11Param,
+    JointBlocks12Param,
+    JointBlocks13Param,
+    JointBlocks14Param,
+    JointBlocks15Param,
+    JointBlocks16Param,
+    JointBlocks17Param,
+    JointBlocks18Param,
+    JointBlocks19Param,
+    JointBlocks20Param,
+    JointBlocks21Param,
+    JointBlocks22Param,
+    JointBlocks23Param,
+    JointBlocks24Param,
+    JointBlocks25Param,
+    JointBlocks26Param,
+    JointBlocks27Param,
+    JointBlocks28Param,
+    JointBlocks29Param,
+    JointBlocks30Param,
+    JointBlocks31Param,
+    JointBlocks32Param,
+    JointBlocks33Param,
+    JointBlocks34Param,
+    JointBlocks35Param,
+    JointBlocks36Param,
+    JointBlocks37Param,
+    FinalLayerParam,
 > {
     type Output = crate::nodes::types::ModelOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
@@ -7321,43 +7321,43 @@ for ModelMergeSd35Large<
 ///**ModelMergeSD3_2B**: No description.
 #[derive(Clone)]
 pub struct ModelMergeSd32B<
-    Model1: crate::nodes::types::Model,
-    Model2: crate::nodes::types::Model,
-    PosEmbed: crate::nodes::types::Float,
-    XEmbedder: crate::nodes::types::Float,
-    ContextEmbedder: crate::nodes::types::Float,
-    YEmbedder: crate::nodes::types::Float,
-    TEmbedder: crate::nodes::types::Float,
-    JointBlocks0: crate::nodes::types::Float,
-    JointBlocks1: crate::nodes::types::Float,
-    JointBlocks2: crate::nodes::types::Float,
-    JointBlocks3: crate::nodes::types::Float,
-    JointBlocks4: crate::nodes::types::Float,
-    JointBlocks5: crate::nodes::types::Float,
-    JointBlocks6: crate::nodes::types::Float,
-    JointBlocks7: crate::nodes::types::Float,
-    JointBlocks8: crate::nodes::types::Float,
-    JointBlocks9: crate::nodes::types::Float,
-    JointBlocks10: crate::nodes::types::Float,
-    JointBlocks11: crate::nodes::types::Float,
-    JointBlocks12: crate::nodes::types::Float,
-    JointBlocks13: crate::nodes::types::Float,
-    JointBlocks14: crate::nodes::types::Float,
-    JointBlocks15: crate::nodes::types::Float,
-    JointBlocks16: crate::nodes::types::Float,
-    JointBlocks17: crate::nodes::types::Float,
-    JointBlocks18: crate::nodes::types::Float,
-    JointBlocks19: crate::nodes::types::Float,
-    JointBlocks20: crate::nodes::types::Float,
-    JointBlocks21: crate::nodes::types::Float,
-    JointBlocks22: crate::nodes::types::Float,
-    JointBlocks23: crate::nodes::types::Float,
-    FinalLayer: crate::nodes::types::Float,
+    Model1Param: crate::nodes::types::Model,
+    Model2Param: crate::nodes::types::Model,
+    PosEmbedParam: crate::nodes::types::Float,
+    XEmbedderParam: crate::nodes::types::Float,
+    ContextEmbedderParam: crate::nodes::types::Float,
+    YEmbedderParam: crate::nodes::types::Float,
+    TEmbedderParam: crate::nodes::types::Float,
+    JointBlocks0Param: crate::nodes::types::Float,
+    JointBlocks1Param: crate::nodes::types::Float,
+    JointBlocks2Param: crate::nodes::types::Float,
+    JointBlocks3Param: crate::nodes::types::Float,
+    JointBlocks4Param: crate::nodes::types::Float,
+    JointBlocks5Param: crate::nodes::types::Float,
+    JointBlocks6Param: crate::nodes::types::Float,
+    JointBlocks7Param: crate::nodes::types::Float,
+    JointBlocks8Param: crate::nodes::types::Float,
+    JointBlocks9Param: crate::nodes::types::Float,
+    JointBlocks10Param: crate::nodes::types::Float,
+    JointBlocks11Param: crate::nodes::types::Float,
+    JointBlocks12Param: crate::nodes::types::Float,
+    JointBlocks13Param: crate::nodes::types::Float,
+    JointBlocks14Param: crate::nodes::types::Float,
+    JointBlocks15Param: crate::nodes::types::Float,
+    JointBlocks16Param: crate::nodes::types::Float,
+    JointBlocks17Param: crate::nodes::types::Float,
+    JointBlocks18Param: crate::nodes::types::Float,
+    JointBlocks19Param: crate::nodes::types::Float,
+    JointBlocks20Param: crate::nodes::types::Float,
+    JointBlocks21Param: crate::nodes::types::Float,
+    JointBlocks22Param: crate::nodes::types::Float,
+    JointBlocks23Param: crate::nodes::types::Float,
+    FinalLayerParam: crate::nodes::types::Float,
 > {
     ///No documentation.
-    pub model_1: Model1,
+    pub model_1: Model1Param,
     ///No documentation.
-    pub model_2: Model2,
+    pub model_2: Model2Param,
     /**No documentation.
 
 **Metadata**:
@@ -7366,7 +7366,7 @@ pub struct ModelMergeSd32B<
   - Min: 0
   - Step: 0.01
 */
-    pub pos_embed: PosEmbed,
+    pub pos_embed: PosEmbedParam,
     /**No documentation.
 
 **Metadata**:
@@ -7375,7 +7375,7 @@ pub struct ModelMergeSd32B<
   - Min: 0
   - Step: 0.01
 */
-    pub x_embedder: XEmbedder,
+    pub x_embedder: XEmbedderParam,
     /**No documentation.
 
 **Metadata**:
@@ -7384,7 +7384,7 @@ pub struct ModelMergeSd32B<
   - Min: 0
   - Step: 0.01
 */
-    pub context_embedder: ContextEmbedder,
+    pub context_embedder: ContextEmbedderParam,
     /**No documentation.
 
 **Metadata**:
@@ -7393,7 +7393,7 @@ pub struct ModelMergeSd32B<
   - Min: 0
   - Step: 0.01
 */
-    pub y_embedder: YEmbedder,
+    pub y_embedder: YEmbedderParam,
     /**No documentation.
 
 **Metadata**:
@@ -7402,7 +7402,7 @@ pub struct ModelMergeSd32B<
   - Min: 0
   - Step: 0.01
 */
-    pub t_embedder: TEmbedder,
+    pub t_embedder: TEmbedderParam,
     /**No documentation.
 
 **Metadata**:
@@ -7411,7 +7411,7 @@ pub struct ModelMergeSd32B<
   - Min: 0
   - Step: 0.01
 */
-    pub joint_blocks_0: JointBlocks0,
+    pub joint_blocks_0: JointBlocks0Param,
     /**No documentation.
 
 **Metadata**:
@@ -7420,7 +7420,7 @@ pub struct ModelMergeSd32B<
   - Min: 0
   - Step: 0.01
 */
-    pub joint_blocks_1: JointBlocks1,
+    pub joint_blocks_1: JointBlocks1Param,
     /**No documentation.
 
 **Metadata**:
@@ -7429,7 +7429,7 @@ pub struct ModelMergeSd32B<
   - Min: 0
   - Step: 0.01
 */
-    pub joint_blocks_2: JointBlocks2,
+    pub joint_blocks_2: JointBlocks2Param,
     /**No documentation.
 
 **Metadata**:
@@ -7438,7 +7438,7 @@ pub struct ModelMergeSd32B<
   - Min: 0
   - Step: 0.01
 */
-    pub joint_blocks_3: JointBlocks3,
+    pub joint_blocks_3: JointBlocks3Param,
     /**No documentation.
 
 **Metadata**:
@@ -7447,7 +7447,7 @@ pub struct ModelMergeSd32B<
   - Min: 0
   - Step: 0.01
 */
-    pub joint_blocks_4: JointBlocks4,
+    pub joint_blocks_4: JointBlocks4Param,
     /**No documentation.
 
 **Metadata**:
@@ -7456,7 +7456,7 @@ pub struct ModelMergeSd32B<
   - Min: 0
   - Step: 0.01
 */
-    pub joint_blocks_5: JointBlocks5,
+    pub joint_blocks_5: JointBlocks5Param,
     /**No documentation.
 
 **Metadata**:
@@ -7465,7 +7465,7 @@ pub struct ModelMergeSd32B<
   - Min: 0
   - Step: 0.01
 */
-    pub joint_blocks_6: JointBlocks6,
+    pub joint_blocks_6: JointBlocks6Param,
     /**No documentation.
 
 **Metadata**:
@@ -7474,7 +7474,7 @@ pub struct ModelMergeSd32B<
   - Min: 0
   - Step: 0.01
 */
-    pub joint_blocks_7: JointBlocks7,
+    pub joint_blocks_7: JointBlocks7Param,
     /**No documentation.
 
 **Metadata**:
@@ -7483,7 +7483,7 @@ pub struct ModelMergeSd32B<
   - Min: 0
   - Step: 0.01
 */
-    pub joint_blocks_8: JointBlocks8,
+    pub joint_blocks_8: JointBlocks8Param,
     /**No documentation.
 
 **Metadata**:
@@ -7492,7 +7492,7 @@ pub struct ModelMergeSd32B<
   - Min: 0
   - Step: 0.01
 */
-    pub joint_blocks_9: JointBlocks9,
+    pub joint_blocks_9: JointBlocks9Param,
     /**No documentation.
 
 **Metadata**:
@@ -7501,7 +7501,7 @@ pub struct ModelMergeSd32B<
   - Min: 0
   - Step: 0.01
 */
-    pub joint_blocks_10: JointBlocks10,
+    pub joint_blocks_10: JointBlocks10Param,
     /**No documentation.
 
 **Metadata**:
@@ -7510,7 +7510,7 @@ pub struct ModelMergeSd32B<
   - Min: 0
   - Step: 0.01
 */
-    pub joint_blocks_11: JointBlocks11,
+    pub joint_blocks_11: JointBlocks11Param,
     /**No documentation.
 
 **Metadata**:
@@ -7519,7 +7519,7 @@ pub struct ModelMergeSd32B<
   - Min: 0
   - Step: 0.01
 */
-    pub joint_blocks_12: JointBlocks12,
+    pub joint_blocks_12: JointBlocks12Param,
     /**No documentation.
 
 **Metadata**:
@@ -7528,7 +7528,7 @@ pub struct ModelMergeSd32B<
   - Min: 0
   - Step: 0.01
 */
-    pub joint_blocks_13: JointBlocks13,
+    pub joint_blocks_13: JointBlocks13Param,
     /**No documentation.
 
 **Metadata**:
@@ -7537,7 +7537,7 @@ pub struct ModelMergeSd32B<
   - Min: 0
   - Step: 0.01
 */
-    pub joint_blocks_14: JointBlocks14,
+    pub joint_blocks_14: JointBlocks14Param,
     /**No documentation.
 
 **Metadata**:
@@ -7546,7 +7546,7 @@ pub struct ModelMergeSd32B<
   - Min: 0
   - Step: 0.01
 */
-    pub joint_blocks_15: JointBlocks15,
+    pub joint_blocks_15: JointBlocks15Param,
     /**No documentation.
 
 **Metadata**:
@@ -7555,7 +7555,7 @@ pub struct ModelMergeSd32B<
   - Min: 0
   - Step: 0.01
 */
-    pub joint_blocks_16: JointBlocks16,
+    pub joint_blocks_16: JointBlocks16Param,
     /**No documentation.
 
 **Metadata**:
@@ -7564,7 +7564,7 @@ pub struct ModelMergeSd32B<
   - Min: 0
   - Step: 0.01
 */
-    pub joint_blocks_17: JointBlocks17,
+    pub joint_blocks_17: JointBlocks17Param,
     /**No documentation.
 
 **Metadata**:
@@ -7573,7 +7573,7 @@ pub struct ModelMergeSd32B<
   - Min: 0
   - Step: 0.01
 */
-    pub joint_blocks_18: JointBlocks18,
+    pub joint_blocks_18: JointBlocks18Param,
     /**No documentation.
 
 **Metadata**:
@@ -7582,7 +7582,7 @@ pub struct ModelMergeSd32B<
   - Min: 0
   - Step: 0.01
 */
-    pub joint_blocks_19: JointBlocks19,
+    pub joint_blocks_19: JointBlocks19Param,
     /**No documentation.
 
 **Metadata**:
@@ -7591,7 +7591,7 @@ pub struct ModelMergeSd32B<
   - Min: 0
   - Step: 0.01
 */
-    pub joint_blocks_20: JointBlocks20,
+    pub joint_blocks_20: JointBlocks20Param,
     /**No documentation.
 
 **Metadata**:
@@ -7600,7 +7600,7 @@ pub struct ModelMergeSd32B<
   - Min: 0
   - Step: 0.01
 */
-    pub joint_blocks_21: JointBlocks21,
+    pub joint_blocks_21: JointBlocks21Param,
     /**No documentation.
 
 **Metadata**:
@@ -7609,7 +7609,7 @@ pub struct ModelMergeSd32B<
   - Min: 0
   - Step: 0.01
 */
-    pub joint_blocks_22: JointBlocks22,
+    pub joint_blocks_22: JointBlocks22Param,
     /**No documentation.
 
 **Metadata**:
@@ -7618,7 +7618,7 @@ pub struct ModelMergeSd32B<
   - Min: 0
   - Step: 0.01
 */
-    pub joint_blocks_23: JointBlocks23,
+    pub joint_blocks_23: JointBlocks23Param,
     /**No documentation.
 
 **Metadata**:
@@ -7627,109 +7627,109 @@ pub struct ModelMergeSd32B<
   - Min: 0
   - Step: 0.01
 */
-    pub final_layer: FinalLayer,
+    pub final_layer: FinalLayerParam,
 }
 impl<
-    Model1: crate::nodes::types::Model,
-    Model2: crate::nodes::types::Model,
-    PosEmbed: crate::nodes::types::Float,
-    XEmbedder: crate::nodes::types::Float,
-    ContextEmbedder: crate::nodes::types::Float,
-    YEmbedder: crate::nodes::types::Float,
-    TEmbedder: crate::nodes::types::Float,
-    JointBlocks0: crate::nodes::types::Float,
-    JointBlocks1: crate::nodes::types::Float,
-    JointBlocks2: crate::nodes::types::Float,
-    JointBlocks3: crate::nodes::types::Float,
-    JointBlocks4: crate::nodes::types::Float,
-    JointBlocks5: crate::nodes::types::Float,
-    JointBlocks6: crate::nodes::types::Float,
-    JointBlocks7: crate::nodes::types::Float,
-    JointBlocks8: crate::nodes::types::Float,
-    JointBlocks9: crate::nodes::types::Float,
-    JointBlocks10: crate::nodes::types::Float,
-    JointBlocks11: crate::nodes::types::Float,
-    JointBlocks12: crate::nodes::types::Float,
-    JointBlocks13: crate::nodes::types::Float,
-    JointBlocks14: crate::nodes::types::Float,
-    JointBlocks15: crate::nodes::types::Float,
-    JointBlocks16: crate::nodes::types::Float,
-    JointBlocks17: crate::nodes::types::Float,
-    JointBlocks18: crate::nodes::types::Float,
-    JointBlocks19: crate::nodes::types::Float,
-    JointBlocks20: crate::nodes::types::Float,
-    JointBlocks21: crate::nodes::types::Float,
-    JointBlocks22: crate::nodes::types::Float,
-    JointBlocks23: crate::nodes::types::Float,
-    FinalLayer: crate::nodes::types::Float,
+    Model1Param: crate::nodes::types::Model,
+    Model2Param: crate::nodes::types::Model,
+    PosEmbedParam: crate::nodes::types::Float,
+    XEmbedderParam: crate::nodes::types::Float,
+    ContextEmbedderParam: crate::nodes::types::Float,
+    YEmbedderParam: crate::nodes::types::Float,
+    TEmbedderParam: crate::nodes::types::Float,
+    JointBlocks0Param: crate::nodes::types::Float,
+    JointBlocks1Param: crate::nodes::types::Float,
+    JointBlocks2Param: crate::nodes::types::Float,
+    JointBlocks3Param: crate::nodes::types::Float,
+    JointBlocks4Param: crate::nodes::types::Float,
+    JointBlocks5Param: crate::nodes::types::Float,
+    JointBlocks6Param: crate::nodes::types::Float,
+    JointBlocks7Param: crate::nodes::types::Float,
+    JointBlocks8Param: crate::nodes::types::Float,
+    JointBlocks9Param: crate::nodes::types::Float,
+    JointBlocks10Param: crate::nodes::types::Float,
+    JointBlocks11Param: crate::nodes::types::Float,
+    JointBlocks12Param: crate::nodes::types::Float,
+    JointBlocks13Param: crate::nodes::types::Float,
+    JointBlocks14Param: crate::nodes::types::Float,
+    JointBlocks15Param: crate::nodes::types::Float,
+    JointBlocks16Param: crate::nodes::types::Float,
+    JointBlocks17Param: crate::nodes::types::Float,
+    JointBlocks18Param: crate::nodes::types::Float,
+    JointBlocks19Param: crate::nodes::types::Float,
+    JointBlocks20Param: crate::nodes::types::Float,
+    JointBlocks21Param: crate::nodes::types::Float,
+    JointBlocks22Param: crate::nodes::types::Float,
+    JointBlocks23Param: crate::nodes::types::Float,
+    FinalLayerParam: crate::nodes::types::Float,
 > ModelMergeSd32B<
-    Model1,
-    Model2,
-    PosEmbed,
-    XEmbedder,
-    ContextEmbedder,
-    YEmbedder,
-    TEmbedder,
-    JointBlocks0,
-    JointBlocks1,
-    JointBlocks2,
-    JointBlocks3,
-    JointBlocks4,
-    JointBlocks5,
-    JointBlocks6,
-    JointBlocks7,
-    JointBlocks8,
-    JointBlocks9,
-    JointBlocks10,
-    JointBlocks11,
-    JointBlocks12,
-    JointBlocks13,
-    JointBlocks14,
-    JointBlocks15,
-    JointBlocks16,
-    JointBlocks17,
-    JointBlocks18,
-    JointBlocks19,
-    JointBlocks20,
-    JointBlocks21,
-    JointBlocks22,
-    JointBlocks23,
-    FinalLayer,
+    Model1Param,
+    Model2Param,
+    PosEmbedParam,
+    XEmbedderParam,
+    ContextEmbedderParam,
+    YEmbedderParam,
+    TEmbedderParam,
+    JointBlocks0Param,
+    JointBlocks1Param,
+    JointBlocks2Param,
+    JointBlocks3Param,
+    JointBlocks4Param,
+    JointBlocks5Param,
+    JointBlocks6Param,
+    JointBlocks7Param,
+    JointBlocks8Param,
+    JointBlocks9Param,
+    JointBlocks10Param,
+    JointBlocks11Param,
+    JointBlocks12Param,
+    JointBlocks13Param,
+    JointBlocks14Param,
+    JointBlocks15Param,
+    JointBlocks16Param,
+    JointBlocks17Param,
+    JointBlocks18Param,
+    JointBlocks19Param,
+    JointBlocks20Param,
+    JointBlocks21Param,
+    JointBlocks22Param,
+    JointBlocks23Param,
+    FinalLayerParam,
 > {
     /// Create a new node.
     pub fn new(
-        model_1: Model1,
-        model_2: Model2,
-        pos_embed: PosEmbed,
-        x_embedder: XEmbedder,
-        context_embedder: ContextEmbedder,
-        y_embedder: YEmbedder,
-        t_embedder: TEmbedder,
-        joint_blocks_0: JointBlocks0,
-        joint_blocks_1: JointBlocks1,
-        joint_blocks_2: JointBlocks2,
-        joint_blocks_3: JointBlocks3,
-        joint_blocks_4: JointBlocks4,
-        joint_blocks_5: JointBlocks5,
-        joint_blocks_6: JointBlocks6,
-        joint_blocks_7: JointBlocks7,
-        joint_blocks_8: JointBlocks8,
-        joint_blocks_9: JointBlocks9,
-        joint_blocks_10: JointBlocks10,
-        joint_blocks_11: JointBlocks11,
-        joint_blocks_12: JointBlocks12,
-        joint_blocks_13: JointBlocks13,
-        joint_blocks_14: JointBlocks14,
-        joint_blocks_15: JointBlocks15,
-        joint_blocks_16: JointBlocks16,
-        joint_blocks_17: JointBlocks17,
-        joint_blocks_18: JointBlocks18,
-        joint_blocks_19: JointBlocks19,
-        joint_blocks_20: JointBlocks20,
-        joint_blocks_21: JointBlocks21,
-        joint_blocks_22: JointBlocks22,
-        joint_blocks_23: JointBlocks23,
-        final_layer: FinalLayer,
+        model_1: Model1Param,
+        model_2: Model2Param,
+        pos_embed: PosEmbedParam,
+        x_embedder: XEmbedderParam,
+        context_embedder: ContextEmbedderParam,
+        y_embedder: YEmbedderParam,
+        t_embedder: TEmbedderParam,
+        joint_blocks_0: JointBlocks0Param,
+        joint_blocks_1: JointBlocks1Param,
+        joint_blocks_2: JointBlocks2Param,
+        joint_blocks_3: JointBlocks3Param,
+        joint_blocks_4: JointBlocks4Param,
+        joint_blocks_5: JointBlocks5Param,
+        joint_blocks_6: JointBlocks6Param,
+        joint_blocks_7: JointBlocks7Param,
+        joint_blocks_8: JointBlocks8Param,
+        joint_blocks_9: JointBlocks9Param,
+        joint_blocks_10: JointBlocks10Param,
+        joint_blocks_11: JointBlocks11Param,
+        joint_blocks_12: JointBlocks12Param,
+        joint_blocks_13: JointBlocks13Param,
+        joint_blocks_14: JointBlocks14Param,
+        joint_blocks_15: JointBlocks15Param,
+        joint_blocks_16: JointBlocks16Param,
+        joint_blocks_17: JointBlocks17Param,
+        joint_blocks_18: JointBlocks18Param,
+        joint_blocks_19: JointBlocks19Param,
+        joint_blocks_20: JointBlocks20Param,
+        joint_blocks_21: JointBlocks21Param,
+        joint_blocks_22: JointBlocks22Param,
+        joint_blocks_23: JointBlocks23Param,
+        final_layer: FinalLayerParam,
     ) -> Self {
         Self {
             model_1,
@@ -7768,72 +7768,72 @@ impl<
     }
 }
 impl<
-    Model1: crate::nodes::types::Model,
-    Model2: crate::nodes::types::Model,
-    PosEmbed: crate::nodes::types::Float,
-    XEmbedder: crate::nodes::types::Float,
-    ContextEmbedder: crate::nodes::types::Float,
-    YEmbedder: crate::nodes::types::Float,
-    TEmbedder: crate::nodes::types::Float,
-    JointBlocks0: crate::nodes::types::Float,
-    JointBlocks1: crate::nodes::types::Float,
-    JointBlocks2: crate::nodes::types::Float,
-    JointBlocks3: crate::nodes::types::Float,
-    JointBlocks4: crate::nodes::types::Float,
-    JointBlocks5: crate::nodes::types::Float,
-    JointBlocks6: crate::nodes::types::Float,
-    JointBlocks7: crate::nodes::types::Float,
-    JointBlocks8: crate::nodes::types::Float,
-    JointBlocks9: crate::nodes::types::Float,
-    JointBlocks10: crate::nodes::types::Float,
-    JointBlocks11: crate::nodes::types::Float,
-    JointBlocks12: crate::nodes::types::Float,
-    JointBlocks13: crate::nodes::types::Float,
-    JointBlocks14: crate::nodes::types::Float,
-    JointBlocks15: crate::nodes::types::Float,
-    JointBlocks16: crate::nodes::types::Float,
-    JointBlocks17: crate::nodes::types::Float,
-    JointBlocks18: crate::nodes::types::Float,
-    JointBlocks19: crate::nodes::types::Float,
-    JointBlocks20: crate::nodes::types::Float,
-    JointBlocks21: crate::nodes::types::Float,
-    JointBlocks22: crate::nodes::types::Float,
-    JointBlocks23: crate::nodes::types::Float,
-    FinalLayer: crate::nodes::types::Float,
+    Model1Param: crate::nodes::types::Model,
+    Model2Param: crate::nodes::types::Model,
+    PosEmbedParam: crate::nodes::types::Float,
+    XEmbedderParam: crate::nodes::types::Float,
+    ContextEmbedderParam: crate::nodes::types::Float,
+    YEmbedderParam: crate::nodes::types::Float,
+    TEmbedderParam: crate::nodes::types::Float,
+    JointBlocks0Param: crate::nodes::types::Float,
+    JointBlocks1Param: crate::nodes::types::Float,
+    JointBlocks2Param: crate::nodes::types::Float,
+    JointBlocks3Param: crate::nodes::types::Float,
+    JointBlocks4Param: crate::nodes::types::Float,
+    JointBlocks5Param: crate::nodes::types::Float,
+    JointBlocks6Param: crate::nodes::types::Float,
+    JointBlocks7Param: crate::nodes::types::Float,
+    JointBlocks8Param: crate::nodes::types::Float,
+    JointBlocks9Param: crate::nodes::types::Float,
+    JointBlocks10Param: crate::nodes::types::Float,
+    JointBlocks11Param: crate::nodes::types::Float,
+    JointBlocks12Param: crate::nodes::types::Float,
+    JointBlocks13Param: crate::nodes::types::Float,
+    JointBlocks14Param: crate::nodes::types::Float,
+    JointBlocks15Param: crate::nodes::types::Float,
+    JointBlocks16Param: crate::nodes::types::Float,
+    JointBlocks17Param: crate::nodes::types::Float,
+    JointBlocks18Param: crate::nodes::types::Float,
+    JointBlocks19Param: crate::nodes::types::Float,
+    JointBlocks20Param: crate::nodes::types::Float,
+    JointBlocks21Param: crate::nodes::types::Float,
+    JointBlocks22Param: crate::nodes::types::Float,
+    JointBlocks23Param: crate::nodes::types::Float,
+    FinalLayerParam: crate::nodes::types::Float,
 > crate::nodes::TypedNode
 for ModelMergeSd32B<
-    Model1,
-    Model2,
-    PosEmbed,
-    XEmbedder,
-    ContextEmbedder,
-    YEmbedder,
-    TEmbedder,
-    JointBlocks0,
-    JointBlocks1,
-    JointBlocks2,
-    JointBlocks3,
-    JointBlocks4,
-    JointBlocks5,
-    JointBlocks6,
-    JointBlocks7,
-    JointBlocks8,
-    JointBlocks9,
-    JointBlocks10,
-    JointBlocks11,
-    JointBlocks12,
-    JointBlocks13,
-    JointBlocks14,
-    JointBlocks15,
-    JointBlocks16,
-    JointBlocks17,
-    JointBlocks18,
-    JointBlocks19,
-    JointBlocks20,
-    JointBlocks21,
-    JointBlocks22,
-    JointBlocks23,
-    FinalLayer,
+    Model1Param,
+    Model2Param,
+    PosEmbedParam,
+    XEmbedderParam,
+    ContextEmbedderParam,
+    YEmbedderParam,
+    TEmbedderParam,
+    JointBlocks0Param,
+    JointBlocks1Param,
+    JointBlocks2Param,
+    JointBlocks3Param,
+    JointBlocks4Param,
+    JointBlocks5Param,
+    JointBlocks6Param,
+    JointBlocks7Param,
+    JointBlocks8Param,
+    JointBlocks9Param,
+    JointBlocks10Param,
+    JointBlocks11Param,
+    JointBlocks12Param,
+    JointBlocks13Param,
+    JointBlocks14Param,
+    JointBlocks15Param,
+    JointBlocks16Param,
+    JointBlocks17Param,
+    JointBlocks18Param,
+    JointBlocks19Param,
+    JointBlocks20Param,
+    JointBlocks21Param,
+    JointBlocks22Param,
+    JointBlocks23Param,
+    FinalLayerParam,
 > {
     type Output = crate::nodes::types::ModelOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
@@ -7901,37 +7901,37 @@ for ModelMergeSd32B<
 ///**ModelMergeSDXL**: No description.
 #[derive(Clone)]
 pub struct ModelMergeSdxl<
-    Model1: crate::nodes::types::Model,
-    Model2: crate::nodes::types::Model,
-    TimeEmbed: crate::nodes::types::Float,
-    LabelEmb: crate::nodes::types::Float,
-    InputBlocks0: crate::nodes::types::Float,
-    InputBlocks1: crate::nodes::types::Float,
-    InputBlocks2: crate::nodes::types::Float,
-    InputBlocks3: crate::nodes::types::Float,
-    InputBlocks4: crate::nodes::types::Float,
-    InputBlocks5: crate::nodes::types::Float,
-    InputBlocks6: crate::nodes::types::Float,
-    InputBlocks7: crate::nodes::types::Float,
-    InputBlocks8: crate::nodes::types::Float,
-    MiddleBlock0: crate::nodes::types::Float,
-    MiddleBlock1: crate::nodes::types::Float,
-    MiddleBlock2: crate::nodes::types::Float,
-    OutputBlocks0: crate::nodes::types::Float,
-    OutputBlocks1: crate::nodes::types::Float,
-    OutputBlocks2: crate::nodes::types::Float,
-    OutputBlocks3: crate::nodes::types::Float,
-    OutputBlocks4: crate::nodes::types::Float,
-    OutputBlocks5: crate::nodes::types::Float,
-    OutputBlocks6: crate::nodes::types::Float,
-    OutputBlocks7: crate::nodes::types::Float,
-    OutputBlocks8: crate::nodes::types::Float,
-    Out: crate::nodes::types::Float,
+    Model1Param: crate::nodes::types::Model,
+    Model2Param: crate::nodes::types::Model,
+    TimeEmbedParam: crate::nodes::types::Float,
+    LabelEmbParam: crate::nodes::types::Float,
+    InputBlocks0Param: crate::nodes::types::Float,
+    InputBlocks1Param: crate::nodes::types::Float,
+    InputBlocks2Param: crate::nodes::types::Float,
+    InputBlocks3Param: crate::nodes::types::Float,
+    InputBlocks4Param: crate::nodes::types::Float,
+    InputBlocks5Param: crate::nodes::types::Float,
+    InputBlocks6Param: crate::nodes::types::Float,
+    InputBlocks7Param: crate::nodes::types::Float,
+    InputBlocks8Param: crate::nodes::types::Float,
+    MiddleBlock0Param: crate::nodes::types::Float,
+    MiddleBlock1Param: crate::nodes::types::Float,
+    MiddleBlock2Param: crate::nodes::types::Float,
+    OutputBlocks0Param: crate::nodes::types::Float,
+    OutputBlocks1Param: crate::nodes::types::Float,
+    OutputBlocks2Param: crate::nodes::types::Float,
+    OutputBlocks3Param: crate::nodes::types::Float,
+    OutputBlocks4Param: crate::nodes::types::Float,
+    OutputBlocks5Param: crate::nodes::types::Float,
+    OutputBlocks6Param: crate::nodes::types::Float,
+    OutputBlocks7Param: crate::nodes::types::Float,
+    OutputBlocks8Param: crate::nodes::types::Float,
+    OutParam: crate::nodes::types::Float,
 > {
     ///No documentation.
-    pub model_1: Model1,
+    pub model_1: Model1Param,
     ///No documentation.
-    pub model_2: Model2,
+    pub model_2: Model2Param,
     /**No documentation.
 
 **Metadata**:
@@ -7940,7 +7940,7 @@ pub struct ModelMergeSdxl<
   - Min: 0
   - Step: 0.01
 */
-    pub time_embed: TimeEmbed,
+    pub time_embed: TimeEmbedParam,
     /**No documentation.
 
 **Metadata**:
@@ -7949,7 +7949,7 @@ pub struct ModelMergeSdxl<
   - Min: 0
   - Step: 0.01
 */
-    pub label_emb: LabelEmb,
+    pub label_emb: LabelEmbParam,
     /**No documentation.
 
 **Metadata**:
@@ -7958,7 +7958,7 @@ pub struct ModelMergeSdxl<
   - Min: 0
   - Step: 0.01
 */
-    pub input_blocks_0: InputBlocks0,
+    pub input_blocks_0: InputBlocks0Param,
     /**No documentation.
 
 **Metadata**:
@@ -7967,7 +7967,7 @@ pub struct ModelMergeSdxl<
   - Min: 0
   - Step: 0.01
 */
-    pub input_blocks_1: InputBlocks1,
+    pub input_blocks_1: InputBlocks1Param,
     /**No documentation.
 
 **Metadata**:
@@ -7976,7 +7976,7 @@ pub struct ModelMergeSdxl<
   - Min: 0
   - Step: 0.01
 */
-    pub input_blocks_2: InputBlocks2,
+    pub input_blocks_2: InputBlocks2Param,
     /**No documentation.
 
 **Metadata**:
@@ -7985,7 +7985,7 @@ pub struct ModelMergeSdxl<
   - Min: 0
   - Step: 0.01
 */
-    pub input_blocks_3: InputBlocks3,
+    pub input_blocks_3: InputBlocks3Param,
     /**No documentation.
 
 **Metadata**:
@@ -7994,7 +7994,7 @@ pub struct ModelMergeSdxl<
   - Min: 0
   - Step: 0.01
 */
-    pub input_blocks_4: InputBlocks4,
+    pub input_blocks_4: InputBlocks4Param,
     /**No documentation.
 
 **Metadata**:
@@ -8003,7 +8003,7 @@ pub struct ModelMergeSdxl<
   - Min: 0
   - Step: 0.01
 */
-    pub input_blocks_5: InputBlocks5,
+    pub input_blocks_5: InputBlocks5Param,
     /**No documentation.
 
 **Metadata**:
@@ -8012,7 +8012,7 @@ pub struct ModelMergeSdxl<
   - Min: 0
   - Step: 0.01
 */
-    pub input_blocks_6: InputBlocks6,
+    pub input_blocks_6: InputBlocks6Param,
     /**No documentation.
 
 **Metadata**:
@@ -8021,7 +8021,7 @@ pub struct ModelMergeSdxl<
   - Min: 0
   - Step: 0.01
 */
-    pub input_blocks_7: InputBlocks7,
+    pub input_blocks_7: InputBlocks7Param,
     /**No documentation.
 
 **Metadata**:
@@ -8030,7 +8030,7 @@ pub struct ModelMergeSdxl<
   - Min: 0
   - Step: 0.01
 */
-    pub input_blocks_8: InputBlocks8,
+    pub input_blocks_8: InputBlocks8Param,
     /**No documentation.
 
 **Metadata**:
@@ -8039,7 +8039,7 @@ pub struct ModelMergeSdxl<
   - Min: 0
   - Step: 0.01
 */
-    pub middle_block_0: MiddleBlock0,
+    pub middle_block_0: MiddleBlock0Param,
     /**No documentation.
 
 **Metadata**:
@@ -8048,7 +8048,7 @@ pub struct ModelMergeSdxl<
   - Min: 0
   - Step: 0.01
 */
-    pub middle_block_1: MiddleBlock1,
+    pub middle_block_1: MiddleBlock1Param,
     /**No documentation.
 
 **Metadata**:
@@ -8057,7 +8057,7 @@ pub struct ModelMergeSdxl<
   - Min: 0
   - Step: 0.01
 */
-    pub middle_block_2: MiddleBlock2,
+    pub middle_block_2: MiddleBlock2Param,
     /**No documentation.
 
 **Metadata**:
@@ -8066,7 +8066,7 @@ pub struct ModelMergeSdxl<
   - Min: 0
   - Step: 0.01
 */
-    pub output_blocks_0: OutputBlocks0,
+    pub output_blocks_0: OutputBlocks0Param,
     /**No documentation.
 
 **Metadata**:
@@ -8075,7 +8075,7 @@ pub struct ModelMergeSdxl<
   - Min: 0
   - Step: 0.01
 */
-    pub output_blocks_1: OutputBlocks1,
+    pub output_blocks_1: OutputBlocks1Param,
     /**No documentation.
 
 **Metadata**:
@@ -8084,7 +8084,7 @@ pub struct ModelMergeSdxl<
   - Min: 0
   - Step: 0.01
 */
-    pub output_blocks_2: OutputBlocks2,
+    pub output_blocks_2: OutputBlocks2Param,
     /**No documentation.
 
 **Metadata**:
@@ -8093,7 +8093,7 @@ pub struct ModelMergeSdxl<
   - Min: 0
   - Step: 0.01
 */
-    pub output_blocks_3: OutputBlocks3,
+    pub output_blocks_3: OutputBlocks3Param,
     /**No documentation.
 
 **Metadata**:
@@ -8102,7 +8102,7 @@ pub struct ModelMergeSdxl<
   - Min: 0
   - Step: 0.01
 */
-    pub output_blocks_4: OutputBlocks4,
+    pub output_blocks_4: OutputBlocks4Param,
     /**No documentation.
 
 **Metadata**:
@@ -8111,7 +8111,7 @@ pub struct ModelMergeSdxl<
   - Min: 0
   - Step: 0.01
 */
-    pub output_blocks_5: OutputBlocks5,
+    pub output_blocks_5: OutputBlocks5Param,
     /**No documentation.
 
 **Metadata**:
@@ -8120,7 +8120,7 @@ pub struct ModelMergeSdxl<
   - Min: 0
   - Step: 0.01
 */
-    pub output_blocks_6: OutputBlocks6,
+    pub output_blocks_6: OutputBlocks6Param,
     /**No documentation.
 
 **Metadata**:
@@ -8129,7 +8129,7 @@ pub struct ModelMergeSdxl<
   - Min: 0
   - Step: 0.01
 */
-    pub output_blocks_7: OutputBlocks7,
+    pub output_blocks_7: OutputBlocks7Param,
     /**No documentation.
 
 **Metadata**:
@@ -8138,7 +8138,7 @@ pub struct ModelMergeSdxl<
   - Min: 0
   - Step: 0.01
 */
-    pub output_blocks_8: OutputBlocks8,
+    pub output_blocks_8: OutputBlocks8Param,
     /**No documentation.
 
 **Metadata**:
@@ -8147,91 +8147,91 @@ pub struct ModelMergeSdxl<
   - Min: 0
   - Step: 0.01
 */
-    pub out: Out,
+    pub out: OutParam,
 }
 impl<
-    Model1: crate::nodes::types::Model,
-    Model2: crate::nodes::types::Model,
-    TimeEmbed: crate::nodes::types::Float,
-    LabelEmb: crate::nodes::types::Float,
-    InputBlocks0: crate::nodes::types::Float,
-    InputBlocks1: crate::nodes::types::Float,
-    InputBlocks2: crate::nodes::types::Float,
-    InputBlocks3: crate::nodes::types::Float,
-    InputBlocks4: crate::nodes::types::Float,
-    InputBlocks5: crate::nodes::types::Float,
-    InputBlocks6: crate::nodes::types::Float,
-    InputBlocks7: crate::nodes::types::Float,
-    InputBlocks8: crate::nodes::types::Float,
-    MiddleBlock0: crate::nodes::types::Float,
-    MiddleBlock1: crate::nodes::types::Float,
-    MiddleBlock2: crate::nodes::types::Float,
-    OutputBlocks0: crate::nodes::types::Float,
-    OutputBlocks1: crate::nodes::types::Float,
-    OutputBlocks2: crate::nodes::types::Float,
-    OutputBlocks3: crate::nodes::types::Float,
-    OutputBlocks4: crate::nodes::types::Float,
-    OutputBlocks5: crate::nodes::types::Float,
-    OutputBlocks6: crate::nodes::types::Float,
-    OutputBlocks7: crate::nodes::types::Float,
-    OutputBlocks8: crate::nodes::types::Float,
-    Out: crate::nodes::types::Float,
+    Model1Param: crate::nodes::types::Model,
+    Model2Param: crate::nodes::types::Model,
+    TimeEmbedParam: crate::nodes::types::Float,
+    LabelEmbParam: crate::nodes::types::Float,
+    InputBlocks0Param: crate::nodes::types::Float,
+    InputBlocks1Param: crate::nodes::types::Float,
+    InputBlocks2Param: crate::nodes::types::Float,
+    InputBlocks3Param: crate::nodes::types::Float,
+    InputBlocks4Param: crate::nodes::types::Float,
+    InputBlocks5Param: crate::nodes::types::Float,
+    InputBlocks6Param: crate::nodes::types::Float,
+    InputBlocks7Param: crate::nodes::types::Float,
+    InputBlocks8Param: crate::nodes::types::Float,
+    MiddleBlock0Param: crate::nodes::types::Float,
+    MiddleBlock1Param: crate::nodes::types::Float,
+    MiddleBlock2Param: crate::nodes::types::Float,
+    OutputBlocks0Param: crate::nodes::types::Float,
+    OutputBlocks1Param: crate::nodes::types::Float,
+    OutputBlocks2Param: crate::nodes::types::Float,
+    OutputBlocks3Param: crate::nodes::types::Float,
+    OutputBlocks4Param: crate::nodes::types::Float,
+    OutputBlocks5Param: crate::nodes::types::Float,
+    OutputBlocks6Param: crate::nodes::types::Float,
+    OutputBlocks7Param: crate::nodes::types::Float,
+    OutputBlocks8Param: crate::nodes::types::Float,
+    OutParam: crate::nodes::types::Float,
 > ModelMergeSdxl<
-    Model1,
-    Model2,
-    TimeEmbed,
-    LabelEmb,
-    InputBlocks0,
-    InputBlocks1,
-    InputBlocks2,
-    InputBlocks3,
-    InputBlocks4,
-    InputBlocks5,
-    InputBlocks6,
-    InputBlocks7,
-    InputBlocks8,
-    MiddleBlock0,
-    MiddleBlock1,
-    MiddleBlock2,
-    OutputBlocks0,
-    OutputBlocks1,
-    OutputBlocks2,
-    OutputBlocks3,
-    OutputBlocks4,
-    OutputBlocks5,
-    OutputBlocks6,
-    OutputBlocks7,
-    OutputBlocks8,
-    Out,
+    Model1Param,
+    Model2Param,
+    TimeEmbedParam,
+    LabelEmbParam,
+    InputBlocks0Param,
+    InputBlocks1Param,
+    InputBlocks2Param,
+    InputBlocks3Param,
+    InputBlocks4Param,
+    InputBlocks5Param,
+    InputBlocks6Param,
+    InputBlocks7Param,
+    InputBlocks8Param,
+    MiddleBlock0Param,
+    MiddleBlock1Param,
+    MiddleBlock2Param,
+    OutputBlocks0Param,
+    OutputBlocks1Param,
+    OutputBlocks2Param,
+    OutputBlocks3Param,
+    OutputBlocks4Param,
+    OutputBlocks5Param,
+    OutputBlocks6Param,
+    OutputBlocks7Param,
+    OutputBlocks8Param,
+    OutParam,
 > {
     /// Create a new node.
     pub fn new(
-        model_1: Model1,
-        model_2: Model2,
-        time_embed: TimeEmbed,
-        label_emb: LabelEmb,
-        input_blocks_0: InputBlocks0,
-        input_blocks_1: InputBlocks1,
-        input_blocks_2: InputBlocks2,
-        input_blocks_3: InputBlocks3,
-        input_blocks_4: InputBlocks4,
-        input_blocks_5: InputBlocks5,
-        input_blocks_6: InputBlocks6,
-        input_blocks_7: InputBlocks7,
-        input_blocks_8: InputBlocks8,
-        middle_block_0: MiddleBlock0,
-        middle_block_1: MiddleBlock1,
-        middle_block_2: MiddleBlock2,
-        output_blocks_0: OutputBlocks0,
-        output_blocks_1: OutputBlocks1,
-        output_blocks_2: OutputBlocks2,
-        output_blocks_3: OutputBlocks3,
-        output_blocks_4: OutputBlocks4,
-        output_blocks_5: OutputBlocks5,
-        output_blocks_6: OutputBlocks6,
-        output_blocks_7: OutputBlocks7,
-        output_blocks_8: OutputBlocks8,
-        out: Out,
+        model_1: Model1Param,
+        model_2: Model2Param,
+        time_embed: TimeEmbedParam,
+        label_emb: LabelEmbParam,
+        input_blocks_0: InputBlocks0Param,
+        input_blocks_1: InputBlocks1Param,
+        input_blocks_2: InputBlocks2Param,
+        input_blocks_3: InputBlocks3Param,
+        input_blocks_4: InputBlocks4Param,
+        input_blocks_5: InputBlocks5Param,
+        input_blocks_6: InputBlocks6Param,
+        input_blocks_7: InputBlocks7Param,
+        input_blocks_8: InputBlocks8Param,
+        middle_block_0: MiddleBlock0Param,
+        middle_block_1: MiddleBlock1Param,
+        middle_block_2: MiddleBlock2Param,
+        output_blocks_0: OutputBlocks0Param,
+        output_blocks_1: OutputBlocks1Param,
+        output_blocks_2: OutputBlocks2Param,
+        output_blocks_3: OutputBlocks3Param,
+        output_blocks_4: OutputBlocks4Param,
+        output_blocks_5: OutputBlocks5Param,
+        output_blocks_6: OutputBlocks6Param,
+        output_blocks_7: OutputBlocks7Param,
+        output_blocks_8: OutputBlocks8Param,
+        out: OutParam,
     ) -> Self {
         Self {
             model_1,
@@ -8264,60 +8264,60 @@ impl<
     }
 }
 impl<
-    Model1: crate::nodes::types::Model,
-    Model2: crate::nodes::types::Model,
-    TimeEmbed: crate::nodes::types::Float,
-    LabelEmb: crate::nodes::types::Float,
-    InputBlocks0: crate::nodes::types::Float,
-    InputBlocks1: crate::nodes::types::Float,
-    InputBlocks2: crate::nodes::types::Float,
-    InputBlocks3: crate::nodes::types::Float,
-    InputBlocks4: crate::nodes::types::Float,
-    InputBlocks5: crate::nodes::types::Float,
-    InputBlocks6: crate::nodes::types::Float,
-    InputBlocks7: crate::nodes::types::Float,
-    InputBlocks8: crate::nodes::types::Float,
-    MiddleBlock0: crate::nodes::types::Float,
-    MiddleBlock1: crate::nodes::types::Float,
-    MiddleBlock2: crate::nodes::types::Float,
-    OutputBlocks0: crate::nodes::types::Float,
-    OutputBlocks1: crate::nodes::types::Float,
-    OutputBlocks2: crate::nodes::types::Float,
-    OutputBlocks3: crate::nodes::types::Float,
-    OutputBlocks4: crate::nodes::types::Float,
-    OutputBlocks5: crate::nodes::types::Float,
-    OutputBlocks6: crate::nodes::types::Float,
-    OutputBlocks7: crate::nodes::types::Float,
-    OutputBlocks8: crate::nodes::types::Float,
-    Out: crate::nodes::types::Float,
+    Model1Param: crate::nodes::types::Model,
+    Model2Param: crate::nodes::types::Model,
+    TimeEmbedParam: crate::nodes::types::Float,
+    LabelEmbParam: crate::nodes::types::Float,
+    InputBlocks0Param: crate::nodes::types::Float,
+    InputBlocks1Param: crate::nodes::types::Float,
+    InputBlocks2Param: crate::nodes::types::Float,
+    InputBlocks3Param: crate::nodes::types::Float,
+    InputBlocks4Param: crate::nodes::types::Float,
+    InputBlocks5Param: crate::nodes::types::Float,
+    InputBlocks6Param: crate::nodes::types::Float,
+    InputBlocks7Param: crate::nodes::types::Float,
+    InputBlocks8Param: crate::nodes::types::Float,
+    MiddleBlock0Param: crate::nodes::types::Float,
+    MiddleBlock1Param: crate::nodes::types::Float,
+    MiddleBlock2Param: crate::nodes::types::Float,
+    OutputBlocks0Param: crate::nodes::types::Float,
+    OutputBlocks1Param: crate::nodes::types::Float,
+    OutputBlocks2Param: crate::nodes::types::Float,
+    OutputBlocks3Param: crate::nodes::types::Float,
+    OutputBlocks4Param: crate::nodes::types::Float,
+    OutputBlocks5Param: crate::nodes::types::Float,
+    OutputBlocks6Param: crate::nodes::types::Float,
+    OutputBlocks7Param: crate::nodes::types::Float,
+    OutputBlocks8Param: crate::nodes::types::Float,
+    OutParam: crate::nodes::types::Float,
 > crate::nodes::TypedNode
 for ModelMergeSdxl<
-    Model1,
-    Model2,
-    TimeEmbed,
-    LabelEmb,
-    InputBlocks0,
-    InputBlocks1,
-    InputBlocks2,
-    InputBlocks3,
-    InputBlocks4,
-    InputBlocks5,
-    InputBlocks6,
-    InputBlocks7,
-    InputBlocks8,
-    MiddleBlock0,
-    MiddleBlock1,
-    MiddleBlock2,
-    OutputBlocks0,
-    OutputBlocks1,
-    OutputBlocks2,
-    OutputBlocks3,
-    OutputBlocks4,
-    OutputBlocks5,
-    OutputBlocks6,
-    OutputBlocks7,
-    OutputBlocks8,
-    Out,
+    Model1Param,
+    Model2Param,
+    TimeEmbedParam,
+    LabelEmbParam,
+    InputBlocks0Param,
+    InputBlocks1Param,
+    InputBlocks2Param,
+    InputBlocks3Param,
+    InputBlocks4Param,
+    InputBlocks5Param,
+    InputBlocks6Param,
+    InputBlocks7Param,
+    InputBlocks8Param,
+    MiddleBlock0Param,
+    MiddleBlock1Param,
+    MiddleBlock2Param,
+    OutputBlocks0Param,
+    OutputBlocks1Param,
+    OutputBlocks2Param,
+    OutputBlocks3Param,
+    OutputBlocks4Param,
+    OutputBlocks5Param,
+    OutputBlocks6Param,
+    OutputBlocks7Param,
+    OutputBlocks8Param,
+    OutParam,
 > {
     type Output = crate::nodes::types::ModelOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
@@ -8370,59 +8370,59 @@ for ModelMergeSdxl<
 ///**ModelMergeWAN2_1**: 1.3B model has 30 blocks, 14B model has 40 blocks. Image to video model has the extra img_emb.
 #[derive(Clone)]
 pub struct ModelMergeWan21<
-    Model1: crate::nodes::types::Model,
-    Model2: crate::nodes::types::Model,
-    PatchEmbedding: crate::nodes::types::Float,
-    TimeEmbedding: crate::nodes::types::Float,
-    TimeProjection: crate::nodes::types::Float,
-    TextEmbedding: crate::nodes::types::Float,
-    ImgEmb: crate::nodes::types::Float,
-    Blocks0: crate::nodes::types::Float,
-    Blocks1: crate::nodes::types::Float,
-    Blocks2: crate::nodes::types::Float,
-    Blocks3: crate::nodes::types::Float,
-    Blocks4: crate::nodes::types::Float,
-    Blocks5: crate::nodes::types::Float,
-    Blocks6: crate::nodes::types::Float,
-    Blocks7: crate::nodes::types::Float,
-    Blocks8: crate::nodes::types::Float,
-    Blocks9: crate::nodes::types::Float,
-    Blocks10: crate::nodes::types::Float,
-    Blocks11: crate::nodes::types::Float,
-    Blocks12: crate::nodes::types::Float,
-    Blocks13: crate::nodes::types::Float,
-    Blocks14: crate::nodes::types::Float,
-    Blocks15: crate::nodes::types::Float,
-    Blocks16: crate::nodes::types::Float,
-    Blocks17: crate::nodes::types::Float,
-    Blocks18: crate::nodes::types::Float,
-    Blocks19: crate::nodes::types::Float,
-    Blocks20: crate::nodes::types::Float,
-    Blocks21: crate::nodes::types::Float,
-    Blocks22: crate::nodes::types::Float,
-    Blocks23: crate::nodes::types::Float,
-    Blocks24: crate::nodes::types::Float,
-    Blocks25: crate::nodes::types::Float,
-    Blocks26: crate::nodes::types::Float,
-    Blocks27: crate::nodes::types::Float,
-    Blocks28: crate::nodes::types::Float,
-    Blocks29: crate::nodes::types::Float,
-    Blocks30: crate::nodes::types::Float,
-    Blocks31: crate::nodes::types::Float,
-    Blocks32: crate::nodes::types::Float,
-    Blocks33: crate::nodes::types::Float,
-    Blocks34: crate::nodes::types::Float,
-    Blocks35: crate::nodes::types::Float,
-    Blocks36: crate::nodes::types::Float,
-    Blocks37: crate::nodes::types::Float,
-    Blocks38: crate::nodes::types::Float,
-    Blocks39: crate::nodes::types::Float,
-    Head: crate::nodes::types::Float,
+    Model1Param: crate::nodes::types::Model,
+    Model2Param: crate::nodes::types::Model,
+    PatchEmbeddingParam: crate::nodes::types::Float,
+    TimeEmbeddingParam: crate::nodes::types::Float,
+    TimeProjectionParam: crate::nodes::types::Float,
+    TextEmbeddingParam: crate::nodes::types::Float,
+    ImgEmbParam: crate::nodes::types::Float,
+    Blocks0Param: crate::nodes::types::Float,
+    Blocks1Param: crate::nodes::types::Float,
+    Blocks2Param: crate::nodes::types::Float,
+    Blocks3Param: crate::nodes::types::Float,
+    Blocks4Param: crate::nodes::types::Float,
+    Blocks5Param: crate::nodes::types::Float,
+    Blocks6Param: crate::nodes::types::Float,
+    Blocks7Param: crate::nodes::types::Float,
+    Blocks8Param: crate::nodes::types::Float,
+    Blocks9Param: crate::nodes::types::Float,
+    Blocks10Param: crate::nodes::types::Float,
+    Blocks11Param: crate::nodes::types::Float,
+    Blocks12Param: crate::nodes::types::Float,
+    Blocks13Param: crate::nodes::types::Float,
+    Blocks14Param: crate::nodes::types::Float,
+    Blocks15Param: crate::nodes::types::Float,
+    Blocks16Param: crate::nodes::types::Float,
+    Blocks17Param: crate::nodes::types::Float,
+    Blocks18Param: crate::nodes::types::Float,
+    Blocks19Param: crate::nodes::types::Float,
+    Blocks20Param: crate::nodes::types::Float,
+    Blocks21Param: crate::nodes::types::Float,
+    Blocks22Param: crate::nodes::types::Float,
+    Blocks23Param: crate::nodes::types::Float,
+    Blocks24Param: crate::nodes::types::Float,
+    Blocks25Param: crate::nodes::types::Float,
+    Blocks26Param: crate::nodes::types::Float,
+    Blocks27Param: crate::nodes::types::Float,
+    Blocks28Param: crate::nodes::types::Float,
+    Blocks29Param: crate::nodes::types::Float,
+    Blocks30Param: crate::nodes::types::Float,
+    Blocks31Param: crate::nodes::types::Float,
+    Blocks32Param: crate::nodes::types::Float,
+    Blocks33Param: crate::nodes::types::Float,
+    Blocks34Param: crate::nodes::types::Float,
+    Blocks35Param: crate::nodes::types::Float,
+    Blocks36Param: crate::nodes::types::Float,
+    Blocks37Param: crate::nodes::types::Float,
+    Blocks38Param: crate::nodes::types::Float,
+    Blocks39Param: crate::nodes::types::Float,
+    HeadParam: crate::nodes::types::Float,
 > {
     ///No documentation.
-    pub model_1: Model1,
+    pub model_1: Model1Param,
     ///No documentation.
-    pub model_2: Model2,
+    pub model_2: Model2Param,
     /**No documentation.
 
 **Metadata**:
@@ -8431,7 +8431,7 @@ pub struct ModelMergeWan21<
   - Min: 0
   - Step: 0.01
 */
-    pub patch_embedding: PatchEmbedding,
+    pub patch_embedding: PatchEmbeddingParam,
     /**No documentation.
 
 **Metadata**:
@@ -8440,7 +8440,7 @@ pub struct ModelMergeWan21<
   - Min: 0
   - Step: 0.01
 */
-    pub time_embedding: TimeEmbedding,
+    pub time_embedding: TimeEmbeddingParam,
     /**No documentation.
 
 **Metadata**:
@@ -8449,7 +8449,7 @@ pub struct ModelMergeWan21<
   - Min: 0
   - Step: 0.01
 */
-    pub time_projection: TimeProjection,
+    pub time_projection: TimeProjectionParam,
     /**No documentation.
 
 **Metadata**:
@@ -8458,7 +8458,7 @@ pub struct ModelMergeWan21<
   - Min: 0
   - Step: 0.01
 */
-    pub text_embedding: TextEmbedding,
+    pub text_embedding: TextEmbeddingParam,
     /**No documentation.
 
 **Metadata**:
@@ -8467,7 +8467,7 @@ pub struct ModelMergeWan21<
   - Min: 0
   - Step: 0.01
 */
-    pub img_emb: ImgEmb,
+    pub img_emb: ImgEmbParam,
     /**No documentation.
 
 **Metadata**:
@@ -8476,7 +8476,7 @@ pub struct ModelMergeWan21<
   - Min: 0
   - Step: 0.01
 */
-    pub blocks_0: Blocks0,
+    pub blocks_0: Blocks0Param,
     /**No documentation.
 
 **Metadata**:
@@ -8485,7 +8485,7 @@ pub struct ModelMergeWan21<
   - Min: 0
   - Step: 0.01
 */
-    pub blocks_1: Blocks1,
+    pub blocks_1: Blocks1Param,
     /**No documentation.
 
 **Metadata**:
@@ -8494,7 +8494,7 @@ pub struct ModelMergeWan21<
   - Min: 0
   - Step: 0.01
 */
-    pub blocks_2: Blocks2,
+    pub blocks_2: Blocks2Param,
     /**No documentation.
 
 **Metadata**:
@@ -8503,7 +8503,7 @@ pub struct ModelMergeWan21<
   - Min: 0
   - Step: 0.01
 */
-    pub blocks_3: Blocks3,
+    pub blocks_3: Blocks3Param,
     /**No documentation.
 
 **Metadata**:
@@ -8512,7 +8512,7 @@ pub struct ModelMergeWan21<
   - Min: 0
   - Step: 0.01
 */
-    pub blocks_4: Blocks4,
+    pub blocks_4: Blocks4Param,
     /**No documentation.
 
 **Metadata**:
@@ -8521,7 +8521,7 @@ pub struct ModelMergeWan21<
   - Min: 0
   - Step: 0.01
 */
-    pub blocks_5: Blocks5,
+    pub blocks_5: Blocks5Param,
     /**No documentation.
 
 **Metadata**:
@@ -8530,7 +8530,7 @@ pub struct ModelMergeWan21<
   - Min: 0
   - Step: 0.01
 */
-    pub blocks_6: Blocks6,
+    pub blocks_6: Blocks6Param,
     /**No documentation.
 
 **Metadata**:
@@ -8539,7 +8539,7 @@ pub struct ModelMergeWan21<
   - Min: 0
   - Step: 0.01
 */
-    pub blocks_7: Blocks7,
+    pub blocks_7: Blocks7Param,
     /**No documentation.
 
 **Metadata**:
@@ -8548,7 +8548,7 @@ pub struct ModelMergeWan21<
   - Min: 0
   - Step: 0.01
 */
-    pub blocks_8: Blocks8,
+    pub blocks_8: Blocks8Param,
     /**No documentation.
 
 **Metadata**:
@@ -8557,7 +8557,7 @@ pub struct ModelMergeWan21<
   - Min: 0
   - Step: 0.01
 */
-    pub blocks_9: Blocks9,
+    pub blocks_9: Blocks9Param,
     /**No documentation.
 
 **Metadata**:
@@ -8566,7 +8566,7 @@ pub struct ModelMergeWan21<
   - Min: 0
   - Step: 0.01
 */
-    pub blocks_10: Blocks10,
+    pub blocks_10: Blocks10Param,
     /**No documentation.
 
 **Metadata**:
@@ -8575,7 +8575,7 @@ pub struct ModelMergeWan21<
   - Min: 0
   - Step: 0.01
 */
-    pub blocks_11: Blocks11,
+    pub blocks_11: Blocks11Param,
     /**No documentation.
 
 **Metadata**:
@@ -8584,7 +8584,7 @@ pub struct ModelMergeWan21<
   - Min: 0
   - Step: 0.01
 */
-    pub blocks_12: Blocks12,
+    pub blocks_12: Blocks12Param,
     /**No documentation.
 
 **Metadata**:
@@ -8593,7 +8593,7 @@ pub struct ModelMergeWan21<
   - Min: 0
   - Step: 0.01
 */
-    pub blocks_13: Blocks13,
+    pub blocks_13: Blocks13Param,
     /**No documentation.
 
 **Metadata**:
@@ -8602,7 +8602,7 @@ pub struct ModelMergeWan21<
   - Min: 0
   - Step: 0.01
 */
-    pub blocks_14: Blocks14,
+    pub blocks_14: Blocks14Param,
     /**No documentation.
 
 **Metadata**:
@@ -8611,7 +8611,7 @@ pub struct ModelMergeWan21<
   - Min: 0
   - Step: 0.01
 */
-    pub blocks_15: Blocks15,
+    pub blocks_15: Blocks15Param,
     /**No documentation.
 
 **Metadata**:
@@ -8620,7 +8620,7 @@ pub struct ModelMergeWan21<
   - Min: 0
   - Step: 0.01
 */
-    pub blocks_16: Blocks16,
+    pub blocks_16: Blocks16Param,
     /**No documentation.
 
 **Metadata**:
@@ -8629,7 +8629,7 @@ pub struct ModelMergeWan21<
   - Min: 0
   - Step: 0.01
 */
-    pub blocks_17: Blocks17,
+    pub blocks_17: Blocks17Param,
     /**No documentation.
 
 **Metadata**:
@@ -8638,7 +8638,7 @@ pub struct ModelMergeWan21<
   - Min: 0
   - Step: 0.01
 */
-    pub blocks_18: Blocks18,
+    pub blocks_18: Blocks18Param,
     /**No documentation.
 
 **Metadata**:
@@ -8647,7 +8647,7 @@ pub struct ModelMergeWan21<
   - Min: 0
   - Step: 0.01
 */
-    pub blocks_19: Blocks19,
+    pub blocks_19: Blocks19Param,
     /**No documentation.
 
 **Metadata**:
@@ -8656,7 +8656,7 @@ pub struct ModelMergeWan21<
   - Min: 0
   - Step: 0.01
 */
-    pub blocks_20: Blocks20,
+    pub blocks_20: Blocks20Param,
     /**No documentation.
 
 **Metadata**:
@@ -8665,7 +8665,7 @@ pub struct ModelMergeWan21<
   - Min: 0
   - Step: 0.01
 */
-    pub blocks_21: Blocks21,
+    pub blocks_21: Blocks21Param,
     /**No documentation.
 
 **Metadata**:
@@ -8674,7 +8674,7 @@ pub struct ModelMergeWan21<
   - Min: 0
   - Step: 0.01
 */
-    pub blocks_22: Blocks22,
+    pub blocks_22: Blocks22Param,
     /**No documentation.
 
 **Metadata**:
@@ -8683,7 +8683,7 @@ pub struct ModelMergeWan21<
   - Min: 0
   - Step: 0.01
 */
-    pub blocks_23: Blocks23,
+    pub blocks_23: Blocks23Param,
     /**No documentation.
 
 **Metadata**:
@@ -8692,7 +8692,7 @@ pub struct ModelMergeWan21<
   - Min: 0
   - Step: 0.01
 */
-    pub blocks_24: Blocks24,
+    pub blocks_24: Blocks24Param,
     /**No documentation.
 
 **Metadata**:
@@ -8701,7 +8701,7 @@ pub struct ModelMergeWan21<
   - Min: 0
   - Step: 0.01
 */
-    pub blocks_25: Blocks25,
+    pub blocks_25: Blocks25Param,
     /**No documentation.
 
 **Metadata**:
@@ -8710,7 +8710,7 @@ pub struct ModelMergeWan21<
   - Min: 0
   - Step: 0.01
 */
-    pub blocks_26: Blocks26,
+    pub blocks_26: Blocks26Param,
     /**No documentation.
 
 **Metadata**:
@@ -8719,7 +8719,7 @@ pub struct ModelMergeWan21<
   - Min: 0
   - Step: 0.01
 */
-    pub blocks_27: Blocks27,
+    pub blocks_27: Blocks27Param,
     /**No documentation.
 
 **Metadata**:
@@ -8728,7 +8728,7 @@ pub struct ModelMergeWan21<
   - Min: 0
   - Step: 0.01
 */
-    pub blocks_28: Blocks28,
+    pub blocks_28: Blocks28Param,
     /**No documentation.
 
 **Metadata**:
@@ -8737,7 +8737,7 @@ pub struct ModelMergeWan21<
   - Min: 0
   - Step: 0.01
 */
-    pub blocks_29: Blocks29,
+    pub blocks_29: Blocks29Param,
     /**No documentation.
 
 **Metadata**:
@@ -8746,7 +8746,7 @@ pub struct ModelMergeWan21<
   - Min: 0
   - Step: 0.01
 */
-    pub blocks_30: Blocks30,
+    pub blocks_30: Blocks30Param,
     /**No documentation.
 
 **Metadata**:
@@ -8755,7 +8755,7 @@ pub struct ModelMergeWan21<
   - Min: 0
   - Step: 0.01
 */
-    pub blocks_31: Blocks31,
+    pub blocks_31: Blocks31Param,
     /**No documentation.
 
 **Metadata**:
@@ -8764,7 +8764,7 @@ pub struct ModelMergeWan21<
   - Min: 0
   - Step: 0.01
 */
-    pub blocks_32: Blocks32,
+    pub blocks_32: Blocks32Param,
     /**No documentation.
 
 **Metadata**:
@@ -8773,7 +8773,7 @@ pub struct ModelMergeWan21<
   - Min: 0
   - Step: 0.01
 */
-    pub blocks_33: Blocks33,
+    pub blocks_33: Blocks33Param,
     /**No documentation.
 
 **Metadata**:
@@ -8782,7 +8782,7 @@ pub struct ModelMergeWan21<
   - Min: 0
   - Step: 0.01
 */
-    pub blocks_34: Blocks34,
+    pub blocks_34: Blocks34Param,
     /**No documentation.
 
 **Metadata**:
@@ -8791,7 +8791,7 @@ pub struct ModelMergeWan21<
   - Min: 0
   - Step: 0.01
 */
-    pub blocks_35: Blocks35,
+    pub blocks_35: Blocks35Param,
     /**No documentation.
 
 **Metadata**:
@@ -8800,7 +8800,7 @@ pub struct ModelMergeWan21<
   - Min: 0
   - Step: 0.01
 */
-    pub blocks_36: Blocks36,
+    pub blocks_36: Blocks36Param,
     /**No documentation.
 
 **Metadata**:
@@ -8809,7 +8809,7 @@ pub struct ModelMergeWan21<
   - Min: 0
   - Step: 0.01
 */
-    pub blocks_37: Blocks37,
+    pub blocks_37: Blocks37Param,
     /**No documentation.
 
 **Metadata**:
@@ -8818,7 +8818,7 @@ pub struct ModelMergeWan21<
   - Min: 0
   - Step: 0.01
 */
-    pub blocks_38: Blocks38,
+    pub blocks_38: Blocks38Param,
     /**No documentation.
 
 **Metadata**:
@@ -8827,7 +8827,7 @@ pub struct ModelMergeWan21<
   - Min: 0
   - Step: 0.01
 */
-    pub blocks_39: Blocks39,
+    pub blocks_39: Blocks39Param,
     /**No documentation.
 
 **Metadata**:
@@ -8836,157 +8836,157 @@ pub struct ModelMergeWan21<
   - Min: 0
   - Step: 0.01
 */
-    pub head: Head,
+    pub head: HeadParam,
 }
 impl<
-    Model1: crate::nodes::types::Model,
-    Model2: crate::nodes::types::Model,
-    PatchEmbedding: crate::nodes::types::Float,
-    TimeEmbedding: crate::nodes::types::Float,
-    TimeProjection: crate::nodes::types::Float,
-    TextEmbedding: crate::nodes::types::Float,
-    ImgEmb: crate::nodes::types::Float,
-    Blocks0: crate::nodes::types::Float,
-    Blocks1: crate::nodes::types::Float,
-    Blocks2: crate::nodes::types::Float,
-    Blocks3: crate::nodes::types::Float,
-    Blocks4: crate::nodes::types::Float,
-    Blocks5: crate::nodes::types::Float,
-    Blocks6: crate::nodes::types::Float,
-    Blocks7: crate::nodes::types::Float,
-    Blocks8: crate::nodes::types::Float,
-    Blocks9: crate::nodes::types::Float,
-    Blocks10: crate::nodes::types::Float,
-    Blocks11: crate::nodes::types::Float,
-    Blocks12: crate::nodes::types::Float,
-    Blocks13: crate::nodes::types::Float,
-    Blocks14: crate::nodes::types::Float,
-    Blocks15: crate::nodes::types::Float,
-    Blocks16: crate::nodes::types::Float,
-    Blocks17: crate::nodes::types::Float,
-    Blocks18: crate::nodes::types::Float,
-    Blocks19: crate::nodes::types::Float,
-    Blocks20: crate::nodes::types::Float,
-    Blocks21: crate::nodes::types::Float,
-    Blocks22: crate::nodes::types::Float,
-    Blocks23: crate::nodes::types::Float,
-    Blocks24: crate::nodes::types::Float,
-    Blocks25: crate::nodes::types::Float,
-    Blocks26: crate::nodes::types::Float,
-    Blocks27: crate::nodes::types::Float,
-    Blocks28: crate::nodes::types::Float,
-    Blocks29: crate::nodes::types::Float,
-    Blocks30: crate::nodes::types::Float,
-    Blocks31: crate::nodes::types::Float,
-    Blocks32: crate::nodes::types::Float,
-    Blocks33: crate::nodes::types::Float,
-    Blocks34: crate::nodes::types::Float,
-    Blocks35: crate::nodes::types::Float,
-    Blocks36: crate::nodes::types::Float,
-    Blocks37: crate::nodes::types::Float,
-    Blocks38: crate::nodes::types::Float,
-    Blocks39: crate::nodes::types::Float,
-    Head: crate::nodes::types::Float,
+    Model1Param: crate::nodes::types::Model,
+    Model2Param: crate::nodes::types::Model,
+    PatchEmbeddingParam: crate::nodes::types::Float,
+    TimeEmbeddingParam: crate::nodes::types::Float,
+    TimeProjectionParam: crate::nodes::types::Float,
+    TextEmbeddingParam: crate::nodes::types::Float,
+    ImgEmbParam: crate::nodes::types::Float,
+    Blocks0Param: crate::nodes::types::Float,
+    Blocks1Param: crate::nodes::types::Float,
+    Blocks2Param: crate::nodes::types::Float,
+    Blocks3Param: crate::nodes::types::Float,
+    Blocks4Param: crate::nodes::types::Float,
+    Blocks5Param: crate::nodes::types::Float,
+    Blocks6Param: crate::nodes::types::Float,
+    Blocks7Param: crate::nodes::types::Float,
+    Blocks8Param: crate::nodes::types::Float,
+    Blocks9Param: crate::nodes::types::Float,
+    Blocks10Param: crate::nodes::types::Float,
+    Blocks11Param: crate::nodes::types::Float,
+    Blocks12Param: crate::nodes::types::Float,
+    Blocks13Param: crate::nodes::types::Float,
+    Blocks14Param: crate::nodes::types::Float,
+    Blocks15Param: crate::nodes::types::Float,
+    Blocks16Param: crate::nodes::types::Float,
+    Blocks17Param: crate::nodes::types::Float,
+    Blocks18Param: crate::nodes::types::Float,
+    Blocks19Param: crate::nodes::types::Float,
+    Blocks20Param: crate::nodes::types::Float,
+    Blocks21Param: crate::nodes::types::Float,
+    Blocks22Param: crate::nodes::types::Float,
+    Blocks23Param: crate::nodes::types::Float,
+    Blocks24Param: crate::nodes::types::Float,
+    Blocks25Param: crate::nodes::types::Float,
+    Blocks26Param: crate::nodes::types::Float,
+    Blocks27Param: crate::nodes::types::Float,
+    Blocks28Param: crate::nodes::types::Float,
+    Blocks29Param: crate::nodes::types::Float,
+    Blocks30Param: crate::nodes::types::Float,
+    Blocks31Param: crate::nodes::types::Float,
+    Blocks32Param: crate::nodes::types::Float,
+    Blocks33Param: crate::nodes::types::Float,
+    Blocks34Param: crate::nodes::types::Float,
+    Blocks35Param: crate::nodes::types::Float,
+    Blocks36Param: crate::nodes::types::Float,
+    Blocks37Param: crate::nodes::types::Float,
+    Blocks38Param: crate::nodes::types::Float,
+    Blocks39Param: crate::nodes::types::Float,
+    HeadParam: crate::nodes::types::Float,
 > ModelMergeWan21<
-    Model1,
-    Model2,
-    PatchEmbedding,
-    TimeEmbedding,
-    TimeProjection,
-    TextEmbedding,
-    ImgEmb,
-    Blocks0,
-    Blocks1,
-    Blocks2,
-    Blocks3,
-    Blocks4,
-    Blocks5,
-    Blocks6,
-    Blocks7,
-    Blocks8,
-    Blocks9,
-    Blocks10,
-    Blocks11,
-    Blocks12,
-    Blocks13,
-    Blocks14,
-    Blocks15,
-    Blocks16,
-    Blocks17,
-    Blocks18,
-    Blocks19,
-    Blocks20,
-    Blocks21,
-    Blocks22,
-    Blocks23,
-    Blocks24,
-    Blocks25,
-    Blocks26,
-    Blocks27,
-    Blocks28,
-    Blocks29,
-    Blocks30,
-    Blocks31,
-    Blocks32,
-    Blocks33,
-    Blocks34,
-    Blocks35,
-    Blocks36,
-    Blocks37,
-    Blocks38,
-    Blocks39,
-    Head,
+    Model1Param,
+    Model2Param,
+    PatchEmbeddingParam,
+    TimeEmbeddingParam,
+    TimeProjectionParam,
+    TextEmbeddingParam,
+    ImgEmbParam,
+    Blocks0Param,
+    Blocks1Param,
+    Blocks2Param,
+    Blocks3Param,
+    Blocks4Param,
+    Blocks5Param,
+    Blocks6Param,
+    Blocks7Param,
+    Blocks8Param,
+    Blocks9Param,
+    Blocks10Param,
+    Blocks11Param,
+    Blocks12Param,
+    Blocks13Param,
+    Blocks14Param,
+    Blocks15Param,
+    Blocks16Param,
+    Blocks17Param,
+    Blocks18Param,
+    Blocks19Param,
+    Blocks20Param,
+    Blocks21Param,
+    Blocks22Param,
+    Blocks23Param,
+    Blocks24Param,
+    Blocks25Param,
+    Blocks26Param,
+    Blocks27Param,
+    Blocks28Param,
+    Blocks29Param,
+    Blocks30Param,
+    Blocks31Param,
+    Blocks32Param,
+    Blocks33Param,
+    Blocks34Param,
+    Blocks35Param,
+    Blocks36Param,
+    Blocks37Param,
+    Blocks38Param,
+    Blocks39Param,
+    HeadParam,
 > {
     /// Create a new node.
     pub fn new(
-        model_1: Model1,
-        model_2: Model2,
-        patch_embedding: PatchEmbedding,
-        time_embedding: TimeEmbedding,
-        time_projection: TimeProjection,
-        text_embedding: TextEmbedding,
-        img_emb: ImgEmb,
-        blocks_0: Blocks0,
-        blocks_1: Blocks1,
-        blocks_2: Blocks2,
-        blocks_3: Blocks3,
-        blocks_4: Blocks4,
-        blocks_5: Blocks5,
-        blocks_6: Blocks6,
-        blocks_7: Blocks7,
-        blocks_8: Blocks8,
-        blocks_9: Blocks9,
-        blocks_10: Blocks10,
-        blocks_11: Blocks11,
-        blocks_12: Blocks12,
-        blocks_13: Blocks13,
-        blocks_14: Blocks14,
-        blocks_15: Blocks15,
-        blocks_16: Blocks16,
-        blocks_17: Blocks17,
-        blocks_18: Blocks18,
-        blocks_19: Blocks19,
-        blocks_20: Blocks20,
-        blocks_21: Blocks21,
-        blocks_22: Blocks22,
-        blocks_23: Blocks23,
-        blocks_24: Blocks24,
-        blocks_25: Blocks25,
-        blocks_26: Blocks26,
-        blocks_27: Blocks27,
-        blocks_28: Blocks28,
-        blocks_29: Blocks29,
-        blocks_30: Blocks30,
-        blocks_31: Blocks31,
-        blocks_32: Blocks32,
-        blocks_33: Blocks33,
-        blocks_34: Blocks34,
-        blocks_35: Blocks35,
-        blocks_36: Blocks36,
-        blocks_37: Blocks37,
-        blocks_38: Blocks38,
-        blocks_39: Blocks39,
-        head: Head,
+        model_1: Model1Param,
+        model_2: Model2Param,
+        patch_embedding: PatchEmbeddingParam,
+        time_embedding: TimeEmbeddingParam,
+        time_projection: TimeProjectionParam,
+        text_embedding: TextEmbeddingParam,
+        img_emb: ImgEmbParam,
+        blocks_0: Blocks0Param,
+        blocks_1: Blocks1Param,
+        blocks_2: Blocks2Param,
+        blocks_3: Blocks3Param,
+        blocks_4: Blocks4Param,
+        blocks_5: Blocks5Param,
+        blocks_6: Blocks6Param,
+        blocks_7: Blocks7Param,
+        blocks_8: Blocks8Param,
+        blocks_9: Blocks9Param,
+        blocks_10: Blocks10Param,
+        blocks_11: Blocks11Param,
+        blocks_12: Blocks12Param,
+        blocks_13: Blocks13Param,
+        blocks_14: Blocks14Param,
+        blocks_15: Blocks15Param,
+        blocks_16: Blocks16Param,
+        blocks_17: Blocks17Param,
+        blocks_18: Blocks18Param,
+        blocks_19: Blocks19Param,
+        blocks_20: Blocks20Param,
+        blocks_21: Blocks21Param,
+        blocks_22: Blocks22Param,
+        blocks_23: Blocks23Param,
+        blocks_24: Blocks24Param,
+        blocks_25: Blocks25Param,
+        blocks_26: Blocks26Param,
+        blocks_27: Blocks27Param,
+        blocks_28: Blocks28Param,
+        blocks_29: Blocks29Param,
+        blocks_30: Blocks30Param,
+        blocks_31: Blocks31Param,
+        blocks_32: Blocks32Param,
+        blocks_33: Blocks33Param,
+        blocks_34: Blocks34Param,
+        blocks_35: Blocks35Param,
+        blocks_36: Blocks36Param,
+        blocks_37: Blocks37Param,
+        blocks_38: Blocks38Param,
+        blocks_39: Blocks39Param,
+        head: HeadParam,
     ) -> Self {
         Self {
             model_1,
@@ -9041,104 +9041,104 @@ impl<
     }
 }
 impl<
-    Model1: crate::nodes::types::Model,
-    Model2: crate::nodes::types::Model,
-    PatchEmbedding: crate::nodes::types::Float,
-    TimeEmbedding: crate::nodes::types::Float,
-    TimeProjection: crate::nodes::types::Float,
-    TextEmbedding: crate::nodes::types::Float,
-    ImgEmb: crate::nodes::types::Float,
-    Blocks0: crate::nodes::types::Float,
-    Blocks1: crate::nodes::types::Float,
-    Blocks2: crate::nodes::types::Float,
-    Blocks3: crate::nodes::types::Float,
-    Blocks4: crate::nodes::types::Float,
-    Blocks5: crate::nodes::types::Float,
-    Blocks6: crate::nodes::types::Float,
-    Blocks7: crate::nodes::types::Float,
-    Blocks8: crate::nodes::types::Float,
-    Blocks9: crate::nodes::types::Float,
-    Blocks10: crate::nodes::types::Float,
-    Blocks11: crate::nodes::types::Float,
-    Blocks12: crate::nodes::types::Float,
-    Blocks13: crate::nodes::types::Float,
-    Blocks14: crate::nodes::types::Float,
-    Blocks15: crate::nodes::types::Float,
-    Blocks16: crate::nodes::types::Float,
-    Blocks17: crate::nodes::types::Float,
-    Blocks18: crate::nodes::types::Float,
-    Blocks19: crate::nodes::types::Float,
-    Blocks20: crate::nodes::types::Float,
-    Blocks21: crate::nodes::types::Float,
-    Blocks22: crate::nodes::types::Float,
-    Blocks23: crate::nodes::types::Float,
-    Blocks24: crate::nodes::types::Float,
-    Blocks25: crate::nodes::types::Float,
-    Blocks26: crate::nodes::types::Float,
-    Blocks27: crate::nodes::types::Float,
-    Blocks28: crate::nodes::types::Float,
-    Blocks29: crate::nodes::types::Float,
-    Blocks30: crate::nodes::types::Float,
-    Blocks31: crate::nodes::types::Float,
-    Blocks32: crate::nodes::types::Float,
-    Blocks33: crate::nodes::types::Float,
-    Blocks34: crate::nodes::types::Float,
-    Blocks35: crate::nodes::types::Float,
-    Blocks36: crate::nodes::types::Float,
-    Blocks37: crate::nodes::types::Float,
-    Blocks38: crate::nodes::types::Float,
-    Blocks39: crate::nodes::types::Float,
-    Head: crate::nodes::types::Float,
+    Model1Param: crate::nodes::types::Model,
+    Model2Param: crate::nodes::types::Model,
+    PatchEmbeddingParam: crate::nodes::types::Float,
+    TimeEmbeddingParam: crate::nodes::types::Float,
+    TimeProjectionParam: crate::nodes::types::Float,
+    TextEmbeddingParam: crate::nodes::types::Float,
+    ImgEmbParam: crate::nodes::types::Float,
+    Blocks0Param: crate::nodes::types::Float,
+    Blocks1Param: crate::nodes::types::Float,
+    Blocks2Param: crate::nodes::types::Float,
+    Blocks3Param: crate::nodes::types::Float,
+    Blocks4Param: crate::nodes::types::Float,
+    Blocks5Param: crate::nodes::types::Float,
+    Blocks6Param: crate::nodes::types::Float,
+    Blocks7Param: crate::nodes::types::Float,
+    Blocks8Param: crate::nodes::types::Float,
+    Blocks9Param: crate::nodes::types::Float,
+    Blocks10Param: crate::nodes::types::Float,
+    Blocks11Param: crate::nodes::types::Float,
+    Blocks12Param: crate::nodes::types::Float,
+    Blocks13Param: crate::nodes::types::Float,
+    Blocks14Param: crate::nodes::types::Float,
+    Blocks15Param: crate::nodes::types::Float,
+    Blocks16Param: crate::nodes::types::Float,
+    Blocks17Param: crate::nodes::types::Float,
+    Blocks18Param: crate::nodes::types::Float,
+    Blocks19Param: crate::nodes::types::Float,
+    Blocks20Param: crate::nodes::types::Float,
+    Blocks21Param: crate::nodes::types::Float,
+    Blocks22Param: crate::nodes::types::Float,
+    Blocks23Param: crate::nodes::types::Float,
+    Blocks24Param: crate::nodes::types::Float,
+    Blocks25Param: crate::nodes::types::Float,
+    Blocks26Param: crate::nodes::types::Float,
+    Blocks27Param: crate::nodes::types::Float,
+    Blocks28Param: crate::nodes::types::Float,
+    Blocks29Param: crate::nodes::types::Float,
+    Blocks30Param: crate::nodes::types::Float,
+    Blocks31Param: crate::nodes::types::Float,
+    Blocks32Param: crate::nodes::types::Float,
+    Blocks33Param: crate::nodes::types::Float,
+    Blocks34Param: crate::nodes::types::Float,
+    Blocks35Param: crate::nodes::types::Float,
+    Blocks36Param: crate::nodes::types::Float,
+    Blocks37Param: crate::nodes::types::Float,
+    Blocks38Param: crate::nodes::types::Float,
+    Blocks39Param: crate::nodes::types::Float,
+    HeadParam: crate::nodes::types::Float,
 > crate::nodes::TypedNode
 for ModelMergeWan21<
-    Model1,
-    Model2,
-    PatchEmbedding,
-    TimeEmbedding,
-    TimeProjection,
-    TextEmbedding,
-    ImgEmb,
-    Blocks0,
-    Blocks1,
-    Blocks2,
-    Blocks3,
-    Blocks4,
-    Blocks5,
-    Blocks6,
-    Blocks7,
-    Blocks8,
-    Blocks9,
-    Blocks10,
-    Blocks11,
-    Blocks12,
-    Blocks13,
-    Blocks14,
-    Blocks15,
-    Blocks16,
-    Blocks17,
-    Blocks18,
-    Blocks19,
-    Blocks20,
-    Blocks21,
-    Blocks22,
-    Blocks23,
-    Blocks24,
-    Blocks25,
-    Blocks26,
-    Blocks27,
-    Blocks28,
-    Blocks29,
-    Blocks30,
-    Blocks31,
-    Blocks32,
-    Blocks33,
-    Blocks34,
-    Blocks35,
-    Blocks36,
-    Blocks37,
-    Blocks38,
-    Blocks39,
-    Head,
+    Model1Param,
+    Model2Param,
+    PatchEmbeddingParam,
+    TimeEmbeddingParam,
+    TimeProjectionParam,
+    TextEmbeddingParam,
+    ImgEmbParam,
+    Blocks0Param,
+    Blocks1Param,
+    Blocks2Param,
+    Blocks3Param,
+    Blocks4Param,
+    Blocks5Param,
+    Blocks6Param,
+    Blocks7Param,
+    Blocks8Param,
+    Blocks9Param,
+    Blocks10Param,
+    Blocks11Param,
+    Blocks12Param,
+    Blocks13Param,
+    Blocks14Param,
+    Blocks15Param,
+    Blocks16Param,
+    Blocks17Param,
+    Blocks18Param,
+    Blocks19Param,
+    Blocks20Param,
+    Blocks21Param,
+    Blocks22Param,
+    Blocks23Param,
+    Blocks24Param,
+    Blocks25Param,
+    Blocks26Param,
+    Blocks27Param,
+    Blocks28Param,
+    Blocks29Param,
+    Blocks30Param,
+    Blocks31Param,
+    Blocks32Param,
+    Blocks33Param,
+    Blocks34Param,
+    Blocks35Param,
+    Blocks36Param,
+    Blocks37Param,
+    Blocks38Param,
+    Blocks39Param,
+    HeadParam,
 > {
     type Output = crate::nodes::types::ModelOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {

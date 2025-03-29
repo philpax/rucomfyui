@@ -8,9 +8,9 @@ use crate::{
 ///**EmptySD3LatentImage**: No description.
 #[derive(Clone)]
 pub struct EmptySd3LatentImage<
-    Width: crate::nodes::types::Int,
-    Height: crate::nodes::types::Int,
-    BatchSize: crate::nodes::types::Int,
+    WidthParam: crate::nodes::types::Int,
+    HeightParam: crate::nodes::types::Int,
+    BatchSizeParam: crate::nodes::types::Int,
 > {
     /**No documentation.
 
@@ -20,7 +20,7 @@ pub struct EmptySd3LatentImage<
   - Min: 16
   - Step: 16
 */
-    pub width: Width,
+    pub width: WidthParam,
     /**No documentation.
 
 **Metadata**:
@@ -29,7 +29,7 @@ pub struct EmptySd3LatentImage<
   - Min: 16
   - Step: 16
 */
-    pub height: Height,
+    pub height: HeightParam,
     /**No documentation.
 
 **Metadata**:
@@ -37,23 +37,28 @@ pub struct EmptySd3LatentImage<
   - Max: 4096
   - Min: 1
 */
-    pub batch_size: BatchSize,
+    pub batch_size: BatchSizeParam,
 }
 impl<
-    Width: crate::nodes::types::Int,
-    Height: crate::nodes::types::Int,
-    BatchSize: crate::nodes::types::Int,
-> EmptySd3LatentImage<Width, Height, BatchSize> {
+    WidthParam: crate::nodes::types::Int,
+    HeightParam: crate::nodes::types::Int,
+    BatchSizeParam: crate::nodes::types::Int,
+> EmptySd3LatentImage<WidthParam, HeightParam, BatchSizeParam> {
     /// Create a new node.
-    pub fn new(width: Width, height: Height, batch_size: BatchSize) -> Self {
+    pub fn new(
+        width: WidthParam,
+        height: HeightParam,
+        batch_size: BatchSizeParam,
+    ) -> Self {
         Self { width, height, batch_size }
     }
 }
 impl<
-    Width: crate::nodes::types::Int,
-    Height: crate::nodes::types::Int,
-    BatchSize: crate::nodes::types::Int,
-> crate::nodes::TypedNode for EmptySd3LatentImage<Width, Height, BatchSize> {
+    WidthParam: crate::nodes::types::Int,
+    HeightParam: crate::nodes::types::Int,
+    BatchSizeParam: crate::nodes::types::Int,
+> crate::nodes::TypedNode
+for EmptySd3LatentImage<WidthParam, HeightParam, BatchSizeParam> {
     type Output = crate::nodes::types::LatentOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)

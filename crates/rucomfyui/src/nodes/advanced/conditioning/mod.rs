@@ -9,42 +9,43 @@ pub mod flux;
 ///**CLIPTextEncodeHunyuanDiT**: No description.
 #[derive(Clone)]
 pub struct ClipTextEncodeHunyuanDiT<
-    Clip: crate::nodes::types::Clip,
-    Bert: crate::nodes::types::String,
-    Mt5Xl: crate::nodes::types::String,
+    ClipParam: crate::nodes::types::Clip,
+    BertParam: crate::nodes::types::String,
+    Mt5XlParam: crate::nodes::types::String,
 > {
     ///No documentation.
-    pub clip: Clip,
+    pub clip: ClipParam,
     /**No documentation.
 
 **Metadata**:
   - Dynamic prompts: true
   - Multiline: true
 */
-    pub bert: Bert,
+    pub bert: BertParam,
     /**No documentation.
 
 **Metadata**:
   - Dynamic prompts: true
   - Multiline: true
 */
-    pub mt_5_xl: Mt5Xl,
+    pub mt_5_xl: Mt5XlParam,
 }
 impl<
-    Clip: crate::nodes::types::Clip,
-    Bert: crate::nodes::types::String,
-    Mt5Xl: crate::nodes::types::String,
-> ClipTextEncodeHunyuanDiT<Clip, Bert, Mt5Xl> {
+    ClipParam: crate::nodes::types::Clip,
+    BertParam: crate::nodes::types::String,
+    Mt5XlParam: crate::nodes::types::String,
+> ClipTextEncodeHunyuanDiT<ClipParam, BertParam, Mt5XlParam> {
     /// Create a new node.
-    pub fn new(clip: Clip, bert: Bert, mt_5_xl: Mt5Xl) -> Self {
+    pub fn new(clip: ClipParam, bert: BertParam, mt_5_xl: Mt5XlParam) -> Self {
         Self { clip, bert, mt_5_xl }
     }
 }
 impl<
-    Clip: crate::nodes::types::Clip,
-    Bert: crate::nodes::types::String,
-    Mt5Xl: crate::nodes::types::String,
-> crate::nodes::TypedNode for ClipTextEncodeHunyuanDiT<Clip, Bert, Mt5Xl> {
+    ClipParam: crate::nodes::types::Clip,
+    BertParam: crate::nodes::types::String,
+    Mt5XlParam: crate::nodes::types::String,
+> crate::nodes::TypedNode
+for ClipTextEncodeHunyuanDiT<ClipParam, BertParam, Mt5XlParam> {
     type Output = crate::nodes::types::ConditioningOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)
@@ -64,10 +65,10 @@ impl<
 ///**CLIPTextEncodePixArtAlpha**: Encodes text and sets the resolution conditioning for PixArt Alpha. Does not apply to PixArt Sigma.
 #[derive(Clone)]
 pub struct ClipTextEncodePixArtAlpha<
-    Width: crate::nodes::types::Int,
-    Height: crate::nodes::types::Int,
-    Text: crate::nodes::types::String,
-    Clip: crate::nodes::types::Clip,
+    WidthParam: crate::nodes::types::Int,
+    HeightParam: crate::nodes::types::Int,
+    TextParam: crate::nodes::types::String,
+    ClipParam: crate::nodes::types::Clip,
 > {
     /**No documentation.
 
@@ -76,7 +77,7 @@ pub struct ClipTextEncodePixArtAlpha<
   - Max: 16384
   - Min: 0
 */
-    pub width: Width,
+    pub width: WidthParam,
     /**No documentation.
 
 **Metadata**:
@@ -84,34 +85,40 @@ pub struct ClipTextEncodePixArtAlpha<
   - Max: 16384
   - Min: 0
 */
-    pub height: Height,
+    pub height: HeightParam,
     /**No documentation.
 
 **Metadata**:
   - Dynamic prompts: true
   - Multiline: true
 */
-    pub text: Text,
+    pub text: TextParam,
     ///No documentation.
-    pub clip: Clip,
+    pub clip: ClipParam,
 }
 impl<
-    Width: crate::nodes::types::Int,
-    Height: crate::nodes::types::Int,
-    Text: crate::nodes::types::String,
-    Clip: crate::nodes::types::Clip,
-> ClipTextEncodePixArtAlpha<Width, Height, Text, Clip> {
+    WidthParam: crate::nodes::types::Int,
+    HeightParam: crate::nodes::types::Int,
+    TextParam: crate::nodes::types::String,
+    ClipParam: crate::nodes::types::Clip,
+> ClipTextEncodePixArtAlpha<WidthParam, HeightParam, TextParam, ClipParam> {
     /// Create a new node.
-    pub fn new(width: Width, height: Height, text: Text, clip: Clip) -> Self {
+    pub fn new(
+        width: WidthParam,
+        height: HeightParam,
+        text: TextParam,
+        clip: ClipParam,
+    ) -> Self {
         Self { width, height, text, clip }
     }
 }
 impl<
-    Width: crate::nodes::types::Int,
-    Height: crate::nodes::types::Int,
-    Text: crate::nodes::types::String,
-    Clip: crate::nodes::types::Clip,
-> crate::nodes::TypedNode for ClipTextEncodePixArtAlpha<Width, Height, Text, Clip> {
+    WidthParam: crate::nodes::types::Int,
+    HeightParam: crate::nodes::types::Int,
+    TextParam: crate::nodes::types::String,
+    ClipParam: crate::nodes::types::Clip,
+> crate::nodes::TypedNode
+for ClipTextEncodePixArtAlpha<WidthParam, HeightParam, TextParam, ClipParam> {
     type Output = crate::nodes::types::ConditioningOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)
@@ -132,52 +139,52 @@ impl<
 ///**CLIPTextEncodeSD3**: No description.
 #[derive(Clone)]
 pub struct ClipTextEncodeSd3<
-    Clip: crate::nodes::types::Clip,
-    ClipL: crate::nodes::types::String,
-    ClipG: crate::nodes::types::String,
-    T5Xxl: crate::nodes::types::String,
-    EmptyPadding: crate::nodes::types::String,
+    ClipParam: crate::nodes::types::Clip,
+    ClipLParam: crate::nodes::types::String,
+    ClipGParam: crate::nodes::types::String,
+    T5XxlParam: crate::nodes::types::String,
+    EmptyPaddingParam: crate::nodes::types::String,
 > {
     ///No documentation.
-    pub clip: Clip,
+    pub clip: ClipParam,
     /**No documentation.
 
 **Metadata**:
   - Dynamic prompts: true
   - Multiline: true
 */
-    pub clip_l: ClipL,
+    pub clip_l: ClipLParam,
     /**No documentation.
 
 **Metadata**:
   - Dynamic prompts: true
   - Multiline: true
 */
-    pub clip_g: ClipG,
+    pub clip_g: ClipGParam,
     /**No documentation.
 
 **Metadata**:
   - Dynamic prompts: true
   - Multiline: true
 */
-    pub t_5_xxl: T5Xxl,
+    pub t_5_xxl: T5XxlParam,
     ///No documentation.
-    pub empty_padding: EmptyPadding,
+    pub empty_padding: EmptyPaddingParam,
 }
 impl<
-    Clip: crate::nodes::types::Clip,
-    ClipL: crate::nodes::types::String,
-    ClipG: crate::nodes::types::String,
-    T5Xxl: crate::nodes::types::String,
-    EmptyPadding: crate::nodes::types::String,
-> ClipTextEncodeSd3<Clip, ClipL, ClipG, T5Xxl, EmptyPadding> {
+    ClipParam: crate::nodes::types::Clip,
+    ClipLParam: crate::nodes::types::String,
+    ClipGParam: crate::nodes::types::String,
+    T5XxlParam: crate::nodes::types::String,
+    EmptyPaddingParam: crate::nodes::types::String,
+> ClipTextEncodeSd3<ClipParam, ClipLParam, ClipGParam, T5XxlParam, EmptyPaddingParam> {
     /// Create a new node.
     pub fn new(
-        clip: Clip,
-        clip_l: ClipL,
-        clip_g: ClipG,
-        t_5_xxl: T5Xxl,
-        empty_padding: EmptyPadding,
+        clip: ClipParam,
+        clip_l: ClipLParam,
+        clip_g: ClipGParam,
+        t_5_xxl: T5XxlParam,
+        empty_padding: EmptyPaddingParam,
     ) -> Self {
         Self {
             clip,
@@ -189,13 +196,13 @@ impl<
     }
 }
 impl<
-    Clip: crate::nodes::types::Clip,
-    ClipL: crate::nodes::types::String,
-    ClipG: crate::nodes::types::String,
-    T5Xxl: crate::nodes::types::String,
-    EmptyPadding: crate::nodes::types::String,
+    ClipParam: crate::nodes::types::Clip,
+    ClipLParam: crate::nodes::types::String,
+    ClipGParam: crate::nodes::types::String,
+    T5XxlParam: crate::nodes::types::String,
+    EmptyPaddingParam: crate::nodes::types::String,
 > crate::nodes::TypedNode
-for ClipTextEncodeSd3<Clip, ClipL, ClipG, T5Xxl, EmptyPadding> {
+for ClipTextEncodeSd3<ClipParam, ClipLParam, ClipGParam, T5XxlParam, EmptyPaddingParam> {
     type Output = crate::nodes::types::ConditioningOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)
@@ -217,18 +224,18 @@ for ClipTextEncodeSd3<Clip, ClipL, ClipG, T5Xxl, EmptyPadding> {
 ///**CLIPTextEncodeSDXL**: No description.
 #[derive(Clone)]
 pub struct ClipTextEncodeSdxl<
-    Clip: crate::nodes::types::Clip,
-    Width: crate::nodes::types::Int,
-    Height: crate::nodes::types::Int,
-    CropW: crate::nodes::types::Int,
-    CropH: crate::nodes::types::Int,
-    TargetWidth: crate::nodes::types::Int,
-    TargetHeight: crate::nodes::types::Int,
-    TextG: crate::nodes::types::String,
-    TextL: crate::nodes::types::String,
+    ClipParam: crate::nodes::types::Clip,
+    WidthParam: crate::nodes::types::Int,
+    HeightParam: crate::nodes::types::Int,
+    CropWParam: crate::nodes::types::Int,
+    CropHParam: crate::nodes::types::Int,
+    TargetWidthParam: crate::nodes::types::Int,
+    TargetHeightParam: crate::nodes::types::Int,
+    TextGParam: crate::nodes::types::String,
+    TextLParam: crate::nodes::types::String,
 > {
     ///No documentation.
-    pub clip: Clip,
+    pub clip: ClipParam,
     /**No documentation.
 
 **Metadata**:
@@ -236,7 +243,7 @@ pub struct ClipTextEncodeSdxl<
   - Max: 16384
   - Min: 0
 */
-    pub width: Width,
+    pub width: WidthParam,
     /**No documentation.
 
 **Metadata**:
@@ -244,7 +251,7 @@ pub struct ClipTextEncodeSdxl<
   - Max: 16384
   - Min: 0
 */
-    pub height: Height,
+    pub height: HeightParam,
     /**No documentation.
 
 **Metadata**:
@@ -252,7 +259,7 @@ pub struct ClipTextEncodeSdxl<
   - Max: 16384
   - Min: 0
 */
-    pub crop_w: CropW,
+    pub crop_w: CropWParam,
     /**No documentation.
 
 **Metadata**:
@@ -260,7 +267,7 @@ pub struct ClipTextEncodeSdxl<
   - Max: 16384
   - Min: 0
 */
-    pub crop_h: CropH,
+    pub crop_h: CropHParam,
     /**No documentation.
 
 **Metadata**:
@@ -268,7 +275,7 @@ pub struct ClipTextEncodeSdxl<
   - Max: 16384
   - Min: 0
 */
-    pub target_width: TargetWidth,
+    pub target_width: TargetWidthParam,
     /**No documentation.
 
 **Metadata**:
@@ -276,54 +283,54 @@ pub struct ClipTextEncodeSdxl<
   - Max: 16384
   - Min: 0
 */
-    pub target_height: TargetHeight,
+    pub target_height: TargetHeightParam,
     /**No documentation.
 
 **Metadata**:
   - Dynamic prompts: true
   - Multiline: true
 */
-    pub text_g: TextG,
+    pub text_g: TextGParam,
     /**No documentation.
 
 **Metadata**:
   - Dynamic prompts: true
   - Multiline: true
 */
-    pub text_l: TextL,
+    pub text_l: TextLParam,
 }
 impl<
-    Clip: crate::nodes::types::Clip,
-    Width: crate::nodes::types::Int,
-    Height: crate::nodes::types::Int,
-    CropW: crate::nodes::types::Int,
-    CropH: crate::nodes::types::Int,
-    TargetWidth: crate::nodes::types::Int,
-    TargetHeight: crate::nodes::types::Int,
-    TextG: crate::nodes::types::String,
-    TextL: crate::nodes::types::String,
+    ClipParam: crate::nodes::types::Clip,
+    WidthParam: crate::nodes::types::Int,
+    HeightParam: crate::nodes::types::Int,
+    CropWParam: crate::nodes::types::Int,
+    CropHParam: crate::nodes::types::Int,
+    TargetWidthParam: crate::nodes::types::Int,
+    TargetHeightParam: crate::nodes::types::Int,
+    TextGParam: crate::nodes::types::String,
+    TextLParam: crate::nodes::types::String,
 > ClipTextEncodeSdxl<
-    Clip,
-    Width,
-    Height,
-    CropW,
-    CropH,
-    TargetWidth,
-    TargetHeight,
-    TextG,
-    TextL,
+    ClipParam,
+    WidthParam,
+    HeightParam,
+    CropWParam,
+    CropHParam,
+    TargetWidthParam,
+    TargetHeightParam,
+    TextGParam,
+    TextLParam,
 > {
     /// Create a new node.
     pub fn new(
-        clip: Clip,
-        width: Width,
-        height: Height,
-        crop_w: CropW,
-        crop_h: CropH,
-        target_width: TargetWidth,
-        target_height: TargetHeight,
-        text_g: TextG,
-        text_l: TextL,
+        clip: ClipParam,
+        width: WidthParam,
+        height: HeightParam,
+        crop_w: CropWParam,
+        crop_h: CropHParam,
+        target_width: TargetWidthParam,
+        target_height: TargetHeightParam,
+        text_g: TextGParam,
+        text_l: TextLParam,
     ) -> Self {
         Self {
             clip,
@@ -339,26 +346,26 @@ impl<
     }
 }
 impl<
-    Clip: crate::nodes::types::Clip,
-    Width: crate::nodes::types::Int,
-    Height: crate::nodes::types::Int,
-    CropW: crate::nodes::types::Int,
-    CropH: crate::nodes::types::Int,
-    TargetWidth: crate::nodes::types::Int,
-    TargetHeight: crate::nodes::types::Int,
-    TextG: crate::nodes::types::String,
-    TextL: crate::nodes::types::String,
+    ClipParam: crate::nodes::types::Clip,
+    WidthParam: crate::nodes::types::Int,
+    HeightParam: crate::nodes::types::Int,
+    CropWParam: crate::nodes::types::Int,
+    CropHParam: crate::nodes::types::Int,
+    TargetWidthParam: crate::nodes::types::Int,
+    TargetHeightParam: crate::nodes::types::Int,
+    TextGParam: crate::nodes::types::String,
+    TextLParam: crate::nodes::types::String,
 > crate::nodes::TypedNode
 for ClipTextEncodeSdxl<
-    Clip,
-    Width,
-    Height,
-    CropW,
-    CropH,
-    TargetWidth,
-    TargetHeight,
-    TextG,
-    TextL,
+    ClipParam,
+    WidthParam,
+    HeightParam,
+    CropWParam,
+    CropHParam,
+    TargetWidthParam,
+    TargetHeightParam,
+    TextGParam,
+    TextLParam,
 > {
     type Output = crate::nodes::types::ConditioningOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
@@ -385,11 +392,11 @@ for ClipTextEncodeSdxl<
 ///**CLIPTextEncodeSDXLRefiner**: No description.
 #[derive(Clone)]
 pub struct ClipTextEncodeSdxlRefiner<
-    Ascore: crate::nodes::types::Float,
-    Width: crate::nodes::types::Int,
-    Height: crate::nodes::types::Int,
-    Text: crate::nodes::types::String,
-    Clip: crate::nodes::types::Clip,
+    AscoreParam: crate::nodes::types::Float,
+    WidthParam: crate::nodes::types::Int,
+    HeightParam: crate::nodes::types::Int,
+    TextParam: crate::nodes::types::String,
+    ClipParam: crate::nodes::types::Clip,
 > {
     /**No documentation.
 
@@ -399,7 +406,7 @@ pub struct ClipTextEncodeSdxlRefiner<
   - Min: 0
   - Step: 0.01
 */
-    pub ascore: Ascore,
+    pub ascore: AscoreParam,
     /**No documentation.
 
 **Metadata**:
@@ -407,7 +414,7 @@ pub struct ClipTextEncodeSdxlRefiner<
   - Max: 16384
   - Min: 0
 */
-    pub width: Width,
+    pub width: WidthParam,
     /**No documentation.
 
 **Metadata**:
@@ -415,31 +422,31 @@ pub struct ClipTextEncodeSdxlRefiner<
   - Max: 16384
   - Min: 0
 */
-    pub height: Height,
+    pub height: HeightParam,
     /**No documentation.
 
 **Metadata**:
   - Dynamic prompts: true
   - Multiline: true
 */
-    pub text: Text,
+    pub text: TextParam,
     ///No documentation.
-    pub clip: Clip,
+    pub clip: ClipParam,
 }
 impl<
-    Ascore: crate::nodes::types::Float,
-    Width: crate::nodes::types::Int,
-    Height: crate::nodes::types::Int,
-    Text: crate::nodes::types::String,
-    Clip: crate::nodes::types::Clip,
-> ClipTextEncodeSdxlRefiner<Ascore, Width, Height, Text, Clip> {
+    AscoreParam: crate::nodes::types::Float,
+    WidthParam: crate::nodes::types::Int,
+    HeightParam: crate::nodes::types::Int,
+    TextParam: crate::nodes::types::String,
+    ClipParam: crate::nodes::types::Clip,
+> ClipTextEncodeSdxlRefiner<AscoreParam, WidthParam, HeightParam, TextParam, ClipParam> {
     /// Create a new node.
     pub fn new(
-        ascore: Ascore,
-        width: Width,
-        height: Height,
-        text: Text,
-        clip: Clip,
+        ascore: AscoreParam,
+        width: WidthParam,
+        height: HeightParam,
+        text: TextParam,
+        clip: ClipParam,
     ) -> Self {
         Self {
             ascore,
@@ -451,13 +458,19 @@ impl<
     }
 }
 impl<
-    Ascore: crate::nodes::types::Float,
-    Width: crate::nodes::types::Int,
-    Height: crate::nodes::types::Int,
-    Text: crate::nodes::types::String,
-    Clip: crate::nodes::types::Clip,
+    AscoreParam: crate::nodes::types::Float,
+    WidthParam: crate::nodes::types::Int,
+    HeightParam: crate::nodes::types::Int,
+    TextParam: crate::nodes::types::String,
+    ClipParam: crate::nodes::types::Clip,
 > crate::nodes::TypedNode
-for ClipTextEncodeSdxlRefiner<Ascore, Width, Height, Text, Clip> {
+for ClipTextEncodeSdxlRefiner<
+    AscoreParam,
+    WidthParam,
+    HeightParam,
+    TextParam,
+    ClipParam,
+> {
     type Output = crate::nodes::types::ConditioningOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)
@@ -479,12 +492,12 @@ for ClipTextEncodeSdxlRefiner<Ascore, Width, Height, Text, Clip> {
 ///**ConditioningSetTimestepRange**: No description.
 #[derive(Clone)]
 pub struct ConditioningSetTimestepRange<
-    Conditioning: crate::nodes::types::Conditioning,
-    Start: crate::nodes::types::Float,
-    End: crate::nodes::types::Float,
+    ConditioningParam: crate::nodes::types::Conditioning,
+    StartParam: crate::nodes::types::Float,
+    EndParam: crate::nodes::types::Float,
 > {
     ///No documentation.
-    pub conditioning: Conditioning,
+    pub conditioning: ConditioningParam,
     /**No documentation.
 
 **Metadata**:
@@ -493,7 +506,7 @@ pub struct ConditioningSetTimestepRange<
   - Min: 0
   - Step: 0.001
 */
-    pub start: Start,
+    pub start: StartParam,
     /**No documentation.
 
 **Metadata**:
@@ -502,23 +515,28 @@ pub struct ConditioningSetTimestepRange<
   - Min: 0
   - Step: 0.001
 */
-    pub end: End,
+    pub end: EndParam,
 }
 impl<
-    Conditioning: crate::nodes::types::Conditioning,
-    Start: crate::nodes::types::Float,
-    End: crate::nodes::types::Float,
-> ConditioningSetTimestepRange<Conditioning, Start, End> {
+    ConditioningParam: crate::nodes::types::Conditioning,
+    StartParam: crate::nodes::types::Float,
+    EndParam: crate::nodes::types::Float,
+> ConditioningSetTimestepRange<ConditioningParam, StartParam, EndParam> {
     /// Create a new node.
-    pub fn new(conditioning: Conditioning, start: Start, end: End) -> Self {
+    pub fn new(
+        conditioning: ConditioningParam,
+        start: StartParam,
+        end: EndParam,
+    ) -> Self {
         Self { conditioning, start, end }
     }
 }
 impl<
-    Conditioning: crate::nodes::types::Conditioning,
-    Start: crate::nodes::types::Float,
-    End: crate::nodes::types::Float,
-> crate::nodes::TypedNode for ConditioningSetTimestepRange<Conditioning, Start, End> {
+    ConditioningParam: crate::nodes::types::Conditioning,
+    StartParam: crate::nodes::types::Float,
+    EndParam: crate::nodes::types::Float,
+> crate::nodes::TypedNode
+for ConditioningSetTimestepRange<ConditioningParam, StartParam, EndParam> {
     type Output = crate::nodes::types::ConditioningOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)
@@ -537,18 +555,20 @@ impl<
 }
 ///**ConditioningZeroOut**: No description.
 #[derive(Clone)]
-pub struct ConditioningZeroOut<Conditioning: crate::nodes::types::Conditioning> {
+pub struct ConditioningZeroOut<ConditioningParam: crate::nodes::types::Conditioning> {
     ///No documentation.
-    pub conditioning: Conditioning,
+    pub conditioning: ConditioningParam,
 }
-impl<Conditioning: crate::nodes::types::Conditioning> ConditioningZeroOut<Conditioning> {
+impl<
+    ConditioningParam: crate::nodes::types::Conditioning,
+> ConditioningZeroOut<ConditioningParam> {
     /// Create a new node.
-    pub fn new(conditioning: Conditioning) -> Self {
+    pub fn new(conditioning: ConditioningParam) -> Self {
         Self { conditioning }
     }
 }
-impl<Conditioning: crate::nodes::types::Conditioning> crate::nodes::TypedNode
-for ConditioningZeroOut<Conditioning> {
+impl<ConditioningParam: crate::nodes::types::Conditioning> crate::nodes::TypedNode
+for ConditioningZeroOut<ConditioningParam> {
     type Output = crate::nodes::types::ConditioningOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)
@@ -566,22 +586,22 @@ for ConditioningZeroOut<Conditioning> {
 ///**TextEncodeHunyuanVideo_ImageToVideo**: No description.
 #[derive(Clone)]
 pub struct TextEncodeHunyuanVideoImageToVideo<
-    Clip: crate::nodes::types::Clip,
-    ClipVisionOutput: crate::nodes::types::ClipVisionOutput,
-    Prompt: crate::nodes::types::String,
-    ImageInterleave: crate::nodes::types::Int,
+    ClipParam: crate::nodes::types::Clip,
+    ClipVisionOutputParam: crate::nodes::types::ClipVisionOutput,
+    PromptParam: crate::nodes::types::String,
+    ImageInterleaveParam: crate::nodes::types::Int,
 > {
     ///No documentation.
-    pub clip: Clip,
+    pub clip: ClipParam,
     ///No documentation.
-    pub clip_vision_output: ClipVisionOutput,
+    pub clip_vision_output: ClipVisionOutputParam,
     /**No documentation.
 
 **Metadata**:
   - Dynamic prompts: true
   - Multiline: true
 */
-    pub prompt: Prompt,
+    pub prompt: PromptParam,
     /**How much the image influences things vs the text prompt. Higher number means more influence from the text prompt.
 
 **Metadata**:
@@ -589,20 +609,25 @@ pub struct TextEncodeHunyuanVideoImageToVideo<
   - Max: 512
   - Min: 1
 */
-    pub image_interleave: ImageInterleave,
+    pub image_interleave: ImageInterleaveParam,
 }
 impl<
-    Clip: crate::nodes::types::Clip,
-    ClipVisionOutput: crate::nodes::types::ClipVisionOutput,
-    Prompt: crate::nodes::types::String,
-    ImageInterleave: crate::nodes::types::Int,
-> TextEncodeHunyuanVideoImageToVideo<Clip, ClipVisionOutput, Prompt, ImageInterleave> {
+    ClipParam: crate::nodes::types::Clip,
+    ClipVisionOutputParam: crate::nodes::types::ClipVisionOutput,
+    PromptParam: crate::nodes::types::String,
+    ImageInterleaveParam: crate::nodes::types::Int,
+> TextEncodeHunyuanVideoImageToVideo<
+    ClipParam,
+    ClipVisionOutputParam,
+    PromptParam,
+    ImageInterleaveParam,
+> {
     /// Create a new node.
     pub fn new(
-        clip: Clip,
-        clip_vision_output: ClipVisionOutput,
-        prompt: Prompt,
-        image_interleave: ImageInterleave,
+        clip: ClipParam,
+        clip_vision_output: ClipVisionOutputParam,
+        prompt: PromptParam,
+        image_interleave: ImageInterleaveParam,
     ) -> Self {
         Self {
             clip,
@@ -613,12 +638,17 @@ impl<
     }
 }
 impl<
-    Clip: crate::nodes::types::Clip,
-    ClipVisionOutput: crate::nodes::types::ClipVisionOutput,
-    Prompt: crate::nodes::types::String,
-    ImageInterleave: crate::nodes::types::Int,
+    ClipParam: crate::nodes::types::Clip,
+    ClipVisionOutputParam: crate::nodes::types::ClipVisionOutput,
+    PromptParam: crate::nodes::types::String,
+    ImageInterleaveParam: crate::nodes::types::Int,
 > crate::nodes::TypedNode
-for TextEncodeHunyuanVideoImageToVideo<Clip, ClipVisionOutput, Prompt, ImageInterleave> {
+for TextEncodeHunyuanVideoImageToVideo<
+    ClipParam,
+    ClipVisionOutputParam,
+    PromptParam,
+    ImageInterleaveParam,
+> {
     type Output = crate::nodes::types::ConditioningOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)

@@ -7,17 +7,18 @@ use crate::{
 };
 ///**CFGZeroStar**: No description.
 #[derive(Clone)]
-pub struct CfgZeroStar<Model: crate::nodes::types::Model> {
+pub struct CfgZeroStar<ModelParam: crate::nodes::types::Model> {
     ///No documentation.
-    pub model: Model,
+    pub model: ModelParam,
 }
-impl<Model: crate::nodes::types::Model> CfgZeroStar<Model> {
+impl<ModelParam: crate::nodes::types::Model> CfgZeroStar<ModelParam> {
     /// Create a new node.
-    pub fn new(model: Model) -> Self {
+    pub fn new(model: ModelParam) -> Self {
         Self { model }
     }
 }
-impl<Model: crate::nodes::types::Model> crate::nodes::TypedNode for CfgZeroStar<Model> {
+impl<ModelParam: crate::nodes::types::Model> crate::nodes::TypedNode
+for CfgZeroStar<ModelParam> {
     type Output = crate::nodes::types::ModelOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)
@@ -35,30 +36,30 @@ impl<Model: crate::nodes::types::Model> crate::nodes::TypedNode for CfgZeroStar<
 ///**SkipLayerGuidanceDiT**: Generic version of SkipLayerGuidance node that can be used on every DiT model.
 #[derive(Clone)]
 pub struct SkipLayerGuidanceDiT<
-    Model: crate::nodes::types::Model,
-    DoubleLayers: crate::nodes::types::String,
-    SingleLayers: crate::nodes::types::String,
-    Scale: crate::nodes::types::Float,
-    StartPercent: crate::nodes::types::Float,
-    EndPercent: crate::nodes::types::Float,
-    RescalingScale: crate::nodes::types::Float,
+    ModelParam: crate::nodes::types::Model,
+    DoubleLayersParam: crate::nodes::types::String,
+    SingleLayersParam: crate::nodes::types::String,
+    ScaleParam: crate::nodes::types::Float,
+    StartPercentParam: crate::nodes::types::Float,
+    EndPercentParam: crate::nodes::types::Float,
+    RescalingScaleParam: crate::nodes::types::Float,
 > {
     ///No documentation.
-    pub model: Model,
+    pub model: ModelParam,
     /**No documentation.
 
 **Metadata**:
   - Multiline: false
   - Default: 7, 8, 9
 */
-    pub double_layers: DoubleLayers,
+    pub double_layers: DoubleLayersParam,
     /**No documentation.
 
 **Metadata**:
   - Multiline: false
   - Default: 7, 8, 9
 */
-    pub single_layers: SingleLayers,
+    pub single_layers: SingleLayersParam,
     /**No documentation.
 
 **Metadata**:
@@ -67,7 +68,7 @@ pub struct SkipLayerGuidanceDiT<
   - Min: 0
   - Step: 0.1
 */
-    pub scale: Scale,
+    pub scale: ScaleParam,
     /**No documentation.
 
 **Metadata**:
@@ -76,7 +77,7 @@ pub struct SkipLayerGuidanceDiT<
   - Min: 0
   - Step: 0.001
 */
-    pub start_percent: StartPercent,
+    pub start_percent: StartPercentParam,
     /**No documentation.
 
 **Metadata**:
@@ -85,7 +86,7 @@ pub struct SkipLayerGuidanceDiT<
   - Min: 0
   - Step: 0.001
 */
-    pub end_percent: EndPercent,
+    pub end_percent: EndPercentParam,
     /**No documentation.
 
 **Metadata**:
@@ -94,34 +95,34 @@ pub struct SkipLayerGuidanceDiT<
   - Min: 0
   - Step: 0.01
 */
-    pub rescaling_scale: RescalingScale,
+    pub rescaling_scale: RescalingScaleParam,
 }
 impl<
-    Model: crate::nodes::types::Model,
-    DoubleLayers: crate::nodes::types::String,
-    SingleLayers: crate::nodes::types::String,
-    Scale: crate::nodes::types::Float,
-    StartPercent: crate::nodes::types::Float,
-    EndPercent: crate::nodes::types::Float,
-    RescalingScale: crate::nodes::types::Float,
+    ModelParam: crate::nodes::types::Model,
+    DoubleLayersParam: crate::nodes::types::String,
+    SingleLayersParam: crate::nodes::types::String,
+    ScaleParam: crate::nodes::types::Float,
+    StartPercentParam: crate::nodes::types::Float,
+    EndPercentParam: crate::nodes::types::Float,
+    RescalingScaleParam: crate::nodes::types::Float,
 > SkipLayerGuidanceDiT<
-    Model,
-    DoubleLayers,
-    SingleLayers,
-    Scale,
-    StartPercent,
-    EndPercent,
-    RescalingScale,
+    ModelParam,
+    DoubleLayersParam,
+    SingleLayersParam,
+    ScaleParam,
+    StartPercentParam,
+    EndPercentParam,
+    RescalingScaleParam,
 > {
     /// Create a new node.
     pub fn new(
-        model: Model,
-        double_layers: DoubleLayers,
-        single_layers: SingleLayers,
-        scale: Scale,
-        start_percent: StartPercent,
-        end_percent: EndPercent,
-        rescaling_scale: RescalingScale,
+        model: ModelParam,
+        double_layers: DoubleLayersParam,
+        single_layers: SingleLayersParam,
+        scale: ScaleParam,
+        start_percent: StartPercentParam,
+        end_percent: EndPercentParam,
+        rescaling_scale: RescalingScaleParam,
     ) -> Self {
         Self {
             model,
@@ -135,22 +136,22 @@ impl<
     }
 }
 impl<
-    Model: crate::nodes::types::Model,
-    DoubleLayers: crate::nodes::types::String,
-    SingleLayers: crate::nodes::types::String,
-    Scale: crate::nodes::types::Float,
-    StartPercent: crate::nodes::types::Float,
-    EndPercent: crate::nodes::types::Float,
-    RescalingScale: crate::nodes::types::Float,
+    ModelParam: crate::nodes::types::Model,
+    DoubleLayersParam: crate::nodes::types::String,
+    SingleLayersParam: crate::nodes::types::String,
+    ScaleParam: crate::nodes::types::Float,
+    StartPercentParam: crate::nodes::types::Float,
+    EndPercentParam: crate::nodes::types::Float,
+    RescalingScaleParam: crate::nodes::types::Float,
 > crate::nodes::TypedNode
 for SkipLayerGuidanceDiT<
-    Model,
-    DoubleLayers,
-    SingleLayers,
-    Scale,
-    StartPercent,
-    EndPercent,
-    RescalingScale,
+    ModelParam,
+    DoubleLayersParam,
+    SingleLayersParam,
+    ScaleParam,
+    StartPercentParam,
+    EndPercentParam,
+    RescalingScaleParam,
 > {
     type Output = crate::nodes::types::ModelOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
@@ -176,21 +177,21 @@ for SkipLayerGuidanceDiT<
 ///**SkipLayerGuidanceSD3**: Generic version of SkipLayerGuidance node that can be used on every DiT model.
 #[derive(Clone)]
 pub struct SkipLayerGuidanceSd3<
-    Model: crate::nodes::types::Model,
-    Layers: crate::nodes::types::String,
-    Scale: crate::nodes::types::Float,
-    StartPercent: crate::nodes::types::Float,
-    EndPercent: crate::nodes::types::Float,
+    ModelParam: crate::nodes::types::Model,
+    LayersParam: crate::nodes::types::String,
+    ScaleParam: crate::nodes::types::Float,
+    StartPercentParam: crate::nodes::types::Float,
+    EndPercentParam: crate::nodes::types::Float,
 > {
     ///No documentation.
-    pub model: Model,
+    pub model: ModelParam,
     /**No documentation.
 
 **Metadata**:
   - Multiline: false
   - Default: 7, 8, 9
 */
-    pub layers: Layers,
+    pub layers: LayersParam,
     /**No documentation.
 
 **Metadata**:
@@ -199,7 +200,7 @@ pub struct SkipLayerGuidanceSd3<
   - Min: 0
   - Step: 0.1
 */
-    pub scale: Scale,
+    pub scale: ScaleParam,
     /**No documentation.
 
 **Metadata**:
@@ -208,7 +209,7 @@ pub struct SkipLayerGuidanceSd3<
   - Min: 0
   - Step: 0.001
 */
-    pub start_percent: StartPercent,
+    pub start_percent: StartPercentParam,
     /**No documentation.
 
 **Metadata**:
@@ -217,22 +218,28 @@ pub struct SkipLayerGuidanceSd3<
   - Min: 0
   - Step: 0.001
 */
-    pub end_percent: EndPercent,
+    pub end_percent: EndPercentParam,
 }
 impl<
-    Model: crate::nodes::types::Model,
-    Layers: crate::nodes::types::String,
-    Scale: crate::nodes::types::Float,
-    StartPercent: crate::nodes::types::Float,
-    EndPercent: crate::nodes::types::Float,
-> SkipLayerGuidanceSd3<Model, Layers, Scale, StartPercent, EndPercent> {
+    ModelParam: crate::nodes::types::Model,
+    LayersParam: crate::nodes::types::String,
+    ScaleParam: crate::nodes::types::Float,
+    StartPercentParam: crate::nodes::types::Float,
+    EndPercentParam: crate::nodes::types::Float,
+> SkipLayerGuidanceSd3<
+    ModelParam,
+    LayersParam,
+    ScaleParam,
+    StartPercentParam,
+    EndPercentParam,
+> {
     /// Create a new node.
     pub fn new(
-        model: Model,
-        layers: Layers,
-        scale: Scale,
-        start_percent: StartPercent,
-        end_percent: EndPercent,
+        model: ModelParam,
+        layers: LayersParam,
+        scale: ScaleParam,
+        start_percent: StartPercentParam,
+        end_percent: EndPercentParam,
     ) -> Self {
         Self {
             model,
@@ -244,13 +251,19 @@ impl<
     }
 }
 impl<
-    Model: crate::nodes::types::Model,
-    Layers: crate::nodes::types::String,
-    Scale: crate::nodes::types::Float,
-    StartPercent: crate::nodes::types::Float,
-    EndPercent: crate::nodes::types::Float,
+    ModelParam: crate::nodes::types::Model,
+    LayersParam: crate::nodes::types::String,
+    ScaleParam: crate::nodes::types::Float,
+    StartPercentParam: crate::nodes::types::Float,
+    EndPercentParam: crate::nodes::types::Float,
 > crate::nodes::TypedNode
-for SkipLayerGuidanceSd3<Model, Layers, Scale, StartPercent, EndPercent> {
+for SkipLayerGuidanceSd3<
+    ModelParam,
+    LayersParam,
+    ScaleParam,
+    StartPercentParam,
+    EndPercentParam,
+> {
     type Output = crate::nodes::types::ModelOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)

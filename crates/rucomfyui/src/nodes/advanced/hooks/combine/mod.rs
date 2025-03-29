@@ -8,27 +8,27 @@ use crate::{
 ///**Combine Hooks [2]**: No description.
 #[derive(Clone)]
 pub struct CombineHooks2<
-    HooksA: crate::nodes::types::Hooks = crate::nodes::types::HooksOut,
-    HooksB: crate::nodes::types::Hooks = crate::nodes::types::HooksOut,
+    HooksAParam: crate::nodes::types::Hooks = crate::nodes::types::HooksOut,
+    HooksBParam: crate::nodes::types::Hooks = crate::nodes::types::HooksOut,
 > {
     ///No documentation.
-    pub hooks_a: Option<HooksA>,
+    pub hooks_a: Option<HooksAParam>,
     ///No documentation.
-    pub hooks_b: Option<HooksB>,
+    pub hooks_b: Option<HooksBParam>,
 }
 impl<
-    HooksA: crate::nodes::types::Hooks,
-    HooksB: crate::nodes::types::Hooks,
-> CombineHooks2<HooksA, HooksB> {
+    HooksAParam: crate::nodes::types::Hooks,
+    HooksBParam: crate::nodes::types::Hooks,
+> CombineHooks2<HooksAParam, HooksBParam> {
     /// Create a new node.
-    pub fn new(hooks_a: Option<HooksA>, hooks_b: Option<HooksB>) -> Self {
+    pub fn new(hooks_a: Option<HooksAParam>, hooks_b: Option<HooksBParam>) -> Self {
         Self { hooks_a, hooks_b }
     }
 }
 impl<
-    HooksA: crate::nodes::types::Hooks,
-    HooksB: crate::nodes::types::Hooks,
-> crate::nodes::TypedNode for CombineHooks2<HooksA, HooksB> {
+    HooksAParam: crate::nodes::types::Hooks,
+    HooksBParam: crate::nodes::types::Hooks,
+> crate::nodes::TypedNode for CombineHooks2<HooksAParam, HooksBParam> {
     type Output = crate::nodes::types::HooksOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)
@@ -51,32 +51,32 @@ impl<
 ///**Combine Hooks [4]**: No description.
 #[derive(Clone)]
 pub struct CombineHooks4<
-    HooksA: crate::nodes::types::Hooks = crate::nodes::types::HooksOut,
-    HooksB: crate::nodes::types::Hooks = crate::nodes::types::HooksOut,
-    HooksC: crate::nodes::types::Hooks = crate::nodes::types::HooksOut,
-    HooksD: crate::nodes::types::Hooks = crate::nodes::types::HooksOut,
+    HooksAParam: crate::nodes::types::Hooks = crate::nodes::types::HooksOut,
+    HooksBParam: crate::nodes::types::Hooks = crate::nodes::types::HooksOut,
+    HooksCParam: crate::nodes::types::Hooks = crate::nodes::types::HooksOut,
+    HooksDParam: crate::nodes::types::Hooks = crate::nodes::types::HooksOut,
 > {
     ///No documentation.
-    pub hooks_a: Option<HooksA>,
+    pub hooks_a: Option<HooksAParam>,
     ///No documentation.
-    pub hooks_b: Option<HooksB>,
+    pub hooks_b: Option<HooksBParam>,
     ///No documentation.
-    pub hooks_c: Option<HooksC>,
+    pub hooks_c: Option<HooksCParam>,
     ///No documentation.
-    pub hooks_d: Option<HooksD>,
+    pub hooks_d: Option<HooksDParam>,
 }
 impl<
-    HooksA: crate::nodes::types::Hooks,
-    HooksB: crate::nodes::types::Hooks,
-    HooksC: crate::nodes::types::Hooks,
-    HooksD: crate::nodes::types::Hooks,
-> CombineHooks4<HooksA, HooksB, HooksC, HooksD> {
+    HooksAParam: crate::nodes::types::Hooks,
+    HooksBParam: crate::nodes::types::Hooks,
+    HooksCParam: crate::nodes::types::Hooks,
+    HooksDParam: crate::nodes::types::Hooks,
+> CombineHooks4<HooksAParam, HooksBParam, HooksCParam, HooksDParam> {
     /// Create a new node.
     pub fn new(
-        hooks_a: Option<HooksA>,
-        hooks_b: Option<HooksB>,
-        hooks_c: Option<HooksC>,
-        hooks_d: Option<HooksD>,
+        hooks_a: Option<HooksAParam>,
+        hooks_b: Option<HooksBParam>,
+        hooks_c: Option<HooksCParam>,
+        hooks_d: Option<HooksDParam>,
     ) -> Self {
         Self {
             hooks_a,
@@ -87,11 +87,12 @@ impl<
     }
 }
 impl<
-    HooksA: crate::nodes::types::Hooks,
-    HooksB: crate::nodes::types::Hooks,
-    HooksC: crate::nodes::types::Hooks,
-    HooksD: crate::nodes::types::Hooks,
-> crate::nodes::TypedNode for CombineHooks4<HooksA, HooksB, HooksC, HooksD> {
+    HooksAParam: crate::nodes::types::Hooks,
+    HooksBParam: crate::nodes::types::Hooks,
+    HooksCParam: crate::nodes::types::Hooks,
+    HooksDParam: crate::nodes::types::Hooks,
+> crate::nodes::TypedNode
+for CombineHooks4<HooksAParam, HooksBParam, HooksCParam, HooksDParam> {
     type Output = crate::nodes::types::HooksOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)
@@ -120,52 +121,61 @@ impl<
 ///**Combine Hooks [8]**: No description.
 #[derive(Clone)]
 pub struct CombineHooks8<
-    HooksA: crate::nodes::types::Hooks = crate::nodes::types::HooksOut,
-    HooksB: crate::nodes::types::Hooks = crate::nodes::types::HooksOut,
-    HooksC: crate::nodes::types::Hooks = crate::nodes::types::HooksOut,
-    HooksD: crate::nodes::types::Hooks = crate::nodes::types::HooksOut,
-    HooksE: crate::nodes::types::Hooks = crate::nodes::types::HooksOut,
-    HooksF: crate::nodes::types::Hooks = crate::nodes::types::HooksOut,
-    HooksG: crate::nodes::types::Hooks = crate::nodes::types::HooksOut,
-    HooksH: crate::nodes::types::Hooks = crate::nodes::types::HooksOut,
+    HooksAParam: crate::nodes::types::Hooks = crate::nodes::types::HooksOut,
+    HooksBParam: crate::nodes::types::Hooks = crate::nodes::types::HooksOut,
+    HooksCParam: crate::nodes::types::Hooks = crate::nodes::types::HooksOut,
+    HooksDParam: crate::nodes::types::Hooks = crate::nodes::types::HooksOut,
+    HooksEParam: crate::nodes::types::Hooks = crate::nodes::types::HooksOut,
+    HooksFParam: crate::nodes::types::Hooks = crate::nodes::types::HooksOut,
+    HooksGParam: crate::nodes::types::Hooks = crate::nodes::types::HooksOut,
+    HooksHParam: crate::nodes::types::Hooks = crate::nodes::types::HooksOut,
 > {
     ///No documentation.
-    pub hooks_a: Option<HooksA>,
+    pub hooks_a: Option<HooksAParam>,
     ///No documentation.
-    pub hooks_b: Option<HooksB>,
+    pub hooks_b: Option<HooksBParam>,
     ///No documentation.
-    pub hooks_c: Option<HooksC>,
+    pub hooks_c: Option<HooksCParam>,
     ///No documentation.
-    pub hooks_d: Option<HooksD>,
+    pub hooks_d: Option<HooksDParam>,
     ///No documentation.
-    pub hooks_e: Option<HooksE>,
+    pub hooks_e: Option<HooksEParam>,
     ///No documentation.
-    pub hooks_f: Option<HooksF>,
+    pub hooks_f: Option<HooksFParam>,
     ///No documentation.
-    pub hooks_g: Option<HooksG>,
+    pub hooks_g: Option<HooksGParam>,
     ///No documentation.
-    pub hooks_h: Option<HooksH>,
+    pub hooks_h: Option<HooksHParam>,
 }
 impl<
-    HooksA: crate::nodes::types::Hooks,
-    HooksB: crate::nodes::types::Hooks,
-    HooksC: crate::nodes::types::Hooks,
-    HooksD: crate::nodes::types::Hooks,
-    HooksE: crate::nodes::types::Hooks,
-    HooksF: crate::nodes::types::Hooks,
-    HooksG: crate::nodes::types::Hooks,
-    HooksH: crate::nodes::types::Hooks,
-> CombineHooks8<HooksA, HooksB, HooksC, HooksD, HooksE, HooksF, HooksG, HooksH> {
+    HooksAParam: crate::nodes::types::Hooks,
+    HooksBParam: crate::nodes::types::Hooks,
+    HooksCParam: crate::nodes::types::Hooks,
+    HooksDParam: crate::nodes::types::Hooks,
+    HooksEParam: crate::nodes::types::Hooks,
+    HooksFParam: crate::nodes::types::Hooks,
+    HooksGParam: crate::nodes::types::Hooks,
+    HooksHParam: crate::nodes::types::Hooks,
+> CombineHooks8<
+    HooksAParam,
+    HooksBParam,
+    HooksCParam,
+    HooksDParam,
+    HooksEParam,
+    HooksFParam,
+    HooksGParam,
+    HooksHParam,
+> {
     /// Create a new node.
     pub fn new(
-        hooks_a: Option<HooksA>,
-        hooks_b: Option<HooksB>,
-        hooks_c: Option<HooksC>,
-        hooks_d: Option<HooksD>,
-        hooks_e: Option<HooksE>,
-        hooks_f: Option<HooksF>,
-        hooks_g: Option<HooksG>,
-        hooks_h: Option<HooksH>,
+        hooks_a: Option<HooksAParam>,
+        hooks_b: Option<HooksBParam>,
+        hooks_c: Option<HooksCParam>,
+        hooks_d: Option<HooksDParam>,
+        hooks_e: Option<HooksEParam>,
+        hooks_f: Option<HooksFParam>,
+        hooks_g: Option<HooksGParam>,
+        hooks_h: Option<HooksHParam>,
     ) -> Self {
         Self {
             hooks_a,
@@ -180,16 +190,25 @@ impl<
     }
 }
 impl<
-    HooksA: crate::nodes::types::Hooks,
-    HooksB: crate::nodes::types::Hooks,
-    HooksC: crate::nodes::types::Hooks,
-    HooksD: crate::nodes::types::Hooks,
-    HooksE: crate::nodes::types::Hooks,
-    HooksF: crate::nodes::types::Hooks,
-    HooksG: crate::nodes::types::Hooks,
-    HooksH: crate::nodes::types::Hooks,
+    HooksAParam: crate::nodes::types::Hooks,
+    HooksBParam: crate::nodes::types::Hooks,
+    HooksCParam: crate::nodes::types::Hooks,
+    HooksDParam: crate::nodes::types::Hooks,
+    HooksEParam: crate::nodes::types::Hooks,
+    HooksFParam: crate::nodes::types::Hooks,
+    HooksGParam: crate::nodes::types::Hooks,
+    HooksHParam: crate::nodes::types::Hooks,
 > crate::nodes::TypedNode
-for CombineHooks8<HooksA, HooksB, HooksC, HooksD, HooksE, HooksF, HooksG, HooksH> {
+for CombineHooks8<
+    HooksAParam,
+    HooksBParam,
+    HooksCParam,
+    HooksDParam,
+    HooksEParam,
+    HooksFParam,
+    HooksGParam,
+    HooksHParam,
+> {
     type Output = crate::nodes::types::HooksOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)

@@ -8,32 +8,37 @@ use crate::{
 ///**Cond Set Default Combine**: No description.
 #[derive(Clone)]
 pub struct ConditioningSetDefaultCombine<
-    Cond: crate::nodes::types::Conditioning,
-    CondDefault: crate::nodes::types::Conditioning,
-    Hooks: crate::nodes::types::Hooks = crate::nodes::types::HooksOut,
+    CondParam: crate::nodes::types::Conditioning,
+    CondDefaultParam: crate::nodes::types::Conditioning,
+    HooksParam: crate::nodes::types::Hooks = crate::nodes::types::HooksOut,
 > {
     ///No documentation.
-    pub cond: Cond,
+    pub cond: CondParam,
     ///No documentation.
-    pub cond_default: CondDefault,
+    pub cond_default: CondDefaultParam,
     ///No documentation.
-    pub hooks: Option<Hooks>,
+    pub hooks: Option<HooksParam>,
 }
 impl<
-    Cond: crate::nodes::types::Conditioning,
-    CondDefault: crate::nodes::types::Conditioning,
-    Hooks: crate::nodes::types::Hooks,
-> ConditioningSetDefaultCombine<Cond, CondDefault, Hooks> {
+    CondParam: crate::nodes::types::Conditioning,
+    CondDefaultParam: crate::nodes::types::Conditioning,
+    HooksParam: crate::nodes::types::Hooks,
+> ConditioningSetDefaultCombine<CondParam, CondDefaultParam, HooksParam> {
     /// Create a new node.
-    pub fn new(cond: Cond, cond_default: CondDefault, hooks: Option<Hooks>) -> Self {
+    pub fn new(
+        cond: CondParam,
+        cond_default: CondDefaultParam,
+        hooks: Option<HooksParam>,
+    ) -> Self {
         Self { cond, cond_default, hooks }
     }
 }
 impl<
-    Cond: crate::nodes::types::Conditioning,
-    CondDefault: crate::nodes::types::Conditioning,
-    Hooks: crate::nodes::types::Hooks,
-> crate::nodes::TypedNode for ConditioningSetDefaultCombine<Cond, CondDefault, Hooks> {
+    CondParam: crate::nodes::types::Conditioning,
+    CondDefaultParam: crate::nodes::types::Conditioning,
+    HooksParam: crate::nodes::types::Hooks,
+> crate::nodes::TypedNode
+for ConditioningSetDefaultCombine<CondParam, CondDefaultParam, HooksParam> {
     type Output = crate::nodes::types::ConditioningOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)
@@ -55,16 +60,16 @@ impl<
 ///**Cond Set Props**: No description.
 #[derive(Clone)]
 pub struct ConditioningSetProperties<
-    CondNew: crate::nodes::types::Conditioning,
-    Strength: crate::nodes::types::Float,
-    SetCondArea: crate::nodes::types::String,
-    Mask: crate::nodes::types::Mask = crate::nodes::types::MaskOut,
-    Hooks: crate::nodes::types::Hooks = crate::nodes::types::HooksOut,
-    Timesteps: crate::nodes::types::TimestepsRange
+    CondNewParam: crate::nodes::types::Conditioning,
+    StrengthParam: crate::nodes::types::Float,
+    SetCondAreaParam: crate::nodes::types::String,
+    MaskParam: crate::nodes::types::Mask = crate::nodes::types::MaskOut,
+    HooksParam: crate::nodes::types::Hooks = crate::nodes::types::HooksOut,
+    TimestepsParam: crate::nodes::types::TimestepsRange
         = crate::nodes::types::TimestepsRangeOut,
 > {
     ///No documentation.
-    pub cond_new: CondNew,
+    pub cond_new: CondNewParam,
     /**No documentation.
 
 **Metadata**:
@@ -73,32 +78,39 @@ pub struct ConditioningSetProperties<
   - Min: 0
   - Step: 0.01
 */
-    pub strength: Strength,
+    pub strength: StrengthParam,
     ///No documentation.
-    pub set_cond_area: SetCondArea,
+    pub set_cond_area: SetCondAreaParam,
     ///No documentation.
-    pub mask: Option<Mask>,
+    pub mask: Option<MaskParam>,
     ///No documentation.
-    pub hooks: Option<Hooks>,
+    pub hooks: Option<HooksParam>,
     ///No documentation.
-    pub timesteps: Option<Timesteps>,
+    pub timesteps: Option<TimestepsParam>,
 }
 impl<
-    CondNew: crate::nodes::types::Conditioning,
-    Strength: crate::nodes::types::Float,
-    SetCondArea: crate::nodes::types::String,
-    Mask: crate::nodes::types::Mask,
-    Hooks: crate::nodes::types::Hooks,
-    Timesteps: crate::nodes::types::TimestepsRange,
-> ConditioningSetProperties<CondNew, Strength, SetCondArea, Mask, Hooks, Timesteps> {
+    CondNewParam: crate::nodes::types::Conditioning,
+    StrengthParam: crate::nodes::types::Float,
+    SetCondAreaParam: crate::nodes::types::String,
+    MaskParam: crate::nodes::types::Mask,
+    HooksParam: crate::nodes::types::Hooks,
+    TimestepsParam: crate::nodes::types::TimestepsRange,
+> ConditioningSetProperties<
+    CondNewParam,
+    StrengthParam,
+    SetCondAreaParam,
+    MaskParam,
+    HooksParam,
+    TimestepsParam,
+> {
     /// Create a new node.
     pub fn new(
-        cond_new: CondNew,
-        strength: Strength,
-        set_cond_area: SetCondArea,
-        mask: Option<Mask>,
-        hooks: Option<Hooks>,
-        timesteps: Option<Timesteps>,
+        cond_new: CondNewParam,
+        strength: StrengthParam,
+        set_cond_area: SetCondAreaParam,
+        mask: Option<MaskParam>,
+        hooks: Option<HooksParam>,
+        timesteps: Option<TimestepsParam>,
     ) -> Self {
         Self {
             cond_new,
@@ -111,14 +123,21 @@ impl<
     }
 }
 impl<
-    CondNew: crate::nodes::types::Conditioning,
-    Strength: crate::nodes::types::Float,
-    SetCondArea: crate::nodes::types::String,
-    Mask: crate::nodes::types::Mask,
-    Hooks: crate::nodes::types::Hooks,
-    Timesteps: crate::nodes::types::TimestepsRange,
+    CondNewParam: crate::nodes::types::Conditioning,
+    StrengthParam: crate::nodes::types::Float,
+    SetCondAreaParam: crate::nodes::types::String,
+    MaskParam: crate::nodes::types::Mask,
+    HooksParam: crate::nodes::types::Hooks,
+    TimestepsParam: crate::nodes::types::TimestepsRange,
 > crate::nodes::TypedNode
-for ConditioningSetProperties<CondNew, Strength, SetCondArea, Mask, Hooks, Timesteps> {
+for ConditioningSetProperties<
+    CondNewParam,
+    StrengthParam,
+    SetCondAreaParam,
+    MaskParam,
+    HooksParam,
+    TimestepsParam,
+> {
     type Output = crate::nodes::types::ConditioningOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)
@@ -147,19 +166,19 @@ for ConditioningSetProperties<CondNew, Strength, SetCondArea, Mask, Hooks, Times
 ///**Cond Set Props Combine**: No description.
 #[derive(Clone)]
 pub struct ConditioningSetPropertiesAndCombine<
-    Cond: crate::nodes::types::Conditioning,
-    CondNew: crate::nodes::types::Conditioning,
-    Strength: crate::nodes::types::Float,
-    SetCondArea: crate::nodes::types::String,
-    Mask: crate::nodes::types::Mask = crate::nodes::types::MaskOut,
-    Hooks: crate::nodes::types::Hooks = crate::nodes::types::HooksOut,
-    Timesteps: crate::nodes::types::TimestepsRange
+    CondParam: crate::nodes::types::Conditioning,
+    CondNewParam: crate::nodes::types::Conditioning,
+    StrengthParam: crate::nodes::types::Float,
+    SetCondAreaParam: crate::nodes::types::String,
+    MaskParam: crate::nodes::types::Mask = crate::nodes::types::MaskOut,
+    HooksParam: crate::nodes::types::Hooks = crate::nodes::types::HooksOut,
+    TimestepsParam: crate::nodes::types::TimestepsRange
         = crate::nodes::types::TimestepsRangeOut,
 > {
     ///No documentation.
-    pub cond: Cond,
+    pub cond: CondParam,
     ///No documentation.
-    pub cond_new: CondNew,
+    pub cond_new: CondNewParam,
     /**No documentation.
 
 **Metadata**:
@@ -168,42 +187,42 @@ pub struct ConditioningSetPropertiesAndCombine<
   - Min: 0
   - Step: 0.01
 */
-    pub strength: Strength,
+    pub strength: StrengthParam,
     ///No documentation.
-    pub set_cond_area: SetCondArea,
+    pub set_cond_area: SetCondAreaParam,
     ///No documentation.
-    pub mask: Option<Mask>,
+    pub mask: Option<MaskParam>,
     ///No documentation.
-    pub hooks: Option<Hooks>,
+    pub hooks: Option<HooksParam>,
     ///No documentation.
-    pub timesteps: Option<Timesteps>,
+    pub timesteps: Option<TimestepsParam>,
 }
 impl<
-    Cond: crate::nodes::types::Conditioning,
-    CondNew: crate::nodes::types::Conditioning,
-    Strength: crate::nodes::types::Float,
-    SetCondArea: crate::nodes::types::String,
-    Mask: crate::nodes::types::Mask,
-    Hooks: crate::nodes::types::Hooks,
-    Timesteps: crate::nodes::types::TimestepsRange,
+    CondParam: crate::nodes::types::Conditioning,
+    CondNewParam: crate::nodes::types::Conditioning,
+    StrengthParam: crate::nodes::types::Float,
+    SetCondAreaParam: crate::nodes::types::String,
+    MaskParam: crate::nodes::types::Mask,
+    HooksParam: crate::nodes::types::Hooks,
+    TimestepsParam: crate::nodes::types::TimestepsRange,
 > ConditioningSetPropertiesAndCombine<
-    Cond,
-    CondNew,
-    Strength,
-    SetCondArea,
-    Mask,
-    Hooks,
-    Timesteps,
+    CondParam,
+    CondNewParam,
+    StrengthParam,
+    SetCondAreaParam,
+    MaskParam,
+    HooksParam,
+    TimestepsParam,
 > {
     /// Create a new node.
     pub fn new(
-        cond: Cond,
-        cond_new: CondNew,
-        strength: Strength,
-        set_cond_area: SetCondArea,
-        mask: Option<Mask>,
-        hooks: Option<Hooks>,
-        timesteps: Option<Timesteps>,
+        cond: CondParam,
+        cond_new: CondNewParam,
+        strength: StrengthParam,
+        set_cond_area: SetCondAreaParam,
+        mask: Option<MaskParam>,
+        hooks: Option<HooksParam>,
+        timesteps: Option<TimestepsParam>,
     ) -> Self {
         Self {
             cond,
@@ -217,22 +236,22 @@ impl<
     }
 }
 impl<
-    Cond: crate::nodes::types::Conditioning,
-    CondNew: crate::nodes::types::Conditioning,
-    Strength: crate::nodes::types::Float,
-    SetCondArea: crate::nodes::types::String,
-    Mask: crate::nodes::types::Mask,
-    Hooks: crate::nodes::types::Hooks,
-    Timesteps: crate::nodes::types::TimestepsRange,
+    CondParam: crate::nodes::types::Conditioning,
+    CondNewParam: crate::nodes::types::Conditioning,
+    StrengthParam: crate::nodes::types::Float,
+    SetCondAreaParam: crate::nodes::types::String,
+    MaskParam: crate::nodes::types::Mask,
+    HooksParam: crate::nodes::types::Hooks,
+    TimestepsParam: crate::nodes::types::TimestepsRange,
 > crate::nodes::TypedNode
 for ConditioningSetPropertiesAndCombine<
-    Cond,
-    CondNew,
-    Strength,
-    SetCondArea,
-    Mask,
-    Hooks,
-    Timesteps,
+    CondParam,
+    CondNewParam,
+    StrengthParam,
+    SetCondAreaParam,
+    MaskParam,
+    HooksParam,
+    TimestepsParam,
 > {
     type Output = crate::nodes::types::ConditioningOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {

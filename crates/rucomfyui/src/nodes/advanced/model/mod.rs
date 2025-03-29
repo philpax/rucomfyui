@@ -8,11 +8,11 @@ use crate::{
 ///**ModelSamplingAuraFlow**: No description.
 #[derive(Clone)]
 pub struct ModelSamplingAuraFlow<
-    Model: crate::nodes::types::Model,
-    Shift: crate::nodes::types::Float,
+    ModelParam: crate::nodes::types::Model,
+    ShiftParam: crate::nodes::types::Float,
 > {
     ///No documentation.
-    pub model: Model,
+    pub model: ModelParam,
     /**No documentation.
 
 **Metadata**:
@@ -21,21 +21,21 @@ pub struct ModelSamplingAuraFlow<
   - Min: 0
   - Step: 0.01
 */
-    pub shift: Shift,
+    pub shift: ShiftParam,
 }
 impl<
-    Model: crate::nodes::types::Model,
-    Shift: crate::nodes::types::Float,
-> ModelSamplingAuraFlow<Model, Shift> {
+    ModelParam: crate::nodes::types::Model,
+    ShiftParam: crate::nodes::types::Float,
+> ModelSamplingAuraFlow<ModelParam, ShiftParam> {
     /// Create a new node.
-    pub fn new(model: Model, shift: Shift) -> Self {
+    pub fn new(model: ModelParam, shift: ShiftParam) -> Self {
         Self { model, shift }
     }
 }
 impl<
-    Model: crate::nodes::types::Model,
-    Shift: crate::nodes::types::Float,
-> crate::nodes::TypedNode for ModelSamplingAuraFlow<Model, Shift> {
+    ModelParam: crate::nodes::types::Model,
+    ShiftParam: crate::nodes::types::Float,
+> crate::nodes::TypedNode for ModelSamplingAuraFlow<ModelParam, ShiftParam> {
     type Output = crate::nodes::types::ModelOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)
@@ -54,15 +54,15 @@ impl<
 ///**ModelSamplingContinuousEDM**: No description.
 #[derive(Clone)]
 pub struct ModelSamplingContinuousEdm<
-    Model: crate::nodes::types::Model,
-    Sampling: crate::nodes::types::String,
-    SigmaMax: crate::nodes::types::Float,
-    SigmaMin: crate::nodes::types::Float,
+    ModelParam: crate::nodes::types::Model,
+    SamplingParam: crate::nodes::types::String,
+    SigmaMaxParam: crate::nodes::types::Float,
+    SigmaMinParam: crate::nodes::types::Float,
 > {
     ///No documentation.
-    pub model: Model,
+    pub model: ModelParam,
     ///No documentation.
-    pub sampling: Sampling,
+    pub sampling: SamplingParam,
     /**No documentation.
 
 **Metadata**:
@@ -72,7 +72,7 @@ pub struct ModelSamplingContinuousEdm<
   - Round: false
   - Step: 0.001
 */
-    pub sigma_max: SigmaMax,
+    pub sigma_max: SigmaMaxParam,
     /**No documentation.
 
 **Metadata**:
@@ -82,20 +82,20 @@ pub struct ModelSamplingContinuousEdm<
   - Round: false
   - Step: 0.001
 */
-    pub sigma_min: SigmaMin,
+    pub sigma_min: SigmaMinParam,
 }
 impl<
-    Model: crate::nodes::types::Model,
-    Sampling: crate::nodes::types::String,
-    SigmaMax: crate::nodes::types::Float,
-    SigmaMin: crate::nodes::types::Float,
-> ModelSamplingContinuousEdm<Model, Sampling, SigmaMax, SigmaMin> {
+    ModelParam: crate::nodes::types::Model,
+    SamplingParam: crate::nodes::types::String,
+    SigmaMaxParam: crate::nodes::types::Float,
+    SigmaMinParam: crate::nodes::types::Float,
+> ModelSamplingContinuousEdm<ModelParam, SamplingParam, SigmaMaxParam, SigmaMinParam> {
     /// Create a new node.
     pub fn new(
-        model: Model,
-        sampling: Sampling,
-        sigma_max: SigmaMax,
-        sigma_min: SigmaMin,
+        model: ModelParam,
+        sampling: SamplingParam,
+        sigma_max: SigmaMaxParam,
+        sigma_min: SigmaMinParam,
     ) -> Self {
         Self {
             model,
@@ -106,12 +106,12 @@ impl<
     }
 }
 impl<
-    Model: crate::nodes::types::Model,
-    Sampling: crate::nodes::types::String,
-    SigmaMax: crate::nodes::types::Float,
-    SigmaMin: crate::nodes::types::Float,
+    ModelParam: crate::nodes::types::Model,
+    SamplingParam: crate::nodes::types::String,
+    SigmaMaxParam: crate::nodes::types::Float,
+    SigmaMinParam: crate::nodes::types::Float,
 > crate::nodes::TypedNode
-for ModelSamplingContinuousEdm<Model, Sampling, SigmaMax, SigmaMin> {
+for ModelSamplingContinuousEdm<ModelParam, SamplingParam, SigmaMaxParam, SigmaMinParam> {
     type Output = crate::nodes::types::ModelOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)
@@ -132,15 +132,15 @@ for ModelSamplingContinuousEdm<Model, Sampling, SigmaMax, SigmaMin> {
 ///**ModelSamplingContinuousV**: No description.
 #[derive(Clone)]
 pub struct ModelSamplingContinuousV<
-    Model: crate::nodes::types::Model,
-    Sampling: crate::nodes::types::String,
-    SigmaMax: crate::nodes::types::Float,
-    SigmaMin: crate::nodes::types::Float,
+    ModelParam: crate::nodes::types::Model,
+    SamplingParam: crate::nodes::types::String,
+    SigmaMaxParam: crate::nodes::types::Float,
+    SigmaMinParam: crate::nodes::types::Float,
 > {
     ///No documentation.
-    pub model: Model,
+    pub model: ModelParam,
     ///No documentation.
-    pub sampling: Sampling,
+    pub sampling: SamplingParam,
     /**No documentation.
 
 **Metadata**:
@@ -150,7 +150,7 @@ pub struct ModelSamplingContinuousV<
   - Round: false
   - Step: 0.001
 */
-    pub sigma_max: SigmaMax,
+    pub sigma_max: SigmaMaxParam,
     /**No documentation.
 
 **Metadata**:
@@ -160,20 +160,20 @@ pub struct ModelSamplingContinuousV<
   - Round: false
   - Step: 0.001
 */
-    pub sigma_min: SigmaMin,
+    pub sigma_min: SigmaMinParam,
 }
 impl<
-    Model: crate::nodes::types::Model,
-    Sampling: crate::nodes::types::String,
-    SigmaMax: crate::nodes::types::Float,
-    SigmaMin: crate::nodes::types::Float,
-> ModelSamplingContinuousV<Model, Sampling, SigmaMax, SigmaMin> {
+    ModelParam: crate::nodes::types::Model,
+    SamplingParam: crate::nodes::types::String,
+    SigmaMaxParam: crate::nodes::types::Float,
+    SigmaMinParam: crate::nodes::types::Float,
+> ModelSamplingContinuousV<ModelParam, SamplingParam, SigmaMaxParam, SigmaMinParam> {
     /// Create a new node.
     pub fn new(
-        model: Model,
-        sampling: Sampling,
-        sigma_max: SigmaMax,
-        sigma_min: SigmaMin,
+        model: ModelParam,
+        sampling: SamplingParam,
+        sigma_max: SigmaMaxParam,
+        sigma_min: SigmaMinParam,
     ) -> Self {
         Self {
             model,
@@ -184,12 +184,12 @@ impl<
     }
 }
 impl<
-    Model: crate::nodes::types::Model,
-    Sampling: crate::nodes::types::String,
-    SigmaMax: crate::nodes::types::Float,
-    SigmaMin: crate::nodes::types::Float,
+    ModelParam: crate::nodes::types::Model,
+    SamplingParam: crate::nodes::types::String,
+    SigmaMaxParam: crate::nodes::types::Float,
+    SigmaMinParam: crate::nodes::types::Float,
 > crate::nodes::TypedNode
-for ModelSamplingContinuousV<Model, Sampling, SigmaMax, SigmaMin> {
+for ModelSamplingContinuousV<ModelParam, SamplingParam, SigmaMaxParam, SigmaMinParam> {
     type Output = crate::nodes::types::ModelOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)
@@ -210,36 +210,37 @@ for ModelSamplingContinuousV<Model, Sampling, SigmaMax, SigmaMin> {
 ///**ModelSamplingDiscrete**: No description.
 #[derive(Clone)]
 pub struct ModelSamplingDiscrete<
-    Model: crate::nodes::types::Model,
-    Sampling: crate::nodes::types::String,
-    Zsnr: crate::nodes::types::Boolean,
+    ModelParam: crate::nodes::types::Model,
+    SamplingParam: crate::nodes::types::String,
+    ZsnrParam: crate::nodes::types::Boolean,
 > {
     ///No documentation.
-    pub model: Model,
+    pub model: ModelParam,
     ///No documentation.
-    pub sampling: Sampling,
+    pub sampling: SamplingParam,
     /**No documentation.
 
 **Metadata**:
   - Default: false
 */
-    pub zsnr: Zsnr,
+    pub zsnr: ZsnrParam,
 }
 impl<
-    Model: crate::nodes::types::Model,
-    Sampling: crate::nodes::types::String,
-    Zsnr: crate::nodes::types::Boolean,
-> ModelSamplingDiscrete<Model, Sampling, Zsnr> {
+    ModelParam: crate::nodes::types::Model,
+    SamplingParam: crate::nodes::types::String,
+    ZsnrParam: crate::nodes::types::Boolean,
+> ModelSamplingDiscrete<ModelParam, SamplingParam, ZsnrParam> {
     /// Create a new node.
-    pub fn new(model: Model, sampling: Sampling, zsnr: Zsnr) -> Self {
+    pub fn new(model: ModelParam, sampling: SamplingParam, zsnr: ZsnrParam) -> Self {
         Self { model, sampling, zsnr }
     }
 }
 impl<
-    Model: crate::nodes::types::Model,
-    Sampling: crate::nodes::types::String,
-    Zsnr: crate::nodes::types::Boolean,
-> crate::nodes::TypedNode for ModelSamplingDiscrete<Model, Sampling, Zsnr> {
+    ModelParam: crate::nodes::types::Model,
+    SamplingParam: crate::nodes::types::String,
+    ZsnrParam: crate::nodes::types::Boolean,
+> crate::nodes::TypedNode
+for ModelSamplingDiscrete<ModelParam, SamplingParam, ZsnrParam> {
     type Output = crate::nodes::types::ModelOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)
@@ -259,14 +260,14 @@ impl<
 ///**ModelSamplingFlux**: No description.
 #[derive(Clone)]
 pub struct ModelSamplingFlux<
-    Model: crate::nodes::types::Model,
-    MaxShift: crate::nodes::types::Float,
-    BaseShift: crate::nodes::types::Float,
-    Width: crate::nodes::types::Int,
-    Height: crate::nodes::types::Int,
+    ModelParam: crate::nodes::types::Model,
+    MaxShiftParam: crate::nodes::types::Float,
+    BaseShiftParam: crate::nodes::types::Float,
+    WidthParam: crate::nodes::types::Int,
+    HeightParam: crate::nodes::types::Int,
 > {
     ///No documentation.
-    pub model: Model,
+    pub model: ModelParam,
     /**No documentation.
 
 **Metadata**:
@@ -275,7 +276,7 @@ pub struct ModelSamplingFlux<
   - Min: 0
   - Step: 0.01
 */
-    pub max_shift: MaxShift,
+    pub max_shift: MaxShiftParam,
     /**No documentation.
 
 **Metadata**:
@@ -284,7 +285,7 @@ pub struct ModelSamplingFlux<
   - Min: 0
   - Step: 0.01
 */
-    pub base_shift: BaseShift,
+    pub base_shift: BaseShiftParam,
     /**No documentation.
 
 **Metadata**:
@@ -293,7 +294,7 @@ pub struct ModelSamplingFlux<
   - Min: 16
   - Step: 8
 */
-    pub width: Width,
+    pub width: WidthParam,
     /**No documentation.
 
 **Metadata**:
@@ -302,22 +303,22 @@ pub struct ModelSamplingFlux<
   - Min: 16
   - Step: 8
 */
-    pub height: Height,
+    pub height: HeightParam,
 }
 impl<
-    Model: crate::nodes::types::Model,
-    MaxShift: crate::nodes::types::Float,
-    BaseShift: crate::nodes::types::Float,
-    Width: crate::nodes::types::Int,
-    Height: crate::nodes::types::Int,
-> ModelSamplingFlux<Model, MaxShift, BaseShift, Width, Height> {
+    ModelParam: crate::nodes::types::Model,
+    MaxShiftParam: crate::nodes::types::Float,
+    BaseShiftParam: crate::nodes::types::Float,
+    WidthParam: crate::nodes::types::Int,
+    HeightParam: crate::nodes::types::Int,
+> ModelSamplingFlux<ModelParam, MaxShiftParam, BaseShiftParam, WidthParam, HeightParam> {
     /// Create a new node.
     pub fn new(
-        model: Model,
-        max_shift: MaxShift,
-        base_shift: BaseShift,
-        width: Width,
-        height: Height,
+        model: ModelParam,
+        max_shift: MaxShiftParam,
+        base_shift: BaseShiftParam,
+        width: WidthParam,
+        height: HeightParam,
     ) -> Self {
         Self {
             model,
@@ -329,13 +330,19 @@ impl<
     }
 }
 impl<
-    Model: crate::nodes::types::Model,
-    MaxShift: crate::nodes::types::Float,
-    BaseShift: crate::nodes::types::Float,
-    Width: crate::nodes::types::Int,
-    Height: crate::nodes::types::Int,
+    ModelParam: crate::nodes::types::Model,
+    MaxShiftParam: crate::nodes::types::Float,
+    BaseShiftParam: crate::nodes::types::Float,
+    WidthParam: crate::nodes::types::Int,
+    HeightParam: crate::nodes::types::Int,
 > crate::nodes::TypedNode
-for ModelSamplingFlux<Model, MaxShift, BaseShift, Width, Height> {
+for ModelSamplingFlux<
+    ModelParam,
+    MaxShiftParam,
+    BaseShiftParam,
+    WidthParam,
+    HeightParam,
+> {
     type Output = crate::nodes::types::ModelOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)
@@ -357,13 +364,13 @@ for ModelSamplingFlux<Model, MaxShift, BaseShift, Width, Height> {
 ///**ModelSamplingLTXV**: No description.
 #[derive(Clone)]
 pub struct ModelSamplingLtxv<
-    Model: crate::nodes::types::Model,
-    MaxShift: crate::nodes::types::Float,
-    BaseShift: crate::nodes::types::Float,
-    Latent: crate::nodes::types::Latent = crate::nodes::types::LatentOut,
+    ModelParam: crate::nodes::types::Model,
+    MaxShiftParam: crate::nodes::types::Float,
+    BaseShiftParam: crate::nodes::types::Float,
+    LatentParam: crate::nodes::types::Latent = crate::nodes::types::LatentOut,
 > {
     ///No documentation.
-    pub model: Model,
+    pub model: ModelParam,
     /**No documentation.
 
 **Metadata**:
@@ -372,7 +379,7 @@ pub struct ModelSamplingLtxv<
   - Min: 0
   - Step: 0.01
 */
-    pub max_shift: MaxShift,
+    pub max_shift: MaxShiftParam,
     /**No documentation.
 
 **Metadata**:
@@ -381,22 +388,22 @@ pub struct ModelSamplingLtxv<
   - Min: 0
   - Step: 0.01
 */
-    pub base_shift: BaseShift,
+    pub base_shift: BaseShiftParam,
     ///No documentation.
-    pub latent: Option<Latent>,
+    pub latent: Option<LatentParam>,
 }
 impl<
-    Model: crate::nodes::types::Model,
-    MaxShift: crate::nodes::types::Float,
-    BaseShift: crate::nodes::types::Float,
-    Latent: crate::nodes::types::Latent,
-> ModelSamplingLtxv<Model, MaxShift, BaseShift, Latent> {
+    ModelParam: crate::nodes::types::Model,
+    MaxShiftParam: crate::nodes::types::Float,
+    BaseShiftParam: crate::nodes::types::Float,
+    LatentParam: crate::nodes::types::Latent,
+> ModelSamplingLtxv<ModelParam, MaxShiftParam, BaseShiftParam, LatentParam> {
     /// Create a new node.
     pub fn new(
-        model: Model,
-        max_shift: MaxShift,
-        base_shift: BaseShift,
-        latent: Option<Latent>,
+        model: ModelParam,
+        max_shift: MaxShiftParam,
+        base_shift: BaseShiftParam,
+        latent: Option<LatentParam>,
     ) -> Self {
         Self {
             model,
@@ -407,11 +414,12 @@ impl<
     }
 }
 impl<
-    Model: crate::nodes::types::Model,
-    MaxShift: crate::nodes::types::Float,
-    BaseShift: crate::nodes::types::Float,
-    Latent: crate::nodes::types::Latent,
-> crate::nodes::TypedNode for ModelSamplingLtxv<Model, MaxShift, BaseShift, Latent> {
+    ModelParam: crate::nodes::types::Model,
+    MaxShiftParam: crate::nodes::types::Float,
+    BaseShiftParam: crate::nodes::types::Float,
+    LatentParam: crate::nodes::types::Latent,
+> crate::nodes::TypedNode
+for ModelSamplingLtxv<ModelParam, MaxShiftParam, BaseShiftParam, LatentParam> {
     type Output = crate::nodes::types::ModelOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)
@@ -434,11 +442,11 @@ impl<
 ///**ModelSamplingSD3**: No description.
 #[derive(Clone)]
 pub struct ModelSamplingSd3<
-    Model: crate::nodes::types::Model,
-    Shift: crate::nodes::types::Float,
+    ModelParam: crate::nodes::types::Model,
+    ShiftParam: crate::nodes::types::Float,
 > {
     ///No documentation.
-    pub model: Model,
+    pub model: ModelParam,
     /**No documentation.
 
 **Metadata**:
@@ -447,21 +455,21 @@ pub struct ModelSamplingSd3<
   - Min: 0
   - Step: 0.01
 */
-    pub shift: Shift,
+    pub shift: ShiftParam,
 }
 impl<
-    Model: crate::nodes::types::Model,
-    Shift: crate::nodes::types::Float,
-> ModelSamplingSd3<Model, Shift> {
+    ModelParam: crate::nodes::types::Model,
+    ShiftParam: crate::nodes::types::Float,
+> ModelSamplingSd3<ModelParam, ShiftParam> {
     /// Create a new node.
-    pub fn new(model: Model, shift: Shift) -> Self {
+    pub fn new(model: ModelParam, shift: ShiftParam) -> Self {
         Self { model, shift }
     }
 }
 impl<
-    Model: crate::nodes::types::Model,
-    Shift: crate::nodes::types::Float,
-> crate::nodes::TypedNode for ModelSamplingSd3<Model, Shift> {
+    ModelParam: crate::nodes::types::Model,
+    ShiftParam: crate::nodes::types::Float,
+> crate::nodes::TypedNode for ModelSamplingSd3<ModelParam, ShiftParam> {
     type Output = crate::nodes::types::ModelOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)
@@ -480,11 +488,11 @@ impl<
 ///**ModelSamplingStableCascade**: No description.
 #[derive(Clone)]
 pub struct ModelSamplingStableCascade<
-    Model: crate::nodes::types::Model,
-    Shift: crate::nodes::types::Float,
+    ModelParam: crate::nodes::types::Model,
+    ShiftParam: crate::nodes::types::Float,
 > {
     ///No documentation.
-    pub model: Model,
+    pub model: ModelParam,
     /**No documentation.
 
 **Metadata**:
@@ -493,21 +501,21 @@ pub struct ModelSamplingStableCascade<
   - Min: 0
   - Step: 0.01
 */
-    pub shift: Shift,
+    pub shift: ShiftParam,
 }
 impl<
-    Model: crate::nodes::types::Model,
-    Shift: crate::nodes::types::Float,
-> ModelSamplingStableCascade<Model, Shift> {
+    ModelParam: crate::nodes::types::Model,
+    ShiftParam: crate::nodes::types::Float,
+> ModelSamplingStableCascade<ModelParam, ShiftParam> {
     /// Create a new node.
-    pub fn new(model: Model, shift: Shift) -> Self {
+    pub fn new(model: ModelParam, shift: ShiftParam) -> Self {
         Self { model, shift }
     }
 }
 impl<
-    Model: crate::nodes::types::Model,
-    Shift: crate::nodes::types::Float,
-> crate::nodes::TypedNode for ModelSamplingStableCascade<Model, Shift> {
+    ModelParam: crate::nodes::types::Model,
+    ShiftParam: crate::nodes::types::Float,
+> crate::nodes::TypedNode for ModelSamplingStableCascade<ModelParam, ShiftParam> {
     type Output = crate::nodes::types::ModelOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)
@@ -526,12 +534,12 @@ impl<
 ///**RenormCFG**: No description.
 #[derive(Clone)]
 pub struct RenormCfg<
-    Model: crate::nodes::types::Model,
-    CfgTrunc: crate::nodes::types::Float,
-    RenormCfg: crate::nodes::types::Float,
+    ModelParam: crate::nodes::types::Model,
+    CfgTruncParam: crate::nodes::types::Float,
+    RenormCfgParam: crate::nodes::types::Float,
 > {
     ///No documentation.
-    pub model: Model,
+    pub model: ModelParam,
     /**No documentation.
 
 **Metadata**:
@@ -540,7 +548,7 @@ pub struct RenormCfg<
   - Min: 0
   - Step: 0.01
 */
-    pub cfg_trunc: CfgTrunc,
+    pub cfg_trunc: CfgTruncParam,
     /**No documentation.
 
 **Metadata**:
@@ -549,15 +557,19 @@ pub struct RenormCfg<
   - Min: 0
   - Step: 0.01
 */
-    pub renorm_cfg: RenormCfg,
+    pub renorm_cfg: RenormCfgParam,
 }
 impl<
-    Model: crate::nodes::types::Model,
-    CfgTrunc: crate::nodes::types::Float,
-    RenormCfg: crate::nodes::types::Float,
-> RenormCfg<Model, CfgTrunc, RenormCfg> {
+    ModelParam: crate::nodes::types::Model,
+    CfgTruncParam: crate::nodes::types::Float,
+    RenormCfgParam: crate::nodes::types::Float,
+> RenormCfg<ModelParam, CfgTruncParam, RenormCfgParam> {
     /// Create a new node.
-    pub fn new(model: Model, cfg_trunc: CfgTrunc, renorm_cfg: RenormCfg) -> Self {
+    pub fn new(
+        model: ModelParam,
+        cfg_trunc: CfgTruncParam,
+        renorm_cfg: RenormCfgParam,
+    ) -> Self {
         Self {
             model,
             cfg_trunc,
@@ -566,10 +578,10 @@ impl<
     }
 }
 impl<
-    Model: crate::nodes::types::Model,
-    CfgTrunc: crate::nodes::types::Float,
-    RenormCfg: crate::nodes::types::Float,
-> crate::nodes::TypedNode for RenormCfg<Model, CfgTrunc, RenormCfg> {
+    ModelParam: crate::nodes::types::Model,
+    CfgTruncParam: crate::nodes::types::Float,
+    RenormCfgParam: crate::nodes::types::Float,
+> crate::nodes::TypedNode for RenormCfg<ModelParam, CfgTruncParam, RenormCfgParam> {
     type Output = crate::nodes::types::ModelOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)
@@ -589,11 +601,11 @@ impl<
 ///**RescaleCFG**: No description.
 #[derive(Clone)]
 pub struct RescaleCfg<
-    Model: crate::nodes::types::Model,
-    Multiplier: crate::nodes::types::Float,
+    ModelParam: crate::nodes::types::Model,
+    MultiplierParam: crate::nodes::types::Float,
 > {
     ///No documentation.
-    pub model: Model,
+    pub model: ModelParam,
     /**No documentation.
 
 **Metadata**:
@@ -602,21 +614,21 @@ pub struct RescaleCfg<
   - Min: 0
   - Step: 0.01
 */
-    pub multiplier: Multiplier,
+    pub multiplier: MultiplierParam,
 }
 impl<
-    Model: crate::nodes::types::Model,
-    Multiplier: crate::nodes::types::Float,
-> RescaleCfg<Model, Multiplier> {
+    ModelParam: crate::nodes::types::Model,
+    MultiplierParam: crate::nodes::types::Float,
+> RescaleCfg<ModelParam, MultiplierParam> {
     /// Create a new node.
-    pub fn new(model: Model, multiplier: Multiplier) -> Self {
+    pub fn new(model: ModelParam, multiplier: MultiplierParam) -> Self {
         Self { model, multiplier }
     }
 }
 impl<
-    Model: crate::nodes::types::Model,
-    Multiplier: crate::nodes::types::Float,
-> crate::nodes::TypedNode for RescaleCfg<Model, Multiplier> {
+    ModelParam: crate::nodes::types::Model,
+    MultiplierParam: crate::nodes::types::Float,
+> crate::nodes::TypedNode for RescaleCfg<ModelParam, MultiplierParam> {
     type Output = crate::nodes::types::ModelOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)
