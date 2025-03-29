@@ -11,6 +11,7 @@ pub mod postprocessing;
 pub mod preprocessors;
 pub mod transform;
 pub mod upscaling;
+pub mod video;
 /// Output types for nodes.
 pub mod out {
     ///Output for [`ImagePadForOutpaint`](super::ImagePadForOutpaint).
@@ -24,6 +25,14 @@ pub mod out {
     ///Output for [`LoadImage`](super::LoadImage).
     #[derive(Clone)]
     pub struct LoadImageOutput {
+        ///No documentation.
+        pub image: crate::nodes::types::ImageOut,
+        ///No documentation.
+        pub mask: crate::nodes::types::MaskOut,
+    }
+    ///Output for [`LoadImageOutput`](super::LoadImageOutput).
+    #[derive(Clone)]
+    pub struct LoadImageOutputOutput {
         ///No documentation.
         pub image: crate::nodes::types::ImageOut,
         ///No documentation.
@@ -399,6 +408,52 @@ for ImagePadForOutpaint<Image, Left, Top, Right, Bottom, Feathering> {
     const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "image";
 }
+///**LTXVPreprocess**: No description.
+#[derive(Clone)]
+pub struct LtxvPreprocess<
+    Image: crate::nodes::types::Image,
+    ImgCompression: crate::nodes::types::Int,
+> {
+    ///No documentation.
+    pub image: Image,
+    /**Amount of compression to apply on image.
+
+**Metadata**:
+  - Default: 35
+  - Max: 100
+  - Min: 0
+*/
+    pub img_compression: ImgCompression,
+}
+impl<
+    Image: crate::nodes::types::Image,
+    ImgCompression: crate::nodes::types::Int,
+> LtxvPreprocess<Image, ImgCompression> {
+    /// Create a new node.
+    pub fn new(image: Image, img_compression: ImgCompression) -> Self {
+        Self { image, img_compression }
+    }
+}
+impl<
+    Image: crate::nodes::types::Image,
+    ImgCompression: crate::nodes::types::Int,
+> crate::nodes::TypedNode for LtxvPreprocess<Image, ImgCompression> {
+    type Output = crate::nodes::types::ImageOut;
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
+        Self::Output::from_dynamic(node_id, 0)
+    }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("image".to_string(), self.image.clone().into());
+        output
+            .insert("img_compression".to_string(), self.img_compression.clone().into());
+        output
+    }
+    const NAME: &'static str = "LTXVPreprocess";
+    const DISPLAY_NAME: &'static str = "LTXVPreprocess";
+    const DESCRIPTION: &'static str = "";
+    const CATEGORY: &'static str = "image";
+}
 ///**Load Image**: No description.
 #[derive(Clone)]
 pub struct LoadImage<Image: crate::nodes::types::String> {
@@ -431,6 +486,31 @@ impl<Image: crate::nodes::types::String> crate::nodes::TypedNode for LoadImage<I
     const NAME: &'static str = "LoadImage";
     const DISPLAY_NAME: &'static str = "Load Image";
     const DESCRIPTION: &'static str = "";
+    const CATEGORY: &'static str = "image";
+}
+///**Load Image (from Outputs)**: Load an image from the output folder. When the refresh button is clicked, the node will update the image list and automatically select the first image, allowing for easy iteration.
+#[derive(Clone)]
+pub struct LoadImageOutput {}
+impl LoadImageOutput {
+    /// Create a new node.
+    pub fn new() -> Self {
+        Self {}
+    }
+}
+impl crate::nodes::TypedNode for LoadImageOutput {
+    type Output = out::LoadImageOutputOutput;
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
+        Self::Output {
+            image: crate::nodes::types::ImageOut::from_dynamic(node_id, 0u32),
+            mask: crate::nodes::types::MaskOut::from_dynamic(node_id, 1u32),
+        }
+    }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        HashMap::default()
+    }
+    const NAME: &'static str = "LoadImageOutput";
+    const DISPLAY_NAME: &'static str = "Load Image (from Outputs)";
+    const DESCRIPTION: &'static str = "Load an image from the output folder. When the refresh button is clicked, the node will update the image list and automatically select the first image, allowing for easy iteration.";
     const CATEGORY: &'static str = "image";
 }
 ///**Preview Image**: Saves the input images to your ComfyUI output directory.

@@ -16,6 +16,10 @@ pub mod out {
         pub mask: crate::nodes::types::MaskOut,
         ///No documentation.
         pub mesh_path: crate::nodes::types::StringOut,
+        ///No documentation.
+        pub normal: crate::nodes::types::ImageOut,
+        ///No documentation.
+        pub lineart: crate::nodes::types::ImageOut,
     }
     ///Output for [`Load3DAnimation`](super::Load3DAnimation).
     #[derive(Clone)]
@@ -26,6 +30,8 @@ pub mod out {
         pub mask: crate::nodes::types::MaskOut,
         ///No documentation.
         pub mesh_path: crate::nodes::types::StringOut,
+        ///No documentation.
+        pub normal: crate::nodes::types::ImageOut,
     }
 }
 ///**Load 3D**: No description.
@@ -34,11 +40,6 @@ pub struct Load3D<
     ModelFile: crate::nodes::types::String,
     Width: crate::nodes::types::Int,
     Height: crate::nodes::types::Int,
-    Material: crate::nodes::types::String,
-    BgColor: crate::nodes::types::String,
-    LightIntensity: crate::nodes::types::Int,
-    UpDirection: crate::nodes::types::String,
-    Fov: crate::nodes::types::Int,
 > {
     ///No documentation.
     pub model_file: ModelFile,
@@ -60,95 +61,30 @@ pub struct Load3D<
   - Step: 1
 */
     pub height: Height,
-    ///No documentation.
-    pub material: Material,
-    /**No documentation.
-
-**Metadata**:
-  - Multiline: false
-  - Default: #000000
-*/
-    pub bg_color: BgColor,
-    /**No documentation.
-
-**Metadata**:
-  - Default: 10
-  - Max: 20
-  - Min: 1
-  - Step: 1
-*/
-    pub light_intensity: LightIntensity,
-    ///No documentation.
-    pub up_direction: UpDirection,
-    /**No documentation.
-
-**Metadata**:
-  - Default: 75
-  - Max: 150
-  - Min: 10
-  - Step: 1
-*/
-    pub fov: Fov,
 }
 impl<
     ModelFile: crate::nodes::types::String,
     Width: crate::nodes::types::Int,
     Height: crate::nodes::types::Int,
-    Material: crate::nodes::types::String,
-    BgColor: crate::nodes::types::String,
-    LightIntensity: crate::nodes::types::Int,
-    UpDirection: crate::nodes::types::String,
-    Fov: crate::nodes::types::Int,
-> Load3D<ModelFile, Width, Height, Material, BgColor, LightIntensity, UpDirection, Fov> {
+> Load3D<ModelFile, Width, Height> {
     /// Create a new node.
-    pub fn new(
-        model_file: ModelFile,
-        width: Width,
-        height: Height,
-        material: Material,
-        bg_color: BgColor,
-        light_intensity: LightIntensity,
-        up_direction: UpDirection,
-        fov: Fov,
-    ) -> Self {
-        Self {
-            model_file,
-            width,
-            height,
-            material,
-            bg_color,
-            light_intensity,
-            up_direction,
-            fov,
-        }
+    pub fn new(model_file: ModelFile, width: Width, height: Height) -> Self {
+        Self { model_file, width, height }
     }
 }
 impl<
     ModelFile: crate::nodes::types::String,
     Width: crate::nodes::types::Int,
     Height: crate::nodes::types::Int,
-    Material: crate::nodes::types::String,
-    BgColor: crate::nodes::types::String,
-    LightIntensity: crate::nodes::types::Int,
-    UpDirection: crate::nodes::types::String,
-    Fov: crate::nodes::types::Int,
-> crate::nodes::TypedNode
-for Load3D<
-    ModelFile,
-    Width,
-    Height,
-    Material,
-    BgColor,
-    LightIntensity,
-    UpDirection,
-    Fov,
-> {
+> crate::nodes::TypedNode for Load3D<ModelFile, Width, Height> {
     type Output = out::Load3DOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
             image: crate::nodes::types::ImageOut::from_dynamic(node_id, 0u32),
             mask: crate::nodes::types::MaskOut::from_dynamic(node_id, 1u32),
             mesh_path: crate::nodes::types::StringOut::from_dynamic(node_id, 2u32),
+            normal: crate::nodes::types::ImageOut::from_dynamic(node_id, 3u32),
+            lineart: crate::nodes::types::ImageOut::from_dynamic(node_id, 4u32),
         }
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
@@ -156,12 +92,6 @@ for Load3D<
         output.insert("model_file".to_string(), self.model_file.clone().into());
         output.insert("width".to_string(), self.width.clone().into());
         output.insert("height".to_string(), self.height.clone().into());
-        output.insert("material".to_string(), self.material.clone().into());
-        output.insert("bg_color".to_string(), self.bg_color.clone().into());
-        output
-            .insert("light_intensity".to_string(), self.light_intensity.clone().into());
-        output.insert("up_direction".to_string(), self.up_direction.clone().into());
-        output.insert("fov".to_string(), self.fov.clone().into());
         output
     }
     const NAME: &'static str = "Load3D";
@@ -175,12 +105,6 @@ pub struct Load3DAnimation<
     ModelFile: crate::nodes::types::String,
     Width: crate::nodes::types::Int,
     Height: crate::nodes::types::Int,
-    Material: crate::nodes::types::String,
-    BgColor: crate::nodes::types::String,
-    LightIntensity: crate::nodes::types::Int,
-    UpDirection: crate::nodes::types::String,
-    AnimationSpeed: crate::nodes::types::String,
-    Fov: crate::nodes::types::Int,
 > {
     ///No documentation.
     pub model_file: ModelFile,
@@ -202,116 +126,29 @@ pub struct Load3DAnimation<
   - Step: 1
 */
     pub height: Height,
-    ///No documentation.
-    pub material: Material,
-    /**No documentation.
-
-**Metadata**:
-  - Multiline: false
-  - Default: #000000
-*/
-    pub bg_color: BgColor,
-    /**No documentation.
-
-**Metadata**:
-  - Default: 10
-  - Max: 20
-  - Min: 1
-  - Step: 1
-*/
-    pub light_intensity: LightIntensity,
-    ///No documentation.
-    pub up_direction: UpDirection,
-    /**No documentation.
-
-**Metadata**:
-  - Default: 1
-*/
-    pub animation_speed: AnimationSpeed,
-    /**No documentation.
-
-**Metadata**:
-  - Default: 75
-  - Max: 150
-  - Min: 10
-  - Step: 1
-*/
-    pub fov: Fov,
 }
 impl<
     ModelFile: crate::nodes::types::String,
     Width: crate::nodes::types::Int,
     Height: crate::nodes::types::Int,
-    Material: crate::nodes::types::String,
-    BgColor: crate::nodes::types::String,
-    LightIntensity: crate::nodes::types::Int,
-    UpDirection: crate::nodes::types::String,
-    AnimationSpeed: crate::nodes::types::String,
-    Fov: crate::nodes::types::Int,
-> Load3DAnimation<
-    ModelFile,
-    Width,
-    Height,
-    Material,
-    BgColor,
-    LightIntensity,
-    UpDirection,
-    AnimationSpeed,
-    Fov,
-> {
+> Load3DAnimation<ModelFile, Width, Height> {
     /// Create a new node.
-    pub fn new(
-        model_file: ModelFile,
-        width: Width,
-        height: Height,
-        material: Material,
-        bg_color: BgColor,
-        light_intensity: LightIntensity,
-        up_direction: UpDirection,
-        animation_speed: AnimationSpeed,
-        fov: Fov,
-    ) -> Self {
-        Self {
-            model_file,
-            width,
-            height,
-            material,
-            bg_color,
-            light_intensity,
-            up_direction,
-            animation_speed,
-            fov,
-        }
+    pub fn new(model_file: ModelFile, width: Width, height: Height) -> Self {
+        Self { model_file, width, height }
     }
 }
 impl<
     ModelFile: crate::nodes::types::String,
     Width: crate::nodes::types::Int,
     Height: crate::nodes::types::Int,
-    Material: crate::nodes::types::String,
-    BgColor: crate::nodes::types::String,
-    LightIntensity: crate::nodes::types::Int,
-    UpDirection: crate::nodes::types::String,
-    AnimationSpeed: crate::nodes::types::String,
-    Fov: crate::nodes::types::Int,
-> crate::nodes::TypedNode
-for Load3DAnimation<
-    ModelFile,
-    Width,
-    Height,
-    Material,
-    BgColor,
-    LightIntensity,
-    UpDirection,
-    AnimationSpeed,
-    Fov,
-> {
+> crate::nodes::TypedNode for Load3DAnimation<ModelFile, Width, Height> {
     type Output = out::Load3DAnimationOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
             image: crate::nodes::types::ImageOut::from_dynamic(node_id, 0u32),
             mask: crate::nodes::types::MaskOut::from_dynamic(node_id, 1u32),
             mesh_path: crate::nodes::types::StringOut::from_dynamic(node_id, 2u32),
+            normal: crate::nodes::types::ImageOut::from_dynamic(node_id, 3u32),
         }
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
@@ -319,14 +156,6 @@ for Load3DAnimation<
         output.insert("model_file".to_string(), self.model_file.clone().into());
         output.insert("width".to_string(), self.width.clone().into());
         output.insert("height".to_string(), self.height.clone().into());
-        output.insert("material".to_string(), self.material.clone().into());
-        output.insert("bg_color".to_string(), self.bg_color.clone().into());
-        output
-            .insert("light_intensity".to_string(), self.light_intensity.clone().into());
-        output.insert("up_direction".to_string(), self.up_direction.clone().into());
-        output
-            .insert("animation_speed".to_string(), self.animation_speed.clone().into());
-        output.insert("fov".to_string(), self.fov.clone().into());
         output
     }
     const NAME: &'static str = "Load3DAnimation";
@@ -336,14 +165,7 @@ for Load3DAnimation<
 }
 ///**Preview 3D**: No description.
 #[derive(Clone)]
-pub struct Preview3D<
-    ModelFile: crate::nodes::types::String,
-    Material: crate::nodes::types::String,
-    BgColor: crate::nodes::types::String,
-    LightIntensity: crate::nodes::types::Int,
-    UpDirection: crate::nodes::types::String,
-    Fov: crate::nodes::types::Int,
-> {
+pub struct Preview3D<ModelFile: crate::nodes::types::String> {
     /**No documentation.
 
 **Metadata**:
@@ -351,72 +173,15 @@ pub struct Preview3D<
   - Default:
 */
     pub model_file: ModelFile,
-    ///No documentation.
-    pub material: Material,
-    /**No documentation.
-
-**Metadata**:
-  - Multiline: false
-  - Default: #000000
-*/
-    pub bg_color: BgColor,
-    /**No documentation.
-
-**Metadata**:
-  - Default: 10
-  - Max: 20
-  - Min: 1
-  - Step: 1
-*/
-    pub light_intensity: LightIntensity,
-    ///No documentation.
-    pub up_direction: UpDirection,
-    /**No documentation.
-
-**Metadata**:
-  - Default: 75
-  - Max: 150
-  - Min: 10
-  - Step: 1
-*/
-    pub fov: Fov,
 }
-impl<
-    ModelFile: crate::nodes::types::String,
-    Material: crate::nodes::types::String,
-    BgColor: crate::nodes::types::String,
-    LightIntensity: crate::nodes::types::Int,
-    UpDirection: crate::nodes::types::String,
-    Fov: crate::nodes::types::Int,
-> Preview3D<ModelFile, Material, BgColor, LightIntensity, UpDirection, Fov> {
+impl<ModelFile: crate::nodes::types::String> Preview3D<ModelFile> {
     /// Create a new node.
-    pub fn new(
-        model_file: ModelFile,
-        material: Material,
-        bg_color: BgColor,
-        light_intensity: LightIntensity,
-        up_direction: UpDirection,
-        fov: Fov,
-    ) -> Self {
-        Self {
-            model_file,
-            material,
-            bg_color,
-            light_intensity,
-            up_direction,
-            fov,
-        }
+    pub fn new(model_file: ModelFile) -> Self {
+        Self { model_file }
     }
 }
-impl<
-    ModelFile: crate::nodes::types::String,
-    Material: crate::nodes::types::String,
-    BgColor: crate::nodes::types::String,
-    LightIntensity: crate::nodes::types::Int,
-    UpDirection: crate::nodes::types::String,
-    Fov: crate::nodes::types::Int,
-> crate::nodes::TypedNode
-for Preview3D<ModelFile, Material, BgColor, LightIntensity, UpDirection, Fov> {
+impl<ModelFile: crate::nodes::types::String> crate::nodes::TypedNode
+for Preview3D<ModelFile> {
     type Output = WorkflowNodeId;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         node_id
@@ -424,12 +189,6 @@ for Preview3D<ModelFile, Material, BgColor, LightIntensity, UpDirection, Fov> {
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
         output.insert("model_file".to_string(), self.model_file.clone().into());
-        output.insert("material".to_string(), self.material.clone().into());
-        output.insert("bg_color".to_string(), self.bg_color.clone().into());
-        output
-            .insert("light_intensity".to_string(), self.light_intensity.clone().into());
-        output.insert("up_direction".to_string(), self.up_direction.clone().into());
-        output.insert("fov".to_string(), self.fov.clone().into());
         output
     }
     const NAME: &'static str = "Preview3D";
@@ -437,12 +196,134 @@ for Preview3D<ModelFile, Material, BgColor, LightIntensity, UpDirection, Fov> {
     const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "3d";
 }
+impl<ModelFile: crate::nodes::types::String> crate::nodes::TypedOutputNode
+for Preview3D<ModelFile> {}
+///**Preview 3D - Animation**: No description.
+#[derive(Clone)]
+pub struct Preview3DAnimation<ModelFile: crate::nodes::types::String> {
+    /**No documentation.
+
+**Metadata**:
+  - Multiline: false
+  - Default:
+*/
+    pub model_file: ModelFile,
+}
+impl<ModelFile: crate::nodes::types::String> Preview3DAnimation<ModelFile> {
+    /// Create a new node.
+    pub fn new(model_file: ModelFile) -> Self {
+        Self { model_file }
+    }
+}
+impl<ModelFile: crate::nodes::types::String> crate::nodes::TypedNode
+for Preview3DAnimation<ModelFile> {
+    type Output = WorkflowNodeId;
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
+        node_id
+    }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("model_file".to_string(), self.model_file.clone().into());
+        output
+    }
+    const NAME: &'static str = "Preview3DAnimation";
+    const DISPLAY_NAME: &'static str = "Preview 3D - Animation";
+    const DESCRIPTION: &'static str = "";
+    const CATEGORY: &'static str = "3d";
+}
+impl<ModelFile: crate::nodes::types::String> crate::nodes::TypedOutputNode
+for Preview3DAnimation<ModelFile> {}
+///**SaveGLB**: No description.
+#[derive(Clone)]
+pub struct SaveGlb<
+    Mesh: crate::nodes::types::Mesh,
+    FilenamePrefix: crate::nodes::types::String,
+> {
+    ///No documentation.
+    pub mesh: Mesh,
+    /**No documentation.
+
+**Metadata**:
+  - Default: mesh/ComfyUI
+*/
+    pub filename_prefix: FilenamePrefix,
+}
 impl<
-    ModelFile: crate::nodes::types::String,
-    Material: crate::nodes::types::String,
-    BgColor: crate::nodes::types::String,
-    LightIntensity: crate::nodes::types::Int,
-    UpDirection: crate::nodes::types::String,
-    Fov: crate::nodes::types::Int,
-> crate::nodes::TypedOutputNode
-for Preview3D<ModelFile, Material, BgColor, LightIntensity, UpDirection, Fov> {}
+    Mesh: crate::nodes::types::Mesh,
+    FilenamePrefix: crate::nodes::types::String,
+> SaveGlb<Mesh, FilenamePrefix> {
+    /// Create a new node.
+    pub fn new(mesh: Mesh, filename_prefix: FilenamePrefix) -> Self {
+        Self { mesh, filename_prefix }
+    }
+}
+impl<
+    Mesh: crate::nodes::types::Mesh,
+    FilenamePrefix: crate::nodes::types::String,
+> crate::nodes::TypedNode for SaveGlb<Mesh, FilenamePrefix> {
+    type Output = WorkflowNodeId;
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
+        node_id
+    }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("mesh".to_string(), self.mesh.clone().into());
+        output
+            .insert("filename_prefix".to_string(), self.filename_prefix.clone().into());
+        output
+    }
+    const NAME: &'static str = "SaveGLB";
+    const DISPLAY_NAME: &'static str = "SaveGLB";
+    const DESCRIPTION: &'static str = "";
+    const CATEGORY: &'static str = "3d";
+}
+impl<
+    Mesh: crate::nodes::types::Mesh,
+    FilenamePrefix: crate::nodes::types::String,
+> crate::nodes::TypedOutputNode for SaveGlb<Mesh, FilenamePrefix> {}
+///**VoxelToMeshBasic**: No description.
+#[derive(Clone)]
+pub struct VoxelToMeshBasic<
+    Voxel: crate::nodes::types::Voxel,
+    Threshold: crate::nodes::types::Float,
+> {
+    ///No documentation.
+    pub voxel: Voxel,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 0.6
+  - Max: 1
+  - Min: -1
+  - Step: 0.01
+*/
+    pub threshold: Threshold,
+}
+impl<
+    Voxel: crate::nodes::types::Voxel,
+    Threshold: crate::nodes::types::Float,
+> VoxelToMeshBasic<Voxel, Threshold> {
+    /// Create a new node.
+    pub fn new(voxel: Voxel, threshold: Threshold) -> Self {
+        Self { voxel, threshold }
+    }
+}
+impl<
+    Voxel: crate::nodes::types::Voxel,
+    Threshold: crate::nodes::types::Float,
+> crate::nodes::TypedNode for VoxelToMeshBasic<Voxel, Threshold> {
+    type Output = crate::nodes::types::MeshOut;
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
+        Self::Output::from_dynamic(node_id, 0)
+    }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("voxel".to_string(), self.voxel.clone().into());
+        output.insert("threshold".to_string(), self.threshold.clone().into());
+        output
+    }
+    const NAME: &'static str = "VoxelToMeshBasic";
+    const DISPLAY_NAME: &'static str = "VoxelToMeshBasic";
+    const DESCRIPTION: &'static str = "";
+    const CATEGORY: &'static str = "3d";
+}

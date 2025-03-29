@@ -264,9 +264,41 @@
     "output_tooltips": []
   },
   {
+    "name": "CFGZeroStar",
+    "display_name": "CFGZeroStar",
+    "description": "",
+    "python_module": "comfy_extras.nodes_cfg",
+    "category": "advanced/guidance",
+    "input": {
+      "required": {
+        "model": [
+          "MODEL"
+        ]
+      },
+      "optional": null
+    },
+    "input_order": {
+      "required": [
+        "model"
+      ],
+      "optional": null
+    },
+    "output": [
+      "MODEL"
+    ],
+    "output_is_list": [
+      false
+    ],
+    "output_name": [
+      "patched_model"
+    ],
+    "output_node": false,
+    "output_tooltips": []
+  },
+  {
     "name": "CLIPLoader",
     "display_name": "Load CLIP",
-    "description": "[Recipes]\n\nstable_diffusion: clip-l\nstable_cascade: clip-g\nsd3: t5 / clip-g / clip-l\nstable_audio: t5\nmochi: t5\ncosmos: old t5 xxl",
+    "description": "[Recipes]\n\nstable_diffusion: clip-l\nstable_cascade: clip-g\nsd3: t5 xxl/ clip-g / clip-l\nstable_audio: t5 base\nmochi: t5 xxl\ncosmos: old t5 xxl\nlumina2: gemma 2 2B\nwan: umt5 xxl",
     "python_module": "nodes",
     "category": "advanced/loaders",
     "input": {
@@ -671,6 +703,59 @@
     ],
     "output_node": false,
     "output_tooltips": []
+  },
+  {
+    "name": "CLIPTextEncodeLumina2",
+    "display_name": "CLIP Text Encode for Lumina2",
+    "description": "Encodes a system prompt and a user prompt using a CLIP model into an embedding that can be used to guide the diffusion model towards generating specific images.",
+    "python_module": "comfy_extras.nodes_lumina2",
+    "category": "conditioning",
+    "input": {
+      "required": {
+        "clip": [
+          "CLIP",
+          {
+            "tooltip": "The CLIP model used for encoding the text."
+          }
+        ],
+        "system_prompt": [
+          [],
+          {
+            "tooltip": "Lumina2 provide two types of system prompts:Superior: You are an assistant designed to generate superior images with the superior degree of image-text alignment based on textual prompts or user prompts. Alignment: You are an assistant designed to generate high-quality images with the highest degree of image-text alignment based on textual prompts."
+          }
+        ],
+        "user_prompt": [
+          "STRING",
+          {
+            "tooltip": "The text to be encoded.",
+            "dynamicPrompts": true,
+            "multiline": true
+          }
+        ]
+      },
+      "optional": null
+    },
+    "input_order": {
+      "required": [
+        "system_prompt",
+        "user_prompt",
+        "clip"
+      ],
+      "optional": null
+    },
+    "output": [
+      "CONDITIONING"
+    ],
+    "output_is_list": [
+      false
+    ],
+    "output_name": [
+      "CONDITIONING"
+    ],
+    "output_node": false,
+    "output_tooltips": [
+      "A conditioning containing the embedded text used to guide the diffusion model."
+    ]
   },
   {
     "name": "CLIPTextEncodePixArtAlpha",
@@ -1650,6 +1735,115 @@
         "height",
         "x",
         "y",
+        "strength"
+      ],
+      "optional": null
+    },
+    "output": [
+      "CONDITIONING"
+    ],
+    "output_is_list": [
+      false
+    ],
+    "output_name": [
+      "CONDITIONING"
+    ],
+    "output_node": false,
+    "output_tooltips": []
+  },
+  {
+    "name": "ConditioningSetAreaPercentageVideo",
+    "display_name": "ConditioningSetAreaPercentageVideo",
+    "description": "",
+    "python_module": "comfy_extras.nodes_video_model",
+    "category": "conditioning",
+    "input": {
+      "required": {
+        "conditioning": [
+          "CONDITIONING"
+        ],
+        "height": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0,
+            "step": 0.01
+          }
+        ],
+        "strength": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 10.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "temporal": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0,
+            "step": 0.01
+          }
+        ],
+        "width": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0,
+            "step": 0.01
+          }
+        ],
+        "x": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 0,
+            "max": 1.0,
+            "min": 0,
+            "step": 0.01
+          }
+        ],
+        "y": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 0,
+            "max": 1.0,
+            "min": 0,
+            "step": 0.01
+          }
+        ],
+        "z": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 0,
+            "max": 1.0,
+            "min": 0,
+            "step": 0.01
+          }
+        ]
+      },
+      "optional": null
+    },
+    "input_order": {
+      "required": [
+        "conditioning",
+        "width",
+        "height",
+        "temporal",
+        "x",
+        "y",
+        "z",
         "strength"
       ],
       "optional": null
@@ -3631,6 +3825,54 @@
     "output_tooltips": []
   },
   {
+    "name": "EmptyLatentHunyuan3Dv2",
+    "display_name": "EmptyLatentHunyuan3Dv2",
+    "description": "",
+    "python_module": "comfy_extras.nodes_hunyuan3d",
+    "category": "latent/3d",
+    "input": {
+      "required": {
+        "batch_size": [
+          "INT",
+          {
+            "tooltip": "The number of latent images in the batch.",
+            "default": 1,
+            "max": 4096,
+            "min": 1
+          }
+        ],
+        "resolution": [
+          "INT",
+          {
+            "tooltip": null,
+            "default": 3072,
+            "max": 8192,
+            "min": 1
+          }
+        ]
+      },
+      "optional": null
+    },
+    "input_order": {
+      "required": [
+        "resolution",
+        "batch_size"
+      ],
+      "optional": null
+    },
+    "output": [
+      "LATENT"
+    ],
+    "output_is_list": [
+      false
+    ],
+    "output_name": [
+      "LATENT"
+    ],
+    "output_node": false,
+    "output_tooltips": []
+  },
+  {
     "name": "EmptyLatentImage",
     "display_name": "Empty Latent Image",
     "description": "Create a new batch of empty latent images to be denoised via sampling.",
@@ -4457,6 +4699,180 @@
     "output_tooltips": []
   },
   {
+    "name": "Hunyuan3Dv2Conditioning",
+    "display_name": "Hunyuan3Dv2Conditioning",
+    "description": "",
+    "python_module": "comfy_extras.nodes_hunyuan3d",
+    "category": "conditioning/video_models",
+    "input": {
+      "required": {
+        "clip_vision_output": [
+          "CLIP_VISION_OUTPUT"
+        ]
+      },
+      "optional": null
+    },
+    "input_order": {
+      "required": [
+        "clip_vision_output"
+      ],
+      "optional": null
+    },
+    "output": [
+      "CONDITIONING",
+      "CONDITIONING"
+    ],
+    "output_is_list": [
+      false,
+      false
+    ],
+    "output_name": [
+      "positive",
+      "negative"
+    ],
+    "output_node": false,
+    "output_tooltips": []
+  },
+  {
+    "name": "Hunyuan3Dv2ConditioningMultiView",
+    "display_name": "Hunyuan3Dv2ConditioningMultiView",
+    "description": "",
+    "python_module": "comfy_extras.nodes_hunyuan3d",
+    "category": "conditioning/video_models",
+    "input": {
+      "required": {},
+      "optional": {
+        "back": [
+          "CLIP_VISION_OUTPUT"
+        ],
+        "front": [
+          "CLIP_VISION_OUTPUT"
+        ],
+        "left": [
+          "CLIP_VISION_OUTPUT"
+        ],
+        "right": [
+          "CLIP_VISION_OUTPUT"
+        ]
+      }
+    },
+    "input_order": {
+      "required": [],
+      "optional": [
+        "front",
+        "left",
+        "back",
+        "right"
+      ]
+    },
+    "output": [
+      "CONDITIONING",
+      "CONDITIONING"
+    ],
+    "output_is_list": [
+      false,
+      false
+    ],
+    "output_name": [
+      "positive",
+      "negative"
+    ],
+    "output_node": false,
+    "output_tooltips": []
+  },
+  {
+    "name": "HunyuanImageToVideo",
+    "display_name": "HunyuanImageToVideo",
+    "description": "",
+    "python_module": "comfy_extras.nodes_hunyuan",
+    "category": "conditioning/video_models",
+    "input": {
+      "required": {
+        "batch_size": [
+          "INT",
+          {
+            "tooltip": null,
+            "default": 1,
+            "max": 4096,
+            "min": 1
+          }
+        ],
+        "guidance_type": [
+          []
+        ],
+        "height": [
+          "INT",
+          {
+            "tooltip": null,
+            "default": 480,
+            "max": 16384,
+            "min": 16,
+            "step": 16
+          }
+        ],
+        "length": [
+          "INT",
+          {
+            "tooltip": null,
+            "default": 53,
+            "max": 16384,
+            "min": 1,
+            "step": 4
+          }
+        ],
+        "positive": [
+          "CONDITIONING"
+        ],
+        "vae": [
+          "VAE"
+        ],
+        "width": [
+          "INT",
+          {
+            "tooltip": null,
+            "default": 848,
+            "max": 16384,
+            "min": 16,
+            "step": 16
+          }
+        ]
+      },
+      "optional": {
+        "start_image": [
+          "IMAGE"
+        ]
+      }
+    },
+    "input_order": {
+      "required": [
+        "positive",
+        "vae",
+        "width",
+        "height",
+        "length",
+        "batch_size",
+        "guidance_type"
+      ],
+      "optional": [
+        "start_image"
+      ]
+    },
+    "output": [
+      "CONDITIONING",
+      "LATENT"
+    ],
+    "output_is_list": [
+      false,
+      false
+    ],
+    "output_name": [
+      "positive",
+      "latent"
+    ],
+    "output_node": false,
+    "output_tooltips": []
+  },
+  {
     "name": "HyperTile",
     "display_name": "HyperTile",
     "description": "",
@@ -5208,6 +5624,44 @@
     "output_tooltips": []
   },
   {
+    "name": "ImageRGBToYUV",
+    "display_name": "ImageRGBToYUV",
+    "description": "",
+    "python_module": "comfy_extras.nodes_morphology",
+    "category": "image/batch",
+    "input": {
+      "required": {
+        "image": [
+          "IMAGE"
+        ]
+      },
+      "optional": null
+    },
+    "input_order": {
+      "required": [
+        "image"
+      ],
+      "optional": null
+    },
+    "output": [
+      "IMAGE",
+      "IMAGE",
+      "IMAGE"
+    ],
+    "output_is_list": [
+      false,
+      false,
+      false
+    ],
+    "output_name": [
+      "Y",
+      "U",
+      "V"
+    ],
+    "output_node": false,
+    "output_tooltips": []
+  },
+  {
     "name": "ImageScale",
     "display_name": "Upscale Image",
     "description": "",
@@ -5485,6 +5939,46 @@
       "required": [
         "upscale_model",
         "image"
+      ],
+      "optional": null
+    },
+    "output": [
+      "IMAGE"
+    ],
+    "output_is_list": [
+      false
+    ],
+    "output_name": [
+      "IMAGE"
+    ],
+    "output_node": false,
+    "output_tooltips": []
+  },
+  {
+    "name": "ImageYUVToRGB",
+    "display_name": "ImageYUVToRGB",
+    "description": "",
+    "python_module": "comfy_extras.nodes_morphology",
+    "category": "image/batch",
+    "input": {
+      "required": {
+        "U": [
+          "IMAGE"
+        ],
+        "V": [
+          "IMAGE"
+        ],
+        "Y": [
+          "IMAGE"
+        ]
+      },
+      "optional": null
+    },
+    "input_order": {
+      "required": [
+        "Y",
+        "U",
+        "V"
       ],
       "optional": null
     },
@@ -6014,6 +6508,84 @@
     "output_tooltips": []
   },
   {
+    "name": "LTXVAddGuide",
+    "display_name": "LTXVAddGuide",
+    "description": "",
+    "python_module": "comfy_extras.nodes_lt",
+    "category": "conditioning/video_models",
+    "input": {
+      "required": {
+        "frame_idx": [
+          "INT",
+          {
+            "tooltip": "Frame index to start the conditioning at. For single-frame images or videos with 1-8 frames, any frame_idx value is acceptable. For videos with 9+ frames, frame_idx must be divisible by 8, otherwise it will be rounded down to the nearest multiple of 8. Negative values are counted from the end of the video.",
+            "default": 0,
+            "max": 9999,
+            "min": -9999
+          }
+        ],
+        "image": [
+          "IMAGE",
+          {
+            "tooltip": "Image or video to condition the latent video on. Must be 8*n + 1 frames.If the video is not 8*n + 1 frames, it will be cropped to the nearest 8*n + 1 frames."
+          }
+        ],
+        "latent": [
+          "LATENT"
+        ],
+        "negative": [
+          "CONDITIONING"
+        ],
+        "positive": [
+          "CONDITIONING"
+        ],
+        "strength": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "vae": [
+          "VAE"
+        ]
+      },
+      "optional": null
+    },
+    "input_order": {
+      "required": [
+        "positive",
+        "negative",
+        "vae",
+        "latent",
+        "image",
+        "frame_idx",
+        "strength"
+      ],
+      "optional": null
+    },
+    "output": [
+      "CONDITIONING",
+      "CONDITIONING",
+      "LATENT"
+    ],
+    "output_is_list": [
+      false,
+      false,
+      false
+    ],
+    "output_name": [
+      "positive",
+      "negative",
+      "latent"
+    ],
+    "output_node": false,
+    "output_tooltips": []
+  },
+  {
     "name": "LTXVConditioning",
     "display_name": "LTXVConditioning",
     "description": "",
@@ -6064,6 +6636,52 @@
     "output_tooltips": []
   },
   {
+    "name": "LTXVCropGuides",
+    "display_name": "LTXVCropGuides",
+    "description": "",
+    "python_module": "comfy_extras.nodes_lt",
+    "category": "conditioning/video_models",
+    "input": {
+      "required": {
+        "latent": [
+          "LATENT"
+        ],
+        "negative": [
+          "CONDITIONING"
+        ],
+        "positive": [
+          "CONDITIONING"
+        ]
+      },
+      "optional": null
+    },
+    "input_order": {
+      "required": [
+        "positive",
+        "negative",
+        "latent"
+      ],
+      "optional": null
+    },
+    "output": [
+      "CONDITIONING",
+      "CONDITIONING",
+      "LATENT"
+    ],
+    "output_is_list": [
+      false,
+      false,
+      false
+    ],
+    "output_name": [
+      "positive",
+      "negative",
+      "latent"
+    ],
+    "output_node": false,
+    "output_tooltips": []
+  },
+  {
     "name": "LTXVImgToVideo",
     "display_name": "LTXVImgToVideo",
     "description": "",
@@ -6092,16 +6710,6 @@
         ],
         "image": [
           "IMAGE"
-        ],
-        "image_noise_scale": [
-          "FLOAT",
-          {
-            "tooltip": "Amount of noise to apply on conditioning image latent.",
-            "default": 0.15,
-            "max": 1.0,
-            "min": 0,
-            "step": 0.01
-          }
         ],
         "length": [
           "INT",
@@ -6144,8 +6752,7 @@
         "width",
         "height",
         "length",
-        "batch_size",
-        "image_noise_scale"
+        "batch_size"
       ],
       "optional": null
     },
@@ -6163,6 +6770,48 @@
       "positive",
       "negative",
       "latent"
+    ],
+    "output_node": false,
+    "output_tooltips": []
+  },
+  {
+    "name": "LTXVPreprocess",
+    "display_name": "LTXVPreprocess",
+    "description": "",
+    "python_module": "comfy_extras.nodes_lt",
+    "category": "image",
+    "input": {
+      "required": {
+        "image": [
+          "IMAGE"
+        ],
+        "img_compression": [
+          "INT",
+          {
+            "tooltip": "Amount of compression to apply on image.",
+            "default": 35,
+            "max": 100,
+            "min": 0
+          }
+        ]
+      },
+      "optional": null
+    },
+    "input_order": {
+      "required": [
+        "image",
+        "img_compression"
+      ],
+      "optional": null
+    },
+    "output": [
+      "IMAGE"
+    ],
+    "output_is_list": [
+      false
+    ],
+    "output_name": [
+      "output_image"
     ],
     "output_node": false,
     "output_tooltips": []
@@ -7206,24 +7855,6 @@
     "category": "3d",
     "input": {
       "required": {
-        "bg_color": [
-          "STRING",
-          {
-            "tooltip": null,
-            "multiline": false,
-            "default": "#000000"
-          }
-        ],
-        "fov": [
-          "INT",
-          {
-            "tooltip": null,
-            "default": 75,
-            "max": 150,
-            "min": 10,
-            "step": 1
-          }
-        ],
         "height": [
           "INT",
           {
@@ -7240,27 +7871,11 @@
             "tooltip": null
           }
         ],
-        "light_intensity": [
-          "INT",
-          {
-            "tooltip": null,
-            "default": 10,
-            "max": 20,
-            "min": 1,
-            "step": 1
-          }
-        ],
-        "material": [
-          []
-        ],
         "model_file": [
           [],
           {
             "tooltip": null
           }
-        ],
-        "up_direction": [
-          []
         ],
         "width": [
           "INT",
@@ -7280,21 +7895,20 @@
         "model_file",
         "image",
         "width",
-        "height",
-        "material",
-        "bg_color",
-        "light_intensity",
-        "up_direction",
-        "fov"
+        "height"
       ],
       "optional": null
     },
     "output": [
       "IMAGE",
       "MASK",
-      "STRING"
+      "STRING",
+      "IMAGE",
+      "IMAGE"
     ],
     "output_is_list": [
+      false,
+      false,
       false,
       false,
       false
@@ -7302,7 +7916,9 @@
     "output_name": [
       "image",
       "mask",
-      "mesh_path"
+      "mesh_path",
+      "normal",
+      "lineart"
     ],
     "output_node": false,
     "output_tooltips": []
@@ -7315,31 +7931,6 @@
     "category": "3d",
     "input": {
       "required": {
-        "animation_speed": [
-          [],
-          {
-            "tooltip": null,
-            "default": "1"
-          }
-        ],
-        "bg_color": [
-          "STRING",
-          {
-            "tooltip": null,
-            "multiline": false,
-            "default": "#000000"
-          }
-        ],
-        "fov": [
-          "INT",
-          {
-            "tooltip": null,
-            "default": 75,
-            "max": 150,
-            "min": 10,
-            "step": 1
-          }
-        ],
         "height": [
           "INT",
           {
@@ -7356,27 +7947,11 @@
             "tooltip": null
           }
         ],
-        "light_intensity": [
-          "INT",
-          {
-            "tooltip": null,
-            "default": 10,
-            "max": 20,
-            "min": 1,
-            "step": 1
-          }
-        ],
-        "material": [
-          []
-        ],
         "model_file": [
           [],
           {
             "tooltip": null
           }
-        ],
-        "up_direction": [
-          []
         ],
         "width": [
           "INT",
@@ -7396,22 +7971,18 @@
         "model_file",
         "image",
         "width",
-        "height",
-        "material",
-        "bg_color",
-        "light_intensity",
-        "up_direction",
-        "animation_speed",
-        "fov"
+        "height"
       ],
       "optional": null
     },
     "output": [
       "IMAGE",
       "MASK",
-      "STRING"
+      "STRING",
+      "IMAGE"
     ],
     "output_is_list": [
+      false,
       false,
       false,
       false
@@ -7419,7 +7990,8 @@
     "output_name": [
       "image",
       "mask",
-      "mesh_path"
+      "mesh_path",
+      "normal"
     ],
     "output_node": false,
     "output_tooltips": []
@@ -7534,6 +8106,45 @@
       false
     ],
     "output_name": [
+      "MASK"
+    ],
+    "output_node": false,
+    "output_tooltips": []
+  },
+  {
+    "name": "LoadImageOutput",
+    "display_name": "Load Image (from Outputs)",
+    "description": "Load an image from the output folder. When the refresh button is clicked, the node will update the image list and automatically select the first image, allowing for easy iteration.",
+    "python_module": "nodes",
+    "category": "image",
+    "input": {
+      "required": {
+        "image": [
+          "COMBO",
+          {
+            "tooltip": null,
+            "image_upload": true
+          }
+        ]
+      },
+      "optional": null
+    },
+    "input_order": {
+      "required": [
+        "image"
+      ],
+      "optional": null
+    },
+    "output": [
+      "IMAGE",
+      "MASK"
+    ],
+    "output_is_list": [
+      false,
+      false
+    ],
+    "output_name": [
+      "IMAGE",
       "MASK"
     ],
     "output_node": false,
@@ -7667,6 +8278,32 @@
     ]
   },
   {
+    "name": "LotusConditioning",
+    "display_name": "LotusConditioning",
+    "description": "",
+    "python_module": "comfy_extras.nodes_lotus",
+    "category": "conditioning/lotus",
+    "input": {
+      "required": {},
+      "optional": null
+    },
+    "input_order": {
+      "required": [],
+      "optional": null
+    },
+    "output": [
+      "CONDITIONING"
+    ],
+    "output_is_list": [
+      false
+    ],
+    "output_name": [
+      "conditioning"
+    ],
+    "output_node": false,
+    "output_tooltips": []
+  },
+  {
     "name": "MaskComposite",
     "display_name": "MaskComposite",
     "description": "",
@@ -7756,6 +8393,42 @@
     ],
     "output_name": [
       "IMAGE"
+    ],
+    "output_node": false,
+    "output_tooltips": []
+  },
+  {
+    "name": "ModelComputeDtype",
+    "display_name": "ModelComputeDtype",
+    "description": "",
+    "python_module": "comfy_extras.nodes_model_advanced",
+    "category": "advanced/debug/model",
+    "input": {
+      "required": {
+        "dtype": [
+          []
+        ],
+        "model": [
+          "MODEL"
+        ]
+      },
+      "optional": null
+    },
+    "input_order": {
+      "required": [
+        "model",
+        "dtype"
+      ],
+      "optional": null
+    },
+    "output": [
+      "MODEL"
+    ],
+    "output_is_list": [
+      false
+    ],
+    "output_name": [
+      "MODEL"
     ],
     "output_node": false,
     "output_tooltips": []
@@ -8359,6 +9032,914 @@
         "input",
         "middle",
         "out"
+      ],
+      "optional": null
+    },
+    "output": [
+      "MODEL"
+    ],
+    "output_is_list": [
+      false
+    ],
+    "output_name": [
+      "MODEL"
+    ],
+    "output_node": false,
+    "output_tooltips": []
+  },
+  {
+    "name": "ModelMergeCosmos14B",
+    "display_name": "ModelMergeCosmos14B",
+    "description": "",
+    "python_module": "comfy_extras.nodes_model_merging_model_specific",
+    "category": "advanced/model_merging/model_specific",
+    "input": {
+      "required": {
+        "affline_norm.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "blocks.block0.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "blocks.block1.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "blocks.block10.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "blocks.block11.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "blocks.block12.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "blocks.block13.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "blocks.block14.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "blocks.block15.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "blocks.block16.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "blocks.block17.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "blocks.block18.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "blocks.block19.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "blocks.block2.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "blocks.block20.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "blocks.block21.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "blocks.block22.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "blocks.block23.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "blocks.block24.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "blocks.block25.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "blocks.block26.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "blocks.block27.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "blocks.block28.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "blocks.block29.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "blocks.block3.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "blocks.block30.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "blocks.block31.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "blocks.block32.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "blocks.block33.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "blocks.block34.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "blocks.block35.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "blocks.block4.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "blocks.block5.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "blocks.block6.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "blocks.block7.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "blocks.block8.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "blocks.block9.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "extra_pos_embedder.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "final_layer.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "model1": [
+          "MODEL"
+        ],
+        "model2": [
+          "MODEL"
+        ],
+        "pos_embedder.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "t_embedder.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "x_embedder.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ]
+      },
+      "optional": null
+    },
+    "input_order": {
+      "required": [
+        "model1",
+        "model2",
+        "pos_embedder.",
+        "extra_pos_embedder.",
+        "x_embedder.",
+        "t_embedder.",
+        "affline_norm.",
+        "blocks.block0.",
+        "blocks.block1.",
+        "blocks.block2.",
+        "blocks.block3.",
+        "blocks.block4.",
+        "blocks.block5.",
+        "blocks.block6.",
+        "blocks.block7.",
+        "blocks.block8.",
+        "blocks.block9.",
+        "blocks.block10.",
+        "blocks.block11.",
+        "blocks.block12.",
+        "blocks.block13.",
+        "blocks.block14.",
+        "blocks.block15.",
+        "blocks.block16.",
+        "blocks.block17.",
+        "blocks.block18.",
+        "blocks.block19.",
+        "blocks.block20.",
+        "blocks.block21.",
+        "blocks.block22.",
+        "blocks.block23.",
+        "blocks.block24.",
+        "blocks.block25.",
+        "blocks.block26.",
+        "blocks.block27.",
+        "blocks.block28.",
+        "blocks.block29.",
+        "blocks.block30.",
+        "blocks.block31.",
+        "blocks.block32.",
+        "blocks.block33.",
+        "blocks.block34.",
+        "blocks.block35.",
+        "final_layer."
+      ],
+      "optional": null
+    },
+    "output": [
+      "MODEL"
+    ],
+    "output_is_list": [
+      false
+    ],
+    "output_name": [
+      "MODEL"
+    ],
+    "output_node": false,
+    "output_tooltips": []
+  },
+  {
+    "name": "ModelMergeCosmos7B",
+    "display_name": "ModelMergeCosmos7B",
+    "description": "",
+    "python_module": "comfy_extras.nodes_model_merging_model_specific",
+    "category": "advanced/model_merging/model_specific",
+    "input": {
+      "required": {
+        "affline_norm.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "blocks.block0.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "blocks.block1.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "blocks.block10.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "blocks.block11.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "blocks.block12.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "blocks.block13.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "blocks.block14.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "blocks.block15.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "blocks.block16.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "blocks.block17.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "blocks.block18.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "blocks.block19.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "blocks.block2.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "blocks.block20.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "blocks.block21.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "blocks.block22.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "blocks.block23.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "blocks.block24.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "blocks.block25.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "blocks.block26.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "blocks.block27.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "blocks.block3.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "blocks.block4.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "blocks.block5.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "blocks.block6.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "blocks.block7.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "blocks.block8.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "blocks.block9.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "extra_pos_embedder.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "final_layer.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "model1": [
+          "MODEL"
+        ],
+        "model2": [
+          "MODEL"
+        ],
+        "pos_embedder.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "t_embedder.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "x_embedder.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ]
+      },
+      "optional": null
+    },
+    "input_order": {
+      "required": [
+        "model1",
+        "model2",
+        "pos_embedder.",
+        "extra_pos_embedder.",
+        "x_embedder.",
+        "t_embedder.",
+        "affline_norm.",
+        "blocks.block0.",
+        "blocks.block1.",
+        "blocks.block2.",
+        "blocks.block3.",
+        "blocks.block4.",
+        "blocks.block5.",
+        "blocks.block6.",
+        "blocks.block7.",
+        "blocks.block8.",
+        "blocks.block9.",
+        "blocks.block10.",
+        "blocks.block11.",
+        "blocks.block12.",
+        "blocks.block13.",
+        "blocks.block14.",
+        "blocks.block15.",
+        "blocks.block16.",
+        "blocks.block17.",
+        "blocks.block18.",
+        "blocks.block19.",
+        "blocks.block20.",
+        "blocks.block21.",
+        "blocks.block22.",
+        "blocks.block23.",
+        "blocks.block24.",
+        "blocks.block25.",
+        "blocks.block26.",
+        "blocks.block27.",
+        "final_layer."
       ],
       "optional": null
     },
@@ -12134,6 +13715,548 @@
     "output_tooltips": []
   },
   {
+    "name": "ModelMergeWAN2_1",
+    "display_name": "ModelMergeWAN2_1",
+    "description": "1.3B model has 30 blocks, 14B model has 40 blocks. Image to video model has the extra img_emb.",
+    "python_module": "comfy_extras.nodes_model_merging_model_specific",
+    "category": "advanced/model_merging/model_specific",
+    "input": {
+      "required": {
+        "blocks.0.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "blocks.1.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "blocks.10.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "blocks.11.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "blocks.12.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "blocks.13.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "blocks.14.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "blocks.15.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "blocks.16.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "blocks.17.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "blocks.18.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "blocks.19.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "blocks.2.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "blocks.20.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "blocks.21.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "blocks.22.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "blocks.23.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "blocks.24.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "blocks.25.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "blocks.26.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "blocks.27.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "blocks.28.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "blocks.29.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "blocks.3.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "blocks.30.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "blocks.31.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "blocks.32.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "blocks.33.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "blocks.34.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "blocks.35.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "blocks.36.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "blocks.37.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "blocks.38.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "blocks.39.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "blocks.4.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "blocks.5.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "blocks.6.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "blocks.7.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "blocks.8.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "blocks.9.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "head.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "img_emb.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "model1": [
+          "MODEL"
+        ],
+        "model2": [
+          "MODEL"
+        ],
+        "patch_embedding.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "text_embedding.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "time_embedding.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "time_projection.": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ]
+      },
+      "optional": null
+    },
+    "input_order": {
+      "required": [
+        "model1",
+        "model2",
+        "patch_embedding.",
+        "time_embedding.",
+        "time_projection.",
+        "text_embedding.",
+        "img_emb.",
+        "blocks.0.",
+        "blocks.1.",
+        "blocks.2.",
+        "blocks.3.",
+        "blocks.4.",
+        "blocks.5.",
+        "blocks.6.",
+        "blocks.7.",
+        "blocks.8.",
+        "blocks.9.",
+        "blocks.10.",
+        "blocks.11.",
+        "blocks.12.",
+        "blocks.13.",
+        "blocks.14.",
+        "blocks.15.",
+        "blocks.16.",
+        "blocks.17.",
+        "blocks.18.",
+        "blocks.19.",
+        "blocks.20.",
+        "blocks.21.",
+        "blocks.22.",
+        "blocks.23.",
+        "blocks.24.",
+        "blocks.25.",
+        "blocks.26.",
+        "blocks.27.",
+        "blocks.28.",
+        "blocks.29.",
+        "blocks.30.",
+        "blocks.31.",
+        "blocks.32.",
+        "blocks.33.",
+        "blocks.34.",
+        "blocks.35.",
+        "blocks.36.",
+        "blocks.37.",
+        "blocks.38.",
+        "blocks.39.",
+        "head."
+      ],
+      "optional": null
+    },
+    "output": [
+      "MODEL"
+    ],
+    "output_is_list": [
+      false
+    ],
+    "output_name": [
+      "MODEL"
+    ],
+    "output_node": false,
+    "output_tooltips": []
+  },
+  {
     "name": "ModelSamplingAuraFlow",
     "display_name": "ModelSamplingAuraFlow",
     "description": "",
@@ -13160,37 +15283,6 @@
     "category": "3d",
     "input": {
       "required": {
-        "bg_color": [
-          "STRING",
-          {
-            "tooltip": null,
-            "multiline": false,
-            "default": "#000000"
-          }
-        ],
-        "fov": [
-          "INT",
-          {
-            "tooltip": null,
-            "default": 75,
-            "max": 150,
-            "min": 10,
-            "step": 1
-          }
-        ],
-        "light_intensity": [
-          "INT",
-          {
-            "tooltip": null,
-            "default": 10,
-            "max": 20,
-            "min": 1,
-            "step": 1
-          }
-        ],
-        "material": [
-          []
-        ],
         "model_file": [
           "STRING",
           {
@@ -13198,21 +15290,44 @@
             "multiline": false,
             "default": ""
           }
-        ],
-        "up_direction": [
-          []
         ]
       },
       "optional": null
     },
     "input_order": {
       "required": [
-        "model_file",
-        "material",
-        "bg_color",
-        "light_intensity",
-        "up_direction",
-        "fov"
+        "model_file"
+      ],
+      "optional": null
+    },
+    "output": [],
+    "output_is_list": [],
+    "output_name": [],
+    "output_node": true,
+    "output_tooltips": []
+  },
+  {
+    "name": "Preview3DAnimation",
+    "display_name": "Preview 3D - Animation",
+    "description": "",
+    "python_module": "comfy_extras.nodes_load_3d",
+    "category": "3d",
+    "input": {
+      "required": {
+        "model_file": [
+          "STRING",
+          {
+            "tooltip": null,
+            "multiline": false,
+            "default": ""
+          }
+        ]
+      },
+      "optional": null
+    },
+    "input_order": {
+      "required": [
+        "model_file"
       ],
       "optional": null
     },
@@ -13272,6 +15387,146 @@
     "output_is_list": [],
     "output_name": [],
     "output_node": true,
+    "output_tooltips": []
+  },
+  {
+    "name": "PrimitiveBoolean",
+    "display_name": "Boolean",
+    "description": "",
+    "python_module": "comfy_extras.nodes_primitive",
+    "category": "utils/primitive",
+    "input": {
+      "required": {
+        "value": [
+          "BOOLEAN",
+          {
+            "tooltip": null
+          }
+        ]
+      },
+      "optional": null
+    },
+    "input_order": {
+      "required": [
+        "value"
+      ],
+      "optional": null
+    },
+    "output": [
+      "BOOLEAN"
+    ],
+    "output_is_list": [
+      false
+    ],
+    "output_name": [
+      "BOOLEAN"
+    ],
+    "output_node": false,
+    "output_tooltips": []
+  },
+  {
+    "name": "PrimitiveFloat",
+    "display_name": "Float",
+    "description": "",
+    "python_module": "comfy_extras.nodes_primitive",
+    "category": "utils/primitive",
+    "input": {
+      "required": {
+        "value": [
+          "FLOAT",
+          {
+            "tooltip": null
+          }
+        ]
+      },
+      "optional": null
+    },
+    "input_order": {
+      "required": [
+        "value"
+      ],
+      "optional": null
+    },
+    "output": [
+      "FLOAT"
+    ],
+    "output_is_list": [
+      false
+    ],
+    "output_name": [
+      "FLOAT"
+    ],
+    "output_node": false,
+    "output_tooltips": []
+  },
+  {
+    "name": "PrimitiveInt",
+    "display_name": "Int",
+    "description": "",
+    "python_module": "comfy_extras.nodes_primitive",
+    "category": "utils/primitive",
+    "input": {
+      "required": {
+        "value": [
+          "INT",
+          {
+            "tooltip": null
+          }
+        ]
+      },
+      "optional": null
+    },
+    "input_order": {
+      "required": [
+        "value"
+      ],
+      "optional": null
+    },
+    "output": [
+      "INT"
+    ],
+    "output_is_list": [
+      false
+    ],
+    "output_name": [
+      "INT"
+    ],
+    "output_node": false,
+    "output_tooltips": []
+  },
+  {
+    "name": "PrimitiveString",
+    "display_name": "String",
+    "description": "",
+    "python_module": "comfy_extras.nodes_primitive",
+    "category": "utils/primitive",
+    "input": {
+      "required": {
+        "value": [
+          "STRING",
+          {
+            "tooltip": null
+          }
+        ]
+      },
+      "optional": null
+    },
+    "input_order": {
+      "required": [
+        "value"
+      ],
+      "optional": null
+    },
+    "output": [
+      "STRING"
+    ],
+    "output_is_list": [
+      false
+    ],
+    "output_name": [
+      "STRING"
+    ],
+    "output_node": false,
     "output_tooltips": []
   },
   {
@@ -13392,6 +15647,60 @@
     ],
     "output_name": [
       "LATENT"
+    ],
+    "output_node": false,
+    "output_tooltips": []
+  },
+  {
+    "name": "RenormCFG",
+    "display_name": "RenormCFG",
+    "description": "",
+    "python_module": "comfy_extras.nodes_lumina2",
+    "category": "advanced/model",
+    "input": {
+      "required": {
+        "cfg_trunc": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 100,
+            "max": 100.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "model": [
+          "MODEL"
+        ],
+        "renorm_cfg": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 100.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ]
+      },
+      "optional": null
+    },
+    "input_order": {
+      "required": [
+        "model",
+        "cfg_trunc",
+        "renorm_cfg"
+      ],
+      "optional": null
+    },
+    "output": [
+      "MODEL"
+    ],
+    "output_is_list": [
+      false
+    ],
+    "output_name": [
+      "MODEL"
     ],
     "output_node": false,
     "output_tooltips": []
@@ -14714,6 +17023,40 @@
     "output_tooltips": []
   },
   {
+    "name": "SaveGLB",
+    "display_name": "SaveGLB",
+    "description": "",
+    "python_module": "comfy_extras.nodes_hunyuan3d",
+    "category": "3d",
+    "input": {
+      "required": {
+        "filename_prefix": [
+          "STRING",
+          {
+            "tooltip": null,
+            "default": "mesh/ComfyUI"
+          }
+        ],
+        "mesh": [
+          "MESH"
+        ]
+      },
+      "optional": null
+    },
+    "input_order": {
+      "required": [
+        "mesh",
+        "filename_prefix"
+      ],
+      "optional": null
+    },
+    "output": [],
+    "output_is_list": [],
+    "output_name": [],
+    "output_node": true,
+    "output_tooltips": []
+  },
+  {
     "name": "SaveImage",
     "display_name": "Save Image",
     "description": "Saves the input images to your ComfyUI output directory.",
@@ -14741,6 +17084,66 @@
       "required": [
         "images",
         "filename_prefix"
+      ],
+      "optional": null
+    },
+    "output": [],
+    "output_is_list": [],
+    "output_name": [],
+    "output_node": true,
+    "output_tooltips": []
+  },
+  {
+    "name": "SaveWEBM",
+    "display_name": "SaveWEBM",
+    "description": "",
+    "python_module": "comfy_extras.nodes_video",
+    "category": "image/video",
+    "input": {
+      "required": {
+        "codec": [
+          []
+        ],
+        "crf": [
+          "FLOAT",
+          {
+            "tooltip": "Higher crf means lower quality with a smaller file size, lower crf means higher quality higher filesize.",
+            "default": 32.0,
+            "max": 63.0,
+            "min": 0,
+            "step": 1
+          }
+        ],
+        "filename_prefix": [
+          "STRING",
+          {
+            "tooltip": null,
+            "default": "ComfyUI"
+          }
+        ],
+        "fps": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 24.0,
+            "max": 1000.0,
+            "min": 0.01,
+            "step": 0.01
+          }
+        ],
+        "images": [
+          "IMAGE"
+        ]
+      },
+      "optional": null
+    },
+    "input_order": {
+      "required": [
+        "images",
+        "filename_prefix",
+        "codec",
+        "fps",
+        "crf"
       ],
       "optional": null
     },
@@ -15789,6 +18192,61 @@
     "output_tooltips": []
   },
   {
+    "name": "TextEncodeHunyuanVideo_ImageToVideo",
+    "display_name": "TextEncodeHunyuanVideo_ImageToVideo",
+    "description": "",
+    "python_module": "comfy_extras.nodes_hunyuan",
+    "category": "advanced/conditioning",
+    "input": {
+      "required": {
+        "clip": [
+          "CLIP"
+        ],
+        "clip_vision_output": [
+          "CLIP_VISION_OUTPUT"
+        ],
+        "image_interleave": [
+          "INT",
+          {
+            "tooltip": "How much the image influences things vs the text prompt. Higher number means more influence from the text prompt.",
+            "default": 2,
+            "max": 512,
+            "min": 1
+          }
+        ],
+        "prompt": [
+          "STRING",
+          {
+            "tooltip": null,
+            "dynamicPrompts": true,
+            "multiline": true
+          }
+        ]
+      },
+      "optional": null
+    },
+    "input_order": {
+      "required": [
+        "clip",
+        "clip_vision_output",
+        "prompt",
+        "image_interleave"
+      ],
+      "optional": null
+    },
+    "output": [
+      "CONDITIONING"
+    ],
+    "output_is_list": [
+      false
+    ],
+    "output_name": [
+      "CONDITIONING"
+    ],
+    "output_node": false,
+    "output_tooltips": []
+  },
+  {
     "name": "ThresholdMask",
     "display_name": "ThresholdMask",
     "description": "",
@@ -16058,6 +18516,62 @@
     ],
     "output_name": [
       "AUDIO"
+    ],
+    "output_node": false,
+    "output_tooltips": []
+  },
+  {
+    "name": "VAEDecodeHunyuan3D",
+    "display_name": "VAEDecodeHunyuan3D",
+    "description": "",
+    "python_module": "comfy_extras.nodes_hunyuan3d",
+    "category": "latent/3d",
+    "input": {
+      "required": {
+        "num_chunks": [
+          "INT",
+          {
+            "tooltip": null,
+            "default": 8000,
+            "max": 500000,
+            "min": 1000
+          }
+        ],
+        "octree_resolution": [
+          "INT",
+          {
+            "tooltip": null,
+            "default": 256,
+            "max": 512,
+            "min": 16
+          }
+        ],
+        "samples": [
+          "LATENT"
+        ],
+        "vae": [
+          "VAE"
+        ]
+      },
+      "optional": null
+    },
+    "input_order": {
+      "required": [
+        "samples",
+        "vae",
+        "num_chunks",
+        "octree_resolution"
+      ],
+      "optional": null
+    },
+    "output": [
+      "VOXEL"
+    ],
+    "output_is_list": [
+      false
+    ],
+    "output_name": [
+      "VOXEL"
     ],
     "output_node": false,
     "output_tooltips": []
@@ -16409,6 +18923,354 @@
     ],
     "output_name": [
       "MODEL"
+    ],
+    "output_node": false,
+    "output_tooltips": []
+  },
+  {
+    "name": "VoxelToMeshBasic",
+    "display_name": "VoxelToMeshBasic",
+    "description": "",
+    "python_module": "comfy_extras.nodes_hunyuan3d",
+    "category": "3d",
+    "input": {
+      "required": {
+        "threshold": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 0.6,
+            "max": 1.0,
+            "min": -1.0,
+            "step": 0.01
+          }
+        ],
+        "voxel": [
+          "VOXEL"
+        ]
+      },
+      "optional": null
+    },
+    "input_order": {
+      "required": [
+        "voxel",
+        "threshold"
+      ],
+      "optional": null
+    },
+    "output": [
+      "MESH"
+    ],
+    "output_is_list": [
+      false
+    ],
+    "output_name": [
+      "MESH"
+    ],
+    "output_node": false,
+    "output_tooltips": []
+  },
+  {
+    "name": "WanFunControlToVideo",
+    "display_name": "WanFunControlToVideo",
+    "description": "",
+    "python_module": "comfy_extras.nodes_wan",
+    "category": "conditioning/video_models",
+    "input": {
+      "required": {
+        "batch_size": [
+          "INT",
+          {
+            "tooltip": null,
+            "default": 1,
+            "max": 4096,
+            "min": 1
+          }
+        ],
+        "height": [
+          "INT",
+          {
+            "tooltip": null,
+            "default": 480,
+            "max": 16384,
+            "min": 16,
+            "step": 16
+          }
+        ],
+        "length": [
+          "INT",
+          {
+            "tooltip": null,
+            "default": 81,
+            "max": 16384,
+            "min": 1,
+            "step": 4
+          }
+        ],
+        "negative": [
+          "CONDITIONING"
+        ],
+        "positive": [
+          "CONDITIONING"
+        ],
+        "vae": [
+          "VAE"
+        ],
+        "width": [
+          "INT",
+          {
+            "tooltip": null,
+            "default": 832,
+            "max": 16384,
+            "min": 16,
+            "step": 16
+          }
+        ]
+      },
+      "optional": {
+        "clip_vision_output": [
+          "CLIP_VISION_OUTPUT"
+        ],
+        "control_video": [
+          "IMAGE"
+        ],
+        "start_image": [
+          "IMAGE"
+        ]
+      }
+    },
+    "input_order": {
+      "required": [
+        "positive",
+        "negative",
+        "vae",
+        "width",
+        "height",
+        "length",
+        "batch_size"
+      ],
+      "optional": [
+        "clip_vision_output",
+        "start_image",
+        "control_video"
+      ]
+    },
+    "output": [
+      "CONDITIONING",
+      "CONDITIONING",
+      "LATENT"
+    ],
+    "output_is_list": [
+      false,
+      false,
+      false
+    ],
+    "output_name": [
+      "positive",
+      "negative",
+      "latent"
+    ],
+    "output_node": false,
+    "output_tooltips": []
+  },
+  {
+    "name": "WanFunInpaintToVideo",
+    "display_name": "WanFunInpaintToVideo",
+    "description": "",
+    "python_module": "comfy_extras.nodes_wan",
+    "category": "conditioning/video_models",
+    "input": {
+      "required": {
+        "batch_size": [
+          "INT",
+          {
+            "tooltip": null,
+            "default": 1,
+            "max": 4096,
+            "min": 1
+          }
+        ],
+        "height": [
+          "INT",
+          {
+            "tooltip": null,
+            "default": 480,
+            "max": 16384,
+            "min": 16,
+            "step": 16
+          }
+        ],
+        "length": [
+          "INT",
+          {
+            "tooltip": null,
+            "default": 81,
+            "max": 16384,
+            "min": 1,
+            "step": 4
+          }
+        ],
+        "negative": [
+          "CONDITIONING"
+        ],
+        "positive": [
+          "CONDITIONING"
+        ],
+        "vae": [
+          "VAE"
+        ],
+        "width": [
+          "INT",
+          {
+            "tooltip": null,
+            "default": 832,
+            "max": 16384,
+            "min": 16,
+            "step": 16
+          }
+        ]
+      },
+      "optional": {
+        "clip_vision_output": [
+          "CLIP_VISION_OUTPUT"
+        ],
+        "end_image": [
+          "IMAGE"
+        ],
+        "start_image": [
+          "IMAGE"
+        ]
+      }
+    },
+    "input_order": {
+      "required": [
+        "positive",
+        "negative",
+        "vae",
+        "width",
+        "height",
+        "length",
+        "batch_size"
+      ],
+      "optional": [
+        "clip_vision_output",
+        "start_image",
+        "end_image"
+      ]
+    },
+    "output": [
+      "CONDITIONING",
+      "CONDITIONING",
+      "LATENT"
+    ],
+    "output_is_list": [
+      false,
+      false,
+      false
+    ],
+    "output_name": [
+      "positive",
+      "negative",
+      "latent"
+    ],
+    "output_node": false,
+    "output_tooltips": []
+  },
+  {
+    "name": "WanImageToVideo",
+    "display_name": "WanImageToVideo",
+    "description": "",
+    "python_module": "comfy_extras.nodes_wan",
+    "category": "conditioning/video_models",
+    "input": {
+      "required": {
+        "batch_size": [
+          "INT",
+          {
+            "tooltip": null,
+            "default": 1,
+            "max": 4096,
+            "min": 1
+          }
+        ],
+        "height": [
+          "INT",
+          {
+            "tooltip": null,
+            "default": 480,
+            "max": 16384,
+            "min": 16,
+            "step": 16
+          }
+        ],
+        "length": [
+          "INT",
+          {
+            "tooltip": null,
+            "default": 81,
+            "max": 16384,
+            "min": 1,
+            "step": 4
+          }
+        ],
+        "negative": [
+          "CONDITIONING"
+        ],
+        "positive": [
+          "CONDITIONING"
+        ],
+        "vae": [
+          "VAE"
+        ],
+        "width": [
+          "INT",
+          {
+            "tooltip": null,
+            "default": 832,
+            "max": 16384,
+            "min": 16,
+            "step": 16
+          }
+        ]
+      },
+      "optional": {
+        "clip_vision_output": [
+          "CLIP_VISION_OUTPUT"
+        ],
+        "start_image": [
+          "IMAGE"
+        ]
+      }
+    },
+    "input_order": {
+      "required": [
+        "positive",
+        "negative",
+        "vae",
+        "width",
+        "height",
+        "length",
+        "batch_size"
+      ],
+      "optional": [
+        "clip_vision_output",
+        "start_image"
+      ]
+    },
+    "output": [
+      "CONDITIONING",
+      "CONDITIONING",
+      "LATENT"
+    ],
+    "output_is_list": [
+      false,
+      false,
+      false
+    ],
+    "output_name": [
+      "positive",
+      "negative",
+      "latent"
     ],
     "output_node": false,
     "output_tooltips": []

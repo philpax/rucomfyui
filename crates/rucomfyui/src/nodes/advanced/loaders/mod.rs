@@ -19,7 +19,7 @@ pub mod out {
         pub vae: crate::nodes::types::VaeOut,
     }
 }
-#[doc = "**Load CLIP**: [Recipes]\n\nstable_diffusion: clip-l\nstable_cascade: clip-g\nsd3: t5 / clip-g / clip-l\nstable_audio: t5\nmochi: t5\ncosmos: old t5 xxl"]
+#[doc = "**Load CLIP**: [Recipes]\n\nstable_diffusion: clip-l\nstable_cascade: clip-g\nsd3: t5 xxl/ clip-g / clip-l\nstable_audio: t5 base\nmochi: t5 xxl\ncosmos: old t5 xxl\nlumina2: gemma 2 2B\nwan: umt5 xxl"]
 #[derive(Clone)]
 pub struct ClipLoader<
     ClipName: crate::nodes::types::String,
@@ -63,7 +63,7 @@ impl<
     }
     const NAME: &'static str = "CLIPLoader";
     const DISPLAY_NAME: &'static str = "Load CLIP";
-    const DESCRIPTION: &'static str = "[Recipes]\n\nstable_diffusion: clip-l\nstable_cascade: clip-g\nsd3: t5 / clip-g / clip-l\nstable_audio: t5\nmochi: t5\ncosmos: old t5 xxl";
+    const DESCRIPTION: &'static str = "[Recipes]\n\nstable_diffusion: clip-l\nstable_cascade: clip-g\nsd3: t5 xxl/ clip-g / clip-l\nstable_audio: t5 base\nmochi: t5 xxl\ncosmos: old t5 xxl\nlumina2: gemma 2 2B\nwan: umt5 xxl";
     const CATEGORY: &'static str = "advanced/loaders";
 }
 ///**Load Checkpoint With Config (DEPRECATED)**: No description.

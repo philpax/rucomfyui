@@ -5,6 +5,33 @@ use crate::{
     workflow::{WorkflowNodeId, WorkflowInput},
     nodes::types::Out,
 };
+///**CFGZeroStar**: No description.
+#[derive(Clone)]
+pub struct CfgZeroStar<Model: crate::nodes::types::Model> {
+    ///No documentation.
+    pub model: Model,
+}
+impl<Model: crate::nodes::types::Model> CfgZeroStar<Model> {
+    /// Create a new node.
+    pub fn new(model: Model) -> Self {
+        Self { model }
+    }
+}
+impl<Model: crate::nodes::types::Model> crate::nodes::TypedNode for CfgZeroStar<Model> {
+    type Output = crate::nodes::types::ModelOut;
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
+        Self::Output::from_dynamic(node_id, 0)
+    }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("model".to_string(), self.model.clone().into());
+        output
+    }
+    const NAME: &'static str = "CFGZeroStar";
+    const DISPLAY_NAME: &'static str = "CFGZeroStar";
+    const DESCRIPTION: &'static str = "";
+    const CATEGORY: &'static str = "advanced/guidance";
+}
 ///**SkipLayerGuidanceDiT**: Generic version of SkipLayerGuidance node that can be used on every DiT model.
 #[derive(Clone)]
 pub struct SkipLayerGuidanceDiT<

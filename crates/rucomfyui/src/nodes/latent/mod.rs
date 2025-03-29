@@ -5,6 +5,7 @@ use crate::{
     workflow::{WorkflowNodeId, WorkflowInput},
     nodes::types::Out,
 };
+pub mod n_3_d;
 pub mod advanced;
 pub mod audio;
 pub mod batch;

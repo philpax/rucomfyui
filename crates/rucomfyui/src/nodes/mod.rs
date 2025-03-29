@@ -9,6 +9,7 @@ pub mod loaders;
 pub mod mask;
 pub mod model_patches;
 pub mod sampling;
+pub mod utils;
 pub mod all;
 pub mod types;
 use std::collections::HashMap;

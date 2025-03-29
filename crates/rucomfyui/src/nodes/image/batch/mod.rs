@@ -5,6 +5,19 @@ use crate::{
     workflow::{WorkflowNodeId, WorkflowInput},
     nodes::types::Out,
 };
+/// Output types for nodes.
+pub mod out {
+    ///Output for [`ImageRgbToYuv`](super::ImageRgbToYuv).
+    #[derive(Clone)]
+    pub struct ImageRgbToYuvOutput {
+        ///No documentation.
+        pub y: crate::nodes::types::ImageOut,
+        ///No documentation.
+        pub u: crate::nodes::types::ImageOut,
+        ///No documentation.
+        pub v: crate::nodes::types::ImageOut,
+    }
+}
 ///**ImageFromBatch**: No description.
 #[derive(Clone)]
 pub struct ImageFromBatch<
@@ -59,6 +72,83 @@ impl<
     }
     const NAME: &'static str = "ImageFromBatch";
     const DISPLAY_NAME: &'static str = "ImageFromBatch";
+    const DESCRIPTION: &'static str = "";
+    const CATEGORY: &'static str = "image/batch";
+}
+///**ImageRGBToYUV**: No description.
+#[derive(Clone)]
+pub struct ImageRgbToYuv<Image: crate::nodes::types::Image> {
+    ///No documentation.
+    pub image: Image,
+}
+impl<Image: crate::nodes::types::Image> ImageRgbToYuv<Image> {
+    /// Create a new node.
+    pub fn new(image: Image) -> Self {
+        Self { image }
+    }
+}
+impl<Image: crate::nodes::types::Image> crate::nodes::TypedNode
+for ImageRgbToYuv<Image> {
+    type Output = out::ImageRgbToYuvOutput;
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
+        Self::Output {
+            y: crate::nodes::types::ImageOut::from_dynamic(node_id, 0u32),
+            u: crate::nodes::types::ImageOut::from_dynamic(node_id, 1u32),
+            v: crate::nodes::types::ImageOut::from_dynamic(node_id, 2u32),
+        }
+    }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("image".to_string(), self.image.clone().into());
+        output
+    }
+    const NAME: &'static str = "ImageRGBToYUV";
+    const DISPLAY_NAME: &'static str = "ImageRGBToYUV";
+    const DESCRIPTION: &'static str = "";
+    const CATEGORY: &'static str = "image/batch";
+}
+///**ImageYUVToRGB**: No description.
+#[derive(Clone)]
+pub struct ImageYuvToRgb<
+    Y: crate::nodes::types::Image,
+    U: crate::nodes::types::Image,
+    V: crate::nodes::types::Image,
+> {
+    ///No documentation.
+    pub y: Y,
+    ///No documentation.
+    pub u: U,
+    ///No documentation.
+    pub v: V,
+}
+impl<
+    Y: crate::nodes::types::Image,
+    U: crate::nodes::types::Image,
+    V: crate::nodes::types::Image,
+> ImageYuvToRgb<Y, U, V> {
+    /// Create a new node.
+    pub fn new(y: Y, u: U, v: V) -> Self {
+        Self { y, u, v }
+    }
+}
+impl<
+    Y: crate::nodes::types::Image,
+    U: crate::nodes::types::Image,
+    V: crate::nodes::types::Image,
+> crate::nodes::TypedNode for ImageYuvToRgb<Y, U, V> {
+    type Output = crate::nodes::types::ImageOut;
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
+        Self::Output::from_dynamic(node_id, 0)
+    }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("Y".to_string(), self.y.clone().into());
+        output.insert("U".to_string(), self.u.clone().into());
+        output.insert("V".to_string(), self.v.clone().into());
+        output
+    }
+    const NAME: &'static str = "ImageYUVToRGB";
+    const DISPLAY_NAME: &'static str = "ImageYUVToRGB";
     const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "image/batch";
 }

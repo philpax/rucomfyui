@@ -523,6 +523,69 @@ impl<
     const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "advanced/model";
 }
+///**RenormCFG**: No description.
+#[derive(Clone)]
+pub struct RenormCfg<
+    Model: crate::nodes::types::Model,
+    CfgTrunc: crate::nodes::types::Float,
+    RenormCfg: crate::nodes::types::Float,
+> {
+    ///No documentation.
+    pub model: Model,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 100
+  - Max: 100
+  - Min: 0
+  - Step: 0.01
+*/
+    pub cfg_trunc: CfgTrunc,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 100
+  - Min: 0
+  - Step: 0.01
+*/
+    pub renorm_cfg: RenormCfg,
+}
+impl<
+    Model: crate::nodes::types::Model,
+    CfgTrunc: crate::nodes::types::Float,
+    RenormCfg: crate::nodes::types::Float,
+> RenormCfg<Model, CfgTrunc, RenormCfg> {
+    /// Create a new node.
+    pub fn new(model: Model, cfg_trunc: CfgTrunc, renorm_cfg: RenormCfg) -> Self {
+        Self {
+            model,
+            cfg_trunc,
+            renorm_cfg,
+        }
+    }
+}
+impl<
+    Model: crate::nodes::types::Model,
+    CfgTrunc: crate::nodes::types::Float,
+    RenormCfg: crate::nodes::types::Float,
+> crate::nodes::TypedNode for RenormCfg<Model, CfgTrunc, RenormCfg> {
+    type Output = crate::nodes::types::ModelOut;
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
+        Self::Output::from_dynamic(node_id, 0)
+    }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("model".to_string(), self.model.clone().into());
+        output.insert("cfg_trunc".to_string(), self.cfg_trunc.clone().into());
+        output.insert("renorm_cfg".to_string(), self.renorm_cfg.clone().into());
+        output
+    }
+    const NAME: &'static str = "RenormCFG";
+    const DISPLAY_NAME: &'static str = "RenormCFG";
+    const DESCRIPTION: &'static str = "";
+    const CATEGORY: &'static str = "advanced/model";
+}
 ///**RescaleCFG**: No description.
 #[derive(Clone)]
 pub struct RescaleCfg<

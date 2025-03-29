@@ -563,3 +563,84 @@ for ConditioningZeroOut<Conditioning> {
     const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "advanced/conditioning";
 }
+///**TextEncodeHunyuanVideo_ImageToVideo**: No description.
+#[derive(Clone)]
+pub struct TextEncodeHunyuanVideoImageToVideo<
+    Clip: crate::nodes::types::Clip,
+    ClipVisionOutput: crate::nodes::types::ClipVisionOutput,
+    Prompt: crate::nodes::types::String,
+    ImageInterleave: crate::nodes::types::Int,
+> {
+    ///No documentation.
+    pub clip: Clip,
+    ///No documentation.
+    pub clip_vision_output: ClipVisionOutput,
+    /**No documentation.
+
+**Metadata**:
+  - Dynamic prompts: true
+  - Multiline: true
+*/
+    pub prompt: Prompt,
+    /**How much the image influences things vs the text prompt. Higher number means more influence from the text prompt.
+
+**Metadata**:
+  - Default: 2
+  - Max: 512
+  - Min: 1
+*/
+    pub image_interleave: ImageInterleave,
+}
+impl<
+    Clip: crate::nodes::types::Clip,
+    ClipVisionOutput: crate::nodes::types::ClipVisionOutput,
+    Prompt: crate::nodes::types::String,
+    ImageInterleave: crate::nodes::types::Int,
+> TextEncodeHunyuanVideoImageToVideo<Clip, ClipVisionOutput, Prompt, ImageInterleave> {
+    /// Create a new node.
+    pub fn new(
+        clip: Clip,
+        clip_vision_output: ClipVisionOutput,
+        prompt: Prompt,
+        image_interleave: ImageInterleave,
+    ) -> Self {
+        Self {
+            clip,
+            clip_vision_output,
+            prompt,
+            image_interleave,
+        }
+    }
+}
+impl<
+    Clip: crate::nodes::types::Clip,
+    ClipVisionOutput: crate::nodes::types::ClipVisionOutput,
+    Prompt: crate::nodes::types::String,
+    ImageInterleave: crate::nodes::types::Int,
+> crate::nodes::TypedNode
+for TextEncodeHunyuanVideoImageToVideo<Clip, ClipVisionOutput, Prompt, ImageInterleave> {
+    type Output = crate::nodes::types::ConditioningOut;
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
+        Self::Output::from_dynamic(node_id, 0)
+    }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("clip".to_string(), self.clip.clone().into());
+        output
+            .insert(
+                "clip_vision_output".to_string(),
+                self.clip_vision_output.clone().into(),
+            );
+        output.insert("prompt".to_string(), self.prompt.clone().into());
+        output
+            .insert(
+                "image_interleave".to_string(),
+                self.image_interleave.clone().into(),
+            );
+        output
+    }
+    const NAME: &'static str = "TextEncodeHunyuanVideo_ImageToVideo";
+    const DISPLAY_NAME: &'static str = "TextEncodeHunyuanVideo_ImageToVideo";
+    const DESCRIPTION: &'static str = "";
+    const CATEGORY: &'static str = "advanced/conditioning";
+}

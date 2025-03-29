@@ -896,6 +896,1454 @@ for ModelMergeAuraflow<
     const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "advanced/model_merging/model_specific";
 }
+///**ModelMergeCosmos14B**: No description.
+#[derive(Clone)]
+pub struct ModelMergeCosmos14B<
+    Model1: crate::nodes::types::Model,
+    Model2: crate::nodes::types::Model,
+    PosEmbedder: crate::nodes::types::Float,
+    ExtraPosEmbedder: crate::nodes::types::Float,
+    XEmbedder: crate::nodes::types::Float,
+    TEmbedder: crate::nodes::types::Float,
+    AfflineNorm: crate::nodes::types::Float,
+    BlocksBlock0: crate::nodes::types::Float,
+    BlocksBlock1: crate::nodes::types::Float,
+    BlocksBlock2: crate::nodes::types::Float,
+    BlocksBlock3: crate::nodes::types::Float,
+    BlocksBlock4: crate::nodes::types::Float,
+    BlocksBlock5: crate::nodes::types::Float,
+    BlocksBlock6: crate::nodes::types::Float,
+    BlocksBlock7: crate::nodes::types::Float,
+    BlocksBlock8: crate::nodes::types::Float,
+    BlocksBlock9: crate::nodes::types::Float,
+    BlocksBlock10: crate::nodes::types::Float,
+    BlocksBlock11: crate::nodes::types::Float,
+    BlocksBlock12: crate::nodes::types::Float,
+    BlocksBlock13: crate::nodes::types::Float,
+    BlocksBlock14: crate::nodes::types::Float,
+    BlocksBlock15: crate::nodes::types::Float,
+    BlocksBlock16: crate::nodes::types::Float,
+    BlocksBlock17: crate::nodes::types::Float,
+    BlocksBlock18: crate::nodes::types::Float,
+    BlocksBlock19: crate::nodes::types::Float,
+    BlocksBlock20: crate::nodes::types::Float,
+    BlocksBlock21: crate::nodes::types::Float,
+    BlocksBlock22: crate::nodes::types::Float,
+    BlocksBlock23: crate::nodes::types::Float,
+    BlocksBlock24: crate::nodes::types::Float,
+    BlocksBlock25: crate::nodes::types::Float,
+    BlocksBlock26: crate::nodes::types::Float,
+    BlocksBlock27: crate::nodes::types::Float,
+    BlocksBlock28: crate::nodes::types::Float,
+    BlocksBlock29: crate::nodes::types::Float,
+    BlocksBlock30: crate::nodes::types::Float,
+    BlocksBlock31: crate::nodes::types::Float,
+    BlocksBlock32: crate::nodes::types::Float,
+    BlocksBlock33: crate::nodes::types::Float,
+    BlocksBlock34: crate::nodes::types::Float,
+    BlocksBlock35: crate::nodes::types::Float,
+    FinalLayer: crate::nodes::types::Float,
+> {
+    ///No documentation.
+    pub model_1: Model1,
+    ///No documentation.
+    pub model_2: Model2,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub pos_embedder: PosEmbedder,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub extra_pos_embedder: ExtraPosEmbedder,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub x_embedder: XEmbedder,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub t_embedder: TEmbedder,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub affline_norm: AfflineNorm,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub blocks_block_0: BlocksBlock0,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub blocks_block_1: BlocksBlock1,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub blocks_block_2: BlocksBlock2,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub blocks_block_3: BlocksBlock3,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub blocks_block_4: BlocksBlock4,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub blocks_block_5: BlocksBlock5,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub blocks_block_6: BlocksBlock6,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub blocks_block_7: BlocksBlock7,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub blocks_block_8: BlocksBlock8,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub blocks_block_9: BlocksBlock9,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub blocks_block_10: BlocksBlock10,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub blocks_block_11: BlocksBlock11,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub blocks_block_12: BlocksBlock12,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub blocks_block_13: BlocksBlock13,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub blocks_block_14: BlocksBlock14,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub blocks_block_15: BlocksBlock15,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub blocks_block_16: BlocksBlock16,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub blocks_block_17: BlocksBlock17,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub blocks_block_18: BlocksBlock18,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub blocks_block_19: BlocksBlock19,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub blocks_block_20: BlocksBlock20,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub blocks_block_21: BlocksBlock21,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub blocks_block_22: BlocksBlock22,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub blocks_block_23: BlocksBlock23,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub blocks_block_24: BlocksBlock24,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub blocks_block_25: BlocksBlock25,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub blocks_block_26: BlocksBlock26,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub blocks_block_27: BlocksBlock27,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub blocks_block_28: BlocksBlock28,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub blocks_block_29: BlocksBlock29,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub blocks_block_30: BlocksBlock30,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub blocks_block_31: BlocksBlock31,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub blocks_block_32: BlocksBlock32,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub blocks_block_33: BlocksBlock33,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub blocks_block_34: BlocksBlock34,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub blocks_block_35: BlocksBlock35,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub final_layer: FinalLayer,
+}
+impl<
+    Model1: crate::nodes::types::Model,
+    Model2: crate::nodes::types::Model,
+    PosEmbedder: crate::nodes::types::Float,
+    ExtraPosEmbedder: crate::nodes::types::Float,
+    XEmbedder: crate::nodes::types::Float,
+    TEmbedder: crate::nodes::types::Float,
+    AfflineNorm: crate::nodes::types::Float,
+    BlocksBlock0: crate::nodes::types::Float,
+    BlocksBlock1: crate::nodes::types::Float,
+    BlocksBlock2: crate::nodes::types::Float,
+    BlocksBlock3: crate::nodes::types::Float,
+    BlocksBlock4: crate::nodes::types::Float,
+    BlocksBlock5: crate::nodes::types::Float,
+    BlocksBlock6: crate::nodes::types::Float,
+    BlocksBlock7: crate::nodes::types::Float,
+    BlocksBlock8: crate::nodes::types::Float,
+    BlocksBlock9: crate::nodes::types::Float,
+    BlocksBlock10: crate::nodes::types::Float,
+    BlocksBlock11: crate::nodes::types::Float,
+    BlocksBlock12: crate::nodes::types::Float,
+    BlocksBlock13: crate::nodes::types::Float,
+    BlocksBlock14: crate::nodes::types::Float,
+    BlocksBlock15: crate::nodes::types::Float,
+    BlocksBlock16: crate::nodes::types::Float,
+    BlocksBlock17: crate::nodes::types::Float,
+    BlocksBlock18: crate::nodes::types::Float,
+    BlocksBlock19: crate::nodes::types::Float,
+    BlocksBlock20: crate::nodes::types::Float,
+    BlocksBlock21: crate::nodes::types::Float,
+    BlocksBlock22: crate::nodes::types::Float,
+    BlocksBlock23: crate::nodes::types::Float,
+    BlocksBlock24: crate::nodes::types::Float,
+    BlocksBlock25: crate::nodes::types::Float,
+    BlocksBlock26: crate::nodes::types::Float,
+    BlocksBlock27: crate::nodes::types::Float,
+    BlocksBlock28: crate::nodes::types::Float,
+    BlocksBlock29: crate::nodes::types::Float,
+    BlocksBlock30: crate::nodes::types::Float,
+    BlocksBlock31: crate::nodes::types::Float,
+    BlocksBlock32: crate::nodes::types::Float,
+    BlocksBlock33: crate::nodes::types::Float,
+    BlocksBlock34: crate::nodes::types::Float,
+    BlocksBlock35: crate::nodes::types::Float,
+    FinalLayer: crate::nodes::types::Float,
+> ModelMergeCosmos14B<
+    Model1,
+    Model2,
+    PosEmbedder,
+    ExtraPosEmbedder,
+    XEmbedder,
+    TEmbedder,
+    AfflineNorm,
+    BlocksBlock0,
+    BlocksBlock1,
+    BlocksBlock2,
+    BlocksBlock3,
+    BlocksBlock4,
+    BlocksBlock5,
+    BlocksBlock6,
+    BlocksBlock7,
+    BlocksBlock8,
+    BlocksBlock9,
+    BlocksBlock10,
+    BlocksBlock11,
+    BlocksBlock12,
+    BlocksBlock13,
+    BlocksBlock14,
+    BlocksBlock15,
+    BlocksBlock16,
+    BlocksBlock17,
+    BlocksBlock18,
+    BlocksBlock19,
+    BlocksBlock20,
+    BlocksBlock21,
+    BlocksBlock22,
+    BlocksBlock23,
+    BlocksBlock24,
+    BlocksBlock25,
+    BlocksBlock26,
+    BlocksBlock27,
+    BlocksBlock28,
+    BlocksBlock29,
+    BlocksBlock30,
+    BlocksBlock31,
+    BlocksBlock32,
+    BlocksBlock33,
+    BlocksBlock34,
+    BlocksBlock35,
+    FinalLayer,
+> {
+    /// Create a new node.
+    pub fn new(
+        model_1: Model1,
+        model_2: Model2,
+        pos_embedder: PosEmbedder,
+        extra_pos_embedder: ExtraPosEmbedder,
+        x_embedder: XEmbedder,
+        t_embedder: TEmbedder,
+        affline_norm: AfflineNorm,
+        blocks_block_0: BlocksBlock0,
+        blocks_block_1: BlocksBlock1,
+        blocks_block_2: BlocksBlock2,
+        blocks_block_3: BlocksBlock3,
+        blocks_block_4: BlocksBlock4,
+        blocks_block_5: BlocksBlock5,
+        blocks_block_6: BlocksBlock6,
+        blocks_block_7: BlocksBlock7,
+        blocks_block_8: BlocksBlock8,
+        blocks_block_9: BlocksBlock9,
+        blocks_block_10: BlocksBlock10,
+        blocks_block_11: BlocksBlock11,
+        blocks_block_12: BlocksBlock12,
+        blocks_block_13: BlocksBlock13,
+        blocks_block_14: BlocksBlock14,
+        blocks_block_15: BlocksBlock15,
+        blocks_block_16: BlocksBlock16,
+        blocks_block_17: BlocksBlock17,
+        blocks_block_18: BlocksBlock18,
+        blocks_block_19: BlocksBlock19,
+        blocks_block_20: BlocksBlock20,
+        blocks_block_21: BlocksBlock21,
+        blocks_block_22: BlocksBlock22,
+        blocks_block_23: BlocksBlock23,
+        blocks_block_24: BlocksBlock24,
+        blocks_block_25: BlocksBlock25,
+        blocks_block_26: BlocksBlock26,
+        blocks_block_27: BlocksBlock27,
+        blocks_block_28: BlocksBlock28,
+        blocks_block_29: BlocksBlock29,
+        blocks_block_30: BlocksBlock30,
+        blocks_block_31: BlocksBlock31,
+        blocks_block_32: BlocksBlock32,
+        blocks_block_33: BlocksBlock33,
+        blocks_block_34: BlocksBlock34,
+        blocks_block_35: BlocksBlock35,
+        final_layer: FinalLayer,
+    ) -> Self {
+        Self {
+            model_1,
+            model_2,
+            pos_embedder,
+            extra_pos_embedder,
+            x_embedder,
+            t_embedder,
+            affline_norm,
+            blocks_block_0,
+            blocks_block_1,
+            blocks_block_2,
+            blocks_block_3,
+            blocks_block_4,
+            blocks_block_5,
+            blocks_block_6,
+            blocks_block_7,
+            blocks_block_8,
+            blocks_block_9,
+            blocks_block_10,
+            blocks_block_11,
+            blocks_block_12,
+            blocks_block_13,
+            blocks_block_14,
+            blocks_block_15,
+            blocks_block_16,
+            blocks_block_17,
+            blocks_block_18,
+            blocks_block_19,
+            blocks_block_20,
+            blocks_block_21,
+            blocks_block_22,
+            blocks_block_23,
+            blocks_block_24,
+            blocks_block_25,
+            blocks_block_26,
+            blocks_block_27,
+            blocks_block_28,
+            blocks_block_29,
+            blocks_block_30,
+            blocks_block_31,
+            blocks_block_32,
+            blocks_block_33,
+            blocks_block_34,
+            blocks_block_35,
+            final_layer,
+        }
+    }
+}
+impl<
+    Model1: crate::nodes::types::Model,
+    Model2: crate::nodes::types::Model,
+    PosEmbedder: crate::nodes::types::Float,
+    ExtraPosEmbedder: crate::nodes::types::Float,
+    XEmbedder: crate::nodes::types::Float,
+    TEmbedder: crate::nodes::types::Float,
+    AfflineNorm: crate::nodes::types::Float,
+    BlocksBlock0: crate::nodes::types::Float,
+    BlocksBlock1: crate::nodes::types::Float,
+    BlocksBlock2: crate::nodes::types::Float,
+    BlocksBlock3: crate::nodes::types::Float,
+    BlocksBlock4: crate::nodes::types::Float,
+    BlocksBlock5: crate::nodes::types::Float,
+    BlocksBlock6: crate::nodes::types::Float,
+    BlocksBlock7: crate::nodes::types::Float,
+    BlocksBlock8: crate::nodes::types::Float,
+    BlocksBlock9: crate::nodes::types::Float,
+    BlocksBlock10: crate::nodes::types::Float,
+    BlocksBlock11: crate::nodes::types::Float,
+    BlocksBlock12: crate::nodes::types::Float,
+    BlocksBlock13: crate::nodes::types::Float,
+    BlocksBlock14: crate::nodes::types::Float,
+    BlocksBlock15: crate::nodes::types::Float,
+    BlocksBlock16: crate::nodes::types::Float,
+    BlocksBlock17: crate::nodes::types::Float,
+    BlocksBlock18: crate::nodes::types::Float,
+    BlocksBlock19: crate::nodes::types::Float,
+    BlocksBlock20: crate::nodes::types::Float,
+    BlocksBlock21: crate::nodes::types::Float,
+    BlocksBlock22: crate::nodes::types::Float,
+    BlocksBlock23: crate::nodes::types::Float,
+    BlocksBlock24: crate::nodes::types::Float,
+    BlocksBlock25: crate::nodes::types::Float,
+    BlocksBlock26: crate::nodes::types::Float,
+    BlocksBlock27: crate::nodes::types::Float,
+    BlocksBlock28: crate::nodes::types::Float,
+    BlocksBlock29: crate::nodes::types::Float,
+    BlocksBlock30: crate::nodes::types::Float,
+    BlocksBlock31: crate::nodes::types::Float,
+    BlocksBlock32: crate::nodes::types::Float,
+    BlocksBlock33: crate::nodes::types::Float,
+    BlocksBlock34: crate::nodes::types::Float,
+    BlocksBlock35: crate::nodes::types::Float,
+    FinalLayer: crate::nodes::types::Float,
+> crate::nodes::TypedNode
+for ModelMergeCosmos14B<
+    Model1,
+    Model2,
+    PosEmbedder,
+    ExtraPosEmbedder,
+    XEmbedder,
+    TEmbedder,
+    AfflineNorm,
+    BlocksBlock0,
+    BlocksBlock1,
+    BlocksBlock2,
+    BlocksBlock3,
+    BlocksBlock4,
+    BlocksBlock5,
+    BlocksBlock6,
+    BlocksBlock7,
+    BlocksBlock8,
+    BlocksBlock9,
+    BlocksBlock10,
+    BlocksBlock11,
+    BlocksBlock12,
+    BlocksBlock13,
+    BlocksBlock14,
+    BlocksBlock15,
+    BlocksBlock16,
+    BlocksBlock17,
+    BlocksBlock18,
+    BlocksBlock19,
+    BlocksBlock20,
+    BlocksBlock21,
+    BlocksBlock22,
+    BlocksBlock23,
+    BlocksBlock24,
+    BlocksBlock25,
+    BlocksBlock26,
+    BlocksBlock27,
+    BlocksBlock28,
+    BlocksBlock29,
+    BlocksBlock30,
+    BlocksBlock31,
+    BlocksBlock32,
+    BlocksBlock33,
+    BlocksBlock34,
+    BlocksBlock35,
+    FinalLayer,
+> {
+    type Output = crate::nodes::types::ModelOut;
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
+        Self::Output::from_dynamic(node_id, 0)
+    }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("model1".to_string(), self.model_1.clone().into());
+        output.insert("model2".to_string(), self.model_2.clone().into());
+        output.insert("pos_embedder.".to_string(), self.pos_embedder.clone().into());
+        output
+            .insert(
+                "extra_pos_embedder.".to_string(),
+                self.extra_pos_embedder.clone().into(),
+            );
+        output.insert("x_embedder.".to_string(), self.x_embedder.clone().into());
+        output.insert("t_embedder.".to_string(), self.t_embedder.clone().into());
+        output.insert("affline_norm.".to_string(), self.affline_norm.clone().into());
+        output.insert("blocks.block0.".to_string(), self.blocks_block_0.clone().into());
+        output.insert("blocks.block1.".to_string(), self.blocks_block_1.clone().into());
+        output.insert("blocks.block2.".to_string(), self.blocks_block_2.clone().into());
+        output.insert("blocks.block3.".to_string(), self.blocks_block_3.clone().into());
+        output.insert("blocks.block4.".to_string(), self.blocks_block_4.clone().into());
+        output.insert("blocks.block5.".to_string(), self.blocks_block_5.clone().into());
+        output.insert("blocks.block6.".to_string(), self.blocks_block_6.clone().into());
+        output.insert("blocks.block7.".to_string(), self.blocks_block_7.clone().into());
+        output.insert("blocks.block8.".to_string(), self.blocks_block_8.clone().into());
+        output.insert("blocks.block9.".to_string(), self.blocks_block_9.clone().into());
+        output
+            .insert("blocks.block10.".to_string(), self.blocks_block_10.clone().into());
+        output
+            .insert("blocks.block11.".to_string(), self.blocks_block_11.clone().into());
+        output
+            .insert("blocks.block12.".to_string(), self.blocks_block_12.clone().into());
+        output
+            .insert("blocks.block13.".to_string(), self.blocks_block_13.clone().into());
+        output
+            .insert("blocks.block14.".to_string(), self.blocks_block_14.clone().into());
+        output
+            .insert("blocks.block15.".to_string(), self.blocks_block_15.clone().into());
+        output
+            .insert("blocks.block16.".to_string(), self.blocks_block_16.clone().into());
+        output
+            .insert("blocks.block17.".to_string(), self.blocks_block_17.clone().into());
+        output
+            .insert("blocks.block18.".to_string(), self.blocks_block_18.clone().into());
+        output
+            .insert("blocks.block19.".to_string(), self.blocks_block_19.clone().into());
+        output
+            .insert("blocks.block20.".to_string(), self.blocks_block_20.clone().into());
+        output
+            .insert("blocks.block21.".to_string(), self.blocks_block_21.clone().into());
+        output
+            .insert("blocks.block22.".to_string(), self.blocks_block_22.clone().into());
+        output
+            .insert("blocks.block23.".to_string(), self.blocks_block_23.clone().into());
+        output
+            .insert("blocks.block24.".to_string(), self.blocks_block_24.clone().into());
+        output
+            .insert("blocks.block25.".to_string(), self.blocks_block_25.clone().into());
+        output
+            .insert("blocks.block26.".to_string(), self.blocks_block_26.clone().into());
+        output
+            .insert("blocks.block27.".to_string(), self.blocks_block_27.clone().into());
+        output
+            .insert("blocks.block28.".to_string(), self.blocks_block_28.clone().into());
+        output
+            .insert("blocks.block29.".to_string(), self.blocks_block_29.clone().into());
+        output
+            .insert("blocks.block30.".to_string(), self.blocks_block_30.clone().into());
+        output
+            .insert("blocks.block31.".to_string(), self.blocks_block_31.clone().into());
+        output
+            .insert("blocks.block32.".to_string(), self.blocks_block_32.clone().into());
+        output
+            .insert("blocks.block33.".to_string(), self.blocks_block_33.clone().into());
+        output
+            .insert("blocks.block34.".to_string(), self.blocks_block_34.clone().into());
+        output
+            .insert("blocks.block35.".to_string(), self.blocks_block_35.clone().into());
+        output.insert("final_layer.".to_string(), self.final_layer.clone().into());
+        output
+    }
+    const NAME: &'static str = "ModelMergeCosmos14B";
+    const DISPLAY_NAME: &'static str = "ModelMergeCosmos14B";
+    const DESCRIPTION: &'static str = "";
+    const CATEGORY: &'static str = "advanced/model_merging/model_specific";
+}
+///**ModelMergeCosmos7B**: No description.
+#[derive(Clone)]
+pub struct ModelMergeCosmos7B<
+    Model1: crate::nodes::types::Model,
+    Model2: crate::nodes::types::Model,
+    PosEmbedder: crate::nodes::types::Float,
+    ExtraPosEmbedder: crate::nodes::types::Float,
+    XEmbedder: crate::nodes::types::Float,
+    TEmbedder: crate::nodes::types::Float,
+    AfflineNorm: crate::nodes::types::Float,
+    BlocksBlock0: crate::nodes::types::Float,
+    BlocksBlock1: crate::nodes::types::Float,
+    BlocksBlock2: crate::nodes::types::Float,
+    BlocksBlock3: crate::nodes::types::Float,
+    BlocksBlock4: crate::nodes::types::Float,
+    BlocksBlock5: crate::nodes::types::Float,
+    BlocksBlock6: crate::nodes::types::Float,
+    BlocksBlock7: crate::nodes::types::Float,
+    BlocksBlock8: crate::nodes::types::Float,
+    BlocksBlock9: crate::nodes::types::Float,
+    BlocksBlock10: crate::nodes::types::Float,
+    BlocksBlock11: crate::nodes::types::Float,
+    BlocksBlock12: crate::nodes::types::Float,
+    BlocksBlock13: crate::nodes::types::Float,
+    BlocksBlock14: crate::nodes::types::Float,
+    BlocksBlock15: crate::nodes::types::Float,
+    BlocksBlock16: crate::nodes::types::Float,
+    BlocksBlock17: crate::nodes::types::Float,
+    BlocksBlock18: crate::nodes::types::Float,
+    BlocksBlock19: crate::nodes::types::Float,
+    BlocksBlock20: crate::nodes::types::Float,
+    BlocksBlock21: crate::nodes::types::Float,
+    BlocksBlock22: crate::nodes::types::Float,
+    BlocksBlock23: crate::nodes::types::Float,
+    BlocksBlock24: crate::nodes::types::Float,
+    BlocksBlock25: crate::nodes::types::Float,
+    BlocksBlock26: crate::nodes::types::Float,
+    BlocksBlock27: crate::nodes::types::Float,
+    FinalLayer: crate::nodes::types::Float,
+> {
+    ///No documentation.
+    pub model_1: Model1,
+    ///No documentation.
+    pub model_2: Model2,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub pos_embedder: PosEmbedder,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub extra_pos_embedder: ExtraPosEmbedder,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub x_embedder: XEmbedder,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub t_embedder: TEmbedder,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub affline_norm: AfflineNorm,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub blocks_block_0: BlocksBlock0,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub blocks_block_1: BlocksBlock1,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub blocks_block_2: BlocksBlock2,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub blocks_block_3: BlocksBlock3,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub blocks_block_4: BlocksBlock4,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub blocks_block_5: BlocksBlock5,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub blocks_block_6: BlocksBlock6,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub blocks_block_7: BlocksBlock7,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub blocks_block_8: BlocksBlock8,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub blocks_block_9: BlocksBlock9,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub blocks_block_10: BlocksBlock10,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub blocks_block_11: BlocksBlock11,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub blocks_block_12: BlocksBlock12,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub blocks_block_13: BlocksBlock13,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub blocks_block_14: BlocksBlock14,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub blocks_block_15: BlocksBlock15,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub blocks_block_16: BlocksBlock16,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub blocks_block_17: BlocksBlock17,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub blocks_block_18: BlocksBlock18,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub blocks_block_19: BlocksBlock19,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub blocks_block_20: BlocksBlock20,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub blocks_block_21: BlocksBlock21,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub blocks_block_22: BlocksBlock22,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub blocks_block_23: BlocksBlock23,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub blocks_block_24: BlocksBlock24,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub blocks_block_25: BlocksBlock25,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub blocks_block_26: BlocksBlock26,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub blocks_block_27: BlocksBlock27,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub final_layer: FinalLayer,
+}
+impl<
+    Model1: crate::nodes::types::Model,
+    Model2: crate::nodes::types::Model,
+    PosEmbedder: crate::nodes::types::Float,
+    ExtraPosEmbedder: crate::nodes::types::Float,
+    XEmbedder: crate::nodes::types::Float,
+    TEmbedder: crate::nodes::types::Float,
+    AfflineNorm: crate::nodes::types::Float,
+    BlocksBlock0: crate::nodes::types::Float,
+    BlocksBlock1: crate::nodes::types::Float,
+    BlocksBlock2: crate::nodes::types::Float,
+    BlocksBlock3: crate::nodes::types::Float,
+    BlocksBlock4: crate::nodes::types::Float,
+    BlocksBlock5: crate::nodes::types::Float,
+    BlocksBlock6: crate::nodes::types::Float,
+    BlocksBlock7: crate::nodes::types::Float,
+    BlocksBlock8: crate::nodes::types::Float,
+    BlocksBlock9: crate::nodes::types::Float,
+    BlocksBlock10: crate::nodes::types::Float,
+    BlocksBlock11: crate::nodes::types::Float,
+    BlocksBlock12: crate::nodes::types::Float,
+    BlocksBlock13: crate::nodes::types::Float,
+    BlocksBlock14: crate::nodes::types::Float,
+    BlocksBlock15: crate::nodes::types::Float,
+    BlocksBlock16: crate::nodes::types::Float,
+    BlocksBlock17: crate::nodes::types::Float,
+    BlocksBlock18: crate::nodes::types::Float,
+    BlocksBlock19: crate::nodes::types::Float,
+    BlocksBlock20: crate::nodes::types::Float,
+    BlocksBlock21: crate::nodes::types::Float,
+    BlocksBlock22: crate::nodes::types::Float,
+    BlocksBlock23: crate::nodes::types::Float,
+    BlocksBlock24: crate::nodes::types::Float,
+    BlocksBlock25: crate::nodes::types::Float,
+    BlocksBlock26: crate::nodes::types::Float,
+    BlocksBlock27: crate::nodes::types::Float,
+    FinalLayer: crate::nodes::types::Float,
+> ModelMergeCosmos7B<
+    Model1,
+    Model2,
+    PosEmbedder,
+    ExtraPosEmbedder,
+    XEmbedder,
+    TEmbedder,
+    AfflineNorm,
+    BlocksBlock0,
+    BlocksBlock1,
+    BlocksBlock2,
+    BlocksBlock3,
+    BlocksBlock4,
+    BlocksBlock5,
+    BlocksBlock6,
+    BlocksBlock7,
+    BlocksBlock8,
+    BlocksBlock9,
+    BlocksBlock10,
+    BlocksBlock11,
+    BlocksBlock12,
+    BlocksBlock13,
+    BlocksBlock14,
+    BlocksBlock15,
+    BlocksBlock16,
+    BlocksBlock17,
+    BlocksBlock18,
+    BlocksBlock19,
+    BlocksBlock20,
+    BlocksBlock21,
+    BlocksBlock22,
+    BlocksBlock23,
+    BlocksBlock24,
+    BlocksBlock25,
+    BlocksBlock26,
+    BlocksBlock27,
+    FinalLayer,
+> {
+    /// Create a new node.
+    pub fn new(
+        model_1: Model1,
+        model_2: Model2,
+        pos_embedder: PosEmbedder,
+        extra_pos_embedder: ExtraPosEmbedder,
+        x_embedder: XEmbedder,
+        t_embedder: TEmbedder,
+        affline_norm: AfflineNorm,
+        blocks_block_0: BlocksBlock0,
+        blocks_block_1: BlocksBlock1,
+        blocks_block_2: BlocksBlock2,
+        blocks_block_3: BlocksBlock3,
+        blocks_block_4: BlocksBlock4,
+        blocks_block_5: BlocksBlock5,
+        blocks_block_6: BlocksBlock6,
+        blocks_block_7: BlocksBlock7,
+        blocks_block_8: BlocksBlock8,
+        blocks_block_9: BlocksBlock9,
+        blocks_block_10: BlocksBlock10,
+        blocks_block_11: BlocksBlock11,
+        blocks_block_12: BlocksBlock12,
+        blocks_block_13: BlocksBlock13,
+        blocks_block_14: BlocksBlock14,
+        blocks_block_15: BlocksBlock15,
+        blocks_block_16: BlocksBlock16,
+        blocks_block_17: BlocksBlock17,
+        blocks_block_18: BlocksBlock18,
+        blocks_block_19: BlocksBlock19,
+        blocks_block_20: BlocksBlock20,
+        blocks_block_21: BlocksBlock21,
+        blocks_block_22: BlocksBlock22,
+        blocks_block_23: BlocksBlock23,
+        blocks_block_24: BlocksBlock24,
+        blocks_block_25: BlocksBlock25,
+        blocks_block_26: BlocksBlock26,
+        blocks_block_27: BlocksBlock27,
+        final_layer: FinalLayer,
+    ) -> Self {
+        Self {
+            model_1,
+            model_2,
+            pos_embedder,
+            extra_pos_embedder,
+            x_embedder,
+            t_embedder,
+            affline_norm,
+            blocks_block_0,
+            blocks_block_1,
+            blocks_block_2,
+            blocks_block_3,
+            blocks_block_4,
+            blocks_block_5,
+            blocks_block_6,
+            blocks_block_7,
+            blocks_block_8,
+            blocks_block_9,
+            blocks_block_10,
+            blocks_block_11,
+            blocks_block_12,
+            blocks_block_13,
+            blocks_block_14,
+            blocks_block_15,
+            blocks_block_16,
+            blocks_block_17,
+            blocks_block_18,
+            blocks_block_19,
+            blocks_block_20,
+            blocks_block_21,
+            blocks_block_22,
+            blocks_block_23,
+            blocks_block_24,
+            blocks_block_25,
+            blocks_block_26,
+            blocks_block_27,
+            final_layer,
+        }
+    }
+}
+impl<
+    Model1: crate::nodes::types::Model,
+    Model2: crate::nodes::types::Model,
+    PosEmbedder: crate::nodes::types::Float,
+    ExtraPosEmbedder: crate::nodes::types::Float,
+    XEmbedder: crate::nodes::types::Float,
+    TEmbedder: crate::nodes::types::Float,
+    AfflineNorm: crate::nodes::types::Float,
+    BlocksBlock0: crate::nodes::types::Float,
+    BlocksBlock1: crate::nodes::types::Float,
+    BlocksBlock2: crate::nodes::types::Float,
+    BlocksBlock3: crate::nodes::types::Float,
+    BlocksBlock4: crate::nodes::types::Float,
+    BlocksBlock5: crate::nodes::types::Float,
+    BlocksBlock6: crate::nodes::types::Float,
+    BlocksBlock7: crate::nodes::types::Float,
+    BlocksBlock8: crate::nodes::types::Float,
+    BlocksBlock9: crate::nodes::types::Float,
+    BlocksBlock10: crate::nodes::types::Float,
+    BlocksBlock11: crate::nodes::types::Float,
+    BlocksBlock12: crate::nodes::types::Float,
+    BlocksBlock13: crate::nodes::types::Float,
+    BlocksBlock14: crate::nodes::types::Float,
+    BlocksBlock15: crate::nodes::types::Float,
+    BlocksBlock16: crate::nodes::types::Float,
+    BlocksBlock17: crate::nodes::types::Float,
+    BlocksBlock18: crate::nodes::types::Float,
+    BlocksBlock19: crate::nodes::types::Float,
+    BlocksBlock20: crate::nodes::types::Float,
+    BlocksBlock21: crate::nodes::types::Float,
+    BlocksBlock22: crate::nodes::types::Float,
+    BlocksBlock23: crate::nodes::types::Float,
+    BlocksBlock24: crate::nodes::types::Float,
+    BlocksBlock25: crate::nodes::types::Float,
+    BlocksBlock26: crate::nodes::types::Float,
+    BlocksBlock27: crate::nodes::types::Float,
+    FinalLayer: crate::nodes::types::Float,
+> crate::nodes::TypedNode
+for ModelMergeCosmos7B<
+    Model1,
+    Model2,
+    PosEmbedder,
+    ExtraPosEmbedder,
+    XEmbedder,
+    TEmbedder,
+    AfflineNorm,
+    BlocksBlock0,
+    BlocksBlock1,
+    BlocksBlock2,
+    BlocksBlock3,
+    BlocksBlock4,
+    BlocksBlock5,
+    BlocksBlock6,
+    BlocksBlock7,
+    BlocksBlock8,
+    BlocksBlock9,
+    BlocksBlock10,
+    BlocksBlock11,
+    BlocksBlock12,
+    BlocksBlock13,
+    BlocksBlock14,
+    BlocksBlock15,
+    BlocksBlock16,
+    BlocksBlock17,
+    BlocksBlock18,
+    BlocksBlock19,
+    BlocksBlock20,
+    BlocksBlock21,
+    BlocksBlock22,
+    BlocksBlock23,
+    BlocksBlock24,
+    BlocksBlock25,
+    BlocksBlock26,
+    BlocksBlock27,
+    FinalLayer,
+> {
+    type Output = crate::nodes::types::ModelOut;
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
+        Self::Output::from_dynamic(node_id, 0)
+    }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("model1".to_string(), self.model_1.clone().into());
+        output.insert("model2".to_string(), self.model_2.clone().into());
+        output.insert("pos_embedder.".to_string(), self.pos_embedder.clone().into());
+        output
+            .insert(
+                "extra_pos_embedder.".to_string(),
+                self.extra_pos_embedder.clone().into(),
+            );
+        output.insert("x_embedder.".to_string(), self.x_embedder.clone().into());
+        output.insert("t_embedder.".to_string(), self.t_embedder.clone().into());
+        output.insert("affline_norm.".to_string(), self.affline_norm.clone().into());
+        output.insert("blocks.block0.".to_string(), self.blocks_block_0.clone().into());
+        output.insert("blocks.block1.".to_string(), self.blocks_block_1.clone().into());
+        output.insert("blocks.block2.".to_string(), self.blocks_block_2.clone().into());
+        output.insert("blocks.block3.".to_string(), self.blocks_block_3.clone().into());
+        output.insert("blocks.block4.".to_string(), self.blocks_block_4.clone().into());
+        output.insert("blocks.block5.".to_string(), self.blocks_block_5.clone().into());
+        output.insert("blocks.block6.".to_string(), self.blocks_block_6.clone().into());
+        output.insert("blocks.block7.".to_string(), self.blocks_block_7.clone().into());
+        output.insert("blocks.block8.".to_string(), self.blocks_block_8.clone().into());
+        output.insert("blocks.block9.".to_string(), self.blocks_block_9.clone().into());
+        output
+            .insert("blocks.block10.".to_string(), self.blocks_block_10.clone().into());
+        output
+            .insert("blocks.block11.".to_string(), self.blocks_block_11.clone().into());
+        output
+            .insert("blocks.block12.".to_string(), self.blocks_block_12.clone().into());
+        output
+            .insert("blocks.block13.".to_string(), self.blocks_block_13.clone().into());
+        output
+            .insert("blocks.block14.".to_string(), self.blocks_block_14.clone().into());
+        output
+            .insert("blocks.block15.".to_string(), self.blocks_block_15.clone().into());
+        output
+            .insert("blocks.block16.".to_string(), self.blocks_block_16.clone().into());
+        output
+            .insert("blocks.block17.".to_string(), self.blocks_block_17.clone().into());
+        output
+            .insert("blocks.block18.".to_string(), self.blocks_block_18.clone().into());
+        output
+            .insert("blocks.block19.".to_string(), self.blocks_block_19.clone().into());
+        output
+            .insert("blocks.block20.".to_string(), self.blocks_block_20.clone().into());
+        output
+            .insert("blocks.block21.".to_string(), self.blocks_block_21.clone().into());
+        output
+            .insert("blocks.block22.".to_string(), self.blocks_block_22.clone().into());
+        output
+            .insert("blocks.block23.".to_string(), self.blocks_block_23.clone().into());
+        output
+            .insert("blocks.block24.".to_string(), self.blocks_block_24.clone().into());
+        output
+            .insert("blocks.block25.".to_string(), self.blocks_block_25.clone().into());
+        output
+            .insert("blocks.block26.".to_string(), self.blocks_block_26.clone().into());
+        output
+            .insert("blocks.block27.".to_string(), self.blocks_block_27.clone().into());
+        output.insert("final_layer.".to_string(), self.final_layer.clone().into());
+        output
+    }
+    const NAME: &'static str = "ModelMergeCosmos7B";
+    const DISPLAY_NAME: &'static str = "ModelMergeCosmos7B";
+    const DESCRIPTION: &'static str = "";
+    const CATEGORY: &'static str = "advanced/model_merging/model_specific";
+}
 ///**ModelMergeFlux1**: No description.
 #[derive(Clone)]
 pub struct ModelMergeFlux1<
@@ -6917,5 +8365,841 @@ for ModelMergeSdxl<
     const NAME: &'static str = "ModelMergeSDXL";
     const DISPLAY_NAME: &'static str = "ModelMergeSDXL";
     const DESCRIPTION: &'static str = "";
+    const CATEGORY: &'static str = "advanced/model_merging/model_specific";
+}
+///**ModelMergeWAN2_1**: 1.3B model has 30 blocks, 14B model has 40 blocks. Image to video model has the extra img_emb.
+#[derive(Clone)]
+pub struct ModelMergeWan21<
+    Model1: crate::nodes::types::Model,
+    Model2: crate::nodes::types::Model,
+    PatchEmbedding: crate::nodes::types::Float,
+    TimeEmbedding: crate::nodes::types::Float,
+    TimeProjection: crate::nodes::types::Float,
+    TextEmbedding: crate::nodes::types::Float,
+    ImgEmb: crate::nodes::types::Float,
+    Blocks0: crate::nodes::types::Float,
+    Blocks1: crate::nodes::types::Float,
+    Blocks2: crate::nodes::types::Float,
+    Blocks3: crate::nodes::types::Float,
+    Blocks4: crate::nodes::types::Float,
+    Blocks5: crate::nodes::types::Float,
+    Blocks6: crate::nodes::types::Float,
+    Blocks7: crate::nodes::types::Float,
+    Blocks8: crate::nodes::types::Float,
+    Blocks9: crate::nodes::types::Float,
+    Blocks10: crate::nodes::types::Float,
+    Blocks11: crate::nodes::types::Float,
+    Blocks12: crate::nodes::types::Float,
+    Blocks13: crate::nodes::types::Float,
+    Blocks14: crate::nodes::types::Float,
+    Blocks15: crate::nodes::types::Float,
+    Blocks16: crate::nodes::types::Float,
+    Blocks17: crate::nodes::types::Float,
+    Blocks18: crate::nodes::types::Float,
+    Blocks19: crate::nodes::types::Float,
+    Blocks20: crate::nodes::types::Float,
+    Blocks21: crate::nodes::types::Float,
+    Blocks22: crate::nodes::types::Float,
+    Blocks23: crate::nodes::types::Float,
+    Blocks24: crate::nodes::types::Float,
+    Blocks25: crate::nodes::types::Float,
+    Blocks26: crate::nodes::types::Float,
+    Blocks27: crate::nodes::types::Float,
+    Blocks28: crate::nodes::types::Float,
+    Blocks29: crate::nodes::types::Float,
+    Blocks30: crate::nodes::types::Float,
+    Blocks31: crate::nodes::types::Float,
+    Blocks32: crate::nodes::types::Float,
+    Blocks33: crate::nodes::types::Float,
+    Blocks34: crate::nodes::types::Float,
+    Blocks35: crate::nodes::types::Float,
+    Blocks36: crate::nodes::types::Float,
+    Blocks37: crate::nodes::types::Float,
+    Blocks38: crate::nodes::types::Float,
+    Blocks39: crate::nodes::types::Float,
+    Head: crate::nodes::types::Float,
+> {
+    ///No documentation.
+    pub model_1: Model1,
+    ///No documentation.
+    pub model_2: Model2,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub patch_embedding: PatchEmbedding,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub time_embedding: TimeEmbedding,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub time_projection: TimeProjection,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub text_embedding: TextEmbedding,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub img_emb: ImgEmb,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub blocks_0: Blocks0,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub blocks_1: Blocks1,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub blocks_2: Blocks2,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub blocks_3: Blocks3,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub blocks_4: Blocks4,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub blocks_5: Blocks5,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub blocks_6: Blocks6,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub blocks_7: Blocks7,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub blocks_8: Blocks8,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub blocks_9: Blocks9,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub blocks_10: Blocks10,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub blocks_11: Blocks11,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub blocks_12: Blocks12,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub blocks_13: Blocks13,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub blocks_14: Blocks14,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub blocks_15: Blocks15,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub blocks_16: Blocks16,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub blocks_17: Blocks17,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub blocks_18: Blocks18,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub blocks_19: Blocks19,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub blocks_20: Blocks20,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub blocks_21: Blocks21,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub blocks_22: Blocks22,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub blocks_23: Blocks23,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub blocks_24: Blocks24,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub blocks_25: Blocks25,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub blocks_26: Blocks26,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub blocks_27: Blocks27,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub blocks_28: Blocks28,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub blocks_29: Blocks29,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub blocks_30: Blocks30,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub blocks_31: Blocks31,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub blocks_32: Blocks32,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub blocks_33: Blocks33,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub blocks_34: Blocks34,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub blocks_35: Blocks35,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub blocks_36: Blocks36,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub blocks_37: Blocks37,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub blocks_38: Blocks38,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub blocks_39: Blocks39,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub head: Head,
+}
+impl<
+    Model1: crate::nodes::types::Model,
+    Model2: crate::nodes::types::Model,
+    PatchEmbedding: crate::nodes::types::Float,
+    TimeEmbedding: crate::nodes::types::Float,
+    TimeProjection: crate::nodes::types::Float,
+    TextEmbedding: crate::nodes::types::Float,
+    ImgEmb: crate::nodes::types::Float,
+    Blocks0: crate::nodes::types::Float,
+    Blocks1: crate::nodes::types::Float,
+    Blocks2: crate::nodes::types::Float,
+    Blocks3: crate::nodes::types::Float,
+    Blocks4: crate::nodes::types::Float,
+    Blocks5: crate::nodes::types::Float,
+    Blocks6: crate::nodes::types::Float,
+    Blocks7: crate::nodes::types::Float,
+    Blocks8: crate::nodes::types::Float,
+    Blocks9: crate::nodes::types::Float,
+    Blocks10: crate::nodes::types::Float,
+    Blocks11: crate::nodes::types::Float,
+    Blocks12: crate::nodes::types::Float,
+    Blocks13: crate::nodes::types::Float,
+    Blocks14: crate::nodes::types::Float,
+    Blocks15: crate::nodes::types::Float,
+    Blocks16: crate::nodes::types::Float,
+    Blocks17: crate::nodes::types::Float,
+    Blocks18: crate::nodes::types::Float,
+    Blocks19: crate::nodes::types::Float,
+    Blocks20: crate::nodes::types::Float,
+    Blocks21: crate::nodes::types::Float,
+    Blocks22: crate::nodes::types::Float,
+    Blocks23: crate::nodes::types::Float,
+    Blocks24: crate::nodes::types::Float,
+    Blocks25: crate::nodes::types::Float,
+    Blocks26: crate::nodes::types::Float,
+    Blocks27: crate::nodes::types::Float,
+    Blocks28: crate::nodes::types::Float,
+    Blocks29: crate::nodes::types::Float,
+    Blocks30: crate::nodes::types::Float,
+    Blocks31: crate::nodes::types::Float,
+    Blocks32: crate::nodes::types::Float,
+    Blocks33: crate::nodes::types::Float,
+    Blocks34: crate::nodes::types::Float,
+    Blocks35: crate::nodes::types::Float,
+    Blocks36: crate::nodes::types::Float,
+    Blocks37: crate::nodes::types::Float,
+    Blocks38: crate::nodes::types::Float,
+    Blocks39: crate::nodes::types::Float,
+    Head: crate::nodes::types::Float,
+> ModelMergeWan21<
+    Model1,
+    Model2,
+    PatchEmbedding,
+    TimeEmbedding,
+    TimeProjection,
+    TextEmbedding,
+    ImgEmb,
+    Blocks0,
+    Blocks1,
+    Blocks2,
+    Blocks3,
+    Blocks4,
+    Blocks5,
+    Blocks6,
+    Blocks7,
+    Blocks8,
+    Blocks9,
+    Blocks10,
+    Blocks11,
+    Blocks12,
+    Blocks13,
+    Blocks14,
+    Blocks15,
+    Blocks16,
+    Blocks17,
+    Blocks18,
+    Blocks19,
+    Blocks20,
+    Blocks21,
+    Blocks22,
+    Blocks23,
+    Blocks24,
+    Blocks25,
+    Blocks26,
+    Blocks27,
+    Blocks28,
+    Blocks29,
+    Blocks30,
+    Blocks31,
+    Blocks32,
+    Blocks33,
+    Blocks34,
+    Blocks35,
+    Blocks36,
+    Blocks37,
+    Blocks38,
+    Blocks39,
+    Head,
+> {
+    /// Create a new node.
+    pub fn new(
+        model_1: Model1,
+        model_2: Model2,
+        patch_embedding: PatchEmbedding,
+        time_embedding: TimeEmbedding,
+        time_projection: TimeProjection,
+        text_embedding: TextEmbedding,
+        img_emb: ImgEmb,
+        blocks_0: Blocks0,
+        blocks_1: Blocks1,
+        blocks_2: Blocks2,
+        blocks_3: Blocks3,
+        blocks_4: Blocks4,
+        blocks_5: Blocks5,
+        blocks_6: Blocks6,
+        blocks_7: Blocks7,
+        blocks_8: Blocks8,
+        blocks_9: Blocks9,
+        blocks_10: Blocks10,
+        blocks_11: Blocks11,
+        blocks_12: Blocks12,
+        blocks_13: Blocks13,
+        blocks_14: Blocks14,
+        blocks_15: Blocks15,
+        blocks_16: Blocks16,
+        blocks_17: Blocks17,
+        blocks_18: Blocks18,
+        blocks_19: Blocks19,
+        blocks_20: Blocks20,
+        blocks_21: Blocks21,
+        blocks_22: Blocks22,
+        blocks_23: Blocks23,
+        blocks_24: Blocks24,
+        blocks_25: Blocks25,
+        blocks_26: Blocks26,
+        blocks_27: Blocks27,
+        blocks_28: Blocks28,
+        blocks_29: Blocks29,
+        blocks_30: Blocks30,
+        blocks_31: Blocks31,
+        blocks_32: Blocks32,
+        blocks_33: Blocks33,
+        blocks_34: Blocks34,
+        blocks_35: Blocks35,
+        blocks_36: Blocks36,
+        blocks_37: Blocks37,
+        blocks_38: Blocks38,
+        blocks_39: Blocks39,
+        head: Head,
+    ) -> Self {
+        Self {
+            model_1,
+            model_2,
+            patch_embedding,
+            time_embedding,
+            time_projection,
+            text_embedding,
+            img_emb,
+            blocks_0,
+            blocks_1,
+            blocks_2,
+            blocks_3,
+            blocks_4,
+            blocks_5,
+            blocks_6,
+            blocks_7,
+            blocks_8,
+            blocks_9,
+            blocks_10,
+            blocks_11,
+            blocks_12,
+            blocks_13,
+            blocks_14,
+            blocks_15,
+            blocks_16,
+            blocks_17,
+            blocks_18,
+            blocks_19,
+            blocks_20,
+            blocks_21,
+            blocks_22,
+            blocks_23,
+            blocks_24,
+            blocks_25,
+            blocks_26,
+            blocks_27,
+            blocks_28,
+            blocks_29,
+            blocks_30,
+            blocks_31,
+            blocks_32,
+            blocks_33,
+            blocks_34,
+            blocks_35,
+            blocks_36,
+            blocks_37,
+            blocks_38,
+            blocks_39,
+            head,
+        }
+    }
+}
+impl<
+    Model1: crate::nodes::types::Model,
+    Model2: crate::nodes::types::Model,
+    PatchEmbedding: crate::nodes::types::Float,
+    TimeEmbedding: crate::nodes::types::Float,
+    TimeProjection: crate::nodes::types::Float,
+    TextEmbedding: crate::nodes::types::Float,
+    ImgEmb: crate::nodes::types::Float,
+    Blocks0: crate::nodes::types::Float,
+    Blocks1: crate::nodes::types::Float,
+    Blocks2: crate::nodes::types::Float,
+    Blocks3: crate::nodes::types::Float,
+    Blocks4: crate::nodes::types::Float,
+    Blocks5: crate::nodes::types::Float,
+    Blocks6: crate::nodes::types::Float,
+    Blocks7: crate::nodes::types::Float,
+    Blocks8: crate::nodes::types::Float,
+    Blocks9: crate::nodes::types::Float,
+    Blocks10: crate::nodes::types::Float,
+    Blocks11: crate::nodes::types::Float,
+    Blocks12: crate::nodes::types::Float,
+    Blocks13: crate::nodes::types::Float,
+    Blocks14: crate::nodes::types::Float,
+    Blocks15: crate::nodes::types::Float,
+    Blocks16: crate::nodes::types::Float,
+    Blocks17: crate::nodes::types::Float,
+    Blocks18: crate::nodes::types::Float,
+    Blocks19: crate::nodes::types::Float,
+    Blocks20: crate::nodes::types::Float,
+    Blocks21: crate::nodes::types::Float,
+    Blocks22: crate::nodes::types::Float,
+    Blocks23: crate::nodes::types::Float,
+    Blocks24: crate::nodes::types::Float,
+    Blocks25: crate::nodes::types::Float,
+    Blocks26: crate::nodes::types::Float,
+    Blocks27: crate::nodes::types::Float,
+    Blocks28: crate::nodes::types::Float,
+    Blocks29: crate::nodes::types::Float,
+    Blocks30: crate::nodes::types::Float,
+    Blocks31: crate::nodes::types::Float,
+    Blocks32: crate::nodes::types::Float,
+    Blocks33: crate::nodes::types::Float,
+    Blocks34: crate::nodes::types::Float,
+    Blocks35: crate::nodes::types::Float,
+    Blocks36: crate::nodes::types::Float,
+    Blocks37: crate::nodes::types::Float,
+    Blocks38: crate::nodes::types::Float,
+    Blocks39: crate::nodes::types::Float,
+    Head: crate::nodes::types::Float,
+> crate::nodes::TypedNode
+for ModelMergeWan21<
+    Model1,
+    Model2,
+    PatchEmbedding,
+    TimeEmbedding,
+    TimeProjection,
+    TextEmbedding,
+    ImgEmb,
+    Blocks0,
+    Blocks1,
+    Blocks2,
+    Blocks3,
+    Blocks4,
+    Blocks5,
+    Blocks6,
+    Blocks7,
+    Blocks8,
+    Blocks9,
+    Blocks10,
+    Blocks11,
+    Blocks12,
+    Blocks13,
+    Blocks14,
+    Blocks15,
+    Blocks16,
+    Blocks17,
+    Blocks18,
+    Blocks19,
+    Blocks20,
+    Blocks21,
+    Blocks22,
+    Blocks23,
+    Blocks24,
+    Blocks25,
+    Blocks26,
+    Blocks27,
+    Blocks28,
+    Blocks29,
+    Blocks30,
+    Blocks31,
+    Blocks32,
+    Blocks33,
+    Blocks34,
+    Blocks35,
+    Blocks36,
+    Blocks37,
+    Blocks38,
+    Blocks39,
+    Head,
+> {
+    type Output = crate::nodes::types::ModelOut;
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
+        Self::Output::from_dynamic(node_id, 0)
+    }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("model1".to_string(), self.model_1.clone().into());
+        output.insert("model2".to_string(), self.model_2.clone().into());
+        output
+            .insert("patch_embedding.".to_string(), self.patch_embedding.clone().into());
+        output.insert("time_embedding.".to_string(), self.time_embedding.clone().into());
+        output
+            .insert("time_projection.".to_string(), self.time_projection.clone().into());
+        output.insert("text_embedding.".to_string(), self.text_embedding.clone().into());
+        output.insert("img_emb.".to_string(), self.img_emb.clone().into());
+        output.insert("blocks.0.".to_string(), self.blocks_0.clone().into());
+        output.insert("blocks.1.".to_string(), self.blocks_1.clone().into());
+        output.insert("blocks.2.".to_string(), self.blocks_2.clone().into());
+        output.insert("blocks.3.".to_string(), self.blocks_3.clone().into());
+        output.insert("blocks.4.".to_string(), self.blocks_4.clone().into());
+        output.insert("blocks.5.".to_string(), self.blocks_5.clone().into());
+        output.insert("blocks.6.".to_string(), self.blocks_6.clone().into());
+        output.insert("blocks.7.".to_string(), self.blocks_7.clone().into());
+        output.insert("blocks.8.".to_string(), self.blocks_8.clone().into());
+        output.insert("blocks.9.".to_string(), self.blocks_9.clone().into());
+        output.insert("blocks.10.".to_string(), self.blocks_10.clone().into());
+        output.insert("blocks.11.".to_string(), self.blocks_11.clone().into());
+        output.insert("blocks.12.".to_string(), self.blocks_12.clone().into());
+        output.insert("blocks.13.".to_string(), self.blocks_13.clone().into());
+        output.insert("blocks.14.".to_string(), self.blocks_14.clone().into());
+        output.insert("blocks.15.".to_string(), self.blocks_15.clone().into());
+        output.insert("blocks.16.".to_string(), self.blocks_16.clone().into());
+        output.insert("blocks.17.".to_string(), self.blocks_17.clone().into());
+        output.insert("blocks.18.".to_string(), self.blocks_18.clone().into());
+        output.insert("blocks.19.".to_string(), self.blocks_19.clone().into());
+        output.insert("blocks.20.".to_string(), self.blocks_20.clone().into());
+        output.insert("blocks.21.".to_string(), self.blocks_21.clone().into());
+        output.insert("blocks.22.".to_string(), self.blocks_22.clone().into());
+        output.insert("blocks.23.".to_string(), self.blocks_23.clone().into());
+        output.insert("blocks.24.".to_string(), self.blocks_24.clone().into());
+        output.insert("blocks.25.".to_string(), self.blocks_25.clone().into());
+        output.insert("blocks.26.".to_string(), self.blocks_26.clone().into());
+        output.insert("blocks.27.".to_string(), self.blocks_27.clone().into());
+        output.insert("blocks.28.".to_string(), self.blocks_28.clone().into());
+        output.insert("blocks.29.".to_string(), self.blocks_29.clone().into());
+        output.insert("blocks.30.".to_string(), self.blocks_30.clone().into());
+        output.insert("blocks.31.".to_string(), self.blocks_31.clone().into());
+        output.insert("blocks.32.".to_string(), self.blocks_32.clone().into());
+        output.insert("blocks.33.".to_string(), self.blocks_33.clone().into());
+        output.insert("blocks.34.".to_string(), self.blocks_34.clone().into());
+        output.insert("blocks.35.".to_string(), self.blocks_35.clone().into());
+        output.insert("blocks.36.".to_string(), self.blocks_36.clone().into());
+        output.insert("blocks.37.".to_string(), self.blocks_37.clone().into());
+        output.insert("blocks.38.".to_string(), self.blocks_38.clone().into());
+        output.insert("blocks.39.".to_string(), self.blocks_39.clone().into());
+        output.insert("head.".to_string(), self.head.clone().into());
+        output
+    }
+    const NAME: &'static str = "ModelMergeWAN2_1";
+    const DISPLAY_NAME: &'static str = "ModelMergeWAN2_1";
+    const DESCRIPTION: &'static str = "1.3B model has 30 blocks, 14B model has 40 blocks. Image to video model has the extra img_emb.";
     const CATEGORY: &'static str = "advanced/model_merging/model_specific";
 }

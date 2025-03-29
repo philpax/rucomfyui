@@ -483,6 +483,7 @@ define_object_type! {
     Latent,
     LatentOperation,
     Mask,
+    Mesh,
     Model,
     Noise,
     Photomaker,
@@ -493,6 +494,7 @@ define_object_type! {
     TimestepsRange,
     UpscaleModel,
     Vae,
+    Voxel,
     Webcam
 }
 

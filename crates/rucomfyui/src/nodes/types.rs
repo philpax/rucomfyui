@@ -297,6 +297,20 @@ impl Out for MaskOut {
     }
 }
 impl Mask for MaskOut {}
+///A value of ComfyUI type `MESH`.
+pub trait Mesh: Clone + Into<WorkflowInput> {}
+///A node output of type [`Mesh`].
+#[derive(Clone, Copy)]
+pub struct MeshOut(pub UntypedOut);
+impl Out for MeshOut {
+    fn from_dynamic(node_id: WorkflowNodeId, node_slot: u32) -> Self {
+        Self(UntypedOut::from_dynamic(node_id, node_slot))
+    }
+    fn into_input(self) -> WorkflowInput {
+        self.0.into_input()
+    }
+}
+impl Mesh for MeshOut {}
 ///A value of ComfyUI type `MODEL`.
 pub trait Model: Clone + Into<WorkflowInput> {}
 ///A node output of type [`Model`].
@@ -437,6 +451,20 @@ impl Out for VaeOut {
     }
 }
 impl Vae for VaeOut {}
+///A value of ComfyUI type `VOXEL`.
+pub trait Voxel: Clone + Into<WorkflowInput> {}
+///A node output of type [`Voxel`].
+#[derive(Clone, Copy)]
+pub struct VoxelOut(pub UntypedOut);
+impl Out for VoxelOut {
+    fn from_dynamic(node_id: WorkflowNodeId, node_slot: u32) -> Self {
+        Self(UntypedOut::from_dynamic(node_id, node_slot))
+    }
+    fn into_input(self) -> WorkflowInput {
+        self.0.into_input()
+    }
+}
+impl Voxel for VoxelOut {}
 ///A value of ComfyUI type `WEBCAM`.
 pub trait Webcam: Clone + Into<WorkflowInput> {}
 ///A node output of type [`Webcam`].

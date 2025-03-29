@@ -10,6 +10,7 @@ pub mod controlnet;
 pub mod gligen;
 pub mod inpaint;
 pub mod instructpix_2_pix;
+pub mod lotus;
 pub mod stable_cascade;
 pub mod style_model;
 pub mod upscale_diffusion;
@@ -117,6 +118,64 @@ impl<
     const NAME: &'static str = "CLIPTextEncode";
     const DISPLAY_NAME: &'static str = "CLIP Text Encode (Prompt)";
     const DESCRIPTION: &'static str = "Encodes a text prompt using a CLIP model into an embedding that can be used to guide the diffusion model towards generating specific images.";
+    const CATEGORY: &'static str = "conditioning";
+}
+///**CLIP Text Encode for Lumina2**: Encodes a system prompt and a user prompt using a CLIP model into an embedding that can be used to guide the diffusion model towards generating specific images.
+#[derive(Clone)]
+pub struct ClipTextEncodeLumina2<
+    SystemPrompt: crate::nodes::types::String,
+    UserPrompt: crate::nodes::types::String,
+    Clip: crate::nodes::types::Clip,
+> {
+    ///Lumina2 provide two types of system prompts:Superior: You are an assistant designed to generate superior images with the superior degree of image-text alignment based on textual prompts or user prompts. Alignment: You are an assistant designed to generate high-quality images with the highest degree of image-text alignment based on textual prompts.
+    pub system_prompt: SystemPrompt,
+    /**The text to be encoded.
+
+**Metadata**:
+  - Dynamic prompts: true
+  - Multiline: true
+*/
+    pub user_prompt: UserPrompt,
+    ///The CLIP model used for encoding the text.
+    pub clip: Clip,
+}
+impl<
+    SystemPrompt: crate::nodes::types::String,
+    UserPrompt: crate::nodes::types::String,
+    Clip: crate::nodes::types::Clip,
+> ClipTextEncodeLumina2<SystemPrompt, UserPrompt, Clip> {
+    /// Create a new node.
+    pub fn new(
+        system_prompt: SystemPrompt,
+        user_prompt: UserPrompt,
+        clip: Clip,
+    ) -> Self {
+        Self {
+            system_prompt,
+            user_prompt,
+            clip,
+        }
+    }
+}
+impl<
+    SystemPrompt: crate::nodes::types::String,
+    UserPrompt: crate::nodes::types::String,
+    Clip: crate::nodes::types::Clip,
+> crate::nodes::TypedNode for ClipTextEncodeLumina2<SystemPrompt, UserPrompt, Clip> {
+    type Output = crate::nodes::types::ConditioningOut;
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
+        Self::Output::from_dynamic(node_id, 0)
+    }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("system_prompt".to_string(), self.system_prompt.clone().into());
+        output.insert("user_prompt".to_string(), self.user_prompt.clone().into());
+        output.insert("clip".to_string(), self.clip.clone().into());
+        output
+    }
+    const NAME: &'static str = "CLIPTextEncodeLumina2";
+    const DISPLAY_NAME: &'static str = "CLIP Text Encode for Lumina2";
+    const DESCRIPTION: &'static str = "Encodes a system prompt and a user prompt using a CLIP model into an embedding that can be used to guide the diffusion model towards generating specific images.";
     const CATEGORY: &'static str = "conditioning";
 }
 ///**CLIP Vision Encode**: No description.
@@ -549,6 +608,167 @@ for ConditioningSetAreaPercentage<Conditioning, Width, Height, X, Y, Strength> {
     }
     const NAME: &'static str = "ConditioningSetAreaPercentage";
     const DISPLAY_NAME: &'static str = "Conditioning (Set Area with Percentage)";
+    const DESCRIPTION: &'static str = "";
+    const CATEGORY: &'static str = "conditioning";
+}
+///**ConditioningSetAreaPercentageVideo**: No description.
+#[derive(Clone)]
+pub struct ConditioningSetAreaPercentageVideo<
+    Conditioning: crate::nodes::types::Conditioning,
+    Width: crate::nodes::types::Float,
+    Height: crate::nodes::types::Float,
+    Temporal: crate::nodes::types::Float,
+    X: crate::nodes::types::Float,
+    Y: crate::nodes::types::Float,
+    Z: crate::nodes::types::Float,
+    Strength: crate::nodes::types::Float,
+> {
+    ///No documentation.
+    pub conditioning: Conditioning,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub width: Width,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub height: Height,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub temporal: Temporal,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 0
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub x: X,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 0
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub y: Y,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 0
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub z: Z,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 10
+  - Min: 0
+  - Step: 0.01
+*/
+    pub strength: Strength,
+}
+impl<
+    Conditioning: crate::nodes::types::Conditioning,
+    Width: crate::nodes::types::Float,
+    Height: crate::nodes::types::Float,
+    Temporal: crate::nodes::types::Float,
+    X: crate::nodes::types::Float,
+    Y: crate::nodes::types::Float,
+    Z: crate::nodes::types::Float,
+    Strength: crate::nodes::types::Float,
+> ConditioningSetAreaPercentageVideo<
+    Conditioning,
+    Width,
+    Height,
+    Temporal,
+    X,
+    Y,
+    Z,
+    Strength,
+> {
+    /// Create a new node.
+    pub fn new(
+        conditioning: Conditioning,
+        width: Width,
+        height: Height,
+        temporal: Temporal,
+        x: X,
+        y: Y,
+        z: Z,
+        strength: Strength,
+    ) -> Self {
+        Self {
+            conditioning,
+            width,
+            height,
+            temporal,
+            x,
+            y,
+            z,
+            strength,
+        }
+    }
+}
+impl<
+    Conditioning: crate::nodes::types::Conditioning,
+    Width: crate::nodes::types::Float,
+    Height: crate::nodes::types::Float,
+    Temporal: crate::nodes::types::Float,
+    X: crate::nodes::types::Float,
+    Y: crate::nodes::types::Float,
+    Z: crate::nodes::types::Float,
+    Strength: crate::nodes::types::Float,
+> crate::nodes::TypedNode
+for ConditioningSetAreaPercentageVideo<
+    Conditioning,
+    Width,
+    Height,
+    Temporal,
+    X,
+    Y,
+    Z,
+    Strength,
+> {
+    type Output = crate::nodes::types::ConditioningOut;
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
+        Self::Output::from_dynamic(node_id, 0)
+    }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("conditioning".to_string(), self.conditioning.clone().into());
+        output.insert("width".to_string(), self.width.clone().into());
+        output.insert("height".to_string(), self.height.clone().into());
+        output.insert("temporal".to_string(), self.temporal.clone().into());
+        output.insert("x".to_string(), self.x.clone().into());
+        output.insert("y".to_string(), self.y.clone().into());
+        output.insert("z".to_string(), self.z.clone().into());
+        output.insert("strength".to_string(), self.strength.clone().into());
+        output
+    }
+    const NAME: &'static str = "ConditioningSetAreaPercentageVideo";
+    const DISPLAY_NAME: &'static str = "ConditioningSetAreaPercentageVideo";
     const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "conditioning";
 }
