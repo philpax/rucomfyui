@@ -16,6 +16,7 @@ pub mod video;
 pub mod out {
     ///Output for [`ImagePadForOutpaint`](super::ImagePadForOutpaint).
     #[derive(Clone)]
+    #[allow(non_camel_case_types)]
     pub struct ImagePadForOutpaintOutput {
         ///No documentation.
         pub image: crate::nodes::types::ImageOut,
@@ -24,6 +25,7 @@ pub mod out {
     }
     ///Output for [`LoadImage`](super::LoadImage).
     #[derive(Clone)]
+    #[allow(non_camel_case_types)]
     pub struct LoadImageOutput {
         ///No documentation.
         pub image: crate::nodes::types::ImageOut,
@@ -32,6 +34,7 @@ pub mod out {
     }
     ///Output for [`LoadImageOutput`](super::LoadImageOutput).
     #[derive(Clone)]
+    #[allow(non_camel_case_types)]
     pub struct LoadImageOutputOutput {
         ///No documentation.
         pub image: crate::nodes::types::ImageOut,
@@ -41,6 +44,7 @@ pub mod out {
 }
 ///**EmptyImage**: No description.
 #[derive(Clone)]
+#[allow(non_camel_case_types)]
 pub struct EmptyImage<
     WidthParam: crate::nodes::types::Int,
     HeightParam: crate::nodes::types::Int,
@@ -131,6 +135,7 @@ for EmptyImage<WidthParam, HeightParam, BatchSizeParam, ColorParam> {
 }
 ///**Batch Images**: No description.
 #[derive(Clone)]
+#[allow(non_camel_case_types)]
 pub struct ImageBatch<
     Image1Param: crate::nodes::types::Image,
     Image2Param: crate::nodes::types::Image,
@@ -170,6 +175,7 @@ impl<
 }
 ///**ImageCompositeMasked**: No description.
 #[derive(Clone)]
+#[allow(non_camel_case_types)]
 pub struct ImageCompositeMasked<
     DestinationParam: crate::nodes::types::Image,
     SourceParam: crate::nodes::types::Image,
@@ -282,6 +288,7 @@ for ImageCompositeMasked<
 }
 ///**Invert Image**: No description.
 #[derive(Clone)]
+#[allow(non_camel_case_types)]
 pub struct ImageInvert<ImageParam: crate::nodes::types::Image> {
     ///No documentation.
     pub image: ImageParam,
@@ -310,6 +317,7 @@ for ImageInvert<ImageParam> {
 }
 ///**Pad Image for Outpainting**: No description.
 #[derive(Clone)]
+#[allow(non_camel_case_types)]
 pub struct ImagePadForOutpaint<
     ImageParam: crate::nodes::types::Image,
     LeftParam: crate::nodes::types::Int,
@@ -440,7 +448,8 @@ for ImagePadForOutpaint<
 }
 ///**LTXVPreprocess**: No description.
 #[derive(Clone)]
-pub struct LtxvPreprocess<
+#[allow(non_camel_case_types)]
+pub struct LTXVPreprocess<
     ImageParam: crate::nodes::types::Image,
     ImgCompressionParam: crate::nodes::types::Int,
 > {
@@ -458,7 +467,7 @@ pub struct LtxvPreprocess<
 impl<
     ImageParam: crate::nodes::types::Image,
     ImgCompressionParam: crate::nodes::types::Int,
-> LtxvPreprocess<ImageParam, ImgCompressionParam> {
+> LTXVPreprocess<ImageParam, ImgCompressionParam> {
     /// Create a new node.
     pub fn new(image: ImageParam, img_compression: ImgCompressionParam) -> Self {
         Self { image, img_compression }
@@ -467,7 +476,7 @@ impl<
 impl<
     ImageParam: crate::nodes::types::Image,
     ImgCompressionParam: crate::nodes::types::Int,
-> crate::nodes::TypedNode for LtxvPreprocess<ImageParam, ImgCompressionParam> {
+> crate::nodes::TypedNode for LTXVPreprocess<ImageParam, ImgCompressionParam> {
     type Output = crate::nodes::types::ImageOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)
@@ -486,6 +495,7 @@ impl<
 }
 ///**Load Image**: No description.
 #[derive(Clone)]
+#[allow(non_camel_case_types)]
 pub struct LoadImage<ImageParam: crate::nodes::types::String> {
     /**No documentation.
 
@@ -521,6 +531,7 @@ for LoadImage<ImageParam> {
 }
 ///**Load Image (from Outputs)**: Load an image from the output folder. When the refresh button is clicked, the node will update the image list and automatically select the first image, allowing for easy iteration.
 #[derive(Clone)]
+#[allow(non_camel_case_types)]
 pub struct LoadImageOutput {}
 impl LoadImageOutput {
     /// Create a new node.
@@ -546,6 +557,7 @@ impl crate::nodes::TypedNode for LoadImageOutput {
 }
 ///**Preview Image**: Saves the input images to your ComfyUI output directory.
 #[derive(Clone)]
+#[allow(non_camel_case_types)]
 pub struct PreviewImage<ImagesParam: crate::nodes::types::Image> {
     ///No documentation.
     pub images: ImagesParam,
@@ -576,6 +588,7 @@ impl<ImagesParam: crate::nodes::types::Image> crate::nodes::TypedOutputNode
 for PreviewImage<ImagesParam> {}
 ///**Save Image**: Saves the input images to your ComfyUI output directory.
 #[derive(Clone)]
+#[allow(non_camel_case_types)]
 pub struct SaveImage<
     ImagesParam: crate::nodes::types::Image,
     FilenamePrefixParam: crate::nodes::types::String,
@@ -624,6 +637,7 @@ impl<
 > crate::nodes::TypedOutputNode for SaveImage<ImagesParam, FilenamePrefixParam> {}
 ///**Webcam Capture**: No description.
 #[derive(Clone)]
+#[allow(non_camel_case_types)]
 pub struct WebcamCapture<
     ImageParam: crate::nodes::types::Webcam,
     WidthParam: crate::nodes::types::Int,

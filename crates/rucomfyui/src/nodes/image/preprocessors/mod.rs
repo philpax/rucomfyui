@@ -7,6 +7,7 @@ use crate::{
 };
 ///**Canny**: No description.
 #[derive(Clone)]
+#[allow(non_camel_case_types)]
 pub struct Canny<
     ImageParam: crate::nodes::types::Image,
     LowThresholdParam: crate::nodes::types::Float,

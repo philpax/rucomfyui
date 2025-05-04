@@ -7,6 +7,7 @@ use crate::{
 };
 ///**Apply Style Model**: No description.
 #[derive(Clone)]
+#[allow(non_camel_case_types)]
 pub struct StyleModelApply<
     ConditioningParam: crate::nodes::types::Conditioning,
     StyleModelParam: crate::nodes::types::StyleModel,

@@ -8,6 +8,7 @@ use crate::{
 pub mod operations;
 ///**LatentAdd**: No description.
 #[derive(Clone)]
+#[allow(non_camel_case_types)]
 pub struct LatentAdd<
     Samples1Param: crate::nodes::types::Latent,
     Samples2Param: crate::nodes::types::Latent,
@@ -47,6 +48,7 @@ impl<
 }
 ///**LatentBatchSeedBehavior**: No description.
 #[derive(Clone)]
+#[allow(non_camel_case_types)]
 pub struct LatentBatchSeedBehavior<
     SamplesParam: crate::nodes::types::Latent,
     SeedBehaviorParam: crate::nodes::types::String,
@@ -90,6 +92,7 @@ impl<
 }
 ///**LatentInterpolate**: No description.
 #[derive(Clone)]
+#[allow(non_camel_case_types)]
 pub struct LatentInterpolate<
     Samples1Param: crate::nodes::types::Latent,
     Samples2Param: crate::nodes::types::Latent,
@@ -151,6 +154,7 @@ for LatentInterpolate<Samples1Param, Samples2Param, RatioParam> {
 }
 ///**LatentMultiply**: No description.
 #[derive(Clone)]
+#[allow(non_camel_case_types)]
 pub struct LatentMultiply<
     SamplesParam: crate::nodes::types::Latent,
     MultiplierParam: crate::nodes::types::Float,
@@ -197,6 +201,7 @@ impl<
 }
 ///**LatentSubtract**: No description.
 #[derive(Clone)]
+#[allow(non_camel_case_types)]
 pub struct LatentSubtract<
     Samples1Param: crate::nodes::types::Latent,
     Samples2Param: crate::nodes::types::Latent,

@@ -9,6 +9,7 @@ use crate::{
 pub mod out {
     ///Output for [`SplitSigmas`](super::SplitSigmas).
     #[derive(Clone)]
+    #[allow(non_camel_case_types)]
     pub struct SplitSigmasOutput {
         ///No documentation.
         pub high_sigmas: crate::nodes::types::SigmasOut,
@@ -17,6 +18,7 @@ pub mod out {
     }
     ///Output for [`SplitSigmasDenoise`](super::SplitSigmasDenoise).
     #[derive(Clone)]
+    #[allow(non_camel_case_types)]
     pub struct SplitSigmasDenoiseOutput {
         ///No documentation.
         pub high_sigmas: crate::nodes::types::SigmasOut,
@@ -26,6 +28,7 @@ pub mod out {
 }
 ///**FlipSigmas**: No description.
 #[derive(Clone)]
+#[allow(non_camel_case_types)]
 pub struct FlipSigmas<SigmasParam: crate::nodes::types::Sigmas> {
     ///No documentation.
     pub sigmas: SigmasParam,
@@ -54,6 +57,7 @@ for FlipSigmas<SigmasParam> {
 }
 ///**SetFirstSigma**: No description.
 #[derive(Clone)]
+#[allow(non_camel_case_types)]
 pub struct SetFirstSigma<
     SigmasParam: crate::nodes::types::Sigmas,
     SigmaParam: crate::nodes::types::Float,
@@ -101,6 +105,7 @@ impl<
 }
 ///**SplitSigmas**: No description.
 #[derive(Clone)]
+#[allow(non_camel_case_types)]
 pub struct SplitSigmas<
     SigmasParam: crate::nodes::types::Sigmas,
     StepParam: crate::nodes::types::Int,
@@ -149,6 +154,7 @@ impl<
 }
 ///**SplitSigmasDenoise**: No description.
 #[derive(Clone)]
+#[allow(non_camel_case_types)]
 pub struct SplitSigmasDenoise<
     SigmasParam: crate::nodes::types::Sigmas,
     DenoiseParam: crate::nodes::types::Float,

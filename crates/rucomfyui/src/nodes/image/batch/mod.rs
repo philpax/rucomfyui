@@ -7,9 +7,10 @@ use crate::{
 };
 /// Output types for nodes.
 pub mod out {
-    ///Output for [`ImageRgbToYuv`](super::ImageRgbToYuv).
+    ///Output for [`ImageRGBToYUV`](super::ImageRGBToYUV).
     #[derive(Clone)]
-    pub struct ImageRgbToYuvOutput {
+    #[allow(non_camel_case_types)]
+    pub struct ImageRGBToYUVOutput {
         ///No documentation.
         pub y: crate::nodes::types::ImageOut,
         ///No documentation.
@@ -20,6 +21,7 @@ pub mod out {
 }
 ///**ImageFromBatch**: No description.
 #[derive(Clone)]
+#[allow(non_camel_case_types)]
 pub struct ImageFromBatch<
     ImageParam: crate::nodes::types::Image,
     BatchIndexParam: crate::nodes::types::Int,
@@ -81,19 +83,20 @@ impl<
 }
 ///**ImageRGBToYUV**: No description.
 #[derive(Clone)]
-pub struct ImageRgbToYuv<ImageParam: crate::nodes::types::Image> {
+#[allow(non_camel_case_types)]
+pub struct ImageRGBToYUV<ImageParam: crate::nodes::types::Image> {
     ///No documentation.
     pub image: ImageParam,
 }
-impl<ImageParam: crate::nodes::types::Image> ImageRgbToYuv<ImageParam> {
+impl<ImageParam: crate::nodes::types::Image> ImageRGBToYUV<ImageParam> {
     /// Create a new node.
     pub fn new(image: ImageParam) -> Self {
         Self { image }
     }
 }
 impl<ImageParam: crate::nodes::types::Image> crate::nodes::TypedNode
-for ImageRgbToYuv<ImageParam> {
-    type Output = out::ImageRgbToYuvOutput;
+for ImageRGBToYUV<ImageParam> {
+    type Output = out::ImageRGBToYUVOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
             y: crate::nodes::types::ImageOut::from_dynamic(node_id, 0u32),
@@ -113,7 +116,8 @@ for ImageRgbToYuv<ImageParam> {
 }
 ///**ImageYUVToRGB**: No description.
 #[derive(Clone)]
-pub struct ImageYuvToRgb<
+#[allow(non_camel_case_types)]
+pub struct ImageYUVToRGB<
     YParam: crate::nodes::types::Image,
     UParam: crate::nodes::types::Image,
     VParam: crate::nodes::types::Image,
@@ -129,7 +133,7 @@ impl<
     YParam: crate::nodes::types::Image,
     UParam: crate::nodes::types::Image,
     VParam: crate::nodes::types::Image,
-> ImageYuvToRgb<YParam, UParam, VParam> {
+> ImageYUVToRGB<YParam, UParam, VParam> {
     /// Create a new node.
     pub fn new(y: YParam, u: UParam, v: VParam) -> Self {
         Self { y, u, v }
@@ -139,7 +143,7 @@ impl<
     YParam: crate::nodes::types::Image,
     UParam: crate::nodes::types::Image,
     VParam: crate::nodes::types::Image,
-> crate::nodes::TypedNode for ImageYuvToRgb<YParam, UParam, VParam> {
+> crate::nodes::TypedNode for ImageYUVToRGB<YParam, UParam, VParam> {
     type Output = crate::nodes::types::ImageOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)
@@ -158,6 +162,7 @@ impl<
 }
 ///**Rebatch Images**: No description.
 #[derive(Clone)]
+#[allow(non_camel_case_types)]
 pub struct RebatchImages<
     ImagesParam: crate::nodes::types::Image,
     BatchSizeParam: crate::nodes::types::Int,
@@ -203,6 +208,7 @@ impl<
 }
 ///**RepeatImageBatch**: No description.
 #[derive(Clone)]
+#[allow(non_camel_case_types)]
 pub struct RepeatImageBatch<
     ImageParam: crate::nodes::types::Image,
     AmountParam: crate::nodes::types::Int,

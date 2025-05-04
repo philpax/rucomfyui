@@ -15,6 +15,7 @@ pub mod scheduling;
 pub mod out {
     ///Output for [`ConditioningTimestepsRange`](super::ConditioningTimestepsRange).
     #[derive(Clone)]
+    #[allow(non_camel_case_types)]
     pub struct ConditioningTimestepsRangeOutput {
         ///No documentation.
         pub timesteps_range: crate::nodes::types::TimestepsRangeOut,
@@ -26,6 +27,7 @@ pub mod out {
 }
 ///**Timesteps Range**: No description.
 #[derive(Clone)]
+#[allow(non_camel_case_types)]
 pub struct ConditioningTimestepsRange<
     StartPercentParam: crate::nodes::types::Float,
     EndPercentParam: crate::nodes::types::Float,

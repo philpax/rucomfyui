@@ -7,6 +7,7 @@ use crate::{
 };
 ///**BasicGuider**: No description.
 #[derive(Clone)]
+#[allow(non_camel_case_types)]
 pub struct BasicGuider<
     ModelParam: crate::nodes::types::Model,
     ConditioningParam: crate::nodes::types::Conditioning,
@@ -46,7 +47,8 @@ impl<
 }
 ///**CFGGuider**: No description.
 #[derive(Clone)]
-pub struct CfgGuider<
+#[allow(non_camel_case_types)]
+pub struct CFGGuider<
     ModelParam: crate::nodes::types::Model,
     PositiveParam: crate::nodes::types::Conditioning,
     NegativeParam: crate::nodes::types::Conditioning,
@@ -74,7 +76,7 @@ impl<
     PositiveParam: crate::nodes::types::Conditioning,
     NegativeParam: crate::nodes::types::Conditioning,
     CfgParam: crate::nodes::types::Float,
-> CfgGuider<ModelParam, PositiveParam, NegativeParam, CfgParam> {
+> CFGGuider<ModelParam, PositiveParam, NegativeParam, CfgParam> {
     /// Create a new node.
     pub fn new(
         model: ModelParam,
@@ -96,7 +98,7 @@ impl<
     NegativeParam: crate::nodes::types::Conditioning,
     CfgParam: crate::nodes::types::Float,
 > crate::nodes::TypedNode
-for CfgGuider<ModelParam, PositiveParam, NegativeParam, CfgParam> {
+for CFGGuider<ModelParam, PositiveParam, NegativeParam, CfgParam> {
     type Output = crate::nodes::types::GuiderOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)
@@ -116,7 +118,8 @@ for CfgGuider<ModelParam, PositiveParam, NegativeParam, CfgParam> {
 }
 ///**DualCFGGuider**: No description.
 #[derive(Clone)]
-pub struct DualCfgGuider<
+#[allow(non_camel_case_types)]
+pub struct DualCFGGuider<
     ModelParam: crate::nodes::types::Model,
     Cond1Param: crate::nodes::types::Conditioning,
     Cond2Param: crate::nodes::types::Conditioning,
@@ -160,7 +163,7 @@ impl<
     NegativeParam: crate::nodes::types::Conditioning,
     CfgCondsParam: crate::nodes::types::Float,
     CfgCond2NegativeParam: crate::nodes::types::Float,
-> DualCfgGuider<
+> DualCFGGuider<
     ModelParam,
     Cond1Param,
     Cond2Param,
@@ -195,7 +198,7 @@ impl<
     CfgCondsParam: crate::nodes::types::Float,
     CfgCond2NegativeParam: crate::nodes::types::Float,
 > crate::nodes::TypedNode
-for DualCfgGuider<
+for DualCFGGuider<
     ModelParam,
     Cond1Param,
     Cond2Param,

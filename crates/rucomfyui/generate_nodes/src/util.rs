@@ -21,7 +21,6 @@ pub fn write_tokenstream(path: &Path, output: TokenStream) -> Result<()> {
 #[derive(Debug, Clone, Copy)]
 /// The case to convert the name to.
 pub enum NameToIdentCase {
-    #[allow(unused)]
     /// Preserve the original case.
     Preserve,
     /// Convert to PascalCase.

@@ -7,6 +7,7 @@ use crate::{
 };
 ///**DisableNoise**: No description.
 #[derive(Clone)]
+#[allow(non_camel_case_types)]
 pub struct DisableNoise {}
 impl DisableNoise {
     /// Create a new node.
@@ -29,6 +30,7 @@ impl crate::nodes::TypedNode for DisableNoise {
 }
 ///**RandomNoise**: No description.
 #[derive(Clone)]
+#[allow(non_camel_case_types)]
 pub struct RandomNoise<NoiseSeedParam: crate::nodes::types::Int> {
     /**No documentation.
 

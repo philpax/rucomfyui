@@ -10,6 +10,7 @@ pub mod video_models;
 pub mod out {
     ///Output for [`CheckpointLoaderSimple`](super::CheckpointLoaderSimple).
     #[derive(Clone)]
+    #[allow(non_camel_case_types)]
     pub struct CheckpointLoaderSimpleOutput {
         ///The model used for denoising latents.
         pub model: crate::nodes::types::ModelOut,
@@ -20,15 +21,17 @@ pub mod out {
     }
     ///Output for [`LoraLoader`](super::LoraLoader).
     #[derive(Clone)]
+    #[allow(non_camel_case_types)]
     pub struct LoraLoaderOutput {
         ///The modified diffusion model.
         pub model: crate::nodes::types::ModelOut,
         ///The modified CLIP model.
         pub clip: crate::nodes::types::ClipOut,
     }
-    ///Output for [`UnClipCheckpointLoader`](super::UnClipCheckpointLoader).
+    ///Output for [`unCLIPCheckpointLoader`](super::unCLIPCheckpointLoader).
     #[derive(Clone)]
-    pub struct UnClipCheckpointLoaderOutput {
+    #[allow(non_camel_case_types)]
+    pub struct unCLIPCheckpointLoaderOutput {
         ///No documentation.
         pub model: crate::nodes::types::ModelOut,
         ///No documentation.
@@ -41,18 +44,19 @@ pub mod out {
 }
 ///**Load CLIP Vision**: No description.
 #[derive(Clone)]
-pub struct ClipVisionLoader<ClipNameParam: crate::nodes::types::String> {
+#[allow(non_camel_case_types)]
+pub struct CLIPVisionLoader<ClipNameParam: crate::nodes::types::String> {
     ///No documentation.
     pub clip_name: ClipNameParam,
 }
-impl<ClipNameParam: crate::nodes::types::String> ClipVisionLoader<ClipNameParam> {
+impl<ClipNameParam: crate::nodes::types::String> CLIPVisionLoader<ClipNameParam> {
     /// Create a new node.
     pub fn new(clip_name: ClipNameParam) -> Self {
         Self { clip_name }
     }
 }
 impl<ClipNameParam: crate::nodes::types::String> crate::nodes::TypedNode
-for ClipVisionLoader<ClipNameParam> {
+for CLIPVisionLoader<ClipNameParam> {
     type Output = crate::nodes::types::ClipVisionOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)
@@ -69,6 +73,7 @@ for ClipVisionLoader<ClipNameParam> {
 }
 ///**Load Checkpoint**: Loads a diffusion model checkpoint, diffusion models are used to denoise latents.
 #[derive(Clone)]
+#[allow(non_camel_case_types)]
 pub struct CheckpointLoaderSimple<CkptNameParam: crate::nodes::types::String> {
     ///The name of the checkpoint (model) to load.
     pub ckpt_name: CkptNameParam,
@@ -101,6 +106,7 @@ for CheckpointLoaderSimple<CkptNameParam> {
 }
 ///**Load ControlNet Model**: No description.
 #[derive(Clone)]
+#[allow(non_camel_case_types)]
 pub struct ControlNetLoader<ControlNetNameParam: crate::nodes::types::String> {
     ///No documentation.
     pub control_net_name: ControlNetNameParam,
@@ -135,6 +141,7 @@ for ControlNetLoader<ControlNetNameParam> {
 }
 ///**Load ControlNet Model (diff)**: No description.
 #[derive(Clone)]
+#[allow(non_camel_case_types)]
 pub struct DiffControlNetLoader<
     ModelParam: crate::nodes::types::Model,
     ControlNetNameParam: crate::nodes::types::String,
@@ -178,18 +185,19 @@ impl<
 }
 ///**GLIGENLoader**: No description.
 #[derive(Clone)]
-pub struct GligenLoader<GligenNameParam: crate::nodes::types::String> {
+#[allow(non_camel_case_types)]
+pub struct GLIGENLoader<GligenNameParam: crate::nodes::types::String> {
     ///No documentation.
     pub gligen_name: GligenNameParam,
 }
-impl<GligenNameParam: crate::nodes::types::String> GligenLoader<GligenNameParam> {
+impl<GligenNameParam: crate::nodes::types::String> GLIGENLoader<GligenNameParam> {
     /// Create a new node.
     pub fn new(gligen_name: GligenNameParam) -> Self {
         Self { gligen_name }
     }
 }
 impl<GligenNameParam: crate::nodes::types::String> crate::nodes::TypedNode
-for GligenLoader<GligenNameParam> {
+for GLIGENLoader<GligenNameParam> {
     type Output = crate::nodes::types::GligenOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)
@@ -206,6 +214,7 @@ for GligenLoader<GligenNameParam> {
 }
 ///**HypernetworkLoader**: No description.
 #[derive(Clone)]
+#[allow(non_camel_case_types)]
 pub struct HypernetworkLoader<
     ModelParam: crate::nodes::types::Model,
     HypernetworkNameParam: crate::nodes::types::String,
@@ -271,6 +280,7 @@ for HypernetworkLoader<ModelParam, HypernetworkNameParam, StrengthParam> {
 }
 ///**Load LoRA**: LoRAs are used to modify diffusion and CLIP models, altering the way in which latents are denoised such as applying styles. Multiple LoRA nodes can be linked together.
 #[derive(Clone)]
+#[allow(non_camel_case_types)]
 pub struct LoraLoader<
     ModelParam: crate::nodes::types::Model,
     ClipParam: crate::nodes::types::Clip,
@@ -370,6 +380,7 @@ for LoraLoader<
 }
 ///**LoraLoaderModelOnly**: LoRAs are used to modify diffusion and CLIP models, altering the way in which latents are denoised such as applying styles. Multiple LoRA nodes can be linked together.
 #[derive(Clone)]
+#[allow(non_camel_case_types)]
 pub struct LoraLoaderModelOnly<
     ModelParam: crate::nodes::types::Model,
     LoraNameParam: crate::nodes::types::String,
@@ -431,6 +442,7 @@ for LoraLoaderModelOnly<ModelParam, LoraNameParam, StrengthModelParam> {
 }
 ///**Load Style Model**: No description.
 #[derive(Clone)]
+#[allow(non_camel_case_types)]
 pub struct StyleModelLoader<StyleModelNameParam: crate::nodes::types::String> {
     ///No documentation.
     pub style_model_name: StyleModelNameParam,
@@ -465,6 +477,7 @@ for StyleModelLoader<StyleModelNameParam> {
 }
 ///**Load Upscale Model**: No description.
 #[derive(Clone)]
+#[allow(non_camel_case_types)]
 pub struct UpscaleModelLoader<ModelNameParam: crate::nodes::types::String> {
     ///No documentation.
     pub model_name: ModelNameParam,
@@ -493,18 +506,19 @@ for UpscaleModelLoader<ModelNameParam> {
 }
 ///**Load VAE**: No description.
 #[derive(Clone)]
-pub struct VaeLoader<VaeNameParam: crate::nodes::types::String> {
+#[allow(non_camel_case_types)]
+pub struct VAELoader<VaeNameParam: crate::nodes::types::String> {
     ///No documentation.
     pub vae_name: VaeNameParam,
 }
-impl<VaeNameParam: crate::nodes::types::String> VaeLoader<VaeNameParam> {
+impl<VaeNameParam: crate::nodes::types::String> VAELoader<VaeNameParam> {
     /// Create a new node.
     pub fn new(vae_name: VaeNameParam) -> Self {
         Self { vae_name }
     }
 }
 impl<VaeNameParam: crate::nodes::types::String> crate::nodes::TypedNode
-for VaeLoader<VaeNameParam> {
+for VAELoader<VaeNameParam> {
     type Output = crate::nodes::types::VaeOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)
@@ -521,19 +535,20 @@ for VaeLoader<VaeNameParam> {
 }
 ///**unCLIPCheckpointLoader**: No description.
 #[derive(Clone)]
-pub struct UnClipCheckpointLoader<CkptNameParam: crate::nodes::types::String> {
+#[allow(non_camel_case_types)]
+pub struct unCLIPCheckpointLoader<CkptNameParam: crate::nodes::types::String> {
     ///No documentation.
     pub ckpt_name: CkptNameParam,
 }
-impl<CkptNameParam: crate::nodes::types::String> UnClipCheckpointLoader<CkptNameParam> {
+impl<CkptNameParam: crate::nodes::types::String> unCLIPCheckpointLoader<CkptNameParam> {
     /// Create a new node.
     pub fn new(ckpt_name: CkptNameParam) -> Self {
         Self { ckpt_name }
     }
 }
 impl<CkptNameParam: crate::nodes::types::String> crate::nodes::TypedNode
-for UnClipCheckpointLoader<CkptNameParam> {
-    type Output = out::UnClipCheckpointLoaderOutput;
+for unCLIPCheckpointLoader<CkptNameParam> {
+    type Output = out::unCLIPCheckpointLoaderOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
             model: crate::nodes::types::ModelOut::from_dynamic(node_id, 0u32),

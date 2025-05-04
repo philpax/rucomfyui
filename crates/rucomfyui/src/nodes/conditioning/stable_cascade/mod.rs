@@ -7,7 +7,8 @@ use crate::{
 };
 ///**StableCascade_StageB_Conditioning**: No description.
 #[derive(Clone)]
-pub struct StableCascadeStageBConditioning<
+#[allow(non_camel_case_types)]
+pub struct StableCascade_StageB_Conditioning<
     ConditioningParam: crate::nodes::types::Conditioning,
     StageCParam: crate::nodes::types::Latent,
 > {
@@ -19,7 +20,7 @@ pub struct StableCascadeStageBConditioning<
 impl<
     ConditioningParam: crate::nodes::types::Conditioning,
     StageCParam: crate::nodes::types::Latent,
-> StableCascadeStageBConditioning<ConditioningParam, StageCParam> {
+> StableCascade_StageB_Conditioning<ConditioningParam, StageCParam> {
     /// Create a new node.
     pub fn new(conditioning: ConditioningParam, stage_c: StageCParam) -> Self {
         Self { conditioning, stage_c }
@@ -29,7 +30,7 @@ impl<
     ConditioningParam: crate::nodes::types::Conditioning,
     StageCParam: crate::nodes::types::Latent,
 > crate::nodes::TypedNode
-for StableCascadeStageBConditioning<ConditioningParam, StageCParam> {
+for StableCascade_StageB_Conditioning<ConditioningParam, StageCParam> {
     type Output = crate::nodes::types::ConditioningOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)

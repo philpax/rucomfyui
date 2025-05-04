@@ -7,6 +7,7 @@ use crate::{
 };
 ///**Crop Latent**: No description.
 #[derive(Clone)]
+#[allow(non_camel_case_types)]
 pub struct LatentCrop<
     SamplesParam: crate::nodes::types::Latent,
     WidthParam: crate::nodes::types::Int,
@@ -105,6 +106,7 @@ for LatentCrop<SamplesParam, WidthParam, HeightParam, XParam, YParam> {
 }
 ///**Flip Latent**: No description.
 #[derive(Clone)]
+#[allow(non_camel_case_types)]
 pub struct LatentFlip<
     SamplesParam: crate::nodes::types::Latent,
     FlipMethodParam: crate::nodes::types::String,
@@ -144,6 +146,7 @@ impl<
 }
 ///**Rotate Latent**: No description.
 #[derive(Clone)]
+#[allow(non_camel_case_types)]
 pub struct LatentRotate<
     SamplesParam: crate::nodes::types::Latent,
     RotationParam: crate::nodes::types::String,

@@ -7,6 +7,7 @@ use crate::{
 };
 ///**LatentBatch**: No description.
 #[derive(Clone)]
+#[allow(non_camel_case_types)]
 pub struct LatentBatch<
     Samples1Param: crate::nodes::types::Latent,
     Samples2Param: crate::nodes::types::Latent,
@@ -46,6 +47,7 @@ impl<
 }
 ///**Latent From Batch**: No description.
 #[derive(Clone)]
+#[allow(non_camel_case_types)]
 pub struct LatentFromBatch<
     SamplesParam: crate::nodes::types::Latent,
     BatchIndexParam: crate::nodes::types::Int,
@@ -112,6 +114,7 @@ for LatentFromBatch<SamplesParam, BatchIndexParam, LengthParam> {
 }
 ///**Rebatch Latents**: No description.
 #[derive(Clone)]
+#[allow(non_camel_case_types)]
 pub struct RebatchLatents<
     LatentsParam: crate::nodes::types::Latent,
     BatchSizeParam: crate::nodes::types::Int,
@@ -157,6 +160,7 @@ impl<
 }
 ///**Repeat Latent Batch**: No description.
 #[derive(Clone)]
+#[allow(non_camel_case_types)]
 pub struct RepeatLatentBatch<
     SamplesParam: crate::nodes::types::Latent,
     AmountParam: crate::nodes::types::Int,

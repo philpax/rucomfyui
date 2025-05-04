@@ -8,6 +8,7 @@ use crate::{
 pub mod compositing;
 ///**CropMask**: No description.
 #[derive(Clone)]
+#[allow(non_camel_case_types)]
 pub struct CropMask<
     MaskParam: crate::nodes::types::Mask,
     XParam: crate::nodes::types::Int,
@@ -100,6 +101,7 @@ for CropMask<MaskParam, XParam, YParam, WidthParam, HeightParam> {
 }
 ///**FeatherMask**: No description.
 #[derive(Clone)]
+#[allow(non_camel_case_types)]
 pub struct FeatherMask<
     MaskParam: crate::nodes::types::Mask,
     LeftParam: crate::nodes::types::Int,
@@ -198,6 +200,7 @@ for FeatherMask<MaskParam, LeftParam, TopParam, RightParam, BottomParam> {
 }
 ///**GrowMask**: No description.
 #[derive(Clone)]
+#[allow(non_camel_case_types)]
 pub struct GrowMask<
     MaskParam: crate::nodes::types::Mask,
     ExpandParam: crate::nodes::types::Int,
@@ -263,6 +266,7 @@ impl<
 }
 ///**ImageColorToMask**: No description.
 #[derive(Clone)]
+#[allow(non_camel_case_types)]
 pub struct ImageColorToMask<
     ImageParam: crate::nodes::types::Image,
     ColorParam: crate::nodes::types::Int,
@@ -310,6 +314,7 @@ impl<
 }
 ///**Convert Image to Mask**: No description.
 #[derive(Clone)]
+#[allow(non_camel_case_types)]
 pub struct ImageToMask<
     ImageParam: crate::nodes::types::Image,
     ChannelParam: crate::nodes::types::String,
@@ -349,6 +354,7 @@ impl<
 }
 ///**InvertMask**: No description.
 #[derive(Clone)]
+#[allow(non_camel_case_types)]
 pub struct InvertMask<MaskParam: crate::nodes::types::Mask> {
     ///No documentation.
     pub mask: MaskParam,
@@ -377,6 +383,7 @@ for InvertMask<MaskParam> {
 }
 ///**Load Image (as Mask)**: No description.
 #[derive(Clone)]
+#[allow(non_camel_case_types)]
 pub struct LoadImageMask<
     ImageParam: crate::nodes::types::String,
     ChannelParam: crate::nodes::types::String,
@@ -420,6 +427,7 @@ impl<
 }
 ///**MaskComposite**: No description.
 #[derive(Clone)]
+#[allow(non_camel_case_types)]
 pub struct MaskComposite<
     DestinationParam: crate::nodes::types::Mask,
     SourceParam: crate::nodes::types::Mask,
@@ -504,6 +512,7 @@ for MaskComposite<DestinationParam, SourceParam, XParam, YParam, OperationParam>
 }
 ///**MaskPreview**: Saves the input images to your ComfyUI output directory.
 #[derive(Clone)]
+#[allow(non_camel_case_types)]
 pub struct MaskPreview<MaskParam: crate::nodes::types::Mask> {
     ///No documentation.
     pub mask: MaskParam,
@@ -534,6 +543,7 @@ impl<MaskParam: crate::nodes::types::Mask> crate::nodes::TypedOutputNode
 for MaskPreview<MaskParam> {}
 ///**Convert Mask to Image**: No description.
 #[derive(Clone)]
+#[allow(non_camel_case_types)]
 pub struct MaskToImage<MaskParam: crate::nodes::types::Mask> {
     ///No documentation.
     pub mask: MaskParam,
@@ -562,6 +572,7 @@ for MaskToImage<MaskParam> {
 }
 ///**SolidMask**: No description.
 #[derive(Clone)]
+#[allow(non_camel_case_types)]
 pub struct SolidMask<
     ValueParam: crate::nodes::types::Float,
     WidthParam: crate::nodes::types::Int,
@@ -628,6 +639,7 @@ impl<
 }
 ///**ThresholdMask**: No description.
 #[derive(Clone)]
+#[allow(non_camel_case_types)]
 pub struct ThresholdMask<
     MaskParam: crate::nodes::types::Mask,
     ValueParam: crate::nodes::types::Float,

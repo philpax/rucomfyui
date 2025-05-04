@@ -7,6 +7,7 @@ use crate::{
 };
 ///**Create Hook Keyframe**: No description.
 #[derive(Clone)]
+#[allow(non_camel_case_types)]
 pub struct CreateHookKeyframe<
     StrengthMultParam: crate::nodes::types::Float,
     StartPercentParam: crate::nodes::types::Float,
@@ -78,6 +79,7 @@ for CreateHookKeyframe<StrengthMultParam, StartPercentParam, PrevHookKfParam> {
 }
 ///**Create Hook Keyframes From Floats**: No description.
 #[derive(Clone)]
+#[allow(non_camel_case_types)]
 pub struct CreateHookKeyframesFromFloats<
     StartPercentParam: crate::nodes::types::Float,
     EndPercentParam: crate::nodes::types::Float,
@@ -172,6 +174,7 @@ for CreateHookKeyframesFromFloats<
 }
 ///**Create Hook Keyframes Interp.**: No description.
 #[derive(Clone)]
+#[allow(non_camel_case_types)]
 pub struct CreateHookKeyframesInterpolated<
     StrengthStartParam: crate::nodes::types::Float,
     StrengthEndParam: crate::nodes::types::Float,
@@ -328,6 +331,7 @@ for CreateHookKeyframesInterpolated<
 }
 ///**Set Hook Keyframes**: No description.
 #[derive(Clone)]
+#[allow(non_camel_case_types)]
 pub struct SetHookKeyframes<
     HooksParam: crate::nodes::types::Hooks,
     HookKfParam: crate::nodes::types::HookKeyframes

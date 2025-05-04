@@ -7,6 +7,7 @@ use crate::{
 };
 ///**T5TokenizerOptions**: No description.
 #[derive(Clone)]
+#[allow(non_camel_case_types)]
 pub struct T5TokenizerOptions<
     ClipParam: crate::nodes::types::Clip,
     MinPaddingParam: crate::nodes::types::Int,

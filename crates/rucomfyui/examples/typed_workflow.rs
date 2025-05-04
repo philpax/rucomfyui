@@ -3,7 +3,7 @@
 
 use anyhow::Context;
 use rucomfyui::nodes::all::{
-    CheckpointLoaderSimple, ClipTextEncode, EmptyLatentImage, KSampler, PreviewImage, VaeDecode,
+    CLIPTextEncode, CheckpointLoaderSimple, EmptyLatentImage, KSampler, PreviewImage, VAEDecode,
 };
 
 #[tokio::main]
@@ -33,7 +33,7 @@ fn workflow() -> (rucomfyui::Workflow, rucomfyui::WorkflowNodeId) {
     let g = rucomfyui::WorkflowGraph::new();
 
     let c = g.add(CheckpointLoaderSimple::new("sd_xl_base_1.0.safetensors"));
-    let preview_image = g.add(PreviewImage::new(g.add(VaeDecode {
+    let preview_image = g.add(PreviewImage::new(g.add(VAEDecode {
         vae: c.vae,
         samples: g.add(KSampler {
             model: c.model,
@@ -42,8 +42,8 @@ fn workflow() -> (rucomfyui::Workflow, rucomfyui::WorkflowNodeId) {
             cfg: 8.0,
             sampler_name: "euler",
             scheduler: "normal",
-            positive: g.add(ClipTextEncode::new("a cat sleeping on a red chair", c.clip)),
-            negative: g.add(ClipTextEncode::new("text", c.clip)),
+            positive: g.add(CLIPTextEncode::new("a cat sleeping on a red chair", c.clip)),
+            negative: g.add(CLIPTextEncode::new("text", c.clip)),
             latent_image: g.add(EmptyLatentImage {
                 width: 1024,
                 height: 1024,

@@ -7,6 +7,7 @@ use crate::{
 };
 ///**Combine Hooks [2]**: No description.
 #[derive(Clone)]
+#[allow(non_camel_case_types)]
 pub struct CombineHooks2<
     HooksAParam: crate::nodes::types::Hooks = crate::nodes::types::HooksOut,
     HooksBParam: crate::nodes::types::Hooks = crate::nodes::types::HooksOut,
@@ -50,6 +51,7 @@ impl<
 }
 ///**Combine Hooks [4]**: No description.
 #[derive(Clone)]
+#[allow(non_camel_case_types)]
 pub struct CombineHooks4<
     HooksAParam: crate::nodes::types::Hooks = crate::nodes::types::HooksOut,
     HooksBParam: crate::nodes::types::Hooks = crate::nodes::types::HooksOut,
@@ -120,6 +122,7 @@ for CombineHooks4<HooksAParam, HooksBParam, HooksCParam, HooksDParam> {
 }
 ///**Combine Hooks [8]**: No description.
 #[derive(Clone)]
+#[allow(non_camel_case_types)]
 pub struct CombineHooks8<
     HooksAParam: crate::nodes::types::Hooks = crate::nodes::types::HooksOut,
     HooksBParam: crate::nodes::types::Hooks = crate::nodes::types::HooksOut,

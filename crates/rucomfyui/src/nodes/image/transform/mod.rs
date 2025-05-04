@@ -7,6 +7,7 @@ use crate::{
 };
 ///**Image Crop**: No description.
 #[derive(Clone)]
+#[allow(non_camel_case_types)]
 pub struct ImageCrop<
     ImageParam: crate::nodes::types::Image,
     WidthParam: crate::nodes::types::Int,

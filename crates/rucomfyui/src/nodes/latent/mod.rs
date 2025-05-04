@@ -16,6 +16,7 @@ pub mod transform;
 pub mod video;
 ///**Empty Latent Image**: Create a new batch of empty latent images to be denoised via sampling.
 #[derive(Clone)]
+#[allow(non_camel_case_types)]
 pub struct EmptyLatentImage<
     WidthParam: crate::nodes::types::Int,
     HeightParam: crate::nodes::types::Int,
@@ -85,6 +86,7 @@ impl<
 }
 ///**Latent Composite**: No description.
 #[derive(Clone)]
+#[allow(non_camel_case_types)]
 pub struct LatentComposite<
     SamplesToParam: crate::nodes::types::Latent,
     SamplesFromParam: crate::nodes::types::Latent,
@@ -176,6 +178,7 @@ for LatentComposite<SamplesToParam, SamplesFromParam, XParam, YParam, FeatherPar
 }
 ///**LatentCompositeMasked**: No description.
 #[derive(Clone)]
+#[allow(non_camel_case_types)]
 pub struct LatentCompositeMasked<
     DestinationParam: crate::nodes::types::Latent,
     SourceParam: crate::nodes::types::Latent,
@@ -288,6 +291,7 @@ for LatentCompositeMasked<
 }
 ///**Upscale Latent**: No description.
 #[derive(Clone)]
+#[allow(non_camel_case_types)]
 pub struct LatentUpscale<
     SamplesParam: crate::nodes::types::Latent,
     UpscaleMethodParam: crate::nodes::types::String,
@@ -372,6 +376,7 @@ for LatentUpscale<SamplesParam, UpscaleMethodParam, WidthParam, HeightParam, Cro
 }
 ///**Upscale Latent By**: No description.
 #[derive(Clone)]
+#[allow(non_camel_case_types)]
 pub struct LatentUpscaleBy<
     SamplesParam: crate::nodes::types::Latent,
     UpscaleMethodParam: crate::nodes::types::String,
@@ -433,7 +438,8 @@ for LatentUpscaleBy<SamplesParam, UpscaleMethodParam, ScaleByParam> {
 }
 ///**VAE Decode**: Decodes latent images back into pixel space images.
 #[derive(Clone)]
-pub struct VaeDecode<
+#[allow(non_camel_case_types)]
+pub struct VAEDecode<
     SamplesParam: crate::nodes::types::Latent,
     VaeParam: crate::nodes::types::Vae,
 > {
@@ -445,7 +451,7 @@ pub struct VaeDecode<
 impl<
     SamplesParam: crate::nodes::types::Latent,
     VaeParam: crate::nodes::types::Vae,
-> VaeDecode<SamplesParam, VaeParam> {
+> VAEDecode<SamplesParam, VaeParam> {
     /// Create a new node.
     pub fn new(samples: SamplesParam, vae: VaeParam) -> Self {
         Self { samples, vae }
@@ -454,7 +460,7 @@ impl<
 impl<
     SamplesParam: crate::nodes::types::Latent,
     VaeParam: crate::nodes::types::Vae,
-> crate::nodes::TypedNode for VaeDecode<SamplesParam, VaeParam> {
+> crate::nodes::TypedNode for VAEDecode<SamplesParam, VaeParam> {
     type Output = crate::nodes::types::ImageOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)
@@ -472,7 +478,8 @@ impl<
 }
 ///**VAE Encode**: No description.
 #[derive(Clone)]
-pub struct VaeEncode<
+#[allow(non_camel_case_types)]
+pub struct VAEEncode<
     PixelsParam: crate::nodes::types::Image,
     VaeParam: crate::nodes::types::Vae,
 > {
@@ -484,7 +491,7 @@ pub struct VaeEncode<
 impl<
     PixelsParam: crate::nodes::types::Image,
     VaeParam: crate::nodes::types::Vae,
-> VaeEncode<PixelsParam, VaeParam> {
+> VAEEncode<PixelsParam, VaeParam> {
     /// Create a new node.
     pub fn new(pixels: PixelsParam, vae: VaeParam) -> Self {
         Self { pixels, vae }
@@ -493,7 +500,7 @@ impl<
 impl<
     PixelsParam: crate::nodes::types::Image,
     VaeParam: crate::nodes::types::Vae,
-> crate::nodes::TypedNode for VaeEncode<PixelsParam, VaeParam> {
+> crate::nodes::TypedNode for VAEEncode<PixelsParam, VaeParam> {
     type Output = crate::nodes::types::LatentOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)

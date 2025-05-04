@@ -7,9 +7,10 @@ use crate::{
 };
 /// Output types for nodes.
 pub mod out {
-    ///Output for [`Sd4XUpscaleConditioning`](super::Sd4XUpscaleConditioning).
+    ///Output for [`SD_4XUpscale_Conditioning`](super::SD_4XUpscale_Conditioning).
     #[derive(Clone)]
-    pub struct Sd4XUpscaleConditioningOutput {
+    #[allow(non_camel_case_types)]
+    pub struct SD_4XUpscale_ConditioningOutput {
         ///No documentation.
         pub positive: crate::nodes::types::ConditioningOut,
         ///No documentation.
@@ -20,7 +21,8 @@ pub mod out {
 }
 ///**SD_4XUpscale_Conditioning**: No description.
 #[derive(Clone)]
-pub struct Sd4XUpscaleConditioning<
+#[allow(non_camel_case_types)]
+pub struct SD_4XUpscale_Conditioning<
     ImagesParam: crate::nodes::types::Image,
     PositiveParam: crate::nodes::types::Conditioning,
     NegativeParam: crate::nodes::types::Conditioning,
@@ -58,7 +60,7 @@ impl<
     NegativeParam: crate::nodes::types::Conditioning,
     ScaleRatioParam: crate::nodes::types::Float,
     NoiseAugmentationParam: crate::nodes::types::Float,
-> Sd4XUpscaleConditioning<
+> SD_4XUpscale_Conditioning<
     ImagesParam,
     PositiveParam,
     NegativeParam,
@@ -89,14 +91,14 @@ impl<
     ScaleRatioParam: crate::nodes::types::Float,
     NoiseAugmentationParam: crate::nodes::types::Float,
 > crate::nodes::TypedNode
-for Sd4XUpscaleConditioning<
+for SD_4XUpscale_Conditioning<
     ImagesParam,
     PositiveParam,
     NegativeParam,
     ScaleRatioParam,
     NoiseAugmentationParam,
 > {
-    type Output = out::Sd4XUpscaleConditioningOutput;
+    type Output = out::SD_4XUpscale_ConditioningOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
             positive: crate::nodes::types::ConditioningOut::from_dynamic(node_id, 0u32),

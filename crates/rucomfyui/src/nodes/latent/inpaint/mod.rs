@@ -7,6 +7,7 @@ use crate::{
 };
 ///**Set Latent Noise Mask**: No description.
 #[derive(Clone)]
+#[allow(non_camel_case_types)]
 pub struct SetLatentNoiseMask<
     SamplesParam: crate::nodes::types::Latent,
     MaskParam: crate::nodes::types::Mask,
@@ -46,7 +47,8 @@ impl<
 }
 ///**VAE Encode (for Inpainting)**: No description.
 #[derive(Clone)]
-pub struct VaeEncodeForInpaint<
+#[allow(non_camel_case_types)]
+pub struct VAEEncodeForInpaint<
     PixelsParam: crate::nodes::types::Image,
     VaeParam: crate::nodes::types::Vae,
     MaskParam: crate::nodes::types::Mask,
@@ -73,7 +75,7 @@ impl<
     VaeParam: crate::nodes::types::Vae,
     MaskParam: crate::nodes::types::Mask,
     GrowMaskByParam: crate::nodes::types::Int,
-> VaeEncodeForInpaint<PixelsParam, VaeParam, MaskParam, GrowMaskByParam> {
+> VAEEncodeForInpaint<PixelsParam, VaeParam, MaskParam, GrowMaskByParam> {
     /// Create a new node.
     pub fn new(
         pixels: PixelsParam,
@@ -95,7 +97,7 @@ impl<
     MaskParam: crate::nodes::types::Mask,
     GrowMaskByParam: crate::nodes::types::Int,
 > crate::nodes::TypedNode
-for VaeEncodeForInpaint<PixelsParam, VaeParam, MaskParam, GrowMaskByParam> {
+for VAEEncodeForInpaint<PixelsParam, VaeParam, MaskParam, GrowMaskByParam> {
     type Output = crate::nodes::types::LatentOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)

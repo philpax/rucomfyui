@@ -7,6 +7,7 @@ use crate::{
 };
 ///**Image Blend**: No description.
 #[derive(Clone)]
+#[allow(non_camel_case_types)]
 pub struct ImageBlend<
     Image1Param: crate::nodes::types::Image,
     Image2Param: crate::nodes::types::Image,
@@ -76,6 +77,7 @@ for ImageBlend<Image1Param, Image2Param, BlendFactorParam, BlendModeParam> {
 }
 ///**Image Blur**: No description.
 #[derive(Clone)]
+#[allow(non_camel_case_types)]
 pub struct ImageBlur<
     ImageParam: crate::nodes::types::Image,
     BlurRadiusParam: crate::nodes::types::Int,
@@ -139,6 +141,7 @@ impl<
 }
 ///**Image Quantize**: No description.
 #[derive(Clone)]
+#[allow(non_camel_case_types)]
 pub struct ImageQuantize<
     ImageParam: crate::nodes::types::Image,
     ColorsParam: crate::nodes::types::Int,
@@ -191,6 +194,7 @@ impl<
 }
 ///**Image Sharpen**: No description.
 #[derive(Clone)]
+#[allow(non_camel_case_types)]
 pub struct ImageSharpen<
     ImageParam: crate::nodes::types::Image,
     SharpenRadiusParam: crate::nodes::types::Int,
@@ -274,6 +278,7 @@ for ImageSharpen<ImageParam, SharpenRadiusParam, SigmaParam, AlphaParam> {
 }
 ///**ImageMorphology**: No description.
 #[derive(Clone)]
+#[allow(non_camel_case_types)]
 pub struct Morphology<
     ImageParam: crate::nodes::types::Image,
     OperationParam: crate::nodes::types::String,

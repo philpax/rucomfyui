@@ -9,6 +9,7 @@ use crate::{
 pub mod out {
     ///Output for [`DiffusersLoader`](super::DiffusersLoader).
     #[derive(Clone)]
+    #[allow(non_camel_case_types)]
     pub struct DiffusersLoaderOutput {
         ///No documentation.
         pub model: crate::nodes::types::ModelOut,
@@ -20,6 +21,7 @@ pub mod out {
 }
 ///**DiffusersLoader**: No description.
 #[derive(Clone)]
+#[allow(non_camel_case_types)]
 pub struct DiffusersLoader<ModelPathParam: crate::nodes::types::String> {
     ///No documentation.
     pub model_path: ModelPathParam,

@@ -7,6 +7,7 @@ use crate::{
 };
 ///**Create Hook LoRA**: No description.
 #[derive(Clone)]
+#[allow(non_camel_case_types)]
 pub struct CreateHookLora<
     LoraNameParam: crate::nodes::types::String,
     StrengthModelParam: crate::nodes::types::Float,
@@ -90,6 +91,7 @@ for CreateHookLora<
 }
 ///**Create Hook LoRA (MO)**: No description.
 #[derive(Clone)]
+#[allow(non_camel_case_types)]
 pub struct CreateHookLoraModelOnly<
     LoraNameParam: crate::nodes::types::String,
     StrengthModelParam: crate::nodes::types::Float,
@@ -153,6 +155,7 @@ for CreateHookLoraModelOnly<LoraNameParam, StrengthModelParam, PrevHooksParam> {
 }
 ///**Create Hook Model as LoRA**: No description.
 #[derive(Clone)]
+#[allow(non_camel_case_types)]
 pub struct CreateHookModelAsLora<
     CkptNameParam: crate::nodes::types::String,
     StrengthModelParam: crate::nodes::types::Float,
@@ -241,6 +244,7 @@ for CreateHookModelAsLora<
 }
 ///**Create Hook Model as LoRA (MO)**: No description.
 #[derive(Clone)]
+#[allow(non_camel_case_types)]
 pub struct CreateHookModelAsLoraModelOnly<
     CkptNameParam: crate::nodes::types::String,
     StrengthModelParam: crate::nodes::types::Float,

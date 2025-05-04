@@ -9,6 +9,7 @@ use crate::{
 pub mod out {
     ///Output for [`InpaintModelConditioning`](super::InpaintModelConditioning).
     #[derive(Clone)]
+    #[allow(non_camel_case_types)]
     pub struct InpaintModelConditioningOutput {
         ///No documentation.
         pub positive: crate::nodes::types::ConditioningOut,
@@ -20,6 +21,7 @@ pub mod out {
 }
 ///**CosmosImageToVideoLatent**: No description.
 #[derive(Clone)]
+#[allow(non_camel_case_types)]
 pub struct CosmosImageToVideoLatent<
     VaeParam: crate::nodes::types::Vae,
     WidthParam: crate::nodes::types::Int,
@@ -153,6 +155,7 @@ for CosmosImageToVideoLatent<
 }
 ///**InpaintModelConditioning**: No description.
 #[derive(Clone)]
+#[allow(non_camel_case_types)]
 pub struct InpaintModelConditioning<
     PositiveParam: crate::nodes::types::Conditioning,
     NegativeParam: crate::nodes::types::Conditioning,

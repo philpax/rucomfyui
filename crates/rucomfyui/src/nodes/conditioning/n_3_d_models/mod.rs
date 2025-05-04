@@ -7,9 +7,10 @@ use crate::{
 };
 /// Output types for nodes.
 pub mod out {
-    ///Output for [`Sv3DConditioning`](super::Sv3DConditioning).
+    ///Output for [`SV3D_Conditioning`](super::SV3D_Conditioning).
     #[derive(Clone)]
-    pub struct Sv3DConditioningOutput {
+    #[allow(non_camel_case_types)]
+    pub struct SV3D_ConditioningOutput {
         ///No documentation.
         pub positive: crate::nodes::types::ConditioningOut,
         ///No documentation.
@@ -17,9 +18,10 @@ pub mod out {
         ///No documentation.
         pub latent: crate::nodes::types::LatentOut,
     }
-    ///Output for [`StableZero123Conditioning`](super::StableZero123Conditioning).
+    ///Output for [`StableZero123_Conditioning`](super::StableZero123_Conditioning).
     #[derive(Clone)]
-    pub struct StableZero123ConditioningOutput {
+    #[allow(non_camel_case_types)]
+    pub struct StableZero123_ConditioningOutput {
         ///No documentation.
         pub positive: crate::nodes::types::ConditioningOut,
         ///No documentation.
@@ -27,9 +29,10 @@ pub mod out {
         ///No documentation.
         pub latent: crate::nodes::types::LatentOut,
     }
-    ///Output for [`StableZero123ConditioningBatched`](super::StableZero123ConditioningBatched).
+    ///Output for [`StableZero123_Conditioning_Batched`](super::StableZero123_Conditioning_Batched).
     #[derive(Clone)]
-    pub struct StableZero123ConditioningBatchedOutput {
+    #[allow(non_camel_case_types)]
+    pub struct StableZero123_Conditioning_BatchedOutput {
         ///No documentation.
         pub positive: crate::nodes::types::ConditioningOut,
         ///No documentation.
@@ -40,7 +43,8 @@ pub mod out {
 }
 ///**SV3D_Conditioning**: No description.
 #[derive(Clone)]
-pub struct Sv3DConditioning<
+#[allow(non_camel_case_types)]
+pub struct SV3D_Conditioning<
     ClipVisionParam: crate::nodes::types::ClipVision,
     InitImageParam: crate::nodes::types::Image,
     VaeParam: crate::nodes::types::Vae,
@@ -100,7 +104,7 @@ impl<
     HeightParam: crate::nodes::types::Int,
     VideoFramesParam: crate::nodes::types::Int,
     ElevationParam: crate::nodes::types::Float,
-> Sv3DConditioning<
+> SV3D_Conditioning<
     ClipVisionParam,
     InitImageParam,
     VaeParam,
@@ -139,7 +143,7 @@ impl<
     VideoFramesParam: crate::nodes::types::Int,
     ElevationParam: crate::nodes::types::Float,
 > crate::nodes::TypedNode
-for Sv3DConditioning<
+for SV3D_Conditioning<
     ClipVisionParam,
     InitImageParam,
     VaeParam,
@@ -148,7 +152,7 @@ for Sv3DConditioning<
     VideoFramesParam,
     ElevationParam,
 > {
-    type Output = out::Sv3DConditioningOutput;
+    type Output = out::SV3D_ConditioningOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
             positive: crate::nodes::types::ConditioningOut::from_dynamic(node_id, 0u32),
@@ -174,7 +178,8 @@ for Sv3DConditioning<
 }
 ///**StableZero123_Conditioning**: No description.
 #[derive(Clone)]
-pub struct StableZero123Conditioning<
+#[allow(non_camel_case_types)]
+pub struct StableZero123_Conditioning<
     ClipVisionParam: crate::nodes::types::ClipVision,
     InitImageParam: crate::nodes::types::Image,
     VaeParam: crate::nodes::types::Vae,
@@ -246,7 +251,7 @@ impl<
     BatchSizeParam: crate::nodes::types::Int,
     ElevationParam: crate::nodes::types::Float,
     AzimuthParam: crate::nodes::types::Float,
-> StableZero123Conditioning<
+> StableZero123_Conditioning<
     ClipVisionParam,
     InitImageParam,
     VaeParam,
@@ -289,7 +294,7 @@ impl<
     ElevationParam: crate::nodes::types::Float,
     AzimuthParam: crate::nodes::types::Float,
 > crate::nodes::TypedNode
-for StableZero123Conditioning<
+for StableZero123_Conditioning<
     ClipVisionParam,
     InitImageParam,
     VaeParam,
@@ -299,7 +304,7 @@ for StableZero123Conditioning<
     ElevationParam,
     AzimuthParam,
 > {
-    type Output = out::StableZero123ConditioningOutput;
+    type Output = out::StableZero123_ConditioningOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
             positive: crate::nodes::types::ConditioningOut::from_dynamic(node_id, 0u32),
@@ -326,7 +331,8 @@ for StableZero123Conditioning<
 }
 ///**StableZero123_Conditioning_Batched**: No description.
 #[derive(Clone)]
-pub struct StableZero123ConditioningBatched<
+#[allow(non_camel_case_types)]
+pub struct StableZero123_Conditioning_Batched<
     ClipVisionParam: crate::nodes::types::ClipVision,
     InitImageParam: crate::nodes::types::Image,
     VaeParam: crate::nodes::types::Vae,
@@ -422,7 +428,7 @@ impl<
     AzimuthParam: crate::nodes::types::Float,
     ElevationBatchIncrementParam: crate::nodes::types::Float,
     AzimuthBatchIncrementParam: crate::nodes::types::Float,
-> StableZero123ConditioningBatched<
+> StableZero123_Conditioning_Batched<
     ClipVisionParam,
     InitImageParam,
     VaeParam,
@@ -473,7 +479,7 @@ impl<
     ElevationBatchIncrementParam: crate::nodes::types::Float,
     AzimuthBatchIncrementParam: crate::nodes::types::Float,
 > crate::nodes::TypedNode
-for StableZero123ConditioningBatched<
+for StableZero123_Conditioning_Batched<
     ClipVisionParam,
     InitImageParam,
     VaeParam,
@@ -485,7 +491,7 @@ for StableZero123ConditioningBatched<
     ElevationBatchIncrementParam,
     AzimuthBatchIncrementParam,
 > {
-    type Output = out::StableZero123ConditioningBatchedOutput;
+    type Output = out::StableZero123_Conditioning_BatchedOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
             positive: crate::nodes::types::ConditioningOut::from_dynamic(node_id, 0u32),

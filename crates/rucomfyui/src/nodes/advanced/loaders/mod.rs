@@ -10,6 +10,7 @@ pub mod deprecated;
 pub mod out {
     ///Output for [`CheckpointLoader`](super::CheckpointLoader).
     #[derive(Clone)]
+    #[allow(non_camel_case_types)]
     pub struct CheckpointLoaderOutput {
         ///No documentation.
         pub model: crate::nodes::types::ModelOut,
@@ -21,7 +22,8 @@ pub mod out {
 }
 #[doc = "**Load CLIP**: [Recipes]\n\nstable_diffusion: clip-l\nstable_cascade: clip-g\nsd3: t5 xxl/ clip-g / clip-l\nstable_audio: t5 base\nmochi: t5 xxl\ncosmos: old t5 xxl\nlumina2: gemma 2 2B\nwan: umt5 xxl\n hidream: llama-3.1 (Recommend) or t5"]
 #[derive(Clone)]
-pub struct ClipLoader<
+#[allow(non_camel_case_types)]
+pub struct CLIPLoader<
     ClipNameParam: crate::nodes::types::String,
     TypeParam: crate::nodes::types::String,
     DeviceParam: crate::nodes::types::String = crate::nodes::types::StringOut,
@@ -37,7 +39,7 @@ impl<
     ClipNameParam: crate::nodes::types::String,
     TypeParam: crate::nodes::types::String,
     DeviceParam: crate::nodes::types::String,
-> ClipLoader<ClipNameParam, TypeParam, DeviceParam> {
+> CLIPLoader<ClipNameParam, TypeParam, DeviceParam> {
     /// Create a new node.
     pub fn new(
         clip_name: ClipNameParam,
@@ -51,7 +53,7 @@ impl<
     ClipNameParam: crate::nodes::types::String,
     TypeParam: crate::nodes::types::String,
     DeviceParam: crate::nodes::types::String,
-> crate::nodes::TypedNode for ClipLoader<ClipNameParam, TypeParam, DeviceParam> {
+> crate::nodes::TypedNode for CLIPLoader<ClipNameParam, TypeParam, DeviceParam> {
     type Output = crate::nodes::types::ClipOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)
@@ -72,6 +74,7 @@ impl<
 }
 ///**Load Checkpoint With Config (DEPRECATED)**: No description.
 #[derive(Clone)]
+#[allow(non_camel_case_types)]
 pub struct CheckpointLoader<
     ConfigNameParam: crate::nodes::types::String,
     CkptNameParam: crate::nodes::types::String,
@@ -115,7 +118,8 @@ impl<
 }
 #[doc = "**DualCLIPLoader**: [Recipes]\n\nsdxl: clip-l, clip-g\nsd3: clip-l, clip-g / clip-l, t5 / clip-g, t5\nflux: clip-l, t5\nhidream: at least one of t5 or llama, recommended t5 and llama"]
 #[derive(Clone)]
-pub struct DualClipLoader<
+#[allow(non_camel_case_types)]
+pub struct DualCLIPLoader<
     ClipName1Param: crate::nodes::types::String,
     ClipName2Param: crate::nodes::types::String,
     TypeParam: crate::nodes::types::String,
@@ -135,7 +139,7 @@ impl<
     ClipName2Param: crate::nodes::types::String,
     TypeParam: crate::nodes::types::String,
     DeviceParam: crate::nodes::types::String,
-> DualClipLoader<ClipName1Param, ClipName2Param, TypeParam, DeviceParam> {
+> DualCLIPLoader<ClipName1Param, ClipName2Param, TypeParam, DeviceParam> {
     /// Create a new node.
     pub fn new(
         clip_name_1: ClipName1Param,
@@ -157,7 +161,7 @@ impl<
     TypeParam: crate::nodes::types::String,
     DeviceParam: crate::nodes::types::String,
 > crate::nodes::TypedNode
-for DualClipLoader<ClipName1Param, ClipName2Param, TypeParam, DeviceParam> {
+for DualCLIPLoader<ClipName1Param, ClipName2Param, TypeParam, DeviceParam> {
     type Output = crate::nodes::types::ClipOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)
@@ -179,7 +183,8 @@ for DualClipLoader<ClipName1Param, ClipName2Param, TypeParam, DeviceParam> {
 }
 #[doc = "**QuadrupleCLIPLoader**: [Recipes]\n\nhidream: long clip-l, long clip-g, t5xxl, llama_8b_3.1_instruct"]
 #[derive(Clone)]
-pub struct QuadrupleClipLoader<
+#[allow(non_camel_case_types)]
+pub struct QuadrupleCLIPLoader<
     ClipName1Param: crate::nodes::types::String,
     ClipName2Param: crate::nodes::types::String,
     ClipName3Param: crate::nodes::types::String,
@@ -199,7 +204,7 @@ impl<
     ClipName2Param: crate::nodes::types::String,
     ClipName3Param: crate::nodes::types::String,
     ClipName4Param: crate::nodes::types::String,
-> QuadrupleClipLoader<ClipName1Param, ClipName2Param, ClipName3Param, ClipName4Param> {
+> QuadrupleCLIPLoader<ClipName1Param, ClipName2Param, ClipName3Param, ClipName4Param> {
     /// Create a new node.
     pub fn new(
         clip_name_1: ClipName1Param,
@@ -221,7 +226,7 @@ impl<
     ClipName3Param: crate::nodes::types::String,
     ClipName4Param: crate::nodes::types::String,
 > crate::nodes::TypedNode
-for QuadrupleClipLoader<ClipName1Param, ClipName2Param, ClipName3Param, ClipName4Param> {
+for QuadrupleCLIPLoader<ClipName1Param, ClipName2Param, ClipName3Param, ClipName4Param> {
     type Output = crate::nodes::types::ClipOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)
@@ -241,7 +246,8 @@ for QuadrupleClipLoader<ClipName1Param, ClipName2Param, ClipName3Param, ClipName
 }
 #[doc = "**TripleCLIPLoader**: [Recipes]\n\nsd3: clip-l, clip-g, t5"]
 #[derive(Clone)]
-pub struct TripleClipLoader<
+#[allow(non_camel_case_types)]
+pub struct TripleCLIPLoader<
     ClipName1Param: crate::nodes::types::String,
     ClipName2Param: crate::nodes::types::String,
     ClipName3Param: crate::nodes::types::String,
@@ -257,7 +263,7 @@ impl<
     ClipName1Param: crate::nodes::types::String,
     ClipName2Param: crate::nodes::types::String,
     ClipName3Param: crate::nodes::types::String,
-> TripleClipLoader<ClipName1Param, ClipName2Param, ClipName3Param> {
+> TripleCLIPLoader<ClipName1Param, ClipName2Param, ClipName3Param> {
     /// Create a new node.
     pub fn new(
         clip_name_1: ClipName1Param,
@@ -276,7 +282,7 @@ impl<
     ClipName2Param: crate::nodes::types::String,
     ClipName3Param: crate::nodes::types::String,
 > crate::nodes::TypedNode
-for TripleClipLoader<ClipName1Param, ClipName2Param, ClipName3Param> {
+for TripleCLIPLoader<ClipName1Param, ClipName2Param, ClipName3Param> {
     type Output = crate::nodes::types::ClipOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)
@@ -295,7 +301,8 @@ for TripleClipLoader<ClipName1Param, ClipName2Param, ClipName3Param> {
 }
 ///**Load Diffusion Model**: No description.
 #[derive(Clone)]
-pub struct UnetLoader<
+#[allow(non_camel_case_types)]
+pub struct UNETLoader<
     UnetNameParam: crate::nodes::types::String,
     WeightDtypeParam: crate::nodes::types::String,
 > {
@@ -307,7 +314,7 @@ pub struct UnetLoader<
 impl<
     UnetNameParam: crate::nodes::types::String,
     WeightDtypeParam: crate::nodes::types::String,
-> UnetLoader<UnetNameParam, WeightDtypeParam> {
+> UNETLoader<UnetNameParam, WeightDtypeParam> {
     /// Create a new node.
     pub fn new(unet_name: UnetNameParam, weight_dtype: WeightDtypeParam) -> Self {
         Self { unet_name, weight_dtype }
@@ -316,7 +323,7 @@ impl<
 impl<
     UnetNameParam: crate::nodes::types::String,
     WeightDtypeParam: crate::nodes::types::String,
-> crate::nodes::TypedNode for UnetLoader<UnetNameParam, WeightDtypeParam> {
+> crate::nodes::TypedNode for UNETLoader<UnetNameParam, WeightDtypeParam> {
     type Output = crate::nodes::types::ModelOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)

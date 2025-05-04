@@ -7,7 +7,8 @@ use crate::{
 };
 ///**SaveAnimatedPNG**: No description.
 #[derive(Clone)]
-pub struct SaveAnimatedPng<
+#[allow(non_camel_case_types)]
+pub struct SaveAnimatedPNG<
     ImagesParam: crate::nodes::types::Image,
     FilenamePrefixParam: crate::nodes::types::String,
     FpsParam: crate::nodes::types::Float,
@@ -44,7 +45,7 @@ impl<
     FilenamePrefixParam: crate::nodes::types::String,
     FpsParam: crate::nodes::types::Float,
     CompressLevelParam: crate::nodes::types::Int,
-> SaveAnimatedPng<ImagesParam, FilenamePrefixParam, FpsParam, CompressLevelParam> {
+> SaveAnimatedPNG<ImagesParam, FilenamePrefixParam, FpsParam, CompressLevelParam> {
     /// Create a new node.
     pub fn new(
         images: ImagesParam,
@@ -66,7 +67,7 @@ impl<
     FpsParam: crate::nodes::types::Float,
     CompressLevelParam: crate::nodes::types::Int,
 > crate::nodes::TypedNode
-for SaveAnimatedPng<ImagesParam, FilenamePrefixParam, FpsParam, CompressLevelParam> {
+for SaveAnimatedPNG<ImagesParam, FilenamePrefixParam, FpsParam, CompressLevelParam> {
     type Output = WorkflowNodeId;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         node_id
@@ -91,10 +92,11 @@ impl<
     FpsParam: crate::nodes::types::Float,
     CompressLevelParam: crate::nodes::types::Int,
 > crate::nodes::TypedOutputNode
-for SaveAnimatedPng<ImagesParam, FilenamePrefixParam, FpsParam, CompressLevelParam> {}
+for SaveAnimatedPNG<ImagesParam, FilenamePrefixParam, FpsParam, CompressLevelParam> {}
 ///**SaveAnimatedWEBP**: No description.
 #[derive(Clone)]
-pub struct SaveAnimatedWebp<
+#[allow(non_camel_case_types)]
+pub struct SaveAnimatedWEBP<
     ImagesParam: crate::nodes::types::Image,
     FilenamePrefixParam: crate::nodes::types::String,
     FpsParam: crate::nodes::types::Float,
@@ -143,7 +145,7 @@ impl<
     LosslessParam: crate::nodes::types::Boolean,
     QualityParam: crate::nodes::types::Int,
     MethodParam: crate::nodes::types::String,
-> SaveAnimatedWebp<
+> SaveAnimatedWEBP<
     ImagesParam,
     FilenamePrefixParam,
     FpsParam,
@@ -178,7 +180,7 @@ impl<
     QualityParam: crate::nodes::types::Int,
     MethodParam: crate::nodes::types::String,
 > crate::nodes::TypedNode
-for SaveAnimatedWebp<
+for SaveAnimatedWEBP<
     ImagesParam,
     FilenamePrefixParam,
     FpsParam,
@@ -214,7 +216,7 @@ impl<
     QualityParam: crate::nodes::types::Int,
     MethodParam: crate::nodes::types::String,
 > crate::nodes::TypedOutputNode
-for SaveAnimatedWebp<
+for SaveAnimatedWEBP<
     ImagesParam,
     FilenamePrefixParam,
     FpsParam,

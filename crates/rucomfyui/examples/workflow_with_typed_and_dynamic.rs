@@ -5,7 +5,7 @@
 use anyhow::Context;
 use rucomfyui::{
     nodes::{
-        all::{ClipTextEncode, EmptyLatentImage, KSampler},
+        all::{CLIPTextEncode, EmptyLatentImage, KSampler},
         types::{ClipOut, ConditioningOut, ModelOut, Out, VaeOut},
     },
     workflow::{WorkflowMeta, WorkflowNode},
@@ -60,7 +60,7 @@ fn workflow() -> (rucomfyui::Workflow, rucomfyui::WorkflowNodeId) {
         cfg: 8.0,
         sampler_name: "euler",
         scheduler: "normal",
-        positive: g.add(ClipTextEncode::new("a cat sleeping on a red chair", clip)),
+        positive: g.add(CLIPTextEncode::new("a cat sleeping on a red chair", clip)),
         // `ConditioningOut::from_dynamic` is used to connect a dynamic node to a typed node that
         // implements `Conditioning`.
         negative: ConditioningOut::from_dynamic(negative, 0),

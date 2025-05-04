@@ -93,7 +93,7 @@ fn all_nodes(tree: &CategoryTree, ctx: &[syn::Ident]) -> Result<TokenStream> {
                     )?;
                 }
                 CategoryTreeNode::Object(object) => {
-                    let name = util::name_to_ident(&object.name, util::NameToIdentCase::Pascal)?;
+                    let name = util::name_to_ident(&object.name, util::NameToIdentCase::Preserve)?;
                     statements.push(quote! {
                         pub use crate :: nodes :: #(#ctx::)* #name;
                     });
@@ -268,12 +268,13 @@ fn write_category_tree((name, tree): (&str, &CategoryTree), directory: &Path) ->
                 });
             }
             CategoryTreeNode::Object(object) => {
-                let struct_name = util::name_to_ident(&object.name, util::NameToIdentCase::Pascal)?;
+                let struct_name =
+                    util::name_to_ident(&object.name, util::NameToIdentCase::Preserve)?;
                 let node_output_struct_name = (!object.output_node && object.output.len() > 1)
                     .then(|| {
                         util::name_to_ident(
                             &format!("{}Output", object.name),
-                            util::NameToIdentCase::Pascal,
+                            util::NameToIdentCase::Preserve,
                         )
                     })
                     .transpose()?;
@@ -506,6 +507,7 @@ fn write_node_struct(
     quote! {
         #[doc = #doc]
         #[derive(Clone)]
+        #[allow(non_camel_case_types)]
         pub struct #struct_name < #(#input_generics),* > {
             #(#fields),*
         }
@@ -683,6 +685,7 @@ fn write_node_output_struct(
     Ok(quote! {
         #[doc = #doc]
         #[derive(Clone)]
+        #[allow(non_camel_case_types)]
         pub struct #node_output_struct_name {
             #(#fields),*
         }

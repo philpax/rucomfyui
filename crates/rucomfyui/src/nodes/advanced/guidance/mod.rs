@@ -7,18 +7,19 @@ use crate::{
 };
 ///**CFGZeroStar**: No description.
 #[derive(Clone)]
-pub struct CfgZeroStar<ModelParam: crate::nodes::types::Model> {
+#[allow(non_camel_case_types)]
+pub struct CFGZeroStar<ModelParam: crate::nodes::types::Model> {
     ///No documentation.
     pub model: ModelParam,
 }
-impl<ModelParam: crate::nodes::types::Model> CfgZeroStar<ModelParam> {
+impl<ModelParam: crate::nodes::types::Model> CFGZeroStar<ModelParam> {
     /// Create a new node.
     pub fn new(model: ModelParam) -> Self {
         Self { model }
     }
 }
 impl<ModelParam: crate::nodes::types::Model> crate::nodes::TypedNode
-for CfgZeroStar<ModelParam> {
+for CFGZeroStar<ModelParam> {
     type Output = crate::nodes::types::ModelOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)
@@ -35,6 +36,7 @@ for CfgZeroStar<ModelParam> {
 }
 ///**SkipLayerGuidanceDiT**: Generic version of SkipLayerGuidance node that can be used on every DiT model.
 #[derive(Clone)]
+#[allow(non_camel_case_types)]
 pub struct SkipLayerGuidanceDiT<
     ModelParam: crate::nodes::types::Model,
     DoubleLayersParam: crate::nodes::types::String,
@@ -176,7 +178,8 @@ for SkipLayerGuidanceDiT<
 }
 ///**SkipLayerGuidanceSD3**: Generic version of SkipLayerGuidance node that can be used on every DiT model.
 #[derive(Clone)]
-pub struct SkipLayerGuidanceSd3<
+#[allow(non_camel_case_types)]
+pub struct SkipLayerGuidanceSD3<
     ModelParam: crate::nodes::types::Model,
     LayersParam: crate::nodes::types::String,
     ScaleParam: crate::nodes::types::Float,
@@ -226,7 +229,7 @@ impl<
     ScaleParam: crate::nodes::types::Float,
     StartPercentParam: crate::nodes::types::Float,
     EndPercentParam: crate::nodes::types::Float,
-> SkipLayerGuidanceSd3<
+> SkipLayerGuidanceSD3<
     ModelParam,
     LayersParam,
     ScaleParam,
@@ -257,7 +260,7 @@ impl<
     StartPercentParam: crate::nodes::types::Float,
     EndPercentParam: crate::nodes::types::Float,
 > crate::nodes::TypedNode
-for SkipLayerGuidanceSd3<
+for SkipLayerGuidanceSD3<
     ModelParam,
     LayersParam,
     ScaleParam,

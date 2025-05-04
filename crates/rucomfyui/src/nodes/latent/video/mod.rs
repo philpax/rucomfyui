@@ -8,6 +8,7 @@ use crate::{
 pub mod ltxv;
 ///**EmptyCosmosLatentVideo**: No description.
 #[derive(Clone)]
+#[allow(non_camel_case_types)]
 pub struct EmptyCosmosLatentVideo<
     WidthParam: crate::nodes::types::Int,
     HeightParam: crate::nodes::types::Int,
@@ -97,6 +98,7 @@ for EmptyCosmosLatentVideo<WidthParam, HeightParam, LengthParam, BatchSizeParam>
 }
 ///**EmptyHunyuanLatentVideo**: No description.
 #[derive(Clone)]
+#[allow(non_camel_case_types)]
 pub struct EmptyHunyuanLatentVideo<
     WidthParam: crate::nodes::types::Int,
     HeightParam: crate::nodes::types::Int,
@@ -186,6 +188,7 @@ for EmptyHunyuanLatentVideo<WidthParam, HeightParam, LengthParam, BatchSizeParam
 }
 ///**EmptyMochiLatentVideo**: No description.
 #[derive(Clone)]
+#[allow(non_camel_case_types)]
 pub struct EmptyMochiLatentVideo<
     WidthParam: crate::nodes::types::Int,
     HeightParam: crate::nodes::types::Int,
@@ -275,6 +278,7 @@ for EmptyMochiLatentVideo<WidthParam, HeightParam, LengthParam, BatchSizeParam> 
 }
 ///**TrimVideoLatent**: No description.
 #[derive(Clone)]
+#[allow(non_camel_case_types)]
 pub struct TrimVideoLatent<
     SamplesParam: crate::nodes::types::Latent,
     TrimAmountParam: crate::nodes::types::Int,

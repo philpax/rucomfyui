@@ -8,7 +8,8 @@ use crate::{
 pub mod model_specific;
 ///**CLIPMergeAdd**: No description.
 #[derive(Clone)]
-pub struct ClipMergeAdd<
+#[allow(non_camel_case_types)]
+pub struct CLIPMergeAdd<
     Clip1Param: crate::nodes::types::Clip,
     Clip2Param: crate::nodes::types::Clip,
 > {
@@ -20,7 +21,7 @@ pub struct ClipMergeAdd<
 impl<
     Clip1Param: crate::nodes::types::Clip,
     Clip2Param: crate::nodes::types::Clip,
-> ClipMergeAdd<Clip1Param, Clip2Param> {
+> CLIPMergeAdd<Clip1Param, Clip2Param> {
     /// Create a new node.
     pub fn new(clip_1: Clip1Param, clip_2: Clip2Param) -> Self {
         Self { clip_1, clip_2 }
@@ -29,7 +30,7 @@ impl<
 impl<
     Clip1Param: crate::nodes::types::Clip,
     Clip2Param: crate::nodes::types::Clip,
-> crate::nodes::TypedNode for ClipMergeAdd<Clip1Param, Clip2Param> {
+> crate::nodes::TypedNode for CLIPMergeAdd<Clip1Param, Clip2Param> {
     type Output = crate::nodes::types::ClipOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)
@@ -47,7 +48,8 @@ impl<
 }
 ///**CLIPMergeSimple**: No description.
 #[derive(Clone)]
-pub struct ClipMergeSimple<
+#[allow(non_camel_case_types)]
+pub struct CLIPMergeSimple<
     Clip1Param: crate::nodes::types::Clip,
     Clip2Param: crate::nodes::types::Clip,
     RatioParam: crate::nodes::types::Float,
@@ -70,7 +72,7 @@ impl<
     Clip1Param: crate::nodes::types::Clip,
     Clip2Param: crate::nodes::types::Clip,
     RatioParam: crate::nodes::types::Float,
-> ClipMergeSimple<Clip1Param, Clip2Param, RatioParam> {
+> CLIPMergeSimple<Clip1Param, Clip2Param, RatioParam> {
     /// Create a new node.
     pub fn new(clip_1: Clip1Param, clip_2: Clip2Param, ratio: RatioParam) -> Self {
         Self { clip_1, clip_2, ratio }
@@ -80,7 +82,7 @@ impl<
     Clip1Param: crate::nodes::types::Clip,
     Clip2Param: crate::nodes::types::Clip,
     RatioParam: crate::nodes::types::Float,
-> crate::nodes::TypedNode for ClipMergeSimple<Clip1Param, Clip2Param, RatioParam> {
+> crate::nodes::TypedNode for CLIPMergeSimple<Clip1Param, Clip2Param, RatioParam> {
     type Output = crate::nodes::types::ClipOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)
@@ -99,7 +101,8 @@ impl<
 }
 ///**CLIPMergeSubtract**: No description.
 #[derive(Clone)]
-pub struct ClipMergeSubtract<
+#[allow(non_camel_case_types)]
+pub struct CLIPMergeSubtract<
     Clip1Param: crate::nodes::types::Clip,
     Clip2Param: crate::nodes::types::Clip,
     MultiplierParam: crate::nodes::types::Float,
@@ -122,7 +125,7 @@ impl<
     Clip1Param: crate::nodes::types::Clip,
     Clip2Param: crate::nodes::types::Clip,
     MultiplierParam: crate::nodes::types::Float,
-> ClipMergeSubtract<Clip1Param, Clip2Param, MultiplierParam> {
+> CLIPMergeSubtract<Clip1Param, Clip2Param, MultiplierParam> {
     /// Create a new node.
     pub fn new(
         clip_1: Clip1Param,
@@ -137,7 +140,7 @@ impl<
     Clip2Param: crate::nodes::types::Clip,
     MultiplierParam: crate::nodes::types::Float,
 > crate::nodes::TypedNode
-for ClipMergeSubtract<Clip1Param, Clip2Param, MultiplierParam> {
+for CLIPMergeSubtract<Clip1Param, Clip2Param, MultiplierParam> {
     type Output = crate::nodes::types::ClipOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)
@@ -156,7 +159,8 @@ for ClipMergeSubtract<Clip1Param, Clip2Param, MultiplierParam> {
 }
 ///**CLIPSave**: No description.
 #[derive(Clone)]
-pub struct ClipSave<
+#[allow(non_camel_case_types)]
+pub struct CLIPSave<
     ClipParam: crate::nodes::types::Clip,
     FilenamePrefixParam: crate::nodes::types::String,
 > {
@@ -172,7 +176,7 @@ pub struct ClipSave<
 impl<
     ClipParam: crate::nodes::types::Clip,
     FilenamePrefixParam: crate::nodes::types::String,
-> ClipSave<ClipParam, FilenamePrefixParam> {
+> CLIPSave<ClipParam, FilenamePrefixParam> {
     /// Create a new node.
     pub fn new(clip: ClipParam, filename_prefix: FilenamePrefixParam) -> Self {
         Self { clip, filename_prefix }
@@ -181,7 +185,7 @@ impl<
 impl<
     ClipParam: crate::nodes::types::Clip,
     FilenamePrefixParam: crate::nodes::types::String,
-> crate::nodes::TypedNode for ClipSave<ClipParam, FilenamePrefixParam> {
+> crate::nodes::TypedNode for CLIPSave<ClipParam, FilenamePrefixParam> {
     type Output = WorkflowNodeId;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         node_id
@@ -201,9 +205,10 @@ impl<
 impl<
     ClipParam: crate::nodes::types::Clip,
     FilenamePrefixParam: crate::nodes::types::String,
-> crate::nodes::TypedOutputNode for ClipSave<ClipParam, FilenamePrefixParam> {}
+> crate::nodes::TypedOutputNode for CLIPSave<ClipParam, FilenamePrefixParam> {}
 ///**Save Checkpoint**: No description.
 #[derive(Clone)]
+#[allow(non_camel_case_types)]
 pub struct CheckpointSave<
     ModelParam: crate::nodes::types::Model,
     ClipParam: crate::nodes::types::Clip,
@@ -278,6 +283,7 @@ impl<
 for CheckpointSave<ModelParam, ClipParam, VaeParam, FilenamePrefixParam> {}
 ///**ImageOnlyCheckpointSave**: No description.
 #[derive(Clone)]
+#[allow(non_camel_case_types)]
 pub struct ImageOnlyCheckpointSave<
     ModelParam: crate::nodes::types::Model,
     ClipVisionParam: crate::nodes::types::ClipVision,
@@ -352,6 +358,7 @@ impl<
 for ImageOnlyCheckpointSave<ModelParam, ClipVisionParam, VaeParam, FilenamePrefixParam> {}
 ///**ModelMergeAdd**: No description.
 #[derive(Clone)]
+#[allow(non_camel_case_types)]
 pub struct ModelMergeAdd<
     Model1Param: crate::nodes::types::Model,
     Model2Param: crate::nodes::types::Model,
@@ -391,6 +398,7 @@ impl<
 }
 ///**ModelMergeBlocks**: No description.
 #[derive(Clone)]
+#[allow(non_camel_case_types)]
 pub struct ModelMergeBlocks<
     Model1Param: crate::nodes::types::Model,
     Model2Param: crate::nodes::types::Model,
@@ -482,6 +490,7 @@ for ModelMergeBlocks<Model1Param, Model2Param, InputParam, MiddleParam, OutParam
 }
 ///**ModelMergeSimple**: No description.
 #[derive(Clone)]
+#[allow(non_camel_case_types)]
 pub struct ModelMergeSimple<
     Model1Param: crate::nodes::types::Model,
     Model2Param: crate::nodes::types::Model,
@@ -534,6 +543,7 @@ impl<
 }
 ///**ModelMergeSubtract**: No description.
 #[derive(Clone)]
+#[allow(non_camel_case_types)]
 pub struct ModelMergeSubtract<
     Model1Param: crate::nodes::types::Model,
     Model2Param: crate::nodes::types::Model,
@@ -595,6 +605,7 @@ for ModelMergeSubtract<Model1Param, Model2Param, MultiplierParam> {
 }
 ///**ModelSave**: No description.
 #[derive(Clone)]
+#[allow(non_camel_case_types)]
 pub struct ModelSave<
     ModelParam: crate::nodes::types::Model,
     FilenamePrefixParam: crate::nodes::types::String,
@@ -643,7 +654,8 @@ impl<
 > crate::nodes::TypedOutputNode for ModelSave<ModelParam, FilenamePrefixParam> {}
 ///**VAESave**: No description.
 #[derive(Clone)]
-pub struct VaeSave<
+#[allow(non_camel_case_types)]
+pub struct VAESave<
     VaeParam: crate::nodes::types::Vae,
     FilenamePrefixParam: crate::nodes::types::String,
 > {
@@ -659,7 +671,7 @@ pub struct VaeSave<
 impl<
     VaeParam: crate::nodes::types::Vae,
     FilenamePrefixParam: crate::nodes::types::String,
-> VaeSave<VaeParam, FilenamePrefixParam> {
+> VAESave<VaeParam, FilenamePrefixParam> {
     /// Create a new node.
     pub fn new(vae: VaeParam, filename_prefix: FilenamePrefixParam) -> Self {
         Self { vae, filename_prefix }
@@ -668,7 +680,7 @@ impl<
 impl<
     VaeParam: crate::nodes::types::Vae,
     FilenamePrefixParam: crate::nodes::types::String,
-> crate::nodes::TypedNode for VaeSave<VaeParam, FilenamePrefixParam> {
+> crate::nodes::TypedNode for VAESave<VaeParam, FilenamePrefixParam> {
     type Output = WorkflowNodeId;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         node_id
@@ -688,4 +700,4 @@ impl<
 impl<
     VaeParam: crate::nodes::types::Vae,
     FilenamePrefixParam: crate::nodes::types::String,
-> crate::nodes::TypedOutputNode for VaeSave<VaeParam, FilenamePrefixParam> {}
+> crate::nodes::TypedOutputNode for VAESave<VaeParam, FilenamePrefixParam> {}

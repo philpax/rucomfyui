@@ -18,7 +18,7 @@ web-time = { workspace = true }
 
 [dev-dependencies]
 anyhow = { workspace = true }
-tokio = { workspace = true }
+tokio = { workspace = true, features = ["full"] }
 
 [features]
 default = ["typed_nodes"]

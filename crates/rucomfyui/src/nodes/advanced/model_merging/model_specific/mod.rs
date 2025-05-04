@@ -7,6 +7,7 @@ use crate::{
 };
 ///**ModelMergeAuraflow**: No description.
 #[derive(Clone)]
+#[allow(non_camel_case_types)]
 pub struct ModelMergeAuraflow<
     Model1Param: crate::nodes::types::Model,
     Model2Param: crate::nodes::types::Model,
@@ -898,6 +899,7 @@ for ModelMergeAuraflow<
 }
 ///**ModelMergeCosmos14B**: No description.
 #[derive(Clone)]
+#[allow(non_camel_case_types)]
 pub struct ModelMergeCosmos14B<
     Model1Param: crate::nodes::types::Model,
     Model2Param: crate::nodes::types::Model,
@@ -1694,6 +1696,7 @@ for ModelMergeCosmos14B<
 }
 ///**ModelMergeCosmos7B**: No description.
 #[derive(Clone)]
+#[allow(non_camel_case_types)]
 pub struct ModelMergeCosmos7B<
     Model1Param: crate::nodes::types::Model,
     Model2Param: crate::nodes::types::Model,
@@ -2346,6 +2349,7 @@ for ModelMergeCosmos7B<
 }
 ///**ModelMergeFlux1**: No description.
 #[derive(Clone)]
+#[allow(non_camel_case_types)]
 pub struct ModelMergeFlux1<
     Model1Param: crate::nodes::types::Model,
     Model2Param: crate::nodes::types::Model,
@@ -3637,7 +3641,8 @@ for ModelMergeFlux1<
 }
 ///**ModelMergeLTXV**: No description.
 #[derive(Clone)]
-pub struct ModelMergeLtxv<
+#[allow(non_camel_case_types)]
+pub struct ModelMergeLTXV<
     Model1Param: crate::nodes::types::Model,
     Model2Param: crate::nodes::types::Model,
     PatchifyProjParam: crate::nodes::types::Float,
@@ -4012,7 +4017,7 @@ impl<
     TransformerBlocks27Param: crate::nodes::types::Float,
     ScaleShiftTableParam: crate::nodes::types::Float,
     ProjOutParam: crate::nodes::types::Float,
-> ModelMergeLtxv<
+> ModelMergeLTXV<
     Model1Param,
     Model2Param,
     PatchifyProjParam,
@@ -4163,7 +4168,7 @@ impl<
     ScaleShiftTableParam: crate::nodes::types::Float,
     ProjOutParam: crate::nodes::types::Float,
 > crate::nodes::TypedNode
-for ModelMergeLtxv<
+for ModelMergeLTXV<
     Model1Param,
     Model2Param,
     PatchifyProjParam,
@@ -4370,6 +4375,7 @@ for ModelMergeLtxv<
 }
 ///**ModelMergeMochiPreview**: No description.
 #[derive(Clone)]
+#[allow(non_camel_case_types)]
 pub struct ModelMergeMochiPreview<
     Model1Param: crate::nodes::types::Model,
     Model2Param: crate::nodes::types::Model,
@@ -5324,7 +5330,8 @@ for ModelMergeMochiPreview<
 }
 ///**ModelMergeSD1**: No description.
 #[derive(Clone)]
-pub struct ModelMergeSd1<
+#[allow(non_camel_case_types)]
+pub struct ModelMergeSD1<
     Model1Param: crate::nodes::types::Model,
     Model2Param: crate::nodes::types::Model,
     TimeEmbedParam: crate::nodes::types::Float,
@@ -5666,7 +5673,7 @@ impl<
     OutputBlocks10Param: crate::nodes::types::Float,
     OutputBlocks11Param: crate::nodes::types::Float,
     OutParam: crate::nodes::types::Float,
-> ModelMergeSd1<
+> ModelMergeSD1<
     Model1Param,
     Model2Param,
     TimeEmbedParam,
@@ -5805,7 +5812,7 @@ impl<
     OutputBlocks11Param: crate::nodes::types::Float,
     OutParam: crate::nodes::types::Float,
 > crate::nodes::TypedNode
-for ModelMergeSd1<
+for ModelMergeSD1<
     Model1Param,
     Model2Param,
     TimeEmbedParam,
@@ -5906,7 +5913,8 @@ for ModelMergeSd1<
 }
 ///**ModelMergeSD2**: No description.
 #[derive(Clone)]
-pub struct ModelMergeSd2<
+#[allow(non_camel_case_types)]
+pub struct ModelMergeSD2<
     Model1Param: crate::nodes::types::Model,
     Model2Param: crate::nodes::types::Model,
     TimeEmbedParam: crate::nodes::types::Float,
@@ -6248,7 +6256,7 @@ impl<
     OutputBlocks10Param: crate::nodes::types::Float,
     OutputBlocks11Param: crate::nodes::types::Float,
     OutParam: crate::nodes::types::Float,
-> ModelMergeSd2<
+> ModelMergeSD2<
     Model1Param,
     Model2Param,
     TimeEmbedParam,
@@ -6387,7 +6395,7 @@ impl<
     OutputBlocks11Param: crate::nodes::types::Float,
     OutParam: crate::nodes::types::Float,
 > crate::nodes::TypedNode
-for ModelMergeSd2<
+for ModelMergeSD2<
     Model1Param,
     Model2Param,
     TimeEmbedParam,
@@ -6488,7 +6496,8 @@ for ModelMergeSd2<
 }
 ///**ModelMergeSD35_Large**: No description.
 #[derive(Clone)]
-pub struct ModelMergeSd35Large<
+#[allow(non_camel_case_types)]
+pub struct ModelMergeSD35_Large<
     Model1Param: crate::nodes::types::Model,
     Model2Param: crate::nodes::types::Model,
     PosEmbedParam: crate::nodes::types::Float,
@@ -6984,7 +6993,7 @@ impl<
     JointBlocks36Param: crate::nodes::types::Float,
     JointBlocks37Param: crate::nodes::types::Float,
     FinalLayerParam: crate::nodes::types::Float,
-> ModelMergeSd35Large<
+> ModelMergeSD35_Large<
     Model1Param,
     Model2Param,
     PosEmbedParam,
@@ -7179,7 +7188,7 @@ impl<
     JointBlocks37Param: crate::nodes::types::Float,
     FinalLayerParam: crate::nodes::types::Float,
 > crate::nodes::TypedNode
-for ModelMergeSd35Large<
+for ModelMergeSD35_Large<
     Model1Param,
     Model2Param,
     PosEmbedParam,
@@ -7320,7 +7329,8 @@ for ModelMergeSd35Large<
 }
 ///**ModelMergeSD3_2B**: No description.
 #[derive(Clone)]
-pub struct ModelMergeSd32B<
+#[allow(non_camel_case_types)]
+pub struct ModelMergeSD3_2B<
     Model1Param: crate::nodes::types::Model,
     Model2Param: crate::nodes::types::Model,
     PosEmbedParam: crate::nodes::types::Float,
@@ -7662,7 +7672,7 @@ impl<
     JointBlocks22Param: crate::nodes::types::Float,
     JointBlocks23Param: crate::nodes::types::Float,
     FinalLayerParam: crate::nodes::types::Float,
-> ModelMergeSd32B<
+> ModelMergeSD3_2B<
     Model1Param,
     Model2Param,
     PosEmbedParam,
@@ -7801,7 +7811,7 @@ impl<
     JointBlocks23Param: crate::nodes::types::Float,
     FinalLayerParam: crate::nodes::types::Float,
 > crate::nodes::TypedNode
-for ModelMergeSd32B<
+for ModelMergeSD3_2B<
     Model1Param,
     Model2Param,
     PosEmbedParam,
@@ -7900,7 +7910,8 @@ for ModelMergeSd32B<
 }
 ///**ModelMergeSDXL**: No description.
 #[derive(Clone)]
-pub struct ModelMergeSdxl<
+#[allow(non_camel_case_types)]
+pub struct ModelMergeSDXL<
     Model1Param: crate::nodes::types::Model,
     Model2Param: crate::nodes::types::Model,
     TimeEmbedParam: crate::nodes::types::Float,
@@ -8176,7 +8187,7 @@ impl<
     OutputBlocks7Param: crate::nodes::types::Float,
     OutputBlocks8Param: crate::nodes::types::Float,
     OutParam: crate::nodes::types::Float,
-> ModelMergeSdxl<
+> ModelMergeSDXL<
     Model1Param,
     Model2Param,
     TimeEmbedParam,
@@ -8291,7 +8302,7 @@ impl<
     OutputBlocks8Param: crate::nodes::types::Float,
     OutParam: crate::nodes::types::Float,
 > crate::nodes::TypedNode
-for ModelMergeSdxl<
+for ModelMergeSDXL<
     Model1Param,
     Model2Param,
     TimeEmbedParam,
@@ -8369,7 +8380,8 @@ for ModelMergeSdxl<
 }
 ///**ModelMergeWAN2_1**: 1.3B model has 30 blocks, 14B model has 40 blocks. Image to video model has the extra img_emb.
 #[derive(Clone)]
-pub struct ModelMergeWan21<
+#[allow(non_camel_case_types)]
+pub struct ModelMergeWAN2_1<
     Model1Param: crate::nodes::types::Model,
     Model2Param: crate::nodes::types::Model,
     PatchEmbeddingParam: crate::nodes::types::Float,
@@ -8887,7 +8899,7 @@ impl<
     Blocks38Param: crate::nodes::types::Float,
     Blocks39Param: crate::nodes::types::Float,
     HeadParam: crate::nodes::types::Float,
-> ModelMergeWan21<
+> ModelMergeWAN2_1<
     Model1Param,
     Model2Param,
     PatchEmbeddingParam,
@@ -9090,7 +9102,7 @@ impl<
     Blocks39Param: crate::nodes::types::Float,
     HeadParam: crate::nodes::types::Float,
 > crate::nodes::TypedNode
-for ModelMergeWan21<
+for ModelMergeWAN2_1<
     Model1Param,
     Model2Param,
     PatchEmbeddingParam,

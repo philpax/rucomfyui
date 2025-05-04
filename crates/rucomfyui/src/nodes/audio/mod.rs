@@ -7,6 +7,7 @@ use crate::{
 };
 ///**LoadAudio**: No description.
 #[derive(Clone)]
+#[allow(non_camel_case_types)]
 pub struct LoadAudio<AudioParam: crate::nodes::types::String> {
     /**No documentation.
 
@@ -39,6 +40,7 @@ for LoadAudio<AudioParam> {
 }
 ///**PreviewAudio**: No description.
 #[derive(Clone)]
+#[allow(non_camel_case_types)]
 pub struct PreviewAudio<AudioParam: crate::nodes::types::Audio> {
     ///No documentation.
     pub audio: AudioParam,
@@ -69,6 +71,7 @@ impl<AudioParam: crate::nodes::types::Audio> crate::nodes::TypedOutputNode
 for PreviewAudio<AudioParam> {}
 ///**SaveAudio**: No description.
 #[derive(Clone)]
+#[allow(non_camel_case_types)]
 pub struct SaveAudio<
     AudioParam: crate::nodes::types::Audio,
     FilenamePrefixParam: crate::nodes::types::String,

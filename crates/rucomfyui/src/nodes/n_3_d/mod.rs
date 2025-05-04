@@ -9,6 +9,7 @@ use crate::{
 pub mod out {
     ///Output for [`Load3D`](super::Load3D).
     #[derive(Clone)]
+    #[allow(non_camel_case_types)]
     pub struct Load3DOutput {
         ///No documentation.
         pub image: crate::nodes::types::ImageOut,
@@ -25,6 +26,7 @@ pub mod out {
     }
     ///Output for [`Load3DAnimation`](super::Load3DAnimation).
     #[derive(Clone)]
+    #[allow(non_camel_case_types)]
     pub struct Load3DAnimationOutput {
         ///No documentation.
         pub image: crate::nodes::types::ImageOut,
@@ -40,6 +42,7 @@ pub mod out {
 }
 ///**Load 3D**: No description.
 #[derive(Clone)]
+#[allow(non_camel_case_types)]
 pub struct Load3D<
     ModelFileParam: crate::nodes::types::String,
     WidthParam: crate::nodes::types::Int,
@@ -113,6 +116,7 @@ impl<
 }
 ///**Load 3D - Animation**: No description.
 #[derive(Clone)]
+#[allow(non_camel_case_types)]
 pub struct Load3DAnimation<
     ModelFileParam: crate::nodes::types::String,
     WidthParam: crate::nodes::types::Int,
@@ -185,6 +189,7 @@ impl<
 }
 ///**Preview 3D**: No description.
 #[derive(Clone)]
+#[allow(non_camel_case_types)]
 pub struct Preview3D<
     ModelFileParam: crate::nodes::types::String,
     CameraInfoParam: crate::nodes::types::Load3DCamera
@@ -239,6 +244,7 @@ impl<
 > crate::nodes::TypedOutputNode for Preview3D<ModelFileParam, CameraInfoParam> {}
 ///**Preview 3D - Animation**: No description.
 #[derive(Clone)]
+#[allow(non_camel_case_types)]
 pub struct Preview3DAnimation<
     ModelFileParam: crate::nodes::types::String,
     CameraInfoParam: crate::nodes::types::Load3DCamera
@@ -293,7 +299,8 @@ impl<
 > crate::nodes::TypedOutputNode for Preview3DAnimation<ModelFileParam, CameraInfoParam> {}
 ///**SaveGLB**: No description.
 #[derive(Clone)]
-pub struct SaveGlb<
+#[allow(non_camel_case_types)]
+pub struct SaveGLB<
     MeshParam: crate::nodes::types::Mesh,
     FilenamePrefixParam: crate::nodes::types::String,
 > {
@@ -309,7 +316,7 @@ pub struct SaveGlb<
 impl<
     MeshParam: crate::nodes::types::Mesh,
     FilenamePrefixParam: crate::nodes::types::String,
-> SaveGlb<MeshParam, FilenamePrefixParam> {
+> SaveGLB<MeshParam, FilenamePrefixParam> {
     /// Create a new node.
     pub fn new(mesh: MeshParam, filename_prefix: FilenamePrefixParam) -> Self {
         Self { mesh, filename_prefix }
@@ -318,7 +325,7 @@ impl<
 impl<
     MeshParam: crate::nodes::types::Mesh,
     FilenamePrefixParam: crate::nodes::types::String,
-> crate::nodes::TypedNode for SaveGlb<MeshParam, FilenamePrefixParam> {
+> crate::nodes::TypedNode for SaveGLB<MeshParam, FilenamePrefixParam> {
     type Output = WorkflowNodeId;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         node_id
@@ -338,9 +345,10 @@ impl<
 impl<
     MeshParam: crate::nodes::types::Mesh,
     FilenamePrefixParam: crate::nodes::types::String,
-> crate::nodes::TypedOutputNode for SaveGlb<MeshParam, FilenamePrefixParam> {}
+> crate::nodes::TypedOutputNode for SaveGLB<MeshParam, FilenamePrefixParam> {}
 ///**VoxelToMesh**: No description.
 #[derive(Clone)]
+#[allow(non_camel_case_types)]
 pub struct VoxelToMesh<
     VoxelParam: crate::nodes::types::Voxel,
     AlgorithmParam: crate::nodes::types::String,
@@ -401,6 +409,7 @@ impl<
 }
 ///**VoxelToMeshBasic**: No description.
 #[derive(Clone)]
+#[allow(non_camel_case_types)]
 pub struct VoxelToMeshBasic<
     VoxelParam: crate::nodes::types::Voxel,
     ThresholdParam: crate::nodes::types::Float,

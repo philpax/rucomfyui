@@ -7,7 +7,8 @@ use crate::{
 };
 ///**EmptySD3LatentImage**: No description.
 #[derive(Clone)]
-pub struct EmptySd3LatentImage<
+#[allow(non_camel_case_types)]
+pub struct EmptySD3LatentImage<
     WidthParam: crate::nodes::types::Int,
     HeightParam: crate::nodes::types::Int,
     BatchSizeParam: crate::nodes::types::Int,
@@ -43,7 +44,7 @@ impl<
     WidthParam: crate::nodes::types::Int,
     HeightParam: crate::nodes::types::Int,
     BatchSizeParam: crate::nodes::types::Int,
-> EmptySd3LatentImage<WidthParam, HeightParam, BatchSizeParam> {
+> EmptySD3LatentImage<WidthParam, HeightParam, BatchSizeParam> {
     /// Create a new node.
     pub fn new(
         width: WidthParam,
@@ -58,7 +59,7 @@ impl<
     HeightParam: crate::nodes::types::Int,
     BatchSizeParam: crate::nodes::types::Int,
 > crate::nodes::TypedNode
-for EmptySd3LatentImage<WidthParam, HeightParam, BatchSizeParam> {
+for EmptySD3LatentImage<WidthParam, HeightParam, BatchSizeParam> {
     type Output = crate::nodes::types::LatentOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)

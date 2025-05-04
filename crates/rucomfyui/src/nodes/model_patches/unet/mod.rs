@@ -7,6 +7,7 @@ use crate::{
 };
 ///**FreeU**: No description.
 #[derive(Clone)]
+#[allow(non_camel_case_types)]
 pub struct FreeU<
     ModelParam: crate::nodes::types::Model,
     B1Param: crate::nodes::types::Float,
@@ -98,7 +99,8 @@ impl<
 }
 ///**FreeU_V2**: No description.
 #[derive(Clone)]
-pub struct FreeUV2<
+#[allow(non_camel_case_types)]
+pub struct FreeU_V2<
     ModelParam: crate::nodes::types::Model,
     B1Param: crate::nodes::types::Float,
     B2Param: crate::nodes::types::Float,
@@ -150,7 +152,7 @@ impl<
     B2Param: crate::nodes::types::Float,
     S1Param: crate::nodes::types::Float,
     S2Param: crate::nodes::types::Float,
-> FreeUV2<ModelParam, B1Param, B2Param, S1Param, S2Param> {
+> FreeU_V2<ModelParam, B1Param, B2Param, S1Param, S2Param> {
     /// Create a new node.
     pub fn new(
         model: ModelParam,
@@ -168,7 +170,7 @@ impl<
     B2Param: crate::nodes::types::Float,
     S1Param: crate::nodes::types::Float,
     S2Param: crate::nodes::types::Float,
-> crate::nodes::TypedNode for FreeUV2<ModelParam, B1Param, B2Param, S1Param, S2Param> {
+> crate::nodes::TypedNode for FreeU_V2<ModelParam, B1Param, B2Param, S1Param, S2Param> {
     type Output = crate::nodes::types::ModelOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)
@@ -189,6 +191,7 @@ impl<
 }
 ///**HyperTile**: No description.
 #[derive(Clone)]
+#[allow(non_camel_case_types)]
 pub struct HyperTile<
     ModelParam: crate::nodes::types::Model,
     TileSizeParam: crate::nodes::types::Int,
@@ -281,6 +284,7 @@ for HyperTile<ModelParam, TileSizeParam, SwapSizeParam, MaxDepthParam, ScaleDept
 }
 ///**PatchModelAddDownscale (Kohya Deep Shrink)**: No description.
 #[derive(Clone)]
+#[allow(non_camel_case_types)]
 pub struct PatchModelAddDownscale<
     ModelParam: crate::nodes::types::Model,
     BlockNumberParam: crate::nodes::types::Int,
@@ -437,6 +441,7 @@ for PatchModelAddDownscale<
 }
 ///**PerturbedAttentionGuidance**: No description.
 #[derive(Clone)]
+#[allow(non_camel_case_types)]
 pub struct PerturbedAttentionGuidance<
     ModelParam: crate::nodes::types::Model,
     ScaleParam: crate::nodes::types::Float,
@@ -484,6 +489,7 @@ impl<
 }
 ///**TomePatchModel**: No description.
 #[derive(Clone)]
+#[allow(non_camel_case_types)]
 pub struct TomePatchModel<
     ModelParam: crate::nodes::types::Model,
     RatioParam: crate::nodes::types::Float,

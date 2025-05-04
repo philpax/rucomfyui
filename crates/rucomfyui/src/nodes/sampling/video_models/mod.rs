@@ -7,7 +7,8 @@ use crate::{
 };
 ///**VideoLinearCFGGuidance**: No description.
 #[derive(Clone)]
-pub struct VideoLinearCfgGuidance<
+#[allow(non_camel_case_types)]
+pub struct VideoLinearCFGGuidance<
     ModelParam: crate::nodes::types::Model,
     MinCfgParam: crate::nodes::types::Float,
 > {
@@ -27,7 +28,7 @@ pub struct VideoLinearCfgGuidance<
 impl<
     ModelParam: crate::nodes::types::Model,
     MinCfgParam: crate::nodes::types::Float,
-> VideoLinearCfgGuidance<ModelParam, MinCfgParam> {
+> VideoLinearCFGGuidance<ModelParam, MinCfgParam> {
     /// Create a new node.
     pub fn new(model: ModelParam, min_cfg: MinCfgParam) -> Self {
         Self { model, min_cfg }
@@ -36,7 +37,7 @@ impl<
 impl<
     ModelParam: crate::nodes::types::Model,
     MinCfgParam: crate::nodes::types::Float,
-> crate::nodes::TypedNode for VideoLinearCfgGuidance<ModelParam, MinCfgParam> {
+> crate::nodes::TypedNode for VideoLinearCFGGuidance<ModelParam, MinCfgParam> {
     type Output = crate::nodes::types::ModelOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)
@@ -54,7 +55,8 @@ impl<
 }
 ///**VideoTriangleCFGGuidance**: No description.
 #[derive(Clone)]
-pub struct VideoTriangleCfgGuidance<
+#[allow(non_camel_case_types)]
+pub struct VideoTriangleCFGGuidance<
     ModelParam: crate::nodes::types::Model,
     MinCfgParam: crate::nodes::types::Float,
 > {
@@ -74,7 +76,7 @@ pub struct VideoTriangleCfgGuidance<
 impl<
     ModelParam: crate::nodes::types::Model,
     MinCfgParam: crate::nodes::types::Float,
-> VideoTriangleCfgGuidance<ModelParam, MinCfgParam> {
+> VideoTriangleCFGGuidance<ModelParam, MinCfgParam> {
     /// Create a new node.
     pub fn new(model: ModelParam, min_cfg: MinCfgParam) -> Self {
         Self { model, min_cfg }
@@ -83,7 +85,7 @@ impl<
 impl<
     ModelParam: crate::nodes::types::Model,
     MinCfgParam: crate::nodes::types::Float,
-> crate::nodes::TypedNode for VideoTriangleCfgGuidance<ModelParam, MinCfgParam> {
+> crate::nodes::TypedNode for VideoTriangleCFGGuidance<ModelParam, MinCfgParam> {
     type Output = crate::nodes::types::ModelOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)

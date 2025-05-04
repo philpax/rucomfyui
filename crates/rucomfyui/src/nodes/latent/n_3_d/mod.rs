@@ -7,6 +7,7 @@ use crate::{
 };
 ///**EmptyLatentHunyuan3Dv2**: No description.
 #[derive(Clone)]
+#[allow(non_camel_case_types)]
 pub struct EmptyLatentHunyuan3Dv2<
     ResolutionParam: crate::nodes::types::Int,
     BatchSizeParam: crate::nodes::types::Int,
@@ -58,7 +59,8 @@ impl<
 }
 ///**VAEDecodeHunyuan3D**: No description.
 #[derive(Clone)]
-pub struct VaeDecodeHunyuan3D<
+#[allow(non_camel_case_types)]
+pub struct VAEDecodeHunyuan3D<
     SamplesParam: crate::nodes::types::Latent,
     VaeParam: crate::nodes::types::Vae,
     NumChunksParam: crate::nodes::types::Int,
@@ -90,7 +92,7 @@ impl<
     VaeParam: crate::nodes::types::Vae,
     NumChunksParam: crate::nodes::types::Int,
     OctreeResolutionParam: crate::nodes::types::Int,
-> VaeDecodeHunyuan3D<SamplesParam, VaeParam, NumChunksParam, OctreeResolutionParam> {
+> VAEDecodeHunyuan3D<SamplesParam, VaeParam, NumChunksParam, OctreeResolutionParam> {
     /// Create a new node.
     pub fn new(
         samples: SamplesParam,
@@ -112,7 +114,7 @@ impl<
     NumChunksParam: crate::nodes::types::Int,
     OctreeResolutionParam: crate::nodes::types::Int,
 > crate::nodes::TypedNode
-for VaeDecodeHunyuan3D<SamplesParam, VaeParam, NumChunksParam, OctreeResolutionParam> {
+for VAEDecodeHunyuan3D<SamplesParam, VaeParam, NumChunksParam, OctreeResolutionParam> {
     type Output = crate::nodes::types::VoxelOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)

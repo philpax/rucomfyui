@@ -19,6 +19,7 @@ pub mod video_models;
 pub mod out {
     ///Output for [`ConditioningStableAudio`](super::ConditioningStableAudio).
     #[derive(Clone)]
+    #[allow(non_camel_case_types)]
     pub struct ConditioningStableAudioOutput {
         ///No documentation.
         pub positive: crate::nodes::types::ConditioningOut,
@@ -28,7 +29,8 @@ pub mod out {
 }
 ///**CLIP Set Last Layer**: No description.
 #[derive(Clone)]
-pub struct ClipSetLastLayer<
+#[allow(non_camel_case_types)]
+pub struct CLIPSetLastLayer<
     ClipParam: crate::nodes::types::Clip,
     StopAtClipLayerParam: crate::nodes::types::Int,
 > {
@@ -47,7 +49,7 @@ pub struct ClipSetLastLayer<
 impl<
     ClipParam: crate::nodes::types::Clip,
     StopAtClipLayerParam: crate::nodes::types::Int,
-> ClipSetLastLayer<ClipParam, StopAtClipLayerParam> {
+> CLIPSetLastLayer<ClipParam, StopAtClipLayerParam> {
     /// Create a new node.
     pub fn new(clip: ClipParam, stop_at_clip_layer: StopAtClipLayerParam) -> Self {
         Self { clip, stop_at_clip_layer }
@@ -56,7 +58,7 @@ impl<
 impl<
     ClipParam: crate::nodes::types::Clip,
     StopAtClipLayerParam: crate::nodes::types::Int,
-> crate::nodes::TypedNode for ClipSetLastLayer<ClipParam, StopAtClipLayerParam> {
+> crate::nodes::TypedNode for CLIPSetLastLayer<ClipParam, StopAtClipLayerParam> {
     type Output = crate::nodes::types::ClipOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)
@@ -78,7 +80,8 @@ impl<
 }
 ///**CLIP Text Encode (Prompt)**: Encodes a text prompt using a CLIP model into an embedding that can be used to guide the diffusion model towards generating specific images.
 #[derive(Clone)]
-pub struct ClipTextEncode<
+#[allow(non_camel_case_types)]
+pub struct CLIPTextEncode<
     TextParam: crate::nodes::types::String,
     ClipParam: crate::nodes::types::Clip,
 > {
@@ -95,7 +98,7 @@ pub struct ClipTextEncode<
 impl<
     TextParam: crate::nodes::types::String,
     ClipParam: crate::nodes::types::Clip,
-> ClipTextEncode<TextParam, ClipParam> {
+> CLIPTextEncode<TextParam, ClipParam> {
     /// Create a new node.
     pub fn new(text: TextParam, clip: ClipParam) -> Self {
         Self { text, clip }
@@ -104,7 +107,7 @@ impl<
 impl<
     TextParam: crate::nodes::types::String,
     ClipParam: crate::nodes::types::Clip,
-> crate::nodes::TypedNode for ClipTextEncode<TextParam, ClipParam> {
+> crate::nodes::TypedNode for CLIPTextEncode<TextParam, ClipParam> {
     type Output = crate::nodes::types::ConditioningOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)
@@ -122,7 +125,8 @@ impl<
 }
 ///**CLIP Text Encode for Lumina2**: Encodes a system prompt and a user prompt using a CLIP model into an embedding that can be used to guide the diffusion model towards generating specific images.
 #[derive(Clone)]
-pub struct ClipTextEncodeLumina2<
+#[allow(non_camel_case_types)]
+pub struct CLIPTextEncodeLumina2<
     SystemPromptParam: crate::nodes::types::String,
     UserPromptParam: crate::nodes::types::String,
     ClipParam: crate::nodes::types::Clip,
@@ -143,7 +147,7 @@ impl<
     SystemPromptParam: crate::nodes::types::String,
     UserPromptParam: crate::nodes::types::String,
     ClipParam: crate::nodes::types::Clip,
-> ClipTextEncodeLumina2<SystemPromptParam, UserPromptParam, ClipParam> {
+> CLIPTextEncodeLumina2<SystemPromptParam, UserPromptParam, ClipParam> {
     /// Create a new node.
     pub fn new(
         system_prompt: SystemPromptParam,
@@ -162,7 +166,7 @@ impl<
     UserPromptParam: crate::nodes::types::String,
     ClipParam: crate::nodes::types::Clip,
 > crate::nodes::TypedNode
-for ClipTextEncodeLumina2<SystemPromptParam, UserPromptParam, ClipParam> {
+for CLIPTextEncodeLumina2<SystemPromptParam, UserPromptParam, ClipParam> {
     type Output = crate::nodes::types::ConditioningOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)
@@ -181,7 +185,8 @@ for ClipTextEncodeLumina2<SystemPromptParam, UserPromptParam, ClipParam> {
 }
 ///**CLIP Vision Encode**: No description.
 #[derive(Clone)]
-pub struct ClipVisionEncode<
+#[allow(non_camel_case_types)]
+pub struct CLIPVisionEncode<
     ClipVisionParam: crate::nodes::types::ClipVision,
     ImageParam: crate::nodes::types::Image,
     CropParam: crate::nodes::types::String,
@@ -197,7 +202,7 @@ impl<
     ClipVisionParam: crate::nodes::types::ClipVision,
     ImageParam: crate::nodes::types::Image,
     CropParam: crate::nodes::types::String,
-> ClipVisionEncode<ClipVisionParam, ImageParam, CropParam> {
+> CLIPVisionEncode<ClipVisionParam, ImageParam, CropParam> {
     /// Create a new node.
     pub fn new(
         clip_vision: ClipVisionParam,
@@ -211,7 +216,7 @@ impl<
     ClipVisionParam: crate::nodes::types::ClipVision,
     ImageParam: crate::nodes::types::Image,
     CropParam: crate::nodes::types::String,
-> crate::nodes::TypedNode for ClipVisionEncode<ClipVisionParam, ImageParam, CropParam> {
+> crate::nodes::TypedNode for CLIPVisionEncode<ClipVisionParam, ImageParam, CropParam> {
     type Output = crate::nodes::types::ClipVisionOutputOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)
@@ -230,6 +235,7 @@ impl<
 }
 ///**ConditioningAverage**: No description.
 #[derive(Clone)]
+#[allow(non_camel_case_types)]
 pub struct ConditioningAverage<
     ConditioningToParam: crate::nodes::types::Conditioning,
     ConditioningFromParam: crate::nodes::types::Conditioning,
@@ -308,6 +314,7 @@ for ConditioningAverage<
 }
 ///**Conditioning (Combine)**: No description.
 #[derive(Clone)]
+#[allow(non_camel_case_types)]
 pub struct ConditioningCombine<
     Conditioning1Param: crate::nodes::types::Conditioning,
     Conditioning2Param: crate::nodes::types::Conditioning,
@@ -354,6 +361,7 @@ for ConditioningCombine<Conditioning1Param, Conditioning2Param> {
 }
 ///**Conditioning (Concat)**: No description.
 #[derive(Clone)]
+#[allow(non_camel_case_types)]
 pub struct ConditioningConcat<
     ConditioningToParam: crate::nodes::types::Conditioning,
     ConditioningFromParam: crate::nodes::types::Conditioning,
@@ -405,6 +413,7 @@ for ConditioningConcat<ConditioningToParam, ConditioningFromParam> {
 }
 ///**Conditioning (Set Area)**: No description.
 #[derive(Clone)]
+#[allow(non_camel_case_types)]
 pub struct ConditioningSetArea<
     ConditioningParam: crate::nodes::types::Conditioning,
     WidthParam: crate::nodes::types::Int,
@@ -532,6 +541,7 @@ for ConditioningSetArea<
 }
 ///**Conditioning (Set Area with Percentage)**: No description.
 #[derive(Clone)]
+#[allow(non_camel_case_types)]
 pub struct ConditioningSetAreaPercentage<
     ConditioningParam: crate::nodes::types::Conditioning,
     WidthParam: crate::nodes::types::Float,
@@ -659,6 +669,7 @@ for ConditioningSetAreaPercentage<
 }
 ///**ConditioningSetAreaPercentageVideo**: No description.
 #[derive(Clone)]
+#[allow(non_camel_case_types)]
 pub struct ConditioningSetAreaPercentageVideo<
     ConditioningParam: crate::nodes::types::Conditioning,
     WidthParam: crate::nodes::types::Float,
@@ -820,6 +831,7 @@ for ConditioningSetAreaPercentageVideo<
 }
 ///**ConditioningSetAreaStrength**: No description.
 #[derive(Clone)]
+#[allow(non_camel_case_types)]
 pub struct ConditioningSetAreaStrength<
     ConditioningParam: crate::nodes::types::Conditioning,
     StrengthParam: crate::nodes::types::Float,
@@ -867,6 +879,7 @@ for ConditioningSetAreaStrength<ConditioningParam, StrengthParam> {
 }
 ///**Conditioning (Set Mask)**: No description.
 #[derive(Clone)]
+#[allow(non_camel_case_types)]
 pub struct ConditioningSetMask<
     ConditioningParam: crate::nodes::types::Conditioning,
     MaskParam: crate::nodes::types::Mask,
@@ -936,6 +949,7 @@ for ConditioningSetMask<ConditioningParam, MaskParam, StrengthParam, SetCondArea
 }
 ///**ConditioningStableAudio**: No description.
 #[derive(Clone)]
+#[allow(non_camel_case_types)]
 pub struct ConditioningStableAudio<
     PositiveParam: crate::nodes::types::Conditioning,
     NegativeParam: crate::nodes::types::Conditioning,
@@ -1025,7 +1039,8 @@ for ConditioningStableAudio<
 }
 ///**unCLIPConditioning**: No description.
 #[derive(Clone)]
-pub struct UnClipConditioning<
+#[allow(non_camel_case_types)]
+pub struct unCLIPConditioning<
     ConditioningParam: crate::nodes::types::Conditioning,
     ClipVisionOutputParam: crate::nodes::types::ClipVisionOutput,
     StrengthParam: crate::nodes::types::Float,
@@ -1059,7 +1074,7 @@ impl<
     ClipVisionOutputParam: crate::nodes::types::ClipVisionOutput,
     StrengthParam: crate::nodes::types::Float,
     NoiseAugmentationParam: crate::nodes::types::Float,
-> UnClipConditioning<
+> unCLIPConditioning<
     ConditioningParam,
     ClipVisionOutputParam,
     StrengthParam,
@@ -1086,7 +1101,7 @@ impl<
     StrengthParam: crate::nodes::types::Float,
     NoiseAugmentationParam: crate::nodes::types::Float,
 > crate::nodes::TypedNode
-for UnClipConditioning<
+for unCLIPConditioning<
     ConditioningParam,
     ClipVisionOutputParam,
     StrengthParam,

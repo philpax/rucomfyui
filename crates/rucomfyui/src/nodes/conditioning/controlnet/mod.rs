@@ -9,15 +9,17 @@ use crate::{
 pub mod out {
     ///Output for [`ControlNetApplyAdvanced`](super::ControlNetApplyAdvanced).
     #[derive(Clone)]
+    #[allow(non_camel_case_types)]
     pub struct ControlNetApplyAdvancedOutput {
         ///No documentation.
         pub positive: crate::nodes::types::ConditioningOut,
         ///No documentation.
         pub negative: crate::nodes::types::ConditioningOut,
     }
-    ///Output for [`ControlNetApplySd3`](super::ControlNetApplySd3).
+    ///Output for [`ControlNetApplySD3`](super::ControlNetApplySD3).
     #[derive(Clone)]
-    pub struct ControlNetApplySd3Output {
+    #[allow(non_camel_case_types)]
+    pub struct ControlNetApplySD3Output {
         ///No documentation.
         pub positive: crate::nodes::types::ConditioningOut,
         ///No documentation.
@@ -25,6 +27,7 @@ pub mod out {
     }
     ///Output for [`ControlNetInpaintingAliMamaApply`](super::ControlNetInpaintingAliMamaApply).
     #[derive(Clone)]
+    #[allow(non_camel_case_types)]
     pub struct ControlNetInpaintingAliMamaApplyOutput {
         ///No documentation.
         pub positive: crate::nodes::types::ConditioningOut,
@@ -34,6 +37,7 @@ pub mod out {
 }
 ///**Apply ControlNet (OLD)**: No description.
 #[derive(Clone)]
+#[allow(non_camel_case_types)]
 pub struct ControlNetApply<
     ConditioningParam: crate::nodes::types::Conditioning,
     ControlNetParam: crate::nodes::types::ControlNet,
@@ -103,6 +107,7 @@ for ControlNetApply<ConditioningParam, ControlNetParam, ImageParam, StrengthPara
 }
 ///**Apply ControlNet**: No description.
 #[derive(Clone)]
+#[allow(non_camel_case_types)]
 pub struct ControlNetApplyAdvanced<
     PositiveParam: crate::nodes::types::Conditioning,
     NegativeParam: crate::nodes::types::Conditioning,
@@ -241,7 +246,8 @@ for ControlNetApplyAdvanced<
 }
 ///**Apply Controlnet with VAE**: No description.
 #[derive(Clone)]
-pub struct ControlNetApplySd3<
+#[allow(non_camel_case_types)]
+pub struct ControlNetApplySD3<
     PositiveParam: crate::nodes::types::Conditioning,
     NegativeParam: crate::nodes::types::Conditioning,
     ControlNetParam: crate::nodes::types::ControlNet,
@@ -298,7 +304,7 @@ impl<
     StrengthParam: crate::nodes::types::Float,
     StartPercentParam: crate::nodes::types::Float,
     EndPercentParam: crate::nodes::types::Float,
-> ControlNetApplySd3<
+> ControlNetApplySD3<
     PositiveParam,
     NegativeParam,
     ControlNetParam,
@@ -341,7 +347,7 @@ impl<
     StartPercentParam: crate::nodes::types::Float,
     EndPercentParam: crate::nodes::types::Float,
 > crate::nodes::TypedNode
-for ControlNetApplySd3<
+for ControlNetApplySD3<
     PositiveParam,
     NegativeParam,
     ControlNetParam,
@@ -351,7 +357,7 @@ for ControlNetApplySd3<
     StartPercentParam,
     EndPercentParam,
 > {
-    type Output = out::ControlNetApplySd3Output;
+    type Output = out::ControlNetApplySD3Output;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
             positive: crate::nodes::types::ConditioningOut::from_dynamic(node_id, 0u32),
@@ -377,6 +383,7 @@ for ControlNetApplySd3<
 }
 ///**ControlNetInpaintingAliMamaApply**: No description.
 #[derive(Clone)]
+#[allow(non_camel_case_types)]
 pub struct ControlNetInpaintingAliMamaApply<
     PositiveParam: crate::nodes::types::Conditioning,
     NegativeParam: crate::nodes::types::Conditioning,
@@ -523,6 +530,7 @@ for ControlNetInpaintingAliMamaApply<
 }
 ///**SetUnionControlNetType**: No description.
 #[derive(Clone)]
+#[allow(non_camel_case_types)]
 pub struct SetUnionControlNetType<
     ControlNetParam: crate::nodes::types::ControlNet,
     TypeParam: crate::nodes::types::String,

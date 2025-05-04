@@ -14,6 +14,7 @@ pub mod sigmas;
 pub mod out {
     ///Output for [`SamplerCustom`](super::SamplerCustom).
     #[derive(Clone)]
+    #[allow(non_camel_case_types)]
     pub struct SamplerCustomOutput {
         ///No documentation.
         pub output: crate::nodes::types::LatentOut,
@@ -22,6 +23,7 @@ pub mod out {
     }
     ///Output for [`SamplerCustomAdvanced`](super::SamplerCustomAdvanced).
     #[derive(Clone)]
+    #[allow(non_camel_case_types)]
     pub struct SamplerCustomAdvancedOutput {
         ///No documentation.
         pub output: crate::nodes::types::LatentOut,
@@ -31,6 +33,7 @@ pub mod out {
 }
 ///**SamplerCustom**: No description.
 #[derive(Clone)]
+#[allow(non_camel_case_types)]
 pub struct SamplerCustom<
     ModelParam: crate::nodes::types::Model,
     AddNoiseParam: crate::nodes::types::Boolean,
@@ -174,6 +177,7 @@ for SamplerCustom<
 }
 ///**SamplerCustomAdvanced**: No description.
 #[derive(Clone)]
+#[allow(non_camel_case_types)]
 pub struct SamplerCustomAdvanced<
     NoiseParam: crate::nodes::types::Noise,
     GuiderParam: crate::nodes::types::Guider,

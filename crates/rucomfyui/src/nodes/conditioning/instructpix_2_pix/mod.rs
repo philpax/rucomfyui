@@ -9,6 +9,7 @@ use crate::{
 pub mod out {
     ///Output for [`InstructPixToPixConditioning`](super::InstructPixToPixConditioning).
     #[derive(Clone)]
+    #[allow(non_camel_case_types)]
     pub struct InstructPixToPixConditioningOutput {
         ///No documentation.
         pub positive: crate::nodes::types::ConditioningOut,
@@ -20,6 +21,7 @@ pub mod out {
 }
 ///**InstructPixToPixConditioning**: No description.
 #[derive(Clone)]
+#[allow(non_camel_case_types)]
 pub struct InstructPixToPixConditioning<
     PositiveParam: crate::nodes::types::Conditioning,
     NegativeParam: crate::nodes::types::Conditioning,

@@ -9,6 +9,7 @@ pub mod custom_sampling;
 pub mod video_models;
 ///**KSampler**: Uses the provided model, positive and negative conditioning to denoise the latent image.
 #[derive(Clone)]
+#[allow(non_camel_case_types)]
 pub struct KSampler<
     ModelParam: crate::nodes::types::Model,
     SeedParam: crate::nodes::types::Int,
@@ -168,6 +169,7 @@ for KSampler<
 }
 ///**KSampler (Advanced)**: No description.
 #[derive(Clone)]
+#[allow(non_camel_case_types)]
 pub struct KSamplerAdvanced<
     ModelParam: crate::nodes::types::Model,
     AddNoiseParam: crate::nodes::types::String,

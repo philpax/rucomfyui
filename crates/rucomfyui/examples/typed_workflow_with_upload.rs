@@ -8,8 +8,8 @@
 
 use anyhow::Context;
 use rucomfyui::nodes::all::{
-    CheckpointLoaderSimple, ClipTextEncode, EmptyLatentImage, KSampler, LoadImage, PreviewImage,
-    VaeDecode, VaeEncode,
+    CLIPTextEncode, CheckpointLoaderSimple, EmptyLatentImage, KSampler, LoadImage, PreviewImage,
+    VAEDecode, VAEEncode,
 };
 
 #[tokio::main]
@@ -61,7 +61,7 @@ fn workflow(
     let g = rucomfyui::WorkflowGraph::new();
 
     let c = g.add(CheckpointLoaderSimple::new("sd_xl_base_1.0.safetensors"));
-    let preview_image = g.add(PreviewImage::new(g.add(VaeDecode {
+    let preview_image = g.add(PreviewImage::new(g.add(VAEDecode {
         vae: c.vae,
         samples: g.add(KSampler {
             model: c.model,
@@ -70,13 +70,13 @@ fn workflow(
             cfg: 8.0,
             sampler_name: "euler",
             scheduler: "normal",
-            positive: g.add(ClipTextEncode::new(
+            positive: g.add(CLIPTextEncode::new(
                 format!("a {animal} sleeping on a red chair"),
                 c.clip,
             )),
-            negative: g.add(ClipTextEncode::new("text", c.clip)),
+            negative: g.add(CLIPTextEncode::new("text", c.clip)),
             latent_image: match load_image {
-                Some(image) => g.add(VaeEncode::new(g.add(LoadImage::new(image)).image, c.vae)),
+                Some(image) => g.add(VAEEncode::new(g.add(LoadImage::new(image)).image, c.vae)),
                 None => g.add(EmptyLatentImage {
                     width: 1024,
                     height: 1024,

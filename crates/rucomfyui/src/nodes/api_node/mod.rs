@@ -7,7 +7,8 @@ use crate::{
 };
 #[doc = "**OpenAI DALL·E 2**: Generates images synchronously via OpenAI's DALL·E 2 endpoint.\n\nUses the proxy at /proxy/openai/images/generations. Returned URLs are short‑lived,\nso download or cache results if you need to keep them."]
 #[derive(Clone)]
-pub struct OpenAiDalle2<
+#[allow(non_camel_case_types)]
+pub struct OpenAIDalle2<
     PromptParam: crate::nodes::types::String,
     SeedParam: crate::nodes::types::Int = crate::nodes::types::IntOut,
     NParam: crate::nodes::types::Int = crate::nodes::types::IntOut,
@@ -52,7 +53,7 @@ impl<
     NParam: crate::nodes::types::Int,
     ImageParam: crate::nodes::types::Image,
     MaskParam: crate::nodes::types::Mask,
-> OpenAiDalle2<PromptParam, SeedParam, NParam, ImageParam, MaskParam> {
+> OpenAIDalle2<PromptParam, SeedParam, NParam, ImageParam, MaskParam> {
     /// Create a new node.
     pub fn new(
         prompt: PromptParam,
@@ -77,7 +78,7 @@ impl<
     ImageParam: crate::nodes::types::Image,
     MaskParam: crate::nodes::types::Mask,
 > crate::nodes::TypedNode
-for OpenAiDalle2<PromptParam, SeedParam, NParam, ImageParam, MaskParam> {
+for OpenAIDalle2<PromptParam, SeedParam, NParam, ImageParam, MaskParam> {
     type Output = crate::nodes::types::ImageOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)
@@ -106,7 +107,8 @@ for OpenAiDalle2<PromptParam, SeedParam, NParam, ImageParam, MaskParam> {
 }
 #[doc = "**OpenAI DALL·E 3**: Generates images synchronously via OpenAI's DALL·E 3 endpoint.\n\nUses the proxy at /proxy/openai/images/generations. Returned URLs are short‑lived,\nso download or cache results if you need to keep them."]
 #[derive(Clone)]
-pub struct OpenAiDalle3<
+#[allow(non_camel_case_types)]
+pub struct OpenAIDalle3<
     PromptParam: crate::nodes::types::String,
     SeedParam: crate::nodes::types::Int = crate::nodes::types::IntOut,
 > {
@@ -131,7 +133,7 @@ pub struct OpenAiDalle3<
 impl<
     PromptParam: crate::nodes::types::String,
     SeedParam: crate::nodes::types::Int,
-> OpenAiDalle3<PromptParam, SeedParam> {
+> OpenAIDalle3<PromptParam, SeedParam> {
     /// Create a new node.
     pub fn new(prompt: PromptParam, seed: Option<SeedParam>) -> Self {
         Self { prompt, seed }
@@ -140,7 +142,7 @@ impl<
 impl<
     PromptParam: crate::nodes::types::String,
     SeedParam: crate::nodes::types::Int,
-> crate::nodes::TypedNode for OpenAiDalle3<PromptParam, SeedParam> {
+> crate::nodes::TypedNode for OpenAIDalle3<PromptParam, SeedParam> {
     type Output = crate::nodes::types::ImageOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)
@@ -160,7 +162,8 @@ impl<
 }
 #[doc = "**OpenAI GPT Image 1**: Generates images synchronously via OpenAI's GPT Image 1 endpoint.\n\nUses the proxy at /proxy/openai/images/generations. Returned URLs are short‑lived,\nso download or cache results if you need to keep them."]
 #[derive(Clone)]
-pub struct OpenAigptImage1<
+#[allow(non_camel_case_types)]
+pub struct OpenAIGPTImage1<
     PromptParam: crate::nodes::types::String,
     SeedParam: crate::nodes::types::Int = crate::nodes::types::IntOut,
     NParam: crate::nodes::types::Int = crate::nodes::types::IntOut,
@@ -205,7 +208,7 @@ impl<
     NParam: crate::nodes::types::Int,
     ImageParam: crate::nodes::types::Image,
     MaskParam: crate::nodes::types::Mask,
-> OpenAigptImage1<PromptParam, SeedParam, NParam, ImageParam, MaskParam> {
+> OpenAIGPTImage1<PromptParam, SeedParam, NParam, ImageParam, MaskParam> {
     /// Create a new node.
     pub fn new(
         prompt: PromptParam,
@@ -230,7 +233,7 @@ impl<
     ImageParam: crate::nodes::types::Image,
     MaskParam: crate::nodes::types::Mask,
 > crate::nodes::TypedNode
-for OpenAigptImage1<PromptParam, SeedParam, NParam, ImageParam, MaskParam> {
+for OpenAIGPTImage1<PromptParam, SeedParam, NParam, ImageParam, MaskParam> {
     type Output = crate::nodes::types::ImageOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)

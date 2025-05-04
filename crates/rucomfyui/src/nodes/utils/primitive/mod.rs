@@ -7,6 +7,7 @@ use crate::{
 };
 ///**Boolean**: No description.
 #[derive(Clone)]
+#[allow(non_camel_case_types)]
 pub struct PrimitiveBoolean<ValueParam: crate::nodes::types::Boolean> {
     ///No documentation.
     pub value: ValueParam,
@@ -35,6 +36,7 @@ for PrimitiveBoolean<ValueParam> {
 }
 ///**Float**: No description.
 #[derive(Clone)]
+#[allow(non_camel_case_types)]
 pub struct PrimitiveFloat<ValueParam: crate::nodes::types::Float> {
     ///No documentation.
     pub value: ValueParam,
@@ -63,6 +65,7 @@ for PrimitiveFloat<ValueParam> {
 }
 ///**Int**: No description.
 #[derive(Clone)]
+#[allow(non_camel_case_types)]
 pub struct PrimitiveInt<ValueParam: crate::nodes::types::Int> {
     ///No documentation.
     pub value: ValueParam,
@@ -91,6 +94,7 @@ for PrimitiveInt<ValueParam> {
 }
 ///**String**: No description.
 #[derive(Clone)]
+#[allow(non_camel_case_types)]
 pub struct PrimitiveString<ValueParam: crate::nodes::types::String> {
     ///No documentation.
     pub value: ValueParam,

@@ -7,7 +7,8 @@ use crate::{
 };
 ///**GLIGENTextBoxApply**: No description.
 #[derive(Clone)]
-pub struct GligenTextBoxApply<
+#[allow(non_camel_case_types)]
+pub struct GLIGENTextBoxApply<
     ConditioningToParam: crate::nodes::types::Conditioning,
     ClipParam: crate::nodes::types::Clip,
     GligenTextboxModelParam: crate::nodes::types::Gligen,
@@ -76,7 +77,7 @@ impl<
     HeightParam: crate::nodes::types::Int,
     XParam: crate::nodes::types::Int,
     YParam: crate::nodes::types::Int,
-> GligenTextBoxApply<
+> GLIGENTextBoxApply<
     ConditioningToParam,
     ClipParam,
     GligenTextboxModelParam,
@@ -119,7 +120,7 @@ impl<
     XParam: crate::nodes::types::Int,
     YParam: crate::nodes::types::Int,
 > crate::nodes::TypedNode
-for GligenTextBoxApply<
+for GLIGENTextBoxApply<
     ConditioningToParam,
     ClipParam,
     GligenTextboxModelParam,

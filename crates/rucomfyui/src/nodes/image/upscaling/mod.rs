@@ -7,6 +7,7 @@ use crate::{
 };
 ///**Upscale Image**: No description.
 #[derive(Clone)]
+#[allow(non_camel_case_types)]
 pub struct ImageScale<
     ImageParam: crate::nodes::types::Image,
     UpscaleMethodParam: crate::nodes::types::String,
@@ -91,6 +92,7 @@ for ImageScale<ImageParam, UpscaleMethodParam, WidthParam, HeightParam, CropPara
 }
 ///**Upscale Image By**: No description.
 #[derive(Clone)]
+#[allow(non_camel_case_types)]
 pub struct ImageScaleBy<
     ImageParam: crate::nodes::types::Image,
     UpscaleMethodParam: crate::nodes::types::String,
@@ -152,6 +154,7 @@ for ImageScaleBy<ImageParam, UpscaleMethodParam, ScaleByParam> {
 }
 ///**Scale Image to Total Pixels**: No description.
 #[derive(Clone)]
+#[allow(non_camel_case_types)]
 pub struct ImageScaleToTotalPixels<
     ImageParam: crate::nodes::types::Image,
     UpscaleMethodParam: crate::nodes::types::String,
@@ -213,6 +216,7 @@ for ImageScaleToTotalPixels<ImageParam, UpscaleMethodParam, MegapixelsParam> {
 }
 ///**Upscale Image (using Model)**: No description.
 #[derive(Clone)]
+#[allow(non_camel_case_types)]
 pub struct ImageUpscaleWithModel<
     UpscaleModelParam: crate::nodes::types::UpscaleModel,
     ImageParam: crate::nodes::types::Image,

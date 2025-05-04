@@ -9,6 +9,7 @@ use crate::{
 pub mod out {
     ///Output for [`ImageOnlyCheckpointLoader`](super::ImageOnlyCheckpointLoader).
     #[derive(Clone)]
+    #[allow(non_camel_case_types)]
     pub struct ImageOnlyCheckpointLoaderOutput {
         ///No documentation.
         pub model: crate::nodes::types::ModelOut,
@@ -20,6 +21,7 @@ pub mod out {
 }
 ///**Image Only Checkpoint Loader (img2vid model)**: No description.
 #[derive(Clone)]
+#[allow(non_camel_case_types)]
 pub struct ImageOnlyCheckpointLoader<CkptNameParam: crate::nodes::types::String> {
     ///No documentation.
     pub ckpt_name: CkptNameParam,

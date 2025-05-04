@@ -7,6 +7,7 @@ use crate::{
 };
 ///**Set CLIP Hooks**: No description.
 #[derive(Clone)]
+#[allow(non_camel_case_types)]
 pub struct SetClipHooks<
     ClipParam: crate::nodes::types::Clip,
     ApplyToCondsParam: crate::nodes::types::Boolean,

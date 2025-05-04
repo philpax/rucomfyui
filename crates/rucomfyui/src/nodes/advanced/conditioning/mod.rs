@@ -8,7 +8,8 @@ use crate::{
 pub mod flux;
 ///**CLIPTextEncodeHiDream**: No description.
 #[derive(Clone)]
-pub struct ClipTextEncodeHiDream<
+#[allow(non_camel_case_types)]
+pub struct CLIPTextEncodeHiDream<
     ClipParam: crate::nodes::types::Clip,
     ClipLParam: crate::nodes::types::String,
     ClipGParam: crate::nodes::types::String,
@@ -52,7 +53,7 @@ impl<
     ClipGParam: crate::nodes::types::String,
     T5XxlParam: crate::nodes::types::String,
     LlamaParam: crate::nodes::types::String,
-> ClipTextEncodeHiDream<ClipParam, ClipLParam, ClipGParam, T5XxlParam, LlamaParam> {
+> CLIPTextEncodeHiDream<ClipParam, ClipLParam, ClipGParam, T5XxlParam, LlamaParam> {
     /// Create a new node.
     pub fn new(
         clip: ClipParam,
@@ -77,7 +78,7 @@ impl<
     T5XxlParam: crate::nodes::types::String,
     LlamaParam: crate::nodes::types::String,
 > crate::nodes::TypedNode
-for ClipTextEncodeHiDream<ClipParam, ClipLParam, ClipGParam, T5XxlParam, LlamaParam> {
+for CLIPTextEncodeHiDream<ClipParam, ClipLParam, ClipGParam, T5XxlParam, LlamaParam> {
     type Output = crate::nodes::types::ConditioningOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)
@@ -98,7 +99,8 @@ for ClipTextEncodeHiDream<ClipParam, ClipLParam, ClipGParam, T5XxlParam, LlamaPa
 }
 ///**CLIPTextEncodeHunyuanDiT**: No description.
 #[derive(Clone)]
-pub struct ClipTextEncodeHunyuanDiT<
+#[allow(non_camel_case_types)]
+pub struct CLIPTextEncodeHunyuanDiT<
     ClipParam: crate::nodes::types::Clip,
     BertParam: crate::nodes::types::String,
     Mt5XlParam: crate::nodes::types::String,
@@ -124,7 +126,7 @@ impl<
     ClipParam: crate::nodes::types::Clip,
     BertParam: crate::nodes::types::String,
     Mt5XlParam: crate::nodes::types::String,
-> ClipTextEncodeHunyuanDiT<ClipParam, BertParam, Mt5XlParam> {
+> CLIPTextEncodeHunyuanDiT<ClipParam, BertParam, Mt5XlParam> {
     /// Create a new node.
     pub fn new(clip: ClipParam, bert: BertParam, mt_5_xl: Mt5XlParam) -> Self {
         Self { clip, bert, mt_5_xl }
@@ -135,7 +137,7 @@ impl<
     BertParam: crate::nodes::types::String,
     Mt5XlParam: crate::nodes::types::String,
 > crate::nodes::TypedNode
-for ClipTextEncodeHunyuanDiT<ClipParam, BertParam, Mt5XlParam> {
+for CLIPTextEncodeHunyuanDiT<ClipParam, BertParam, Mt5XlParam> {
     type Output = crate::nodes::types::ConditioningOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)
@@ -154,7 +156,8 @@ for ClipTextEncodeHunyuanDiT<ClipParam, BertParam, Mt5XlParam> {
 }
 ///**CLIPTextEncodePixArtAlpha**: Encodes text and sets the resolution conditioning for PixArt Alpha. Does not apply to PixArt Sigma.
 #[derive(Clone)]
-pub struct ClipTextEncodePixArtAlpha<
+#[allow(non_camel_case_types)]
+pub struct CLIPTextEncodePixArtAlpha<
     WidthParam: crate::nodes::types::Int,
     HeightParam: crate::nodes::types::Int,
     TextParam: crate::nodes::types::String,
@@ -191,7 +194,7 @@ impl<
     HeightParam: crate::nodes::types::Int,
     TextParam: crate::nodes::types::String,
     ClipParam: crate::nodes::types::Clip,
-> ClipTextEncodePixArtAlpha<WidthParam, HeightParam, TextParam, ClipParam> {
+> CLIPTextEncodePixArtAlpha<WidthParam, HeightParam, TextParam, ClipParam> {
     /// Create a new node.
     pub fn new(
         width: WidthParam,
@@ -208,7 +211,7 @@ impl<
     TextParam: crate::nodes::types::String,
     ClipParam: crate::nodes::types::Clip,
 > crate::nodes::TypedNode
-for ClipTextEncodePixArtAlpha<WidthParam, HeightParam, TextParam, ClipParam> {
+for CLIPTextEncodePixArtAlpha<WidthParam, HeightParam, TextParam, ClipParam> {
     type Output = crate::nodes::types::ConditioningOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)
@@ -228,7 +231,8 @@ for ClipTextEncodePixArtAlpha<WidthParam, HeightParam, TextParam, ClipParam> {
 }
 ///**CLIPTextEncodeSD3**: No description.
 #[derive(Clone)]
-pub struct ClipTextEncodeSd3<
+#[allow(non_camel_case_types)]
+pub struct CLIPTextEncodeSD3<
     ClipParam: crate::nodes::types::Clip,
     ClipLParam: crate::nodes::types::String,
     ClipGParam: crate::nodes::types::String,
@@ -267,7 +271,7 @@ impl<
     ClipGParam: crate::nodes::types::String,
     T5XxlParam: crate::nodes::types::String,
     EmptyPaddingParam: crate::nodes::types::String,
-> ClipTextEncodeSd3<ClipParam, ClipLParam, ClipGParam, T5XxlParam, EmptyPaddingParam> {
+> CLIPTextEncodeSD3<ClipParam, ClipLParam, ClipGParam, T5XxlParam, EmptyPaddingParam> {
     /// Create a new node.
     pub fn new(
         clip: ClipParam,
@@ -292,7 +296,7 @@ impl<
     T5XxlParam: crate::nodes::types::String,
     EmptyPaddingParam: crate::nodes::types::String,
 > crate::nodes::TypedNode
-for ClipTextEncodeSd3<ClipParam, ClipLParam, ClipGParam, T5XxlParam, EmptyPaddingParam> {
+for CLIPTextEncodeSD3<ClipParam, ClipLParam, ClipGParam, T5XxlParam, EmptyPaddingParam> {
     type Output = crate::nodes::types::ConditioningOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)
@@ -313,7 +317,8 @@ for ClipTextEncodeSd3<ClipParam, ClipLParam, ClipGParam, T5XxlParam, EmptyPaddin
 }
 ///**CLIPTextEncodeSDXL**: No description.
 #[derive(Clone)]
-pub struct ClipTextEncodeSdxl<
+#[allow(non_camel_case_types)]
+pub struct CLIPTextEncodeSDXL<
     ClipParam: crate::nodes::types::Clip,
     WidthParam: crate::nodes::types::Int,
     HeightParam: crate::nodes::types::Int,
@@ -399,7 +404,7 @@ impl<
     TargetHeightParam: crate::nodes::types::Int,
     TextGParam: crate::nodes::types::String,
     TextLParam: crate::nodes::types::String,
-> ClipTextEncodeSdxl<
+> CLIPTextEncodeSDXL<
     ClipParam,
     WidthParam,
     HeightParam,
@@ -446,7 +451,7 @@ impl<
     TextGParam: crate::nodes::types::String,
     TextLParam: crate::nodes::types::String,
 > crate::nodes::TypedNode
-for ClipTextEncodeSdxl<
+for CLIPTextEncodeSDXL<
     ClipParam,
     WidthParam,
     HeightParam,
@@ -481,7 +486,8 @@ for ClipTextEncodeSdxl<
 }
 ///**CLIPTextEncodeSDXLRefiner**: No description.
 #[derive(Clone)]
-pub struct ClipTextEncodeSdxlRefiner<
+#[allow(non_camel_case_types)]
+pub struct CLIPTextEncodeSDXLRefiner<
     AscoreParam: crate::nodes::types::Float,
     WidthParam: crate::nodes::types::Int,
     HeightParam: crate::nodes::types::Int,
@@ -529,7 +535,7 @@ impl<
     HeightParam: crate::nodes::types::Int,
     TextParam: crate::nodes::types::String,
     ClipParam: crate::nodes::types::Clip,
-> ClipTextEncodeSdxlRefiner<AscoreParam, WidthParam, HeightParam, TextParam, ClipParam> {
+> CLIPTextEncodeSDXLRefiner<AscoreParam, WidthParam, HeightParam, TextParam, ClipParam> {
     /// Create a new node.
     pub fn new(
         ascore: AscoreParam,
@@ -554,7 +560,7 @@ impl<
     TextParam: crate::nodes::types::String,
     ClipParam: crate::nodes::types::Clip,
 > crate::nodes::TypedNode
-for ClipTextEncodeSdxlRefiner<
+for CLIPTextEncodeSDXLRefiner<
     AscoreParam,
     WidthParam,
     HeightParam,
@@ -581,6 +587,7 @@ for ClipTextEncodeSdxlRefiner<
 }
 ///**ConditioningSetTimestepRange**: No description.
 #[derive(Clone)]
+#[allow(non_camel_case_types)]
 pub struct ConditioningSetTimestepRange<
     ConditioningParam: crate::nodes::types::Conditioning,
     StartParam: crate::nodes::types::Float,
@@ -645,6 +652,7 @@ for ConditioningSetTimestepRange<ConditioningParam, StartParam, EndParam> {
 }
 ///**ConditioningZeroOut**: No description.
 #[derive(Clone)]
+#[allow(non_camel_case_types)]
 pub struct ConditioningZeroOut<ConditioningParam: crate::nodes::types::Conditioning> {
     ///No documentation.
     pub conditioning: ConditioningParam,
@@ -675,7 +683,8 @@ for ConditioningZeroOut<ConditioningParam> {
 }
 ///**TextEncodeHunyuanVideo_ImageToVideo**: No description.
 #[derive(Clone)]
-pub struct TextEncodeHunyuanVideoImageToVideo<
+#[allow(non_camel_case_types)]
+pub struct TextEncodeHunyuanVideo_ImageToVideo<
     ClipParam: crate::nodes::types::Clip,
     ClipVisionOutputParam: crate::nodes::types::ClipVisionOutput,
     PromptParam: crate::nodes::types::String,
@@ -706,7 +715,7 @@ impl<
     ClipVisionOutputParam: crate::nodes::types::ClipVisionOutput,
     PromptParam: crate::nodes::types::String,
     ImageInterleaveParam: crate::nodes::types::Int,
-> TextEncodeHunyuanVideoImageToVideo<
+> TextEncodeHunyuanVideo_ImageToVideo<
     ClipParam,
     ClipVisionOutputParam,
     PromptParam,
@@ -733,7 +742,7 @@ impl<
     PromptParam: crate::nodes::types::String,
     ImageInterleaveParam: crate::nodes::types::Int,
 > crate::nodes::TypedNode
-for TextEncodeHunyuanVideoImageToVideo<
+for TextEncodeHunyuanVideo_ImageToVideo<
     ClipParam,
     ClipVisionOutputParam,
     PromptParam,

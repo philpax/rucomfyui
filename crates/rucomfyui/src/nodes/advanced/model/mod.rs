@@ -7,6 +7,7 @@ use crate::{
 };
 ///**ModelSamplingAuraFlow**: No description.
 #[derive(Clone)]
+#[allow(non_camel_case_types)]
 pub struct ModelSamplingAuraFlow<
     ModelParam: crate::nodes::types::Model,
     ShiftParam: crate::nodes::types::Float,
@@ -53,7 +54,8 @@ impl<
 }
 ///**ModelSamplingContinuousEDM**: No description.
 #[derive(Clone)]
-pub struct ModelSamplingContinuousEdm<
+#[allow(non_camel_case_types)]
+pub struct ModelSamplingContinuousEDM<
     ModelParam: crate::nodes::types::Model,
     SamplingParam: crate::nodes::types::String,
     SigmaMaxParam: crate::nodes::types::Float,
@@ -89,7 +91,7 @@ impl<
     SamplingParam: crate::nodes::types::String,
     SigmaMaxParam: crate::nodes::types::Float,
     SigmaMinParam: crate::nodes::types::Float,
-> ModelSamplingContinuousEdm<ModelParam, SamplingParam, SigmaMaxParam, SigmaMinParam> {
+> ModelSamplingContinuousEDM<ModelParam, SamplingParam, SigmaMaxParam, SigmaMinParam> {
     /// Create a new node.
     pub fn new(
         model: ModelParam,
@@ -111,7 +113,7 @@ impl<
     SigmaMaxParam: crate::nodes::types::Float,
     SigmaMinParam: crate::nodes::types::Float,
 > crate::nodes::TypedNode
-for ModelSamplingContinuousEdm<ModelParam, SamplingParam, SigmaMaxParam, SigmaMinParam> {
+for ModelSamplingContinuousEDM<ModelParam, SamplingParam, SigmaMaxParam, SigmaMinParam> {
     type Output = crate::nodes::types::ModelOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)
@@ -131,6 +133,7 @@ for ModelSamplingContinuousEdm<ModelParam, SamplingParam, SigmaMaxParam, SigmaMi
 }
 ///**ModelSamplingContinuousV**: No description.
 #[derive(Clone)]
+#[allow(non_camel_case_types)]
 pub struct ModelSamplingContinuousV<
     ModelParam: crate::nodes::types::Model,
     SamplingParam: crate::nodes::types::String,
@@ -209,6 +212,7 @@ for ModelSamplingContinuousV<ModelParam, SamplingParam, SigmaMaxParam, SigmaMinP
 }
 ///**ModelSamplingDiscrete**: No description.
 #[derive(Clone)]
+#[allow(non_camel_case_types)]
 pub struct ModelSamplingDiscrete<
     ModelParam: crate::nodes::types::Model,
     SamplingParam: crate::nodes::types::String,
@@ -259,6 +263,7 @@ for ModelSamplingDiscrete<ModelParam, SamplingParam, ZsnrParam> {
 }
 ///**ModelSamplingFlux**: No description.
 #[derive(Clone)]
+#[allow(non_camel_case_types)]
 pub struct ModelSamplingFlux<
     ModelParam: crate::nodes::types::Model,
     MaxShiftParam: crate::nodes::types::Float,
@@ -363,7 +368,8 @@ for ModelSamplingFlux<
 }
 ///**ModelSamplingLTXV**: No description.
 #[derive(Clone)]
-pub struct ModelSamplingLtxv<
+#[allow(non_camel_case_types)]
+pub struct ModelSamplingLTXV<
     ModelParam: crate::nodes::types::Model,
     MaxShiftParam: crate::nodes::types::Float,
     BaseShiftParam: crate::nodes::types::Float,
@@ -397,7 +403,7 @@ impl<
     MaxShiftParam: crate::nodes::types::Float,
     BaseShiftParam: crate::nodes::types::Float,
     LatentParam: crate::nodes::types::Latent,
-> ModelSamplingLtxv<ModelParam, MaxShiftParam, BaseShiftParam, LatentParam> {
+> ModelSamplingLTXV<ModelParam, MaxShiftParam, BaseShiftParam, LatentParam> {
     /// Create a new node.
     pub fn new(
         model: ModelParam,
@@ -419,7 +425,7 @@ impl<
     BaseShiftParam: crate::nodes::types::Float,
     LatentParam: crate::nodes::types::Latent,
 > crate::nodes::TypedNode
-for ModelSamplingLtxv<ModelParam, MaxShiftParam, BaseShiftParam, LatentParam> {
+for ModelSamplingLTXV<ModelParam, MaxShiftParam, BaseShiftParam, LatentParam> {
     type Output = crate::nodes::types::ModelOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)
@@ -441,7 +447,8 @@ for ModelSamplingLtxv<ModelParam, MaxShiftParam, BaseShiftParam, LatentParam> {
 }
 ///**ModelSamplingSD3**: No description.
 #[derive(Clone)]
-pub struct ModelSamplingSd3<
+#[allow(non_camel_case_types)]
+pub struct ModelSamplingSD3<
     ModelParam: crate::nodes::types::Model,
     ShiftParam: crate::nodes::types::Float,
 > {
@@ -460,7 +467,7 @@ pub struct ModelSamplingSd3<
 impl<
     ModelParam: crate::nodes::types::Model,
     ShiftParam: crate::nodes::types::Float,
-> ModelSamplingSd3<ModelParam, ShiftParam> {
+> ModelSamplingSD3<ModelParam, ShiftParam> {
     /// Create a new node.
     pub fn new(model: ModelParam, shift: ShiftParam) -> Self {
         Self { model, shift }
@@ -469,7 +476,7 @@ impl<
 impl<
     ModelParam: crate::nodes::types::Model,
     ShiftParam: crate::nodes::types::Float,
-> crate::nodes::TypedNode for ModelSamplingSd3<ModelParam, ShiftParam> {
+> crate::nodes::TypedNode for ModelSamplingSD3<ModelParam, ShiftParam> {
     type Output = crate::nodes::types::ModelOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)
@@ -487,6 +494,7 @@ impl<
 }
 ///**ModelSamplingStableCascade**: No description.
 #[derive(Clone)]
+#[allow(non_camel_case_types)]
 pub struct ModelSamplingStableCascade<
     ModelParam: crate::nodes::types::Model,
     ShiftParam: crate::nodes::types::Float,
@@ -533,7 +541,8 @@ impl<
 }
 ///**RenormCFG**: No description.
 #[derive(Clone)]
-pub struct RenormCfg<
+#[allow(non_camel_case_types)]
+pub struct RenormCFG<
     ModelParam: crate::nodes::types::Model,
     CfgTruncParam: crate::nodes::types::Float,
     RenormCfgParam: crate::nodes::types::Float,
@@ -563,7 +572,7 @@ impl<
     ModelParam: crate::nodes::types::Model,
     CfgTruncParam: crate::nodes::types::Float,
     RenormCfgParam: crate::nodes::types::Float,
-> RenormCfg<ModelParam, CfgTruncParam, RenormCfgParam> {
+> RenormCFG<ModelParam, CfgTruncParam, RenormCfgParam> {
     /// Create a new node.
     pub fn new(
         model: ModelParam,
@@ -581,7 +590,7 @@ impl<
     ModelParam: crate::nodes::types::Model,
     CfgTruncParam: crate::nodes::types::Float,
     RenormCfgParam: crate::nodes::types::Float,
-> crate::nodes::TypedNode for RenormCfg<ModelParam, CfgTruncParam, RenormCfgParam> {
+> crate::nodes::TypedNode for RenormCFG<ModelParam, CfgTruncParam, RenormCfgParam> {
     type Output = crate::nodes::types::ModelOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)
@@ -600,7 +609,8 @@ impl<
 }
 ///**RescaleCFG**: No description.
 #[derive(Clone)]
-pub struct RescaleCfg<
+#[allow(non_camel_case_types)]
+pub struct RescaleCFG<
     ModelParam: crate::nodes::types::Model,
     MultiplierParam: crate::nodes::types::Float,
 > {
@@ -619,7 +629,7 @@ pub struct RescaleCfg<
 impl<
     ModelParam: crate::nodes::types::Model,
     MultiplierParam: crate::nodes::types::Float,
-> RescaleCfg<ModelParam, MultiplierParam> {
+> RescaleCFG<ModelParam, MultiplierParam> {
     /// Create a new node.
     pub fn new(model: ModelParam, multiplier: MultiplierParam) -> Self {
         Self { model, multiplier }
@@ -628,7 +638,7 @@ impl<
 impl<
     ModelParam: crate::nodes::types::Model,
     MultiplierParam: crate::nodes::types::Float,
-> crate::nodes::TypedNode for RescaleCfg<ModelParam, MultiplierParam> {
+> crate::nodes::TypedNode for RescaleCFG<ModelParam, MultiplierParam> {
     type Output = crate::nodes::types::ModelOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)

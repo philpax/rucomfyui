@@ -7,6 +7,7 @@ use crate::{
 };
 ///**ModelComputeDtype**: No description.
 #[derive(Clone)]
+#[allow(non_camel_case_types)]
 pub struct ModelComputeDtype<
     ModelParam: crate::nodes::types::Model,
     DtypeParam: crate::nodes::types::String,

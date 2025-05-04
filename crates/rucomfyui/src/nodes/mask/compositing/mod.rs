@@ -9,6 +9,7 @@ use crate::{
 pub mod out {
     ///Output for [`PorterDuffImageComposite`](super::PorterDuffImageComposite).
     #[derive(Clone)]
+    #[allow(non_camel_case_types)]
     pub struct PorterDuffImageCompositeOutput {
         ///No documentation.
         pub image: crate::nodes::types::ImageOut,
@@ -17,6 +18,7 @@ pub mod out {
     }
     ///Output for [`SplitImageWithAlpha`](super::SplitImageWithAlpha).
     #[derive(Clone)]
+    #[allow(non_camel_case_types)]
     pub struct SplitImageWithAlphaOutput {
         ///No documentation.
         pub image: crate::nodes::types::ImageOut,
@@ -26,6 +28,7 @@ pub mod out {
 }
 ///**Join Image with Alpha**: No description.
 #[derive(Clone)]
+#[allow(non_camel_case_types)]
 pub struct JoinImageWithAlpha<
     ImageParam: crate::nodes::types::Image,
     AlphaParam: crate::nodes::types::Mask,
@@ -65,6 +68,7 @@ impl<
 }
 ///**Porter-Duff Image Composite**: No description.
 #[derive(Clone)]
+#[allow(non_camel_case_types)]
 pub struct PorterDuffImageComposite<
     SourceParam: crate::nodes::types::Image,
     SourceAlphaParam: crate::nodes::types::Mask,
@@ -158,6 +162,7 @@ for PorterDuffImageComposite<
 }
 ///**Split Image with Alpha**: No description.
 #[derive(Clone)]
+#[allow(non_camel_case_types)]
 pub struct SplitImageWithAlpha<ImageParam: crate::nodes::types::Image> {
     ///No documentation.
     pub image: ImageParam,

@@ -9,6 +9,7 @@ use crate::{
 pub mod out {
     ///Output for [`PairConditioningCombine`](super::PairConditioningCombine).
     #[derive(Clone)]
+    #[allow(non_camel_case_types)]
     pub struct PairConditioningCombineOutput {
         ///No documentation.
         pub positive: crate::nodes::types::ConditioningOut,
@@ -17,6 +18,7 @@ pub mod out {
     }
     ///Output for [`PairConditioningSetDefaultCombine`](super::PairConditioningSetDefaultCombine).
     #[derive(Clone)]
+    #[allow(non_camel_case_types)]
     pub struct PairConditioningSetDefaultCombineOutput {
         ///No documentation.
         pub positive: crate::nodes::types::ConditioningOut,
@@ -25,6 +27,7 @@ pub mod out {
     }
     ///Output for [`PairConditioningSetProperties`](super::PairConditioningSetProperties).
     #[derive(Clone)]
+    #[allow(non_camel_case_types)]
     pub struct PairConditioningSetPropertiesOutput {
         ///No documentation.
         pub positive: crate::nodes::types::ConditioningOut,
@@ -33,6 +36,7 @@ pub mod out {
     }
     ///Output for [`PairConditioningSetPropertiesAndCombine`](super::PairConditioningSetPropertiesAndCombine).
     #[derive(Clone)]
+    #[allow(non_camel_case_types)]
     pub struct PairConditioningSetPropertiesAndCombineOutput {
         ///No documentation.
         pub positive: crate::nodes::types::ConditioningOut,
@@ -42,6 +46,7 @@ pub mod out {
 }
 ///**Cond Pair Combine**: No description.
 #[derive(Clone)]
+#[allow(non_camel_case_types)]
 pub struct PairConditioningCombine<
     PositiveAParam: crate::nodes::types::Conditioning,
     NegativeAParam: crate::nodes::types::Conditioning,
@@ -117,6 +122,7 @@ for PairConditioningCombine<
 }
 ///**Cond Pair Set Default Combine**: No description.
 #[derive(Clone)]
+#[allow(non_camel_case_types)]
 pub struct PairConditioningSetDefaultCombine<
     PositiveParam: crate::nodes::types::Conditioning,
     NegativeParam: crate::nodes::types::Conditioning,
@@ -212,6 +218,7 @@ for PairConditioningSetDefaultCombine<
 }
 ///**Cond Pair Set Props**: No description.
 #[derive(Clone)]
+#[allow(non_camel_case_types)]
 pub struct PairConditioningSetProperties<
     PositiveNewParam: crate::nodes::types::Conditioning,
     NegativeNewParam: crate::nodes::types::Conditioning,
@@ -331,6 +338,7 @@ for PairConditioningSetProperties<
 }
 ///**Cond Pair Set Props Combine**: No description.
 #[derive(Clone)]
+#[allow(non_camel_case_types)]
 pub struct PairConditioningSetPropertiesAndCombine<
     PositiveParam: crate::nodes::types::Conditioning,
     NegativeParam: crate::nodes::types::Conditioning,

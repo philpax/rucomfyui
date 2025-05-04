@@ -9,6 +9,7 @@ use crate::{
 pub mod out {
     ///Output for [`Hunyuan3Dv2Conditioning`](super::Hunyuan3Dv2Conditioning).
     #[derive(Clone)]
+    #[allow(non_camel_case_types)]
     pub struct Hunyuan3Dv2ConditioningOutput {
         ///No documentation.
         pub positive: crate::nodes::types::ConditioningOut,
@@ -17,6 +18,7 @@ pub mod out {
     }
     ///Output for [`Hunyuan3Dv2ConditioningMultiView`](super::Hunyuan3Dv2ConditioningMultiView).
     #[derive(Clone)]
+    #[allow(non_camel_case_types)]
     pub struct Hunyuan3Dv2ConditioningMultiViewOutput {
         ///No documentation.
         pub positive: crate::nodes::types::ConditioningOut,
@@ -25,15 +27,17 @@ pub mod out {
     }
     ///Output for [`HunyuanImageToVideo`](super::HunyuanImageToVideo).
     #[derive(Clone)]
+    #[allow(non_camel_case_types)]
     pub struct HunyuanImageToVideoOutput {
         ///No documentation.
         pub positive: crate::nodes::types::ConditioningOut,
         ///No documentation.
         pub latent: crate::nodes::types::LatentOut,
     }
-    ///Output for [`LtxvAddGuide`](super::LtxvAddGuide).
+    ///Output for [`LTXVAddGuide`](super::LTXVAddGuide).
     #[derive(Clone)]
-    pub struct LtxvAddGuideOutput {
+    #[allow(non_camel_case_types)]
+    pub struct LTXVAddGuideOutput {
         ///No documentation.
         pub positive: crate::nodes::types::ConditioningOut,
         ///No documentation.
@@ -41,27 +45,19 @@ pub mod out {
         ///No documentation.
         pub latent: crate::nodes::types::LatentOut,
     }
-    ///Output for [`LtxvConditioning`](super::LtxvConditioning).
+    ///Output for [`LTXVConditioning`](super::LTXVConditioning).
     #[derive(Clone)]
-    pub struct LtxvConditioningOutput {
+    #[allow(non_camel_case_types)]
+    pub struct LTXVConditioningOutput {
         ///No documentation.
         pub positive: crate::nodes::types::ConditioningOut,
         ///No documentation.
         pub negative: crate::nodes::types::ConditioningOut,
     }
-    ///Output for [`LtxvCropGuides`](super::LtxvCropGuides).
+    ///Output for [`LTXVCropGuides`](super::LTXVCropGuides).
     #[derive(Clone)]
-    pub struct LtxvCropGuidesOutput {
-        ///No documentation.
-        pub positive: crate::nodes::types::ConditioningOut,
-        ///No documentation.
-        pub negative: crate::nodes::types::ConditioningOut,
-        ///No documentation.
-        pub latent: crate::nodes::types::LatentOut,
-    }
-    ///Output for [`LtxvImgToVideo`](super::LtxvImgToVideo).
-    #[derive(Clone)]
-    pub struct LtxvImgToVideoOutput {
+    #[allow(non_camel_case_types)]
+    pub struct LTXVCropGuidesOutput {
         ///No documentation.
         pub positive: crate::nodes::types::ConditioningOut,
         ///No documentation.
@@ -69,9 +65,21 @@ pub mod out {
         ///No documentation.
         pub latent: crate::nodes::types::LatentOut,
     }
-    ///Output for [`SvdImg2VidConditioning`](super::SvdImg2VidConditioning).
+    ///Output for [`LTXVImgToVideo`](super::LTXVImgToVideo).
     #[derive(Clone)]
-    pub struct SvdImg2VidConditioningOutput {
+    #[allow(non_camel_case_types)]
+    pub struct LTXVImgToVideoOutput {
+        ///No documentation.
+        pub positive: crate::nodes::types::ConditioningOut,
+        ///No documentation.
+        pub negative: crate::nodes::types::ConditioningOut,
+        ///No documentation.
+        pub latent: crate::nodes::types::LatentOut,
+    }
+    ///Output for [`SVD_img2vid_Conditioning`](super::SVD_img2vid_Conditioning).
+    #[derive(Clone)]
+    #[allow(non_camel_case_types)]
+    pub struct SVD_img2vid_ConditioningOutput {
         ///No documentation.
         pub positive: crate::nodes::types::ConditioningOut,
         ///No documentation.
@@ -81,6 +89,7 @@ pub mod out {
     }
     ///Output for [`WanFirstLastFrameToVideo`](super::WanFirstLastFrameToVideo).
     #[derive(Clone)]
+    #[allow(non_camel_case_types)]
     pub struct WanFirstLastFrameToVideoOutput {
         ///No documentation.
         pub positive: crate::nodes::types::ConditioningOut,
@@ -91,6 +100,7 @@ pub mod out {
     }
     ///Output for [`WanFunControlToVideo`](super::WanFunControlToVideo).
     #[derive(Clone)]
+    #[allow(non_camel_case_types)]
     pub struct WanFunControlToVideoOutput {
         ///No documentation.
         pub positive: crate::nodes::types::ConditioningOut,
@@ -101,6 +111,7 @@ pub mod out {
     }
     ///Output for [`WanFunInpaintToVideo`](super::WanFunInpaintToVideo).
     #[derive(Clone)]
+    #[allow(non_camel_case_types)]
     pub struct WanFunInpaintToVideoOutput {
         ///No documentation.
         pub positive: crate::nodes::types::ConditioningOut,
@@ -111,6 +122,7 @@ pub mod out {
     }
     ///Output for [`WanImageToVideo`](super::WanImageToVideo).
     #[derive(Clone)]
+    #[allow(non_camel_case_types)]
     pub struct WanImageToVideoOutput {
         ///No documentation.
         pub positive: crate::nodes::types::ConditioningOut,
@@ -121,6 +133,7 @@ pub mod out {
     }
     ///Output for [`WanVaceToVideo`](super::WanVaceToVideo).
     #[derive(Clone)]
+    #[allow(non_camel_case_types)]
     pub struct WanVaceToVideoOutput {
         ///No documentation.
         pub positive: crate::nodes::types::ConditioningOut,
@@ -134,6 +147,7 @@ pub mod out {
 }
 ///**Hunyuan3Dv2Conditioning**: No description.
 #[derive(Clone)]
+#[allow(non_camel_case_types)]
 pub struct Hunyuan3Dv2Conditioning<
     ClipVisionOutputParam: crate::nodes::types::ClipVisionOutput,
 > {
@@ -174,6 +188,7 @@ impl<
 }
 ///**Hunyuan3Dv2ConditioningMultiView**: No description.
 #[derive(Clone)]
+#[allow(non_camel_case_types)]
 pub struct Hunyuan3Dv2ConditioningMultiView<
     FrontParam: crate::nodes::types::ClipVisionOutput
         = crate::nodes::types::ClipVisionOutputOut,
@@ -246,6 +261,7 @@ for Hunyuan3Dv2ConditioningMultiView<FrontParam, LeftParam, BackParam, RightPara
 }
 ///**HunyuanImageToVideo**: No description.
 #[derive(Clone)]
+#[allow(non_camel_case_types)]
 pub struct HunyuanImageToVideo<
     PositiveParam: crate::nodes::types::Conditioning,
     VaeParam: crate::nodes::types::Vae,
@@ -390,7 +406,8 @@ for HunyuanImageToVideo<
 }
 ///**LTXVAddGuide**: No description.
 #[derive(Clone)]
-pub struct LtxvAddGuide<
+#[allow(non_camel_case_types)]
+pub struct LTXVAddGuide<
     PositiveParam: crate::nodes::types::Conditioning,
     NegativeParam: crate::nodes::types::Conditioning,
     VaeParam: crate::nodes::types::Vae,
@@ -435,7 +452,7 @@ impl<
     ImageParam: crate::nodes::types::Image,
     FrameIdxParam: crate::nodes::types::Int,
     StrengthParam: crate::nodes::types::Float,
-> LtxvAddGuide<
+> LTXVAddGuide<
     PositiveParam,
     NegativeParam,
     VaeParam,
@@ -474,7 +491,7 @@ impl<
     FrameIdxParam: crate::nodes::types::Int,
     StrengthParam: crate::nodes::types::Float,
 > crate::nodes::TypedNode
-for LtxvAddGuide<
+for LTXVAddGuide<
     PositiveParam,
     NegativeParam,
     VaeParam,
@@ -483,7 +500,7 @@ for LtxvAddGuide<
     FrameIdxParam,
     StrengthParam,
 > {
-    type Output = out::LtxvAddGuideOutput;
+    type Output = out::LTXVAddGuideOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
             positive: crate::nodes::types::ConditioningOut::from_dynamic(node_id, 0u32),
@@ -509,7 +526,8 @@ for LtxvAddGuide<
 }
 ///**LTXVConditioning**: No description.
 #[derive(Clone)]
-pub struct LtxvConditioning<
+#[allow(non_camel_case_types)]
+pub struct LTXVConditioning<
     PositiveParam: crate::nodes::types::Conditioning,
     NegativeParam: crate::nodes::types::Conditioning,
     FrameRateParam: crate::nodes::types::Float,
@@ -532,7 +550,7 @@ impl<
     PositiveParam: crate::nodes::types::Conditioning,
     NegativeParam: crate::nodes::types::Conditioning,
     FrameRateParam: crate::nodes::types::Float,
-> LtxvConditioning<PositiveParam, NegativeParam, FrameRateParam> {
+> LTXVConditioning<PositiveParam, NegativeParam, FrameRateParam> {
     /// Create a new node.
     pub fn new(
         positive: PositiveParam,
@@ -551,8 +569,8 @@ impl<
     NegativeParam: crate::nodes::types::Conditioning,
     FrameRateParam: crate::nodes::types::Float,
 > crate::nodes::TypedNode
-for LtxvConditioning<PositiveParam, NegativeParam, FrameRateParam> {
-    type Output = out::LtxvConditioningOutput;
+for LTXVConditioning<PositiveParam, NegativeParam, FrameRateParam> {
+    type Output = out::LTXVConditioningOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
             positive: crate::nodes::types::ConditioningOut::from_dynamic(node_id, 0u32),
@@ -573,7 +591,8 @@ for LtxvConditioning<PositiveParam, NegativeParam, FrameRateParam> {
 }
 ///**LTXVCropGuides**: No description.
 #[derive(Clone)]
-pub struct LtxvCropGuides<
+#[allow(non_camel_case_types)]
+pub struct LTXVCropGuides<
     PositiveParam: crate::nodes::types::Conditioning,
     NegativeParam: crate::nodes::types::Conditioning,
     LatentParam: crate::nodes::types::Latent,
@@ -589,7 +608,7 @@ impl<
     PositiveParam: crate::nodes::types::Conditioning,
     NegativeParam: crate::nodes::types::Conditioning,
     LatentParam: crate::nodes::types::Latent,
-> LtxvCropGuides<PositiveParam, NegativeParam, LatentParam> {
+> LTXVCropGuides<PositiveParam, NegativeParam, LatentParam> {
     /// Create a new node.
     pub fn new(
         positive: PositiveParam,
@@ -603,8 +622,8 @@ impl<
     PositiveParam: crate::nodes::types::Conditioning,
     NegativeParam: crate::nodes::types::Conditioning,
     LatentParam: crate::nodes::types::Latent,
-> crate::nodes::TypedNode for LtxvCropGuides<PositiveParam, NegativeParam, LatentParam> {
-    type Output = out::LtxvCropGuidesOutput;
+> crate::nodes::TypedNode for LTXVCropGuides<PositiveParam, NegativeParam, LatentParam> {
+    type Output = out::LTXVCropGuidesOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
             positive: crate::nodes::types::ConditioningOut::from_dynamic(node_id, 0u32),
@@ -626,7 +645,8 @@ impl<
 }
 ///**LTXVImgToVideo**: No description.
 #[derive(Clone)]
-pub struct LtxvImgToVideo<
+#[allow(non_camel_case_types)]
+pub struct LTXVImgToVideo<
     PositiveParam: crate::nodes::types::Conditioning,
     NegativeParam: crate::nodes::types::Conditioning,
     VaeParam: crate::nodes::types::Vae,
@@ -699,7 +719,7 @@ impl<
     LengthParam: crate::nodes::types::Int,
     BatchSizeParam: crate::nodes::types::Int,
     StrengthParam: crate::nodes::types::Float,
-> LtxvImgToVideo<
+> LTXVImgToVideo<
     PositiveParam,
     NegativeParam,
     VaeParam,
@@ -746,7 +766,7 @@ impl<
     BatchSizeParam: crate::nodes::types::Int,
     StrengthParam: crate::nodes::types::Float,
 > crate::nodes::TypedNode
-for LtxvImgToVideo<
+for LTXVImgToVideo<
     PositiveParam,
     NegativeParam,
     VaeParam,
@@ -757,7 +777,7 @@ for LtxvImgToVideo<
     BatchSizeParam,
     StrengthParam,
 > {
-    type Output = out::LtxvImgToVideoOutput;
+    type Output = out::LTXVImgToVideoOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
             positive: crate::nodes::types::ConditioningOut::from_dynamic(node_id, 0u32),
@@ -785,7 +805,8 @@ for LtxvImgToVideo<
 }
 ///**SVD_img2vid_Conditioning**: No description.
 #[derive(Clone)]
-pub struct SvdImg2VidConditioning<
+#[allow(non_camel_case_types)]
+pub struct SVD_img2vid_Conditioning<
     ClipVisionParam: crate::nodes::types::ClipVision,
     InitImageParam: crate::nodes::types::Image,
     VaeParam: crate::nodes::types::Vae,
@@ -864,7 +885,7 @@ impl<
     MotionBucketIdParam: crate::nodes::types::Int,
     FpsParam: crate::nodes::types::Int,
     AugmentationLevelParam: crate::nodes::types::Float,
-> SvdImg2VidConditioning<
+> SVD_img2vid_Conditioning<
     ClipVisionParam,
     InitImageParam,
     VaeParam,
@@ -911,7 +932,7 @@ impl<
     FpsParam: crate::nodes::types::Int,
     AugmentationLevelParam: crate::nodes::types::Float,
 > crate::nodes::TypedNode
-for SvdImg2VidConditioning<
+for SVD_img2vid_Conditioning<
     ClipVisionParam,
     InitImageParam,
     VaeParam,
@@ -922,7 +943,7 @@ for SvdImg2VidConditioning<
     FpsParam,
     AugmentationLevelParam,
 > {
-    type Output = out::SvdImg2VidConditioningOutput;
+    type Output = out::SVD_img2vid_ConditioningOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output {
             positive: crate::nodes::types::ConditioningOut::from_dynamic(node_id, 0u32),
@@ -958,6 +979,7 @@ for SvdImg2VidConditioning<
 }
 ///**WanFirstLastFrameToVideo**: No description.
 #[derive(Clone)]
+#[allow(non_camel_case_types)]
 pub struct WanFirstLastFrameToVideo<
     PositiveParam: crate::nodes::types::Conditioning,
     NegativeParam: crate::nodes::types::Conditioning,
@@ -1141,6 +1163,7 @@ for WanFirstLastFrameToVideo<
 }
 ///**WanFunControlToVideo**: No description.
 #[derive(Clone)]
+#[allow(non_camel_case_types)]
 pub struct WanFunControlToVideo<
     PositiveParam: crate::nodes::types::Conditioning,
     NegativeParam: crate::nodes::types::Conditioning,
@@ -1311,6 +1334,7 @@ for WanFunControlToVideo<
 }
 ///**WanFunInpaintToVideo**: No description.
 #[derive(Clone)]
+#[allow(non_camel_case_types)]
 pub struct WanFunInpaintToVideo<
     PositiveParam: crate::nodes::types::Conditioning,
     NegativeParam: crate::nodes::types::Conditioning,
@@ -1481,6 +1505,7 @@ for WanFunInpaintToVideo<
 }
 ///**WanImageToVideo**: No description.
 #[derive(Clone)]
+#[allow(non_camel_case_types)]
 pub struct WanImageToVideo<
     PositiveParam: crate::nodes::types::Conditioning,
     NegativeParam: crate::nodes::types::Conditioning,
@@ -1639,6 +1664,7 @@ for WanImageToVideo<
 }
 ///**WanVaceToVideo**: No description.
 #[derive(Clone)]
+#[allow(non_camel_case_types)]
 pub struct WanVaceToVideo<
     PositiveParam: crate::nodes::types::Conditioning,
     NegativeParam: crate::nodes::types::Conditioning,

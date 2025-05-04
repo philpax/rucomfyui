@@ -7,7 +7,8 @@ use crate::{
 };
 ///**CLIPTextEncodeFlux**: No description.
 #[derive(Clone)]
-pub struct ClipTextEncodeFlux<
+#[allow(non_camel_case_types)]
+pub struct CLIPTextEncodeFlux<
     ClipParam: crate::nodes::types::Clip,
     ClipLParam: crate::nodes::types::String,
     T5XxlParam: crate::nodes::types::String,
@@ -44,7 +45,7 @@ impl<
     ClipLParam: crate::nodes::types::String,
     T5XxlParam: crate::nodes::types::String,
     GuidanceParam: crate::nodes::types::Float,
-> ClipTextEncodeFlux<ClipParam, ClipLParam, T5XxlParam, GuidanceParam> {
+> CLIPTextEncodeFlux<ClipParam, ClipLParam, T5XxlParam, GuidanceParam> {
     /// Create a new node.
     pub fn new(
         clip: ClipParam,
@@ -66,7 +67,7 @@ impl<
     T5XxlParam: crate::nodes::types::String,
     GuidanceParam: crate::nodes::types::Float,
 > crate::nodes::TypedNode
-for ClipTextEncodeFlux<ClipParam, ClipLParam, T5XxlParam, GuidanceParam> {
+for CLIPTextEncodeFlux<ClipParam, ClipLParam, T5XxlParam, GuidanceParam> {
     type Output = crate::nodes::types::ConditioningOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)
@@ -86,6 +87,7 @@ for ClipTextEncodeFlux<ClipParam, ClipLParam, T5XxlParam, GuidanceParam> {
 }
 ///**FluxDisableGuidance**: This node completely disables the guidance embed on Flux and Flux like models
 #[derive(Clone)]
+#[allow(non_camel_case_types)]
 pub struct FluxDisableGuidance<ConditioningParam: crate::nodes::types::Conditioning> {
     ///No documentation.
     pub conditioning: ConditioningParam,
@@ -116,6 +118,7 @@ for FluxDisableGuidance<ConditioningParam> {
 }
 ///**FluxGuidance**: No description.
 #[derive(Clone)]
+#[allow(non_camel_case_types)]
 pub struct FluxGuidance<
     ConditioningParam: crate::nodes::types::Conditioning,
     GuidanceParam: crate::nodes::types::Float,

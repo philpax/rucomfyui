@@ -9,6 +9,7 @@ use crate::{
 pub mod out {
     ///Output for [`GetVideoComponents`](super::GetVideoComponents).
     #[derive(Clone)]
+    #[allow(non_camel_case_types)]
     pub struct GetVideoComponentsOutput {
         ///No documentation.
         pub images: crate::nodes::types::ImageOut,
@@ -20,6 +21,7 @@ pub mod out {
 }
 ///**Create Video**: Create a video from images.
 #[derive(Clone)]
+#[allow(non_camel_case_types)]
 pub struct CreateVideo<
     ImagesParam: crate::nodes::types::Image,
     FpsParam: crate::nodes::types::Float,
@@ -74,6 +76,7 @@ impl<
 }
 ///**Get Video Components**: Extracts all components from a video: frames, audio, and framerate.
 #[derive(Clone)]
+#[allow(non_camel_case_types)]
 pub struct GetVideoComponents<VideoParam: crate::nodes::types::Video> {
     ///The video to extract components from.
     pub video: VideoParam,
@@ -106,6 +109,7 @@ for GetVideoComponents<VideoParam> {
 }
 ///**Load Video**: No description.
 #[derive(Clone)]
+#[allow(non_camel_case_types)]
 pub struct LoadVideo<FileParam: crate::nodes::types::String> {
     ///No documentation.
     pub file: FileParam,
@@ -134,6 +138,7 @@ for LoadVideo<FileParam> {
 }
 ///**Save Video**: Saves the input images to your ComfyUI output directory.
 #[derive(Clone)]
+#[allow(non_camel_case_types)]
 pub struct SaveVideo<
     VideoParam: crate::nodes::types::Video,
     FilenamePrefixParam: crate::nodes::types::String,
@@ -216,7 +221,8 @@ impl<
 for SaveVideo<VideoParam, FilenamePrefixParam, FormatParam, CodecParam> {}
 ///**SaveWEBM**: No description.
 #[derive(Clone)]
-pub struct SaveWebm<
+#[allow(non_camel_case_types)]
+pub struct SaveWEBM<
     ImagesParam: crate::nodes::types::Image,
     FilenamePrefixParam: crate::nodes::types::String,
     CodecParam: crate::nodes::types::String,
@@ -258,7 +264,7 @@ impl<
     CodecParam: crate::nodes::types::String,
     FpsParam: crate::nodes::types::Float,
     CrfParam: crate::nodes::types::Float,
-> SaveWebm<ImagesParam, FilenamePrefixParam, CodecParam, FpsParam, CrfParam> {
+> SaveWEBM<ImagesParam, FilenamePrefixParam, CodecParam, FpsParam, CrfParam> {
     /// Create a new node.
     pub fn new(
         images: ImagesParam,
@@ -283,7 +289,7 @@ impl<
     FpsParam: crate::nodes::types::Float,
     CrfParam: crate::nodes::types::Float,
 > crate::nodes::TypedNode
-for SaveWebm<ImagesParam, FilenamePrefixParam, CodecParam, FpsParam, CrfParam> {
+for SaveWEBM<ImagesParam, FilenamePrefixParam, CodecParam, FpsParam, CrfParam> {
     type Output = WorkflowNodeId;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         node_id
@@ -310,4 +316,4 @@ impl<
     FpsParam: crate::nodes::types::Float,
     CrfParam: crate::nodes::types::Float,
 > crate::nodes::TypedOutputNode
-for SaveWebm<ImagesParam, FilenamePrefixParam, CodecParam, FpsParam, CrfParam> {}
+for SaveWEBM<ImagesParam, FilenamePrefixParam, CodecParam, FpsParam, CrfParam> {}

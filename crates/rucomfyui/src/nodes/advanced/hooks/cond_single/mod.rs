@@ -7,6 +7,7 @@ use crate::{
 };
 ///**Cond Set Default Combine**: No description.
 #[derive(Clone)]
+#[allow(non_camel_case_types)]
 pub struct ConditioningSetDefaultCombine<
     CondParam: crate::nodes::types::Conditioning,
     CondDefaultParam: crate::nodes::types::Conditioning,
@@ -59,6 +60,7 @@ for ConditioningSetDefaultCombine<CondParam, CondDefaultParam, HooksParam> {
 }
 ///**Cond Set Props**: No description.
 #[derive(Clone)]
+#[allow(non_camel_case_types)]
 pub struct ConditioningSetProperties<
     CondNewParam: crate::nodes::types::Conditioning,
     StrengthParam: crate::nodes::types::Float,
@@ -165,6 +167,7 @@ for ConditioningSetProperties<
 }
 ///**Cond Set Props Combine**: No description.
 #[derive(Clone)]
+#[allow(non_camel_case_types)]
 pub struct ConditioningSetPropertiesAndCombine<
     CondParam: crate::nodes::types::Conditioning,
     CondNewParam: crate::nodes::types::Conditioning,
