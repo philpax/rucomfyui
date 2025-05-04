@@ -85,7 +85,7 @@ fn all_nodes(tree: &CategoryTree, ctx: &[syn::Ident]) -> Result<TokenStream> {
         for node in tree.values() {
             match node {
                 CategoryTreeNode::Category(name, tree) => {
-                    let name = util::name_to_ident(name, false)?;
+                    let name = util::name_to_ident(name, util::NameToIdentCase::Snake)?;
                     generate_node_stmts(
                         tree,
                         &ctx.iter().cloned().chain([name]).collect::<Vec<_>>(),
@@ -93,7 +93,7 @@ fn all_nodes(tree: &CategoryTree, ctx: &[syn::Ident]) -> Result<TokenStream> {
                     )?;
                 }
                 CategoryTreeNode::Object(object) => {
-                    let name = util::name_to_ident(&object.name, true)?;
+                    let name = util::name_to_ident(&object.name, util::NameToIdentCase::Pascal)?;
                     statements.push(quote! {
                         pub use crate :: nodes :: #(#ctx::)* #name;
                     });
@@ -118,7 +118,7 @@ fn type_module_definitions() -> Result<TokenStream> {
         .map(|ty| {
             let recased_ty = format!("{ty:?}").to_case(Case::ScreamingSnake);
             let doc = format!("A value of ComfyUI type `{recased_ty}`.");
-            let name = util::name_to_ident(&format!("{ty:?}"), true)?;
+            let name = util::name_to_ident(&format!("{ty:?}"), util::NameToIdentCase::Pascal)?;
 
             let output_doc = format!("A node output of type [`{ty:?}`].");
             let output_name = util::object_type_out_struct_ident(ty);
@@ -199,7 +199,7 @@ fn write_category_tree_root(root: &CategoryTree, directory: &Path) -> Result<()>
     for (key, node) in root {
         match node {
             CategoryTreeNode::Category(name, tree) => {
-                let key = util::name_to_ident(key, false)?;
+                let key = util::name_to_ident(key, util::NameToIdentCase::Snake)?;
                 write_category_tree((name, tree), &directory.join(key.to_string()))
                     .context(name.clone())?;
                 modules.push(quote! {
@@ -260,7 +260,7 @@ fn write_category_tree((name, tree): (&str, &CategoryTree), directory: &Path) ->
     for (key, node) in tree {
         match node {
             CategoryTreeNode::Category(name, tree) => {
-                let key = util::name_to_ident(key, false)?;
+                let key = util::name_to_ident(key, util::NameToIdentCase::Snake)?;
                 write_category_tree((name, tree), &directory.join(key.to_string()))
                     .context(name.clone())?;
                 modules.push(quote! {
@@ -268,9 +268,14 @@ fn write_category_tree((name, tree): (&str, &CategoryTree), directory: &Path) ->
                 });
             }
             CategoryTreeNode::Object(object) => {
-                let struct_name = util::name_to_ident(&object.name, true)?;
+                let struct_name = util::name_to_ident(&object.name, util::NameToIdentCase::Pascal)?;
                 let node_output_struct_name = (!object.output_node && object.output.len() > 1)
-                    .then(|| util::name_to_ident(&format!("{}Output", object.name), true))
+                    .then(|| {
+                        util::name_to_ident(
+                            &format!("{}Output", object.name),
+                            util::NameToIdentCase::Pascal,
+                        )
+                    })
                     .transpose()?;
 
                 nodes.push(write_node(
@@ -357,12 +362,17 @@ fn node_processed_inputs(node: &Object) -> Result<Vec<ProcessedInput>> {
             let meta_typed = input.as_meta_typed();
             Some(ProcessedInput {
                 original_name: name,
-                name: util::name_to_ident(name, false).ok()?,
+                name: util::name_to_ident(name, util::NameToIdentCase::Snake).ok()?,
                 meta_typed,
                 tooltip: input.tooltip(),
                 ty: ty.clone(),
-                generic_name: util::name_to_ident(&format!("{name}Param"), true).ok()?,
-                generic_ty: util::name_to_ident(&format!("{ty:?}"), true).ok()?,
+                generic_name: util::name_to_ident(
+                    &format!("{name}Param"),
+                    util::NameToIdentCase::Pascal,
+                )
+                .ok()?,
+                generic_ty: util::name_to_ident(&format!("{ty:?}"), util::NameToIdentCase::Pascal)
+                    .ok()?,
                 optional: !required,
             })
         })
@@ -547,7 +557,7 @@ fn write_node_trait_impl(
             .processed_output()
             .enumerate()
             .map(|(i, output)| {
-                let name = util::name_to_ident(output.name, false)?;
+                let name = util::name_to_ident(output.name, util::NameToIdentCase::Snake)?;
                 let ty = util::object_type_out_struct_ident(&output.ty);
                 let i = i as u32;
                 Ok(quote! {
@@ -660,7 +670,7 @@ fn write_node_output_struct(
     let fields = node
         .processed_output()
         .map(|output| {
-            let name = util::name_to_ident(output.name, false)?;
+            let name = util::name_to_ident(output.name, util::NameToIdentCase::Snake)?;
             let ty = util::object_type_out_struct_ident(&output.ty);
             let doc = output.tooltip.unwrap_or("No documentation.");
             Ok(quote! {

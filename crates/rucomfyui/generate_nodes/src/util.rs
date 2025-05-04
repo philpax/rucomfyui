@@ -18,17 +18,33 @@ pub fn write_tokenstream(path: &Path, output: TokenStream) -> Result<()> {
     Ok(())
 }
 
+#[derive(Debug, Clone, Copy)]
+/// The case to convert the name to.
+pub enum NameToIdentCase {
+    #[allow(unused)]
+    /// Preserve the original case.
+    Preserve,
+    /// Convert to PascalCase.
+    Pascal,
+    /// Convert to snake_case.
+    Snake,
+}
+
 /// Converts the given name to a [`syn::Ident`], including converting to either `snake_case` or `PascalCase`.
-pub fn name_to_ident(name: &str, pascal_case: bool) -> Result<syn::Ident> {
+pub fn name_to_ident(name: &str, case: NameToIdentCase) -> Result<syn::Ident> {
     let mut name = name.replace(".", "_");
     if name.starts_with(char::is_numeric) {
         name = format!("n{name}");
     }
 
-    if pascal_case {
-        name = name.to_case(Case::UpperCamel);
-    } else {
-        name = name.to_case(Case::Snake);
+    match case {
+        NameToIdentCase::Preserve => {}
+        NameToIdentCase::Pascal => {
+            name = name.to_case(Case::UpperCamel);
+        }
+        NameToIdentCase::Snake => {
+            name = name.to_case(Case::Snake);
+        }
     }
 
     if name == "type" {
@@ -43,5 +59,5 @@ pub fn object_type_out_struct_ident(ty: &ObjectType) -> syn::Ident {
     if let ObjectType::Other(ty) = ty {
         panic!("Unexpected other type: {ty:?}");
     }
-    name_to_ident(&format!("{ty:?}Out"), true).unwrap()
+    name_to_ident(&format!("{ty:?}Out"), NameToIdentCase::Pascal).unwrap()
 }
