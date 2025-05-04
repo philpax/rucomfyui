@@ -443,13 +443,15 @@ impl std::fmt::Display for ObjectInputMetaTypedRoundValue {
 }
 
 macro_rules! define_object_type {
-    ($($ot:ident),*) => {
+    ($(($ot:ident, $rename:expr)),*) => {
         #[derive(Debug, Serialize, Deserialize, Clone, PartialEq, Eq)]
-        #[serde(rename_all = "SCREAMING_SNAKE_CASE")]
         /// Type of an object.
         #[allow(missing_docs)]
         pub enum ObjectType {
-            $($ot,)*
+            $(
+                #[serde(rename = $rename)]
+                $ot,
+            )*
             #[serde(untagged)]
             Other(String),
         }
@@ -464,38 +466,40 @@ macro_rules! define_object_type {
     }
 }
 define_object_type! {
-    Audio,
-    Boolean,
-    ClipVisionOutput,
-    ClipVision,
-    Clip,
-    Conditioning,
-    ControlNet,
-    Float,
-    Gligen,
-    Guider,
-    Hooks,
-    HookKeyframes,
-    Image,
-    InpaintModel,
-    InpaintPatch,
-    Int,
-    Latent,
-    LatentOperation,
-    Mask,
-    Mesh,
-    Model,
-    Noise,
-    Photomaker,
-    Sampler,
-    String,
-    Sigmas,
-    StyleModel,
-    TimestepsRange,
-    UpscaleModel,
-    Vae,
-    Voxel,
-    Webcam
+    (Audio, "AUDIO"),
+    (Boolean, "BOOLEAN"),
+    (ClipVisionOutput, "CLIP_VISION_OUTPUT"),
+    (ClipVision, "CLIP_VISION"),
+    (Clip, "CLIP"),
+    (Conditioning, "CONDITIONING"),
+    (ControlNet, "CONTROL_NET"),
+    (Float, "FLOAT"),
+    (Gligen, "GLIGEN"),
+    (Guider, "GUIDER"),
+    (Hooks, "HOOKS"),
+    (HookKeyframes, "HOOK_KEYFRAMES"),
+    (Image, "IMAGE"),
+    (InpaintModel, "INPAINT_MODEL"),
+    (InpaintPatch, "INPAINT_PATCH"),
+    (Int, "INT"),
+    (Latent, "LATENT"),
+    (LatentOperation, "LATENT_OPERATION"),
+    (Load3DCamera, "LOAD3D_CAMERA"),
+    (Mask, "MASK"),
+    (Mesh, "MESH"),
+    (Model, "MODEL"),
+    (Noise, "NOISE"),
+    (Photomaker, "PHOTOMAKER"),
+    (Sampler, "SAMPLER"),
+    (String, "STRING"),
+    (Sigmas, "SIGMAS"),
+    (StyleModel, "STYLE_MODEL"),
+    (TimestepsRange, "TIMESTEPS_RANGE"),
+    (UpscaleModel, "UPSCALE_MODEL"),
+    (Vae, "VAE"),
+    (Video, "VIDEO"),
+    (Voxel, "VOXEL"),
+    (Webcam, "WEBCAM")
 }
 
 /// A tree of objects based on their categories.

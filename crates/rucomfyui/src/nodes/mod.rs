@@ -1,6 +1,7 @@
 //! Typed node definitions for ComfyUI that provide a type-safe abstraction over the API.
 pub mod n_3_d;
 pub mod advanced;
+pub mod api_node;
 pub mod audio;
 pub mod conditioning;
 pub mod image;
@@ -9,6 +10,7 @@ pub mod loaders;
 pub mod mask;
 pub mod model_patches;
 pub mod sampling;
+pub mod sd;
 pub mod utils;
 pub mod all;
 pub mod types;

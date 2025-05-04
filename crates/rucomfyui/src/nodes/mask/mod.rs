@@ -502,6 +502,36 @@ for MaskComposite<DestinationParam, SourceParam, XParam, YParam, OperationParam>
     const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "mask";
 }
+///**MaskPreview**: Saves the input images to your ComfyUI output directory.
+#[derive(Clone)]
+pub struct MaskPreview<MaskParam: crate::nodes::types::Mask> {
+    ///No documentation.
+    pub mask: MaskParam,
+}
+impl<MaskParam: crate::nodes::types::Mask> MaskPreview<MaskParam> {
+    /// Create a new node.
+    pub fn new(mask: MaskParam) -> Self {
+        Self { mask }
+    }
+}
+impl<MaskParam: crate::nodes::types::Mask> crate::nodes::TypedNode
+for MaskPreview<MaskParam> {
+    type Output = WorkflowNodeId;
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
+        node_id
+    }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("mask".to_string(), self.mask.clone().into());
+        output
+    }
+    const NAME: &'static str = "MaskPreview";
+    const DISPLAY_NAME: &'static str = "MaskPreview";
+    const DESCRIPTION: &'static str = "Saves the input images to your ComfyUI output directory.";
+    const CATEGORY: &'static str = "mask";
+}
+impl<MaskParam: crate::nodes::types::Mask> crate::nodes::TypedOutputNode
+for MaskPreview<MaskParam> {}
 ///**Convert Mask to Image**: No description.
 #[derive(Clone)]
 pub struct MaskToImage<MaskParam: crate::nodes::types::Mask> {

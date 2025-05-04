@@ -273,3 +273,48 @@ for EmptyMochiLatentVideo<WidthParam, HeightParam, LengthParam, BatchSizeParam> 
     const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "latent/video";
 }
+///**TrimVideoLatent**: No description.
+#[derive(Clone)]
+pub struct TrimVideoLatent<
+    SamplesParam: crate::nodes::types::Latent,
+    TrimAmountParam: crate::nodes::types::Int,
+> {
+    ///No documentation.
+    pub samples: SamplesParam,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 0
+  - Max: 99999
+  - Min: 0
+*/
+    pub trim_amount: TrimAmountParam,
+}
+impl<
+    SamplesParam: crate::nodes::types::Latent,
+    TrimAmountParam: crate::nodes::types::Int,
+> TrimVideoLatent<SamplesParam, TrimAmountParam> {
+    /// Create a new node.
+    pub fn new(samples: SamplesParam, trim_amount: TrimAmountParam) -> Self {
+        Self { samples, trim_amount }
+    }
+}
+impl<
+    SamplesParam: crate::nodes::types::Latent,
+    TrimAmountParam: crate::nodes::types::Int,
+> crate::nodes::TypedNode for TrimVideoLatent<SamplesParam, TrimAmountParam> {
+    type Output = crate::nodes::types::LatentOut;
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
+        Self::Output::from_dynamic(node_id, 0)
+    }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("samples".to_string(), self.samples.clone().into());
+        output.insert("trim_amount".to_string(), self.trim_amount.clone().into());
+        output
+    }
+    const NAME: &'static str = "TrimVideoLatent";
+    const DISPLAY_NAME: &'static str = "TrimVideoLatent";
+    const DESCRIPTION: &'static str = "";
+    const CATEGORY: &'static str = "latent/video";
+}

@@ -79,6 +79,16 @@ pub mod out {
         ///No documentation.
         pub latent: crate::nodes::types::LatentOut,
     }
+    ///Output for [`WanFirstLastFrameToVideo`](super::WanFirstLastFrameToVideo).
+    #[derive(Clone)]
+    pub struct WanFirstLastFrameToVideoOutput {
+        ///No documentation.
+        pub positive: crate::nodes::types::ConditioningOut,
+        ///No documentation.
+        pub negative: crate::nodes::types::ConditioningOut,
+        ///No documentation.
+        pub latent: crate::nodes::types::LatentOut,
+    }
     ///Output for [`WanFunControlToVideo`](super::WanFunControlToVideo).
     #[derive(Clone)]
     pub struct WanFunControlToVideoOutput {
@@ -108,6 +118,18 @@ pub mod out {
         pub negative: crate::nodes::types::ConditioningOut,
         ///No documentation.
         pub latent: crate::nodes::types::LatentOut,
+    }
+    ///Output for [`WanVaceToVideo`](super::WanVaceToVideo).
+    #[derive(Clone)]
+    pub struct WanVaceToVideoOutput {
+        ///No documentation.
+        pub positive: crate::nodes::types::ConditioningOut,
+        ///No documentation.
+        pub negative: crate::nodes::types::ConditioningOut,
+        ///No documentation.
+        pub latent: crate::nodes::types::LatentOut,
+        ///No documentation.
+        pub trim_latent: crate::nodes::types::IntOut,
     }
 }
 ///**Hunyuan3Dv2Conditioning**: No description.
@@ -613,6 +635,7 @@ pub struct LtxvImgToVideo<
     HeightParam: crate::nodes::types::Int,
     LengthParam: crate::nodes::types::Int,
     BatchSizeParam: crate::nodes::types::Int,
+    StrengthParam: crate::nodes::types::Float,
 > {
     ///No documentation.
     pub positive: PositiveParam,
@@ -657,6 +680,14 @@ pub struct LtxvImgToVideo<
   - Min: 1
 */
     pub batch_size: BatchSizeParam,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+*/
+    pub strength: StrengthParam,
 }
 impl<
     PositiveParam: crate::nodes::types::Conditioning,
@@ -667,6 +698,7 @@ impl<
     HeightParam: crate::nodes::types::Int,
     LengthParam: crate::nodes::types::Int,
     BatchSizeParam: crate::nodes::types::Int,
+    StrengthParam: crate::nodes::types::Float,
 > LtxvImgToVideo<
     PositiveParam,
     NegativeParam,
@@ -676,6 +708,7 @@ impl<
     HeightParam,
     LengthParam,
     BatchSizeParam,
+    StrengthParam,
 > {
     /// Create a new node.
     pub fn new(
@@ -687,6 +720,7 @@ impl<
         height: HeightParam,
         length: LengthParam,
         batch_size: BatchSizeParam,
+        strength: StrengthParam,
     ) -> Self {
         Self {
             positive,
@@ -697,6 +731,7 @@ impl<
             height,
             length,
             batch_size,
+            strength,
         }
     }
 }
@@ -709,6 +744,7 @@ impl<
     HeightParam: crate::nodes::types::Int,
     LengthParam: crate::nodes::types::Int,
     BatchSizeParam: crate::nodes::types::Int,
+    StrengthParam: crate::nodes::types::Float,
 > crate::nodes::TypedNode
 for LtxvImgToVideo<
     PositiveParam,
@@ -719,6 +755,7 @@ for LtxvImgToVideo<
     HeightParam,
     LengthParam,
     BatchSizeParam,
+    StrengthParam,
 > {
     type Output = out::LtxvImgToVideoOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
@@ -738,6 +775,7 @@ for LtxvImgToVideo<
         output.insert("height".to_string(), self.height.clone().into());
         output.insert("length".to_string(), self.length.clone().into());
         output.insert("batch_size".to_string(), self.batch_size.clone().into());
+        output.insert("strength".to_string(), self.strength.clone().into());
         output
     }
     const NAME: &'static str = "LTXVImgToVideo";
@@ -915,6 +953,189 @@ for SvdImg2VidConditioning<
     }
     const NAME: &'static str = "SVD_img2vid_Conditioning";
     const DISPLAY_NAME: &'static str = "SVD_img2vid_Conditioning";
+    const DESCRIPTION: &'static str = "";
+    const CATEGORY: &'static str = "conditioning/video_models";
+}
+///**WanFirstLastFrameToVideo**: No description.
+#[derive(Clone)]
+pub struct WanFirstLastFrameToVideo<
+    PositiveParam: crate::nodes::types::Conditioning,
+    NegativeParam: crate::nodes::types::Conditioning,
+    VaeParam: crate::nodes::types::Vae,
+    WidthParam: crate::nodes::types::Int,
+    HeightParam: crate::nodes::types::Int,
+    LengthParam: crate::nodes::types::Int,
+    BatchSizeParam: crate::nodes::types::Int,
+    ClipVisionStartImageParam: crate::nodes::types::ClipVisionOutput
+        = crate::nodes::types::ClipVisionOutputOut,
+    ClipVisionEndImageParam: crate::nodes::types::ClipVisionOutput
+        = crate::nodes::types::ClipVisionOutputOut,
+    StartImageParam: crate::nodes::types::Image = crate::nodes::types::ImageOut,
+    EndImageParam: crate::nodes::types::Image = crate::nodes::types::ImageOut,
+> {
+    ///No documentation.
+    pub positive: PositiveParam,
+    ///No documentation.
+    pub negative: NegativeParam,
+    ///No documentation.
+    pub vae: VaeParam,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 832
+  - Max: 16384
+  - Min: 16
+  - Step: 16
+*/
+    pub width: WidthParam,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 480
+  - Max: 16384
+  - Min: 16
+  - Step: 16
+*/
+    pub height: HeightParam,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 81
+  - Max: 16384
+  - Min: 1
+  - Step: 4
+*/
+    pub length: LengthParam,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 4096
+  - Min: 1
+*/
+    pub batch_size: BatchSizeParam,
+    ///No documentation.
+    pub clip_vision_start_image: Option<ClipVisionStartImageParam>,
+    ///No documentation.
+    pub clip_vision_end_image: Option<ClipVisionEndImageParam>,
+    ///No documentation.
+    pub start_image: Option<StartImageParam>,
+    ///No documentation.
+    pub end_image: Option<EndImageParam>,
+}
+impl<
+    PositiveParam: crate::nodes::types::Conditioning,
+    NegativeParam: crate::nodes::types::Conditioning,
+    VaeParam: crate::nodes::types::Vae,
+    WidthParam: crate::nodes::types::Int,
+    HeightParam: crate::nodes::types::Int,
+    LengthParam: crate::nodes::types::Int,
+    BatchSizeParam: crate::nodes::types::Int,
+    ClipVisionStartImageParam: crate::nodes::types::ClipVisionOutput,
+    ClipVisionEndImageParam: crate::nodes::types::ClipVisionOutput,
+    StartImageParam: crate::nodes::types::Image,
+    EndImageParam: crate::nodes::types::Image,
+> WanFirstLastFrameToVideo<
+    PositiveParam,
+    NegativeParam,
+    VaeParam,
+    WidthParam,
+    HeightParam,
+    LengthParam,
+    BatchSizeParam,
+    ClipVisionStartImageParam,
+    ClipVisionEndImageParam,
+    StartImageParam,
+    EndImageParam,
+> {
+    /// Create a new node.
+    pub fn new(
+        positive: PositiveParam,
+        negative: NegativeParam,
+        vae: VaeParam,
+        width: WidthParam,
+        height: HeightParam,
+        length: LengthParam,
+        batch_size: BatchSizeParam,
+        clip_vision_start_image: Option<ClipVisionStartImageParam>,
+        clip_vision_end_image: Option<ClipVisionEndImageParam>,
+        start_image: Option<StartImageParam>,
+        end_image: Option<EndImageParam>,
+    ) -> Self {
+        Self {
+            positive,
+            negative,
+            vae,
+            width,
+            height,
+            length,
+            batch_size,
+            clip_vision_start_image,
+            clip_vision_end_image,
+            start_image,
+            end_image,
+        }
+    }
+}
+impl<
+    PositiveParam: crate::nodes::types::Conditioning,
+    NegativeParam: crate::nodes::types::Conditioning,
+    VaeParam: crate::nodes::types::Vae,
+    WidthParam: crate::nodes::types::Int,
+    HeightParam: crate::nodes::types::Int,
+    LengthParam: crate::nodes::types::Int,
+    BatchSizeParam: crate::nodes::types::Int,
+    ClipVisionStartImageParam: crate::nodes::types::ClipVisionOutput,
+    ClipVisionEndImageParam: crate::nodes::types::ClipVisionOutput,
+    StartImageParam: crate::nodes::types::Image,
+    EndImageParam: crate::nodes::types::Image,
+> crate::nodes::TypedNode
+for WanFirstLastFrameToVideo<
+    PositiveParam,
+    NegativeParam,
+    VaeParam,
+    WidthParam,
+    HeightParam,
+    LengthParam,
+    BatchSizeParam,
+    ClipVisionStartImageParam,
+    ClipVisionEndImageParam,
+    StartImageParam,
+    EndImageParam,
+> {
+    type Output = out::WanFirstLastFrameToVideoOutput;
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
+        Self::Output {
+            positive: crate::nodes::types::ConditioningOut::from_dynamic(node_id, 0u32),
+            negative: crate::nodes::types::ConditioningOut::from_dynamic(node_id, 1u32),
+            latent: crate::nodes::types::LatentOut::from_dynamic(node_id, 2u32),
+        }
+    }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("positive".to_string(), self.positive.clone().into());
+        output.insert("negative".to_string(), self.negative.clone().into());
+        output.insert("vae".to_string(), self.vae.clone().into());
+        output.insert("width".to_string(), self.width.clone().into());
+        output.insert("height".to_string(), self.height.clone().into());
+        output.insert("length".to_string(), self.length.clone().into());
+        output.insert("batch_size".to_string(), self.batch_size.clone().into());
+        if let Some(v) = &self.clip_vision_start_image {
+            output.insert("clip_vision_start_image".to_string(), v.clone().into());
+        }
+        if let Some(v) = &self.clip_vision_end_image {
+            output.insert("clip_vision_end_image".to_string(), v.clone().into());
+        }
+        if let Some(v) = &self.start_image {
+            output.insert("start_image".to_string(), v.clone().into());
+        }
+        if let Some(v) = &self.end_image {
+            output.insert("end_image".to_string(), v.clone().into());
+        }
+        output
+    }
+    const NAME: &'static str = "WanFirstLastFrameToVideo";
+    const DISPLAY_NAME: &'static str = "WanFirstLastFrameToVideo";
     const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "conditioning/video_models";
 }
@@ -1413,6 +1634,193 @@ for WanImageToVideo<
     }
     const NAME: &'static str = "WanImageToVideo";
     const DISPLAY_NAME: &'static str = "WanImageToVideo";
+    const DESCRIPTION: &'static str = "";
+    const CATEGORY: &'static str = "conditioning/video_models";
+}
+///**WanVaceToVideo**: No description.
+#[derive(Clone)]
+pub struct WanVaceToVideo<
+    PositiveParam: crate::nodes::types::Conditioning,
+    NegativeParam: crate::nodes::types::Conditioning,
+    VaeParam: crate::nodes::types::Vae,
+    WidthParam: crate::nodes::types::Int,
+    HeightParam: crate::nodes::types::Int,
+    LengthParam: crate::nodes::types::Int,
+    BatchSizeParam: crate::nodes::types::Int,
+    StrengthParam: crate::nodes::types::Float,
+    ControlVideoParam: crate::nodes::types::Image = crate::nodes::types::ImageOut,
+    ControlMasksParam: crate::nodes::types::Mask = crate::nodes::types::MaskOut,
+    ReferenceImageParam: crate::nodes::types::Image = crate::nodes::types::ImageOut,
+> {
+    ///No documentation.
+    pub positive: PositiveParam,
+    ///No documentation.
+    pub negative: NegativeParam,
+    ///No documentation.
+    pub vae: VaeParam,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 832
+  - Max: 16384
+  - Min: 16
+  - Step: 16
+*/
+    pub width: WidthParam,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 480
+  - Max: 16384
+  - Min: 16
+  - Step: 16
+*/
+    pub height: HeightParam,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 81
+  - Max: 16384
+  - Min: 1
+  - Step: 4
+*/
+    pub length: LengthParam,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 4096
+  - Min: 1
+*/
+    pub batch_size: BatchSizeParam,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1000
+  - Min: 0
+  - Step: 0.01
+*/
+    pub strength: StrengthParam,
+    ///No documentation.
+    pub control_video: Option<ControlVideoParam>,
+    ///No documentation.
+    pub control_masks: Option<ControlMasksParam>,
+    ///No documentation.
+    pub reference_image: Option<ReferenceImageParam>,
+}
+impl<
+    PositiveParam: crate::nodes::types::Conditioning,
+    NegativeParam: crate::nodes::types::Conditioning,
+    VaeParam: crate::nodes::types::Vae,
+    WidthParam: crate::nodes::types::Int,
+    HeightParam: crate::nodes::types::Int,
+    LengthParam: crate::nodes::types::Int,
+    BatchSizeParam: crate::nodes::types::Int,
+    StrengthParam: crate::nodes::types::Float,
+    ControlVideoParam: crate::nodes::types::Image,
+    ControlMasksParam: crate::nodes::types::Mask,
+    ReferenceImageParam: crate::nodes::types::Image,
+> WanVaceToVideo<
+    PositiveParam,
+    NegativeParam,
+    VaeParam,
+    WidthParam,
+    HeightParam,
+    LengthParam,
+    BatchSizeParam,
+    StrengthParam,
+    ControlVideoParam,
+    ControlMasksParam,
+    ReferenceImageParam,
+> {
+    /// Create a new node.
+    pub fn new(
+        positive: PositiveParam,
+        negative: NegativeParam,
+        vae: VaeParam,
+        width: WidthParam,
+        height: HeightParam,
+        length: LengthParam,
+        batch_size: BatchSizeParam,
+        strength: StrengthParam,
+        control_video: Option<ControlVideoParam>,
+        control_masks: Option<ControlMasksParam>,
+        reference_image: Option<ReferenceImageParam>,
+    ) -> Self {
+        Self {
+            positive,
+            negative,
+            vae,
+            width,
+            height,
+            length,
+            batch_size,
+            strength,
+            control_video,
+            control_masks,
+            reference_image,
+        }
+    }
+}
+impl<
+    PositiveParam: crate::nodes::types::Conditioning,
+    NegativeParam: crate::nodes::types::Conditioning,
+    VaeParam: crate::nodes::types::Vae,
+    WidthParam: crate::nodes::types::Int,
+    HeightParam: crate::nodes::types::Int,
+    LengthParam: crate::nodes::types::Int,
+    BatchSizeParam: crate::nodes::types::Int,
+    StrengthParam: crate::nodes::types::Float,
+    ControlVideoParam: crate::nodes::types::Image,
+    ControlMasksParam: crate::nodes::types::Mask,
+    ReferenceImageParam: crate::nodes::types::Image,
+> crate::nodes::TypedNode
+for WanVaceToVideo<
+    PositiveParam,
+    NegativeParam,
+    VaeParam,
+    WidthParam,
+    HeightParam,
+    LengthParam,
+    BatchSizeParam,
+    StrengthParam,
+    ControlVideoParam,
+    ControlMasksParam,
+    ReferenceImageParam,
+> {
+    type Output = out::WanVaceToVideoOutput;
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
+        Self::Output {
+            positive: crate::nodes::types::ConditioningOut::from_dynamic(node_id, 0u32),
+            negative: crate::nodes::types::ConditioningOut::from_dynamic(node_id, 1u32),
+            latent: crate::nodes::types::LatentOut::from_dynamic(node_id, 2u32),
+            trim_latent: crate::nodes::types::IntOut::from_dynamic(node_id, 3u32),
+        }
+    }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("positive".to_string(), self.positive.clone().into());
+        output.insert("negative".to_string(), self.negative.clone().into());
+        output.insert("vae".to_string(), self.vae.clone().into());
+        output.insert("width".to_string(), self.width.clone().into());
+        output.insert("height".to_string(), self.height.clone().into());
+        output.insert("length".to_string(), self.length.clone().into());
+        output.insert("batch_size".to_string(), self.batch_size.clone().into());
+        output.insert("strength".to_string(), self.strength.clone().into());
+        if let Some(v) = &self.control_video {
+            output.insert("control_video".to_string(), v.clone().into());
+        }
+        if let Some(v) = &self.control_masks {
+            output.insert("control_masks".to_string(), v.clone().into());
+        }
+        if let Some(v) = &self.reference_image {
+            output.insert("reference_image".to_string(), v.clone().into());
+        }
+        output
+    }
+    const NAME: &'static str = "WanVaceToVideo";
+    const DISPLAY_NAME: &'static str = "WanVaceToVideo";
     const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "conditioning/video_models";
 }

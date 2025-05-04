@@ -688,6 +688,69 @@ for LaplaceScheduler<StepsParam, SigmaMaxParam, SigmaMinParam, MuParam, BetaPara
     const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "sampling/custom_sampling/schedulers";
 }
+///**OptimalStepsScheduler**: No description.
+#[derive(Clone)]
+pub struct OptimalStepsScheduler<
+    ModelTypeParam: crate::nodes::types::String,
+    StepsParam: crate::nodes::types::Int,
+    DenoiseParam: crate::nodes::types::Float,
+> {
+    ///No documentation.
+    pub model_type: ModelTypeParam,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 20
+  - Max: 1000
+  - Min: 3
+*/
+    pub steps: StepsParam,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub denoise: DenoiseParam,
+}
+impl<
+    ModelTypeParam: crate::nodes::types::String,
+    StepsParam: crate::nodes::types::Int,
+    DenoiseParam: crate::nodes::types::Float,
+> OptimalStepsScheduler<ModelTypeParam, StepsParam, DenoiseParam> {
+    /// Create a new node.
+    pub fn new(
+        model_type: ModelTypeParam,
+        steps: StepsParam,
+        denoise: DenoiseParam,
+    ) -> Self {
+        Self { model_type, steps, denoise }
+    }
+}
+impl<
+    ModelTypeParam: crate::nodes::types::String,
+    StepsParam: crate::nodes::types::Int,
+    DenoiseParam: crate::nodes::types::Float,
+> crate::nodes::TypedNode
+for OptimalStepsScheduler<ModelTypeParam, StepsParam, DenoiseParam> {
+    type Output = crate::nodes::types::SigmasOut;
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
+        Self::Output::from_dynamic(node_id, 0)
+    }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("model_type".to_string(), self.model_type.clone().into());
+        output.insert("steps".to_string(), self.steps.clone().into());
+        output.insert("denoise".to_string(), self.denoise.clone().into());
+        output
+    }
+    const NAME: &'static str = "OptimalStepsScheduler";
+    const DISPLAY_NAME: &'static str = "OptimalStepsScheduler";
+    const DESCRIPTION: &'static str = "";
+    const CATEGORY: &'static str = "sampling/custom_sampling/schedulers";
+}
 ///**PolyexponentialScheduler**: No description.
 #[derive(Clone)]
 pub struct PolyexponentialScheduler<

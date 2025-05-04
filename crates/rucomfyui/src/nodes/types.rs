@@ -283,6 +283,20 @@ impl Out for LatentOperationOut {
     }
 }
 impl LatentOperation for LatentOperationOut {}
+///A value of ComfyUI type `LOAD_3_D_CAMERA`.
+pub trait Load3DCamera: Clone + Into<WorkflowInput> {}
+///A node output of type [`Load3DCamera`].
+#[derive(Clone, Copy)]
+pub struct Load3DCameraOut(pub UntypedOut);
+impl Out for Load3DCameraOut {
+    fn from_dynamic(node_id: WorkflowNodeId, node_slot: u32) -> Self {
+        Self(UntypedOut::from_dynamic(node_id, node_slot))
+    }
+    fn into_input(self) -> WorkflowInput {
+        self.0.into_input()
+    }
+}
+impl Load3DCamera for Load3DCameraOut {}
 ///A value of ComfyUI type `MASK`.
 pub trait Mask: Clone + Into<WorkflowInput> {}
 ///A node output of type [`Mask`].
@@ -451,6 +465,20 @@ impl Out for VaeOut {
     }
 }
 impl Vae for VaeOut {}
+///A value of ComfyUI type `VIDEO`.
+pub trait Video: Clone + Into<WorkflowInput> {}
+///A node output of type [`Video`].
+#[derive(Clone, Copy)]
+pub struct VideoOut(pub UntypedOut);
+impl Out for VideoOut {
+    fn from_dynamic(node_id: WorkflowNodeId, node_slot: u32) -> Self {
+        Self(UntypedOut::from_dynamic(node_id, node_slot))
+    }
+    fn into_input(self) -> WorkflowInput {
+        self.0.into_input()
+    }
+}
+impl Video for VideoOut {}
 ///A value of ComfyUI type `VOXEL`.
 pub trait Voxel: Clone + Into<WorkflowInput> {}
 ///A node output of type [`Voxel`].

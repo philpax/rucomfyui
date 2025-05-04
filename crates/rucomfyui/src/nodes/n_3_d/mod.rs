@@ -20,6 +20,8 @@ pub mod out {
         pub normal: crate::nodes::types::ImageOut,
         ///No documentation.
         pub lineart: crate::nodes::types::ImageOut,
+        ///No documentation.
+        pub camera_info: crate::nodes::types::Load3DCameraOut,
     }
     ///Output for [`Load3DAnimation`](super::Load3DAnimation).
     #[derive(Clone)]
@@ -32,6 +34,8 @@ pub mod out {
         pub mesh_path: crate::nodes::types::StringOut,
         ///No documentation.
         pub normal: crate::nodes::types::ImageOut,
+        ///No documentation.
+        pub camera_info: crate::nodes::types::Load3DCameraOut,
     }
 }
 ///**Load 3D**: No description.
@@ -89,6 +93,10 @@ impl<
             mesh_path: crate::nodes::types::StringOut::from_dynamic(node_id, 2u32),
             normal: crate::nodes::types::ImageOut::from_dynamic(node_id, 3u32),
             lineart: crate::nodes::types::ImageOut::from_dynamic(node_id, 4u32),
+            camera_info: crate::nodes::types::Load3DCameraOut::from_dynamic(
+                node_id,
+                5u32,
+            ),
         }
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
@@ -157,6 +165,10 @@ impl<
             mask: crate::nodes::types::MaskOut::from_dynamic(node_id, 1u32),
             mesh_path: crate::nodes::types::StringOut::from_dynamic(node_id, 2u32),
             normal: crate::nodes::types::ImageOut::from_dynamic(node_id, 3u32),
+            camera_info: crate::nodes::types::Load3DCameraOut::from_dynamic(
+                node_id,
+                4u32,
+            ),
         }
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
@@ -173,7 +185,11 @@ impl<
 }
 ///**Preview 3D**: No description.
 #[derive(Clone)]
-pub struct Preview3D<ModelFileParam: crate::nodes::types::String> {
+pub struct Preview3D<
+    ModelFileParam: crate::nodes::types::String,
+    CameraInfoParam: crate::nodes::types::Load3DCamera
+        = crate::nodes::types::Load3DCameraOut,
+> {
     /**No documentation.
 
 **Metadata**:
@@ -181,15 +197,25 @@ pub struct Preview3D<ModelFileParam: crate::nodes::types::String> {
   - Default:
 */
     pub model_file: ModelFileParam,
+    ///No documentation.
+    pub camera_info: Option<CameraInfoParam>,
 }
-impl<ModelFileParam: crate::nodes::types::String> Preview3D<ModelFileParam> {
+impl<
+    ModelFileParam: crate::nodes::types::String,
+    CameraInfoParam: crate::nodes::types::Load3DCamera,
+> Preview3D<ModelFileParam, CameraInfoParam> {
     /// Create a new node.
-    pub fn new(model_file: ModelFileParam) -> Self {
-        Self { model_file }
+    pub fn new(
+        model_file: ModelFileParam,
+        camera_info: Option<CameraInfoParam>,
+    ) -> Self {
+        Self { model_file, camera_info }
     }
 }
-impl<ModelFileParam: crate::nodes::types::String> crate::nodes::TypedNode
-for Preview3D<ModelFileParam> {
+impl<
+    ModelFileParam: crate::nodes::types::String,
+    CameraInfoParam: crate::nodes::types::Load3DCamera,
+> crate::nodes::TypedNode for Preview3D<ModelFileParam, CameraInfoParam> {
     type Output = WorkflowNodeId;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         node_id
@@ -197,6 +223,9 @@ for Preview3D<ModelFileParam> {
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
         output.insert("model_file".to_string(), self.model_file.clone().into());
+        if let Some(v) = &self.camera_info {
+            output.insert("camera_info".to_string(), v.clone().into());
+        }
         output
     }
     const NAME: &'static str = "Preview3D";
@@ -204,11 +233,17 @@ for Preview3D<ModelFileParam> {
     const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "3d";
 }
-impl<ModelFileParam: crate::nodes::types::String> crate::nodes::TypedOutputNode
-for Preview3D<ModelFileParam> {}
+impl<
+    ModelFileParam: crate::nodes::types::String,
+    CameraInfoParam: crate::nodes::types::Load3DCamera,
+> crate::nodes::TypedOutputNode for Preview3D<ModelFileParam, CameraInfoParam> {}
 ///**Preview 3D - Animation**: No description.
 #[derive(Clone)]
-pub struct Preview3DAnimation<ModelFileParam: crate::nodes::types::String> {
+pub struct Preview3DAnimation<
+    ModelFileParam: crate::nodes::types::String,
+    CameraInfoParam: crate::nodes::types::Load3DCamera
+        = crate::nodes::types::Load3DCameraOut,
+> {
     /**No documentation.
 
 **Metadata**:
@@ -216,15 +251,25 @@ pub struct Preview3DAnimation<ModelFileParam: crate::nodes::types::String> {
   - Default:
 */
     pub model_file: ModelFileParam,
+    ///No documentation.
+    pub camera_info: Option<CameraInfoParam>,
 }
-impl<ModelFileParam: crate::nodes::types::String> Preview3DAnimation<ModelFileParam> {
+impl<
+    ModelFileParam: crate::nodes::types::String,
+    CameraInfoParam: crate::nodes::types::Load3DCamera,
+> Preview3DAnimation<ModelFileParam, CameraInfoParam> {
     /// Create a new node.
-    pub fn new(model_file: ModelFileParam) -> Self {
-        Self { model_file }
+    pub fn new(
+        model_file: ModelFileParam,
+        camera_info: Option<CameraInfoParam>,
+    ) -> Self {
+        Self { model_file, camera_info }
     }
 }
-impl<ModelFileParam: crate::nodes::types::String> crate::nodes::TypedNode
-for Preview3DAnimation<ModelFileParam> {
+impl<
+    ModelFileParam: crate::nodes::types::String,
+    CameraInfoParam: crate::nodes::types::Load3DCamera,
+> crate::nodes::TypedNode for Preview3DAnimation<ModelFileParam, CameraInfoParam> {
     type Output = WorkflowNodeId;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         node_id
@@ -232,6 +277,9 @@ for Preview3DAnimation<ModelFileParam> {
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
         output.insert("model_file".to_string(), self.model_file.clone().into());
+        if let Some(v) = &self.camera_info {
+            output.insert("camera_info".to_string(), v.clone().into());
+        }
         output
     }
     const NAME: &'static str = "Preview3DAnimation";
@@ -239,8 +287,10 @@ for Preview3DAnimation<ModelFileParam> {
     const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "3d";
 }
-impl<ModelFileParam: crate::nodes::types::String> crate::nodes::TypedOutputNode
-for Preview3DAnimation<ModelFileParam> {}
+impl<
+    ModelFileParam: crate::nodes::types::String,
+    CameraInfoParam: crate::nodes::types::Load3DCamera,
+> crate::nodes::TypedOutputNode for Preview3DAnimation<ModelFileParam, CameraInfoParam> {}
 ///**SaveGLB**: No description.
 #[derive(Clone)]
 pub struct SaveGlb<
@@ -289,6 +339,66 @@ impl<
     MeshParam: crate::nodes::types::Mesh,
     FilenamePrefixParam: crate::nodes::types::String,
 > crate::nodes::TypedOutputNode for SaveGlb<MeshParam, FilenamePrefixParam> {}
+///**VoxelToMesh**: No description.
+#[derive(Clone)]
+pub struct VoxelToMesh<
+    VoxelParam: crate::nodes::types::Voxel,
+    AlgorithmParam: crate::nodes::types::String,
+    ThresholdParam: crate::nodes::types::Float,
+> {
+    ///No documentation.
+    pub voxel: VoxelParam,
+    ///No documentation.
+    pub algorithm: AlgorithmParam,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 0.6
+  - Max: 1
+  - Min: -1
+  - Step: 0.01
+*/
+    pub threshold: ThresholdParam,
+}
+impl<
+    VoxelParam: crate::nodes::types::Voxel,
+    AlgorithmParam: crate::nodes::types::String,
+    ThresholdParam: crate::nodes::types::Float,
+> VoxelToMesh<VoxelParam, AlgorithmParam, ThresholdParam> {
+    /// Create a new node.
+    pub fn new(
+        voxel: VoxelParam,
+        algorithm: AlgorithmParam,
+        threshold: ThresholdParam,
+    ) -> Self {
+        Self {
+            voxel,
+            algorithm,
+            threshold,
+        }
+    }
+}
+impl<
+    VoxelParam: crate::nodes::types::Voxel,
+    AlgorithmParam: crate::nodes::types::String,
+    ThresholdParam: crate::nodes::types::Float,
+> crate::nodes::TypedNode for VoxelToMesh<VoxelParam, AlgorithmParam, ThresholdParam> {
+    type Output = crate::nodes::types::MeshOut;
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
+        Self::Output::from_dynamic(node_id, 0)
+    }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("voxel".to_string(), self.voxel.clone().into());
+        output.insert("algorithm".to_string(), self.algorithm.clone().into());
+        output.insert("threshold".to_string(), self.threshold.clone().into());
+        output
+    }
+    const NAME: &'static str = "VoxelToMesh";
+    const DISPLAY_NAME: &'static str = "VoxelToMesh";
+    const DESCRIPTION: &'static str = "";
+    const CATEGORY: &'static str = "3d";
+}
 ///**VoxelToMeshBasic**: No description.
 #[derive(Clone)]
 pub struct VoxelToMeshBasic<

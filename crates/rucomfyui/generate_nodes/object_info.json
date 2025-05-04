@@ -298,7 +298,7 @@
   {
     "name": "CLIPLoader",
     "display_name": "Load CLIP",
-    "description": "[Recipes]\n\nstable_diffusion: clip-l\nstable_cascade: clip-g\nsd3: t5 xxl/ clip-g / clip-l\nstable_audio: t5 base\nmochi: t5 xxl\ncosmos: old t5 xxl\nlumina2: gemma 2 2B\nwan: umt5 xxl",
+    "description": "[Recipes]\n\nstable_diffusion: clip-l\nstable_cascade: clip-g\nsd3: t5 xxl/ clip-g / clip-l\nstable_audio: t5 base\nmochi: t5 xxl\ncosmos: old t5 xxl\nlumina2: gemma 2 2B\nwan: umt5 xxl\n hidream: llama-3.1 (Recommend) or t5",
     "python_module": "nodes",
     "category": "advanced/loaders",
     "input": {
@@ -639,6 +639,74 @@
         "clip_l",
         "t5xxl",
         "guidance"
+      ],
+      "optional": null
+    },
+    "output": [
+      "CONDITIONING"
+    ],
+    "output_is_list": [
+      false
+    ],
+    "output_name": [
+      "CONDITIONING"
+    ],
+    "output_node": false,
+    "output_tooltips": []
+  },
+  {
+    "name": "CLIPTextEncodeHiDream",
+    "display_name": "CLIPTextEncodeHiDream",
+    "description": "",
+    "python_module": "comfy_extras.nodes_hidream",
+    "category": "advanced/conditioning",
+    "input": {
+      "required": {
+        "clip": [
+          "CLIP"
+        ],
+        "clip_g": [
+          "STRING",
+          {
+            "tooltip": null,
+            "dynamicPrompts": true,
+            "multiline": true
+          }
+        ],
+        "clip_l": [
+          "STRING",
+          {
+            "tooltip": null,
+            "dynamicPrompts": true,
+            "multiline": true
+          }
+        ],
+        "llama": [
+          "STRING",
+          {
+            "tooltip": null,
+            "dynamicPrompts": true,
+            "multiline": true
+          }
+        ],
+        "t5xxl": [
+          "STRING",
+          {
+            "tooltip": null,
+            "dynamicPrompts": true,
+            "multiline": true
+          }
+        ]
+      },
+      "optional": null
+    },
+    "input_order": {
+      "required": [
+        "clip",
+        "clip_l",
+        "clip_g",
+        "t5xxl",
+        "llama"
       ],
       "optional": null
     },
@@ -3198,6 +3266,61 @@
     "output_tooltips": []
   },
   {
+    "name": "CreateVideo",
+    "display_name": "Create Video",
+    "description": "Create a video from images.",
+    "python_module": "comfy_extras.nodes_video",
+    "category": "image/video",
+    "input": {
+      "required": {
+        "fps": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 30.0,
+            "max": 120.0,
+            "min": 1.0,
+            "step": 1.0
+          }
+        ],
+        "images": [
+          "IMAGE",
+          {
+            "tooltip": "The images to create a video from."
+          }
+        ]
+      },
+      "optional": {
+        "audio": [
+          "AUDIO",
+          {
+            "tooltip": "The audio to add to the video."
+          }
+        ]
+      }
+    },
+    "input_order": {
+      "required": [
+        "images",
+        "fps"
+      ],
+      "optional": [
+        "audio"
+      ]
+    },
+    "output": [
+      "VIDEO"
+    ],
+    "output_is_list": [
+      false
+    ],
+    "output_name": [
+      "VIDEO"
+    ],
+    "output_node": false,
+    "output_tooltips": []
+  },
+  {
     "name": "CropMask",
     "display_name": "CropMask",
     "description": "",
@@ -3444,7 +3567,7 @@
   {
     "name": "DualCLIPLoader",
     "display_name": "DualCLIPLoader",
-    "description": "[Recipes]\n\nsdxl: clip-l, clip-g\nsd3: clip-l, clip-g / clip-l, t5 / clip-g, t5\nflux: clip-l, t5",
+    "description": "[Recipes]\n\nsdxl: clip-l, clip-g\nsd3: clip-l, clip-g / clip-l, t5 / clip-g, t5\nflux: clip-l, t5\nhidream: at least one of t5 or llama, recommended t5 and llama",
     "python_module": "nodes",
     "category": "advanced/loaders",
     "input": {
@@ -4643,6 +4766,47 @@
     ],
     "output_name": [
       "CONDITIONING"
+    ],
+    "output_node": false,
+    "output_tooltips": []
+  },
+  {
+    "name": "GetVideoComponents",
+    "display_name": "Get Video Components",
+    "description": "Extracts all components from a video: frames, audio, and framerate.",
+    "python_module": "comfy_extras.nodes_video",
+    "category": "image/video",
+    "input": {
+      "required": {
+        "video": [
+          "VIDEO",
+          {
+            "tooltip": "The video to extract components from."
+          }
+        ]
+      },
+      "optional": null
+    },
+    "input_order": {
+      "required": [
+        "video"
+      ],
+      "optional": null
+    },
+    "output": [
+      "IMAGE",
+      "AUDIO",
+      "FLOAT"
+    ],
+    "output_is_list": [
+      false,
+      false,
+      false
+    ],
+    "output_name": [
+      "images",
+      "audio",
+      "fps"
     ],
     "output_node": false,
     "output_tooltips": []
@@ -6727,6 +6891,15 @@
         "positive": [
           "CONDITIONING"
         ],
+        "strength": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0
+          }
+        ],
         "vae": [
           "VAE"
         ],
@@ -6752,7 +6925,8 @@
         "width",
         "height",
         "length",
-        "batch_size"
+        "batch_size",
+        "strength"
       ],
       "optional": null
     },
@@ -7904,9 +8078,11 @@
       "MASK",
       "STRING",
       "IMAGE",
-      "IMAGE"
+      "IMAGE",
+      "LOAD3D_CAMERA"
     ],
     "output_is_list": [
+      false,
       false,
       false,
       false,
@@ -7918,7 +8094,8 @@
       "mask",
       "mesh_path",
       "normal",
-      "lineart"
+      "lineart",
+      "camera_info"
     ],
     "output_node": false,
     "output_tooltips": []
@@ -7979,9 +8156,11 @@
       "IMAGE",
       "MASK",
       "STRING",
-      "IMAGE"
+      "IMAGE",
+      "LOAD3D_CAMERA"
     ],
     "output_is_list": [
+      false,
       false,
       false,
       false,
@@ -7991,7 +8170,8 @@
       "image",
       "mask",
       "mesh_path",
-      "normal"
+      "normal",
+      "camera_info"
     ],
     "output_node": false,
     "output_tooltips": []
@@ -8146,6 +8326,41 @@
     "output_name": [
       "IMAGE",
       "MASK"
+    ],
+    "output_node": false,
+    "output_tooltips": []
+  },
+  {
+    "name": "LoadVideo",
+    "display_name": "Load Video",
+    "description": "",
+    "python_module": "comfy_extras.nodes_video",
+    "category": "image/video",
+    "input": {
+      "required": {
+        "file": [
+          [],
+          {
+            "tooltip": null
+          }
+        ]
+      },
+      "optional": null
+    },
+    "input_order": {
+      "required": [
+        "file"
+      ],
+      "optional": null
+    },
+    "output": [
+      "VIDEO"
+    ],
+    "output_is_list": [
+      false
+    ],
+    "output_name": [
+      "VIDEO"
     ],
     "output_node": false,
     "output_tooltips": []
@@ -8363,6 +8578,32 @@
       "MASK"
     ],
     "output_node": false,
+    "output_tooltips": []
+  },
+  {
+    "name": "MaskPreview",
+    "display_name": "MaskPreview",
+    "description": "Saves the input images to your ComfyUI output directory.",
+    "python_module": "comfy_extras.nodes_mask",
+    "category": "mask",
+    "input": {
+      "required": {
+        "mask": [
+          "MASK"
+        ]
+      },
+      "optional": null
+    },
+    "input_order": {
+      "required": [
+        "mask"
+      ],
+      "optional": null
+    },
+    "output": [],
+    "output_is_list": [],
+    "output_name": [],
+    "output_node": true,
     "output_tooltips": []
   },
   {
@@ -14767,6 +15008,328 @@
     "output_tooltips": []
   },
   {
+    "name": "OpenAIDalle2",
+    "display_name": "OpenAI DALL·E 2",
+    "description": "Generates images synchronously via OpenAI's DALL·E 2 endpoint.\n\nUses the proxy at /proxy/openai/images/generations. Returned URLs are short‑lived,\nso download or cache results if you need to keep them.",
+    "python_module": "comfy_api_nodes.nodes_api",
+    "category": "api node",
+    "input": {
+      "required": {
+        "prompt": [
+          "STRING",
+          {
+            "tooltip": "Text prompt for DALL·E",
+            "multiline": true,
+            "default": ""
+          }
+        ]
+      },
+      "optional": {
+        "image": [
+          "IMAGE",
+          {
+            "tooltip": "Optional reference image for image editing."
+          }
+        ],
+        "mask": [
+          "MASK",
+          {
+            "tooltip": "Optional mask for inpainting (white areas will be replaced)"
+          }
+        ],
+        "n": [
+          "INT",
+          {
+            "tooltip": "How many images to generate",
+            "default": 1,
+            "display": "number",
+            "max": 8,
+            "min": 1,
+            "step": 1
+          }
+        ],
+        "seed": [
+          "INT",
+          {
+            "tooltip": "not implemented yet in backend",
+            "default": 0,
+            "display": "number",
+            "max": 2147483647,
+            "min": 0,
+            "step": 1
+          }
+        ],
+        "size": [
+          "COMBO",
+          {
+            "tooltip": "Image size",
+            "default": "1024x1024"
+          }
+        ]
+      }
+    },
+    "input_order": {
+      "required": [
+        "prompt"
+      ],
+      "optional": [
+        "seed",
+        "size",
+        "n",
+        "image",
+        "mask"
+      ]
+    },
+    "output": [
+      "IMAGE"
+    ],
+    "output_is_list": [
+      false
+    ],
+    "output_name": [
+      "IMAGE"
+    ],
+    "output_node": false,
+    "output_tooltips": []
+  },
+  {
+    "name": "OpenAIDalle3",
+    "display_name": "OpenAI DALL·E 3",
+    "description": "Generates images synchronously via OpenAI's DALL·E 3 endpoint.\n\nUses the proxy at /proxy/openai/images/generations. Returned URLs are short‑lived,\nso download or cache results if you need to keep them.",
+    "python_module": "comfy_api_nodes.nodes_api",
+    "category": "api node",
+    "input": {
+      "required": {
+        "prompt": [
+          "STRING",
+          {
+            "tooltip": "Text prompt for DALL·E",
+            "multiline": true,
+            "default": ""
+          }
+        ]
+      },
+      "optional": {
+        "quality": [
+          "COMBO",
+          {
+            "tooltip": "Image quality",
+            "default": "standard"
+          }
+        ],
+        "seed": [
+          "INT",
+          {
+            "tooltip": "not implemented yet in backend",
+            "default": 0,
+            "display": "number",
+            "max": 2147483647,
+            "min": 0,
+            "step": 1
+          }
+        ],
+        "size": [
+          "COMBO",
+          {
+            "tooltip": "Image size",
+            "default": "1024x1024"
+          }
+        ],
+        "style": [
+          "COMBO",
+          {
+            "tooltip": "Vivid causes the model to lean towards generating hyper-real and dramatic images. Natural causes the model to produce more natural, less hyper-real looking images.",
+            "default": "natural"
+          }
+        ]
+      }
+    },
+    "input_order": {
+      "required": [
+        "prompt"
+      ],
+      "optional": [
+        "seed",
+        "quality",
+        "style",
+        "size"
+      ]
+    },
+    "output": [
+      "IMAGE"
+    ],
+    "output_is_list": [
+      false
+    ],
+    "output_name": [
+      "IMAGE"
+    ],
+    "output_node": false,
+    "output_tooltips": []
+  },
+  {
+    "name": "OpenAIGPTImage1",
+    "display_name": "OpenAI GPT Image 1",
+    "description": "Generates images synchronously via OpenAI's GPT Image 1 endpoint.\n\nUses the proxy at /proxy/openai/images/generations. Returned URLs are short‑lived,\nso download or cache results if you need to keep them.",
+    "python_module": "comfy_api_nodes.nodes_api",
+    "category": "api node",
+    "input": {
+      "required": {
+        "prompt": [
+          "STRING",
+          {
+            "tooltip": "Text prompt for GPT Image 1",
+            "multiline": true,
+            "default": ""
+          }
+        ]
+      },
+      "optional": {
+        "background": [
+          "COMBO",
+          {
+            "tooltip": "Return image with or without background",
+            "default": "opaque"
+          }
+        ],
+        "image": [
+          "IMAGE",
+          {
+            "tooltip": "Optional reference image for image editing."
+          }
+        ],
+        "mask": [
+          "MASK",
+          {
+            "tooltip": "Optional mask for inpainting (white areas will be replaced)"
+          }
+        ],
+        "moderation": [
+          "COMBO",
+          {
+            "tooltip": "Moderation level",
+            "default": "low"
+          }
+        ],
+        "n": [
+          "INT",
+          {
+            "tooltip": "How many images to generate",
+            "default": 1,
+            "display": "number",
+            "max": 8,
+            "min": 1,
+            "step": 1
+          }
+        ],
+        "quality": [
+          "COMBO",
+          {
+            "tooltip": "Image quality, affects cost and generation time.",
+            "default": "low"
+          }
+        ],
+        "seed": [
+          "INT",
+          {
+            "tooltip": "not implemented yet in backend",
+            "default": 0,
+            "display": "number",
+            "max": 2147483647,
+            "min": 0,
+            "step": 1
+          }
+        ],
+        "size": [
+          "COMBO",
+          {
+            "tooltip": "Image size",
+            "default": "auto"
+          }
+        ]
+      }
+    },
+    "input_order": {
+      "required": [
+        "prompt"
+      ],
+      "optional": [
+        "seed",
+        "quality",
+        "background",
+        "size",
+        "n",
+        "image",
+        "mask",
+        "moderation"
+      ]
+    },
+    "output": [
+      "IMAGE"
+    ],
+    "output_is_list": [
+      false
+    ],
+    "output_name": [
+      "IMAGE"
+    ],
+    "output_node": false,
+    "output_tooltips": []
+  },
+  {
+    "name": "OptimalStepsScheduler",
+    "display_name": "OptimalStepsScheduler",
+    "description": "",
+    "python_module": "comfy_extras.nodes_optimalsteps",
+    "category": "sampling/custom_sampling/schedulers",
+    "input": {
+      "required": {
+        "denoise": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "model_type": [
+          []
+        ],
+        "steps": [
+          "INT",
+          {
+            "tooltip": null,
+            "default": 20,
+            "max": 1000,
+            "min": 3
+          }
+        ]
+      },
+      "optional": null
+    },
+    "input_order": {
+      "required": [
+        "model_type",
+        "steps",
+        "denoise"
+      ],
+      "optional": null
+    },
+    "output": [
+      "SIGMAS"
+    ],
+    "output_is_list": [
+      false
+    ],
+    "output_name": [
+      "SIGMAS"
+    ],
+    "output_node": false,
+    "output_tooltips": []
+  },
+  {
     "name": "PairConditioningCombine",
     "display_name": "Cond Pair Combine",
     "description": "",
@@ -15292,13 +15855,22 @@
           }
         ]
       },
-      "optional": null
+      "optional": {
+        "camera_info": [
+          "LOAD3D_CAMERA",
+          {
+            "tooltip": null
+          }
+        ]
+      }
     },
     "input_order": {
       "required": [
         "model_file"
       ],
-      "optional": null
+      "optional": [
+        "camera_info"
+      ]
     },
     "output": [],
     "output_is_list": [],
@@ -15323,13 +15895,22 @@
           }
         ]
       },
-      "optional": null
+      "optional": {
+        "camera_info": [
+          "LOAD3D_CAMERA",
+          {
+            "tooltip": null
+          }
+        ]
+      }
     },
     "input_order": {
       "required": [
         "model_file"
       ],
-      "optional": null
+      "optional": [
+        "camera_info"
+      ]
     },
     "output": [],
     "output_is_list": [],
@@ -15525,6 +16106,50 @@
     ],
     "output_name": [
       "STRING"
+    ],
+    "output_node": false,
+    "output_tooltips": []
+  },
+  {
+    "name": "QuadrupleCLIPLoader",
+    "display_name": "QuadrupleCLIPLoader",
+    "description": "[Recipes]\n\nhidream: long clip-l, long clip-g, t5xxl, llama_8b_3.1_instruct",
+    "python_module": "comfy_extras.nodes_hidream",
+    "category": "advanced/loaders",
+    "input": {
+      "required": {
+        "clip_name1": [
+          []
+        ],
+        "clip_name2": [
+          []
+        ],
+        "clip_name3": [
+          []
+        ],
+        "clip_name4": [
+          []
+        ]
+      },
+      "optional": null
+    },
+    "input_order": {
+      "required": [
+        "clip_name1",
+        "clip_name2",
+        "clip_name3",
+        "clip_name4"
+      ],
+      "optional": null
+    },
+    "output": [
+      "CLIP"
+    ],
+    "output_is_list": [
+      false
+    ],
+    "output_name": [
+      "CLIP"
     ],
     "output_node": false,
     "output_tooltips": []
@@ -17094,6 +17719,59 @@
     "output_tooltips": []
   },
   {
+    "name": "SaveVideo",
+    "display_name": "Save Video",
+    "description": "Saves the input images to your ComfyUI output directory.",
+    "python_module": "comfy_extras.nodes_video",
+    "category": "image/video",
+    "input": {
+      "required": {
+        "codec": [
+          [],
+          {
+            "tooltip": "The codec to use for the video.",
+            "default": "auto"
+          }
+        ],
+        "filename_prefix": [
+          "STRING",
+          {
+            "tooltip": "The prefix for the file to save. This may include formatting information such as %date:yyyy-MM-dd% or %Empty Latent Image.width% to include values from nodes.",
+            "default": "video/ComfyUI"
+          }
+        ],
+        "format": [
+          [],
+          {
+            "tooltip": "The format to save the video as.",
+            "default": "auto"
+          }
+        ],
+        "video": [
+          "VIDEO",
+          {
+            "tooltip": "The video to save."
+          }
+        ]
+      },
+      "optional": null
+    },
+    "input_order": {
+      "required": [
+        "video",
+        "filename_prefix",
+        "format",
+        "codec"
+      ],
+      "optional": null
+    },
+    "output": [],
+    "output_is_list": [],
+    "output_name": [],
+    "output_node": true,
+    "output_tooltips": []
+  },
+  {
     "name": "SaveWEBM",
     "display_name": "SaveWEBM",
     "description": "",
@@ -18192,6 +18870,60 @@
     "output_tooltips": []
   },
   {
+    "name": "T5TokenizerOptions",
+    "display_name": "T5TokenizerOptions",
+    "description": "",
+    "python_module": "comfy_extras.nodes_cond",
+    "category": "sd",
+    "input": {
+      "required": {
+        "clip": [
+          "CLIP"
+        ],
+        "min_length": [
+          "INT",
+          {
+            "tooltip": null,
+            "default": 0,
+            "max": 10000,
+            "min": 0,
+            "step": 1
+          }
+        ],
+        "min_padding": [
+          "INT",
+          {
+            "tooltip": null,
+            "default": 0,
+            "max": 10000,
+            "min": 0,
+            "step": 1
+          }
+        ]
+      },
+      "optional": null
+    },
+    "input_order": {
+      "required": [
+        "clip",
+        "min_padding",
+        "min_length"
+      ],
+      "optional": null
+    },
+    "output": [
+      "CLIP"
+    ],
+    "output_is_list": [
+      false
+    ],
+    "output_name": [
+      "CLIP"
+    ],
+    "output_node": false,
+    "output_tooltips": []
+  },
+  {
     "name": "TextEncodeHunyuanVideo_ImageToVideo",
     "display_name": "TextEncodeHunyuanVideo_ImageToVideo",
     "description": "",
@@ -18328,6 +19060,48 @@
     ],
     "output_name": [
       "MODEL"
+    ],
+    "output_node": false,
+    "output_tooltips": []
+  },
+  {
+    "name": "TrimVideoLatent",
+    "display_name": "TrimVideoLatent",
+    "description": "",
+    "python_module": "comfy_extras.nodes_wan",
+    "category": "latent/video",
+    "input": {
+      "required": {
+        "samples": [
+          "LATENT"
+        ],
+        "trim_amount": [
+          "INT",
+          {
+            "tooltip": null,
+            "default": 0,
+            "max": 99999,
+            "min": 0
+          }
+        ]
+      },
+      "optional": null
+    },
+    "input_order": {
+      "required": [
+        "samples",
+        "trim_amount"
+      ],
+      "optional": null
+    },
+    "output": [
+      "LATENT"
+    ],
+    "output_is_list": [
+      false
+    ],
+    "output_name": [
+      "LATENT"
     ],
     "output_node": false,
     "output_tooltips": []
@@ -18928,6 +19702,53 @@
     "output_tooltips": []
   },
   {
+    "name": "VoxelToMesh",
+    "display_name": "VoxelToMesh",
+    "description": "",
+    "python_module": "comfy_extras.nodes_hunyuan3d",
+    "category": "3d",
+    "input": {
+      "required": {
+        "algorithm": [
+          []
+        ],
+        "threshold": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 0.6,
+            "max": 1.0,
+            "min": -1.0,
+            "step": 0.01
+          }
+        ],
+        "voxel": [
+          "VOXEL"
+        ]
+      },
+      "optional": null
+    },
+    "input_order": {
+      "required": [
+        "voxel",
+        "algorithm",
+        "threshold"
+      ],
+      "optional": null
+    },
+    "output": [
+      "MESH"
+    ],
+    "output_is_list": [
+      false
+    ],
+    "output_name": [
+      "MESH"
+    ],
+    "output_node": false,
+    "output_tooltips": []
+  },
+  {
     "name": "VoxelToMeshBasic",
     "display_name": "VoxelToMeshBasic",
     "description": "",
@@ -18966,6 +19787,113 @@
     ],
     "output_name": [
       "MESH"
+    ],
+    "output_node": false,
+    "output_tooltips": []
+  },
+  {
+    "name": "WanFirstLastFrameToVideo",
+    "display_name": "WanFirstLastFrameToVideo",
+    "description": "",
+    "python_module": "comfy_extras.nodes_wan",
+    "category": "conditioning/video_models",
+    "input": {
+      "required": {
+        "batch_size": [
+          "INT",
+          {
+            "tooltip": null,
+            "default": 1,
+            "max": 4096,
+            "min": 1
+          }
+        ],
+        "height": [
+          "INT",
+          {
+            "tooltip": null,
+            "default": 480,
+            "max": 16384,
+            "min": 16,
+            "step": 16
+          }
+        ],
+        "length": [
+          "INT",
+          {
+            "tooltip": null,
+            "default": 81,
+            "max": 16384,
+            "min": 1,
+            "step": 4
+          }
+        ],
+        "negative": [
+          "CONDITIONING"
+        ],
+        "positive": [
+          "CONDITIONING"
+        ],
+        "vae": [
+          "VAE"
+        ],
+        "width": [
+          "INT",
+          {
+            "tooltip": null,
+            "default": 832,
+            "max": 16384,
+            "min": 16,
+            "step": 16
+          }
+        ]
+      },
+      "optional": {
+        "clip_vision_end_image": [
+          "CLIP_VISION_OUTPUT"
+        ],
+        "clip_vision_start_image": [
+          "CLIP_VISION_OUTPUT"
+        ],
+        "end_image": [
+          "IMAGE"
+        ],
+        "start_image": [
+          "IMAGE"
+        ]
+      }
+    },
+    "input_order": {
+      "required": [
+        "positive",
+        "negative",
+        "vae",
+        "width",
+        "height",
+        "length",
+        "batch_size"
+      ],
+      "optional": [
+        "clip_vision_start_image",
+        "clip_vision_end_image",
+        "start_image",
+        "end_image"
+      ]
+    },
+    "output": [
+      "CONDITIONING",
+      "CONDITIONING",
+      "LATENT"
+    ],
+    "output_is_list": [
+      false,
+      false,
+      false
+    ],
+    "output_name": [
+      "positive",
+      "negative",
+      "latent"
     ],
     "output_node": false,
     "output_tooltips": []
@@ -19271,6 +20199,123 @@
       "positive",
       "negative",
       "latent"
+    ],
+    "output_node": false,
+    "output_tooltips": []
+  },
+  {
+    "name": "WanVaceToVideo",
+    "display_name": "WanVaceToVideo",
+    "description": "",
+    "python_module": "comfy_extras.nodes_wan",
+    "category": "conditioning/video_models",
+    "input": {
+      "required": {
+        "batch_size": [
+          "INT",
+          {
+            "tooltip": null,
+            "default": 1,
+            "max": 4096,
+            "min": 1
+          }
+        ],
+        "height": [
+          "INT",
+          {
+            "tooltip": null,
+            "default": 480,
+            "max": 16384,
+            "min": 16,
+            "step": 16
+          }
+        ],
+        "length": [
+          "INT",
+          {
+            "tooltip": null,
+            "default": 81,
+            "max": 16384,
+            "min": 1,
+            "step": 4
+          }
+        ],
+        "negative": [
+          "CONDITIONING"
+        ],
+        "positive": [
+          "CONDITIONING"
+        ],
+        "strength": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 1.0,
+            "max": 1000.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "vae": [
+          "VAE"
+        ],
+        "width": [
+          "INT",
+          {
+            "tooltip": null,
+            "default": 832,
+            "max": 16384,
+            "min": 16,
+            "step": 16
+          }
+        ]
+      },
+      "optional": {
+        "control_masks": [
+          "MASK"
+        ],
+        "control_video": [
+          "IMAGE"
+        ],
+        "reference_image": [
+          "IMAGE"
+        ]
+      }
+    },
+    "input_order": {
+      "required": [
+        "positive",
+        "negative",
+        "vae",
+        "width",
+        "height",
+        "length",
+        "batch_size",
+        "strength"
+      ],
+      "optional": [
+        "control_video",
+        "control_masks",
+        "reference_image"
+      ]
+    },
+    "output": [
+      "CONDITIONING",
+      "CONDITIONING",
+      "LATENT",
+      "INT"
+    ],
+    "output_is_list": [
+      false,
+      false,
+      false,
+      false
+    ],
+    "output_name": [
+      "positive",
+      "negative",
+      "latent",
+      "trim_latent"
     ],
     "output_node": false,
     "output_tooltips": []

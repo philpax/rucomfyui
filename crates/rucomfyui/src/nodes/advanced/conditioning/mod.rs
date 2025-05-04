@@ -6,6 +6,96 @@ use crate::{
     nodes::types::Out,
 };
 pub mod flux;
+///**CLIPTextEncodeHiDream**: No description.
+#[derive(Clone)]
+pub struct ClipTextEncodeHiDream<
+    ClipParam: crate::nodes::types::Clip,
+    ClipLParam: crate::nodes::types::String,
+    ClipGParam: crate::nodes::types::String,
+    T5XxlParam: crate::nodes::types::String,
+    LlamaParam: crate::nodes::types::String,
+> {
+    ///No documentation.
+    pub clip: ClipParam,
+    /**No documentation.
+
+**Metadata**:
+  - Dynamic prompts: true
+  - Multiline: true
+*/
+    pub clip_l: ClipLParam,
+    /**No documentation.
+
+**Metadata**:
+  - Dynamic prompts: true
+  - Multiline: true
+*/
+    pub clip_g: ClipGParam,
+    /**No documentation.
+
+**Metadata**:
+  - Dynamic prompts: true
+  - Multiline: true
+*/
+    pub t_5_xxl: T5XxlParam,
+    /**No documentation.
+
+**Metadata**:
+  - Dynamic prompts: true
+  - Multiline: true
+*/
+    pub llama: LlamaParam,
+}
+impl<
+    ClipParam: crate::nodes::types::Clip,
+    ClipLParam: crate::nodes::types::String,
+    ClipGParam: crate::nodes::types::String,
+    T5XxlParam: crate::nodes::types::String,
+    LlamaParam: crate::nodes::types::String,
+> ClipTextEncodeHiDream<ClipParam, ClipLParam, ClipGParam, T5XxlParam, LlamaParam> {
+    /// Create a new node.
+    pub fn new(
+        clip: ClipParam,
+        clip_l: ClipLParam,
+        clip_g: ClipGParam,
+        t_5_xxl: T5XxlParam,
+        llama: LlamaParam,
+    ) -> Self {
+        Self {
+            clip,
+            clip_l,
+            clip_g,
+            t_5_xxl,
+            llama,
+        }
+    }
+}
+impl<
+    ClipParam: crate::nodes::types::Clip,
+    ClipLParam: crate::nodes::types::String,
+    ClipGParam: crate::nodes::types::String,
+    T5XxlParam: crate::nodes::types::String,
+    LlamaParam: crate::nodes::types::String,
+> crate::nodes::TypedNode
+for ClipTextEncodeHiDream<ClipParam, ClipLParam, ClipGParam, T5XxlParam, LlamaParam> {
+    type Output = crate::nodes::types::ConditioningOut;
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
+        Self::Output::from_dynamic(node_id, 0)
+    }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("clip".to_string(), self.clip.clone().into());
+        output.insert("clip_l".to_string(), self.clip_l.clone().into());
+        output.insert("clip_g".to_string(), self.clip_g.clone().into());
+        output.insert("t5xxl".to_string(), self.t_5_xxl.clone().into());
+        output.insert("llama".to_string(), self.llama.clone().into());
+        output
+    }
+    const NAME: &'static str = "CLIPTextEncodeHiDream";
+    const DISPLAY_NAME: &'static str = "CLIPTextEncodeHiDream";
+    const DESCRIPTION: &'static str = "";
+    const CATEGORY: &'static str = "advanced/conditioning";
+}
 ///**CLIPTextEncodeHunyuanDiT**: No description.
 #[derive(Clone)]
 pub struct ClipTextEncodeHunyuanDiT<
