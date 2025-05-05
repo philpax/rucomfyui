@@ -5,10 +5,12 @@ use error::parse_response;
 use reqwest::multipart::{Form, Part};
 
 pub mod history;
+pub mod models;
 pub mod object_info;
 pub mod queue;
-pub mod workflow;
+pub mod system_stats;
 
+pub mod workflow;
 pub use workflow::{Workflow, WorkflowGraph, WorkflowNodeId};
 
 #[cfg(feature = "typed_nodes")]
@@ -16,8 +18,6 @@ pub mod nodes;
 
 pub mod error;
 pub use error::ClientError;
-
-pub mod system_stats;
 
 /// Result type for the client.
 pub type Result<T> = std::result::Result<T, ClientError>;

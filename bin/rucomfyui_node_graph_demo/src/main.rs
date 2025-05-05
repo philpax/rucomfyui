@@ -107,6 +107,11 @@ pub struct Application {
     /// Whether the system stats window is open.
     system_stats_open: bool,
 
+    /// The model categories and models.
+    models: HashMap<rucomfyui::models::ModelCategory, Vec<String>>,
+    /// Whether the models window is open.
+    models_open: bool,
+
     /// Whether the settings window is open.
     settings_open: bool,
     /// Whether to allow insecure HTTPS.
@@ -150,6 +155,9 @@ impl Application {
 
             system_stats: None,
             system_stats_open: false,
+
+            models: HashMap::new(),
+            models_open: false,
 
             settings_open: false,
             #[cfg(not(target_arch = "wasm32"))]
@@ -223,6 +231,9 @@ impl eframe::App for Application {
                     });
                     if ui.button("System stats").clicked() {
                         self.request_system_stats();
+                    }
+                    if ui.button("Models").clicked() {
+                        self.request_models();
                     }
                 }
 
@@ -378,6 +389,10 @@ impl eframe::App for Application {
         if self.system_stats_open {
             self.draw_system_stats(ctx);
         }
+
+        if self.models_open {
+            self.draw_models_window(ctx);
+        }
     }
 }
 impl Application {
@@ -516,6 +531,52 @@ impl Application {
                     });
                 }
             });
+    }
+
+    fn draw_models_window(&mut self, ctx: &egui::Context) {
+        let mut should_refresh = false;
+
+        egui::Window::new("Models")
+            .open(&mut self.models_open)
+            .resizable(true)
+            .default_width(400.0)
+            .show(ctx, |ui| {
+                if self.models.is_empty() {
+                    ui.label("No models data available. Loading...");
+                    return;
+                }
+
+                let mut categories: Vec<_> = self.models.keys().collect();
+                // Sort categories alphabetically for consistent UI
+                categories.sort_by_key(|c| format!("{c:?}"));
+
+                for category in categories {
+                    let category_name = format!("{category:?}");
+                    let models = &self.models[category];
+                    let count = models.len();
+
+                    ui.collapsing(format!("{} ({})", category_name, count), |ui| {
+                        // Create a scrollable area for models
+                        egui::ScrollArea::vertical().show(ui, |ui| {
+                            for model in models {
+                                ui.label(model);
+                            }
+                        });
+                    });
+                }
+
+                // Add refresh button at the bottom
+                ui.separator();
+                if ui.button("Refresh Models").clicked() {
+                    self.models.clear();
+                    should_refresh = true;
+                }
+            });
+
+        // If refresh was clicked, request models again
+        if should_refresh {
+            self.request_models();
+        }
     }
 }
 impl Application {
@@ -666,6 +727,48 @@ impl Application {
             .unwrap();
         });
     }
+
+    /// Request that model categories and their models be fetched.
+    fn request_models(&mut self) {
+        let tx = self.async_output_tx.clone();
+        let client = match self.client.clone() {
+            Some(client) => client,
+            None => {
+                tx.send(AsyncResponse::error("Models", "Not connected to ComfyUI"))
+                    .unwrap();
+                return;
+            }
+        };
+
+        self.runtime.spawn(async move {
+            let mut models_map = HashMap::new();
+
+            // First get all categories
+            match client.model_categories().await {
+                Ok(categories) => {
+                    // For each category, get the models
+                    for category in categories {
+                        match client.models(category.clone()).await {
+                            Ok(models) => {
+                                models_map.insert(category, models);
+                            }
+                            Err(err) => {
+                                tx.send(AsyncResponse::error(format!("Models: {category:?}"), err))
+                                    .unwrap();
+
+                                return;
+                            }
+                        }
+                    }
+
+                    tx.send(AsyncResponse::Models(models_map)).unwrap();
+                }
+                Err(err) => {
+                    tx.send(AsyncResponse::error("Models", err)).unwrap();
+                }
+            }
+        });
+    }
 }
 
 /// Output from the async handler.
@@ -697,6 +800,8 @@ pub enum AsyncResponse {
     Queue(rucomfyui::queue::Queue),
     /// System statistics were received.
     SystemStats(rucomfyui::system_stats::SystemStats),
+    /// Model categories and their models were received.
+    Models(HashMap<rucomfyui::models::ModelCategory, Vec<String>>),
 }
 impl AsyncResponse {
     /// Create an error response.
@@ -767,6 +872,10 @@ impl Application {
                 AsyncResponse::SystemStats(stats) => {
                     self.system_stats = Some(stats);
                     self.system_stats_open = true;
+                }
+                AsyncResponse::Models(models) => {
+                    self.models = models;
+                    self.models_open = true;
                 }
             }
             needs_repaint = true;

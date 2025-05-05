@@ -14,6 +14,15 @@ pub enum ClientError {
     /// Reqwest error.
     Reqwest(#[from] reqwest::Error),
 
+    #[error("not found: {url} ({response})")]
+    /// Not found.
+    NotFound {
+        /// The URL that was requested.
+        url: String,
+        /// The response text.
+        response: String,
+    },
+
     #[error("parse error: {0}")]
     /// Parse int error.
     ParseInt(#[from] std::num::ParseIntError),
@@ -317,6 +326,12 @@ impl NodeError {
 pub(crate) async fn parse_response<T: serde::de::DeserializeOwned>(
     response: reqwest::Response,
 ) -> Result<T, ClientError> {
+    if response.status().as_u16() == 404 {
+        return Err(ClientError::NotFound {
+            url: response.url().to_string(),
+            response: response.text().await?,
+        });
+    }
     let value: serde_json::Value = response.json().await?;
     if let Some(object) = value.as_object() {
         if let Some(error) = object.get("error").and_then(ValidationError::from_value) {
