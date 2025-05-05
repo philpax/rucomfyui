@@ -267,12 +267,14 @@ impl eframe::App for Application {
             egui::SidePanel::right("right").show(ctx, |ui| {
                 ui.heading("Queue");
                 let mut requested_deletions = vec![];
+                let mut requested_interrupt = false;
                 fn render_queue(
                     ui: &mut egui::Ui,
                     object_info: &ObjectInfo,
                     (queue_name, queue, is_running): (&str, &[QueueEntry], bool),
                     viewed_workflow: &mut Option<rucomfyui_node_graph::ComfyUiNodeGraph>,
                     requested_deletions: &mut Vec<String>,
+                    requested_interrupt: &mut bool,
                 ) {
                     egui::CollapsingHeader::new(queue_name)
                         .default_open(true)
@@ -300,6 +302,10 @@ impl eframe::App for Application {
                                         if !is_running {
                                             if ui.button("Delete").clicked() {
                                                 requested_deletions.push(entry.prompt_id.clone());
+                                            }
+                                        } else {
+                                            if ui.button("Interrupt").clicked() {
+                                                *requested_interrupt = true;
                                             }
                                         }
                                     });
@@ -333,6 +339,7 @@ impl eframe::App for Application {
                         ("Running", &self.queue.running, true),
                         viewed_workflow,
                         &mut requested_deletions,
+                        &mut requested_interrupt,
                     );
                     render_queue(
                         ui,
@@ -340,10 +347,14 @@ impl eframe::App for Application {
                         ("Pending", &self.queue.pending, false),
                         viewed_workflow,
                         &mut requested_deletions,
+                        &mut requested_interrupt,
                     );
                 }
                 if !requested_deletions.is_empty() {
                     self.request_deletions_from_queue(requested_deletions);
+                }
+                if requested_interrupt {
+                    self.request_interrupt();
                 }
             });
         }
@@ -778,6 +789,20 @@ impl Application {
             if let Err(err) = output {
                 tx.send(AsyncResponse::error("Delete from queue", err))
                     .unwrap();
+            }
+        });
+    }
+
+    /// Request that the current workflow be interrupted.
+    fn request_interrupt(&mut self) {
+        let tx = self.async_output_tx.clone();
+        let Some(client) = self.get_client_or_send_error(&tx) else {
+            return;
+        };
+        self.runtime.spawn(async move {
+            let output = client.interrupt().await;
+            if let Err(err) = output {
+                tx.send(AsyncResponse::error("Interrupt", err)).unwrap();
             }
         });
     }

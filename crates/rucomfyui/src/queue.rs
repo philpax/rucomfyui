@@ -133,6 +133,13 @@ impl Client {
         })
     }
 
+    /// Interrupt the current workflow.
+    pub async fn interrupt(&self) -> Result<()> {
+        self.post_json_without_parse("interrupt", &())
+            .await
+            .map(|_| ())
+    }
+
     /// Delete workflows from the queue.
     pub async fn delete_from_queue(&self, prompt_ids: Vec<String>) -> Result<()> {
         self.post_json_without_parse(
