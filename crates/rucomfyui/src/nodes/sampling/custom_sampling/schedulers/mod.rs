@@ -498,7 +498,7 @@ pub struct LTXVScheduler<
   - Step: 0.01
 */
     pub base_shift: BaseShiftParam,
-    /**Stretch the sigmas to be in the range [terminal, 1].
+    /**Stretch the sigmas to be in the range \[terminal, 1\].
 
 **Metadata**:
   - Default: true

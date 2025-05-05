@@ -60,3 +60,14 @@ pub fn object_type_out_struct_ident(ty: &ObjectType) -> syn::Ident {
     }
     name_to_ident(&format!("{ty:?}Out"), NameToIdentCase::Pascal).unwrap()
 }
+
+/// Ensures the description is doc safe by applying the following transformations:
+/// - Replace `[` with `\[`
+/// - Replace `]` with `\]`
+/// - Replace `\n` with `\n\n`
+pub fn ensure_string_is_doc_safe(description: &str) -> String {
+    description
+        .replace("[", "\\[")
+        .replace("]", "\\]")
+        .replace("\n", "\n\n")
+}

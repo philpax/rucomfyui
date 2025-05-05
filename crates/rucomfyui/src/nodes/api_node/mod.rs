@@ -5,7 +5,7 @@ use crate::{
     workflow::{WorkflowNodeId, WorkflowInput},
     nodes::types::Out,
 };
-#[doc = "**OpenAI DALL·E 2**: Generates images synchronously via OpenAI's DALL·E 2 endpoint.\n\nUses the proxy at /proxy/openai/images/generations. Returned URLs are short‑lived,\nso download or cache results if you need to keep them."]
+#[doc = "**OpenAI DALL·E 2**: Generates images synchronously via OpenAI's DALL·E 2 endpoint.\n\n\n\nUses the proxy at /proxy/openai/images/generations. Returned URLs are short‑lived,\n\nso download or cache results if you need to keep them."]
 #[derive(Clone)]
 #[allow(non_camel_case_types)]
 pub struct OpenAIDalle2<
@@ -105,7 +105,7 @@ for OpenAIDalle2<PromptParam, SeedParam, NParam, ImageParam, MaskParam> {
     const DESCRIPTION: &'static str = "Generates images synchronously via OpenAI's DALL·E 2 endpoint.\n\nUses the proxy at /proxy/openai/images/generations. Returned URLs are short‑lived,\nso download or cache results if you need to keep them.";
     const CATEGORY: &'static str = "api node";
 }
-#[doc = "**OpenAI DALL·E 3**: Generates images synchronously via OpenAI's DALL·E 3 endpoint.\n\nUses the proxy at /proxy/openai/images/generations. Returned URLs are short‑lived,\nso download or cache results if you need to keep them."]
+#[doc = "**OpenAI DALL·E 3**: Generates images synchronously via OpenAI's DALL·E 3 endpoint.\n\n\n\nUses the proxy at /proxy/openai/images/generations. Returned URLs are short‑lived,\n\nso download or cache results if you need to keep them."]
 #[derive(Clone)]
 #[allow(non_camel_case_types)]
 pub struct OpenAIDalle3<
@@ -160,7 +160,7 @@ impl<
     const DESCRIPTION: &'static str = "Generates images synchronously via OpenAI's DALL·E 3 endpoint.\n\nUses the proxy at /proxy/openai/images/generations. Returned URLs are short‑lived,\nso download or cache results if you need to keep them.";
     const CATEGORY: &'static str = "api node";
 }
-#[doc = "**OpenAI GPT Image 1**: Generates images synchronously via OpenAI's GPT Image 1 endpoint.\n\nUses the proxy at /proxy/openai/images/generations. Returned URLs are short‑lived,\nso download or cache results if you need to keep them."]
+#[doc = "**OpenAI GPT Image 1**: Generates images synchronously via OpenAI's GPT Image 1 endpoint.\n\n\n\nUses the proxy at /proxy/openai/images/generations. Returned URLs are short‑lived,\n\nso download or cache results if you need to keep them."]
 #[derive(Clone)]
 #[allow(non_camel_case_types)]
 pub struct OpenAIGPTImage1<

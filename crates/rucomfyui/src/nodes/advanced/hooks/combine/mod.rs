@@ -5,7 +5,7 @@ use crate::{
     workflow::{WorkflowNodeId, WorkflowInput},
     nodes::types::Out,
 };
-///**Combine Hooks [2]**: No description.
+///**Combine Hooks \[2\]**: No description.
 #[derive(Clone)]
 #[allow(non_camel_case_types)]
 pub struct CombineHooks2<
@@ -49,7 +49,7 @@ impl<
     const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "advanced/hooks/combine";
 }
-///**Combine Hooks [4]**: No description.
+///**Combine Hooks \[4\]**: No description.
 #[derive(Clone)]
 #[allow(non_camel_case_types)]
 pub struct CombineHooks4<
@@ -120,7 +120,7 @@ for CombineHooks4<HooksAParam, HooksBParam, HooksCParam, HooksDParam> {
     const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "advanced/hooks/combine";
 }
-///**Combine Hooks [8]**: No description.
+///**Combine Hooks \[8\]**: No description.
 #[derive(Clone)]
 #[allow(non_camel_case_types)]
 pub struct CombineHooks8<

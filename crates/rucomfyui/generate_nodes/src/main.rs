@@ -426,7 +426,7 @@ fn write_node_struct(
     let fields = processed_inputs.iter().map(|input| {
         let name = &input.name;
         let generic_name = &input.generic_name;
-        let mut doc = input.tooltip.unwrap_or("No documentation.").to_string();
+        let mut doc = util::ensure_string_is_doc_safe(input.tooltip.unwrap_or("No documentation."));
         if let Some(metadata) = input.meta_typed {
             let mut metadata_items = vec![];
             match metadata {
@@ -480,11 +480,11 @@ fn write_node_struct(
 
     let doc = format!(
         "**{}**: {}",
-        node.display_name,
+        util::ensure_string_is_doc_safe(&node.display_name),
         if node.description.is_empty() {
-            "No description."
+            "No description.".to_string()
         } else {
-            &node.description
+            util::ensure_string_is_doc_safe(&node.description)
         }
     );
 

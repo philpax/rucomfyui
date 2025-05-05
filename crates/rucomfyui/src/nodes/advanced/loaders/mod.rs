@@ -20,7 +20,7 @@ pub mod out {
         pub vae: crate::nodes::types::VaeOut,
     }
 }
-#[doc = "**Load CLIP**: [Recipes]\n\nstable_diffusion: clip-l\nstable_cascade: clip-g\nsd3: t5 xxl/ clip-g / clip-l\nstable_audio: t5 base\nmochi: t5 xxl\ncosmos: old t5 xxl\nlumina2: gemma 2 2B\nwan: umt5 xxl\n hidream: llama-3.1 (Recommend) or t5"]
+#[doc = "**Load CLIP**: \\[Recipes\\]\n\n\n\nstable_diffusion: clip-l\n\nstable_cascade: clip-g\n\nsd3: t5 xxl/ clip-g / clip-l\n\nstable_audio: t5 base\n\nmochi: t5 xxl\n\ncosmos: old t5 xxl\n\nlumina2: gemma 2 2B\n\nwan: umt5 xxl\n\n hidream: llama-3.1 (Recommend) or t5"]
 #[derive(Clone)]
 #[allow(non_camel_case_types)]
 pub struct CLIPLoader<
@@ -116,7 +116,7 @@ impl<
     const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "advanced/loaders";
 }
-#[doc = "**DualCLIPLoader**: [Recipes]\n\nsdxl: clip-l, clip-g\nsd3: clip-l, clip-g / clip-l, t5 / clip-g, t5\nflux: clip-l, t5\nhidream: at least one of t5 or llama, recommended t5 and llama"]
+#[doc = "**DualCLIPLoader**: \\[Recipes\\]\n\n\n\nsdxl: clip-l, clip-g\n\nsd3: clip-l, clip-g / clip-l, t5 / clip-g, t5\n\nflux: clip-l, t5\n\nhidream: at least one of t5 or llama, recommended t5 and llama"]
 #[derive(Clone)]
 #[allow(non_camel_case_types)]
 pub struct DualCLIPLoader<
@@ -181,7 +181,7 @@ for DualCLIPLoader<ClipName1Param, ClipName2Param, TypeParam, DeviceParam> {
     const DESCRIPTION: &'static str = "[Recipes]\n\nsdxl: clip-l, clip-g\nsd3: clip-l, clip-g / clip-l, t5 / clip-g, t5\nflux: clip-l, t5\nhidream: at least one of t5 or llama, recommended t5 and llama";
     const CATEGORY: &'static str = "advanced/loaders";
 }
-#[doc = "**QuadrupleCLIPLoader**: [Recipes]\n\nhidream: long clip-l, long clip-g, t5xxl, llama_8b_3.1_instruct"]
+#[doc = "**QuadrupleCLIPLoader**: \\[Recipes\\]\n\n\n\nhidream: long clip-l, long clip-g, t5xxl, llama_8b_3.1_instruct"]
 #[derive(Clone)]
 #[allow(non_camel_case_types)]
 pub struct QuadrupleCLIPLoader<
@@ -244,7 +244,7 @@ for QuadrupleCLIPLoader<ClipName1Param, ClipName2Param, ClipName3Param, ClipName
     const DESCRIPTION: &'static str = "[Recipes]\n\nhidream: long clip-l, long clip-g, t5xxl, llama_8b_3.1_instruct";
     const CATEGORY: &'static str = "advanced/loaders";
 }
-#[doc = "**TripleCLIPLoader**: [Recipes]\n\nsd3: clip-l, clip-g, t5"]
+#[doc = "**TripleCLIPLoader**: \\[Recipes\\]\n\n\n\nsd3: clip-l, clip-g, t5"]
 #[derive(Clone)]
 #[allow(non_camel_case_types)]
 pub struct TripleCLIPLoader<
