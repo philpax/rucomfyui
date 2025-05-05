@@ -200,15 +200,6 @@ impl eframe::App for Application {
                             self.request_api_save();
                         }
                     });
-
-                    if let Some(last_queue_time) = self.last_prompt_queue_time {
-                        ui.label(format!(
-                            "Queued: {:.02}s ago",
-                            last_queue_time.elapsed().as_secs_f32()
-                        ));
-                    } else if ui.button("Queue").clicked() {
-                        self.request_queue();
-                    }
                 }
 
                 ui.with_layout(egui::Layout::right_to_left(egui::Align::Center), |ui| {
@@ -235,7 +226,7 @@ impl eframe::App for Application {
             });
         });
 
-        if let Some(object_info) = self.graph.as_ref().map(|g| &g.object_info) {
+        if self.graph.is_some() {
             egui::SidePanel::right("right").show(ctx, |ui| {
                 ui.heading("Queue");
                 fn render_queue(
@@ -276,21 +267,34 @@ impl eframe::App for Application {
                             }
                         });
                 }
+                if let Some(last_queue_time) = self.last_prompt_queue_time {
+                    ui.label(format!(
+                        "Queued: {:.02}s ago",
+                        last_queue_time.elapsed().as_secs_f32()
+                    ));
+                } else if ui
+                    .add(egui::Button::new("Run").min_size(egui::vec2(100.0, 0.0)))
+                    .clicked()
+                {
+                    self.request_queue();
+                }
                 let viewed_workflow = &mut self.viewed_workflow;
-                render_queue(
-                    ui,
-                    object_info,
-                    "Running",
-                    &self.queue.running,
-                    viewed_workflow,
-                );
-                render_queue(
-                    ui,
-                    object_info,
-                    "Pending",
-                    &self.queue.pending,
-                    viewed_workflow,
-                );
+                if let Some(object_info) = self.graph.as_ref().map(|g| &g.object_info) {
+                    render_queue(
+                        ui,
+                        object_info,
+                        "Running",
+                        &self.queue.running,
+                        viewed_workflow,
+                    );
+                    render_queue(
+                        ui,
+                        object_info,
+                        "Pending",
+                        &self.queue.pending,
+                        viewed_workflow,
+                    );
+                }
             });
         }
 
