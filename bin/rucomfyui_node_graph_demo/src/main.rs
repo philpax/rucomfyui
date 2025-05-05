@@ -639,6 +639,7 @@ impl Application {
     /// Draw the history window.
     fn draw_history_window(&mut self, ctx: &egui::Context) {
         let mut should_refresh = false;
+        let mut entries_to_delete = vec![];
 
         egui::Window::new("History")
             .open(&mut self.history_open)
@@ -684,14 +685,19 @@ impl Application {
                                 );
 
                                 // Use different colors based on status
-                                let text = if is_completed {
-                                    egui::RichText::new(header_text).color(egui::Color32::GREEN)
-                                } else {
-                                    egui::RichText::new(header_text).color(egui::Color32::YELLOW)
-                                };
+                                let text =
+                                    egui::RichText::new(header_text).color(if is_completed {
+                                        egui::Color32::GREEN
+                                    } else {
+                                        egui::Color32::YELLOW
+                                    });
 
                                 // Create a collapsing section for each history entry
                                 ui.collapsing(text, |ui| {
+                                    if ui.button("Delete").clicked() {
+                                        entries_to_delete.push(prompt_id.clone());
+                                    }
+
                                     // Show outputs by node
                                     for (node_id, output) in &data.outputs.nodes {
                                         draw_node(ui, self.client.as_ref(), node_id, output);
@@ -712,7 +718,7 @@ impl Application {
                     node_id: &str,
                     output: &rucomfyui::history::HistoryNodeOutput,
                 ) {
-                    ui.collapsing(format!("Node: {node_id}"), |ui| {
+                    ui.collapsing(format!("Node {node_id}"), |ui| {
                         // Show images if any
                         if !output.images.is_empty() {
                             ui.label("Images:");
@@ -740,6 +746,10 @@ impl Application {
         // If we need to refresh, request history
         if should_refresh {
             self.request_history();
+        }
+
+        if !entries_to_delete.is_empty() {
+            self.request_deletions_from_history(entries_to_delete);
         }
     }
 }
@@ -1002,6 +1012,22 @@ impl Application {
             .unwrap();
         });
     }
+
+    /// Request that history entries be deleted.
+    fn request_deletions_from_history(&mut self, prompt_ids: Vec<String>) {
+        let tx = self.async_output_tx.clone();
+        let Some(client) = self.get_client_or_send_error(&tx) else {
+            return;
+        };
+        self.runtime.spawn(async move {
+            let output = client.delete_from_history(prompt_ids).await;
+            tx.send(match output {
+                Ok(_) => AsyncResponse::RefreshHistory,
+                Err(err) => AsyncResponse::error("Delete from history", err),
+            })
+            .unwrap();
+        });
+    }
 }
 
 /// Output from the async handler.
@@ -1037,6 +1063,8 @@ pub enum AsyncResponse {
     Models(HashMap<rucomfyui::models::ModelCategory, Vec<String>>),
     /// History data was received.
     History(rucomfyui::history::History),
+    /// The history needs to be refreshed.
+    RefreshHistory,
 }
 impl AsyncResponse {
     /// Create an error response.
@@ -1050,7 +1078,9 @@ impl AsyncResponse {
 impl Application {
     fn handle_async_responses(&mut self) -> bool {
         let mut needs_repaint = false;
+
         let mut load_workflow = None;
+        let mut refresh_history = false;
 
         // Process async events
         for event in self.async_output_rx.try_iter() {
@@ -1123,6 +1153,9 @@ impl Application {
                     self.history = Some(history);
                     self.history_open = true;
                 }
+                AsyncResponse::RefreshHistory => {
+                    refresh_history = true;
+                }
             }
             needs_repaint = true;
         }
@@ -1133,6 +1166,10 @@ impl Application {
                     .send(AsyncResponse::error("Load", err))
                     .unwrap();
             }
+        }
+
+        if refresh_history {
+            self.request_history();
         }
 
         needs_repaint

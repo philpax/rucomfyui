@@ -19,6 +19,18 @@ impl Client {
     pub async fn get_history_for_prompt(&self, prompt_id: &str) -> Result<History> {
         self.get(&format!("history/{prompt_id}")).await
     }
+
+    /// Delete entries from the history.
+    pub async fn delete_from_history(&self, prompt_ids: Vec<String>) -> Result<()> {
+        self.post_json_without_parse(
+            "history",
+            &serde_json::json!({
+                "delete": prompt_ids,
+            }),
+        )
+        .await
+        .map(|_| ())
+    }
 }
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
