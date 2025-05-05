@@ -31,6 +31,13 @@ impl Client {
         .await
         .map(|_| ())
     }
+
+    /// Clear the history.
+    pub async fn clear_history(&self) -> Result<()> {
+        self.post_json_without_parse("history", &serde_json::json!({ "clear": true }))
+            .await
+            .map(|_| ())
+    }
 }
 
 #[derive(Serialize, Deserialize, Debug, Clone)]

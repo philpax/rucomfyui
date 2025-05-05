@@ -639,6 +639,7 @@ impl Application {
     /// Draw the history window.
     fn draw_history_window(&mut self, ctx: &egui::Context) {
         let mut should_refresh = false;
+        let mut clear_history = false;
         let mut entries_to_delete = vec![];
 
         egui::Window::new("History")
@@ -660,6 +661,10 @@ impl Application {
 
                     if ui.button("Refresh").clicked() {
                         should_refresh = true;
+                    }
+
+                    if ui.button("Clear").clicked() {
+                        clear_history = true;
                     }
                 });
                 ui.separator();
@@ -746,6 +751,10 @@ impl Application {
         // If we need to refresh, request history
         if should_refresh {
             self.request_history();
+        }
+
+        if clear_history {
+            self.request_clear_history();
         }
 
         if !entries_to_delete.is_empty() {
@@ -1008,6 +1017,22 @@ impl Application {
             tx.send(match history {
                 Ok(history) => AsyncResponse::History(history),
                 Err(err) => AsyncResponse::error("History", err),
+            })
+            .unwrap();
+        });
+    }
+
+    /// Request that the history be cleared.
+    fn request_clear_history(&mut self) {
+        let tx = self.async_output_tx.clone();
+        let Some(client) = self.get_client_or_send_error(&tx) else {
+            return;
+        };
+        self.runtime.spawn(async move {
+            let output = client.clear_history().await;
+            tx.send(match output {
+                Ok(_) => AsyncResponse::RefreshHistory,
+                Err(err) => AsyncResponse::error("Clear history", err),
             })
             .unwrap();
         });
