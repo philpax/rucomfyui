@@ -496,6 +496,8 @@ impl Application {
             );
         }
 
+        let mut should_refresh = false;
+
         egui::Window::new("System stats")
             .open(&mut self.system_stats_open)
             .show(ctx, |ui| {
@@ -530,7 +532,18 @@ impl Application {
                         }
                     });
                 }
+
+                // Add refresh button at the bottom
+                ui.separator();
+                if ui.button("Refresh Stats").clicked() {
+                    should_refresh = true;
+                }
             });
+
+        // If refresh was clicked, request system stats again
+        if should_refresh {
+            self.request_system_stats();
+        }
     }
 
     fn draw_models_window(&mut self, ctx: &egui::Context) {
