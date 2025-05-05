@@ -299,14 +299,10 @@ impl eframe::App for Application {
                                                 .expect("Failed to load queued workflow");
                                             *viewed_workflow = Some(graph);
                                         }
-                                        if !is_running {
-                                            if ui.button("Delete").clicked() {
-                                                requested_deletions.push(entry.prompt_id.clone());
-                                            }
-                                        } else {
-                                            if ui.button("Interrupt").clicked() {
-                                                *requested_interrupt = true;
-                                            }
+                                        if !is_running && ui.button("Delete").clicked() {
+                                            requested_deletions.push(entry.prompt_id.clone());
+                                        } else if is_running && ui.button("Interrupt").clicked() {
+                                            *requested_interrupt = true;
                                         }
                                     });
                                 });
