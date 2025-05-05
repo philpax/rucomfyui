@@ -17,6 +17,8 @@ pub mod nodes;
 pub mod error;
 pub use error::ClientError;
 
+pub mod system_stats;
+
 /// Result type for the client.
 pub type Result<T> = std::result::Result<T, ClientError>;
 

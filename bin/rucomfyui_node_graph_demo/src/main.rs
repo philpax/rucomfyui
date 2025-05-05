@@ -102,6 +102,11 @@ pub struct Application {
     /// The time at which the last prompt was queued.
     last_prompt_queue_time: Option<Instant>,
 
+    /// The system statistics.
+    system_stats: Option<rucomfyui::system_stats::SystemStats>,
+    /// Whether the system stats window is open.
+    system_stats_open: bool,
+
     /// Whether the settings window is open.
     settings_open: bool,
     /// Whether to allow insecure HTTPS.
@@ -136,6 +141,9 @@ impl Application {
             viewed_workflow: None,
 
             last_prompt_queue_time: None,
+
+            system_stats: None,
+            system_stats_open: false,
 
             settings_open: false,
             #[cfg(not(target_arch = "wasm32"))]
@@ -200,6 +208,9 @@ impl eframe::App for Application {
                             self.request_api_save();
                         }
                     });
+                    if ui.button("System stats").clicked() {
+                        self.request_system_stats();
+                    }
                 }
 
                 ui.with_layout(egui::Layout::right_to_left(egui::Align::Center), |ui| {
@@ -350,6 +361,148 @@ impl eframe::App for Application {
                     ui.text_edit_singleline(&mut self.authorization_token);
                 });
         }
+
+        if self.system_stats_open {
+            self.draw_system_stats(ctx);
+        }
+    }
+}
+impl Application {
+    fn draw_system_stats(&mut self, ctx: &egui::Context) {
+        fn draw_system_info(ui: &mut egui::Ui, system: &rucomfyui::system_stats::SystemInfo) {
+            ui.heading("System Information");
+            ui.separator();
+
+            let ram_total_gb = system.ram_total as f64 / 1_073_741_824.0; // Convert to GB
+            let ram_free_gb = system.ram_free as f64 / 1_073_741_824.0; // Convert to GB
+            let ram_used_gb = ram_total_gb - ram_free_gb;
+            let ram_usage_percent = if ram_total_gb > 0.0 {
+                (ram_used_gb / ram_total_gb) * 100.0
+            } else {
+                0.0
+            };
+
+            egui::Grid::new("system_info_grid")
+                .num_columns(2)
+                .spacing([40.0, 4.0])
+                .striped(true)
+                .show(ui, |ui| {
+                    ui.label("OS:");
+                    ui.label(&system.os);
+                    ui.end_row();
+
+                    ui.label("ComfyUI Version:");
+                    ui.label(&system.comfyui_version);
+                    ui.end_row();
+
+                    ui.label("Python Version:");
+                    ui.label(&system.python_version);
+                    ui.end_row();
+
+                    ui.label("PyTorch Version:");
+                    ui.label(&system.pytorch_version);
+                    ui.end_row();
+
+                    ui.label("Embedded Python:");
+                    ui.label(if system.embedded_python { "Yes" } else { "No" });
+                    ui.end_row();
+
+                    ui.label("RAM Usage:");
+                    ui.label(format!(
+                        "{ram_used_gb:.1} GB / {ram_total_gb:.1} GB ({ram_usage_percent:.1}%)"
+                    ));
+                    ui.end_row();
+                });
+        }
+
+        fn draw_device_info(
+            ui: &mut egui::Ui,
+            i: usize,
+            device: &rucomfyui::system_stats::DeviceInfo,
+        ) {
+            let vram_total_gb = device.vram_total as f64 / 1_073_741_824.0;
+            let vram_free_gb = device.vram_free as f64 / 1_073_741_824.0;
+            let vram_used_gb = vram_total_gb - vram_free_gb;
+            let vram_usage_percent = if vram_total_gb > 0.0 {
+                (vram_used_gb / vram_total_gb) * 100.0
+            } else {
+                0.0
+            };
+
+            ui.collapsing(
+                format!("{}: {} ({})", device.name, device.device_type, device.index),
+                |ui| {
+                    egui::Grid::new(format!("device_info_grid_{}", i))
+                        .num_columns(2)
+                        .spacing([40.0, 4.0])
+                        .striped(true)
+                        .show(ui, |ui| {
+                            // VRAM usage
+                            ui.label("VRAM Usage:");
+                            ui.label(format!(
+                                "{:.1} GB / {:.1} GB ({:.1}%)",
+                                vram_used_gb, vram_total_gb, vram_usage_percent
+                            ));
+                            ui.end_row();
+
+                            // Torch VRAM info
+                            let torch_vram_total_gb =
+                                device.torch_vram_total as f64 / 1_073_741_824.0;
+                            let torch_vram_free_gb =
+                                device.torch_vram_free as f64 / 1_073_741_824.0;
+                            let torch_vram_used_gb = torch_vram_total_gb - torch_vram_free_gb;
+                            let torch_vram_percent = if torch_vram_total_gb > 0.0 {
+                                (torch_vram_used_gb / torch_vram_total_gb) * 100.0
+                            } else {
+                                0.0
+                            };
+
+                            ui.label("Torch VRAM Usage:");
+                            ui.label(format!(
+                                "{:.1} GB / {:.1} GB ({:.1}%)",
+                                torch_vram_used_gb, torch_vram_total_gb, torch_vram_percent
+                            ));
+                            ui.end_row();
+                        });
+                },
+            );
+        }
+
+        egui::Window::new("System stats")
+            .open(&mut self.system_stats_open)
+            .show(ctx, |ui| {
+                let Some(system_stats) = self.system_stats.as_ref() else {
+                    ui.label("No system stats available");
+                    return;
+                };
+
+                draw_system_info(ui, &system_stats.system);
+
+                // Device Info Section
+                if !system_stats.devices.is_empty() {
+                    ui.add_space(16.0);
+                    ui.heading("Devices");
+                    ui.separator();
+
+                    for (i, device) in system_stats.devices.iter().enumerate() {
+                        if i > 0 {
+                            ui.add_space(8.0);
+                        }
+                        draw_device_info(ui, i, device);
+                    }
+                }
+
+                // Command line arguments section
+                let argv = &system_stats.system.argv;
+                if !argv.is_empty() {
+                    ui.add_space(16.0);
+                    ui.collapsing("Command Line Arguments", |ui| {
+                        for (i, arg) in argv.iter().enumerate() {
+                            ui.label(format!("[{}] {}", i, arg));
+                        }
+                    });
+                }
+            });
     }
 }
 impl Application {
@@ -486,6 +639,20 @@ impl Application {
         });
         self.last_prompt_queue_time = Some(Instant::now());
     }
+
+    /// Request that system statistics be fetched.
+    fn request_system_stats(&mut self) {
+        let tx = self.async_output_tx.clone();
+        let client = self.client.clone().unwrap();
+        self.runtime.spawn(async move {
+            let stats = client.system_stats().await;
+            tx.send(match stats {
+                Ok(stats) => AsyncResponse::SystemStats(stats),
+                Err(err) => AsyncResponse::error("System stats", err),
+            })
+            .unwrap();
+        });
+    }
 }
 
 /// Output from the async handler.
@@ -515,6 +682,8 @@ pub enum AsyncResponse {
     LoadedWorkflow(rucomfyui::Workflow),
     /// A queue was received.
     Queue(rucomfyui::queue::Queue),
+    /// System statistics were received.
+    SystemStats(rucomfyui::system_stats::SystemStats),
 }
 impl AsyncResponse {
     /// Create an error response.
@@ -581,6 +750,10 @@ impl Application {
                 }
                 AsyncResponse::Queue(queue) => {
                     self.queue = queue;
+                }
+                AsyncResponse::SystemStats(stats) => {
+                    self.system_stats = Some(stats);
+                    self.system_stats_open = true;
                 }
             }
             needs_repaint = true;
