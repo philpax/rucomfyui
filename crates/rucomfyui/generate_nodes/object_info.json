@@ -4251,6 +4251,76 @@
     "output_tooltips": []
   },
   {
+    "name": "ExtendIntermediateSigmas",
+    "display_name": "ExtendIntermediateSigmas",
+    "description": "",
+    "python_module": "comfy_extras.nodes_custom_sampler",
+    "category": "sampling/custom_sampling/sigmas",
+    "input": {
+      "required": {
+        "end_at_sigma": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 12.0,
+            "max": 20000.0,
+            "min": 0.0,
+            "round": false,
+            "step": 0.01
+          }
+        ],
+        "sigmas": [
+          "SIGMAS"
+        ],
+        "spacing": [
+          []
+        ],
+        "start_at_sigma": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": -1.0,
+            "max": 20000.0,
+            "min": -1.0,
+            "round": false,
+            "step": 0.01
+          }
+        ],
+        "steps": [
+          "INT",
+          {
+            "tooltip": null,
+            "default": 2,
+            "max": 100,
+            "min": 1
+          }
+        ]
+      },
+      "optional": null
+    },
+    "input_order": {
+      "required": [
+        "sigmas",
+        "steps",
+        "start_at_sigma",
+        "end_at_sigma",
+        "spacing"
+      ],
+      "optional": null
+    },
+    "output": [
+      "SIGMAS"
+    ],
+    "output_is_list": [
+      false
+    ],
+    "output_name": [
+      "SIGMAS"
+    ],
+    "output_node": false,
+    "output_tooltips": []
+  },
+  {
     "name": "FeatherMask",
     "display_name": "FeatherMask",
     "description": "",
@@ -15911,6 +15981,35 @@
       "optional": [
         "camera_info"
       ]
+    },
+    "output": [],
+    "output_is_list": [],
+    "output_name": [],
+    "output_node": true,
+    "output_tooltips": []
+  },
+  {
+    "name": "PreviewAny",
+    "display_name": "Preview Any",
+    "description": "",
+    "python_module": "comfy_extras.nodes_preview_any",
+    "category": "utils",
+    "input": {
+      "required": {
+        "source": [
+          "*",
+          {
+            "tooltip": null
+          }
+        ]
+      },
+      "optional": null
+    },
+    "input_order": {
+      "required": [
+        "source"
+      ],
+      "optional": null
     },
     "output": [],
     "output_is_list": [],

@@ -269,6 +269,7 @@ pub use crate::nodes::sampling::custom_sampling::schedulers::OptimalStepsSchedul
 pub use crate::nodes::sampling::custom_sampling::schedulers::PolyexponentialScheduler;
 pub use crate::nodes::sampling::custom_sampling::schedulers::SDTurboScheduler;
 pub use crate::nodes::sampling::custom_sampling::schedulers::VPScheduler;
+pub use crate::nodes::sampling::custom_sampling::sigmas::ExtendIntermediateSigmas;
 pub use crate::nodes::sampling::custom_sampling::sigmas::FlipSigmas;
 pub use crate::nodes::sampling::custom_sampling::sigmas::SetFirstSigma;
 pub use crate::nodes::sampling::custom_sampling::sigmas::SplitSigmas;
@@ -276,6 +277,7 @@ pub use crate::nodes::sampling::custom_sampling::sigmas::SplitSigmasDenoise;
 pub use crate::nodes::sampling::video_models::VideoLinearCFGGuidance;
 pub use crate::nodes::sampling::video_models::VideoTriangleCFGGuidance;
 pub use crate::nodes::sd::T5TokenizerOptions;
+pub use crate::nodes::utils::PreviewAny;
 pub use crate::nodes::utils::primitive::PrimitiveBoolean;
 pub use crate::nodes::utils::primitive::PrimitiveFloat;
 pub use crate::nodes::utils::primitive::PrimitiveInt;

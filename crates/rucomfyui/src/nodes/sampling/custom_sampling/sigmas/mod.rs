@@ -26,6 +26,111 @@ pub mod out {
         pub low_sigmas: crate::nodes::types::SigmasOut,
     }
 }
+///**ExtendIntermediateSigmas**: No description.
+#[derive(Clone)]
+#[allow(non_camel_case_types)]
+pub struct ExtendIntermediateSigmas<
+    SigmasParam: crate::nodes::types::Sigmas,
+    StepsParam: crate::nodes::types::Int,
+    StartAtSigmaParam: crate::nodes::types::Float,
+    EndAtSigmaParam: crate::nodes::types::Float,
+    SpacingParam: crate::nodes::types::String,
+> {
+    ///No documentation.
+    pub sigmas: SigmasParam,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 2
+  - Max: 100
+  - Min: 1
+*/
+    pub steps: StepsParam,
+    /**No documentation.
+
+**Metadata**:
+  - Default: -1
+  - Max: 20000
+  - Min: -1
+  - Round: false
+  - Step: 0.01
+*/
+    pub start_at_sigma: StartAtSigmaParam,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 12
+  - Max: 20000
+  - Min: 0
+  - Round: false
+  - Step: 0.01
+*/
+    pub end_at_sigma: EndAtSigmaParam,
+    ///No documentation.
+    pub spacing: SpacingParam,
+}
+impl<
+    SigmasParam: crate::nodes::types::Sigmas,
+    StepsParam: crate::nodes::types::Int,
+    StartAtSigmaParam: crate::nodes::types::Float,
+    EndAtSigmaParam: crate::nodes::types::Float,
+    SpacingParam: crate::nodes::types::String,
+> ExtendIntermediateSigmas<
+    SigmasParam,
+    StepsParam,
+    StartAtSigmaParam,
+    EndAtSigmaParam,
+    SpacingParam,
+> {
+    /// Create a new node.
+    pub fn new(
+        sigmas: SigmasParam,
+        steps: StepsParam,
+        start_at_sigma: StartAtSigmaParam,
+        end_at_sigma: EndAtSigmaParam,
+        spacing: SpacingParam,
+    ) -> Self {
+        Self {
+            sigmas,
+            steps,
+            start_at_sigma,
+            end_at_sigma,
+            spacing,
+        }
+    }
+}
+impl<
+    SigmasParam: crate::nodes::types::Sigmas,
+    StepsParam: crate::nodes::types::Int,
+    StartAtSigmaParam: crate::nodes::types::Float,
+    EndAtSigmaParam: crate::nodes::types::Float,
+    SpacingParam: crate::nodes::types::String,
+> crate::nodes::TypedNode
+for ExtendIntermediateSigmas<
+    SigmasParam,
+    StepsParam,
+    StartAtSigmaParam,
+    EndAtSigmaParam,
+    SpacingParam,
+> {
+    type Output = crate::nodes::types::SigmasOut;
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
+        Self::Output::from_dynamic(node_id, 0)
+    }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("sigmas".to_string(), self.sigmas.clone().into());
+        output.insert("steps".to_string(), self.steps.clone().into());
+        output.insert("start_at_sigma".to_string(), self.start_at_sigma.clone().into());
+        output.insert("end_at_sigma".to_string(), self.end_at_sigma.clone().into());
+        output.insert("spacing".to_string(), self.spacing.clone().into());
+        output
+    }
+    const NAME: &'static str = "ExtendIntermediateSigmas";
+    const DISPLAY_NAME: &'static str = "ExtendIntermediateSigmas";
+    const DESCRIPTION: &'static str = "";
+    const CATEGORY: &'static str = "sampling/custom_sampling/sigmas";
+}
 ///**FlipSigmas**: No description.
 #[derive(Clone)]
 #[allow(non_camel_case_types)]
