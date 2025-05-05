@@ -35,7 +35,7 @@ pub enum ClientError {
     /// Validation error.
     Validation {
         /// The main error.
-        error: ValidationError,
+        error: Box<ValidationError>,
 
         /// Any node errors that may have occurred.
         node_errors: Option<HashMap<WorkflowNodeId, NodeError>>,
@@ -343,7 +343,11 @@ pub(crate) async fn parse_response<T: serde::de::DeserializeOwned>(
     let value: serde_json::Value =
         serde_json::from_str(&text).map_err(|e| ClientError::JsonDecode(e, text.clone()))?;
     if let Some(object) = value.as_object() {
-        if let Some(error) = object.get("error").and_then(ValidationError::from_value) {
+        if let Some(error) = object
+            .get("error")
+            .and_then(ValidationError::from_value)
+            .map(Box::new)
+        {
             let node_errors = object
                 .get("node_errors")
                 .and_then(|v| v.as_object())
