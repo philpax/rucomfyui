@@ -119,11 +119,17 @@ impl Application {
     /// Create a new application.
     pub fn new(cc: &eframe::CreationContext<'_>) -> Self {
         let (async_output_tx, async_output_rx) = std::sync::mpsc::channel();
-        Self {
-            comfyui_address: cc
-                .storage
+
+        // Get comfyui_address from command line args if available
+        let cli_address = std::env::args().nth(1);
+        let comfyui_address = cli_address.clone().unwrap_or_else(|| {
+            cc.storage
                 .and_then(|s| eframe::get_value(s, "comfyui_address"))
-                .unwrap_or_else(|| "http://127.0.0.1:8188".to_string()),
+                .unwrap_or_else(|| "http://127.0.0.1:8188".to_string())
+        });
+
+        let mut app = Self {
+            comfyui_address,
 
             graph: None,
 
@@ -155,7 +161,14 @@ impl Application {
                 .storage
                 .and_then(|s| eframe::get_value(s, "authorization_token"))
                 .unwrap_or_default(),
+        };
+
+        // If comfyui_address came from command line args, connect immediately
+        if cli_address.is_some() {
+            app.connect();
         }
+
+        app
     }
 }
 impl eframe::App for Application {
