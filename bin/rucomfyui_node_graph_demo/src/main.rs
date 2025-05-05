@@ -104,7 +104,7 @@ pub struct Application {
     viewed_workflow: Option<rucomfyui_node_graph::ComfyUiNodeGraph>,
 
     /// The system statistics.
-    system_stats: Option<rucomfyui::system_stats::SystemStats>,
+    system_stats: Option<rucomfyui::system::SystemStats>,
     /// Whether the system stats window is open.
     system_stats_open: bool,
 
@@ -441,7 +441,7 @@ impl eframe::App for Application {
 }
 impl Application {
     fn draw_system_stats(&mut self, ctx: &egui::Context) {
-        fn draw_system_info(ui: &mut egui::Ui, system: &rucomfyui::system_stats::SystemInfo) {
+        fn draw_system_info(ui: &mut egui::Ui, system: &rucomfyui::system::SystemInfo) {
             ui.heading("System Information");
             ui.separator();
 
@@ -487,11 +487,7 @@ impl Application {
                 });
         }
 
-        fn draw_device_info(
-            ui: &mut egui::Ui,
-            i: usize,
-            device: &rucomfyui::system_stats::DeviceInfo,
-        ) {
+        fn draw_device_info(ui: &mut egui::Ui, i: usize, device: &rucomfyui::system::DeviceInfo) {
             let vram_total_gb = device.vram_total as f64 / 1_073_741_824.0;
             let vram_free_gb = device.vram_free as f64 / 1_073_741_824.0;
             let vram_used_gb = vram_total_gb - vram_free_gb;
@@ -541,6 +537,7 @@ impl Application {
         }
 
         let mut should_refresh = false;
+        let mut should_free = None;
 
         egui::Window::new("System stats")
             .open(&mut self.system_stats_open)
@@ -582,11 +579,26 @@ impl Application {
                 if ui.button("Refresh Stats").clicked() {
                     should_refresh = true;
                 }
+                ui.horizontal(|ui| {
+                    if ui.button("Unload models").clicked() {
+                        should_free = Some((true, false));
+                    }
+                    if ui.button("Free memory").clicked() {
+                        should_free = Some((false, true));
+                    }
+                    if ui.button("Both").clicked() {
+                        should_free = Some((true, true));
+                    }
+                });
             });
 
         // If refresh was clicked, request system stats again
         if should_refresh {
             self.request_system_stats();
+        }
+
+        if let Some((unload_models, free_memory)) = should_free {
+            self.request_free(unload_models, free_memory);
         }
     }
 
@@ -862,7 +874,6 @@ impl Application {
             .unwrap();
         });
     }
-
     /// Disconnect from ComfyUI.
     fn disconnect(&mut self) {
         self.graph = None;
@@ -908,7 +919,6 @@ impl Application {
             .unwrap();
         });
     }
-
     /// Request that the queue be cleared.
     fn request_clear_queue(&mut self) {
         let tx = self.async_output_tx.clone();
@@ -962,6 +972,21 @@ impl Application {
             tx.send(match stats {
                 Ok(stats) => AsyncResponse::SystemStats(stats),
                 Err(err) => AsyncResponse::error("System stats", err),
+            })
+            .unwrap();
+        });
+    }
+    /// Request that memory be freed and/or models be unloaded.
+    fn request_free(&mut self, unload_models: bool, free_memory: bool) {
+        let tx = self.async_output_tx.clone();
+        let Some(client) = self.get_client_or_send_error(&tx) else {
+            return;
+        };
+        self.runtime.spawn(async move {
+            let output = client.free(unload_models, free_memory).await;
+            tx.send(match output {
+                Ok(_) => AsyncResponse::RefreshSystemStats,
+                Err(err) => AsyncResponse::error("Free", err),
             })
             .unwrap();
         });
@@ -1021,7 +1046,6 @@ impl Application {
             .unwrap();
         });
     }
-
     /// Request that the history be cleared.
     fn request_clear_history(&mut self) {
         let tx = self.async_output_tx.clone();
@@ -1037,7 +1061,6 @@ impl Application {
             .unwrap();
         });
     }
-
     /// Request that history entries be deleted.
     fn request_deletions_from_history(&mut self, prompt_ids: Vec<String>) {
         let tx = self.async_output_tx.clone();
@@ -1083,7 +1106,9 @@ pub enum AsyncResponse {
     /// A queue was received.
     Queue(rucomfyui::queue::Queue),
     /// System statistics were received.
-    SystemStats(rucomfyui::system_stats::SystemStats),
+    SystemStats(rucomfyui::system::SystemStats),
+    /// The system stats need to be refreshed.
+    RefreshSystemStats,
     /// Model categories and their models were received.
     Models(HashMap<rucomfyui::models::ModelCategory, Vec<String>>),
     /// History data was received.
@@ -1105,6 +1130,7 @@ impl Application {
         let mut needs_repaint = false;
 
         let mut load_workflow = None;
+        let mut refresh_system_stats = false;
         let mut refresh_history = false;
 
         // Process async events
@@ -1165,11 +1191,15 @@ impl Application {
                         self.queue_top_update_time =
                             (!self.queue.running.is_empty()).then(Instant::now);
                         refresh_history = true;
+                        refresh_system_stats = true;
                     }
                 }
                 AsyncResponse::SystemStats(stats) => {
                     self.system_stats = Some(stats);
                     self.system_stats_open = true;
+                }
+                AsyncResponse::RefreshSystemStats => {
+                    refresh_system_stats = true;
                 }
                 AsyncResponse::Models(models) => {
                     self.models = models;
@@ -1192,6 +1222,10 @@ impl Application {
                     .send(AsyncResponse::error("Load", err))
                     .unwrap();
             }
+        }
+
+        if refresh_system_stats {
+            self.request_system_stats();
         }
 
         if refresh_history {

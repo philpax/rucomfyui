@@ -3,11 +3,24 @@ use serde::{Deserialize, Serialize};
 
 use crate::{Client, Result};
 
-/// Function for retrieving system statistics from the ComfyUI instance.
+/// Functions for interacting with the system.
 impl Client {
     /// Get system statistics.
     pub async fn system_stats(&self) -> Result<SystemStats> {
         self.get("system_stats").await
+    }
+
+    /// Free memory and/or unload models.
+    pub async fn free(&self, unload_models: bool, free_memory: bool) -> Result<()> {
+        self.post_json_without_parse(
+            "free",
+            &serde_json::json!({
+                "unload_models": unload_models,
+                "free_memory": free_memory,
+            }),
+        )
+        .await
+        .map(|_| ())
     }
 }
 

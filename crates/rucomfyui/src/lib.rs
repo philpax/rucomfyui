@@ -20,7 +20,7 @@ pub mod models;
 
 pub mod object_info;
 
-pub mod system_stats;
+pub mod system;
 
 pub mod error;
 use error::parse_response;
