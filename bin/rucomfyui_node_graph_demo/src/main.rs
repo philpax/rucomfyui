@@ -94,13 +94,14 @@ pub struct Application {
 
     /// The queue for this application.
     queue: rucomfyui::queue::Queue,
+    /// The top of the current queue. Used to identify when an item has started running.
+    queue_top_prompt_id: Option<String>,
+    /// The time at which the top of the queue was updated.
+    queue_top_update_time: Option<Instant>,
     /// The time at which the queue was last updated.
     last_queue_update_time: Instant,
     /// The workflow that is currently being viewed.
     viewed_workflow: Option<rucomfyui_node_graph::ComfyUiNodeGraph>,
-
-    /// The time at which the last prompt was queued.
-    last_prompt_queue_time: Option<Instant>,
 
     /// The system statistics.
     system_stats: Option<rucomfyui::system_stats::SystemStats>,
@@ -151,7 +152,8 @@ impl Application {
             last_queue_update_time: Instant::now(),
             viewed_workflow: None,
 
-            last_prompt_queue_time: None,
+            queue_top_prompt_id: None,
+            queue_top_update_time: None,
 
             system_stats: None,
             system_stats_open: false,
@@ -302,16 +304,17 @@ impl eframe::App for Application {
                             }
                         });
                 }
-                if let Some(last_queue_time) = self.last_prompt_queue_time {
-                    ui.label(format!(
-                        "Queued: {:.02}s ago",
-                        last_queue_time.elapsed().as_secs_f32()
-                    ));
-                } else if ui
-                    .add(egui::Button::new("Run").min_size(egui::vec2(100.0, 0.0)))
+                if ui
+                    .add(egui::Button::new("Queue new").min_size(egui::vec2(100.0, 0.0)))
                     .clicked()
                 {
                     self.request_queue();
+                }
+                if let Some(last_start_time) = self.queue_top_update_time {
+                    ui.label(format!(
+                        "Started: {:.02}s ago",
+                        last_start_time.elapsed().as_secs_f32()
+                    ));
                 }
                 let viewed_workflow = &mut self.viewed_workflow;
                 if let Some(object_info) = self.graph.as_ref().map(|g| &g.object_info) {
@@ -847,7 +850,6 @@ impl Application {
                     );
                 }
                 AsyncResponse::QueueWorkflowResult { mapping, output } => {
-                    self.last_prompt_queue_time = None;
                     let Some(graph) = self.graph.as_mut() else {
                         continue;
                     };
@@ -881,6 +883,14 @@ impl Application {
                 }
                 AsyncResponse::Queue(queue) => {
                     self.queue = queue;
+                    if self.queue_top_prompt_id.as_deref()
+                        != self.queue.running.first().map(|r| r.prompt_id.as_str())
+                    {
+                        self.queue_top_prompt_id =
+                            self.queue.running.first().map(|r| r.prompt_id.clone());
+                        self.queue_top_update_time =
+                            (!self.queue.running.is_empty()).then(|| Instant::now());
+                    }
                 }
                 AsyncResponse::SystemStats(stats) => {
                     self.system_stats = Some(stats);
