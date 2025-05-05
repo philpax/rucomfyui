@@ -26,7 +26,7 @@ impl Client {
 pub struct History {
     #[serde(flatten)]
     /// Data.
-    pub data: BTreeMap<String, HistoryData>,
+    pub data: indexmap::IndexMap<String, HistoryData>,
 }
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
