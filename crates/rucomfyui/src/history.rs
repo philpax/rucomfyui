@@ -6,6 +6,7 @@ use serde::{Deserialize, Serialize};
 
 use crate::{Client, OwnedBytes, Result};
 
+/// Functions for interacting with the history of queued prompts.
 impl Client {
     /// Get the history for this ComfyUI instance.
     pub async fn get_history(&self, max_items: u32) -> Result<History> {

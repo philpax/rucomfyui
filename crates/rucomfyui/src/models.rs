@@ -60,7 +60,7 @@ impl fmt::Display for ModelCategory {
         write!(f, "{unquoted}")
     }
 }
-
+/// Functions for retrieving information about the models available to the ComfyUI instance.
 impl Client {
     /// Get all model categories.
     pub async fn get_model_categories(&self) -> Result<Vec<ModelCategory>> {

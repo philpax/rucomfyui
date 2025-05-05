@@ -8,7 +8,7 @@ use crate::{Client, ClientError, Result};
 
 /// Object info for a ComfyUI instance, where the keys are the object names.
 pub type ObjectInfo = BTreeMap<String, Object>;
-
+/// Functions for retrieving information about the objects available to the ComfyUI instance.
 impl Client {
     /// Get the object info for this ComfyUI instance, where the keys are the object names.
     pub async fn get_object_info(&self) -> Result<ObjectInfo> {

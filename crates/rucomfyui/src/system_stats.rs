@@ -3,6 +3,7 @@ use serde::{Deserialize, Serialize};
 
 use crate::{Client, Result};
 
+/// Function for retrieving system statistics from the ComfyUI instance.
 impl Client {
     /// Get system statistics.
     pub async fn system_stats(&self) -> Result<SystemStats> {
