@@ -120,6 +120,13 @@ pub struct Application {
     allow_insecure_https: bool,
     /// The authorization token to pass (`Bearer {authorization_token}` in the `Authorization` header).
     authorization_token: String,
+
+    /// The history data.
+    history: Option<rucomfyui::history::History>,
+    /// Whether the history window is open.
+    history_open: bool,
+    /// The maximum number of history items to fetch.
+    history_max_items: u32,
 }
 impl Application {
     /// Create a new application.
@@ -171,6 +178,13 @@ impl Application {
                 .storage
                 .and_then(|s| eframe::get_value(s, "authorization_token"))
                 .unwrap_or_default(),
+
+            history: None,
+            history_open: false,
+            history_max_items: cc
+                .storage
+                .and_then(|s| eframe::get_value(s, "history_max_items"))
+                .unwrap_or(100),
         };
 
         // If comfyui_address came from command line args, connect immediately
@@ -192,6 +206,7 @@ impl eframe::App for Application {
         #[cfg(not(target_arch = "wasm32"))]
         eframe::set_value(storage, "allow_insecure_https", &self.allow_insecure_https);
         eframe::set_value(storage, "authorization_token", &self.authorization_token);
+        eframe::set_value(storage, "history_max_items", &self.history_max_items);
     }
 
     /// Update the application and render the UI.
@@ -236,6 +251,9 @@ impl eframe::App for Application {
                     }
                     if ui.button("Models").clicked() {
                         self.request_models();
+                    }
+                    if ui.button("History").clicked() {
+                        self.request_history();
                     }
                 }
 
@@ -414,6 +432,10 @@ impl eframe::App for Application {
 
         if self.models_open {
             self.draw_models_window(ctx);
+        }
+
+        if self.history_open {
+            self.draw_history_window(ctx);
         }
     }
 }
@@ -611,6 +633,113 @@ impl Application {
         // If refresh was clicked, request models again
         if should_refresh {
             self.request_models();
+        }
+    }
+
+    /// Draw the history window.
+    fn draw_history_window(&mut self, ctx: &egui::Context) {
+        let mut should_refresh = false;
+
+        egui::Window::new("History")
+            .open(&mut self.history_open)
+            .resizable(true)
+            .default_width(600.0)
+            .default_height(500.0)
+            .show(ctx, |ui| {
+                // Controls at the top
+                ui.horizontal(|ui| {
+                    ui.label("Max items:");
+                    if ui
+                        .add(egui::DragValue::new(&mut self.history_max_items).speed(1.0))
+                        .changed()
+                    {
+                        // Make sure max_items doesn't go below 1
+                        self.history_max_items = self.history_max_items.max(1);
+                    }
+
+                    if ui.button("Refresh").clicked() {
+                        should_refresh = true;
+                    }
+                });
+                ui.separator();
+
+                // Display history
+                if let Some(history) = &self.history {
+                    if history.data.is_empty() {
+                        ui.label("No history entries available.");
+                    } else {
+                        egui::ScrollArea::vertical().show(ui, |ui| {
+                            for (prompt_id, data) in history.data.iter().rev() {
+                                let is_completed = data.status.completed;
+                                let status_text = &data.status.status_str;
+
+                                // Format the entry header
+                                let header_text = format!(
+                                    "{prompt_id} - Status: {}",
+                                    if is_completed {
+                                        "Completed"
+                                    } else {
+                                        status_text
+                                    }
+                                );
+
+                                // Use different colors based on status
+                                let text = if is_completed {
+                                    egui::RichText::new(header_text).color(egui::Color32::GREEN)
+                                } else {
+                                    egui::RichText::new(header_text).color(egui::Color32::YELLOW)
+                                };
+
+                                // Create a collapsing section for each history entry
+                                ui.collapsing(text, |ui| {
+                                    // Show outputs by node
+                                    for (node_id, output) in &data.outputs.nodes {
+                                        draw_node(ui, self.client.as_ref(), node_id, output);
+                                    }
+                                });
+                                ui.separator();
+                            }
+                        });
+                    }
+                } else {
+                    ui.label("Loading history...");
+                    should_refresh = true;
+                }
+
+                fn draw_node(
+                    ui: &mut egui::Ui,
+                    client: Option<&Arc<rucomfyui::Client>>,
+                    node_id: &str,
+                    output: &rucomfyui::history::HistoryNodeOutput,
+                ) {
+                    ui.collapsing(format!("Node: {node_id}"), |ui| {
+                        // Show images if any
+                        if !output.images.is_empty() {
+                            ui.label("Images:");
+                            for image in &output.images {
+                                let label = format!("{} ({})", image.filename, image.image_type);
+                                if let Some(client) = client {
+                                    ui.hyperlink_to(label, image.url(client));
+                                } else {
+                                    ui.label(label);
+                                }
+                            }
+                        }
+
+                        // Show text outputs if any
+                        if !output.text.is_empty() {
+                            ui.label("Text outputs:");
+                            for text in &output.text {
+                                ui.label(text);
+                            }
+                        }
+                    });
+                }
+            });
+
+        // If we need to refresh, request history
+        if should_refresh {
+            self.request_history();
         }
     }
 }
@@ -855,6 +984,24 @@ impl Application {
             }
         });
     }
+
+    /// Request history data from ComfyUI.
+    fn request_history(&mut self) {
+        let tx = self.async_output_tx.clone();
+        let Some(client) = self.get_client_or_send_error(&tx) else {
+            return;
+        };
+        let max_items = self.history_max_items;
+
+        self.runtime.spawn(async move {
+            let history = client.get_history(max_items).await;
+            tx.send(match history {
+                Ok(history) => AsyncResponse::History(history),
+                Err(err) => AsyncResponse::error("History", err),
+            })
+            .unwrap();
+        });
+    }
 }
 
 /// Output from the async handler.
@@ -888,6 +1035,8 @@ pub enum AsyncResponse {
     SystemStats(rucomfyui::system_stats::SystemStats),
     /// Model categories and their models were received.
     Models(HashMap<rucomfyui::models::ModelCategory, Vec<String>>),
+    /// History data was received.
+    History(rucomfyui::history::History),
 }
 impl AsyncResponse {
     /// Create an error response.
@@ -969,6 +1118,10 @@ impl Application {
                 AsyncResponse::Models(models) => {
                     self.models = models;
                     self.models_open = true;
+                }
+                AsyncResponse::History(history) => {
+                    self.history = Some(history);
+                    self.history_open = true;
                 }
             }
             needs_repaint = true;
