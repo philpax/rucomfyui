@@ -1164,6 +1164,7 @@ impl Application {
                             self.queue.running.first().map(|r| r.prompt_id.clone());
                         self.queue_top_update_time =
                             (!self.queue.running.is_empty()).then(Instant::now);
+                        refresh_history = true;
                     }
                 }
                 AsyncResponse::SystemStats(stats) => {
