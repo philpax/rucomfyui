@@ -313,6 +313,12 @@ impl eframe::App for Application {
                 {
                     self.request_queue();
                 }
+                if ui
+                    .add(egui::Button::new("Clear queue").min_size(egui::vec2(100.0, 0.0)))
+                    .clicked()
+                {
+                    self.request_clear_queue();
+                }
                 if let Some(last_start_time) = self.queue_top_update_time {
                     ui.label(format!(
                         "Started: {:.02}s ago",
@@ -748,6 +754,19 @@ impl Application {
         });
     }
 
+    /// Request that the queue be cleared.
+    fn request_clear_queue(&mut self) {
+        let tx = self.async_output_tx.clone();
+        let Some(client) = self.get_client_or_send_error(&tx) else {
+            return;
+        };
+        self.runtime.spawn(async move {
+            let output = client.clear_queue().await;
+            if let Err(err) = output {
+                tx.send(AsyncResponse::error("Clear queue", err)).unwrap();
+            }
+        });
+    }
     /// Request that workflows be deleted from the queue.
     fn request_deletions_from_queue(&mut self, prompt_ids: Vec<String>) {
         let tx = self.async_output_tx.clone();

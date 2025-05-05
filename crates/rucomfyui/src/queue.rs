@@ -144,4 +144,16 @@ impl Client {
         .await
         .map(|_| ())
     }
+
+    /// Clear queue.
+    pub async fn clear_queue(&self) -> Result<()> {
+        self.post_json_without_parse(
+            "queue",
+            &serde_json::json!({
+                "clear": true,
+            }),
+        )
+        .await
+        .map(|_| ())
+    }
 }
