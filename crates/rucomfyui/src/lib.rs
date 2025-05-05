@@ -67,6 +67,24 @@ impl Client {
         .await
     }
 
+    /// Post a JSON resource to the ComfyUI API without parsing the response.
+    ///
+    /// This does not do any validation of the response.
+    pub async fn post_json_without_parse<Req: serde::Serialize>(
+        &self,
+        path: &str,
+        body: &Req,
+    ) -> Result<String> {
+        Ok(self
+            .client
+            .post(format!("{}/{}", self.api_base, path))
+            .json(body)
+            .send()
+            .await?
+            .text()
+            .await?)
+    }
+
     /// Post a JSON resource to the ComfyUI API.
     pub async fn post_json<Req: serde::Serialize, Res: serde::de::DeserializeOwned>(
         &self,

@@ -53,10 +53,13 @@ pub struct QueueEntry {
 impl Client {
     /// Send a workflow to the ComfyUI API.
     pub async fn queue(&self, workflow: &Workflow) -> Result<QueueResult> {
-        let payload = serde_json::json!({
-            "prompt": workflow,
-        });
-        self.post_json("prompt", &payload).await
+        self.post_json(
+            "prompt",
+            &serde_json::json!({
+                "prompt": workflow,
+            }),
+        )
+        .await
     }
 
     /// Helper function that prompts with a workflow, polls for the result, and then returns all output images.
@@ -128,5 +131,17 @@ impl Client {
             running: api_queue_to_queue(api_queue.queue_running),
             pending: api_queue_to_queue(api_queue.queue_pending),
         })
+    }
+
+    /// Delete workflows from the queue.
+    pub async fn delete_from_queue(&self, prompt_ids: Vec<String>) -> Result<()> {
+        self.post_json_without_parse(
+            "queue",
+            &serde_json::json!({
+                "delete": prompt_ids,
+            }),
+        )
+        .await
+        .map(|_| ())
     }
 }

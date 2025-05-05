@@ -266,12 +266,13 @@ impl eframe::App for Application {
         if self.graph.is_some() {
             egui::SidePanel::right("right").show(ctx, |ui| {
                 ui.heading("Queue");
+                let mut requested_deletions = vec![];
                 fn render_queue(
                     ui: &mut egui::Ui,
                     object_info: &ObjectInfo,
-                    queue_name: &str,
-                    queue: &[QueueEntry],
+                    (queue_name, queue, is_running): (&str, &[QueueEntry], bool),
                     viewed_workflow: &mut Option<rucomfyui_node_graph::ComfyUiNodeGraph>,
+                    requested_deletions: &mut Vec<String>,
                 ) {
                     egui::CollapsingHeader::new(queue_name)
                         .default_open(true)
@@ -296,8 +297,10 @@ impl eframe::App for Application {
                                                 .expect("Failed to load queued workflow");
                                             *viewed_workflow = Some(graph);
                                         }
-                                        if ui.button("Cancel").clicked() {
-                                            todo!("Cancellation not implemented");
+                                        if !is_running {
+                                            if ui.button("Delete").clicked() {
+                                                requested_deletions.push(entry.prompt_id.clone());
+                                            }
                                         }
                                     });
                                 });
@@ -321,17 +324,20 @@ impl eframe::App for Application {
                     render_queue(
                         ui,
                         object_info,
-                        "Running",
-                        &self.queue.running,
+                        ("Running", &self.queue.running, true),
                         viewed_workflow,
+                        &mut requested_deletions,
                     );
                     render_queue(
                         ui,
                         object_info,
-                        "Pending",
-                        &self.queue.pending,
+                        ("Pending", &self.queue.pending, false),
                         viewed_workflow,
+                        &mut requested_deletions,
                     );
+                }
+                if !requested_deletions.is_empty() {
+                    self.request_deletions_from_queue(requested_deletions);
                 }
             });
         }
@@ -701,6 +707,24 @@ impl Application {
         self.graph = None;
     }
 
+    fn get_client_or_send_error(
+        &self,
+        tx: &Sender<AsyncResponse>,
+    ) -> Option<Arc<rucomfyui::Client>> {
+        let client = self.client.clone();
+        match client {
+            Some(client) => Some(client),
+            None => {
+                tx.send(AsyncResponse::error(
+                    "Connection",
+                    "Not connected to ComfyUI",
+                ))
+                .unwrap();
+                None
+            }
+        }
+    }
+
     /// Request that the current workflow is queued.
     fn request_queue(&mut self) {
         let tx = self.async_output_tx.clone();
@@ -709,12 +733,7 @@ impl Application {
                 .unwrap();
             return;
         };
-        let Some(client) = self.client.clone() else {
-            tx.send(AsyncResponse::error(
-                "Connection",
-                "Not connected to ComfyUI",
-            ))
-            .unwrap();
+        let Some(client) = self.get_client_or_send_error(&tx) else {
             return;
         };
 
@@ -727,13 +746,29 @@ impl Application {
             })
             .unwrap();
         });
-        self.last_prompt_queue_time = Some(Instant::now());
+    }
+
+    /// Request that workflows be deleted from the queue.
+    fn request_deletions_from_queue(&mut self, prompt_ids: Vec<String>) {
+        let tx = self.async_output_tx.clone();
+        let Some(client) = self.get_client_or_send_error(&tx) else {
+            return;
+        };
+        self.runtime.spawn(async move {
+            let output = client.delete_from_queue(prompt_ids).await;
+            if let Err(err) = output {
+                tx.send(AsyncResponse::error("Delete from queue", err))
+                    .unwrap();
+            }
+        });
     }
 
     /// Request that system statistics be fetched.
     fn request_system_stats(&mut self) {
         let tx = self.async_output_tx.clone();
-        let client = self.client.clone().unwrap();
+        let Some(client) = self.get_client_or_send_error(&tx) else {
+            return;
+        };
         self.runtime.spawn(async move {
             let stats = client.system_stats().await;
             tx.send(match stats {
@@ -747,13 +782,8 @@ impl Application {
     /// Request that model categories and their models be fetched.
     fn request_models(&mut self) {
         let tx = self.async_output_tx.clone();
-        let client = match self.client.clone() {
-            Some(client) => client,
-            None => {
-                tx.send(AsyncResponse::error("Models", "Not connected to ComfyUI"))
-                    .unwrap();
-                return;
-            }
+        let Some(client) = self.get_client_or_send_error(&tx) else {
+            return;
         };
 
         self.runtime.spawn(async move {
@@ -821,10 +851,10 @@ pub enum AsyncResponse {
 }
 impl AsyncResponse {
     /// Create an error response.
-    pub fn error(category: impl std::fmt::Display, error: impl std::fmt::Display) -> Self {
+    pub fn error(category: impl std::fmt::Display, error: impl std::fmt::Debug) -> Self {
         Self::Error {
             category: category.to_string(),
-            error: error.to_string(),
+            error: format!("{error:?}"),
         }
     }
 }
@@ -889,7 +919,7 @@ impl Application {
                         self.queue_top_prompt_id =
                             self.queue.running.first().map(|r| r.prompt_id.clone());
                         self.queue_top_update_time =
-                            (!self.queue.running.is_empty()).then(|| Instant::now());
+                            (!self.queue.running.is_empty()).then(Instant::now);
                     }
                 }
                 AsyncResponse::SystemStats(stats) => {
