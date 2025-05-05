@@ -681,7 +681,7 @@ impl Application {
 
         let tx = self.async_output_tx.clone();
         self.runtime.spawn(async move {
-            let object_info = client.object_info().await;
+            let object_info = client.get_object_info().await;
             tx.send(match object_info {
                 Ok(object_info) => AsyncResponse::ObjectInfo {
                     object_info,
@@ -757,11 +757,11 @@ impl Application {
             let mut models_map = HashMap::new();
 
             // First get all categories
-            match client.model_categories().await {
+            match client.get_model_categories().await {
                 Ok(categories) => {
                     // For each category, get the models
                     for category in categories {
-                        match client.models(category.clone()).await {
+                        match client.get_models(category.clone()).await {
                             Ok(models) => {
                                 models_map.insert(category, models);
                             }

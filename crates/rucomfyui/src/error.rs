@@ -41,7 +41,7 @@ pub enum ClientError {
         node_errors: Option<HashMap<WorkflowNodeId, NodeError>>,
     },
 
-    /// The object was not found in [`Client::object_info_for_name`].
+    /// The object was not found in [`crate::Client::get_object_for_name`].
     #[error("object not found in info: {name}")]
     ObjectNotFoundInInfo {
         /// The name of the object that was not found.

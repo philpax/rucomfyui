@@ -57,7 +57,7 @@ async fn load_or_get_object_info(
     let client = rucomfyui::Client::new(url);
 
     let mut object_info: Vec<Object> = client
-        .object_info()
+        .get_object_info()
         .await?
         .values()
         .filter(|n| !(n.python_module.starts_with("custom_nodes") || n.category.starts_with("_")))

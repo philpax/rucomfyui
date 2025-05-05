@@ -63,12 +63,12 @@ impl fmt::Display for ModelCategory {
 
 impl Client {
     /// Get all model categories.
-    pub async fn model_categories(&self) -> Result<Vec<ModelCategory>> {
+    pub async fn get_model_categories(&self) -> Result<Vec<ModelCategory>> {
         self.get("models").await
     }
 
     /// Get all models in a category.
-    pub async fn models(&self, category: ModelCategory) -> Result<Vec<String>> {
+    pub async fn get_models(&self, category: ModelCategory) -> Result<Vec<String>> {
         self.get(&format!("models/{category}")).await
     }
 }

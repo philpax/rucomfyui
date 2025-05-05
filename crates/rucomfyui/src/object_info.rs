@@ -11,11 +11,11 @@ pub type ObjectInfo = BTreeMap<String, Object>;
 
 impl Client {
     /// Get the object info for this ComfyUI instance, where the keys are the object names.
-    pub async fn object_info(&self) -> Result<ObjectInfo> {
+    pub async fn get_object_info(&self) -> Result<ObjectInfo> {
         self.get("object_info").await
     }
-    /// Get the object info for a given object name.
-    pub async fn object_info_for_name(&self, name: &str) -> Result<Object> {
+    /// Get the object for a given object name.
+    pub async fn get_object_for_name(&self, name: &str) -> Result<Object> {
         self.get::<ObjectInfo>(&format!("object_info/{name}"))
             .await?
             .get(name)
@@ -528,7 +528,7 @@ impl std::fmt::Debug for CategoryTreeNode<'_> {
 
 /// Builds a tree of objects based on their categories.
 ///
-/// Recommended use is with a values iterator over [`Client::object_info`] with whatever filtering
+/// Recommended use is with a values iterator over [`Client::get_object_info`] with whatever filtering
 /// is appropriate for your usecase.
 pub fn categorize<'a>(objects: impl Iterator<Item = &'a Object>) -> CategoryTree<'a> {
     let mut tree = CategoryTree::new();
