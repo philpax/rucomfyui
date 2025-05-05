@@ -27,9 +27,9 @@ pub enum ClientError {
     /// Parse int error.
     ParseInt(#[from] std::num::ParseIntError),
 
-    #[error("JSON error: {0}")]
-    /// Serde JSON error.
-    Json(#[from] serde_json::Error),
+    #[error("JSON decode error: {0} from {1}")]
+    /// Serde JSON decode error.
+    JsonDecode(serde_json::Error, String),
 
     #[error("validation error: {error}, node errors: {node_errors:?}")]
     /// Validation error.
@@ -339,7 +339,9 @@ pub(crate) async fn parse_response<T: serde::de::DeserializeOwned>(
             response: response.text().await?,
         });
     }
-    let value: serde_json::Value = response.json().await?;
+    let text = response.text().await?;
+    let value: serde_json::Value =
+        serde_json::from_str(&text).map_err(|e| ClientError::JsonDecode(e, text.clone()))?;
     if let Some(object) = value.as_object() {
         if let Some(error) = object.get("error").and_then(ValidationError::from_value) {
             let node_errors = object
@@ -356,5 +358,5 @@ pub(crate) async fn parse_response<T: serde::de::DeserializeOwned>(
             return Err(ClientError::Validation { error, node_errors });
         }
     }
-    Ok(serde_json::from_value(value)?)
+    serde_json::from_value(value).map_err(|e| ClientError::JsonDecode(e, text))
 }
