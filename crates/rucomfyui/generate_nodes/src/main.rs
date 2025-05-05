@@ -39,41 +39,47 @@ async fn load_or_get_object_info(
     our_directory: &Path,
 ) -> Result<Vec<rucomfyui::object_info::Object>> {
     let path = our_directory.join("object_info.json");
-    match std::fs::read_to_string(&path) {
-        Ok(existing) => Ok(serde_json::from_str(&existing)?),
-        Err(_) => {
-            println!("Loading object info from ComfyUI...");
-            let url = std::env::args().nth(1).expect("ComfyUI URL not provided");
-            let client = rucomfyui::Client::new(url);
 
-            let mut object_info: Vec<Object> = client
-                .object_info()
-                .await?
-                .values()
-                .filter(|n| {
-                    !(n.python_module.starts_with("custom_nodes") || n.category.starts_with("_"))
-                })
-                .cloned()
-                .collect();
-            object_info.sort_by(|a, b| a.name.cmp(&b.name));
-            // Scrub all array type values to improve determinism of results.
-            for object in &mut object_info {
-                for input in object.input.required.values_mut().chain(
-                    object
-                        .input
-                        .optional
-                        .iter_mut()
-                        .flat_map(|v| v.values_mut()),
-                ) {
-                    if let Some(array) = input.as_input_type_mut().as_array_mut() {
-                        array.clear();
-                    }
-                }
+    let Some(url) = std::env::args().nth(1) else {
+        // Fall back to existing object info if no URL is provided
+        match std::fs::read_to_string(&path) {
+            Ok(existing) => {
+                println!("Using existing object info from {}", path.display());
+                return Ok(serde_json::from_str(&existing)?);
             }
-            std::fs::write(path, serde_json::to_string_pretty(&object_info)?)?;
-            Ok(object_info)
+            Err(e) => {
+                anyhow::bail!("No ComfyUI URL provided and couldn't read existing object info: {e}")
+            }
+        }
+    };
+
+    println!("Loading object info from ComfyUI...");
+    let client = rucomfyui::Client::new(url);
+
+    let mut object_info: Vec<Object> = client
+        .object_info()
+        .await?
+        .values()
+        .filter(|n| !(n.python_module.starts_with("custom_nodes") || n.category.starts_with("_")))
+        .cloned()
+        .collect();
+    object_info.sort_by(|a, b| a.name.cmp(&b.name));
+    // Scrub all array type values to improve determinism of results.
+    for object in &mut object_info {
+        for input in object.input.required.values_mut().chain(
+            object
+                .input
+                .optional
+                .iter_mut()
+                .flat_map(|v| v.values_mut()),
+        ) {
+            if let Some(array) = input.as_input_type_mut().as_array_mut() {
+                array.clear();
+            }
         }
     }
+    std::fs::write(&path, serde_json::to_string_pretty(&object_info)?)?;
+    Ok(object_info)
 }
 
 fn all_nodes(tree: &CategoryTree, ctx: &[syn::Ident]) -> Result<TokenStream> {
