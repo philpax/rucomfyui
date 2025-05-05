@@ -4,9 +4,7 @@ use std::collections::HashMap;
 
 use serde::{Deserialize, Serialize};
 
-use crate::{
-    error::parse_response, workflow::WorkflowNodeId, Client, OwnedBytes, Result, Workflow,
-};
+use crate::{workflow::WorkflowNodeId, Client, OwnedBytes, Result, Workflow};
 
 #[derive(Serialize, Deserialize, Debug)]
 /// Result of the queueing of a prompt.
@@ -24,14 +22,7 @@ impl Client {
         let payload = serde_json::json!({
             "prompt": workflow,
         });
-        parse_response(
-            self.client
-                .post(format!("{}/prompt", self.api_base))
-                .json(&payload)
-                .send()
-                .await?,
-        )
-        .await
+        self.post_json("prompt", &payload).await
     }
 }
 
@@ -87,13 +78,7 @@ impl Client {
                 .collect()
         }
 
-        let api_queue: ApiQueue = parse_response(
-            self.client
-                .get(format!("{}/queue", self.api_base))
-                .send()
-                .await?,
-        )
-        .await?;
+        let api_queue: ApiQueue = self.get("queue").await?;
         Ok(Queue {
             running: api_queue_to_queue(api_queue.queue_running),
             pending: api_queue_to_queue(api_queue.queue_pending),

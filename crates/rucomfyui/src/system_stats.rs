@@ -1,18 +1,12 @@
 //! System statistics from ComfyUI.
 use serde::{Deserialize, Serialize};
 
-use crate::{parse_response, Client, Result};
+use crate::{Client, Result};
 
 impl Client {
     /// Get system statistics.
     pub async fn system_stats(&self) -> Result<SystemStats> {
-        parse_response(
-            self.client
-                .get(format!("{}/system_stats", self.api_base))
-                .send()
-                .await?,
-        )
-        .await
+        self.get("system_stats").await
     }
 }
 

@@ -4,7 +4,7 @@ use std::collections::BTreeMap;
 
 use serde::{Deserialize, Serialize};
 
-use crate::{error::parse_response, Client, Result};
+use crate::{Client, Result};
 
 /// Object info for a ComfyUI instance, where the keys are the object names.
 pub type ObjectInfo = BTreeMap<String, Object>;
@@ -12,13 +12,7 @@ pub type ObjectInfo = BTreeMap<String, Object>;
 impl Client {
     /// Get the object info for this ComfyUI instance, where the keys are the object names.
     pub async fn object_info(&self) -> Result<ObjectInfo> {
-        parse_response(
-            self.client
-                .get(format!("{}/object_info", self.api_base))
-                .send()
-                .await?,
-        )
-        .await
+        self.get("object_info").await
     }
 }
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]

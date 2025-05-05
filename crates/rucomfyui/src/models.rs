@@ -4,7 +4,7 @@ use serde::{Deserialize, Serialize};
 use serde_json;
 use std::fmt;
 
-use crate::{parse_response, Client, Result};
+use crate::{Client, Result};
 
 #[derive(Debug, Clone, PartialEq, Eq, Hash, Serialize, Deserialize)]
 #[serde(rename_all = "snake_case")]
@@ -64,23 +64,11 @@ impl fmt::Display for ModelCategory {
 impl Client {
     /// Get all model categories.
     pub async fn model_categories(&self) -> Result<Vec<ModelCategory>> {
-        parse_response(
-            self.client
-                .get(format!("{}/models", self.api_base))
-                .send()
-                .await?,
-        )
-        .await
+        self.get("models").await
     }
 
     /// Get all models in a category.
     pub async fn models(&self, category: ModelCategory) -> Result<Vec<String>> {
-        parse_response(
-            self.client
-                .get(format!("{}/models/{category}", self.api_base))
-                .send()
-                .await?,
-        )
-        .await
+        self.get(&format!("models/{category}")).await
     }
 }

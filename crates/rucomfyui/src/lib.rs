@@ -48,6 +48,50 @@ impl Client {
     }
 }
 impl Client {
+    /// Get a resource from the ComfyUI API.
+    pub async fn get<T: serde::de::DeserializeOwned>(&self, path: &str) -> Result<T> {
+        parse_response(
+            self.client
+                .get(format!("{}/{}", self.api_base, path))
+                .send()
+                .await?,
+        )
+        .await
+    }
+
+    /// Post a JSON resource to the ComfyUI API.
+    pub async fn post_json<Req: serde::Serialize, Res: serde::de::DeserializeOwned>(
+        &self,
+        path: &str,
+        body: &Req,
+    ) -> Result<Res> {
+        parse_response(
+            self.client
+                .post(format!("{}/{}", self.api_base, path))
+                .json(body)
+                .send()
+                .await?,
+        )
+        .await
+    }
+
+    /// Post a multipart resource to the ComfyUI API.
+    pub async fn post_multipart<Req: serde::Serialize, Res: serde::de::DeserializeOwned>(
+        &self,
+        path: &str,
+        body: reqwest::multipart::Form,
+    ) -> Result<Res> {
+        parse_response(
+            self.client
+                .post(format!("{}/{}", self.api_base, path))
+                .multipart(body)
+                .send()
+                .await?,
+        )
+        .await
+    }
+}
+impl Client {
     /// Upload a file to the ComfyUI API.
     pub async fn upload(
         &self,
@@ -59,13 +103,6 @@ impl Client {
             .text("type", "input")
             .text("overwrite", "true");
 
-        parse_response(
-            self.client
-                .post(format!("{}/upload/image", self.api_base))
-                .multipart(form)
-                .send()
-                .await?,
-        )
-        .await
+        self.post_multipart::<(), _>("upload/image", form).await
     }
 }
