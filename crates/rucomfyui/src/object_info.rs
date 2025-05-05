@@ -4,7 +4,7 @@ use std::collections::BTreeMap;
 
 use serde::{Deserialize, Serialize};
 
-use crate::{Client, Result};
+use crate::{Client, ClientError, Result};
 
 /// Object info for a ComfyUI instance, where the keys are the object names.
 pub type ObjectInfo = BTreeMap<String, Object>;
@@ -13,6 +13,16 @@ impl Client {
     /// Get the object info for this ComfyUI instance, where the keys are the object names.
     pub async fn object_info(&self) -> Result<ObjectInfo> {
         self.get("object_info").await
+    }
+    /// Get the object info for a given object name.
+    pub async fn object_info_for_name(&self, name: &str) -> Result<Object> {
+        self.get::<ObjectInfo>(&format!("object_info/{name}"))
+            .await?
+            .get(name)
+            .cloned()
+            .ok_or(ClientError::ObjectNotFoundInInfo {
+                name: name.to_string(),
+            })
     }
 }
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]

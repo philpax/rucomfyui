@@ -40,6 +40,13 @@ pub enum ClientError {
         /// Any node errors that may have occurred.
         node_errors: Option<HashMap<WorkflowNodeId, NodeError>>,
     },
+
+    /// The object was not found in [`Client::object_info_for_name`].
+    #[error("object not found in info: {name}")]
+    ObjectNotFoundInInfo {
+        /// The name of the object that was not found.
+        name: String,
+    },
 }
 
 #[derive(Debug, Deserialize)]
