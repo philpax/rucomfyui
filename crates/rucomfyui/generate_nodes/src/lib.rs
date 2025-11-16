@@ -530,7 +530,7 @@ fn write_node_struct(
 
     let doc = format!(
         "**{}**: {}",
-        util::ensure_string_is_doc_safe(&node.display_name),
+        util::ensure_string_is_doc_safe(node.display_name()),
         if node.description.is_empty() {
             "No description.".to_string()
         } else {
@@ -585,7 +585,7 @@ fn write_node_trait_impl(
     node_output_struct_name: Option<&syn::Ident>,
 ) -> Result<TokenStream> {
     let node_name = node.name.as_str();
-    let display_name = node.display_name.as_str();
+    let display_name = node.display_name();
     let description = node.description.as_str();
     let category = node.category.as_str();
 

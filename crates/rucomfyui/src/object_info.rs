@@ -31,7 +31,7 @@ pub struct Object {
     /// The name of the object.
     pub name: String,
     /// The display name of the object.
-    pub display_name: String,
+    pub display_name: Option<String>,
     /// The description of the object. Often empty.
     pub description: String,
     /// The Python module that introduced this object.
@@ -58,9 +58,13 @@ pub struct Object {
     pub output_node: bool,
     /// Tooltips for the outputs.
     #[serde(default)]
-    pub output_tooltips: Vec<String>,
+    pub output_tooltips: Vec<Option<String>>,
 }
 impl Object {
+    /// The display name of the object, if available; otherwise, the name.
+    pub fn display_name(&self) -> &str {
+        self.display_name.as_deref().unwrap_or(&self.name)
+    }
     /// Groups together the various outputs from the object info into an iterator of processed outputs.
     pub fn processed_output(&self) -> impl Iterator<Item = ObjectProcessedOutput<'_>> + '_ {
         self.output
@@ -72,7 +76,7 @@ impl Object {
                 ty: ty.clone(),
                 is_list: *is_list,
                 name: name.as_str(),
-                tooltip: self.output_tooltips.get(idx).map(|s| s.as_str()),
+                tooltip: self.output_tooltips.get(idx).and_then(|s| s.as_deref()),
             })
     }
     /// Required inputs for the object, returned in the order they should be provided.
@@ -470,18 +474,23 @@ macro_rules! define_object_type {
     }
 }
 define_object_type! {
+    (AccessoriesOptions, "ACCESSORIES_OPTIONS"),
     (Audio, "AUDIO"),
+    (AudioEncoder, "AUDIO_ENCODER"),
+    (AudioEncoderOutput, "AUDIO_ENCODER_OUTPUT"),
     (Boolean, "BOOLEAN"),
-    (ClipVisionOutput, "CLIP_VISION_OUTPUT"),
-    (ClipVision, "CLIP_VISION"),
+    (CameraControl, "CAMERA_CONTROL"),
     (Clip, "CLIP"),
+    (ClipVision, "CLIP_VISION"),
+    (ClipVisionOutput, "CLIP_VISION_OUTPUT"),
     (Conditioning, "CONDITIONING"),
     (ControlNet, "CONTROL_NET"),
     (Float, "FLOAT"),
+    (GeminiInputFiles, "GEMINI_INPUT_FILES"),
     (Gligen, "GLIGEN"),
     (Guider, "GUIDER"),
-    (Hooks, "HOOKS"),
     (HookKeyframes, "HOOK_KEYFRAMES"),
+    (Hooks, "HOOKS"),
     (Image, "IMAGE"),
     (InpaintModel, "INPAINT_MODEL"),
     (InpaintPatch, "INPAINT_PATCH"),
@@ -489,21 +498,35 @@ define_object_type! {
     (Latent, "LATENT"),
     (LatentOperation, "LATENT_OPERATION"),
     (Load3DCamera, "LOAD3D_CAMERA"),
+    (LoraModel, "LORA_MODEL"),
+    (LossMap, "LOSS_MAP"),
+    (LumaConcepts, "LUMA_CONCEPTS"),
+    (LumaRef, "LUMA_REF"),
     (Mask, "MASK"),
     (Mesh, "MESH"),
     (Model, "MODEL"),
+    (ModelPatch, "MODEL_PATCH"),
     (Noise, "NOISE"),
+    (OpenAiChatConfig, "OPENAI_CHAT_CONFIG"),
+    (OpenAiInputFiles, "OPENAI_INPUT_FILES"),
     (Photomaker, "PHOTOMAKER"),
+    (PixverseTemplate, "PIXVERSE_TEMPLATE"),
+    (RecraftColor, "RECRAFT_COLOR"),
+    (RecraftControls, "RECRAFT_CONTROLS"),
+    (RecraftV3Style, "RECRAFT_V3_STYLE"),
     (Sampler, "SAMPLER"),
-    (String, "STRING"),
     (Sigmas, "SIGMAS"),
+    (String, "STRING"),
     (StyleModel, "STYLE_MODEL"),
+    (Svg, "SVG"),
     (TimestepsRange, "TIMESTEPS_RANGE"),
     (UpscaleModel, "UPSCALE_MODEL"),
     (Vae, "VAE"),
     (Video, "VIDEO"),
     (Voxel, "VOXEL"),
-    (Webcam, "WEBCAM")
+    (WanCameraEmbedding, "WAN_CAMERA_EMBEDDING"),
+    (Webcam, "WEBCAM"),
+    (Wildcard, "*")
 }
 
 /// A tree of objects based on their categories.
@@ -616,7 +639,7 @@ mod tests {
 
         let target_object = Object {
             name: "EmptyLatentAudio".into(),
-            display_name: "EmptyLatentAudio".into(),
+            display_name: Some("EmptyLatentAudio".into()),
             description: "".into(),
             python_module: "comfy_extras.nodes_audio".into(),
             category: "latent/audio".into(),

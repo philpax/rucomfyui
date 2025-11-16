@@ -31,7 +31,10 @@ pub enum NameToIdentCase {
 
 /// Converts the given name to a [`syn::Ident`], including converting to either `snake_case` or `PascalCase`.
 pub fn name_to_ident(name: &str, case: NameToIdentCase) -> Result<syn::Ident> {
-    let mut name = name.replace(".", "_");
+    let mut name = remove_emoji(name)
+        .replace(".", "_")
+        .replace("|", "_")
+        .replace(" ", "_");
     if name.starts_with(char::is_numeric) {
         name = format!("n{name}");
     }
@@ -51,6 +54,36 @@ pub fn name_to_ident(name: &str, case: NameToIdentCase) -> Result<syn::Ident> {
     }
 
     syn::parse_str::<syn::Ident>(&name).with_context(|| format!("Error parsing {name}"))
+}
+
+fn remove_emoji(s: &str) -> String {
+    s.chars()
+        .filter(|c| {
+            let code = *c as u32;
+            // Filter out common emoji ranges
+            !(
+                (0x1F600..=0x1F64F).contains(&code) || // Emoticons
+                (0x1F300..=0x1F5FF).contains(&code) || // Misc Symbols and Pictographs
+                (0x1F680..=0x1F6FF).contains(&code) || // Transport and Map
+                (0x1F700..=0x1F77F).contains(&code) || // Alchemical
+                (0x1F780..=0x1F7FF).contains(&code) || // Geometric Shapes
+                (0x1F800..=0x1F8FF).contains(&code) || // Supplemental Arrows-C
+                (0x1F900..=0x1F9FF).contains(&code) || // Supplemental Symbols and Pictographs
+                (0x1FA00..=0x1FA6F).contains(&code) || // Chess Symbols
+                (0x1FA70..=0x1FAFF).contains(&code) || // Symbols and Pictographs Extended-A
+                (0x2600..=0x26FF).contains(&code)   || // Misc symbols
+                (0x2700..=0x27BF).contains(&code)   || // Dingbats
+                (0xFE00..=0xFE0F).contains(&code)   || // Variation Selectors
+                (0x1F1E6..=0x1F1FF).contains(&code) || // Regional Indicators (flags)
+                (0x1F191..=0x1F251).contains(&code) || // Enclosed chars
+                (0x1F004..=0x1F0CF).contains(&code) || // Mahjong, playing cards
+                (0x1F170..=0x1F189).contains(&code) || // Enclosed alphanumerics
+                (0x2300..=0x23FF).contains(&code)   || // Miscellaneous Technical
+                (0x2B50..=0x2B55).contains(&code)
+                // Stars and other symbols
+            )
+        })
+        .collect()
 }
 
 /// A helper function to get the output struct ident for the given [`ObjectType`].

@@ -64,7 +64,7 @@ impl ComfyUiNodeGraph {
         for (node_id, node) in &graph.nodes {
             let object = &node.user_data.template.0;
             let mut g_node = WorkflowNode::new(object.name.clone())
-                .with_meta(WorkflowMeta::new(object.display_name.clone()));
+                .with_meta(WorkflowMeta::new(object.display_name()));
 
             let mut connections = vec![];
             for (input_name, input_id) in &node.inputs {
@@ -150,7 +150,7 @@ impl ComfyUiNodeGraph {
                 })?;
                 let template = internal::FlowNodeTemplate(object.clone());
                 let g_node_id = state.graph.add_node(
-                    object.display_name.clone(),
+                    object.display_name().into(),
                     template.user_data(&mut self.user_state),
                     |g, g_node_id| {
                         let bno = internal::build_node(&template, g, g_node_id, Some(node));

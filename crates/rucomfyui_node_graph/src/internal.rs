@@ -352,7 +352,7 @@ impl NodeTemplateTrait for FlowNodeTemplate {
     type CategoryType = String;
 
     fn node_finder_label(&self, _user_state: &mut Self::UserState) -> Cow<'_, str> {
-        self.0.display_name.as_str().into()
+        self.0.display_name().into()
     }
     fn node_finder_categories(&self, _user_state: &mut Self::UserState) -> Vec<String> {
         vec![self.0.category.clone()]
