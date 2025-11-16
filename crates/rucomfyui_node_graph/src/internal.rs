@@ -1,100 +1,28 @@
 //! Internal implementation details of this crate, including the types used
-//! to represent the graph and its nodes in terms of [`egui_node_graph2`].
+//! to represent the graph and its nodes in terms of [`egui-snarl`].
 //!
-//! Provided for serialization and deserialization purposes, as well as
-//! keeping to the general ethos of [`egui_node_graph2`].
+//! Provided for serialization and deserialization purposes.
 
 use std::{
-    borrow::Cow,
     collections::HashMap,
     hash::{Hash, Hasher},
 };
 
-use egui_node_graph2::*;
+use egui_snarl::{
+    ui::{PinInfo, SnarlViewer, WireStyle},
+    InPin, NodeId, OutPin, Snarl,
+};
 
 use rucomfyui::{
     object_info::{
-        Object, ObjectInfo, ObjectInputMetaTyped, ObjectInputMetaTypedRoundValue, ObjectInputType,
-        ObjectType,
+        Object, ObjectInputMetaTyped, ObjectInputMetaTypedRoundValue, ObjectInputType, ObjectType,
     },
-    workflow::{WorkflowInput, WorkflowNode},
+    workflow::WorkflowInput,
 };
 
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
-/// The data for a node in the graph.
-pub struct FlowNodeData {
-    /// The template for the node.
-    pub template: FlowNodeTemplate,
-    /// The input tooltips for the node where the key is the input name.
-    pub input_tooltips: HashMap<String, String>,
-    /// The output tooltips for the node where the key is the output name.
-    pub output_tooltips: HashMap<String, String>,
-}
-impl NodeDataTrait for FlowNodeData {
-    type Response = EmptyResponse;
-    type UserState = FlowUserState;
-    type DataType = ObjectType;
-    type ValueType = FlowValueType;
-
-    fn bottom_ui(
-        &self,
-        ui: &mut egui::Ui,
-        node_id: NodeId,
-        _graph: &Graph<Self, Self::DataType, Self::ValueType>,
-        user_state: &mut Self::UserState,
-    ) -> Vec<NodeResponse<EmptyResponse, FlowNodeData>>
-    where
-        EmptyResponse: UserResponseTrait,
-    {
-        if let Some((images, selected)) = user_state.output_images.get_mut(&node_id) {
-            ui.horizontal(|ui| {
-                for idx in 0..images.len() {
-                    if ui
-                        .add(
-                            egui::Button::new(format!("{}", idx + 1))
-                                .small()
-                                .selected(*selected == idx),
-                        )
-                        .clicked()
-                    {
-                        *selected = idx;
-                    }
-                }
-            });
-
-            if let Some(image) = images.get(*selected) {
-                ui.image(image.clone());
-            }
-        }
-        vec![]
-    }
-    fn output_ui(
-        &self,
-        ui: &mut egui::Ui,
-        node_id: NodeId,
-        graph: &Graph<Self, Self::DataType, Self::ValueType>,
-        _user_state: &mut Self::UserState,
-        param_name: &str,
-    ) -> Vec<NodeResponse<Self::Response, Self>>
-    where
-        Self::Response: UserResponseTrait,
-    {
-        let r = ui.label(param_name);
-        if let Some(tooltip) = graph
-            .nodes
-            .get(node_id)
-            .and_then(|n| n.user_data.output_tooltips.get(param_name))
-        {
-            r.on_hover_text(tooltip);
-        }
-
-        Default::default()
-    }
-}
-
 #[derive(Clone, Debug, Default, PartialEq)]
-#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
-/// The value type for a node in the graph.
+/// The value type for an input in the graph.
 pub enum FlowValueType {
     /// An array of options.
     Array {
@@ -153,6 +81,7 @@ pub enum FlowValueType {
     /// An unknown type. Should not occur in practice.
     Unknown,
 }
+
 impl FlowValueType {
     fn convert_float(value: Option<f64>, typed_meta: Option<&ObjectInputMetaTyped>) -> Self {
         let typed_meta = typed_meta.and_then(|m| m.as_number());
@@ -172,6 +101,7 @@ impl FlowValueType {
                 .unwrap_or(1.0),
         }
     }
+
     fn convert_string(value: &str, typed_meta: Option<&ObjectInputMetaTyped>) -> Self {
         Self::String {
             value: value.into(),
@@ -181,6 +111,7 @@ impl FlowValueType {
                 .unwrap_or(false),
         }
     }
+
     fn convert_i64(value: Option<i64>, typed_meta_orig: Option<&ObjectInputMetaTyped>) -> Self {
         let typed_meta = typed_meta_orig.and_then(|m| m.as_number());
         if typed_meta.is_some_and(|m| u64::from(m.min) == 0)
@@ -198,6 +129,7 @@ impl FlowValueType {
             step: typed_meta.and_then(|m| m.step).map(i64::from).unwrap_or(1),
         }
     }
+
     fn convert_u64(value: Option<u64>, typed_meta: Option<&ObjectInputMetaTyped>) -> Self {
         let typed_meta = typed_meta.and_then(|m| m.as_number());
         Self::UnsignedInt {
@@ -209,6 +141,7 @@ impl FlowValueType {
             step: typed_meta.and_then(|m| m.step).map(u64::from).unwrap_or(1),
         }
     }
+
     fn convert_bool(value: Option<bool>, typed_meta: Option<&ObjectInputMetaTyped>) -> Self {
         Self::Boolean(
             value
@@ -217,7 +150,7 @@ impl FlowValueType {
         )
     }
 
-    fn from_object_type(
+    pub(crate) fn from_object_type(
         object_type: &ObjectType,
         typed_meta: Option<&ObjectInputMetaTyped>,
     ) -> Self {
@@ -229,7 +162,8 @@ impl FlowValueType {
             _ => Self::Other(object_type.clone()),
         }
     }
-    fn from_object_type_and_input(
+
+    pub(crate) fn from_object_type_and_input(
         object_type: &ObjectType,
         input: &WorkflowInput,
         typed_meta: Option<&ObjectInputMetaTyped>,
@@ -249,6 +183,7 @@ impl FlowValueType {
     pub fn is_connection_only(&self) -> bool {
         matches!(self, Self::Other(..)) || matches!(self, Self::Unknown)
     }
+
     #[must_use]
     /// Returns whether this value type is constant-only.
     pub fn is_constant_only(&self) -> bool {
@@ -259,26 +194,22 @@ impl FlowValueType {
             | matches!(self, Self::UnsignedInt { .. })
             | matches!(self, Self::Boolean(..))
     }
-}
-impl WidgetValueTrait for FlowValueType {
-    type Response = EmptyResponse;
-    type UserState = FlowUserState;
-    type NodeData = FlowNodeData;
-    fn value_widget(
+
+    /// Render the value widget for an input
+    fn render_input_widget(
         &mut self,
-        param_name: &str,
-        _node_id: NodeId,
         ui: &mut egui::Ui,
-        _user_state: &mut FlowUserState,
-        node_data: &FlowNodeData,
-    ) -> Vec<EmptyResponse> {
+        param_name: &str,
+        tooltip: Option<&String>,
+    ) {
         let r = ui.label(param_name);
-        if let Some(tooltip) = node_data.input_tooltips.get(param_name) {
+        if let Some(tooltip) = tooltip {
             r.on_hover_text(tooltip);
         }
+
         match self {
             FlowValueType::Array { options, selected } => {
-                egui::ComboBox::new(format!("{param_name}_checkbox"), "")
+                egui::ComboBox::new(format!("{param_name}_combobox"), "")
                     .selected_text(selected.clone())
                     .show_ui(ui, |ui| {
                         for option in options {
@@ -332,185 +263,276 @@ impl WidgetValueTrait for FlowValueType {
             }
             FlowValueType::Other(_) => {}
             FlowValueType::Unknown => {
-                ui.label("Unknown, this should not happen");
+                ui.label("Unknown");
             }
         }
-
-        Vec::new()
     }
 }
 
-#[derive(Clone)]
+/// Input data for a node
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
-/// The template for a node in the graph.
-pub struct FlowNodeTemplate(pub Object);
-impl NodeTemplateTrait for FlowNodeTemplate {
-    type NodeData = FlowNodeData;
-    type DataType = ObjectType;
-    type ValueType = FlowValueType;
-    type UserState = FlowUserState;
-    type CategoryType = String;
+#[derive(Clone, Debug)]
+pub struct FlowInput {
+    /// The name of the input
+    pub name: String,
+    /// The type of the input
+    pub typ: ObjectType,
+    /// The value of the input (if not connected)
+    pub value: FlowValueType,
+    /// Tooltip for the input
+    pub tooltip: Option<String>,
+}
 
-    fn node_finder_label(&self, _user_state: &mut Self::UserState) -> Cow<'_, str> {
-        self.0.display_name().into()
-    }
-    fn node_finder_categories(&self, _user_state: &mut Self::UserState) -> Vec<String> {
-        vec![self.0.category.clone()]
-    }
-    fn node_graph_label(&self, user_state: &mut Self::UserState) -> String {
-        self.node_finder_label(user_state).into()
-    }
-    fn user_data(&self, _user_state: &mut Self::UserState) -> Self::NodeData {
-        let input_tooltips = self
-            .0
-            .all_inputs()
-            .flat_map(|(name, input, _)| Some((name.to_string(), input.tooltip()?.to_owned())))
+/// Output data for a node
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+#[derive(Clone, Debug)]
+pub struct FlowOutput {
+    /// The name of the output
+    pub name: String,
+    /// The type of the output
+    pub typ: ObjectType,
+    /// Tooltip for the output
+    pub tooltip: Option<String>,
+}
+
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+#[derive(Clone, Debug)]
+/// The data for a node in the graph.
+pub struct FlowNodeData {
+    /// The Object template for the node.
+    pub object: Object,
+    /// The inputs for the node
+    pub inputs: Vec<FlowInput>,
+    /// The outputs for the node
+    pub outputs: Vec<FlowOutput>,
+}
+
+impl FlowNodeData {
+    /// Create a new node from an Object template
+    pub fn new(object: Object) -> Self {
+        let mut inputs = Vec::new();
+
+        // Collect all inputs with their metadata
+        for (name, input, _required) in object.all_inputs() {
+            let meta_typed = input.as_meta_typed();
+            let tooltip = input.tooltip().map(|s| s.to_owned());
+
+            let (typ, value) = match input.as_input_type() {
+                ObjectInputType::Array(vec) => (
+                    ObjectType::String,
+                    FlowValueType::Array {
+                        options: vec.iter().map(|v| v.as_str().to_string()).collect(),
+                        selected: vec
+                            .first()
+                            .cloned()
+                            .map(String::from)
+                            .unwrap_or_default(),
+                    },
+                ),
+                ObjectInputType::Typed(object_type) => (
+                    object_type.clone(),
+                    FlowValueType::from_object_type(object_type, meta_typed),
+                ),
+            };
+
+            inputs.push(FlowInput {
+                name: name.to_string(),
+                typ,
+                value,
+                tooltip,
+            });
+        }
+
+        // Sort inputs: connection-only first, then others
+        inputs.sort_by_key(|input| {
+            if input.value.is_connection_only() {
+                0
+            } else {
+                1
+            }
+        });
+
+        let outputs = object
+            .output_name
+            .iter()
+            .zip(object.output.iter())
+            .enumerate()
+            .map(|(idx, (name, typ))| FlowOutput {
+                name: name.clone(),
+                typ: typ.clone(),
+                tooltip: object
+                    .processed_output()
+                    .nth(idx)
+                    .and_then(|o| o.tooltip.as_ref().map(|s| s.to_string())),
+            })
             .collect();
-        let output_tooltips = self
-            .0
-            .processed_output()
-            .flat_map(|o| Some((o.name.to_owned(), o.tooltip?.to_owned())))
-            .collect();
-        FlowNodeData {
-            template: self.clone(),
-            input_tooltips,
-            output_tooltips,
+
+        Self {
+            object,
+            inputs,
+            outputs,
         }
     }
-    fn build_node(
-        &self,
-        graph: &mut Graph<Self::NodeData, Self::DataType, Self::ValueType>,
-        _user_state: &mut Self::UserState,
-        node_id: NodeId,
-    ) {
-        build_node(self, graph, node_id, None);
-    }
 }
 
-#[derive(Clone, Copy, Debug, PartialEq, Eq)]
-/// The response for a node in the graph. Currently empty.
-pub struct EmptyResponse;
-impl UserResponseTrait for EmptyResponse {}
-
+/// User state for the graph viewer
 #[derive(Default)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
-/// The user state of the node graph.
-///
-/// Currently used to store output images for nodes to display.
 pub struct FlowUserState {
     #[cfg_attr(feature = "serde", serde(skip))]
     /// A mapping from node IDs to output images and the selected image.
     pub output_images: HashMap<NodeId, (Vec<egui::ImageSource<'static>>, usize)>,
 }
 
-impl DataTypeTrait<FlowUserState> for ObjectType {
-    fn data_type_color(&self, _user_state: &mut FlowUserState) -> egui::Color32 {
-        let mut hasher = std::hash::DefaultHasher::new();
-        format!("{self:?}").hash(&mut hasher);
-        let hash = hasher.finish();
-        let hash = (hash % 3600) as f32 / 3600.0;
-        egui::ecolor::Hsva::new(hash, 0.5, 0.5, 1.0).into()
-    }
-
-    fn name(&self) -> Cow<'_, str> {
-        format!("{self:?}").into()
-    }
+/// The viewer for the ComfyUI flow graph
+pub struct FlowViewer<'a> {
+    /// The user state
+    pub user_state: &'a mut FlowUserState,
 }
 
-/// The output of [`build_node`].
-pub struct BuildNodeOutput {
-    /// A mapping from input names to input IDs.
-    pub input_ids: HashMap<String, InputId>,
-    /// A list of output IDs in the order associated with the template.
-    pub output_ids: Vec<OutputId>,
-}
-/// Build a node in the graph given a template, graph, and node ID.
-///
-/// A workflow node can be provided to set the initial values of the node,
-/// which can be useful when loading a workflow in.
-pub fn build_node(
-    template: &FlowNodeTemplate,
-    graph: &mut Graph<FlowNodeData, ObjectType, FlowValueType>,
-    node_id: NodeId,
-    workflow_node: Option<&WorkflowNode>,
-) -> BuildNodeOutput {
-    let mut input_ids = HashMap::new();
-    let mut output_ids = vec![];
+impl SnarlViewer<FlowNodeData> for FlowViewer<'_> {
+    fn title(&mut self, node: &FlowNodeData) -> String {
+        node.object.display_name().to_string()
+    }
 
-    let mut sorted_inputs = vec![];
-    for (name, input, _required) in template.0.all_inputs() {
-        let workflow_input = workflow_node.and_then(|n| n.inputs.get(name));
+    fn inputs(&mut self, node: &FlowNodeData) -> usize {
+        node.inputs.len()
+    }
 
-        let meta_typed = input.as_meta_typed();
-        let (type_, value_type) = match input.as_input_type() {
-            ObjectInputType::Array(vec) => (
-                ObjectType::String,
-                FlowValueType::Array {
-                    options: vec.iter().map(|v| v.as_str().to_string()).collect(),
-                    selected: workflow_input
-                        .and_then(|i| i.as_str())
-                        .map(|s| s.to_string())
-                        .or_else(|| vec.first().cloned().map(String::from))
-                        .unwrap_or_default(),
-                },
-            ),
-            ObjectInputType::Typed(object_type) => (
-                object_type.clone(),
-                workflow_input
-                    .map(|input| {
-                        FlowValueType::from_object_type_and_input(object_type, input, meta_typed)
-                    })
-                    .unwrap_or_else(|| FlowValueType::from_object_type(object_type, meta_typed)),
-            ),
-        };
+    fn outputs(&mut self, node: &FlowNodeData) -> usize {
+        node.outputs.len()
+    }
 
-        let input_param_kind = if value_type.is_connection_only() {
-            InputParamKind::ConnectionOnly
-        } else if value_type.is_constant_only() {
-            InputParamKind::ConstantOnly
+    fn show_input(
+        &mut self,
+        pin: &InPin,
+        ui: &mut egui::Ui,
+        snarl: &mut Snarl<FlowNodeData>,
+    ) -> PinInfo {
+        let node = &mut snarl[pin.id.node];
+        let input = &mut node.inputs[pin.id.input];
+
+        // If there's a connection, show the connected value (read-only)
+        if let Some(&_remote) = pin.remotes.first() {
+            // Connected - show label only
+            let r = ui.label(&input.name);
+            if let Some(tooltip) = &input.tooltip {
+                r.on_hover_text(tooltip);
+            }
+        } else if input.value.is_connection_only() {
+            // Connection-only input with no connection - show label
+            let r = ui.label(&input.name);
+            if let Some(tooltip) = &input.tooltip {
+                r.on_hover_text(tooltip);
+            }
         } else {
-            InputParamKind::ConnectionOrConstant
-        };
+            // No connection and not connection-only - show editable widget
+            input.value.render_input_widget(ui, &input.name, input.tooltip.as_ref());
+        }
 
-        sorted_inputs.push((
-            name.to_string(),
-            type_.clone(),
-            value_type,
-            input_param_kind,
-        ));
-    }
-    // Sort inputs by input param kind
-    sorted_inputs.sort_by_key(|(_, _, _, input_param_kind)| match input_param_kind {
-        InputParamKind::ConnectionOnly => 0,
-        InputParamKind::ConnectionOrConstant | InputParamKind::ConstantOnly => 1,
-    });
-    for (name, type_, value_type, input_param_kind) in sorted_inputs {
-        input_ids.insert(
-            name.clone(),
-            graph.add_input_param(node_id, name, type_, value_type, input_param_kind, true),
-        );
+        // Determine pin color based on type
+        let color = data_type_color(&input.typ);
+        PinInfo::circle().with_fill(color)
     }
 
-    for (name, output) in template.0.output_name.iter().zip(template.0.output.iter()) {
-        output_ids.push(graph.add_output_param(node_id, name.clone(), output.clone()));
+    fn show_output(
+        &mut self,
+        pin: &OutPin,
+        ui: &mut egui::Ui,
+        snarl: &mut Snarl<FlowNodeData>,
+    ) -> PinInfo {
+        let node = &snarl[pin.id.node];
+        let output = &node.outputs[pin.id.output];
+
+        let r = ui.label(&output.name);
+        if let Some(tooltip) = &output.tooltip {
+            r.on_hover_text(tooltip);
+        }
+
+        let color = data_type_color(&output.typ);
+        PinInfo::circle().with_fill(color)
     }
 
-    BuildNodeOutput {
-        input_ids,
-        output_ids,
+    fn connect(&mut self, from: &OutPin, to: &InPin, snarl: &mut Snarl<FlowNodeData>) {
+        // Validate that the types are compatible
+        let from_node = &snarl[from.id.node];
+        let to_node = &snarl[to.id.node];
+
+        let from_output = &from_node.outputs[from.id.output];
+        let to_input = &to_node.inputs[to.id.input];
+
+        // Check type compatibility
+        // In ComfyUI, any type can connect to any type (it's dynamically typed)
+        // but we'll at least check if they're the same or if one is a wildcard
+        let compatible = from_output.typ == to_input.typ
+            || matches!(from_output.typ, ObjectType::Wildcard)
+            || matches!(to_input.typ, ObjectType::Wildcard);
+
+        if !compatible {
+            // Types don't match - still allow but could add validation
+        }
+
+        // Disconnect any existing connections to this input (single connection per input)
+        for &remote in &to.remotes {
+            snarl.disconnect(remote, to.id);
+        }
+
+        // Make the connection
+        snarl.connect(from.id, to.id);
+    }
+
+    fn has_body(&mut self, _node: &FlowNodeData) -> bool {
+        false
+    }
+
+    fn has_footer(&mut self, _node: &FlowNodeData) -> bool {
+        // Show footer if there are output images
+        // We can't check without the node_id, so we just return false here
+        // The footer will be shown via show_footer which has the node_id
+        false
+    }
+
+    fn show_footer(
+        &mut self,
+        node_id: NodeId,
+        _inputs: &[InPin],
+        _outputs: &[OutPin],
+        ui: &mut egui::Ui,
+        _snarl: &mut Snarl<FlowNodeData>,
+    ) {
+        if let Some((images, selected)) = self.user_state.output_images.get_mut(&node_id) {
+            ui.horizontal(|ui| {
+                for idx in 0..images.len() {
+                    if ui
+                        .add(
+                            egui::Button::new(format!("{}", idx + 1))
+                                .small()
+                                .selected(*selected == idx),
+                        )
+                        .clicked()
+                    {
+                        *selected = idx;
+                    }
+                }
+            });
+
+            if let Some(image) = images.get(*selected) {
+                ui.image(image.clone());
+            }
+        }
+    }
+
+    fn has_graph_menu(&mut self, _pos: egui::Pos2, _snarl: &mut Snarl<FlowNodeData>) -> bool {
+        // Graph menu will be handled by the application
+        false
     }
 }
 
-/// The iterator for node templates.
-pub struct NodeTemplates<'a>(pub &'a ObjectInfo);
-impl NodeTemplateIter for NodeTemplates<'_> {
-    type Item = FlowNodeTemplate;
-
-    fn all_kinds(&self) -> Vec<Self::Item> {
-        self.0.values().cloned().map(FlowNodeTemplate).collect()
-    }
+/// Get the color for a data type
+fn data_type_color(typ: &ObjectType) -> egui::Color32 {
+    let mut hasher = std::hash::DefaultHasher::new();
+    format!("{typ:?}").hash(&mut hasher);
+    let hash = hasher.finish();
+    let hash = (hash % 3600) as f32 / 3600.0;
+    egui::ecolor::Hsva::new(hash, 0.5, 0.5, 1.0).into()
 }
-
-/// The state of the node graph.
-pub type FlowEditorState =
-    GraphEditorState<FlowNodeData, ObjectType, FlowValueType, FlowNodeTemplate, FlowUserState>;

@@ -235,7 +235,7 @@ impl eframe::App for Application {
 
         egui::TopBottomPanel::top("top").show(ctx, |ui| {
             let is_connected = self.graph.is_some();
-            egui::menu::bar(ui, |ui| {
+            egui::MenuBar::new().ui(ui, |ui| {
                 egui::widgets::global_theme_preference_switch(ui);
                 if is_connected {
                     ui.menu_button("File", |ui| {

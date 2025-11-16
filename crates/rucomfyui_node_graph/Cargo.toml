@@ -7,8 +7,8 @@ authors = ["Philpax <me@philpax.me>"]
 license = "MIT"
 
 [dependencies]
-egui = "0.29"
-egui_node_graph2 = { version = "0.7", features = ["persistence"] }
+egui = "0.33"
+egui-snarl = "0.9"
 
 # We don't need the typed nodes, so we are opting out of them
 rucomfyui = { path = "../rucomfyui", default-features = false }
