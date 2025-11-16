@@ -2,7 +2,7 @@
 name = "rucomfyui_generate_nodes"
 version = "0.1.0"
 edition = "2021"
-description = "Internal: generates the typed node Rust definitions from ComfyUI object info."
+description = "A library for generating typed Rust node definitions from ComfyUI ObjectInfo."
 
 [dependencies]
 anyhow = { workspace = true }
