@@ -2347,6 +2347,1378 @@ for ModelMergeCosmos7B<
     const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "advanced/model_merging/model_specific";
 }
+///**ModelMergeCosmosPredict2_14B**: No description.
+#[derive(Clone)]
+#[allow(non_camel_case_types)]
+pub struct ModelMergeCosmosPredict2_14B<
+    Model1Param: crate::nodes::types::Model,
+    Model2Param: crate::nodes::types::Model,
+    PosEmbedderParam: crate::nodes::types::Float,
+    XEmbedderParam: crate::nodes::types::Float,
+    TEmbedderParam: crate::nodes::types::Float,
+    TEmbeddingNormParam: crate::nodes::types::Float,
+    Blocks0Param: crate::nodes::types::Float,
+    Blocks1Param: crate::nodes::types::Float,
+    Blocks2Param: crate::nodes::types::Float,
+    Blocks3Param: crate::nodes::types::Float,
+    Blocks4Param: crate::nodes::types::Float,
+    Blocks5Param: crate::nodes::types::Float,
+    Blocks6Param: crate::nodes::types::Float,
+    Blocks7Param: crate::nodes::types::Float,
+    Blocks8Param: crate::nodes::types::Float,
+    Blocks9Param: crate::nodes::types::Float,
+    Blocks10Param: crate::nodes::types::Float,
+    Blocks11Param: crate::nodes::types::Float,
+    Blocks12Param: crate::nodes::types::Float,
+    Blocks13Param: crate::nodes::types::Float,
+    Blocks14Param: crate::nodes::types::Float,
+    Blocks15Param: crate::nodes::types::Float,
+    Blocks16Param: crate::nodes::types::Float,
+    Blocks17Param: crate::nodes::types::Float,
+    Blocks18Param: crate::nodes::types::Float,
+    Blocks19Param: crate::nodes::types::Float,
+    Blocks20Param: crate::nodes::types::Float,
+    Blocks21Param: crate::nodes::types::Float,
+    Blocks22Param: crate::nodes::types::Float,
+    Blocks23Param: crate::nodes::types::Float,
+    Blocks24Param: crate::nodes::types::Float,
+    Blocks25Param: crate::nodes::types::Float,
+    Blocks26Param: crate::nodes::types::Float,
+    Blocks27Param: crate::nodes::types::Float,
+    Blocks28Param: crate::nodes::types::Float,
+    Blocks29Param: crate::nodes::types::Float,
+    Blocks30Param: crate::nodes::types::Float,
+    Blocks31Param: crate::nodes::types::Float,
+    Blocks32Param: crate::nodes::types::Float,
+    Blocks33Param: crate::nodes::types::Float,
+    Blocks34Param: crate::nodes::types::Float,
+    Blocks35Param: crate::nodes::types::Float,
+    FinalLayerParam: crate::nodes::types::Float,
+> {
+    ///No documentation.
+    pub model_1: Model1Param,
+    ///No documentation.
+    pub model_2: Model2Param,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub pos_embedder: PosEmbedderParam,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub x_embedder: XEmbedderParam,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub t_embedder: TEmbedderParam,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub t_embedding_norm: TEmbeddingNormParam,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub blocks_0: Blocks0Param,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub blocks_1: Blocks1Param,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub blocks_2: Blocks2Param,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub blocks_3: Blocks3Param,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub blocks_4: Blocks4Param,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub blocks_5: Blocks5Param,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub blocks_6: Blocks6Param,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub blocks_7: Blocks7Param,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub blocks_8: Blocks8Param,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub blocks_9: Blocks9Param,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub blocks_10: Blocks10Param,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub blocks_11: Blocks11Param,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub blocks_12: Blocks12Param,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub blocks_13: Blocks13Param,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub blocks_14: Blocks14Param,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub blocks_15: Blocks15Param,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub blocks_16: Blocks16Param,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub blocks_17: Blocks17Param,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub blocks_18: Blocks18Param,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub blocks_19: Blocks19Param,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub blocks_20: Blocks20Param,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub blocks_21: Blocks21Param,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub blocks_22: Blocks22Param,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub blocks_23: Blocks23Param,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub blocks_24: Blocks24Param,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub blocks_25: Blocks25Param,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub blocks_26: Blocks26Param,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub blocks_27: Blocks27Param,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub blocks_28: Blocks28Param,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub blocks_29: Blocks29Param,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub blocks_30: Blocks30Param,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub blocks_31: Blocks31Param,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub blocks_32: Blocks32Param,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub blocks_33: Blocks33Param,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub blocks_34: Blocks34Param,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub blocks_35: Blocks35Param,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub final_layer: FinalLayerParam,
+}
+impl<
+    Model1Param: crate::nodes::types::Model,
+    Model2Param: crate::nodes::types::Model,
+    PosEmbedderParam: crate::nodes::types::Float,
+    XEmbedderParam: crate::nodes::types::Float,
+    TEmbedderParam: crate::nodes::types::Float,
+    TEmbeddingNormParam: crate::nodes::types::Float,
+    Blocks0Param: crate::nodes::types::Float,
+    Blocks1Param: crate::nodes::types::Float,
+    Blocks2Param: crate::nodes::types::Float,
+    Blocks3Param: crate::nodes::types::Float,
+    Blocks4Param: crate::nodes::types::Float,
+    Blocks5Param: crate::nodes::types::Float,
+    Blocks6Param: crate::nodes::types::Float,
+    Blocks7Param: crate::nodes::types::Float,
+    Blocks8Param: crate::nodes::types::Float,
+    Blocks9Param: crate::nodes::types::Float,
+    Blocks10Param: crate::nodes::types::Float,
+    Blocks11Param: crate::nodes::types::Float,
+    Blocks12Param: crate::nodes::types::Float,
+    Blocks13Param: crate::nodes::types::Float,
+    Blocks14Param: crate::nodes::types::Float,
+    Blocks15Param: crate::nodes::types::Float,
+    Blocks16Param: crate::nodes::types::Float,
+    Blocks17Param: crate::nodes::types::Float,
+    Blocks18Param: crate::nodes::types::Float,
+    Blocks19Param: crate::nodes::types::Float,
+    Blocks20Param: crate::nodes::types::Float,
+    Blocks21Param: crate::nodes::types::Float,
+    Blocks22Param: crate::nodes::types::Float,
+    Blocks23Param: crate::nodes::types::Float,
+    Blocks24Param: crate::nodes::types::Float,
+    Blocks25Param: crate::nodes::types::Float,
+    Blocks26Param: crate::nodes::types::Float,
+    Blocks27Param: crate::nodes::types::Float,
+    Blocks28Param: crate::nodes::types::Float,
+    Blocks29Param: crate::nodes::types::Float,
+    Blocks30Param: crate::nodes::types::Float,
+    Blocks31Param: crate::nodes::types::Float,
+    Blocks32Param: crate::nodes::types::Float,
+    Blocks33Param: crate::nodes::types::Float,
+    Blocks34Param: crate::nodes::types::Float,
+    Blocks35Param: crate::nodes::types::Float,
+    FinalLayerParam: crate::nodes::types::Float,
+> ModelMergeCosmosPredict2_14B<
+    Model1Param,
+    Model2Param,
+    PosEmbedderParam,
+    XEmbedderParam,
+    TEmbedderParam,
+    TEmbeddingNormParam,
+    Blocks0Param,
+    Blocks1Param,
+    Blocks2Param,
+    Blocks3Param,
+    Blocks4Param,
+    Blocks5Param,
+    Blocks6Param,
+    Blocks7Param,
+    Blocks8Param,
+    Blocks9Param,
+    Blocks10Param,
+    Blocks11Param,
+    Blocks12Param,
+    Blocks13Param,
+    Blocks14Param,
+    Blocks15Param,
+    Blocks16Param,
+    Blocks17Param,
+    Blocks18Param,
+    Blocks19Param,
+    Blocks20Param,
+    Blocks21Param,
+    Blocks22Param,
+    Blocks23Param,
+    Blocks24Param,
+    Blocks25Param,
+    Blocks26Param,
+    Blocks27Param,
+    Blocks28Param,
+    Blocks29Param,
+    Blocks30Param,
+    Blocks31Param,
+    Blocks32Param,
+    Blocks33Param,
+    Blocks34Param,
+    Blocks35Param,
+    FinalLayerParam,
+> {
+    /// Create a new node.
+    pub fn new(
+        model_1: Model1Param,
+        model_2: Model2Param,
+        pos_embedder: PosEmbedderParam,
+        x_embedder: XEmbedderParam,
+        t_embedder: TEmbedderParam,
+        t_embedding_norm: TEmbeddingNormParam,
+        blocks_0: Blocks0Param,
+        blocks_1: Blocks1Param,
+        blocks_2: Blocks2Param,
+        blocks_3: Blocks3Param,
+        blocks_4: Blocks4Param,
+        blocks_5: Blocks5Param,
+        blocks_6: Blocks6Param,
+        blocks_7: Blocks7Param,
+        blocks_8: Blocks8Param,
+        blocks_9: Blocks9Param,
+        blocks_10: Blocks10Param,
+        blocks_11: Blocks11Param,
+        blocks_12: Blocks12Param,
+        blocks_13: Blocks13Param,
+        blocks_14: Blocks14Param,
+        blocks_15: Blocks15Param,
+        blocks_16: Blocks16Param,
+        blocks_17: Blocks17Param,
+        blocks_18: Blocks18Param,
+        blocks_19: Blocks19Param,
+        blocks_20: Blocks20Param,
+        blocks_21: Blocks21Param,
+        blocks_22: Blocks22Param,
+        blocks_23: Blocks23Param,
+        blocks_24: Blocks24Param,
+        blocks_25: Blocks25Param,
+        blocks_26: Blocks26Param,
+        blocks_27: Blocks27Param,
+        blocks_28: Blocks28Param,
+        blocks_29: Blocks29Param,
+        blocks_30: Blocks30Param,
+        blocks_31: Blocks31Param,
+        blocks_32: Blocks32Param,
+        blocks_33: Blocks33Param,
+        blocks_34: Blocks34Param,
+        blocks_35: Blocks35Param,
+        final_layer: FinalLayerParam,
+    ) -> Self {
+        Self {
+            model_1,
+            model_2,
+            pos_embedder,
+            x_embedder,
+            t_embedder,
+            t_embedding_norm,
+            blocks_0,
+            blocks_1,
+            blocks_2,
+            blocks_3,
+            blocks_4,
+            blocks_5,
+            blocks_6,
+            blocks_7,
+            blocks_8,
+            blocks_9,
+            blocks_10,
+            blocks_11,
+            blocks_12,
+            blocks_13,
+            blocks_14,
+            blocks_15,
+            blocks_16,
+            blocks_17,
+            blocks_18,
+            blocks_19,
+            blocks_20,
+            blocks_21,
+            blocks_22,
+            blocks_23,
+            blocks_24,
+            blocks_25,
+            blocks_26,
+            blocks_27,
+            blocks_28,
+            blocks_29,
+            blocks_30,
+            blocks_31,
+            blocks_32,
+            blocks_33,
+            blocks_34,
+            blocks_35,
+            final_layer,
+        }
+    }
+}
+impl<
+    Model1Param: crate::nodes::types::Model,
+    Model2Param: crate::nodes::types::Model,
+    PosEmbedderParam: crate::nodes::types::Float,
+    XEmbedderParam: crate::nodes::types::Float,
+    TEmbedderParam: crate::nodes::types::Float,
+    TEmbeddingNormParam: crate::nodes::types::Float,
+    Blocks0Param: crate::nodes::types::Float,
+    Blocks1Param: crate::nodes::types::Float,
+    Blocks2Param: crate::nodes::types::Float,
+    Blocks3Param: crate::nodes::types::Float,
+    Blocks4Param: crate::nodes::types::Float,
+    Blocks5Param: crate::nodes::types::Float,
+    Blocks6Param: crate::nodes::types::Float,
+    Blocks7Param: crate::nodes::types::Float,
+    Blocks8Param: crate::nodes::types::Float,
+    Blocks9Param: crate::nodes::types::Float,
+    Blocks10Param: crate::nodes::types::Float,
+    Blocks11Param: crate::nodes::types::Float,
+    Blocks12Param: crate::nodes::types::Float,
+    Blocks13Param: crate::nodes::types::Float,
+    Blocks14Param: crate::nodes::types::Float,
+    Blocks15Param: crate::nodes::types::Float,
+    Blocks16Param: crate::nodes::types::Float,
+    Blocks17Param: crate::nodes::types::Float,
+    Blocks18Param: crate::nodes::types::Float,
+    Blocks19Param: crate::nodes::types::Float,
+    Blocks20Param: crate::nodes::types::Float,
+    Blocks21Param: crate::nodes::types::Float,
+    Blocks22Param: crate::nodes::types::Float,
+    Blocks23Param: crate::nodes::types::Float,
+    Blocks24Param: crate::nodes::types::Float,
+    Blocks25Param: crate::nodes::types::Float,
+    Blocks26Param: crate::nodes::types::Float,
+    Blocks27Param: crate::nodes::types::Float,
+    Blocks28Param: crate::nodes::types::Float,
+    Blocks29Param: crate::nodes::types::Float,
+    Blocks30Param: crate::nodes::types::Float,
+    Blocks31Param: crate::nodes::types::Float,
+    Blocks32Param: crate::nodes::types::Float,
+    Blocks33Param: crate::nodes::types::Float,
+    Blocks34Param: crate::nodes::types::Float,
+    Blocks35Param: crate::nodes::types::Float,
+    FinalLayerParam: crate::nodes::types::Float,
+> crate::nodes::TypedNode
+for ModelMergeCosmosPredict2_14B<
+    Model1Param,
+    Model2Param,
+    PosEmbedderParam,
+    XEmbedderParam,
+    TEmbedderParam,
+    TEmbeddingNormParam,
+    Blocks0Param,
+    Blocks1Param,
+    Blocks2Param,
+    Blocks3Param,
+    Blocks4Param,
+    Blocks5Param,
+    Blocks6Param,
+    Blocks7Param,
+    Blocks8Param,
+    Blocks9Param,
+    Blocks10Param,
+    Blocks11Param,
+    Blocks12Param,
+    Blocks13Param,
+    Blocks14Param,
+    Blocks15Param,
+    Blocks16Param,
+    Blocks17Param,
+    Blocks18Param,
+    Blocks19Param,
+    Blocks20Param,
+    Blocks21Param,
+    Blocks22Param,
+    Blocks23Param,
+    Blocks24Param,
+    Blocks25Param,
+    Blocks26Param,
+    Blocks27Param,
+    Blocks28Param,
+    Blocks29Param,
+    Blocks30Param,
+    Blocks31Param,
+    Blocks32Param,
+    Blocks33Param,
+    Blocks34Param,
+    Blocks35Param,
+    FinalLayerParam,
+> {
+    type Output = crate::nodes::types::ModelOut;
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
+        Self::Output::from_dynamic(node_id, 0)
+    }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("model1".to_string(), self.model_1.clone().into());
+        output.insert("model2".to_string(), self.model_2.clone().into());
+        output.insert("pos_embedder.".to_string(), self.pos_embedder.clone().into());
+        output.insert("x_embedder.".to_string(), self.x_embedder.clone().into());
+        output.insert("t_embedder.".to_string(), self.t_embedder.clone().into());
+        output
+            .insert(
+                "t_embedding_norm.".to_string(),
+                self.t_embedding_norm.clone().into(),
+            );
+        output.insert("blocks.0.".to_string(), self.blocks_0.clone().into());
+        output.insert("blocks.1.".to_string(), self.blocks_1.clone().into());
+        output.insert("blocks.2.".to_string(), self.blocks_2.clone().into());
+        output.insert("blocks.3.".to_string(), self.blocks_3.clone().into());
+        output.insert("blocks.4.".to_string(), self.blocks_4.clone().into());
+        output.insert("blocks.5.".to_string(), self.blocks_5.clone().into());
+        output.insert("blocks.6.".to_string(), self.blocks_6.clone().into());
+        output.insert("blocks.7.".to_string(), self.blocks_7.clone().into());
+        output.insert("blocks.8.".to_string(), self.blocks_8.clone().into());
+        output.insert("blocks.9.".to_string(), self.blocks_9.clone().into());
+        output.insert("blocks.10.".to_string(), self.blocks_10.clone().into());
+        output.insert("blocks.11.".to_string(), self.blocks_11.clone().into());
+        output.insert("blocks.12.".to_string(), self.blocks_12.clone().into());
+        output.insert("blocks.13.".to_string(), self.blocks_13.clone().into());
+        output.insert("blocks.14.".to_string(), self.blocks_14.clone().into());
+        output.insert("blocks.15.".to_string(), self.blocks_15.clone().into());
+        output.insert("blocks.16.".to_string(), self.blocks_16.clone().into());
+        output.insert("blocks.17.".to_string(), self.blocks_17.clone().into());
+        output.insert("blocks.18.".to_string(), self.blocks_18.clone().into());
+        output.insert("blocks.19.".to_string(), self.blocks_19.clone().into());
+        output.insert("blocks.20.".to_string(), self.blocks_20.clone().into());
+        output.insert("blocks.21.".to_string(), self.blocks_21.clone().into());
+        output.insert("blocks.22.".to_string(), self.blocks_22.clone().into());
+        output.insert("blocks.23.".to_string(), self.blocks_23.clone().into());
+        output.insert("blocks.24.".to_string(), self.blocks_24.clone().into());
+        output.insert("blocks.25.".to_string(), self.blocks_25.clone().into());
+        output.insert("blocks.26.".to_string(), self.blocks_26.clone().into());
+        output.insert("blocks.27.".to_string(), self.blocks_27.clone().into());
+        output.insert("blocks.28.".to_string(), self.blocks_28.clone().into());
+        output.insert("blocks.29.".to_string(), self.blocks_29.clone().into());
+        output.insert("blocks.30.".to_string(), self.blocks_30.clone().into());
+        output.insert("blocks.31.".to_string(), self.blocks_31.clone().into());
+        output.insert("blocks.32.".to_string(), self.blocks_32.clone().into());
+        output.insert("blocks.33.".to_string(), self.blocks_33.clone().into());
+        output.insert("blocks.34.".to_string(), self.blocks_34.clone().into());
+        output.insert("blocks.35.".to_string(), self.blocks_35.clone().into());
+        output.insert("final_layer.".to_string(), self.final_layer.clone().into());
+        output
+    }
+    const NAME: &'static str = "ModelMergeCosmosPredict2_14B";
+    const DISPLAY_NAME: &'static str = "ModelMergeCosmosPredict2_14B";
+    const DESCRIPTION: &'static str = "";
+    const CATEGORY: &'static str = "advanced/model_merging/model_specific";
+}
+///**ModelMergeCosmosPredict2_2B**: No description.
+#[derive(Clone)]
+#[allow(non_camel_case_types)]
+pub struct ModelMergeCosmosPredict2_2B<
+    Model1Param: crate::nodes::types::Model,
+    Model2Param: crate::nodes::types::Model,
+    PosEmbedderParam: crate::nodes::types::Float,
+    XEmbedderParam: crate::nodes::types::Float,
+    TEmbedderParam: crate::nodes::types::Float,
+    TEmbeddingNormParam: crate::nodes::types::Float,
+    Blocks0Param: crate::nodes::types::Float,
+    Blocks1Param: crate::nodes::types::Float,
+    Blocks2Param: crate::nodes::types::Float,
+    Blocks3Param: crate::nodes::types::Float,
+    Blocks4Param: crate::nodes::types::Float,
+    Blocks5Param: crate::nodes::types::Float,
+    Blocks6Param: crate::nodes::types::Float,
+    Blocks7Param: crate::nodes::types::Float,
+    Blocks8Param: crate::nodes::types::Float,
+    Blocks9Param: crate::nodes::types::Float,
+    Blocks10Param: crate::nodes::types::Float,
+    Blocks11Param: crate::nodes::types::Float,
+    Blocks12Param: crate::nodes::types::Float,
+    Blocks13Param: crate::nodes::types::Float,
+    Blocks14Param: crate::nodes::types::Float,
+    Blocks15Param: crate::nodes::types::Float,
+    Blocks16Param: crate::nodes::types::Float,
+    Blocks17Param: crate::nodes::types::Float,
+    Blocks18Param: crate::nodes::types::Float,
+    Blocks19Param: crate::nodes::types::Float,
+    Blocks20Param: crate::nodes::types::Float,
+    Blocks21Param: crate::nodes::types::Float,
+    Blocks22Param: crate::nodes::types::Float,
+    Blocks23Param: crate::nodes::types::Float,
+    Blocks24Param: crate::nodes::types::Float,
+    Blocks25Param: crate::nodes::types::Float,
+    Blocks26Param: crate::nodes::types::Float,
+    Blocks27Param: crate::nodes::types::Float,
+    FinalLayerParam: crate::nodes::types::Float,
+> {
+    ///No documentation.
+    pub model_1: Model1Param,
+    ///No documentation.
+    pub model_2: Model2Param,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub pos_embedder: PosEmbedderParam,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub x_embedder: XEmbedderParam,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub t_embedder: TEmbedderParam,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub t_embedding_norm: TEmbeddingNormParam,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub blocks_0: Blocks0Param,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub blocks_1: Blocks1Param,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub blocks_2: Blocks2Param,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub blocks_3: Blocks3Param,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub blocks_4: Blocks4Param,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub blocks_5: Blocks5Param,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub blocks_6: Blocks6Param,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub blocks_7: Blocks7Param,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub blocks_8: Blocks8Param,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub blocks_9: Blocks9Param,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub blocks_10: Blocks10Param,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub blocks_11: Blocks11Param,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub blocks_12: Blocks12Param,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub blocks_13: Blocks13Param,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub blocks_14: Blocks14Param,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub blocks_15: Blocks15Param,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub blocks_16: Blocks16Param,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub blocks_17: Blocks17Param,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub blocks_18: Blocks18Param,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub blocks_19: Blocks19Param,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub blocks_20: Blocks20Param,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub blocks_21: Blocks21Param,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub blocks_22: Blocks22Param,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub blocks_23: Blocks23Param,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub blocks_24: Blocks24Param,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub blocks_25: Blocks25Param,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub blocks_26: Blocks26Param,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub blocks_27: Blocks27Param,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub final_layer: FinalLayerParam,
+}
+impl<
+    Model1Param: crate::nodes::types::Model,
+    Model2Param: crate::nodes::types::Model,
+    PosEmbedderParam: crate::nodes::types::Float,
+    XEmbedderParam: crate::nodes::types::Float,
+    TEmbedderParam: crate::nodes::types::Float,
+    TEmbeddingNormParam: crate::nodes::types::Float,
+    Blocks0Param: crate::nodes::types::Float,
+    Blocks1Param: crate::nodes::types::Float,
+    Blocks2Param: crate::nodes::types::Float,
+    Blocks3Param: crate::nodes::types::Float,
+    Blocks4Param: crate::nodes::types::Float,
+    Blocks5Param: crate::nodes::types::Float,
+    Blocks6Param: crate::nodes::types::Float,
+    Blocks7Param: crate::nodes::types::Float,
+    Blocks8Param: crate::nodes::types::Float,
+    Blocks9Param: crate::nodes::types::Float,
+    Blocks10Param: crate::nodes::types::Float,
+    Blocks11Param: crate::nodes::types::Float,
+    Blocks12Param: crate::nodes::types::Float,
+    Blocks13Param: crate::nodes::types::Float,
+    Blocks14Param: crate::nodes::types::Float,
+    Blocks15Param: crate::nodes::types::Float,
+    Blocks16Param: crate::nodes::types::Float,
+    Blocks17Param: crate::nodes::types::Float,
+    Blocks18Param: crate::nodes::types::Float,
+    Blocks19Param: crate::nodes::types::Float,
+    Blocks20Param: crate::nodes::types::Float,
+    Blocks21Param: crate::nodes::types::Float,
+    Blocks22Param: crate::nodes::types::Float,
+    Blocks23Param: crate::nodes::types::Float,
+    Blocks24Param: crate::nodes::types::Float,
+    Blocks25Param: crate::nodes::types::Float,
+    Blocks26Param: crate::nodes::types::Float,
+    Blocks27Param: crate::nodes::types::Float,
+    FinalLayerParam: crate::nodes::types::Float,
+> ModelMergeCosmosPredict2_2B<
+    Model1Param,
+    Model2Param,
+    PosEmbedderParam,
+    XEmbedderParam,
+    TEmbedderParam,
+    TEmbeddingNormParam,
+    Blocks0Param,
+    Blocks1Param,
+    Blocks2Param,
+    Blocks3Param,
+    Blocks4Param,
+    Blocks5Param,
+    Blocks6Param,
+    Blocks7Param,
+    Blocks8Param,
+    Blocks9Param,
+    Blocks10Param,
+    Blocks11Param,
+    Blocks12Param,
+    Blocks13Param,
+    Blocks14Param,
+    Blocks15Param,
+    Blocks16Param,
+    Blocks17Param,
+    Blocks18Param,
+    Blocks19Param,
+    Blocks20Param,
+    Blocks21Param,
+    Blocks22Param,
+    Blocks23Param,
+    Blocks24Param,
+    Blocks25Param,
+    Blocks26Param,
+    Blocks27Param,
+    FinalLayerParam,
+> {
+    /// Create a new node.
+    pub fn new(
+        model_1: Model1Param,
+        model_2: Model2Param,
+        pos_embedder: PosEmbedderParam,
+        x_embedder: XEmbedderParam,
+        t_embedder: TEmbedderParam,
+        t_embedding_norm: TEmbeddingNormParam,
+        blocks_0: Blocks0Param,
+        blocks_1: Blocks1Param,
+        blocks_2: Blocks2Param,
+        blocks_3: Blocks3Param,
+        blocks_4: Blocks4Param,
+        blocks_5: Blocks5Param,
+        blocks_6: Blocks6Param,
+        blocks_7: Blocks7Param,
+        blocks_8: Blocks8Param,
+        blocks_9: Blocks9Param,
+        blocks_10: Blocks10Param,
+        blocks_11: Blocks11Param,
+        blocks_12: Blocks12Param,
+        blocks_13: Blocks13Param,
+        blocks_14: Blocks14Param,
+        blocks_15: Blocks15Param,
+        blocks_16: Blocks16Param,
+        blocks_17: Blocks17Param,
+        blocks_18: Blocks18Param,
+        blocks_19: Blocks19Param,
+        blocks_20: Blocks20Param,
+        blocks_21: Blocks21Param,
+        blocks_22: Blocks22Param,
+        blocks_23: Blocks23Param,
+        blocks_24: Blocks24Param,
+        blocks_25: Blocks25Param,
+        blocks_26: Blocks26Param,
+        blocks_27: Blocks27Param,
+        final_layer: FinalLayerParam,
+    ) -> Self {
+        Self {
+            model_1,
+            model_2,
+            pos_embedder,
+            x_embedder,
+            t_embedder,
+            t_embedding_norm,
+            blocks_0,
+            blocks_1,
+            blocks_2,
+            blocks_3,
+            blocks_4,
+            blocks_5,
+            blocks_6,
+            blocks_7,
+            blocks_8,
+            blocks_9,
+            blocks_10,
+            blocks_11,
+            blocks_12,
+            blocks_13,
+            blocks_14,
+            blocks_15,
+            blocks_16,
+            blocks_17,
+            blocks_18,
+            blocks_19,
+            blocks_20,
+            blocks_21,
+            blocks_22,
+            blocks_23,
+            blocks_24,
+            blocks_25,
+            blocks_26,
+            blocks_27,
+            final_layer,
+        }
+    }
+}
+impl<
+    Model1Param: crate::nodes::types::Model,
+    Model2Param: crate::nodes::types::Model,
+    PosEmbedderParam: crate::nodes::types::Float,
+    XEmbedderParam: crate::nodes::types::Float,
+    TEmbedderParam: crate::nodes::types::Float,
+    TEmbeddingNormParam: crate::nodes::types::Float,
+    Blocks0Param: crate::nodes::types::Float,
+    Blocks1Param: crate::nodes::types::Float,
+    Blocks2Param: crate::nodes::types::Float,
+    Blocks3Param: crate::nodes::types::Float,
+    Blocks4Param: crate::nodes::types::Float,
+    Blocks5Param: crate::nodes::types::Float,
+    Blocks6Param: crate::nodes::types::Float,
+    Blocks7Param: crate::nodes::types::Float,
+    Blocks8Param: crate::nodes::types::Float,
+    Blocks9Param: crate::nodes::types::Float,
+    Blocks10Param: crate::nodes::types::Float,
+    Blocks11Param: crate::nodes::types::Float,
+    Blocks12Param: crate::nodes::types::Float,
+    Blocks13Param: crate::nodes::types::Float,
+    Blocks14Param: crate::nodes::types::Float,
+    Blocks15Param: crate::nodes::types::Float,
+    Blocks16Param: crate::nodes::types::Float,
+    Blocks17Param: crate::nodes::types::Float,
+    Blocks18Param: crate::nodes::types::Float,
+    Blocks19Param: crate::nodes::types::Float,
+    Blocks20Param: crate::nodes::types::Float,
+    Blocks21Param: crate::nodes::types::Float,
+    Blocks22Param: crate::nodes::types::Float,
+    Blocks23Param: crate::nodes::types::Float,
+    Blocks24Param: crate::nodes::types::Float,
+    Blocks25Param: crate::nodes::types::Float,
+    Blocks26Param: crate::nodes::types::Float,
+    Blocks27Param: crate::nodes::types::Float,
+    FinalLayerParam: crate::nodes::types::Float,
+> crate::nodes::TypedNode
+for ModelMergeCosmosPredict2_2B<
+    Model1Param,
+    Model2Param,
+    PosEmbedderParam,
+    XEmbedderParam,
+    TEmbedderParam,
+    TEmbeddingNormParam,
+    Blocks0Param,
+    Blocks1Param,
+    Blocks2Param,
+    Blocks3Param,
+    Blocks4Param,
+    Blocks5Param,
+    Blocks6Param,
+    Blocks7Param,
+    Blocks8Param,
+    Blocks9Param,
+    Blocks10Param,
+    Blocks11Param,
+    Blocks12Param,
+    Blocks13Param,
+    Blocks14Param,
+    Blocks15Param,
+    Blocks16Param,
+    Blocks17Param,
+    Blocks18Param,
+    Blocks19Param,
+    Blocks20Param,
+    Blocks21Param,
+    Blocks22Param,
+    Blocks23Param,
+    Blocks24Param,
+    Blocks25Param,
+    Blocks26Param,
+    Blocks27Param,
+    FinalLayerParam,
+> {
+    type Output = crate::nodes::types::ModelOut;
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
+        Self::Output::from_dynamic(node_id, 0)
+    }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("model1".to_string(), self.model_1.clone().into());
+        output.insert("model2".to_string(), self.model_2.clone().into());
+        output.insert("pos_embedder.".to_string(), self.pos_embedder.clone().into());
+        output.insert("x_embedder.".to_string(), self.x_embedder.clone().into());
+        output.insert("t_embedder.".to_string(), self.t_embedder.clone().into());
+        output
+            .insert(
+                "t_embedding_norm.".to_string(),
+                self.t_embedding_norm.clone().into(),
+            );
+        output.insert("blocks.0.".to_string(), self.blocks_0.clone().into());
+        output.insert("blocks.1.".to_string(), self.blocks_1.clone().into());
+        output.insert("blocks.2.".to_string(), self.blocks_2.clone().into());
+        output.insert("blocks.3.".to_string(), self.blocks_3.clone().into());
+        output.insert("blocks.4.".to_string(), self.blocks_4.clone().into());
+        output.insert("blocks.5.".to_string(), self.blocks_5.clone().into());
+        output.insert("blocks.6.".to_string(), self.blocks_6.clone().into());
+        output.insert("blocks.7.".to_string(), self.blocks_7.clone().into());
+        output.insert("blocks.8.".to_string(), self.blocks_8.clone().into());
+        output.insert("blocks.9.".to_string(), self.blocks_9.clone().into());
+        output.insert("blocks.10.".to_string(), self.blocks_10.clone().into());
+        output.insert("blocks.11.".to_string(), self.blocks_11.clone().into());
+        output.insert("blocks.12.".to_string(), self.blocks_12.clone().into());
+        output.insert("blocks.13.".to_string(), self.blocks_13.clone().into());
+        output.insert("blocks.14.".to_string(), self.blocks_14.clone().into());
+        output.insert("blocks.15.".to_string(), self.blocks_15.clone().into());
+        output.insert("blocks.16.".to_string(), self.blocks_16.clone().into());
+        output.insert("blocks.17.".to_string(), self.blocks_17.clone().into());
+        output.insert("blocks.18.".to_string(), self.blocks_18.clone().into());
+        output.insert("blocks.19.".to_string(), self.blocks_19.clone().into());
+        output.insert("blocks.20.".to_string(), self.blocks_20.clone().into());
+        output.insert("blocks.21.".to_string(), self.blocks_21.clone().into());
+        output.insert("blocks.22.".to_string(), self.blocks_22.clone().into());
+        output.insert("blocks.23.".to_string(), self.blocks_23.clone().into());
+        output.insert("blocks.24.".to_string(), self.blocks_24.clone().into());
+        output.insert("blocks.25.".to_string(), self.blocks_25.clone().into());
+        output.insert("blocks.26.".to_string(), self.blocks_26.clone().into());
+        output.insert("blocks.27.".to_string(), self.blocks_27.clone().into());
+        output.insert("final_layer.".to_string(), self.final_layer.clone().into());
+        output
+    }
+    const NAME: &'static str = "ModelMergeCosmosPredict2_2B";
+    const DISPLAY_NAME: &'static str = "ModelMergeCosmosPredict2_2B";
+    const DESCRIPTION: &'static str = "";
+    const CATEGORY: &'static str = "advanced/model_merging/model_specific";
+}
 ///**ModelMergeFlux1**: No description.
 #[derive(Clone)]
 #[allow(non_camel_case_types)]
@@ -5325,6 +6697,1422 @@ for ModelMergeMochiPreview<
     }
     const NAME: &'static str = "ModelMergeMochiPreview";
     const DISPLAY_NAME: &'static str = "ModelMergeMochiPreview";
+    const DESCRIPTION: &'static str = "";
+    const CATEGORY: &'static str = "advanced/model_merging/model_specific";
+}
+///**ModelMergeQwenImage**: No description.
+#[derive(Clone)]
+#[allow(non_camel_case_types)]
+pub struct ModelMergeQwenImage<
+    Model1Param: crate::nodes::types::Model,
+    Model2Param: crate::nodes::types::Model,
+    PosEmbedsParam: crate::nodes::types::Float,
+    ImgInParam: crate::nodes::types::Float,
+    TxtNormParam: crate::nodes::types::Float,
+    TxtInParam: crate::nodes::types::Float,
+    TimeTextEmbedParam: crate::nodes::types::Float,
+    TransformerBlocks0Param: crate::nodes::types::Float,
+    TransformerBlocks1Param: crate::nodes::types::Float,
+    TransformerBlocks2Param: crate::nodes::types::Float,
+    TransformerBlocks3Param: crate::nodes::types::Float,
+    TransformerBlocks4Param: crate::nodes::types::Float,
+    TransformerBlocks5Param: crate::nodes::types::Float,
+    TransformerBlocks6Param: crate::nodes::types::Float,
+    TransformerBlocks7Param: crate::nodes::types::Float,
+    TransformerBlocks8Param: crate::nodes::types::Float,
+    TransformerBlocks9Param: crate::nodes::types::Float,
+    TransformerBlocks10Param: crate::nodes::types::Float,
+    TransformerBlocks11Param: crate::nodes::types::Float,
+    TransformerBlocks12Param: crate::nodes::types::Float,
+    TransformerBlocks13Param: crate::nodes::types::Float,
+    TransformerBlocks14Param: crate::nodes::types::Float,
+    TransformerBlocks15Param: crate::nodes::types::Float,
+    TransformerBlocks16Param: crate::nodes::types::Float,
+    TransformerBlocks17Param: crate::nodes::types::Float,
+    TransformerBlocks18Param: crate::nodes::types::Float,
+    TransformerBlocks19Param: crate::nodes::types::Float,
+    TransformerBlocks20Param: crate::nodes::types::Float,
+    TransformerBlocks21Param: crate::nodes::types::Float,
+    TransformerBlocks22Param: crate::nodes::types::Float,
+    TransformerBlocks23Param: crate::nodes::types::Float,
+    TransformerBlocks24Param: crate::nodes::types::Float,
+    TransformerBlocks25Param: crate::nodes::types::Float,
+    TransformerBlocks26Param: crate::nodes::types::Float,
+    TransformerBlocks27Param: crate::nodes::types::Float,
+    TransformerBlocks28Param: crate::nodes::types::Float,
+    TransformerBlocks29Param: crate::nodes::types::Float,
+    TransformerBlocks30Param: crate::nodes::types::Float,
+    TransformerBlocks31Param: crate::nodes::types::Float,
+    TransformerBlocks32Param: crate::nodes::types::Float,
+    TransformerBlocks33Param: crate::nodes::types::Float,
+    TransformerBlocks34Param: crate::nodes::types::Float,
+    TransformerBlocks35Param: crate::nodes::types::Float,
+    TransformerBlocks36Param: crate::nodes::types::Float,
+    TransformerBlocks37Param: crate::nodes::types::Float,
+    TransformerBlocks38Param: crate::nodes::types::Float,
+    TransformerBlocks39Param: crate::nodes::types::Float,
+    TransformerBlocks40Param: crate::nodes::types::Float,
+    TransformerBlocks41Param: crate::nodes::types::Float,
+    TransformerBlocks42Param: crate::nodes::types::Float,
+    TransformerBlocks43Param: crate::nodes::types::Float,
+    TransformerBlocks44Param: crate::nodes::types::Float,
+    TransformerBlocks45Param: crate::nodes::types::Float,
+    TransformerBlocks46Param: crate::nodes::types::Float,
+    TransformerBlocks47Param: crate::nodes::types::Float,
+    TransformerBlocks48Param: crate::nodes::types::Float,
+    TransformerBlocks49Param: crate::nodes::types::Float,
+    TransformerBlocks50Param: crate::nodes::types::Float,
+    TransformerBlocks51Param: crate::nodes::types::Float,
+    TransformerBlocks52Param: crate::nodes::types::Float,
+    TransformerBlocks53Param: crate::nodes::types::Float,
+    TransformerBlocks54Param: crate::nodes::types::Float,
+    TransformerBlocks55Param: crate::nodes::types::Float,
+    TransformerBlocks56Param: crate::nodes::types::Float,
+    TransformerBlocks57Param: crate::nodes::types::Float,
+    TransformerBlocks58Param: crate::nodes::types::Float,
+    TransformerBlocks59Param: crate::nodes::types::Float,
+    ProjOutParam: crate::nodes::types::Float,
+> {
+    ///No documentation.
+    pub model_1: Model1Param,
+    ///No documentation.
+    pub model_2: Model2Param,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub pos_embeds: PosEmbedsParam,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub img_in: ImgInParam,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub txt_norm: TxtNormParam,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub txt_in: TxtInParam,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub time_text_embed: TimeTextEmbedParam,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub transformer_blocks_0: TransformerBlocks0Param,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub transformer_blocks_1: TransformerBlocks1Param,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub transformer_blocks_2: TransformerBlocks2Param,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub transformer_blocks_3: TransformerBlocks3Param,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub transformer_blocks_4: TransformerBlocks4Param,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub transformer_blocks_5: TransformerBlocks5Param,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub transformer_blocks_6: TransformerBlocks6Param,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub transformer_blocks_7: TransformerBlocks7Param,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub transformer_blocks_8: TransformerBlocks8Param,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub transformer_blocks_9: TransformerBlocks9Param,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub transformer_blocks_10: TransformerBlocks10Param,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub transformer_blocks_11: TransformerBlocks11Param,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub transformer_blocks_12: TransformerBlocks12Param,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub transformer_blocks_13: TransformerBlocks13Param,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub transformer_blocks_14: TransformerBlocks14Param,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub transformer_blocks_15: TransformerBlocks15Param,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub transformer_blocks_16: TransformerBlocks16Param,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub transformer_blocks_17: TransformerBlocks17Param,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub transformer_blocks_18: TransformerBlocks18Param,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub transformer_blocks_19: TransformerBlocks19Param,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub transformer_blocks_20: TransformerBlocks20Param,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub transformer_blocks_21: TransformerBlocks21Param,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub transformer_blocks_22: TransformerBlocks22Param,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub transformer_blocks_23: TransformerBlocks23Param,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub transformer_blocks_24: TransformerBlocks24Param,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub transformer_blocks_25: TransformerBlocks25Param,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub transformer_blocks_26: TransformerBlocks26Param,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub transformer_blocks_27: TransformerBlocks27Param,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub transformer_blocks_28: TransformerBlocks28Param,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub transformer_blocks_29: TransformerBlocks29Param,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub transformer_blocks_30: TransformerBlocks30Param,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub transformer_blocks_31: TransformerBlocks31Param,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub transformer_blocks_32: TransformerBlocks32Param,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub transformer_blocks_33: TransformerBlocks33Param,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub transformer_blocks_34: TransformerBlocks34Param,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub transformer_blocks_35: TransformerBlocks35Param,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub transformer_blocks_36: TransformerBlocks36Param,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub transformer_blocks_37: TransformerBlocks37Param,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub transformer_blocks_38: TransformerBlocks38Param,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub transformer_blocks_39: TransformerBlocks39Param,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub transformer_blocks_40: TransformerBlocks40Param,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub transformer_blocks_41: TransformerBlocks41Param,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub transformer_blocks_42: TransformerBlocks42Param,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub transformer_blocks_43: TransformerBlocks43Param,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub transformer_blocks_44: TransformerBlocks44Param,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub transformer_blocks_45: TransformerBlocks45Param,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub transformer_blocks_46: TransformerBlocks46Param,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub transformer_blocks_47: TransformerBlocks47Param,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub transformer_blocks_48: TransformerBlocks48Param,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub transformer_blocks_49: TransformerBlocks49Param,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub transformer_blocks_50: TransformerBlocks50Param,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub transformer_blocks_51: TransformerBlocks51Param,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub transformer_blocks_52: TransformerBlocks52Param,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub transformer_blocks_53: TransformerBlocks53Param,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub transformer_blocks_54: TransformerBlocks54Param,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub transformer_blocks_55: TransformerBlocks55Param,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub transformer_blocks_56: TransformerBlocks56Param,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub transformer_blocks_57: TransformerBlocks57Param,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub transformer_blocks_58: TransformerBlocks58Param,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub transformer_blocks_59: TransformerBlocks59Param,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub proj_out: ProjOutParam,
+}
+impl<
+    Model1Param: crate::nodes::types::Model,
+    Model2Param: crate::nodes::types::Model,
+    PosEmbedsParam: crate::nodes::types::Float,
+    ImgInParam: crate::nodes::types::Float,
+    TxtNormParam: crate::nodes::types::Float,
+    TxtInParam: crate::nodes::types::Float,
+    TimeTextEmbedParam: crate::nodes::types::Float,
+    TransformerBlocks0Param: crate::nodes::types::Float,
+    TransformerBlocks1Param: crate::nodes::types::Float,
+    TransformerBlocks2Param: crate::nodes::types::Float,
+    TransformerBlocks3Param: crate::nodes::types::Float,
+    TransformerBlocks4Param: crate::nodes::types::Float,
+    TransformerBlocks5Param: crate::nodes::types::Float,
+    TransformerBlocks6Param: crate::nodes::types::Float,
+    TransformerBlocks7Param: crate::nodes::types::Float,
+    TransformerBlocks8Param: crate::nodes::types::Float,
+    TransformerBlocks9Param: crate::nodes::types::Float,
+    TransformerBlocks10Param: crate::nodes::types::Float,
+    TransformerBlocks11Param: crate::nodes::types::Float,
+    TransformerBlocks12Param: crate::nodes::types::Float,
+    TransformerBlocks13Param: crate::nodes::types::Float,
+    TransformerBlocks14Param: crate::nodes::types::Float,
+    TransformerBlocks15Param: crate::nodes::types::Float,
+    TransformerBlocks16Param: crate::nodes::types::Float,
+    TransformerBlocks17Param: crate::nodes::types::Float,
+    TransformerBlocks18Param: crate::nodes::types::Float,
+    TransformerBlocks19Param: crate::nodes::types::Float,
+    TransformerBlocks20Param: crate::nodes::types::Float,
+    TransformerBlocks21Param: crate::nodes::types::Float,
+    TransformerBlocks22Param: crate::nodes::types::Float,
+    TransformerBlocks23Param: crate::nodes::types::Float,
+    TransformerBlocks24Param: crate::nodes::types::Float,
+    TransformerBlocks25Param: crate::nodes::types::Float,
+    TransformerBlocks26Param: crate::nodes::types::Float,
+    TransformerBlocks27Param: crate::nodes::types::Float,
+    TransformerBlocks28Param: crate::nodes::types::Float,
+    TransformerBlocks29Param: crate::nodes::types::Float,
+    TransformerBlocks30Param: crate::nodes::types::Float,
+    TransformerBlocks31Param: crate::nodes::types::Float,
+    TransformerBlocks32Param: crate::nodes::types::Float,
+    TransformerBlocks33Param: crate::nodes::types::Float,
+    TransformerBlocks34Param: crate::nodes::types::Float,
+    TransformerBlocks35Param: crate::nodes::types::Float,
+    TransformerBlocks36Param: crate::nodes::types::Float,
+    TransformerBlocks37Param: crate::nodes::types::Float,
+    TransformerBlocks38Param: crate::nodes::types::Float,
+    TransformerBlocks39Param: crate::nodes::types::Float,
+    TransformerBlocks40Param: crate::nodes::types::Float,
+    TransformerBlocks41Param: crate::nodes::types::Float,
+    TransformerBlocks42Param: crate::nodes::types::Float,
+    TransformerBlocks43Param: crate::nodes::types::Float,
+    TransformerBlocks44Param: crate::nodes::types::Float,
+    TransformerBlocks45Param: crate::nodes::types::Float,
+    TransformerBlocks46Param: crate::nodes::types::Float,
+    TransformerBlocks47Param: crate::nodes::types::Float,
+    TransformerBlocks48Param: crate::nodes::types::Float,
+    TransformerBlocks49Param: crate::nodes::types::Float,
+    TransformerBlocks50Param: crate::nodes::types::Float,
+    TransformerBlocks51Param: crate::nodes::types::Float,
+    TransformerBlocks52Param: crate::nodes::types::Float,
+    TransformerBlocks53Param: crate::nodes::types::Float,
+    TransformerBlocks54Param: crate::nodes::types::Float,
+    TransformerBlocks55Param: crate::nodes::types::Float,
+    TransformerBlocks56Param: crate::nodes::types::Float,
+    TransformerBlocks57Param: crate::nodes::types::Float,
+    TransformerBlocks58Param: crate::nodes::types::Float,
+    TransformerBlocks59Param: crate::nodes::types::Float,
+    ProjOutParam: crate::nodes::types::Float,
+> ModelMergeQwenImage<
+    Model1Param,
+    Model2Param,
+    PosEmbedsParam,
+    ImgInParam,
+    TxtNormParam,
+    TxtInParam,
+    TimeTextEmbedParam,
+    TransformerBlocks0Param,
+    TransformerBlocks1Param,
+    TransformerBlocks2Param,
+    TransformerBlocks3Param,
+    TransformerBlocks4Param,
+    TransformerBlocks5Param,
+    TransformerBlocks6Param,
+    TransformerBlocks7Param,
+    TransformerBlocks8Param,
+    TransformerBlocks9Param,
+    TransformerBlocks10Param,
+    TransformerBlocks11Param,
+    TransformerBlocks12Param,
+    TransformerBlocks13Param,
+    TransformerBlocks14Param,
+    TransformerBlocks15Param,
+    TransformerBlocks16Param,
+    TransformerBlocks17Param,
+    TransformerBlocks18Param,
+    TransformerBlocks19Param,
+    TransformerBlocks20Param,
+    TransformerBlocks21Param,
+    TransformerBlocks22Param,
+    TransformerBlocks23Param,
+    TransformerBlocks24Param,
+    TransformerBlocks25Param,
+    TransformerBlocks26Param,
+    TransformerBlocks27Param,
+    TransformerBlocks28Param,
+    TransformerBlocks29Param,
+    TransformerBlocks30Param,
+    TransformerBlocks31Param,
+    TransformerBlocks32Param,
+    TransformerBlocks33Param,
+    TransformerBlocks34Param,
+    TransformerBlocks35Param,
+    TransformerBlocks36Param,
+    TransformerBlocks37Param,
+    TransformerBlocks38Param,
+    TransformerBlocks39Param,
+    TransformerBlocks40Param,
+    TransformerBlocks41Param,
+    TransformerBlocks42Param,
+    TransformerBlocks43Param,
+    TransformerBlocks44Param,
+    TransformerBlocks45Param,
+    TransformerBlocks46Param,
+    TransformerBlocks47Param,
+    TransformerBlocks48Param,
+    TransformerBlocks49Param,
+    TransformerBlocks50Param,
+    TransformerBlocks51Param,
+    TransformerBlocks52Param,
+    TransformerBlocks53Param,
+    TransformerBlocks54Param,
+    TransformerBlocks55Param,
+    TransformerBlocks56Param,
+    TransformerBlocks57Param,
+    TransformerBlocks58Param,
+    TransformerBlocks59Param,
+    ProjOutParam,
+> {
+    /// Create a new node.
+    pub fn new(
+        model_1: Model1Param,
+        model_2: Model2Param,
+        pos_embeds: PosEmbedsParam,
+        img_in: ImgInParam,
+        txt_norm: TxtNormParam,
+        txt_in: TxtInParam,
+        time_text_embed: TimeTextEmbedParam,
+        transformer_blocks_0: TransformerBlocks0Param,
+        transformer_blocks_1: TransformerBlocks1Param,
+        transformer_blocks_2: TransformerBlocks2Param,
+        transformer_blocks_3: TransformerBlocks3Param,
+        transformer_blocks_4: TransformerBlocks4Param,
+        transformer_blocks_5: TransformerBlocks5Param,
+        transformer_blocks_6: TransformerBlocks6Param,
+        transformer_blocks_7: TransformerBlocks7Param,
+        transformer_blocks_8: TransformerBlocks8Param,
+        transformer_blocks_9: TransformerBlocks9Param,
+        transformer_blocks_10: TransformerBlocks10Param,
+        transformer_blocks_11: TransformerBlocks11Param,
+        transformer_blocks_12: TransformerBlocks12Param,
+        transformer_blocks_13: TransformerBlocks13Param,
+        transformer_blocks_14: TransformerBlocks14Param,
+        transformer_blocks_15: TransformerBlocks15Param,
+        transformer_blocks_16: TransformerBlocks16Param,
+        transformer_blocks_17: TransformerBlocks17Param,
+        transformer_blocks_18: TransformerBlocks18Param,
+        transformer_blocks_19: TransformerBlocks19Param,
+        transformer_blocks_20: TransformerBlocks20Param,
+        transformer_blocks_21: TransformerBlocks21Param,
+        transformer_blocks_22: TransformerBlocks22Param,
+        transformer_blocks_23: TransformerBlocks23Param,
+        transformer_blocks_24: TransformerBlocks24Param,
+        transformer_blocks_25: TransformerBlocks25Param,
+        transformer_blocks_26: TransformerBlocks26Param,
+        transformer_blocks_27: TransformerBlocks27Param,
+        transformer_blocks_28: TransformerBlocks28Param,
+        transformer_blocks_29: TransformerBlocks29Param,
+        transformer_blocks_30: TransformerBlocks30Param,
+        transformer_blocks_31: TransformerBlocks31Param,
+        transformer_blocks_32: TransformerBlocks32Param,
+        transformer_blocks_33: TransformerBlocks33Param,
+        transformer_blocks_34: TransformerBlocks34Param,
+        transformer_blocks_35: TransformerBlocks35Param,
+        transformer_blocks_36: TransformerBlocks36Param,
+        transformer_blocks_37: TransformerBlocks37Param,
+        transformer_blocks_38: TransformerBlocks38Param,
+        transformer_blocks_39: TransformerBlocks39Param,
+        transformer_blocks_40: TransformerBlocks40Param,
+        transformer_blocks_41: TransformerBlocks41Param,
+        transformer_blocks_42: TransformerBlocks42Param,
+        transformer_blocks_43: TransformerBlocks43Param,
+        transformer_blocks_44: TransformerBlocks44Param,
+        transformer_blocks_45: TransformerBlocks45Param,
+        transformer_blocks_46: TransformerBlocks46Param,
+        transformer_blocks_47: TransformerBlocks47Param,
+        transformer_blocks_48: TransformerBlocks48Param,
+        transformer_blocks_49: TransformerBlocks49Param,
+        transformer_blocks_50: TransformerBlocks50Param,
+        transformer_blocks_51: TransformerBlocks51Param,
+        transformer_blocks_52: TransformerBlocks52Param,
+        transformer_blocks_53: TransformerBlocks53Param,
+        transformer_blocks_54: TransformerBlocks54Param,
+        transformer_blocks_55: TransformerBlocks55Param,
+        transformer_blocks_56: TransformerBlocks56Param,
+        transformer_blocks_57: TransformerBlocks57Param,
+        transformer_blocks_58: TransformerBlocks58Param,
+        transformer_blocks_59: TransformerBlocks59Param,
+        proj_out: ProjOutParam,
+    ) -> Self {
+        Self {
+            model_1,
+            model_2,
+            pos_embeds,
+            img_in,
+            txt_norm,
+            txt_in,
+            time_text_embed,
+            transformer_blocks_0,
+            transformer_blocks_1,
+            transformer_blocks_2,
+            transformer_blocks_3,
+            transformer_blocks_4,
+            transformer_blocks_5,
+            transformer_blocks_6,
+            transformer_blocks_7,
+            transformer_blocks_8,
+            transformer_blocks_9,
+            transformer_blocks_10,
+            transformer_blocks_11,
+            transformer_blocks_12,
+            transformer_blocks_13,
+            transformer_blocks_14,
+            transformer_blocks_15,
+            transformer_blocks_16,
+            transformer_blocks_17,
+            transformer_blocks_18,
+            transformer_blocks_19,
+            transformer_blocks_20,
+            transformer_blocks_21,
+            transformer_blocks_22,
+            transformer_blocks_23,
+            transformer_blocks_24,
+            transformer_blocks_25,
+            transformer_blocks_26,
+            transformer_blocks_27,
+            transformer_blocks_28,
+            transformer_blocks_29,
+            transformer_blocks_30,
+            transformer_blocks_31,
+            transformer_blocks_32,
+            transformer_blocks_33,
+            transformer_blocks_34,
+            transformer_blocks_35,
+            transformer_blocks_36,
+            transformer_blocks_37,
+            transformer_blocks_38,
+            transformer_blocks_39,
+            transformer_blocks_40,
+            transformer_blocks_41,
+            transformer_blocks_42,
+            transformer_blocks_43,
+            transformer_blocks_44,
+            transformer_blocks_45,
+            transformer_blocks_46,
+            transformer_blocks_47,
+            transformer_blocks_48,
+            transformer_blocks_49,
+            transformer_blocks_50,
+            transformer_blocks_51,
+            transformer_blocks_52,
+            transformer_blocks_53,
+            transformer_blocks_54,
+            transformer_blocks_55,
+            transformer_blocks_56,
+            transformer_blocks_57,
+            transformer_blocks_58,
+            transformer_blocks_59,
+            proj_out,
+        }
+    }
+}
+impl<
+    Model1Param: crate::nodes::types::Model,
+    Model2Param: crate::nodes::types::Model,
+    PosEmbedsParam: crate::nodes::types::Float,
+    ImgInParam: crate::nodes::types::Float,
+    TxtNormParam: crate::nodes::types::Float,
+    TxtInParam: crate::nodes::types::Float,
+    TimeTextEmbedParam: crate::nodes::types::Float,
+    TransformerBlocks0Param: crate::nodes::types::Float,
+    TransformerBlocks1Param: crate::nodes::types::Float,
+    TransformerBlocks2Param: crate::nodes::types::Float,
+    TransformerBlocks3Param: crate::nodes::types::Float,
+    TransformerBlocks4Param: crate::nodes::types::Float,
+    TransformerBlocks5Param: crate::nodes::types::Float,
+    TransformerBlocks6Param: crate::nodes::types::Float,
+    TransformerBlocks7Param: crate::nodes::types::Float,
+    TransformerBlocks8Param: crate::nodes::types::Float,
+    TransformerBlocks9Param: crate::nodes::types::Float,
+    TransformerBlocks10Param: crate::nodes::types::Float,
+    TransformerBlocks11Param: crate::nodes::types::Float,
+    TransformerBlocks12Param: crate::nodes::types::Float,
+    TransformerBlocks13Param: crate::nodes::types::Float,
+    TransformerBlocks14Param: crate::nodes::types::Float,
+    TransformerBlocks15Param: crate::nodes::types::Float,
+    TransformerBlocks16Param: crate::nodes::types::Float,
+    TransformerBlocks17Param: crate::nodes::types::Float,
+    TransformerBlocks18Param: crate::nodes::types::Float,
+    TransformerBlocks19Param: crate::nodes::types::Float,
+    TransformerBlocks20Param: crate::nodes::types::Float,
+    TransformerBlocks21Param: crate::nodes::types::Float,
+    TransformerBlocks22Param: crate::nodes::types::Float,
+    TransformerBlocks23Param: crate::nodes::types::Float,
+    TransformerBlocks24Param: crate::nodes::types::Float,
+    TransformerBlocks25Param: crate::nodes::types::Float,
+    TransformerBlocks26Param: crate::nodes::types::Float,
+    TransformerBlocks27Param: crate::nodes::types::Float,
+    TransformerBlocks28Param: crate::nodes::types::Float,
+    TransformerBlocks29Param: crate::nodes::types::Float,
+    TransformerBlocks30Param: crate::nodes::types::Float,
+    TransformerBlocks31Param: crate::nodes::types::Float,
+    TransformerBlocks32Param: crate::nodes::types::Float,
+    TransformerBlocks33Param: crate::nodes::types::Float,
+    TransformerBlocks34Param: crate::nodes::types::Float,
+    TransformerBlocks35Param: crate::nodes::types::Float,
+    TransformerBlocks36Param: crate::nodes::types::Float,
+    TransformerBlocks37Param: crate::nodes::types::Float,
+    TransformerBlocks38Param: crate::nodes::types::Float,
+    TransformerBlocks39Param: crate::nodes::types::Float,
+    TransformerBlocks40Param: crate::nodes::types::Float,
+    TransformerBlocks41Param: crate::nodes::types::Float,
+    TransformerBlocks42Param: crate::nodes::types::Float,
+    TransformerBlocks43Param: crate::nodes::types::Float,
+    TransformerBlocks44Param: crate::nodes::types::Float,
+    TransformerBlocks45Param: crate::nodes::types::Float,
+    TransformerBlocks46Param: crate::nodes::types::Float,
+    TransformerBlocks47Param: crate::nodes::types::Float,
+    TransformerBlocks48Param: crate::nodes::types::Float,
+    TransformerBlocks49Param: crate::nodes::types::Float,
+    TransformerBlocks50Param: crate::nodes::types::Float,
+    TransformerBlocks51Param: crate::nodes::types::Float,
+    TransformerBlocks52Param: crate::nodes::types::Float,
+    TransformerBlocks53Param: crate::nodes::types::Float,
+    TransformerBlocks54Param: crate::nodes::types::Float,
+    TransformerBlocks55Param: crate::nodes::types::Float,
+    TransformerBlocks56Param: crate::nodes::types::Float,
+    TransformerBlocks57Param: crate::nodes::types::Float,
+    TransformerBlocks58Param: crate::nodes::types::Float,
+    TransformerBlocks59Param: crate::nodes::types::Float,
+    ProjOutParam: crate::nodes::types::Float,
+> crate::nodes::TypedNode
+for ModelMergeQwenImage<
+    Model1Param,
+    Model2Param,
+    PosEmbedsParam,
+    ImgInParam,
+    TxtNormParam,
+    TxtInParam,
+    TimeTextEmbedParam,
+    TransformerBlocks0Param,
+    TransformerBlocks1Param,
+    TransformerBlocks2Param,
+    TransformerBlocks3Param,
+    TransformerBlocks4Param,
+    TransformerBlocks5Param,
+    TransformerBlocks6Param,
+    TransformerBlocks7Param,
+    TransformerBlocks8Param,
+    TransformerBlocks9Param,
+    TransformerBlocks10Param,
+    TransformerBlocks11Param,
+    TransformerBlocks12Param,
+    TransformerBlocks13Param,
+    TransformerBlocks14Param,
+    TransformerBlocks15Param,
+    TransformerBlocks16Param,
+    TransformerBlocks17Param,
+    TransformerBlocks18Param,
+    TransformerBlocks19Param,
+    TransformerBlocks20Param,
+    TransformerBlocks21Param,
+    TransformerBlocks22Param,
+    TransformerBlocks23Param,
+    TransformerBlocks24Param,
+    TransformerBlocks25Param,
+    TransformerBlocks26Param,
+    TransformerBlocks27Param,
+    TransformerBlocks28Param,
+    TransformerBlocks29Param,
+    TransformerBlocks30Param,
+    TransformerBlocks31Param,
+    TransformerBlocks32Param,
+    TransformerBlocks33Param,
+    TransformerBlocks34Param,
+    TransformerBlocks35Param,
+    TransformerBlocks36Param,
+    TransformerBlocks37Param,
+    TransformerBlocks38Param,
+    TransformerBlocks39Param,
+    TransformerBlocks40Param,
+    TransformerBlocks41Param,
+    TransformerBlocks42Param,
+    TransformerBlocks43Param,
+    TransformerBlocks44Param,
+    TransformerBlocks45Param,
+    TransformerBlocks46Param,
+    TransformerBlocks47Param,
+    TransformerBlocks48Param,
+    TransformerBlocks49Param,
+    TransformerBlocks50Param,
+    TransformerBlocks51Param,
+    TransformerBlocks52Param,
+    TransformerBlocks53Param,
+    TransformerBlocks54Param,
+    TransformerBlocks55Param,
+    TransformerBlocks56Param,
+    TransformerBlocks57Param,
+    TransformerBlocks58Param,
+    TransformerBlocks59Param,
+    ProjOutParam,
+> {
+    type Output = crate::nodes::types::ModelOut;
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
+        Self::Output::from_dynamic(node_id, 0)
+    }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("model1".to_string(), self.model_1.clone().into());
+        output.insert("model2".to_string(), self.model_2.clone().into());
+        output.insert("pos_embeds.".to_string(), self.pos_embeds.clone().into());
+        output.insert("img_in.".to_string(), self.img_in.clone().into());
+        output.insert("txt_norm.".to_string(), self.txt_norm.clone().into());
+        output.insert("txt_in.".to_string(), self.txt_in.clone().into());
+        output
+            .insert("time_text_embed.".to_string(), self.time_text_embed.clone().into());
+        output
+            .insert(
+                "transformer_blocks.0.".to_string(),
+                self.transformer_blocks_0.clone().into(),
+            );
+        output
+            .insert(
+                "transformer_blocks.1.".to_string(),
+                self.transformer_blocks_1.clone().into(),
+            );
+        output
+            .insert(
+                "transformer_blocks.2.".to_string(),
+                self.transformer_blocks_2.clone().into(),
+            );
+        output
+            .insert(
+                "transformer_blocks.3.".to_string(),
+                self.transformer_blocks_3.clone().into(),
+            );
+        output
+            .insert(
+                "transformer_blocks.4.".to_string(),
+                self.transformer_blocks_4.clone().into(),
+            );
+        output
+            .insert(
+                "transformer_blocks.5.".to_string(),
+                self.transformer_blocks_5.clone().into(),
+            );
+        output
+            .insert(
+                "transformer_blocks.6.".to_string(),
+                self.transformer_blocks_6.clone().into(),
+            );
+        output
+            .insert(
+                "transformer_blocks.7.".to_string(),
+                self.transformer_blocks_7.clone().into(),
+            );
+        output
+            .insert(
+                "transformer_blocks.8.".to_string(),
+                self.transformer_blocks_8.clone().into(),
+            );
+        output
+            .insert(
+                "transformer_blocks.9.".to_string(),
+                self.transformer_blocks_9.clone().into(),
+            );
+        output
+            .insert(
+                "transformer_blocks.10.".to_string(),
+                self.transformer_blocks_10.clone().into(),
+            );
+        output
+            .insert(
+                "transformer_blocks.11.".to_string(),
+                self.transformer_blocks_11.clone().into(),
+            );
+        output
+            .insert(
+                "transformer_blocks.12.".to_string(),
+                self.transformer_blocks_12.clone().into(),
+            );
+        output
+            .insert(
+                "transformer_blocks.13.".to_string(),
+                self.transformer_blocks_13.clone().into(),
+            );
+        output
+            .insert(
+                "transformer_blocks.14.".to_string(),
+                self.transformer_blocks_14.clone().into(),
+            );
+        output
+            .insert(
+                "transformer_blocks.15.".to_string(),
+                self.transformer_blocks_15.clone().into(),
+            );
+        output
+            .insert(
+                "transformer_blocks.16.".to_string(),
+                self.transformer_blocks_16.clone().into(),
+            );
+        output
+            .insert(
+                "transformer_blocks.17.".to_string(),
+                self.transformer_blocks_17.clone().into(),
+            );
+        output
+            .insert(
+                "transformer_blocks.18.".to_string(),
+                self.transformer_blocks_18.clone().into(),
+            );
+        output
+            .insert(
+                "transformer_blocks.19.".to_string(),
+                self.transformer_blocks_19.clone().into(),
+            );
+        output
+            .insert(
+                "transformer_blocks.20.".to_string(),
+                self.transformer_blocks_20.clone().into(),
+            );
+        output
+            .insert(
+                "transformer_blocks.21.".to_string(),
+                self.transformer_blocks_21.clone().into(),
+            );
+        output
+            .insert(
+                "transformer_blocks.22.".to_string(),
+                self.transformer_blocks_22.clone().into(),
+            );
+        output
+            .insert(
+                "transformer_blocks.23.".to_string(),
+                self.transformer_blocks_23.clone().into(),
+            );
+        output
+            .insert(
+                "transformer_blocks.24.".to_string(),
+                self.transformer_blocks_24.clone().into(),
+            );
+        output
+            .insert(
+                "transformer_blocks.25.".to_string(),
+                self.transformer_blocks_25.clone().into(),
+            );
+        output
+            .insert(
+                "transformer_blocks.26.".to_string(),
+                self.transformer_blocks_26.clone().into(),
+            );
+        output
+            .insert(
+                "transformer_blocks.27.".to_string(),
+                self.transformer_blocks_27.clone().into(),
+            );
+        output
+            .insert(
+                "transformer_blocks.28.".to_string(),
+                self.transformer_blocks_28.clone().into(),
+            );
+        output
+            .insert(
+                "transformer_blocks.29.".to_string(),
+                self.transformer_blocks_29.clone().into(),
+            );
+        output
+            .insert(
+                "transformer_blocks.30.".to_string(),
+                self.transformer_blocks_30.clone().into(),
+            );
+        output
+            .insert(
+                "transformer_blocks.31.".to_string(),
+                self.transformer_blocks_31.clone().into(),
+            );
+        output
+            .insert(
+                "transformer_blocks.32.".to_string(),
+                self.transformer_blocks_32.clone().into(),
+            );
+        output
+            .insert(
+                "transformer_blocks.33.".to_string(),
+                self.transformer_blocks_33.clone().into(),
+            );
+        output
+            .insert(
+                "transformer_blocks.34.".to_string(),
+                self.transformer_blocks_34.clone().into(),
+            );
+        output
+            .insert(
+                "transformer_blocks.35.".to_string(),
+                self.transformer_blocks_35.clone().into(),
+            );
+        output
+            .insert(
+                "transformer_blocks.36.".to_string(),
+                self.transformer_blocks_36.clone().into(),
+            );
+        output
+            .insert(
+                "transformer_blocks.37.".to_string(),
+                self.transformer_blocks_37.clone().into(),
+            );
+        output
+            .insert(
+                "transformer_blocks.38.".to_string(),
+                self.transformer_blocks_38.clone().into(),
+            );
+        output
+            .insert(
+                "transformer_blocks.39.".to_string(),
+                self.transformer_blocks_39.clone().into(),
+            );
+        output
+            .insert(
+                "transformer_blocks.40.".to_string(),
+                self.transformer_blocks_40.clone().into(),
+            );
+        output
+            .insert(
+                "transformer_blocks.41.".to_string(),
+                self.transformer_blocks_41.clone().into(),
+            );
+        output
+            .insert(
+                "transformer_blocks.42.".to_string(),
+                self.transformer_blocks_42.clone().into(),
+            );
+        output
+            .insert(
+                "transformer_blocks.43.".to_string(),
+                self.transformer_blocks_43.clone().into(),
+            );
+        output
+            .insert(
+                "transformer_blocks.44.".to_string(),
+                self.transformer_blocks_44.clone().into(),
+            );
+        output
+            .insert(
+                "transformer_blocks.45.".to_string(),
+                self.transformer_blocks_45.clone().into(),
+            );
+        output
+            .insert(
+                "transformer_blocks.46.".to_string(),
+                self.transformer_blocks_46.clone().into(),
+            );
+        output
+            .insert(
+                "transformer_blocks.47.".to_string(),
+                self.transformer_blocks_47.clone().into(),
+            );
+        output
+            .insert(
+                "transformer_blocks.48.".to_string(),
+                self.transformer_blocks_48.clone().into(),
+            );
+        output
+            .insert(
+                "transformer_blocks.49.".to_string(),
+                self.transformer_blocks_49.clone().into(),
+            );
+        output
+            .insert(
+                "transformer_blocks.50.".to_string(),
+                self.transformer_blocks_50.clone().into(),
+            );
+        output
+            .insert(
+                "transformer_blocks.51.".to_string(),
+                self.transformer_blocks_51.clone().into(),
+            );
+        output
+            .insert(
+                "transformer_blocks.52.".to_string(),
+                self.transformer_blocks_52.clone().into(),
+            );
+        output
+            .insert(
+                "transformer_blocks.53.".to_string(),
+                self.transformer_blocks_53.clone().into(),
+            );
+        output
+            .insert(
+                "transformer_blocks.54.".to_string(),
+                self.transformer_blocks_54.clone().into(),
+            );
+        output
+            .insert(
+                "transformer_blocks.55.".to_string(),
+                self.transformer_blocks_55.clone().into(),
+            );
+        output
+            .insert(
+                "transformer_blocks.56.".to_string(),
+                self.transformer_blocks_56.clone().into(),
+            );
+        output
+            .insert(
+                "transformer_blocks.57.".to_string(),
+                self.transformer_blocks_57.clone().into(),
+            );
+        output
+            .insert(
+                "transformer_blocks.58.".to_string(),
+                self.transformer_blocks_58.clone().into(),
+            );
+        output
+            .insert(
+                "transformer_blocks.59.".to_string(),
+                self.transformer_blocks_59.clone().into(),
+            );
+        output.insert("proj_out.".to_string(), self.proj_out.clone().into());
+        output
+    }
+    const NAME: &'static str = "ModelMergeQwenImage";
+    const DISPLAY_NAME: &'static str = "ModelMergeQwenImage";
     const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "advanced/model_merging/model_specific";
 }

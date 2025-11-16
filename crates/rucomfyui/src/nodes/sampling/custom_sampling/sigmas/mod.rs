@@ -160,6 +160,82 @@ for FlipSigmas<SigmasParam> {
     const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "sampling/custom_sampling/sigmas";
 }
+///**SamplingPercentToSigma**: No description.
+#[derive(Clone)]
+#[allow(non_camel_case_types)]
+pub struct SamplingPercentToSigma<
+    ModelParam: crate::nodes::types::Model,
+    SamplingPercentParam: crate::nodes::types::Float,
+    ReturnActualSigmaParam: crate::nodes::types::Boolean,
+> {
+    ///No documentation.
+    pub model: ModelParam,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 0
+  - Max: 1
+  - Min: 0
+  - Step: 0.0001
+*/
+    pub sampling_percent: SamplingPercentParam,
+    /**Return the actual sigma value instead of the value used for interval checks.
+
+This only affects results at 0.0 and 1.0.
+
+**Metadata**:
+  - Default: false
+*/
+    pub return_actual_sigma: ReturnActualSigmaParam,
+}
+impl<
+    ModelParam: crate::nodes::types::Model,
+    SamplingPercentParam: crate::nodes::types::Float,
+    ReturnActualSigmaParam: crate::nodes::types::Boolean,
+> SamplingPercentToSigma<ModelParam, SamplingPercentParam, ReturnActualSigmaParam> {
+    /// Create a new node.
+    pub fn new(
+        model: ModelParam,
+        sampling_percent: SamplingPercentParam,
+        return_actual_sigma: ReturnActualSigmaParam,
+    ) -> Self {
+        Self {
+            model,
+            sampling_percent,
+            return_actual_sigma,
+        }
+    }
+}
+impl<
+    ModelParam: crate::nodes::types::Model,
+    SamplingPercentParam: crate::nodes::types::Float,
+    ReturnActualSigmaParam: crate::nodes::types::Boolean,
+> crate::nodes::TypedNode
+for SamplingPercentToSigma<ModelParam, SamplingPercentParam, ReturnActualSigmaParam> {
+    type Output = crate::nodes::types::FloatOut;
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
+        Self::Output::from_dynamic(node_id, 0)
+    }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("model".to_string(), self.model.clone().into());
+        output
+            .insert(
+                "sampling_percent".to_string(),
+                self.sampling_percent.clone().into(),
+            );
+        output
+            .insert(
+                "return_actual_sigma".to_string(),
+                self.return_actual_sigma.clone().into(),
+            );
+        output
+    }
+    const NAME: &'static str = "SamplingPercentToSigma";
+    const DISPLAY_NAME: &'static str = "SamplingPercentToSigma";
+    const DESCRIPTION: &'static str = "";
+    const CATEGORY: &'static str = "sampling/custom_sampling/sigmas";
+}
 ///**SetFirstSigma**: No description.
 #[derive(Clone)]
 #[allow(non_camel_case_types)]

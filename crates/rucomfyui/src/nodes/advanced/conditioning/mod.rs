@@ -5,6 +5,7 @@ use crate::{
     workflow::{WorkflowNodeId, WorkflowInput},
     nodes::types::Out,
 };
+pub mod edit_models;
 pub mod flux;
 ///**CLIPTextEncodeHiDream**: No description.
 #[derive(Clone)]
@@ -237,7 +238,6 @@ pub struct CLIPTextEncodeSD3<
     ClipLParam: crate::nodes::types::String,
     ClipGParam: crate::nodes::types::String,
     T5XxlParam: crate::nodes::types::String,
-    EmptyPaddingParam: crate::nodes::types::String,
 > {
     ///No documentation.
     pub clip: ClipParam,
@@ -262,30 +262,25 @@ pub struct CLIPTextEncodeSD3<
   - Multiline: true
 */
     pub t_5_xxl: T5XxlParam,
-    ///No documentation.
-    pub empty_padding: EmptyPaddingParam,
 }
 impl<
     ClipParam: crate::nodes::types::Clip,
     ClipLParam: crate::nodes::types::String,
     ClipGParam: crate::nodes::types::String,
     T5XxlParam: crate::nodes::types::String,
-    EmptyPaddingParam: crate::nodes::types::String,
-> CLIPTextEncodeSD3<ClipParam, ClipLParam, ClipGParam, T5XxlParam, EmptyPaddingParam> {
+> CLIPTextEncodeSD3<ClipParam, ClipLParam, ClipGParam, T5XxlParam> {
     /// Create a new node.
     pub fn new(
         clip: ClipParam,
         clip_l: ClipLParam,
         clip_g: ClipGParam,
         t_5_xxl: T5XxlParam,
-        empty_padding: EmptyPaddingParam,
     ) -> Self {
         Self {
             clip,
             clip_l,
             clip_g,
             t_5_xxl,
-            empty_padding,
         }
     }
 }
@@ -294,9 +289,8 @@ impl<
     ClipLParam: crate::nodes::types::String,
     ClipGParam: crate::nodes::types::String,
     T5XxlParam: crate::nodes::types::String,
-    EmptyPaddingParam: crate::nodes::types::String,
 > crate::nodes::TypedNode
-for CLIPTextEncodeSD3<ClipParam, ClipLParam, ClipGParam, T5XxlParam, EmptyPaddingParam> {
+for CLIPTextEncodeSD3<ClipParam, ClipLParam, ClipGParam, T5XxlParam> {
     type Output = crate::nodes::types::ConditioningOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)
@@ -307,7 +301,6 @@ for CLIPTextEncodeSD3<ClipParam, ClipLParam, ClipGParam, T5XxlParam, EmptyPaddin
         output.insert("clip_l".to_string(), self.clip_l.clone().into());
         output.insert("clip_g".to_string(), self.clip_g.clone().into());
         output.insert("t5xxl".to_string(), self.t_5_xxl.clone().into());
-        output.insert("empty_padding".to_string(), self.empty_padding.clone().into());
         output
     }
     const NAME: &'static str = "CLIPTextEncodeSD3";
@@ -770,6 +763,179 @@ for TextEncodeHunyuanVideo_ImageToVideo<
     }
     const NAME: &'static str = "TextEncodeHunyuanVideo_ImageToVideo";
     const DISPLAY_NAME: &'static str = "TextEncodeHunyuanVideo_ImageToVideo";
+    const DESCRIPTION: &'static str = "";
+    const CATEGORY: &'static str = "advanced/conditioning";
+}
+///**TextEncodeQwenImageEdit**: No description.
+#[derive(Clone)]
+#[allow(non_camel_case_types)]
+pub struct TextEncodeQwenImageEdit<
+    ClipParam: crate::nodes::types::Clip,
+    PromptParam: crate::nodes::types::String,
+    VaeParam: crate::nodes::types::Vae = crate::nodes::types::VaeOut,
+    ImageParam: crate::nodes::types::Image = crate::nodes::types::ImageOut,
+> {
+    ///No documentation.
+    pub clip: ClipParam,
+    /**No documentation.
+
+**Metadata**:
+  - Dynamic prompts: true
+  - Multiline: true
+*/
+    pub prompt: PromptParam,
+    ///No documentation.
+    pub vae: Option<VaeParam>,
+    ///No documentation.
+    pub image: Option<ImageParam>,
+}
+impl<
+    ClipParam: crate::nodes::types::Clip,
+    PromptParam: crate::nodes::types::String,
+    VaeParam: crate::nodes::types::Vae,
+    ImageParam: crate::nodes::types::Image,
+> TextEncodeQwenImageEdit<ClipParam, PromptParam, VaeParam, ImageParam> {
+    /// Create a new node.
+    pub fn new(
+        clip: ClipParam,
+        prompt: PromptParam,
+        vae: Option<VaeParam>,
+        image: Option<ImageParam>,
+    ) -> Self {
+        Self { clip, prompt, vae, image }
+    }
+}
+impl<
+    ClipParam: crate::nodes::types::Clip,
+    PromptParam: crate::nodes::types::String,
+    VaeParam: crate::nodes::types::Vae,
+    ImageParam: crate::nodes::types::Image,
+> crate::nodes::TypedNode
+for TextEncodeQwenImageEdit<ClipParam, PromptParam, VaeParam, ImageParam> {
+    type Output = crate::nodes::types::ConditioningOut;
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
+        Self::Output::from_dynamic(node_id, 0)
+    }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("clip".to_string(), self.clip.clone().into());
+        output.insert("prompt".to_string(), self.prompt.clone().into());
+        if let Some(v) = &self.vae {
+            output.insert("vae".to_string(), v.clone().into());
+        }
+        if let Some(v) = &self.image {
+            output.insert("image".to_string(), v.clone().into());
+        }
+        output
+    }
+    const NAME: &'static str = "TextEncodeQwenImageEdit";
+    const DISPLAY_NAME: &'static str = "TextEncodeQwenImageEdit";
+    const DESCRIPTION: &'static str = "";
+    const CATEGORY: &'static str = "advanced/conditioning";
+}
+///**TextEncodeQwenImageEditPlus**: No description.
+#[derive(Clone)]
+#[allow(non_camel_case_types)]
+pub struct TextEncodeQwenImageEditPlus<
+    ClipParam: crate::nodes::types::Clip,
+    PromptParam: crate::nodes::types::String,
+    VaeParam: crate::nodes::types::Vae = crate::nodes::types::VaeOut,
+    Image1Param: crate::nodes::types::Image = crate::nodes::types::ImageOut,
+    Image2Param: crate::nodes::types::Image = crate::nodes::types::ImageOut,
+    Image3Param: crate::nodes::types::Image = crate::nodes::types::ImageOut,
+> {
+    ///No documentation.
+    pub clip: ClipParam,
+    /**No documentation.
+
+**Metadata**:
+  - Dynamic prompts: true
+  - Multiline: true
+*/
+    pub prompt: PromptParam,
+    ///No documentation.
+    pub vae: Option<VaeParam>,
+    ///No documentation.
+    pub image_1: Option<Image1Param>,
+    ///No documentation.
+    pub image_2: Option<Image2Param>,
+    ///No documentation.
+    pub image_3: Option<Image3Param>,
+}
+impl<
+    ClipParam: crate::nodes::types::Clip,
+    PromptParam: crate::nodes::types::String,
+    VaeParam: crate::nodes::types::Vae,
+    Image1Param: crate::nodes::types::Image,
+    Image2Param: crate::nodes::types::Image,
+    Image3Param: crate::nodes::types::Image,
+> TextEncodeQwenImageEditPlus<
+    ClipParam,
+    PromptParam,
+    VaeParam,
+    Image1Param,
+    Image2Param,
+    Image3Param,
+> {
+    /// Create a new node.
+    pub fn new(
+        clip: ClipParam,
+        prompt: PromptParam,
+        vae: Option<VaeParam>,
+        image_1: Option<Image1Param>,
+        image_2: Option<Image2Param>,
+        image_3: Option<Image3Param>,
+    ) -> Self {
+        Self {
+            clip,
+            prompt,
+            vae,
+            image_1,
+            image_2,
+            image_3,
+        }
+    }
+}
+impl<
+    ClipParam: crate::nodes::types::Clip,
+    PromptParam: crate::nodes::types::String,
+    VaeParam: crate::nodes::types::Vae,
+    Image1Param: crate::nodes::types::Image,
+    Image2Param: crate::nodes::types::Image,
+    Image3Param: crate::nodes::types::Image,
+> crate::nodes::TypedNode
+for TextEncodeQwenImageEditPlus<
+    ClipParam,
+    PromptParam,
+    VaeParam,
+    Image1Param,
+    Image2Param,
+    Image3Param,
+> {
+    type Output = crate::nodes::types::ConditioningOut;
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
+        Self::Output::from_dynamic(node_id, 0)
+    }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("clip".to_string(), self.clip.clone().into());
+        output.insert("prompt".to_string(), self.prompt.clone().into());
+        if let Some(v) = &self.vae {
+            output.insert("vae".to_string(), v.clone().into());
+        }
+        if let Some(v) = &self.image_1 {
+            output.insert("image1".to_string(), v.clone().into());
+        }
+        if let Some(v) = &self.image_2 {
+            output.insert("image2".to_string(), v.clone().into());
+        }
+        if let Some(v) = &self.image_3 {
+            output.insert("image3".to_string(), v.clone().into());
+        }
+        output
+    }
+    const NAME: &'static str = "TextEncodeQwenImageEditPlus";
+    const DISPLAY_NAME: &'static str = "TextEncodeQwenImageEditPlus";
     const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "advanced/conditioning";
 }

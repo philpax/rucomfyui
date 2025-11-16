@@ -153,6 +153,140 @@ for CosmosImageToVideoLatent<
     const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "conditioning/inpaint";
 }
+///**CosmosPredict2ImageToVideoLatent**: No description.
+#[derive(Clone)]
+#[allow(non_camel_case_types)]
+pub struct CosmosPredict2ImageToVideoLatent<
+    VaeParam: crate::nodes::types::Vae,
+    WidthParam: crate::nodes::types::Int,
+    HeightParam: crate::nodes::types::Int,
+    LengthParam: crate::nodes::types::Int,
+    BatchSizeParam: crate::nodes::types::Int,
+    StartImageParam: crate::nodes::types::Image = crate::nodes::types::ImageOut,
+    EndImageParam: crate::nodes::types::Image = crate::nodes::types::ImageOut,
+> {
+    ///No documentation.
+    pub vae: VaeParam,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 848
+  - Max: 16384
+  - Min: 16
+  - Step: 16
+*/
+    pub width: WidthParam,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 480
+  - Max: 16384
+  - Min: 16
+  - Step: 16
+*/
+    pub height: HeightParam,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 93
+  - Max: 16384
+  - Min: 1
+  - Step: 4
+*/
+    pub length: LengthParam,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 4096
+  - Min: 1
+*/
+    pub batch_size: BatchSizeParam,
+    ///No documentation.
+    pub start_image: Option<StartImageParam>,
+    ///No documentation.
+    pub end_image: Option<EndImageParam>,
+}
+impl<
+    VaeParam: crate::nodes::types::Vae,
+    WidthParam: crate::nodes::types::Int,
+    HeightParam: crate::nodes::types::Int,
+    LengthParam: crate::nodes::types::Int,
+    BatchSizeParam: crate::nodes::types::Int,
+    StartImageParam: crate::nodes::types::Image,
+    EndImageParam: crate::nodes::types::Image,
+> CosmosPredict2ImageToVideoLatent<
+    VaeParam,
+    WidthParam,
+    HeightParam,
+    LengthParam,
+    BatchSizeParam,
+    StartImageParam,
+    EndImageParam,
+> {
+    /// Create a new node.
+    pub fn new(
+        vae: VaeParam,
+        width: WidthParam,
+        height: HeightParam,
+        length: LengthParam,
+        batch_size: BatchSizeParam,
+        start_image: Option<StartImageParam>,
+        end_image: Option<EndImageParam>,
+    ) -> Self {
+        Self {
+            vae,
+            width,
+            height,
+            length,
+            batch_size,
+            start_image,
+            end_image,
+        }
+    }
+}
+impl<
+    VaeParam: crate::nodes::types::Vae,
+    WidthParam: crate::nodes::types::Int,
+    HeightParam: crate::nodes::types::Int,
+    LengthParam: crate::nodes::types::Int,
+    BatchSizeParam: crate::nodes::types::Int,
+    StartImageParam: crate::nodes::types::Image,
+    EndImageParam: crate::nodes::types::Image,
+> crate::nodes::TypedNode
+for CosmosPredict2ImageToVideoLatent<
+    VaeParam,
+    WidthParam,
+    HeightParam,
+    LengthParam,
+    BatchSizeParam,
+    StartImageParam,
+    EndImageParam,
+> {
+    type Output = crate::nodes::types::LatentOut;
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
+        Self::Output::from_dynamic(node_id, 0)
+    }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("vae".to_string(), self.vae.clone().into());
+        output.insert("width".to_string(), self.width.clone().into());
+        output.insert("height".to_string(), self.height.clone().into());
+        output.insert("length".to_string(), self.length.clone().into());
+        output.insert("batch_size".to_string(), self.batch_size.clone().into());
+        if let Some(v) = &self.start_image {
+            output.insert("start_image".to_string(), v.clone().into());
+        }
+        if let Some(v) = &self.end_image {
+            output.insert("end_image".to_string(), v.clone().into());
+        }
+        output
+    }
+    const NAME: &'static str = "CosmosPredict2ImageToVideoLatent";
+    const DISPLAY_NAME: &'static str = "CosmosPredict2ImageToVideoLatent";
+    const DESCRIPTION: &'static str = "";
+    const CATEGORY: &'static str = "conditioning/inpaint";
+}
 ///**InpaintModelConditioning**: No description.
 #[derive(Clone)]
 #[allow(non_camel_case_types)]
@@ -251,6 +385,128 @@ for InpaintModelConditioning<
     }
     const NAME: &'static str = "InpaintModelConditioning";
     const DISPLAY_NAME: &'static str = "InpaintModelConditioning";
+    const DESCRIPTION: &'static str = "";
+    const CATEGORY: &'static str = "conditioning/inpaint";
+}
+///**Wan22ImageToVideoLatent**: No description.
+#[derive(Clone)]
+#[allow(non_camel_case_types)]
+pub struct Wan22ImageToVideoLatent<
+    VaeParam: crate::nodes::types::Vae,
+    WidthParam: crate::nodes::types::Int,
+    HeightParam: crate::nodes::types::Int,
+    LengthParam: crate::nodes::types::Int,
+    BatchSizeParam: crate::nodes::types::Int,
+    StartImageParam: crate::nodes::types::Image = crate::nodes::types::ImageOut,
+> {
+    ///No documentation.
+    pub vae: VaeParam,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1280
+  - Max: 16384
+  - Min: 32
+  - Step: 32
+*/
+    pub width: WidthParam,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 704
+  - Max: 16384
+  - Min: 32
+  - Step: 32
+*/
+    pub height: HeightParam,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 49
+  - Max: 16384
+  - Min: 1
+  - Step: 4
+*/
+    pub length: LengthParam,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 4096
+  - Min: 1
+*/
+    pub batch_size: BatchSizeParam,
+    ///No documentation.
+    pub start_image: Option<StartImageParam>,
+}
+impl<
+    VaeParam: crate::nodes::types::Vae,
+    WidthParam: crate::nodes::types::Int,
+    HeightParam: crate::nodes::types::Int,
+    LengthParam: crate::nodes::types::Int,
+    BatchSizeParam: crate::nodes::types::Int,
+    StartImageParam: crate::nodes::types::Image,
+> Wan22ImageToVideoLatent<
+    VaeParam,
+    WidthParam,
+    HeightParam,
+    LengthParam,
+    BatchSizeParam,
+    StartImageParam,
+> {
+    /// Create a new node.
+    pub fn new(
+        vae: VaeParam,
+        width: WidthParam,
+        height: HeightParam,
+        length: LengthParam,
+        batch_size: BatchSizeParam,
+        start_image: Option<StartImageParam>,
+    ) -> Self {
+        Self {
+            vae,
+            width,
+            height,
+            length,
+            batch_size,
+            start_image,
+        }
+    }
+}
+impl<
+    VaeParam: crate::nodes::types::Vae,
+    WidthParam: crate::nodes::types::Int,
+    HeightParam: crate::nodes::types::Int,
+    LengthParam: crate::nodes::types::Int,
+    BatchSizeParam: crate::nodes::types::Int,
+    StartImageParam: crate::nodes::types::Image,
+> crate::nodes::TypedNode
+for Wan22ImageToVideoLatent<
+    VaeParam,
+    WidthParam,
+    HeightParam,
+    LengthParam,
+    BatchSizeParam,
+    StartImageParam,
+> {
+    type Output = crate::nodes::types::LatentOut;
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
+        Self::Output::from_dynamic(node_id, 0)
+    }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("vae".to_string(), self.vae.clone().into());
+        output.insert("width".to_string(), self.width.clone().into());
+        output.insert("height".to_string(), self.height.clone().into());
+        output.insert("length".to_string(), self.length.clone().into());
+        output.insert("batch_size".to_string(), self.batch_size.clone().into());
+        if let Some(v) = &self.start_image {
+            output.insert("start_image".to_string(), v.clone().into());
+        }
+        output
+    }
+    const NAME: &'static str = "Wan22ImageToVideoLatent";
+    const DISPLAY_NAME: &'static str = "Wan22ImageToVideoLatent";
     const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "conditioning/inpaint";
 }

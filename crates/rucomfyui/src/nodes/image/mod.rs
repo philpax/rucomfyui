@@ -9,11 +9,23 @@ pub mod animation;
 pub mod batch;
 pub mod postprocessing;
 pub mod preprocessors;
+pub mod save;
 pub mod transform;
 pub mod upscaling;
 pub mod video;
 /// Output types for nodes.
 pub mod out {
+    ///Output for [`GetImageSize`](super::GetImageSize).
+    #[derive(Clone)]
+    #[allow(non_camel_case_types)]
+    pub struct GetImageSizeOutput {
+        ///No documentation.
+        pub width: crate::nodes::types::IntOut,
+        ///No documentation.
+        pub height: crate::nodes::types::IntOut,
+        ///No documentation.
+        pub batch_size: crate::nodes::types::IntOut,
+    }
     ///Output for [`ImagePadForOutpaint`](super::ImagePadForOutpaint).
     #[derive(Clone)]
     #[allow(non_camel_case_types)]
@@ -130,6 +142,98 @@ for EmptyImage<WidthParam, HeightParam, BatchSizeParam, ColorParam> {
     }
     const NAME: &'static str = "EmptyImage";
     const DISPLAY_NAME: &'static str = "EmptyImage";
+    const DESCRIPTION: &'static str = "";
+    const CATEGORY: &'static str = "image";
+}
+///**Get Image Size**: Returns width and height of the image, and passes it through unchanged.
+#[derive(Clone)]
+#[allow(non_camel_case_types)]
+pub struct GetImageSize<ImageParam: crate::nodes::types::Image> {
+    ///No documentation.
+    pub image: ImageParam,
+}
+impl<ImageParam: crate::nodes::types::Image> GetImageSize<ImageParam> {
+    /// Create a new node.
+    pub fn new(image: ImageParam) -> Self {
+        Self { image }
+    }
+}
+impl<ImageParam: crate::nodes::types::Image> crate::nodes::TypedNode
+for GetImageSize<ImageParam> {
+    type Output = out::GetImageSizeOutput;
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
+        Self::Output {
+            width: crate::nodes::types::IntOut::from_dynamic(node_id, 0u32),
+            height: crate::nodes::types::IntOut::from_dynamic(node_id, 1u32),
+            batch_size: crate::nodes::types::IntOut::from_dynamic(node_id, 2u32),
+        }
+    }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("image".to_string(), self.image.clone().into());
+        output
+    }
+    const NAME: &'static str = "GetImageSize";
+    const DISPLAY_NAME: &'static str = "Get Image Size";
+    const DESCRIPTION: &'static str = "Returns width and height of the image, and passes it through unchanged.";
+    const CATEGORY: &'static str = "image";
+}
+///**ImageAddNoise**: No description.
+#[derive(Clone)]
+#[allow(non_camel_case_types)]
+pub struct ImageAddNoise<
+    ImageParam: crate::nodes::types::Image,
+    SeedParam: crate::nodes::types::Int,
+    StrengthParam: crate::nodes::types::Float,
+> {
+    ///No documentation.
+    pub image: ImageParam,
+    /**The random seed used for creating the noise.
+
+**Metadata**:
+  - Default: 0
+  - Max: 18446744073709551615
+  - Min: 0
+*/
+    pub seed: SeedParam,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 0.5
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub strength: StrengthParam,
+}
+impl<
+    ImageParam: crate::nodes::types::Image,
+    SeedParam: crate::nodes::types::Int,
+    StrengthParam: crate::nodes::types::Float,
+> ImageAddNoise<ImageParam, SeedParam, StrengthParam> {
+    /// Create a new node.
+    pub fn new(image: ImageParam, seed: SeedParam, strength: StrengthParam) -> Self {
+        Self { image, seed, strength }
+    }
+}
+impl<
+    ImageParam: crate::nodes::types::Image,
+    SeedParam: crate::nodes::types::Int,
+    StrengthParam: crate::nodes::types::Float,
+> crate::nodes::TypedNode for ImageAddNoise<ImageParam, SeedParam, StrengthParam> {
+    type Output = crate::nodes::types::ImageOut;
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
+        Self::Output::from_dynamic(node_id, 0)
+    }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("image".to_string(), self.image.clone().into());
+        output.insert("seed".to_string(), self.seed.clone().into());
+        output.insert("strength".to_string(), self.strength.clone().into());
+        output
+    }
+    const NAME: &'static str = "ImageAddNoise";
+    const DISPLAY_NAME: &'static str = "ImageAddNoise";
     const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "image";
 }

@@ -5,4 +5,5 @@ use crate::{
     workflow::{WorkflowNodeId, WorkflowInput},
     nodes::types::Out,
 };
+pub mod chroma_radiance;
 pub mod unet;

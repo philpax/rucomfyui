@@ -5,72 +5,105 @@ use crate::{
     workflow::{WorkflowNodeId, WorkflowInput},
     nodes::types::Out,
 };
-///**T5TokenizerOptions**: No description.
+/// Output types for nodes.
+pub mod out {
+    ///Output for [`HunyuanRefinerLatent`](super::HunyuanRefinerLatent).
+    #[derive(Clone)]
+    #[allow(non_camel_case_types)]
+    pub struct HunyuanRefinerLatentOutput {
+        ///No documentation.
+        pub positive: crate::nodes::types::ConditioningOut,
+        ///No documentation.
+        pub negative: crate::nodes::types::ConditioningOut,
+        ///No documentation.
+        pub latent: crate::nodes::types::LatentOut,
+    }
+}
+///**HunyuanRefinerLatent**: No description.
 #[derive(Clone)]
 #[allow(non_camel_case_types)]
-pub struct T5TokenizerOptions<
-    ClipParam: crate::nodes::types::Clip,
-    MinPaddingParam: crate::nodes::types::Int,
-    MinLengthParam: crate::nodes::types::Int,
+pub struct HunyuanRefinerLatent<
+    PositiveParam: crate::nodes::types::Conditioning,
+    NegativeParam: crate::nodes::types::Conditioning,
+    LatentParam: crate::nodes::types::Latent,
+    NoiseAugmentationParam: crate::nodes::types::Float,
 > {
     ///No documentation.
-    pub clip: ClipParam,
+    pub positive: PositiveParam,
+    ///No documentation.
+    pub negative: NegativeParam,
+    ///No documentation.
+    pub latent: LatentParam,
     /**No documentation.
 
 **Metadata**:
-  - Default: 0
-  - Max: 10000
+  - Default: 0.1
+  - Max: 1
   - Min: 0
-  - Step: 1
+  - Step: 0.01
 */
-    pub min_padding: MinPaddingParam,
-    /**No documentation.
-
-**Metadata**:
-  - Default: 0
-  - Max: 10000
-  - Min: 0
-  - Step: 1
-*/
-    pub min_length: MinLengthParam,
+    pub noise_augmentation: NoiseAugmentationParam,
 }
 impl<
-    ClipParam: crate::nodes::types::Clip,
-    MinPaddingParam: crate::nodes::types::Int,
-    MinLengthParam: crate::nodes::types::Int,
-> T5TokenizerOptions<ClipParam, MinPaddingParam, MinLengthParam> {
+    PositiveParam: crate::nodes::types::Conditioning,
+    NegativeParam: crate::nodes::types::Conditioning,
+    LatentParam: crate::nodes::types::Latent,
+    NoiseAugmentationParam: crate::nodes::types::Float,
+> HunyuanRefinerLatent<
+    PositiveParam,
+    NegativeParam,
+    LatentParam,
+    NoiseAugmentationParam,
+> {
     /// Create a new node.
     pub fn new(
-        clip: ClipParam,
-        min_padding: MinPaddingParam,
-        min_length: MinLengthParam,
+        positive: PositiveParam,
+        negative: NegativeParam,
+        latent: LatentParam,
+        noise_augmentation: NoiseAugmentationParam,
     ) -> Self {
         Self {
-            clip,
-            min_padding,
-            min_length,
+            positive,
+            negative,
+            latent,
+            noise_augmentation,
         }
     }
 }
 impl<
-    ClipParam: crate::nodes::types::Clip,
-    MinPaddingParam: crate::nodes::types::Int,
-    MinLengthParam: crate::nodes::types::Int,
+    PositiveParam: crate::nodes::types::Conditioning,
+    NegativeParam: crate::nodes::types::Conditioning,
+    LatentParam: crate::nodes::types::Latent,
+    NoiseAugmentationParam: crate::nodes::types::Float,
 > crate::nodes::TypedNode
-for T5TokenizerOptions<ClipParam, MinPaddingParam, MinLengthParam> {
-    type Output = crate::nodes::types::ClipOut;
+for HunyuanRefinerLatent<
+    PositiveParam,
+    NegativeParam,
+    LatentParam,
+    NoiseAugmentationParam,
+> {
+    type Output = out::HunyuanRefinerLatentOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
-        Self::Output::from_dynamic(node_id, 0)
+        Self::Output {
+            positive: crate::nodes::types::ConditioningOut::from_dynamic(node_id, 0u32),
+            negative: crate::nodes::types::ConditioningOut::from_dynamic(node_id, 1u32),
+            latent: crate::nodes::types::LatentOut::from_dynamic(node_id, 2u32),
+        }
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
-        output.insert("clip".to_string(), self.clip.clone().into());
-        output.insert("min_padding".to_string(), self.min_padding.clone().into());
-        output.insert("min_length".to_string(), self.min_length.clone().into());
+        output.insert("positive".to_string(), self.positive.clone().into());
+        output.insert("negative".to_string(), self.negative.clone().into());
+        output.insert("latent".to_string(), self.latent.clone().into());
+        output
+            .insert(
+                "noise_augmentation".to_string(),
+                self.noise_augmentation.clone().into(),
+            );
         output
     }
-    const NAME: &'static str = "T5TokenizerOptions";
-    const DISPLAY_NAME: &'static str = "T5TokenizerOptions";
+    const NAME: &'static str = "HunyuanRefinerLatent";
+    const DISPLAY_NAME: &'static str = "HunyuanRefinerLatent";
     const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "sd";
 }

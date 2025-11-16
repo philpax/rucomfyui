@@ -23,6 +23,8 @@ pub mod out {
         pub lineart: crate::nodes::types::ImageOut,
         ///No documentation.
         pub camera_info: crate::nodes::types::Load3DCameraOut,
+        ///No documentation.
+        pub recording_video: crate::nodes::types::VideoOut,
     }
     ///Output for [`Load3DAnimation`](super::Load3DAnimation).
     #[derive(Clone)]
@@ -38,6 +40,8 @@ pub mod out {
         pub normal: crate::nodes::types::ImageOut,
         ///No documentation.
         pub camera_info: crate::nodes::types::Load3DCameraOut,
+        ///No documentation.
+        pub recording_video: crate::nodes::types::VideoOut,
     }
 }
 ///**Load 3D**: No description.
@@ -100,6 +104,7 @@ impl<
                 node_id,
                 5u32,
             ),
+            recording_video: crate::nodes::types::VideoOut::from_dynamic(node_id, 6u32),
         }
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
@@ -173,6 +178,7 @@ impl<
                 node_id,
                 4u32,
             ),
+            recording_video: crate::nodes::types::VideoOut::from_dynamic(node_id, 5u32),
         }
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {

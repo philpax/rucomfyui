@@ -74,7 +74,6 @@ pub struct PorterDuffImageComposite<
     SourceAlphaParam: crate::nodes::types::Mask,
     DestinationParam: crate::nodes::types::Image,
     DestinationAlphaParam: crate::nodes::types::Mask,
-    ModeParam: crate::nodes::types::String,
 > {
     ///No documentation.
     pub source: SourceParam,
@@ -84,25 +83,17 @@ pub struct PorterDuffImageComposite<
     pub destination: DestinationParam,
     ///No documentation.
     pub destination_alpha: DestinationAlphaParam,
-    /**No documentation.
-
-**Metadata**:
-  - Default: DST
-*/
-    pub mode: ModeParam,
 }
 impl<
     SourceParam: crate::nodes::types::Image,
     SourceAlphaParam: crate::nodes::types::Mask,
     DestinationParam: crate::nodes::types::Image,
     DestinationAlphaParam: crate::nodes::types::Mask,
-    ModeParam: crate::nodes::types::String,
 > PorterDuffImageComposite<
     SourceParam,
     SourceAlphaParam,
     DestinationParam,
     DestinationAlphaParam,
-    ModeParam,
 > {
     /// Create a new node.
     pub fn new(
@@ -110,14 +101,12 @@ impl<
         source_alpha: SourceAlphaParam,
         destination: DestinationParam,
         destination_alpha: DestinationAlphaParam,
-        mode: ModeParam,
     ) -> Self {
         Self {
             source,
             source_alpha,
             destination,
             destination_alpha,
-            mode,
         }
     }
 }
@@ -126,14 +115,12 @@ impl<
     SourceAlphaParam: crate::nodes::types::Mask,
     DestinationParam: crate::nodes::types::Image,
     DestinationAlphaParam: crate::nodes::types::Mask,
-    ModeParam: crate::nodes::types::String,
 > crate::nodes::TypedNode
 for PorterDuffImageComposite<
     SourceParam,
     SourceAlphaParam,
     DestinationParam,
     DestinationAlphaParam,
-    ModeParam,
 > {
     type Output = out::PorterDuffImageCompositeOutput;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
@@ -152,7 +139,6 @@ for PorterDuffImageComposite<
                 "destination_alpha".to_string(),
                 self.destination_alpha.clone().into(),
             );
-        output.insert("mode".to_string(), self.mode.clone().into());
         output
     }
     const NAME: &'static str = "PorterDuffImageComposite";

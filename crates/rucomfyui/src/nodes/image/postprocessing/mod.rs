@@ -5,14 +5,13 @@ use crate::{
     workflow::{WorkflowNodeId, WorkflowInput},
     nodes::types::Out,
 };
-///**Image Blend**: No description.
+///**ImageBlend**: No description.
 #[derive(Clone)]
 #[allow(non_camel_case_types)]
 pub struct ImageBlend<
     Image1Param: crate::nodes::types::Image,
     Image2Param: crate::nodes::types::Image,
     BlendFactorParam: crate::nodes::types::Float,
-    BlendModeParam: crate::nodes::types::String,
 > {
     ///No documentation.
     pub image_1: Image1Param,
@@ -27,27 +26,22 @@ pub struct ImageBlend<
   - Step: 0.01
 */
     pub blend_factor: BlendFactorParam,
-    ///No documentation.
-    pub blend_mode: BlendModeParam,
 }
 impl<
     Image1Param: crate::nodes::types::Image,
     Image2Param: crate::nodes::types::Image,
     BlendFactorParam: crate::nodes::types::Float,
-    BlendModeParam: crate::nodes::types::String,
-> ImageBlend<Image1Param, Image2Param, BlendFactorParam, BlendModeParam> {
+> ImageBlend<Image1Param, Image2Param, BlendFactorParam> {
     /// Create a new node.
     pub fn new(
         image_1: Image1Param,
         image_2: Image2Param,
         blend_factor: BlendFactorParam,
-        blend_mode: BlendModeParam,
     ) -> Self {
         Self {
             image_1,
             image_2,
             blend_factor,
-            blend_mode,
         }
     }
 }
@@ -55,9 +49,7 @@ impl<
     Image1Param: crate::nodes::types::Image,
     Image2Param: crate::nodes::types::Image,
     BlendFactorParam: crate::nodes::types::Float,
-    BlendModeParam: crate::nodes::types::String,
-> crate::nodes::TypedNode
-for ImageBlend<Image1Param, Image2Param, BlendFactorParam, BlendModeParam> {
+> crate::nodes::TypedNode for ImageBlend<Image1Param, Image2Param, BlendFactorParam> {
     type Output = crate::nodes::types::ImageOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)
@@ -67,15 +59,14 @@ for ImageBlend<Image1Param, Image2Param, BlendFactorParam, BlendModeParam> {
         output.insert("image1".to_string(), self.image_1.clone().into());
         output.insert("image2".to_string(), self.image_2.clone().into());
         output.insert("blend_factor".to_string(), self.blend_factor.clone().into());
-        output.insert("blend_mode".to_string(), self.blend_mode.clone().into());
         output
     }
     const NAME: &'static str = "ImageBlend";
-    const DISPLAY_NAME: &'static str = "Image Blend";
+    const DISPLAY_NAME: &'static str = "ImageBlend";
     const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "image/postprocessing";
 }
-///**Image Blur**: No description.
+///**ImageBlur**: No description.
 #[derive(Clone)]
 #[allow(non_camel_case_types)]
 pub struct ImageBlur<
@@ -135,17 +126,16 @@ impl<
         output
     }
     const NAME: &'static str = "ImageBlur";
-    const DISPLAY_NAME: &'static str = "Image Blur";
+    const DISPLAY_NAME: &'static str = "ImageBlur";
     const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "image/postprocessing";
 }
-///**Image Quantize**: No description.
+///**ImageQuantize**: No description.
 #[derive(Clone)]
 #[allow(non_camel_case_types)]
 pub struct ImageQuantize<
     ImageParam: crate::nodes::types::Image,
     ColorsParam: crate::nodes::types::Int,
-    DitherParam: crate::nodes::types::String,
 > {
     ///No documentation.
     pub image: ImageParam,
@@ -158,24 +148,20 @@ pub struct ImageQuantize<
   - Step: 1
 */
     pub colors: ColorsParam,
-    ///No documentation.
-    pub dither: DitherParam,
 }
 impl<
     ImageParam: crate::nodes::types::Image,
     ColorsParam: crate::nodes::types::Int,
-    DitherParam: crate::nodes::types::String,
-> ImageQuantize<ImageParam, ColorsParam, DitherParam> {
+> ImageQuantize<ImageParam, ColorsParam> {
     /// Create a new node.
-    pub fn new(image: ImageParam, colors: ColorsParam, dither: DitherParam) -> Self {
-        Self { image, colors, dither }
+    pub fn new(image: ImageParam, colors: ColorsParam) -> Self {
+        Self { image, colors }
     }
 }
 impl<
     ImageParam: crate::nodes::types::Image,
     ColorsParam: crate::nodes::types::Int,
-    DitherParam: crate::nodes::types::String,
-> crate::nodes::TypedNode for ImageQuantize<ImageParam, ColorsParam, DitherParam> {
+> crate::nodes::TypedNode for ImageQuantize<ImageParam, ColorsParam> {
     type Output = crate::nodes::types::ImageOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)
@@ -184,15 +170,14 @@ impl<
         let mut output = HashMap::default();
         output.insert("image".to_string(), self.image.clone().into());
         output.insert("colors".to_string(), self.colors.clone().into());
-        output.insert("dither".to_string(), self.dither.clone().into());
         output
     }
     const NAME: &'static str = "ImageQuantize";
-    const DISPLAY_NAME: &'static str = "Image Quantize";
+    const DISPLAY_NAME: &'static str = "ImageQuantize";
     const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "image/postprocessing";
 }
-///**Image Sharpen**: No description.
+///**ImageSharpen**: No description.
 #[derive(Clone)]
 #[allow(non_camel_case_types)]
 pub struct ImageSharpen<
@@ -272,7 +257,7 @@ for ImageSharpen<ImageParam, SharpenRadiusParam, SigmaParam, AlphaParam> {
         output
     }
     const NAME: &'static str = "ImageSharpen";
-    const DISPLAY_NAME: &'static str = "Image Sharpen";
+    const DISPLAY_NAME: &'static str = "ImageSharpen";
     const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "image/postprocessing";
 }
@@ -281,13 +266,10 @@ for ImageSharpen<ImageParam, SharpenRadiusParam, SigmaParam, AlphaParam> {
 #[allow(non_camel_case_types)]
 pub struct Morphology<
     ImageParam: crate::nodes::types::Image,
-    OperationParam: crate::nodes::types::String,
     KernelSizeParam: crate::nodes::types::Int,
 > {
     ///No documentation.
     pub image: ImageParam,
-    ///No documentation.
-    pub operation: OperationParam,
     /**No documentation.
 
 **Metadata**:
@@ -300,27 +282,17 @@ pub struct Morphology<
 }
 impl<
     ImageParam: crate::nodes::types::Image,
-    OperationParam: crate::nodes::types::String,
     KernelSizeParam: crate::nodes::types::Int,
-> Morphology<ImageParam, OperationParam, KernelSizeParam> {
+> Morphology<ImageParam, KernelSizeParam> {
     /// Create a new node.
-    pub fn new(
-        image: ImageParam,
-        operation: OperationParam,
-        kernel_size: KernelSizeParam,
-    ) -> Self {
-        Self {
-            image,
-            operation,
-            kernel_size,
-        }
+    pub fn new(image: ImageParam, kernel_size: KernelSizeParam) -> Self {
+        Self { image, kernel_size }
     }
 }
 impl<
     ImageParam: crate::nodes::types::Image,
-    OperationParam: crate::nodes::types::String,
     KernelSizeParam: crate::nodes::types::Int,
-> crate::nodes::TypedNode for Morphology<ImageParam, OperationParam, KernelSizeParam> {
+> crate::nodes::TypedNode for Morphology<ImageParam, KernelSizeParam> {
     type Output = crate::nodes::types::ImageOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)
@@ -328,7 +300,6 @@ impl<
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
         output.insert("image".to_string(), self.image.clone().into());
-        output.insert("operation".to_string(), self.operation.clone().into());
         output.insert("kernel_size".to_string(), self.kernel_size.clone().into());
         output
     }

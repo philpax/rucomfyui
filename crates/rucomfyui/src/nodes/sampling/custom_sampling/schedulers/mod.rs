@@ -9,12 +9,9 @@ use crate::{
 #[derive(Clone)]
 #[allow(non_camel_case_types)]
 pub struct AlignYourStepsScheduler<
-    ModelTypeParam: crate::nodes::types::String,
     StepsParam: crate::nodes::types::Int,
     DenoiseParam: crate::nodes::types::Float,
 > {
-    ///No documentation.
-    pub model_type: ModelTypeParam,
     /**No documentation.
 
 **Metadata**:
@@ -34,32 +31,24 @@ pub struct AlignYourStepsScheduler<
     pub denoise: DenoiseParam,
 }
 impl<
-    ModelTypeParam: crate::nodes::types::String,
     StepsParam: crate::nodes::types::Int,
     DenoiseParam: crate::nodes::types::Float,
-> AlignYourStepsScheduler<ModelTypeParam, StepsParam, DenoiseParam> {
+> AlignYourStepsScheduler<StepsParam, DenoiseParam> {
     /// Create a new node.
-    pub fn new(
-        model_type: ModelTypeParam,
-        steps: StepsParam,
-        denoise: DenoiseParam,
-    ) -> Self {
-        Self { model_type, steps, denoise }
+    pub fn new(steps: StepsParam, denoise: DenoiseParam) -> Self {
+        Self { steps, denoise }
     }
 }
 impl<
-    ModelTypeParam: crate::nodes::types::String,
     StepsParam: crate::nodes::types::Int,
     DenoiseParam: crate::nodes::types::Float,
-> crate::nodes::TypedNode
-for AlignYourStepsScheduler<ModelTypeParam, StepsParam, DenoiseParam> {
+> crate::nodes::TypedNode for AlignYourStepsScheduler<StepsParam, DenoiseParam> {
     type Output = crate::nodes::types::SigmasOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
-        output.insert("model_type".to_string(), self.model_type.clone().into());
         output.insert("steps".to_string(), self.steps.clone().into());
         output.insert("denoise".to_string(), self.denoise.clone().into());
         output
@@ -700,12 +689,9 @@ for LaplaceScheduler<StepsParam, SigmaMaxParam, SigmaMinParam, MuParam, BetaPara
 #[derive(Clone)]
 #[allow(non_camel_case_types)]
 pub struct OptimalStepsScheduler<
-    ModelTypeParam: crate::nodes::types::String,
     StepsParam: crate::nodes::types::Int,
     DenoiseParam: crate::nodes::types::Float,
 > {
-    ///No documentation.
-    pub model_type: ModelTypeParam,
     /**No documentation.
 
 **Metadata**:
@@ -725,32 +711,24 @@ pub struct OptimalStepsScheduler<
     pub denoise: DenoiseParam,
 }
 impl<
-    ModelTypeParam: crate::nodes::types::String,
     StepsParam: crate::nodes::types::Int,
     DenoiseParam: crate::nodes::types::Float,
-> OptimalStepsScheduler<ModelTypeParam, StepsParam, DenoiseParam> {
+> OptimalStepsScheduler<StepsParam, DenoiseParam> {
     /// Create a new node.
-    pub fn new(
-        model_type: ModelTypeParam,
-        steps: StepsParam,
-        denoise: DenoiseParam,
-    ) -> Self {
-        Self { model_type, steps, denoise }
+    pub fn new(steps: StepsParam, denoise: DenoiseParam) -> Self {
+        Self { steps, denoise }
     }
 }
 impl<
-    ModelTypeParam: crate::nodes::types::String,
     StepsParam: crate::nodes::types::Int,
     DenoiseParam: crate::nodes::types::Float,
-> crate::nodes::TypedNode
-for OptimalStepsScheduler<ModelTypeParam, StepsParam, DenoiseParam> {
+> crate::nodes::TypedNode for OptimalStepsScheduler<StepsParam, DenoiseParam> {
     type Output = crate::nodes::types::SigmasOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
-        output.insert("model_type".to_string(), self.model_type.clone().into());
         output.insert("steps".to_string(), self.steps.clone().into());
         output.insert("denoise".to_string(), self.denoise.clone().into());
         output

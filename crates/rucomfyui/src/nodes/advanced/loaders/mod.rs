@@ -6,6 +6,7 @@ use crate::{
     nodes::types::Out,
 };
 pub mod deprecated;
+pub mod qwen;
 /// Output types for nodes.
 pub mod out {
     ///Output for [`CheckpointLoader`](super::CheckpointLoader).
@@ -20,7 +21,7 @@ pub mod out {
         pub vae: crate::nodes::types::VaeOut,
     }
 }
-#[doc = "**Load CLIP**: \\[Recipes\\]\n\n\n\nstable_diffusion: clip-l\n\nstable_cascade: clip-g\n\nsd3: t5 xxl/ clip-g / clip-l\n\nstable_audio: t5 base\n\nmochi: t5 xxl\n\ncosmos: old t5 xxl\n\nlumina2: gemma 2 2B\n\nwan: umt5 xxl\n\n hidream: llama-3.1 (Recommend) or t5"]
+#[doc = "**Load CLIP**: \\[Recipes\\]\n\n\n\nstable_diffusion: clip-l\n\nstable_cascade: clip-g\n\nsd3: t5 xxl/ clip-g / clip-l\n\nstable_audio: t5 base\n\nmochi: t5 xxl\n\ncosmos: old t5 xxl\n\nlumina2: gemma 2 2B\n\nwan: umt5 xxl\n\n hidream: llama-3.1 (Recommend) or t5\n\nomnigen2: qwen vl 2.5 3B"]
 #[derive(Clone)]
 #[allow(non_camel_case_types)]
 pub struct CLIPLoader<
@@ -69,7 +70,7 @@ impl<
     }
     const NAME: &'static str = "CLIPLoader";
     const DISPLAY_NAME: &'static str = "Load CLIP";
-    const DESCRIPTION: &'static str = "[Recipes]\n\nstable_diffusion: clip-l\nstable_cascade: clip-g\nsd3: t5 xxl/ clip-g / clip-l\nstable_audio: t5 base\nmochi: t5 xxl\ncosmos: old t5 xxl\nlumina2: gemma 2 2B\nwan: umt5 xxl\n hidream: llama-3.1 (Recommend) or t5";
+    const DESCRIPTION: &'static str = "[Recipes]\n\nstable_diffusion: clip-l\nstable_cascade: clip-g\nsd3: t5 xxl/ clip-g / clip-l\nstable_audio: t5 base\nmochi: t5 xxl\ncosmos: old t5 xxl\nlumina2: gemma 2 2B\nwan: umt5 xxl\n hidream: llama-3.1 (Recommend) or t5\nomnigen2: qwen vl 2.5 3B";
     const CATEGORY: &'static str = "advanced/loaders";
 }
 ///**Load Checkpoint With Config (DEPRECATED)**: No description.
@@ -116,7 +117,7 @@ impl<
     const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "advanced/loaders";
 }
-#[doc = "**DualCLIPLoader**: \\[Recipes\\]\n\n\n\nsdxl: clip-l, clip-g\n\nsd3: clip-l, clip-g / clip-l, t5 / clip-g, t5\n\nflux: clip-l, t5\n\nhidream: at least one of t5 or llama, recommended t5 and llama"]
+#[doc = "**DualCLIPLoader**: \\[Recipes\\]\n\n\n\nsdxl: clip-l, clip-g\n\nsd3: clip-l, clip-g / clip-l, t5 / clip-g, t5\n\nflux: clip-l, t5\n\nhidream: at least one of t5 or llama, recommended t5 and llama\n\nhunyuan_image: qwen2.5vl 7b and byt5 small"]
 #[derive(Clone)]
 #[allow(non_camel_case_types)]
 pub struct DualCLIPLoader<
@@ -178,66 +179,55 @@ for DualCLIPLoader<ClipName1Param, ClipName2Param, TypeParam, DeviceParam> {
     }
     const NAME: &'static str = "DualCLIPLoader";
     const DISPLAY_NAME: &'static str = "DualCLIPLoader";
-    const DESCRIPTION: &'static str = "[Recipes]\n\nsdxl: clip-l, clip-g\nsd3: clip-l, clip-g / clip-l, t5 / clip-g, t5\nflux: clip-l, t5\nhidream: at least one of t5 or llama, recommended t5 and llama";
+    const DESCRIPTION: &'static str = "[Recipes]\n\nsdxl: clip-l, clip-g\nsd3: clip-l, clip-g / clip-l, t5 / clip-g, t5\nflux: clip-l, t5\nhidream: at least one of t5 or llama, recommended t5 and llama\nhunyuan_image: qwen2.5vl 7b and byt5 small";
     const CATEGORY: &'static str = "advanced/loaders";
 }
-#[doc = "**QuadrupleCLIPLoader**: \\[Recipes\\]\n\n\n\nhidream: long clip-l, long clip-g, t5xxl, llama_8b_3.1_instruct"]
+///**ModelPatchLoader**: No description.
 #[derive(Clone)]
 #[allow(non_camel_case_types)]
-pub struct QuadrupleCLIPLoader<
-    ClipName1Param: crate::nodes::types::String,
-    ClipName2Param: crate::nodes::types::String,
-    ClipName3Param: crate::nodes::types::String,
-    ClipName4Param: crate::nodes::types::String,
-> {
+pub struct ModelPatchLoader<NameParam: crate::nodes::types::String> {
     ///No documentation.
-    pub clip_name_1: ClipName1Param,
-    ///No documentation.
-    pub clip_name_2: ClipName2Param,
-    ///No documentation.
-    pub clip_name_3: ClipName3Param,
-    ///No documentation.
-    pub clip_name_4: ClipName4Param,
+    pub name: NameParam,
 }
-impl<
-    ClipName1Param: crate::nodes::types::String,
-    ClipName2Param: crate::nodes::types::String,
-    ClipName3Param: crate::nodes::types::String,
-    ClipName4Param: crate::nodes::types::String,
-> QuadrupleCLIPLoader<ClipName1Param, ClipName2Param, ClipName3Param, ClipName4Param> {
+impl<NameParam: crate::nodes::types::String> ModelPatchLoader<NameParam> {
     /// Create a new node.
-    pub fn new(
-        clip_name_1: ClipName1Param,
-        clip_name_2: ClipName2Param,
-        clip_name_3: ClipName3Param,
-        clip_name_4: ClipName4Param,
-    ) -> Self {
-        Self {
-            clip_name_1,
-            clip_name_2,
-            clip_name_3,
-            clip_name_4,
-        }
+    pub fn new(name: NameParam) -> Self {
+        Self { name }
     }
 }
-impl<
-    ClipName1Param: crate::nodes::types::String,
-    ClipName2Param: crate::nodes::types::String,
-    ClipName3Param: crate::nodes::types::String,
-    ClipName4Param: crate::nodes::types::String,
-> crate::nodes::TypedNode
-for QuadrupleCLIPLoader<ClipName1Param, ClipName2Param, ClipName3Param, ClipName4Param> {
-    type Output = crate::nodes::types::ClipOut;
+impl<NameParam: crate::nodes::types::String> crate::nodes::TypedNode
+for ModelPatchLoader<NameParam> {
+    type Output = crate::nodes::types::ModelPatchOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
-        output.insert("clip_name1".to_string(), self.clip_name_1.clone().into());
-        output.insert("clip_name2".to_string(), self.clip_name_2.clone().into());
-        output.insert("clip_name3".to_string(), self.clip_name_3.clone().into());
-        output.insert("clip_name4".to_string(), self.clip_name_4.clone().into());
+        output.insert("name".to_string(), self.name.clone().into());
         output
+    }
+    const NAME: &'static str = "ModelPatchLoader";
+    const DISPLAY_NAME: &'static str = "ModelPatchLoader";
+    const DESCRIPTION: &'static str = "";
+    const CATEGORY: &'static str = "advanced/loaders";
+}
+#[doc = "**QuadrupleCLIPLoader**: \\[Recipes\\]\n\n\n\nhidream: long clip-l, long clip-g, t5xxl, llama_8b_3.1_instruct"]
+#[derive(Clone)]
+#[allow(non_camel_case_types)]
+pub struct QuadrupleCLIPLoader {}
+impl QuadrupleCLIPLoader {
+    /// Create a new node.
+    pub fn new() -> Self {
+        Self {}
+    }
+}
+impl crate::nodes::TypedNode for QuadrupleCLIPLoader {
+    type Output = crate::nodes::types::ClipOut;
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
+        Self::Output::from_dynamic(node_id, 0)
+    }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        HashMap::default()
     }
     const NAME: &'static str = "QuadrupleCLIPLoader";
     const DISPLAY_NAME: &'static str = "QuadrupleCLIPLoader";
@@ -247,52 +237,20 @@ for QuadrupleCLIPLoader<ClipName1Param, ClipName2Param, ClipName3Param, ClipName
 #[doc = "**TripleCLIPLoader**: \\[Recipes\\]\n\n\n\nsd3: clip-l, clip-g, t5"]
 #[derive(Clone)]
 #[allow(non_camel_case_types)]
-pub struct TripleCLIPLoader<
-    ClipName1Param: crate::nodes::types::String,
-    ClipName2Param: crate::nodes::types::String,
-    ClipName3Param: crate::nodes::types::String,
-> {
-    ///No documentation.
-    pub clip_name_1: ClipName1Param,
-    ///No documentation.
-    pub clip_name_2: ClipName2Param,
-    ///No documentation.
-    pub clip_name_3: ClipName3Param,
-}
-impl<
-    ClipName1Param: crate::nodes::types::String,
-    ClipName2Param: crate::nodes::types::String,
-    ClipName3Param: crate::nodes::types::String,
-> TripleCLIPLoader<ClipName1Param, ClipName2Param, ClipName3Param> {
+pub struct TripleCLIPLoader {}
+impl TripleCLIPLoader {
     /// Create a new node.
-    pub fn new(
-        clip_name_1: ClipName1Param,
-        clip_name_2: ClipName2Param,
-        clip_name_3: ClipName3Param,
-    ) -> Self {
-        Self {
-            clip_name_1,
-            clip_name_2,
-            clip_name_3,
-        }
+    pub fn new() -> Self {
+        Self {}
     }
 }
-impl<
-    ClipName1Param: crate::nodes::types::String,
-    ClipName2Param: crate::nodes::types::String,
-    ClipName3Param: crate::nodes::types::String,
-> crate::nodes::TypedNode
-for TripleCLIPLoader<ClipName1Param, ClipName2Param, ClipName3Param> {
+impl crate::nodes::TypedNode for TripleCLIPLoader {
     type Output = crate::nodes::types::ClipOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
-        let mut output = HashMap::default();
-        output.insert("clip_name1".to_string(), self.clip_name_1.clone().into());
-        output.insert("clip_name2".to_string(), self.clip_name_2.clone().into());
-        output.insert("clip_name3".to_string(), self.clip_name_3.clone().into());
-        output
+        HashMap::default()
     }
     const NAME: &'static str = "TripleCLIPLoader";
     const DISPLAY_NAME: &'static str = "TripleCLIPLoader";

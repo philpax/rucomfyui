@@ -49,32 +49,18 @@ impl<
 ///**LatentBatchSeedBehavior**: No description.
 #[derive(Clone)]
 #[allow(non_camel_case_types)]
-pub struct LatentBatchSeedBehavior<
-    SamplesParam: crate::nodes::types::Latent,
-    SeedBehaviorParam: crate::nodes::types::String,
-> {
+pub struct LatentBatchSeedBehavior<SamplesParam: crate::nodes::types::Latent> {
     ///No documentation.
     pub samples: SamplesParam,
-    /**No documentation.
-
-**Metadata**:
-  - Default: fixed
-*/
-    pub seed_behavior: SeedBehaviorParam,
 }
-impl<
-    SamplesParam: crate::nodes::types::Latent,
-    SeedBehaviorParam: crate::nodes::types::String,
-> LatentBatchSeedBehavior<SamplesParam, SeedBehaviorParam> {
+impl<SamplesParam: crate::nodes::types::Latent> LatentBatchSeedBehavior<SamplesParam> {
     /// Create a new node.
-    pub fn new(samples: SamplesParam, seed_behavior: SeedBehaviorParam) -> Self {
-        Self { samples, seed_behavior }
+    pub fn new(samples: SamplesParam) -> Self {
+        Self { samples }
     }
 }
-impl<
-    SamplesParam: crate::nodes::types::Latent,
-    SeedBehaviorParam: crate::nodes::types::String,
-> crate::nodes::TypedNode for LatentBatchSeedBehavior<SamplesParam, SeedBehaviorParam> {
+impl<SamplesParam: crate::nodes::types::Latent> crate::nodes::TypedNode
+for LatentBatchSeedBehavior<SamplesParam> {
     type Output = crate::nodes::types::LatentOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)
@@ -82,11 +68,110 @@ impl<
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
         output.insert("samples".to_string(), self.samples.clone().into());
-        output.insert("seed_behavior".to_string(), self.seed_behavior.clone().into());
         output
     }
     const NAME: &'static str = "LatentBatchSeedBehavior";
     const DISPLAY_NAME: &'static str = "LatentBatchSeedBehavior";
+    const DESCRIPTION: &'static str = "";
+    const CATEGORY: &'static str = "latent/advanced";
+}
+///**LatentConcat**: No description.
+#[derive(Clone)]
+#[allow(non_camel_case_types)]
+pub struct LatentConcat<
+    Samples1Param: crate::nodes::types::Latent,
+    Samples2Param: crate::nodes::types::Latent,
+> {
+    ///No documentation.
+    pub samples_1: Samples1Param,
+    ///No documentation.
+    pub samples_2: Samples2Param,
+}
+impl<
+    Samples1Param: crate::nodes::types::Latent,
+    Samples2Param: crate::nodes::types::Latent,
+> LatentConcat<Samples1Param, Samples2Param> {
+    /// Create a new node.
+    pub fn new(samples_1: Samples1Param, samples_2: Samples2Param) -> Self {
+        Self { samples_1, samples_2 }
+    }
+}
+impl<
+    Samples1Param: crate::nodes::types::Latent,
+    Samples2Param: crate::nodes::types::Latent,
+> crate::nodes::TypedNode for LatentConcat<Samples1Param, Samples2Param> {
+    type Output = crate::nodes::types::LatentOut;
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
+        Self::Output::from_dynamic(node_id, 0)
+    }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("samples1".to_string(), self.samples_1.clone().into());
+        output.insert("samples2".to_string(), self.samples_2.clone().into());
+        output
+    }
+    const NAME: &'static str = "LatentConcat";
+    const DISPLAY_NAME: &'static str = "LatentConcat";
+    const DESCRIPTION: &'static str = "";
+    const CATEGORY: &'static str = "latent/advanced";
+}
+///**LatentCut**: No description.
+#[derive(Clone)]
+#[allow(non_camel_case_types)]
+pub struct LatentCut<
+    SamplesParam: crate::nodes::types::Latent,
+    IndexParam: crate::nodes::types::Int,
+    AmountParam: crate::nodes::types::Int,
+> {
+    ///No documentation.
+    pub samples: SamplesParam,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 0
+  - Max: 16384
+  - Min: -16384
+  - Step: 1
+*/
+    pub index: IndexParam,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 16384
+  - Min: 1
+  - Step: 1
+*/
+    pub amount: AmountParam,
+}
+impl<
+    SamplesParam: crate::nodes::types::Latent,
+    IndexParam: crate::nodes::types::Int,
+    AmountParam: crate::nodes::types::Int,
+> LatentCut<SamplesParam, IndexParam, AmountParam> {
+    /// Create a new node.
+    pub fn new(samples: SamplesParam, index: IndexParam, amount: AmountParam) -> Self {
+        Self { samples, index, amount }
+    }
+}
+impl<
+    SamplesParam: crate::nodes::types::Latent,
+    IndexParam: crate::nodes::types::Int,
+    AmountParam: crate::nodes::types::Int,
+> crate::nodes::TypedNode for LatentCut<SamplesParam, IndexParam, AmountParam> {
+    type Output = crate::nodes::types::LatentOut;
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
+        Self::Output::from_dynamic(node_id, 0)
+    }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("samples".to_string(), self.samples.clone().into());
+        output.insert("index".to_string(), self.index.clone().into());
+        output.insert("amount".to_string(), self.amount.clone().into());
+        output
+    }
+    const NAME: &'static str = "LatentCut";
+    const DISPLAY_NAME: &'static str = "LatentCut";
     const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "latent/advanced";
 }

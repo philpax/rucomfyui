@@ -152,18 +152,77 @@ for ImageScaleBy<ImageParam, UpscaleMethodParam, ScaleByParam> {
     const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "image/upscaling";
 }
-///**Scale Image to Total Pixels**: No description.
+///**ImageScaleToMaxDimension**: No description.
 #[derive(Clone)]
 #[allow(non_camel_case_types)]
-pub struct ImageScaleToTotalPixels<
+pub struct ImageScaleToMaxDimension<
     ImageParam: crate::nodes::types::Image,
     UpscaleMethodParam: crate::nodes::types::String,
-    MegapixelsParam: crate::nodes::types::Float,
+    LargestSizeParam: crate::nodes::types::Int,
 > {
     ///No documentation.
     pub image: ImageParam,
     ///No documentation.
     pub upscale_method: UpscaleMethodParam,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 512
+  - Max: 16384
+  - Min: 0
+  - Step: 1
+*/
+    pub largest_size: LargestSizeParam,
+}
+impl<
+    ImageParam: crate::nodes::types::Image,
+    UpscaleMethodParam: crate::nodes::types::String,
+    LargestSizeParam: crate::nodes::types::Int,
+> ImageScaleToMaxDimension<ImageParam, UpscaleMethodParam, LargestSizeParam> {
+    /// Create a new node.
+    pub fn new(
+        image: ImageParam,
+        upscale_method: UpscaleMethodParam,
+        largest_size: LargestSizeParam,
+    ) -> Self {
+        Self {
+            image,
+            upscale_method,
+            largest_size,
+        }
+    }
+}
+impl<
+    ImageParam: crate::nodes::types::Image,
+    UpscaleMethodParam: crate::nodes::types::String,
+    LargestSizeParam: crate::nodes::types::Int,
+> crate::nodes::TypedNode
+for ImageScaleToMaxDimension<ImageParam, UpscaleMethodParam, LargestSizeParam> {
+    type Output = crate::nodes::types::ImageOut;
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
+        Self::Output::from_dynamic(node_id, 0)
+    }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("image".to_string(), self.image.clone().into());
+        output.insert("upscale_method".to_string(), self.upscale_method.clone().into());
+        output.insert("largest_size".to_string(), self.largest_size.clone().into());
+        output
+    }
+    const NAME: &'static str = "ImageScaleToMaxDimension";
+    const DISPLAY_NAME: &'static str = "ImageScaleToMaxDimension";
+    const DESCRIPTION: &'static str = "";
+    const CATEGORY: &'static str = "image/upscaling";
+}
+///**ImageScaleToTotalPixels**: No description.
+#[derive(Clone)]
+#[allow(non_camel_case_types)]
+pub struct ImageScaleToTotalPixels<
+    ImageParam: crate::nodes::types::Image,
+    MegapixelsParam: crate::nodes::types::Float,
+> {
+    ///No documentation.
+    pub image: ImageParam,
     /**No documentation.
 
 **Metadata**:
@@ -176,28 +235,17 @@ pub struct ImageScaleToTotalPixels<
 }
 impl<
     ImageParam: crate::nodes::types::Image,
-    UpscaleMethodParam: crate::nodes::types::String,
     MegapixelsParam: crate::nodes::types::Float,
-> ImageScaleToTotalPixels<ImageParam, UpscaleMethodParam, MegapixelsParam> {
+> ImageScaleToTotalPixels<ImageParam, MegapixelsParam> {
     /// Create a new node.
-    pub fn new(
-        image: ImageParam,
-        upscale_method: UpscaleMethodParam,
-        megapixels: MegapixelsParam,
-    ) -> Self {
-        Self {
-            image,
-            upscale_method,
-            megapixels,
-        }
+    pub fn new(image: ImageParam, megapixels: MegapixelsParam) -> Self {
+        Self { image, megapixels }
     }
 }
 impl<
     ImageParam: crate::nodes::types::Image,
-    UpscaleMethodParam: crate::nodes::types::String,
     MegapixelsParam: crate::nodes::types::Float,
-> crate::nodes::TypedNode
-for ImageScaleToTotalPixels<ImageParam, UpscaleMethodParam, MegapixelsParam> {
+> crate::nodes::TypedNode for ImageScaleToTotalPixels<ImageParam, MegapixelsParam> {
     type Output = crate::nodes::types::ImageOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)
@@ -205,12 +253,11 @@ for ImageScaleToTotalPixels<ImageParam, UpscaleMethodParam, MegapixelsParam> {
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
         output.insert("image".to_string(), self.image.clone().into());
-        output.insert("upscale_method".to_string(), self.upscale_method.clone().into());
         output.insert("megapixels".to_string(), self.megapixels.clone().into());
         output
     }
     const NAME: &'static str = "ImageScaleToTotalPixels";
-    const DISPLAY_NAME: &'static str = "Scale Image to Total Pixels";
+    const DISPLAY_NAME: &'static str = "ImageScaleToTotalPixels";
     const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "image/upscaling";
 }

@@ -5,6 +5,54 @@ use crate::{
     workflow::{WorkflowNodeId, WorkflowInput},
     nodes::types::Out,
 };
+///**Epsilon Scaling**: No description.
+#[derive(Clone)]
+#[allow(non_camel_case_types)]
+pub struct Epsilon_Scaling<
+    ModelParam: crate::nodes::types::Model,
+    ScalingFactorParam: crate::nodes::types::Float,
+> {
+    ///No documentation.
+    pub model: ModelParam,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1.005
+  - Display: number
+  - Max: 1.5
+  - Min: 0.5
+  - Step: 0.001
+*/
+    pub scaling_factor: ScalingFactorParam,
+}
+impl<
+    ModelParam: crate::nodes::types::Model,
+    ScalingFactorParam: crate::nodes::types::Float,
+> Epsilon_Scaling<ModelParam, ScalingFactorParam> {
+    /// Create a new node.
+    pub fn new(model: ModelParam, scaling_factor: ScalingFactorParam) -> Self {
+        Self { model, scaling_factor }
+    }
+}
+impl<
+    ModelParam: crate::nodes::types::Model,
+    ScalingFactorParam: crate::nodes::types::Float,
+> crate::nodes::TypedNode for Epsilon_Scaling<ModelParam, ScalingFactorParam> {
+    type Output = crate::nodes::types::ModelOut;
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
+        Self::Output::from_dynamic(node_id, 0)
+    }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("model".to_string(), self.model.clone().into());
+        output.insert("scaling_factor".to_string(), self.scaling_factor.clone().into());
+        output
+    }
+    const NAME: &'static str = "Epsilon Scaling";
+    const DISPLAY_NAME: &'static str = "Epsilon Scaling";
+    const DESCRIPTION: &'static str = "";
+    const CATEGORY: &'static str = "model_patches/unet";
+}
 ///**FreeU**: No description.
 #[derive(Clone)]
 #[allow(non_camel_case_types)]
@@ -292,8 +340,6 @@ pub struct PatchModelAddDownscale<
     StartPercentParam: crate::nodes::types::Float,
     EndPercentParam: crate::nodes::types::Float,
     DownscaleAfterSkipParam: crate::nodes::types::Boolean,
-    DownscaleMethodParam: crate::nodes::types::String,
-    UpscaleMethodParam: crate::nodes::types::String,
 > {
     ///No documentation.
     pub model: ModelParam,
@@ -339,10 +385,6 @@ pub struct PatchModelAddDownscale<
   - Default: true
 */
     pub downscale_after_skip: DownscaleAfterSkipParam,
-    ///No documentation.
-    pub downscale_method: DownscaleMethodParam,
-    ///No documentation.
-    pub upscale_method: UpscaleMethodParam,
 }
 impl<
     ModelParam: crate::nodes::types::Model,
@@ -351,8 +393,6 @@ impl<
     StartPercentParam: crate::nodes::types::Float,
     EndPercentParam: crate::nodes::types::Float,
     DownscaleAfterSkipParam: crate::nodes::types::Boolean,
-    DownscaleMethodParam: crate::nodes::types::String,
-    UpscaleMethodParam: crate::nodes::types::String,
 > PatchModelAddDownscale<
     ModelParam,
     BlockNumberParam,
@@ -360,8 +400,6 @@ impl<
     StartPercentParam,
     EndPercentParam,
     DownscaleAfterSkipParam,
-    DownscaleMethodParam,
-    UpscaleMethodParam,
 > {
     /// Create a new node.
     pub fn new(
@@ -371,8 +409,6 @@ impl<
         start_percent: StartPercentParam,
         end_percent: EndPercentParam,
         downscale_after_skip: DownscaleAfterSkipParam,
-        downscale_method: DownscaleMethodParam,
-        upscale_method: UpscaleMethodParam,
     ) -> Self {
         Self {
             model,
@@ -381,8 +417,6 @@ impl<
             start_percent,
             end_percent,
             downscale_after_skip,
-            downscale_method,
-            upscale_method,
         }
     }
 }
@@ -393,8 +427,6 @@ impl<
     StartPercentParam: crate::nodes::types::Float,
     EndPercentParam: crate::nodes::types::Float,
     DownscaleAfterSkipParam: crate::nodes::types::Boolean,
-    DownscaleMethodParam: crate::nodes::types::String,
-    UpscaleMethodParam: crate::nodes::types::String,
 > crate::nodes::TypedNode
 for PatchModelAddDownscale<
     ModelParam,
@@ -403,8 +435,6 @@ for PatchModelAddDownscale<
     StartPercentParam,
     EndPercentParam,
     DownscaleAfterSkipParam,
-    DownscaleMethodParam,
-    UpscaleMethodParam,
 > {
     type Output = crate::nodes::types::ModelOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
@@ -426,12 +456,6 @@ for PatchModelAddDownscale<
                 "downscale_after_skip".to_string(),
                 self.downscale_after_skip.clone().into(),
             );
-        output
-            .insert(
-                "downscale_method".to_string(),
-                self.downscale_method.clone().into(),
-            );
-        output.insert("upscale_method".to_string(), self.upscale_method.clone().into());
         output
     }
     const NAME: &'static str = "PatchModelAddDownscale";
@@ -485,6 +509,73 @@ impl<
     const NAME: &'static str = "PerturbedAttentionGuidance";
     const DISPLAY_NAME: &'static str = "PerturbedAttentionGuidance";
     const DESCRIPTION: &'static str = "";
+    const CATEGORY: &'static str = "model_patches/unet";
+}
+#[doc = "**TSR - Temporal Score Rescaling**: \\[Post-CFG Function\\]\n\nTSR - Temporal Score Rescaling (2510.01184)\n\n\n\nRescaling the model's score or noise to steer the sampling diversity.\n\n"]
+#[derive(Clone)]
+#[allow(non_camel_case_types)]
+pub struct TemporalScoreRescaling<
+    ModelParam: crate::nodes::types::Model,
+    TsrKParam: crate::nodes::types::Float,
+    TsrSigmaParam: crate::nodes::types::Float,
+> {
+    ///No documentation.
+    pub model: ModelParam,
+    /**Controls the rescaling strength.
+
+Lower k produces more detailed results; higher k produces smoother results in image generation. Setting k = 1 disables rescaling.
+
+**Metadata**:
+  - Default: 0.95
+  - Display: number
+  - Max: 100
+  - Min: 0.01
+  - Step: 0.001
+*/
+    pub tsr_k: TsrKParam,
+    /**Controls how early rescaling takes effect.
+
+Larger values take effect earlier.
+
+**Metadata**:
+  - Default: 1
+  - Display: number
+  - Max: 100
+  - Min: 0.01
+  - Step: 0.001
+*/
+    pub tsr_sigma: TsrSigmaParam,
+}
+impl<
+    ModelParam: crate::nodes::types::Model,
+    TsrKParam: crate::nodes::types::Float,
+    TsrSigmaParam: crate::nodes::types::Float,
+> TemporalScoreRescaling<ModelParam, TsrKParam, TsrSigmaParam> {
+    /// Create a new node.
+    pub fn new(model: ModelParam, tsr_k: TsrKParam, tsr_sigma: TsrSigmaParam) -> Self {
+        Self { model, tsr_k, tsr_sigma }
+    }
+}
+impl<
+    ModelParam: crate::nodes::types::Model,
+    TsrKParam: crate::nodes::types::Float,
+    TsrSigmaParam: crate::nodes::types::Float,
+> crate::nodes::TypedNode
+for TemporalScoreRescaling<ModelParam, TsrKParam, TsrSigmaParam> {
+    type Output = crate::nodes::types::ModelOut;
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
+        Self::Output::from_dynamic(node_id, 0)
+    }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("model".to_string(), self.model.clone().into());
+        output.insert("tsr_k".to_string(), self.tsr_k.clone().into());
+        output.insert("tsr_sigma".to_string(), self.tsr_sigma.clone().into());
+        output
+    }
+    const NAME: &'static str = "TemporalScoreRescaling";
+    const DISPLAY_NAME: &'static str = "TSR - Temporal Score Rescaling";
+    const DESCRIPTION: &'static str = "[Post-CFG Function]\nTSR - Temporal Score Rescaling (2510.01184)\n\nRescaling the model's score or noise to steer the sampling diversity.\n";
     const CATEGORY: &'static str = "model_patches/unet";
 }
 ///**TomePatchModel**: No description.

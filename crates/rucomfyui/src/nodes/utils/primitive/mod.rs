@@ -96,7 +96,11 @@ for PrimitiveInt<ValueParam> {
 #[derive(Clone)]
 #[allow(non_camel_case_types)]
 pub struct PrimitiveString<ValueParam: crate::nodes::types::String> {
-    ///No documentation.
+    /**No documentation.
+
+**Metadata**:
+  - Multiline: false
+*/
     pub value: ValueParam,
 }
 impl<ValueParam: crate::nodes::types::String> PrimitiveString<ValueParam> {
@@ -118,6 +122,39 @@ for PrimitiveString<ValueParam> {
     }
     const NAME: &'static str = "PrimitiveString";
     const DISPLAY_NAME: &'static str = "String";
+    const DESCRIPTION: &'static str = "";
+    const CATEGORY: &'static str = "utils/primitive";
+}
+///**String (Multiline)**: No description.
+#[derive(Clone)]
+#[allow(non_camel_case_types)]
+pub struct PrimitiveStringMultiline<ValueParam: crate::nodes::types::String> {
+    /**No documentation.
+
+**Metadata**:
+  - Multiline: true
+*/
+    pub value: ValueParam,
+}
+impl<ValueParam: crate::nodes::types::String> PrimitiveStringMultiline<ValueParam> {
+    /// Create a new node.
+    pub fn new(value: ValueParam) -> Self {
+        Self { value }
+    }
+}
+impl<ValueParam: crate::nodes::types::String> crate::nodes::TypedNode
+for PrimitiveStringMultiline<ValueParam> {
+    type Output = crate::nodes::types::StringOut;
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
+        Self::Output::from_dynamic(node_id, 0)
+    }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("value".to_string(), self.value.clone().into());
+        output
+    }
+    const NAME: &'static str = "PrimitiveStringMultiline";
+    const DISPLAY_NAME: &'static str = "String (Multiline)";
     const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "utils/primitive";
 }

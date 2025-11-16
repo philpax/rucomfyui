@@ -27,6 +27,46 @@ pub mod out {
         pub negative: crate::nodes::types::ConditioningOut,
     }
 }
+///**AudioEncoderEncode**: No description.
+#[derive(Clone)]
+#[allow(non_camel_case_types)]
+pub struct AudioEncoderEncode<
+    AudioEncoderParam: crate::nodes::types::AudioEncoder,
+    AudioParam: crate::nodes::types::Audio,
+> {
+    ///No documentation.
+    pub audio_encoder: AudioEncoderParam,
+    ///No documentation.
+    pub audio: AudioParam,
+}
+impl<
+    AudioEncoderParam: crate::nodes::types::AudioEncoder,
+    AudioParam: crate::nodes::types::Audio,
+> AudioEncoderEncode<AudioEncoderParam, AudioParam> {
+    /// Create a new node.
+    pub fn new(audio_encoder: AudioEncoderParam, audio: AudioParam) -> Self {
+        Self { audio_encoder, audio }
+    }
+}
+impl<
+    AudioEncoderParam: crate::nodes::types::AudioEncoder,
+    AudioParam: crate::nodes::types::Audio,
+> crate::nodes::TypedNode for AudioEncoderEncode<AudioEncoderParam, AudioParam> {
+    type Output = crate::nodes::types::AudioEncoderOutputOut;
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
+        Self::Output::from_dynamic(node_id, 0)
+    }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("audio_encoder".to_string(), self.audio_encoder.clone().into());
+        output.insert("audio".to_string(), self.audio.clone().into());
+        output
+    }
+    const NAME: &'static str = "AudioEncoderEncode";
+    const DISPLAY_NAME: &'static str = "AudioEncoderEncode";
+    const DESCRIPTION: &'static str = "";
+    const CATEGORY: &'static str = "conditioning";
+}
 ///**CLIP Set Last Layer**: No description.
 #[derive(Clone)]
 #[allow(non_camel_case_types)]
@@ -127,12 +167,9 @@ impl<
 #[derive(Clone)]
 #[allow(non_camel_case_types)]
 pub struct CLIPTextEncodeLumina2<
-    SystemPromptParam: crate::nodes::types::String,
     UserPromptParam: crate::nodes::types::String,
     ClipParam: crate::nodes::types::Clip,
 > {
-    ///Lumina2 provide two types of system prompts:Superior: You are an assistant designed to generate superior images with the superior degree of image-text alignment based on textual prompts or user prompts. Alignment: You are an assistant designed to generate high-quality images with the highest degree of image-text alignment based on textual prompts.
-    pub system_prompt: SystemPromptParam,
     /**The text to be encoded.
 
 **Metadata**:
@@ -144,36 +181,24 @@ pub struct CLIPTextEncodeLumina2<
     pub clip: ClipParam,
 }
 impl<
-    SystemPromptParam: crate::nodes::types::String,
     UserPromptParam: crate::nodes::types::String,
     ClipParam: crate::nodes::types::Clip,
-> CLIPTextEncodeLumina2<SystemPromptParam, UserPromptParam, ClipParam> {
+> CLIPTextEncodeLumina2<UserPromptParam, ClipParam> {
     /// Create a new node.
-    pub fn new(
-        system_prompt: SystemPromptParam,
-        user_prompt: UserPromptParam,
-        clip: ClipParam,
-    ) -> Self {
-        Self {
-            system_prompt,
-            user_prompt,
-            clip,
-        }
+    pub fn new(user_prompt: UserPromptParam, clip: ClipParam) -> Self {
+        Self { user_prompt, clip }
     }
 }
 impl<
-    SystemPromptParam: crate::nodes::types::String,
     UserPromptParam: crate::nodes::types::String,
     ClipParam: crate::nodes::types::Clip,
-> crate::nodes::TypedNode
-for CLIPTextEncodeLumina2<SystemPromptParam, UserPromptParam, ClipParam> {
+> crate::nodes::TypedNode for CLIPTextEncodeLumina2<UserPromptParam, ClipParam> {
     type Output = crate::nodes::types::ConditioningOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
-        output.insert("system_prompt".to_string(), self.system_prompt.clone().into());
         output.insert("user_prompt".to_string(), self.user_prompt.clone().into());
         output.insert("clip".to_string(), self.clip.clone().into());
         output
@@ -1034,6 +1059,87 @@ for ConditioningStableAudio<
     }
     const NAME: &'static str = "ConditioningStableAudio";
     const DISPLAY_NAME: &'static str = "ConditioningStableAudio";
+    const DESCRIPTION: &'static str = "";
+    const CATEGORY: &'static str = "conditioning";
+}
+///**TextEncodeAceStepAudio**: No description.
+#[derive(Clone)]
+#[allow(non_camel_case_types)]
+pub struct TextEncodeAceStepAudio<
+    ClipParam: crate::nodes::types::Clip,
+    TagsParam: crate::nodes::types::String,
+    LyricsParam: crate::nodes::types::String,
+    LyricsStrengthParam: crate::nodes::types::Float,
+> {
+    ///No documentation.
+    pub clip: ClipParam,
+    /**No documentation.
+
+**Metadata**:
+  - Dynamic prompts: true
+  - Multiline: true
+*/
+    pub tags: TagsParam,
+    /**No documentation.
+
+**Metadata**:
+  - Dynamic prompts: true
+  - Multiline: true
+*/
+    pub lyrics: LyricsParam,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 10
+  - Min: 0
+  - Step: 0.01
+*/
+    pub lyrics_strength: LyricsStrengthParam,
+}
+impl<
+    ClipParam: crate::nodes::types::Clip,
+    TagsParam: crate::nodes::types::String,
+    LyricsParam: crate::nodes::types::String,
+    LyricsStrengthParam: crate::nodes::types::Float,
+> TextEncodeAceStepAudio<ClipParam, TagsParam, LyricsParam, LyricsStrengthParam> {
+    /// Create a new node.
+    pub fn new(
+        clip: ClipParam,
+        tags: TagsParam,
+        lyrics: LyricsParam,
+        lyrics_strength: LyricsStrengthParam,
+    ) -> Self {
+        Self {
+            clip,
+            tags,
+            lyrics,
+            lyrics_strength,
+        }
+    }
+}
+impl<
+    ClipParam: crate::nodes::types::Clip,
+    TagsParam: crate::nodes::types::String,
+    LyricsParam: crate::nodes::types::String,
+    LyricsStrengthParam: crate::nodes::types::Float,
+> crate::nodes::TypedNode
+for TextEncodeAceStepAudio<ClipParam, TagsParam, LyricsParam, LyricsStrengthParam> {
+    type Output = crate::nodes::types::ConditioningOut;
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
+        Self::Output::from_dynamic(node_id, 0)
+    }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("clip".to_string(), self.clip.clone().into());
+        output.insert("tags".to_string(), self.tags.clone().into());
+        output.insert("lyrics".to_string(), self.lyrics.clone().into());
+        output
+            .insert("lyrics_strength".to_string(), self.lyrics_strength.clone().into());
+        output
+    }
+    const NAME: &'static str = "TextEncodeAceStepAudio";
+    const DISPLAY_NAME: &'static str = "TextEncodeAceStepAudio";
     const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "conditioning";
 }

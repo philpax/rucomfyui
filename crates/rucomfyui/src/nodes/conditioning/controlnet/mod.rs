@@ -531,28 +531,20 @@ for ControlNetInpaintingAliMamaApply<
 ///**SetUnionControlNetType**: No description.
 #[derive(Clone)]
 #[allow(non_camel_case_types)]
-pub struct SetUnionControlNetType<
-    ControlNetParam: crate::nodes::types::ControlNet,
-    TypeParam: crate::nodes::types::String,
-> {
+pub struct SetUnionControlNetType<ControlNetParam: crate::nodes::types::ControlNet> {
     ///No documentation.
     pub control_net: ControlNetParam,
-    ///No documentation.
-    pub type_: TypeParam,
 }
 impl<
     ControlNetParam: crate::nodes::types::ControlNet,
-    TypeParam: crate::nodes::types::String,
-> SetUnionControlNetType<ControlNetParam, TypeParam> {
+> SetUnionControlNetType<ControlNetParam> {
     /// Create a new node.
-    pub fn new(control_net: ControlNetParam, type_: TypeParam) -> Self {
-        Self { control_net, type_ }
+    pub fn new(control_net: ControlNetParam) -> Self {
+        Self { control_net }
     }
 }
-impl<
-    ControlNetParam: crate::nodes::types::ControlNet,
-    TypeParam: crate::nodes::types::String,
-> crate::nodes::TypedNode for SetUnionControlNetType<ControlNetParam, TypeParam> {
+impl<ControlNetParam: crate::nodes::types::ControlNet> crate::nodes::TypedNode
+for SetUnionControlNetType<ControlNetParam> {
     type Output = crate::nodes::types::ControlNetOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)
@@ -560,7 +552,6 @@ impl<
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
         output.insert("control_net".to_string(), self.control_net.clone().into());
-        output.insert("type".to_string(), self.type_.clone().into());
         output
     }
     const NAME: &'static str = "SetUnionControlNetType";

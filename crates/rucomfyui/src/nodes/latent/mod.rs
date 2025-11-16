@@ -9,11 +9,83 @@ pub mod n_3_d;
 pub mod advanced;
 pub mod audio;
 pub mod batch;
+pub mod chroma_radiance;
 pub mod inpaint;
 pub mod sd_3;
 pub mod stable_cascade;
 pub mod transform;
 pub mod video;
+///**EmptyHunyuanImageLatent**: No description.
+#[derive(Clone)]
+#[allow(non_camel_case_types)]
+pub struct EmptyHunyuanImageLatent<
+    WidthParam: crate::nodes::types::Int,
+    HeightParam: crate::nodes::types::Int,
+    BatchSizeParam: crate::nodes::types::Int,
+> {
+    /**No documentation.
+
+**Metadata**:
+  - Default: 2048
+  - Max: 16384
+  - Min: 64
+  - Step: 32
+*/
+    pub width: WidthParam,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 2048
+  - Max: 16384
+  - Min: 64
+  - Step: 32
+*/
+    pub height: HeightParam,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 4096
+  - Min: 1
+*/
+    pub batch_size: BatchSizeParam,
+}
+impl<
+    WidthParam: crate::nodes::types::Int,
+    HeightParam: crate::nodes::types::Int,
+    BatchSizeParam: crate::nodes::types::Int,
+> EmptyHunyuanImageLatent<WidthParam, HeightParam, BatchSizeParam> {
+    /// Create a new node.
+    pub fn new(
+        width: WidthParam,
+        height: HeightParam,
+        batch_size: BatchSizeParam,
+    ) -> Self {
+        Self { width, height, batch_size }
+    }
+}
+impl<
+    WidthParam: crate::nodes::types::Int,
+    HeightParam: crate::nodes::types::Int,
+    BatchSizeParam: crate::nodes::types::Int,
+> crate::nodes::TypedNode
+for EmptyHunyuanImageLatent<WidthParam, HeightParam, BatchSizeParam> {
+    type Output = crate::nodes::types::LatentOut;
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
+        Self::Output::from_dynamic(node_id, 0)
+    }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("width".to_string(), self.width.clone().into());
+        output.insert("height".to_string(), self.height.clone().into());
+        output.insert("batch_size".to_string(), self.batch_size.clone().into());
+        output
+    }
+    const NAME: &'static str = "EmptyHunyuanImageLatent";
+    const DISPLAY_NAME: &'static str = "EmptyHunyuanImageLatent";
+    const DESCRIPTION: &'static str = "";
+    const CATEGORY: &'static str = "latent";
+}
 ///**Empty Latent Image**: Create a new batch of empty latent images to be denoised via sampling.
 #[derive(Clone)]
 #[allow(non_camel_case_types)]

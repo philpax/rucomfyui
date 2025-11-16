@@ -110,26 +110,20 @@ for GetVideoComponents<VideoParam> {
 ///**Load Video**: No description.
 #[derive(Clone)]
 #[allow(non_camel_case_types)]
-pub struct LoadVideo<FileParam: crate::nodes::types::String> {
-    ///No documentation.
-    pub file: FileParam,
-}
-impl<FileParam: crate::nodes::types::String> LoadVideo<FileParam> {
+pub struct LoadVideo {}
+impl LoadVideo {
     /// Create a new node.
-    pub fn new(file: FileParam) -> Self {
-        Self { file }
+    pub fn new() -> Self {
+        Self {}
     }
 }
-impl<FileParam: crate::nodes::types::String> crate::nodes::TypedNode
-for LoadVideo<FileParam> {
+impl crate::nodes::TypedNode for LoadVideo {
     type Output = crate::nodes::types::VideoOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
-        let mut output = HashMap::default();
-        output.insert("file".to_string(), self.file.clone().into());
-        output
+        HashMap::default()
     }
     const NAME: &'static str = "LoadVideo";
     const DISPLAY_NAME: &'static str = "Load Video";
@@ -142,58 +136,30 @@ for LoadVideo<FileParam> {
 pub struct SaveVideo<
     VideoParam: crate::nodes::types::Video,
     FilenamePrefixParam: crate::nodes::types::String,
-    FormatParam: crate::nodes::types::String,
-    CodecParam: crate::nodes::types::String,
 > {
     ///The video to save.
     pub video: VideoParam,
     /**The prefix for the file to save. This may include formatting information such as %date:yyyy-MM-dd% or %Empty Latent Image.width% to include values from nodes.
 
 **Metadata**:
+  - Multiline: false
   - Default: video/ComfyUI
 */
     pub filename_prefix: FilenamePrefixParam,
-    /**The format to save the video as.
-
-**Metadata**:
-  - Default: auto
-*/
-    pub format: FormatParam,
-    /**The codec to use for the video.
-
-**Metadata**:
-  - Default: auto
-*/
-    pub codec: CodecParam,
 }
 impl<
     VideoParam: crate::nodes::types::Video,
     FilenamePrefixParam: crate::nodes::types::String,
-    FormatParam: crate::nodes::types::String,
-    CodecParam: crate::nodes::types::String,
-> SaveVideo<VideoParam, FilenamePrefixParam, FormatParam, CodecParam> {
+> SaveVideo<VideoParam, FilenamePrefixParam> {
     /// Create a new node.
-    pub fn new(
-        video: VideoParam,
-        filename_prefix: FilenamePrefixParam,
-        format: FormatParam,
-        codec: CodecParam,
-    ) -> Self {
-        Self {
-            video,
-            filename_prefix,
-            format,
-            codec,
-        }
+    pub fn new(video: VideoParam, filename_prefix: FilenamePrefixParam) -> Self {
+        Self { video, filename_prefix }
     }
 }
 impl<
     VideoParam: crate::nodes::types::Video,
     FilenamePrefixParam: crate::nodes::types::String,
-    FormatParam: crate::nodes::types::String,
-    CodecParam: crate::nodes::types::String,
-> crate::nodes::TypedNode
-for SaveVideo<VideoParam, FilenamePrefixParam, FormatParam, CodecParam> {
+> crate::nodes::TypedNode for SaveVideo<VideoParam, FilenamePrefixParam> {
     type Output = WorkflowNodeId;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         node_id
@@ -203,8 +169,6 @@ for SaveVideo<VideoParam, FilenamePrefixParam, FormatParam, CodecParam> {
         output.insert("video".to_string(), self.video.clone().into());
         output
             .insert("filename_prefix".to_string(), self.filename_prefix.clone().into());
-        output.insert("format".to_string(), self.format.clone().into());
-        output.insert("codec".to_string(), self.codec.clone().into());
         output
     }
     const NAME: &'static str = "SaveVideo";
@@ -215,17 +179,13 @@ for SaveVideo<VideoParam, FilenamePrefixParam, FormatParam, CodecParam> {
 impl<
     VideoParam: crate::nodes::types::Video,
     FilenamePrefixParam: crate::nodes::types::String,
-    FormatParam: crate::nodes::types::String,
-    CodecParam: crate::nodes::types::String,
-> crate::nodes::TypedOutputNode
-for SaveVideo<VideoParam, FilenamePrefixParam, FormatParam, CodecParam> {}
+> crate::nodes::TypedOutputNode for SaveVideo<VideoParam, FilenamePrefixParam> {}
 ///**SaveWEBM**: No description.
 #[derive(Clone)]
 #[allow(non_camel_case_types)]
 pub struct SaveWEBM<
     ImagesParam: crate::nodes::types::Image,
     FilenamePrefixParam: crate::nodes::types::String,
-    CodecParam: crate::nodes::types::String,
     FpsParam: crate::nodes::types::Float,
     CrfParam: crate::nodes::types::Float,
 > {
@@ -234,11 +194,10 @@ pub struct SaveWEBM<
     /**No documentation.
 
 **Metadata**:
+  - Multiline: false
   - Default: ComfyUI
 */
     pub filename_prefix: FilenamePrefixParam,
-    ///No documentation.
-    pub codec: CodecParam,
     /**No documentation.
 
 **Metadata**:
@@ -261,22 +220,19 @@ pub struct SaveWEBM<
 impl<
     ImagesParam: crate::nodes::types::Image,
     FilenamePrefixParam: crate::nodes::types::String,
-    CodecParam: crate::nodes::types::String,
     FpsParam: crate::nodes::types::Float,
     CrfParam: crate::nodes::types::Float,
-> SaveWEBM<ImagesParam, FilenamePrefixParam, CodecParam, FpsParam, CrfParam> {
+> SaveWEBM<ImagesParam, FilenamePrefixParam, FpsParam, CrfParam> {
     /// Create a new node.
     pub fn new(
         images: ImagesParam,
         filename_prefix: FilenamePrefixParam,
-        codec: CodecParam,
         fps: FpsParam,
         crf: CrfParam,
     ) -> Self {
         Self {
             images,
             filename_prefix,
-            codec,
             fps,
             crf,
         }
@@ -285,11 +241,10 @@ impl<
 impl<
     ImagesParam: crate::nodes::types::Image,
     FilenamePrefixParam: crate::nodes::types::String,
-    CodecParam: crate::nodes::types::String,
     FpsParam: crate::nodes::types::Float,
     CrfParam: crate::nodes::types::Float,
 > crate::nodes::TypedNode
-for SaveWEBM<ImagesParam, FilenamePrefixParam, CodecParam, FpsParam, CrfParam> {
+for SaveWEBM<ImagesParam, FilenamePrefixParam, FpsParam, CrfParam> {
     type Output = WorkflowNodeId;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         node_id
@@ -299,7 +254,6 @@ for SaveWEBM<ImagesParam, FilenamePrefixParam, CodecParam, FpsParam, CrfParam> {
         output.insert("images".to_string(), self.images.clone().into());
         output
             .insert("filename_prefix".to_string(), self.filename_prefix.clone().into());
-        output.insert("codec".to_string(), self.codec.clone().into());
         output.insert("fps".to_string(), self.fps.clone().into());
         output.insert("crf".to_string(), self.crf.clone().into());
         output
@@ -312,8 +266,7 @@ for SaveWEBM<ImagesParam, FilenamePrefixParam, CodecParam, FpsParam, CrfParam> {
 impl<
     ImagesParam: crate::nodes::types::Image,
     FilenamePrefixParam: crate::nodes::types::String,
-    CodecParam: crate::nodes::types::String,
     FpsParam: crate::nodes::types::Float,
     CrfParam: crate::nodes::types::Float,
 > crate::nodes::TypedOutputNode
-for SaveWEBM<ImagesParam, FilenamePrefixParam, CodecParam, FpsParam, CrfParam> {}
+for SaveWEBM<ImagesParam, FilenamePrefixParam, FpsParam, CrfParam> {}

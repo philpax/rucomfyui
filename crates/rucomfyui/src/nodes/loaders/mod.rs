@@ -19,6 +19,15 @@ pub mod out {
         ///The VAE model used for encoding and decoding images to and from latent space.
         pub vae: crate::nodes::types::VaeOut,
     }
+    ///Output for [`LoadImageTextSetFromFolderNode`](super::LoadImageTextSetFromFolderNode).
+    #[derive(Clone)]
+    #[allow(non_camel_case_types)]
+    pub struct LoadImageTextSetFromFolderNodeOutput {
+        ///No documentation.
+        pub image: crate::nodes::types::ImageOut,
+        ///No documentation.
+        pub conditioning: crate::nodes::types::ConditioningOut,
+    }
     ///Output for [`LoraLoader`](super::LoraLoader).
     #[derive(Clone)]
     #[allow(non_camel_case_types)]
@@ -41,6 +50,29 @@ pub mod out {
         ///No documentation.
         pub clip_vision: crate::nodes::types::ClipVisionOut,
     }
+}
+///**AudioEncoderLoader**: No description.
+#[derive(Clone)]
+#[allow(non_camel_case_types)]
+pub struct AudioEncoderLoader {}
+impl AudioEncoderLoader {
+    /// Create a new node.
+    pub fn new() -> Self {
+        Self {}
+    }
+}
+impl crate::nodes::TypedNode for AudioEncoderLoader {
+    type Output = crate::nodes::types::AudioEncoderOut;
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
+        Self::Output::from_dynamic(node_id, 0)
+    }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        HashMap::default()
+    }
+    const NAME: &'static str = "AudioEncoderLoader";
+    const DISPLAY_NAME: &'static str = "AudioEncoderLoader";
+    const DESCRIPTION: &'static str = "";
+    const CATEGORY: &'static str = "loaders";
 }
 ///**Load CLIP Vision**: No description.
 #[derive(Clone)]
@@ -217,13 +249,10 @@ for GLIGENLoader<GligenNameParam> {
 #[allow(non_camel_case_types)]
 pub struct HypernetworkLoader<
     ModelParam: crate::nodes::types::Model,
-    HypernetworkNameParam: crate::nodes::types::String,
     StrengthParam: crate::nodes::types::Float,
 > {
     ///No documentation.
     pub model: ModelParam,
-    ///No documentation.
-    pub hypernetwork_name: HypernetworkNameParam,
     /**No documentation.
 
 **Metadata**:
@@ -236,28 +265,17 @@ pub struct HypernetworkLoader<
 }
 impl<
     ModelParam: crate::nodes::types::Model,
-    HypernetworkNameParam: crate::nodes::types::String,
     StrengthParam: crate::nodes::types::Float,
-> HypernetworkLoader<ModelParam, HypernetworkNameParam, StrengthParam> {
+> HypernetworkLoader<ModelParam, StrengthParam> {
     /// Create a new node.
-    pub fn new(
-        model: ModelParam,
-        hypernetwork_name: HypernetworkNameParam,
-        strength: StrengthParam,
-    ) -> Self {
-        Self {
-            model,
-            hypernetwork_name,
-            strength,
-        }
+    pub fn new(model: ModelParam, strength: StrengthParam) -> Self {
+        Self { model, strength }
     }
 }
 impl<
     ModelParam: crate::nodes::types::Model,
-    HypernetworkNameParam: crate::nodes::types::String,
     StrengthParam: crate::nodes::types::Float,
-> crate::nodes::TypedNode
-for HypernetworkLoader<ModelParam, HypernetworkNameParam, StrengthParam> {
+> crate::nodes::TypedNode for HypernetworkLoader<ModelParam, StrengthParam> {
     type Output = crate::nodes::types::ModelOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)
@@ -265,17 +283,172 @@ for HypernetworkLoader<ModelParam, HypernetworkNameParam, StrengthParam> {
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
         output.insert("model".to_string(), self.model.clone().into());
-        output
-            .insert(
-                "hypernetwork_name".to_string(),
-                self.hypernetwork_name.clone().into(),
-            );
         output.insert("strength".to_string(), self.strength.clone().into());
         output
     }
     const NAME: &'static str = "HypernetworkLoader";
     const DISPLAY_NAME: &'static str = "HypernetworkLoader";
     const DESCRIPTION: &'static str = "";
+    const CATEGORY: &'static str = "loaders";
+}
+///**Load Image Dataset from Folder**: Loads a batch of images from a directory for training.
+#[derive(Clone)]
+#[allow(non_camel_case_types)]
+pub struct LoadImageSetFromFolderNode<
+    FolderParam: crate::nodes::types::String,
+    ResizeMethodParam: crate::nodes::types::String = crate::nodes::types::StringOut,
+> {
+    ///The folder to load images from.
+    pub folder: FolderParam,
+    /**No documentation.
+
+**Metadata**:
+  - Default: None
+*/
+    pub resize_method: Option<ResizeMethodParam>,
+}
+impl<
+    FolderParam: crate::nodes::types::String,
+    ResizeMethodParam: crate::nodes::types::String,
+> LoadImageSetFromFolderNode<FolderParam, ResizeMethodParam> {
+    /// Create a new node.
+    pub fn new(folder: FolderParam, resize_method: Option<ResizeMethodParam>) -> Self {
+        Self { folder, resize_method }
+    }
+}
+impl<
+    FolderParam: crate::nodes::types::String,
+    ResizeMethodParam: crate::nodes::types::String,
+> crate::nodes::TypedNode
+for LoadImageSetFromFolderNode<FolderParam, ResizeMethodParam> {
+    type Output = crate::nodes::types::ImageOut;
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
+        Self::Output::from_dynamic(node_id, 0)
+    }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("folder".to_string(), self.folder.clone().into());
+        if let Some(v) = &self.resize_method {
+            output.insert("resize_method".to_string(), v.clone().into());
+        }
+        output
+    }
+    const NAME: &'static str = "LoadImageSetFromFolderNode";
+    const DISPLAY_NAME: &'static str = "Load Image Dataset from Folder";
+    const DESCRIPTION: &'static str = "Loads a batch of images from a directory for training.";
+    const CATEGORY: &'static str = "loaders";
+}
+///**Load Image and Text Dataset from Folder**: Loads a batch of images and caption from a directory for training.
+#[derive(Clone)]
+#[allow(non_camel_case_types)]
+pub struct LoadImageTextSetFromFolderNode<
+    FolderParam: crate::nodes::types::String,
+    ClipParam: crate::nodes::types::Clip,
+    ResizeMethodParam: crate::nodes::types::String = crate::nodes::types::StringOut,
+    WidthParam: crate::nodes::types::Int = crate::nodes::types::IntOut,
+    HeightParam: crate::nodes::types::Int = crate::nodes::types::IntOut,
+> {
+    ///The folder to load images from.
+    pub folder: FolderParam,
+    ///The CLIP model used for encoding the text.
+    pub clip: ClipParam,
+    /**No documentation.
+
+**Metadata**:
+  - Default: None
+*/
+    pub resize_method: Option<ResizeMethodParam>,
+    /**The width to resize the images to. -1 means use the original width.
+
+**Metadata**:
+  - Default: -1
+  - Max: 10000
+  - Min: -1
+  - Step: 1
+*/
+    pub width: Option<WidthParam>,
+    /**The height to resize the images to. -1 means use the original height.
+
+**Metadata**:
+  - Default: -1
+  - Max: 10000
+  - Min: -1
+  - Step: 1
+*/
+    pub height: Option<HeightParam>,
+}
+impl<
+    FolderParam: crate::nodes::types::String,
+    ClipParam: crate::nodes::types::Clip,
+    ResizeMethodParam: crate::nodes::types::String,
+    WidthParam: crate::nodes::types::Int,
+    HeightParam: crate::nodes::types::Int,
+> LoadImageTextSetFromFolderNode<
+    FolderParam,
+    ClipParam,
+    ResizeMethodParam,
+    WidthParam,
+    HeightParam,
+> {
+    /// Create a new node.
+    pub fn new(
+        folder: FolderParam,
+        clip: ClipParam,
+        resize_method: Option<ResizeMethodParam>,
+        width: Option<WidthParam>,
+        height: Option<HeightParam>,
+    ) -> Self {
+        Self {
+            folder,
+            clip,
+            resize_method,
+            width,
+            height,
+        }
+    }
+}
+impl<
+    FolderParam: crate::nodes::types::String,
+    ClipParam: crate::nodes::types::Clip,
+    ResizeMethodParam: crate::nodes::types::String,
+    WidthParam: crate::nodes::types::Int,
+    HeightParam: crate::nodes::types::Int,
+> crate::nodes::TypedNode
+for LoadImageTextSetFromFolderNode<
+    FolderParam,
+    ClipParam,
+    ResizeMethodParam,
+    WidthParam,
+    HeightParam,
+> {
+    type Output = out::LoadImageTextSetFromFolderNodeOutput;
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
+        Self::Output {
+            image: crate::nodes::types::ImageOut::from_dynamic(node_id, 0u32),
+            conditioning: crate::nodes::types::ConditioningOut::from_dynamic(
+                node_id,
+                1u32,
+            ),
+        }
+    }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("folder".to_string(), self.folder.clone().into());
+        output.insert("clip".to_string(), self.clip.clone().into());
+        if let Some(v) = &self.resize_method {
+            output.insert("resize_method".to_string(), v.clone().into());
+        }
+        if let Some(v) = &self.width {
+            output.insert("width".to_string(), v.clone().into());
+        }
+        if let Some(v) = &self.height {
+            output.insert("height".to_string(), v.clone().into());
+        }
+        output
+    }
+    const NAME: &'static str = "LoadImageTextSetFromFolderNode";
+    const DISPLAY_NAME: &'static str = "Load Image and Text Dataset from Folder";
+    const DESCRIPTION: &'static str = "Loads a batch of images and caption from a directory for training.";
     const CATEGORY: &'static str = "loaders";
 }
 ///**Load LoRA**: LoRAs are used to modify diffusion and CLIP models, altering the way in which latents are denoised such as applying styles. Multiple LoRA nodes can be linked together.
@@ -440,6 +613,125 @@ for LoraLoaderModelOnly<ModelParam, LoraNameParam, StrengthModelParam> {
     const DESCRIPTION: &'static str = "LoRAs are used to modify diffusion and CLIP models, altering the way in which latents are denoised such as applying styles. Multiple LoRA nodes can be linked together.";
     const CATEGORY: &'static str = "loaders";
 }
+///**Load LoRA Model**: Load Trained LoRA weights from Train LoRA node.
+#[derive(Clone)]
+#[allow(non_camel_case_types)]
+pub struct LoraModelLoader<
+    ModelParam: crate::nodes::types::Model,
+    LoraParam: crate::nodes::types::LoraModel,
+    StrengthModelParam: crate::nodes::types::Float,
+> {
+    ///The diffusion model the LoRA will be applied to.
+    pub model: ModelParam,
+    ///The LoRA model to apply to the diffusion model.
+    pub lora: LoraParam,
+    /**How strongly to modify the diffusion model. This value can be negative.
+
+**Metadata**:
+  - Default: 1
+  - Max: 100
+  - Min: -100
+  - Step: 0.01
+*/
+    pub strength_model: StrengthModelParam,
+}
+impl<
+    ModelParam: crate::nodes::types::Model,
+    LoraParam: crate::nodes::types::LoraModel,
+    StrengthModelParam: crate::nodes::types::Float,
+> LoraModelLoader<ModelParam, LoraParam, StrengthModelParam> {
+    /// Create a new node.
+    pub fn new(
+        model: ModelParam,
+        lora: LoraParam,
+        strength_model: StrengthModelParam,
+    ) -> Self {
+        Self {
+            model,
+            lora,
+            strength_model,
+        }
+    }
+}
+impl<
+    ModelParam: crate::nodes::types::Model,
+    LoraParam: crate::nodes::types::LoraModel,
+    StrengthModelParam: crate::nodes::types::Float,
+> crate::nodes::TypedNode
+for LoraModelLoader<ModelParam, LoraParam, StrengthModelParam> {
+    type Output = crate::nodes::types::ModelOut;
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
+        Self::Output::from_dynamic(node_id, 0)
+    }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("model".to_string(), self.model.clone().into());
+        output.insert("lora".to_string(), self.lora.clone().into());
+        output.insert("strength_model".to_string(), self.strength_model.clone().into());
+        output
+    }
+    const NAME: &'static str = "LoraModelLoader";
+    const DISPLAY_NAME: &'static str = "Load LoRA Model";
+    const DESCRIPTION: &'static str = "Load Trained LoRA weights from Train LoRA node.";
+    const CATEGORY: &'static str = "loaders";
+}
+///**Save LoRA Weights**: No description.
+#[derive(Clone)]
+#[allow(non_camel_case_types)]
+pub struct SaveLoRANode<
+    LoraParam: crate::nodes::types::LoraModel,
+    PrefixParam: crate::nodes::types::String,
+    StepsParam: crate::nodes::types::Int = crate::nodes::types::IntOut,
+> {
+    ///The LoRA model to save. Do not use the model with LoRA layers.
+    pub lora: LoraParam,
+    /**The prefix to use for the saved LoRA file.
+
+**Metadata**:
+  - Default: loras/ComfyUI_trained_lora
+*/
+    pub prefix: PrefixParam,
+    ///Optional: The number of steps to LoRA has been trained for, used to name the saved file.
+    pub steps: Option<StepsParam>,
+}
+impl<
+    LoraParam: crate::nodes::types::LoraModel,
+    PrefixParam: crate::nodes::types::String,
+    StepsParam: crate::nodes::types::Int,
+> SaveLoRANode<LoraParam, PrefixParam, StepsParam> {
+    /// Create a new node.
+    pub fn new(lora: LoraParam, prefix: PrefixParam, steps: Option<StepsParam>) -> Self {
+        Self { lora, prefix, steps }
+    }
+}
+impl<
+    LoraParam: crate::nodes::types::LoraModel,
+    PrefixParam: crate::nodes::types::String,
+    StepsParam: crate::nodes::types::Int,
+> crate::nodes::TypedNode for SaveLoRANode<LoraParam, PrefixParam, StepsParam> {
+    type Output = WorkflowNodeId;
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
+        node_id
+    }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("lora".to_string(), self.lora.clone().into());
+        output.insert("prefix".to_string(), self.prefix.clone().into());
+        if let Some(v) = &self.steps {
+            output.insert("steps".to_string(), v.clone().into());
+        }
+        output
+    }
+    const NAME: &'static str = "SaveLoRANode";
+    const DISPLAY_NAME: &'static str = "Save LoRA Weights";
+    const DESCRIPTION: &'static str = "";
+    const CATEGORY: &'static str = "loaders";
+}
+impl<
+    LoraParam: crate::nodes::types::LoraModel,
+    PrefixParam: crate::nodes::types::String,
+    StepsParam: crate::nodes::types::Int,
+> crate::nodes::TypedOutputNode for SaveLoRANode<LoraParam, PrefixParam, StepsParam> {}
 ///**Load Style Model**: No description.
 #[derive(Clone)]
 #[allow(non_camel_case_types)]
@@ -478,26 +770,20 @@ for StyleModelLoader<StyleModelNameParam> {
 ///**Load Upscale Model**: No description.
 #[derive(Clone)]
 #[allow(non_camel_case_types)]
-pub struct UpscaleModelLoader<ModelNameParam: crate::nodes::types::String> {
-    ///No documentation.
-    pub model_name: ModelNameParam,
-}
-impl<ModelNameParam: crate::nodes::types::String> UpscaleModelLoader<ModelNameParam> {
+pub struct UpscaleModelLoader {}
+impl UpscaleModelLoader {
     /// Create a new node.
-    pub fn new(model_name: ModelNameParam) -> Self {
-        Self { model_name }
+    pub fn new() -> Self {
+        Self {}
     }
 }
-impl<ModelNameParam: crate::nodes::types::String> crate::nodes::TypedNode
-for UpscaleModelLoader<ModelNameParam> {
+impl crate::nodes::TypedNode for UpscaleModelLoader {
     type Output = crate::nodes::types::UpscaleModelOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
-        let mut output = HashMap::default();
-        output.insert("model_name".to_string(), self.model_name.clone().into());
-        output
+        HashMap::default()
     }
     const NAME: &'static str = "UpscaleModelLoader";
     const DISPLAY_NAME: &'static str = "Load Upscale Model";

@@ -163,3 +163,65 @@ impl<
     const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "advanced/conditioning/flux";
 }
+///**FluxKontextImageScale**: This node resizes the image to one that is more optimal for flux kontext.
+#[derive(Clone)]
+#[allow(non_camel_case_types)]
+pub struct FluxKontextImageScale<ImageParam: crate::nodes::types::Image> {
+    ///No documentation.
+    pub image: ImageParam,
+}
+impl<ImageParam: crate::nodes::types::Image> FluxKontextImageScale<ImageParam> {
+    /// Create a new node.
+    pub fn new(image: ImageParam) -> Self {
+        Self { image }
+    }
+}
+impl<ImageParam: crate::nodes::types::Image> crate::nodes::TypedNode
+for FluxKontextImageScale<ImageParam> {
+    type Output = crate::nodes::types::ImageOut;
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
+        Self::Output::from_dynamic(node_id, 0)
+    }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("image".to_string(), self.image.clone().into());
+        output
+    }
+    const NAME: &'static str = "FluxKontextImageScale";
+    const DISPLAY_NAME: &'static str = "FluxKontextImageScale";
+    const DESCRIPTION: &'static str = "This node resizes the image to one that is more optimal for flux kontext.";
+    const CATEGORY: &'static str = "advanced/conditioning/flux";
+}
+///**FluxKontextMultiReferenceLatentMethod**: No description.
+#[derive(Clone)]
+#[allow(non_camel_case_types)]
+pub struct FluxKontextMultiReferenceLatentMethod<
+    ConditioningParam: crate::nodes::types::Conditioning,
+> {
+    ///No documentation.
+    pub conditioning: ConditioningParam,
+}
+impl<
+    ConditioningParam: crate::nodes::types::Conditioning,
+> FluxKontextMultiReferenceLatentMethod<ConditioningParam> {
+    /// Create a new node.
+    pub fn new(conditioning: ConditioningParam) -> Self {
+        Self { conditioning }
+    }
+}
+impl<ConditioningParam: crate::nodes::types::Conditioning> crate::nodes::TypedNode
+for FluxKontextMultiReferenceLatentMethod<ConditioningParam> {
+    type Output = crate::nodes::types::ConditioningOut;
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
+        Self::Output::from_dynamic(node_id, 0)
+    }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("conditioning".to_string(), self.conditioning.clone().into());
+        output
+    }
+    const NAME: &'static str = "FluxKontextMultiReferenceLatentMethod";
+    const DISPLAY_NAME: &'static str = "FluxKontextMultiReferenceLatentMethod";
+    const DESCRIPTION: &'static str = "";
+    const CATEGORY: &'static str = "advanced/conditioning/flux";
+}

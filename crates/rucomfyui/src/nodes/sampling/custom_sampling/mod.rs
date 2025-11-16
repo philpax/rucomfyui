@@ -31,6 +31,90 @@ pub mod out {
         pub denoised_output: crate::nodes::types::LatentOut,
     }
 }
+///**Adaptive Projected Guidance**: No description.
+#[derive(Clone)]
+#[allow(non_camel_case_types)]
+pub struct APG<
+    ModelParam: crate::nodes::types::Model,
+    EtaParam: crate::nodes::types::Float,
+    NormThresholdParam: crate::nodes::types::Float,
+    MomentumParam: crate::nodes::types::Float,
+> {
+    ///No documentation.
+    pub model: ModelParam,
+    /**Controls the scale of the parallel guidance vector. Default CFG behavior at a setting of 1.
+
+**Metadata**:
+  - Default: 1
+  - Max: 10
+  - Min: -10
+  - Step: 0.01
+*/
+    pub eta: EtaParam,
+    /**Normalize guidance vector to this value, normalization disable at a setting of 0.
+
+**Metadata**:
+  - Default: 5
+  - Max: 50
+  - Min: 0
+  - Step: 0.1
+*/
+    pub norm_threshold: NormThresholdParam,
+    /**Controls a running average of guidance during diffusion, disabled at a setting of 0.
+
+**Metadata**:
+  - Default: 0
+  - Max: 1
+  - Min: -5
+  - Step: 0.01
+*/
+    pub momentum: MomentumParam,
+}
+impl<
+    ModelParam: crate::nodes::types::Model,
+    EtaParam: crate::nodes::types::Float,
+    NormThresholdParam: crate::nodes::types::Float,
+    MomentumParam: crate::nodes::types::Float,
+> APG<ModelParam, EtaParam, NormThresholdParam, MomentumParam> {
+    /// Create a new node.
+    pub fn new(
+        model: ModelParam,
+        eta: EtaParam,
+        norm_threshold: NormThresholdParam,
+        momentum: MomentumParam,
+    ) -> Self {
+        Self {
+            model,
+            eta,
+            norm_threshold,
+            momentum,
+        }
+    }
+}
+impl<
+    ModelParam: crate::nodes::types::Model,
+    EtaParam: crate::nodes::types::Float,
+    NormThresholdParam: crate::nodes::types::Float,
+    MomentumParam: crate::nodes::types::Float,
+> crate::nodes::TypedNode
+for APG<ModelParam, EtaParam, NormThresholdParam, MomentumParam> {
+    type Output = crate::nodes::types::ModelOut;
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
+        Self::Output::from_dynamic(node_id, 0)
+    }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("model".to_string(), self.model.clone().into());
+        output.insert("eta".to_string(), self.eta.clone().into());
+        output.insert("norm_threshold".to_string(), self.norm_threshold.clone().into());
+        output.insert("momentum".to_string(), self.momentum.clone().into());
+        output
+    }
+    const NAME: &'static str = "APG";
+    const DISPLAY_NAME: &'static str = "Adaptive Projected Guidance";
+    const DESCRIPTION: &'static str = "";
+    const CATEGORY: &'static str = "sampling/custom_sampling";
+}
 ///**SamplerCustom**: No description.
 #[derive(Clone)]
 #[allow(non_camel_case_types)]

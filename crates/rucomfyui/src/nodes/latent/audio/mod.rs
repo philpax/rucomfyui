@@ -5,7 +5,60 @@ use crate::{
     workflow::{WorkflowNodeId, WorkflowInput},
     nodes::types::Out,
 };
-///**EmptyLatentAudio**: No description.
+///**EmptyAceStepLatentAudio**: No description.
+#[derive(Clone)]
+#[allow(non_camel_case_types)]
+pub struct EmptyAceStepLatentAudio<
+    SecondsParam: crate::nodes::types::Float,
+    BatchSizeParam: crate::nodes::types::Int,
+> {
+    /**No documentation.
+
+**Metadata**:
+  - Default: 120
+  - Max: 1000
+  - Min: 1
+  - Step: 0.1
+*/
+    pub seconds: SecondsParam,
+    /**The number of latent images in the batch.
+
+**Metadata**:
+  - Default: 1
+  - Max: 4096
+  - Min: 1
+*/
+    pub batch_size: BatchSizeParam,
+}
+impl<
+    SecondsParam: crate::nodes::types::Float,
+    BatchSizeParam: crate::nodes::types::Int,
+> EmptyAceStepLatentAudio<SecondsParam, BatchSizeParam> {
+    /// Create a new node.
+    pub fn new(seconds: SecondsParam, batch_size: BatchSizeParam) -> Self {
+        Self { seconds, batch_size }
+    }
+}
+impl<
+    SecondsParam: crate::nodes::types::Float,
+    BatchSizeParam: crate::nodes::types::Int,
+> crate::nodes::TypedNode for EmptyAceStepLatentAudio<SecondsParam, BatchSizeParam> {
+    type Output = crate::nodes::types::LatentOut;
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
+        Self::Output::from_dynamic(node_id, 0)
+    }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("seconds".to_string(), self.seconds.clone().into());
+        output.insert("batch_size".to_string(), self.batch_size.clone().into());
+        output
+    }
+    const NAME: &'static str = "EmptyAceStepLatentAudio";
+    const DISPLAY_NAME: &'static str = "EmptyAceStepLatentAudio";
+    const DESCRIPTION: &'static str = "";
+    const CATEGORY: &'static str = "latent/audio";
+}
+///**Empty Latent Audio**: No description.
 #[derive(Clone)]
 #[allow(non_camel_case_types)]
 pub struct EmptyLatentAudio<
@@ -54,11 +107,11 @@ impl<
         output
     }
     const NAME: &'static str = "EmptyLatentAudio";
-    const DISPLAY_NAME: &'static str = "EmptyLatentAudio";
+    const DISPLAY_NAME: &'static str = "Empty Latent Audio";
     const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "latent/audio";
 }
-///**VAEDecodeAudio**: No description.
+///**VAE Decode Audio**: No description.
 #[derive(Clone)]
 #[allow(non_camel_case_types)]
 pub struct VAEDecodeAudio<
@@ -94,11 +147,11 @@ impl<
         output
     }
     const NAME: &'static str = "VAEDecodeAudio";
-    const DISPLAY_NAME: &'static str = "VAEDecodeAudio";
+    const DISPLAY_NAME: &'static str = "VAE Decode Audio";
     const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "latent/audio";
 }
-///**VAEEncodeAudio**: No description.
+///**VAE Encode Audio**: No description.
 #[derive(Clone)]
 #[allow(non_camel_case_types)]
 pub struct VAEEncodeAudio<
@@ -134,7 +187,7 @@ impl<
         output
     }
     const NAME: &'static str = "VAEEncodeAudio";
-    const DISPLAY_NAME: &'static str = "VAEEncodeAudio";
+    const DISPLAY_NAME: &'static str = "VAE Encode Audio";
     const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "latent/audio";
 }
