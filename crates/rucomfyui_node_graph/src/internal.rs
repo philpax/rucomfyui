@@ -9,7 +9,7 @@ use std::{
 };
 
 use egui_snarl::{
-    ui::{PinInfo, SnarlViewer, WireStyle},
+    ui::{PinInfo, SnarlViewer},
     InPin, NodeId, OutPin, Snarl,
 };
 
@@ -403,6 +403,7 @@ impl SnarlViewer<FlowNodeData> for FlowViewer<'_> {
         node.outputs.len()
     }
 
+    #[allow(refining_impl_trait)]
     fn show_input(
         &mut self,
         pin: &InPin,
@@ -435,6 +436,7 @@ impl SnarlViewer<FlowNodeData> for FlowViewer<'_> {
         PinInfo::circle().with_fill(color)
     }
 
+    #[allow(refining_impl_trait)]
     fn show_output(
         &mut self,
         pin: &OutPin,
