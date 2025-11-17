@@ -56,16 +56,14 @@ impl ComfyUiNodeGraph {
     pub fn as_workflow_graph_with_mapping(&self) -> (WorkflowGraph, NodeToWorkflowNodeMapping) {
         let g = WorkflowGraph::new();
         let mut mapping: HashMap<NodeId, WorkflowNodeId> = HashMap::new();
-        let mut input_mapping: HashMap<(NodeId, usize), (WorkflowNodeId, String)> =
-            HashMap::new();
-        let mut output_mapping: HashMap<(NodeId, usize), (WorkflowNodeId, usize)> =
-            HashMap::new();
+        let mut input_mapping: HashMap<(NodeId, usize), (WorkflowNodeId, String)> = HashMap::new();
+        let mut output_mapping: HashMap<(NodeId, usize), (WorkflowNodeId, usize)> = HashMap::new();
 
         // First pass: create all nodes
         for (node_id, node) in self.snarl.node_ids() {
             let object = &node.object;
-            let mut g_node =
-                WorkflowNode::new(object.name.clone()).with_meta(WorkflowMeta::new(object.display_name()));
+            let mut g_node = WorkflowNode::new(object.name.clone())
+                .with_meta(WorkflowMeta::new(object.display_name()));
 
             // Add constant inputs (non-connected inputs)
             for (input_idx, input) in node.inputs.iter().enumerate() {
@@ -164,12 +162,13 @@ impl ComfyUiNodeGraph {
 
             for node_id in node_ids {
                 let workflow_node = workflow.0.get(&node_id).unwrap();
-                let object = self.object_info.get(&workflow_node.class_type).ok_or_else(|| {
-                    UnknownClassTypeError {
+                let object = self
+                    .object_info
+                    .get(&workflow_node.class_type)
+                    .ok_or_else(|| UnknownClassTypeError {
                         node_id,
                         class_type: workflow_node.class_type.clone(),
-                    }
-                })?;
+                    })?;
 
                 // Create node data with values from workflow
                 let mut node_data = FlowNodeData::new(object.clone());
@@ -220,10 +219,8 @@ impl ComfyUiNodeGraph {
                     };
 
                     // Find the input index for this input name
-                    let Some(input_idx) = node
-                        .inputs
-                        .iter()
-                        .position(|inp| inp.name == *input_name)
+                    let Some(input_idx) =
+                        node.inputs.iter().position(|inp| inp.name == *input_name)
                     else {
                         continue;
                     };
