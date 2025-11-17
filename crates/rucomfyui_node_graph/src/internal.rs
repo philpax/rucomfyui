@@ -488,10 +488,9 @@ impl SnarlViewer<FlowNodeData> for FlowViewer<'_> {
     }
 
     fn has_footer(&mut self, _node: &FlowNodeData) -> bool {
-        // Show footer if there are output images
-        // We can't check without the node_id, so we just return false here
-        // The footer will be shown via show_footer which has the node_id
-        false
+        // Always return true since any node could potentially have output images.
+        // The actual rendering in show_footer will handle cases where there are no images.
+        true
     }
 
     fn show_footer(
