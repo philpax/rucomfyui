@@ -247,13 +247,13 @@ impl eframe::App for Application {
                         }
                     });
                     if ui.button("System stats").clicked() {
-                        self.request_system_stats();
+                        self.request_system_stats(true);
                     }
                     if ui.button("Models").clicked() {
                         self.request_models();
                     }
                     if ui.button("History").clicked() {
-                        self.request_history();
+                        self.request_history(true);
                     }
                 }
 
@@ -594,7 +594,7 @@ impl Application {
 
         // If refresh was clicked, request system stats again
         if should_refresh {
-            self.request_system_stats();
+            self.request_system_stats(false);
         }
 
         if let Some((unload_models, free_memory)) = should_free {
@@ -762,7 +762,7 @@ impl Application {
 
         // If we need to refresh, request history
         if should_refresh {
-            self.request_history();
+            self.request_history(false);
         }
 
         if clear_history {
@@ -962,7 +962,7 @@ impl Application {
     }
 
     /// Request that system statistics be fetched.
-    fn request_system_stats(&mut self) {
+    fn request_system_stats(&mut self, open_window: bool) {
         let tx = self.async_output_tx.clone();
         let Some(client) = self.get_client_or_send_error(&tx) else {
             return;
@@ -970,7 +970,7 @@ impl Application {
         self.runtime.spawn(async move {
             let stats = client.system_stats().await;
             tx.send(match stats {
-                Ok(stats) => AsyncResponse::SystemStats(stats),
+                Ok(stats) => AsyncResponse::SystemStats { stats, open_window },
                 Err(err) => AsyncResponse::error("System stats", err),
             })
             .unwrap();
@@ -1030,7 +1030,7 @@ impl Application {
     }
 
     /// Request history data from ComfyUI.
-    fn request_history(&mut self) {
+    fn request_history(&mut self, open_window: bool) {
         let tx = self.async_output_tx.clone();
         let Some(client) = self.get_client_or_send_error(&tx) else {
             return;
@@ -1040,7 +1040,7 @@ impl Application {
         self.runtime.spawn(async move {
             let history = client.get_history(max_items).await;
             tx.send(match history {
-                Ok(history) => AsyncResponse::History(history),
+                Ok(history) => AsyncResponse::History { history, open_window },
                 Err(err) => AsyncResponse::error("History", err),
             })
             .unwrap();
@@ -1106,13 +1106,23 @@ pub enum AsyncResponse {
     /// A queue was received.
     Queue(rucomfyui::queue::Queue),
     /// System statistics were received.
-    SystemStats(rucomfyui::system::SystemStats),
+    SystemStats {
+        /// The system stats.
+        stats: rucomfyui::system::SystemStats,
+        /// Whether to open the window.
+        open_window: bool,
+    },
     /// The system stats need to be refreshed.
     RefreshSystemStats,
     /// Model categories and their models were received.
     Models(HashMap<rucomfyui::models::ModelCategory, Vec<String>>),
     /// History data was received.
-    History(rucomfyui::history::History),
+    History {
+        /// The history data.
+        history: rucomfyui::history::History,
+        /// Whether to open the window.
+        open_window: bool,
+    },
     /// The history needs to be refreshed.
     RefreshHistory,
 }
@@ -1194,9 +1204,11 @@ impl Application {
                         refresh_system_stats = true;
                     }
                 }
-                AsyncResponse::SystemStats(stats) => {
+                AsyncResponse::SystemStats { stats, open_window } => {
                     self.system_stats = Some(stats);
-                    self.system_stats_open = true;
+                    if open_window {
+                        self.system_stats_open = true;
+                    }
                 }
                 AsyncResponse::RefreshSystemStats => {
                     refresh_system_stats = true;
@@ -1205,9 +1217,11 @@ impl Application {
                     self.models = models;
                     self.models_open = true;
                 }
-                AsyncResponse::History(history) => {
+                AsyncResponse::History { history, open_window } => {
                     self.history = Some(history);
-                    self.history_open = true;
+                    if open_window {
+                        self.history_open = true;
+                    }
                 }
                 AsyncResponse::RefreshHistory => {
                     refresh_history = true;
@@ -1225,11 +1239,11 @@ impl Application {
         }
 
         if refresh_system_stats {
-            self.request_system_stats();
+            self.request_system_stats(false);
         }
 
         if refresh_history {
-            self.request_history();
+            self.request_history(false);
         }
 
         needs_repaint

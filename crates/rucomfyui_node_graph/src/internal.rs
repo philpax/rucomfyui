@@ -518,7 +518,12 @@ impl SnarlViewer<FlowNodeData> for FlowViewer<'_> {
             });
 
             if let Some(image) = images.get(*selected) {
-                ui.image(image.clone());
+                let available_width = ui.available_width();
+                ui.add(
+                    egui::Image::new(image.clone())
+                        .max_width(available_width)
+                        .shrink_to_fit(),
+                );
             }
         }
     }
