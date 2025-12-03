@@ -198,8 +198,7 @@ impl LuaUserData for Client {
         methods.add_async_method("get_models", |lua, this, category: String| async move {
             this.check_allowed("get_models", this.config.get_models)?;
             let cat: rucomfyui::models::ModelCategory =
-                serde_json::from_value(serde_json::Value::String(category))
-                    .map_err(mlua::Error::external)?;
+                lua.from_value(LuaValue::String(lua.create_string(&category)?))?;
             let models = to_lua_result(this.inner.get_models(cat).await)?;
             lua.to_value(&models)
         });

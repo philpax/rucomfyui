@@ -12,7 +12,6 @@ categories = ["api-bindings", "multimedia::images"]
 rucomfyui = { path = "../rucomfyui", default-features = false }
 mlua = { version = "0.10", features = ["lua54", "vendored", "async", "send", "serialize"] }
 convert_case = { workspace = true }
-serde_json = { workspace = true }
 thiserror = { workspace = true }
 
 [dev-dependencies]
