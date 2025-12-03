@@ -5,7 +5,9 @@ use crate::{
     workflow::{WorkflowNodeId, WorkflowInput},
     nodes::types::Out,
 };
+#[rustfmt::skip]
 pub mod custom_sampling;
+#[rustfmt::skip]
 pub mod video_models;
 ///**KSampler**: Uses the provided model, positive and negative conditioning to denoise the latent image.
 #[derive(Clone)]

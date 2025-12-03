@@ -5,11 +5,17 @@ use crate::{
     workflow::{WorkflowNodeId, WorkflowInput},
     nodes::types::Out,
 };
+#[rustfmt::skip]
 pub mod clip;
+#[rustfmt::skip]
 pub mod combine;
+#[rustfmt::skip]
 pub mod cond_pair;
+#[rustfmt::skip]
 pub mod cond_single;
+#[rustfmt::skip]
 pub mod create;
+#[rustfmt::skip]
 pub mod scheduling;
 /// Output types for nodes.
 pub mod out {

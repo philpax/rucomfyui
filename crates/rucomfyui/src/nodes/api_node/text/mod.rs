@@ -5,5 +5,7 @@ use crate::{
     workflow::{WorkflowNodeId, WorkflowInput},
     nodes::types::Out,
 };
+#[rustfmt::skip]
 pub mod gemini;
+#[rustfmt::skip]
 pub mod open_ai;

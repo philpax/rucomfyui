@@ -5,15 +5,25 @@ use crate::{
     workflow::{WorkflowNodeId, WorkflowInput},
     nodes::types::Out,
 };
+#[rustfmt::skip]
 pub mod n_3_d;
+#[rustfmt::skip]
 pub mod advanced;
+#[rustfmt::skip]
 pub mod audio;
+#[rustfmt::skip]
 pub mod batch;
+#[rustfmt::skip]
 pub mod chroma_radiance;
+#[rustfmt::skip]
 pub mod inpaint;
+#[rustfmt::skip]
 pub mod sd_3;
+#[rustfmt::skip]
 pub mod stable_cascade;
+#[rustfmt::skip]
 pub mod transform;
+#[rustfmt::skip]
 pub mod video;
 ///**EmptyHunyuanImageLatent**: No description.
 #[derive(Clone)]

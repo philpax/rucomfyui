@@ -54,11 +54,14 @@ impl LuaUserData for Client {
             lua.to_value(&object_info)
         });
 
-        methods.add_async_method("get_object_for_name", |lua, this, name: String| async move {
-            this.check_allowed("get_object_for_name", this.config.get_object_for_name)?;
-            let object = to_lua_result(this.inner.get_object_for_name(&name).await)?;
-            lua.to_value(&object)
-        });
+        methods.add_async_method(
+            "get_object_for_name",
+            |lua, this, name: String| async move {
+                this.check_allowed("get_object_for_name", this.config.get_object_for_name)?;
+                let object = to_lua_result(this.inner.get_object_for_name(&name).await)?;
+                lua.to_value(&object)
+            },
+        );
 
         // ==================== Queue Operations ====================
 
@@ -73,60 +76,62 @@ impl LuaUserData for Client {
         });
 
         // easy_queue needs manual handling for images (bytes) and custom metatable
-        methods.add_async_method("easy_queue", |lua, this, graph: LuaAnyUserData| async move {
-            this.check_allowed("easy_queue", this.config.easy_queue)?;
-            let graph_ref = graph.borrow::<Graph>()?;
-            let workflow = graph_ref.to_workflow();
-            drop(graph_ref);
+        methods.add_async_method(
+            "easy_queue",
+            |lua, this, graph: LuaAnyUserData| async move {
+                this.check_allowed("easy_queue", this.config.easy_queue)?;
+                let graph_ref = graph.borrow::<Graph>()?;
+                let workflow = graph_ref.to_workflow();
+                drop(graph_ref);
 
-            let result = to_lua_result(this.inner.easy_queue(&workflow).await)?;
+                let result = to_lua_result(this.inner.easy_queue(&workflow).await)?;
 
-            let output_table = lua.create_table()?;
+                let output_table = lua.create_table()?;
 
-            for (node_id, node_output) in result {
-                let node_table = lua.create_table()?;
+                for (node_id, node_output) in result {
+                    let node_table = lua.create_table()?;
 
-                // Images as byte strings
-                let images_table = lua.create_table()?;
-                for (i, image) in node_output.images.into_iter().enumerate() {
-                    images_table.set(i + 1, lua.create_string(&image)?)?;
+                    // Images as byte strings
+                    let images_table = lua.create_table()?;
+                    for (i, image) in node_output.images.into_iter().enumerate() {
+                        images_table.set(i + 1, lua.create_string(&image)?)?;
+                    }
+                    node_table.set("images", images_table)?;
+
+                    // Texts
+                    let texts_table = lua.create_table()?;
+                    for (i, text) in node_output.texts.into_iter().enumerate() {
+                        texts_table.set(i + 1, text)?;
+                    }
+                    node_table.set("texts", texts_table)?;
+
+                    output_table.set(node_id.0, node_table)?;
                 }
-                node_table.set("images", images_table)?;
 
-                // Texts
-                let texts_table = lua.create_table()?;
-                for (i, text) in node_output.texts.into_iter().enumerate() {
-                    texts_table.set(i + 1, text)?;
-                }
-                node_table.set("texts", texts_table)?;
-
-                output_table.set(node_id.0, node_table)?;
-            }
-
-            // Add a metatable to allow indexing by NodeOutput
-            let metatable = lua.create_table()?;
-            metatable.set(
-                "__index",
-                lua.create_function(
-                    |_lua, (table, key): (LuaTable, LuaValue)| -> LuaResult<LuaValue> {
-                        if let LuaValue::UserData(ud) = &key {
-                            if let Ok(output) = ud.borrow::<NodeOutput>() {
-                                return table.raw_get(output.node_id.0);
+                // Add a metatable to allow indexing by NodeOutput
+                let metatable = lua.create_table()?;
+                metatable.set(
+                    "__index",
+                    lua.create_function(
+                        |_lua, (table, key): (LuaTable, LuaValue)| -> LuaResult<LuaValue> {
+                            if let LuaValue::UserData(ud) = &key {
+                                if let Ok(output) = ud.borrow::<NodeOutput>() {
+                                    return table.raw_get(output.node_id.0);
+                                }
+                                if let Ok(outputs) = ud.borrow::<crate::node_output::NodeOutputs>()
+                                {
+                                    return table.raw_get(outputs.node_id.0);
+                                }
                             }
-                            if let Ok(outputs) =
-                                ud.borrow::<crate::node_output::NodeOutputs>()
-                            {
-                                return table.raw_get(outputs.node_id.0);
-                            }
-                        }
-                        table.raw_get(key)
-                    },
-                )?,
-            )?;
-            output_table.set_metatable(Some(metatable));
+                            table.raw_get(key)
+                        },
+                    )?,
+                )?;
+                output_table.set_metatable(Some(metatable));
 
-            Ok(output_table)
-        });
+                Ok(output_table)
+            },
+        );
 
         methods.add_async_method("get_queue", |lua, this, ()| async move {
             this.check_allowed("get_queue", this.config.get_queue)?;

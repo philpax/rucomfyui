@@ -5,7 +5,9 @@ use crate::{
     workflow::{WorkflowNodeId, WorkflowInput},
     nodes::types::Out,
 };
+#[rustfmt::skip]
 pub mod primitive;
+#[rustfmt::skip]
 pub mod string;
 ///**Preview Any**: No description.
 #[derive(Clone)]

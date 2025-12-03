@@ -29,10 +29,7 @@ pub fn lua_to_workflow_input(value: LuaValue) -> LuaResult<WorkflowInput> {
         LuaValue::UserData(ud) => {
             // Try NodeOutput first
             if let Ok(output) = ud.borrow::<NodeOutput>() {
-                return Ok(WorkflowInput::Slot(
-                    output.node_id.to_string(),
-                    output.slot,
-                ));
+                return Ok(WorkflowInput::Slot(output.node_id.to_string(), output.slot));
             }
             // Try NodeOutputs (use slot 0 by default)
             if let Ok(outputs) = ud.borrow::<NodeOutputs>() {
@@ -52,4 +49,3 @@ pub fn lua_to_workflow_input(value: LuaValue) -> LuaResult<WorkflowInput> {
         ))),
     }
 }
-

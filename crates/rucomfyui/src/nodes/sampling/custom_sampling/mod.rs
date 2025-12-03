@@ -5,10 +5,15 @@ use crate::{
     workflow::{WorkflowNodeId, WorkflowInput},
     nodes::types::Out,
 };
+#[rustfmt::skip]
 pub mod guiders;
+#[rustfmt::skip]
 pub mod noise;
+#[rustfmt::skip]
 pub mod samplers;
+#[rustfmt::skip]
 pub mod schedulers;
+#[rustfmt::skip]
 pub mod sigmas;
 /// Output types for nodes.
 pub mod out {

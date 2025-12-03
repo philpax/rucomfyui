@@ -259,6 +259,7 @@ fn write_category_tree_root(root: &CategoryTree, directory: &Path) -> Result<()>
                 write_category_tree((name, tree), &directory.join(key.to_string()))
                     .context(name.clone())?;
                 modules.push(quote! {
+                    #[rustfmt::skip]
                     pub mod #key;
                 });
             }
@@ -269,12 +270,13 @@ fn write_category_tree_root(root: &CategoryTree, directory: &Path) -> Result<()>
     let output = quote! {
         //! Typed node definitions for ComfyUI that provide a type-safe abstraction over the API.
         #(#modules)*
+        #[rustfmt::skip]
         pub mod all;
+        #[rustfmt::skip]
         pub mod types;
 
+        use crate::workflow::{WorkflowInput, WorkflowNodeId};
         use std::collections::HashMap;
-
-        use crate::workflow::{WorkflowNodeId, WorkflowInput};
 
         /// Implemented for all typed nodes; provides the node's output and metadata.
         pub trait TypedNode: Clone {
@@ -320,6 +322,7 @@ fn write_category_tree((name, tree): (&str, &CategoryTree), directory: &Path) ->
                 write_category_tree((name, tree), &directory.join(key.to_string()))
                     .context(name.clone())?;
                 modules.push(quote! {
+                    #[rustfmt::skip]
                     pub mod #key;
                 });
             }
