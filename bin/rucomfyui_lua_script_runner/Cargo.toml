@@ -1,0 +1,12 @@
+[package]
+name = "rucomfyui_lua_script_runner"
+version = "0.1.0"
+edition = "2021"
+description = "Example demonstrating rucomfyui_mlua - run Lua workflow scripts against a ComfyUI server"
+
+[dependencies]
+anyhow = { workspace = true }
+tokio = { workspace = true, features = ["rt-multi-thread", "macros", "fs"] }
+rucomfyui = { path = "../../crates/rucomfyui", default-features = false }
+rucomfyui_mlua = { path = "../../crates/rucomfyui_mlua" }
+mlua = { workspace = true, features = ["lua54"] }

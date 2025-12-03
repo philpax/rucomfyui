@@ -21,7 +21,7 @@ async fn main() -> anyhow::Result<()> {
     let script_path = args
         .get(2)
         .map(|s| s.as_str())
-        .unwrap_or("crates/rucomfyui_mlua/examples/workflow.lua");
+        .unwrap_or("bin/rucomfyui_lua_script_runner/workflow.lua");
     let prompt = args.get(3);
 
     // Read the script
