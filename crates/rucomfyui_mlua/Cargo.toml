@@ -1,0 +1,18 @@
+[package]
+name = "rucomfyui_mlua"
+version = "0.1.0"
+edition = "2021"
+description = "Lua bindings for rucomfyui - a fluent ComfyUI workflow builder"
+license = "MIT OR Apache-2.0"
+repository = "https://github.com/philpax/rucomfyui"
+keywords = ["comfyui", "lua", "mlua", "stable-diffusion"]
+categories = ["api-bindings", "multimedia::images"]
+
+[dependencies]
+rucomfyui = { path = "../rucomfyui", default-features = false }
+mlua = { version = "0.10", features = ["lua54", "vendored", "async", "send", "serialize"] }
+serde_json = { workspace = true }
+thiserror = { workspace = true }
+
+[dev-dependencies]
+tokio = { workspace = true, features = ["rt-multi-thread", "macros"] }
