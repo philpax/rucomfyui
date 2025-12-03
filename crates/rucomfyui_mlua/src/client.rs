@@ -127,7 +127,7 @@ impl LuaUserData for Client {
                         },
                     )?,
                 )?;
-                output_table.set_metatable(Some(metatable));
+                output_table.set_metatable(Some(metatable))?;
 
                 Ok(output_table)
             },
