@@ -5,15 +5,25 @@ use crate::{
     workflow::{WorkflowNodeId, WorkflowInput},
     nodes::types::Out,
 };
+#[rustfmt::skip]
 pub mod n_3_d_models;
+#[rustfmt::skip]
 pub mod controlnet;
+#[rustfmt::skip]
 pub mod gligen;
+#[rustfmt::skip]
 pub mod inpaint;
+#[rustfmt::skip]
 pub mod instructpix_2_pix;
+#[rustfmt::skip]
 pub mod lotus;
+#[rustfmt::skip]
 pub mod stable_cascade;
+#[rustfmt::skip]
 pub mod style_model;
+#[rustfmt::skip]
 pub mod upscale_diffusion;
+#[rustfmt::skip]
 pub mod video_models;
 /// Output types for nodes.
 pub mod out {

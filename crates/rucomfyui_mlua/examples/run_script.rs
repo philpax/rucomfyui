@@ -15,7 +15,9 @@ async fn main() -> anyhow::Result<()> {
     let args: Vec<String> = std::env::args().collect();
 
     // Parse arguments
-    let url = args.get(1).context("Usage: run_script <url> [script] [prompt]")?;
+    let url = args
+        .get(1)
+        .context("Usage: run_script <url> [script] [prompt]")?;
     let script_path = args
         .get(2)
         .map(|s| s.as_str())
@@ -53,11 +55,7 @@ async fn main() -> anyhow::Result<()> {
         println!("Prompt: {}", prompt);
     }
 
-    let images: Vec<mlua::String> = lua
-        .load(&script)
-        .set_name(script_path)
-        .eval_async()
-        .await?;
+    let images: Vec<mlua::String> = lua.load(&script).set_name(script_path).eval_async().await?;
 
     // Save the images
     for (idx, image) in images.iter().enumerate() {
