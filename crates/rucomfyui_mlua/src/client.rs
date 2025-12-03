@@ -2,21 +2,45 @@
 
 use mlua::prelude::*;
 
-use crate::{error::to_lua_result, graph::Graph, node_output::NodeOutput};
+use crate::{config::ClientConfig, error::to_lua_result, graph::Graph, node_output::NodeOutput};
 
 /// A ComfyUI client.
 ///
 /// This wraps the rucomfyui Client and exposes its functionality to Lua.
 pub struct Client {
     inner: rucomfyui::Client,
+    config: ClientConfig,
 }
 
 impl Client {
-    /// Create a new client.
-    pub fn new(_lua: &Lua, url: String) -> LuaResult<Self> {
+    /// Create a new client with a URL and config.
+    pub fn new(_lua: &Lua, url: String, config: ClientConfig) -> LuaResult<Self> {
         Ok(Self {
             inner: rucomfyui::Client::new(url),
+            config,
         })
+    }
+
+    /// Create a client from an existing rucomfyui::Client.
+    ///
+    /// This allows Rust integrators to pass in a pre-configured client.
+    pub fn from_existing(client: rucomfyui::Client, config: ClientConfig) -> Self {
+        Self {
+            inner: client,
+            config,
+        }
+    }
+
+    /// Check if a method is allowed.
+    fn check_allowed(&self, method_name: &str, allowed: bool) -> LuaResult<()> {
+        if allowed {
+            Ok(())
+        } else {
+            Err(LuaError::external(format!(
+                "Method '{}' is not enabled in ClientConfig",
+                method_name
+            )))
+        }
     }
 }
 
@@ -27,12 +51,14 @@ impl LuaUserData for Client {
         // Get object info for all nodes.
         // Returns a table that can be passed to `graph()`.
         methods.add_async_method("get_object_info", |lua, this, ()| async move {
+            this.check_allowed("get_object_info", this.config.get_object_info)?;
             let object_info = to_lua_result(this.inner.get_object_info().await)?;
             lua.to_value(&object_info)
         });
 
         // Get object info for a specific node by name.
         methods.add_async_method("get_object_for_name", |lua, this, name: String| async move {
+            this.check_allowed("get_object_for_name", this.config.get_object_for_name)?;
             let object = to_lua_result(this.inner.get_object_for_name(&name).await)?;
             lua.to_value(&object)
         });
@@ -42,6 +68,7 @@ impl LuaUserData for Client {
         // Queue a workflow for execution.
         // Takes a Graph and returns queue result with prompt_id.
         methods.add_async_method("queue", |lua, this, graph: LuaAnyUserData| async move {
+            this.check_allowed("queue", this.config.queue)?;
             let graph_ref = graph.borrow::<Graph>()?;
             let workflow = graph_ref.to_workflow();
             drop(graph_ref);
@@ -58,6 +85,7 @@ impl LuaUserData for Client {
         // Queue a workflow and wait for results.
         // Returns a table mapping node outputs to their results.
         methods.add_async_method("easy_queue", |lua, this, graph: LuaAnyUserData| async move {
+            this.check_allowed("easy_queue", this.config.easy_queue)?;
             let graph_ref = graph.borrow::<Graph>()?;
             let workflow = graph_ref.to_workflow();
             drop(graph_ref);
@@ -117,6 +145,7 @@ impl LuaUserData for Client {
 
         // Get the current queue status.
         methods.add_async_method("get_queue", |lua, this, ()| async move {
+            this.check_allowed("get_queue", this.config.get_queue)?;
             let queue = to_lua_result(this.inner.get_queue().await)?;
 
             let table = lua.create_table()?;
@@ -154,6 +183,7 @@ impl LuaUserData for Client {
 
         // Interrupt the current workflow.
         methods.add_async_method("interrupt", |_lua, this, ()| async move {
+            this.check_allowed("interrupt", this.config.interrupt)?;
             to_lua_result(this.inner.interrupt().await)?;
             Ok(())
         });
@@ -162,6 +192,7 @@ impl LuaUserData for Client {
         methods.add_async_method(
             "delete_from_queue",
             |_lua, this, prompt_ids: Vec<String>| async move {
+                this.check_allowed("delete_from_queue", this.config.delete_from_queue)?;
                 to_lua_result(this.inner.delete_from_queue(prompt_ids).await)?;
                 Ok(())
             },
@@ -169,6 +200,7 @@ impl LuaUserData for Client {
 
         // Clear the entire queue.
         methods.add_async_method("clear_queue", |_lua, this, ()| async move {
+            this.check_allowed("clear_queue", this.config.clear_queue)?;
             to_lua_result(this.inner.clear_queue().await)?;
             Ok(())
         });
@@ -177,6 +209,7 @@ impl LuaUserData for Client {
 
         // Get history with a maximum number of items.
         methods.add_async_method("get_history", |lua, this, max_items: u32| async move {
+            this.check_allowed("get_history", this.config.get_history)?;
             let history = to_lua_result(this.inner.get_history(max_items).await)?;
             lua.to_value(&history)
         });
@@ -185,6 +218,7 @@ impl LuaUserData for Client {
         methods.add_async_method(
             "get_history_for_prompt",
             |lua, this, prompt_id: String| async move {
+                this.check_allowed("get_history_for_prompt", this.config.get_history_for_prompt)?;
                 let history = to_lua_result(this.inner.get_history_for_prompt(&prompt_id).await)?;
                 lua.to_value(&history)
             },
@@ -194,6 +228,7 @@ impl LuaUserData for Client {
         methods.add_async_method(
             "delete_from_history",
             |_lua, this, prompt_ids: Vec<String>| async move {
+                this.check_allowed("delete_from_history", this.config.delete_from_history)?;
                 to_lua_result(this.inner.delete_from_history(prompt_ids).await)?;
                 Ok(())
             },
@@ -201,6 +236,7 @@ impl LuaUserData for Client {
 
         // Clear all history.
         methods.add_async_method("clear_history", |_lua, this, ()| async move {
+            this.check_allowed("clear_history", this.config.clear_history)?;
             to_lua_result(this.inner.clear_history().await)?;
             Ok(())
         });
@@ -209,6 +245,7 @@ impl LuaUserData for Client {
 
         // Get all model categories.
         methods.add_async_method("get_model_categories", |lua, this, ()| async move {
+            this.check_allowed("get_model_categories", this.config.get_model_categories)?;
             let categories = to_lua_result(this.inner.get_model_categories().await)?;
             let table = lua.create_table()?;
             for (i, cat) in categories.into_iter().enumerate() {
@@ -219,6 +256,7 @@ impl LuaUserData for Client {
 
         // Get models in a category.
         methods.add_async_method("get_models", |lua, this, category: String| async move {
+            this.check_allowed("get_models", this.config.get_models)?;
             // Parse the category string
             let cat: rucomfyui::models::ModelCategory =
                 serde_json::from_value(serde_json::Value::String(category))
@@ -235,6 +273,7 @@ impl LuaUserData for Client {
 
         // Get system statistics.
         methods.add_async_method("system_stats", |lua, this, ()| async move {
+            this.check_allowed("system_stats", this.config.system_stats)?;
             let stats = to_lua_result(this.inner.system_stats().await)?;
 
             let table = lua.create_table()?;
@@ -277,6 +316,7 @@ impl LuaUserData for Client {
         methods.add_async_method(
             "free",
             |_lua, this, (unload_models, free_memory): (bool, bool)| async move {
+                this.check_allowed("free", this.config.free)?;
                 to_lua_result(this.inner.free(unload_models, free_memory).await)?;
                 Ok(())
             },
@@ -289,6 +329,7 @@ impl LuaUserData for Client {
         methods.add_async_method(
             "upload",
             |lua, this, (filename, bytes): (String, LuaString)| async move {
+                this.check_allowed("upload", this.config.upload)?;
                 let bytes_vec = bytes.as_bytes().to_vec();
                 let result = to_lua_result(this.inner.upload(&filename, bytes_vec).await)?;
                 lua.to_value(&result)
