@@ -53,30 +53,3 @@ pub fn lua_to_workflow_input(value: LuaValue) -> LuaResult<WorkflowInput> {
     }
 }
 
-/// Check if a Lua value represents a node output.
-#[allow(dead_code)]
-pub fn is_node_output(value: &LuaValue) -> bool {
-    match value {
-        LuaValue::UserData(ud) => {
-            ud.borrow::<NodeOutput>().is_ok() || ud.borrow::<NodeOutputs>().is_ok()
-        }
-        _ => false,
-    }
-}
-
-/// Get the node ID from a Lua value if it's a node output.
-#[allow(dead_code)]
-pub fn get_node_id(value: &LuaValue) -> Option<u32> {
-    match value {
-        LuaValue::UserData(ud) => {
-            if let Ok(output) = ud.borrow::<NodeOutput>() {
-                return Some(output.node_id.0);
-            }
-            if let Ok(outputs) = ud.borrow::<NodeOutputs>() {
-                return Some(outputs.node_id.0);
-            }
-            None
-        }
-        _ => None,
-    }
-}

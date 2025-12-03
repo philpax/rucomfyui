@@ -101,17 +101,6 @@ pub enum NodeOutputValue {
     Multiple(NodeOutputs),
 }
 
-impl NodeOutputValue {
-    /// Get the node ID.
-    #[allow(dead_code)]
-    pub fn node_id(&self) -> WorkflowNodeId {
-        match self {
-            Self::Single(o) => o.node_id,
-            Self::Multiple(o) => o.node_id,
-        }
-    }
-}
-
 impl IntoLua for NodeOutputValue {
     fn into_lua(self, lua: &Lua) -> LuaResult<LuaValue> {
         match self {
