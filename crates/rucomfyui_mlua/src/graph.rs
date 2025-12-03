@@ -201,11 +201,27 @@ fn create_node_output(object: &Object, node_id: WorkflowNodeId) -> NodeOutputVal
 }
 
 /// Convert a string to snake_case.
+/// Handles ALL_CAPS words correctly (e.g., "CLIP" -> "clip", "VAE" -> "vae").
 fn to_snake_case(s: &str) -> String {
+    // If the string is all uppercase, just lowercase it
+    if s.chars().all(|c| c.is_uppercase() || !c.is_alphabetic()) {
+        return s.to_lowercase();
+    }
+
     let mut result = String::new();
-    for (i, c) in s.chars().enumerate() {
+    let chars: Vec<char> = s.chars().collect();
+
+    for (i, &c) in chars.iter().enumerate() {
         if c.is_uppercase() {
-            if i > 0 {
+            // Check if we're in the middle of an acronym (current and next are uppercase)
+            let next_is_upper = chars.get(i + 1).is_some_and(|&n| n.is_uppercase());
+            let prev_is_upper = i > 0 && chars.get(i - 1).is_some_and(|&p| p.is_uppercase());
+
+            // Add underscore before this char if:
+            // - We're not at the start
+            // - Previous char was lowercase, OR
+            // - We're at the end of an acronym (prev is upper, next is lower or end)
+            if i > 0 && (!prev_is_upper || (!next_is_upper && i + 1 < chars.len())) {
                 result.push('_');
             }
             result.push(c.to_lowercase().next().unwrap());
