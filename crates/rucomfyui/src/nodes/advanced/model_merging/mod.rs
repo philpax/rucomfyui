@@ -5,6 +5,7 @@ use crate::{
     workflow::{WorkflowNodeId, WorkflowInput},
     nodes::types::Out,
 };
+#[rustfmt::skip]
 pub mod model_specific;
 ///**CLIPMergeAdd**: No description.
 #[derive(Clone)]

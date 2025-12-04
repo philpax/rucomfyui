@@ -353,6 +353,20 @@ impl Out for LatentOperationOut {
     }
 }
 impl LatentOperation for LatentOperationOut {}
+///A value of ComfyUI type `LATENT_UPSCALE_MODEL`.
+pub trait LatentUpscaleModel: Clone + Into<WorkflowInput> {}
+///A node output of type [`LatentUpscaleModel`].
+#[derive(Clone, Copy)]
+pub struct LatentUpscaleModelOut(pub UntypedOut);
+impl Out for LatentUpscaleModelOut {
+    fn from_dynamic(node_id: WorkflowNodeId, node_slot: u32) -> Self {
+        Self(UntypedOut::from_dynamic(node_id, node_slot))
+    }
+    fn into_input(self) -> WorkflowInput {
+        self.0.into_input()
+    }
+}
+impl LatentUpscaleModel for LatentUpscaleModelOut {}
 ///A value of ComfyUI type `LOAD_3_D_CAMERA`.
 pub trait Load3DCamera: Clone + Into<WorkflowInput> {}
 ///A node output of type [`Load3DCamera`].

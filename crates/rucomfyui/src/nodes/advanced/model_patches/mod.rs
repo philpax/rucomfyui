@@ -5,6 +5,7 @@ use crate::{
     workflow::{WorkflowNodeId, WorkflowInput},
     nodes::types::Out,
 };
+#[rustfmt::skip]
 pub mod flux;
 ///**ScaleROPE**: Scale and shift the ROPE of the model.
 #[derive(Clone)]

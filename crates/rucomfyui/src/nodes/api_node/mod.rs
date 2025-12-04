@@ -5,8 +5,13 @@ use crate::{
     workflow::{WorkflowNodeId, WorkflowInput},
     nodes::types::Out,
 };
+#[rustfmt::skip]
 pub mod n_3_d;
+#[rustfmt::skip]
 pub mod audio;
+#[rustfmt::skip]
 pub mod image;
+#[rustfmt::skip]
 pub mod text;
+#[rustfmt::skip]
 pub mod video;

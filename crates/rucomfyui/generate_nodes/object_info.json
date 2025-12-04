@@ -70,6 +70,194 @@
     ]
   },
   {
+    "name": "AddTextPrefix",
+    "display_name": "Add Text Prefix",
+    "description": "",
+    "python_module": "comfy_extras.nodes_dataset",
+    "category": "dataset/text",
+    "input": {
+      "required": {
+        "prefix": [
+          "STRING",
+          {
+            "tooltip": "Prefix to add.",
+            "multiline": false,
+            "default": ""
+          }
+        ],
+        "texts": [
+          "STRING",
+          {
+            "tooltip": "Text to process.",
+            "multiline": false
+          }
+        ]
+      },
+      "optional": null
+    },
+    "input_order": {
+      "required": [
+        "texts",
+        "prefix"
+      ],
+      "optional": null
+    },
+    "output": [
+      "STRING"
+    ],
+    "output_is_list": [
+      null
+    ],
+    "output_name": [
+      "texts"
+    ],
+    "output_node": false,
+    "output_tooltips": [
+      "Processed texts"
+    ]
+  },
+  {
+    "name": "AddTextSuffix",
+    "display_name": "Add Text Suffix",
+    "description": "",
+    "python_module": "comfy_extras.nodes_dataset",
+    "category": "dataset/text",
+    "input": {
+      "required": {
+        "suffix": [
+          "STRING",
+          {
+            "tooltip": "Suffix to add.",
+            "multiline": false,
+            "default": ""
+          }
+        ],
+        "texts": [
+          "STRING",
+          {
+            "tooltip": "Text to process.",
+            "multiline": false
+          }
+        ]
+      },
+      "optional": null
+    },
+    "input_order": {
+      "required": [
+        "texts",
+        "suffix"
+      ],
+      "optional": null
+    },
+    "output": [
+      "STRING"
+    ],
+    "output_is_list": [
+      null
+    ],
+    "output_name": [
+      "texts"
+    ],
+    "output_node": false,
+    "output_tooltips": [
+      "Processed texts"
+    ]
+  },
+  {
+    "name": "AdjustBrightness",
+    "display_name": "Adjust Brightness",
+    "description": "",
+    "python_module": "comfy_extras.nodes_dataset",
+    "category": "dataset/image",
+    "input": {
+      "required": {
+        "factor": [
+          "FLOAT",
+          {
+            "tooltip": "Brightness factor. 1.0 = no change, <1.0 = darker, >1.0 = brighter.",
+            "default": 1.0,
+            "max": 2.0,
+            "min": 0.0
+          }
+        ],
+        "images": [
+          "IMAGE",
+          {
+            "tooltip": "Image to process."
+          }
+        ]
+      },
+      "optional": null
+    },
+    "input_order": {
+      "required": [
+        "images",
+        "factor"
+      ],
+      "optional": null
+    },
+    "output": [
+      "IMAGE"
+    ],
+    "output_is_list": [
+      false
+    ],
+    "output_name": [
+      "images"
+    ],
+    "output_node": false,
+    "output_tooltips": [
+      "Processed images"
+    ]
+  },
+  {
+    "name": "AdjustContrast",
+    "display_name": "Adjust Contrast",
+    "description": "",
+    "python_module": "comfy_extras.nodes_dataset",
+    "category": "dataset/image",
+    "input": {
+      "required": {
+        "factor": [
+          "FLOAT",
+          {
+            "tooltip": "Contrast factor. 1.0 = no change, <1.0 = less contrast, >1.0 = more contrast.",
+            "default": 1.0,
+            "max": 2.0,
+            "min": 0.0
+          }
+        ],
+        "images": [
+          "IMAGE",
+          {
+            "tooltip": "Image to process."
+          }
+        ]
+      },
+      "optional": null
+    },
+    "input_order": {
+      "required": [
+        "images",
+        "factor"
+      ],
+      "optional": null
+    },
+    "output": [
+      "IMAGE"
+    ],
+    "output_is_list": [
+      false
+    ],
+    "output_name": [
+      "images"
+    ],
+    "output_node": false,
+    "output_tooltips": [
+      "Processed images"
+    ]
+  },
+  {
     "name": "AlignYourStepsScheduler",
     "display_name": null,
     "description": "",
@@ -136,13 +324,16 @@
     "input": {
       "required": {
         "audio": [
-          "AUDIO"
+          "AUDIO",
+          {
+            "tooltip": null
+          }
         ],
         "volume": [
           "INT",
           {
             "tooltip": "Volume adjustment in decibels (dB). 0 = no change, +6 = double, -6 = half, etc",
-            "default": 1.0,
+            "default": 1,
             "max": 100,
             "min": -100
           }
@@ -167,7 +358,9 @@
       "AUDIO"
     ],
     "output_node": false,
-    "output_tooltips": []
+    "output_tooltips": [
+      null
+    ]
   },
   {
     "name": "AudioConcat",
@@ -178,13 +371,19 @@
     "input": {
       "required": {
         "audio1": [
-          "AUDIO"
+          "AUDIO",
+          {
+            "tooltip": null
+          }
         ],
         "audio2": [
-          "AUDIO"
+          "AUDIO",
+          {
+            "tooltip": null
+          }
         ],
         "direction": [
-          [],
+          "COMBO",
           {
             "tooltip": "Whether to append audio2 after or before audio1.",
             "default": "after"
@@ -211,7 +410,9 @@
       "AUDIO"
     ],
     "output_node": false,
-    "output_tooltips": []
+    "output_tooltips": [
+      null
+    ]
   },
   {
     "name": "AudioEncoderEncode",
@@ -303,13 +504,19 @@
     "input": {
       "required": {
         "audio1": [
-          "AUDIO"
+          "AUDIO",
+          {
+            "tooltip": null
+          }
         ],
         "audio2": [
-          "AUDIO"
+          "AUDIO",
+          {
+            "tooltip": null
+          }
         ],
         "merge_method": [
-          [],
+          "COMBO",
           {
             "tooltip": "The method used to combine the audio waveforms."
           }
@@ -335,21 +542,29 @@
       "AUDIO"
     ],
     "output_node": false,
-    "output_tooltips": []
+    "output_tooltips": [
+      null
+    ]
   },
   {
     "name": "BasicGuider",
-    "display_name": "BasicGuider",
+    "display_name": null,
     "description": "",
     "python_module": "comfy_extras.nodes_custom_sampler",
     "category": "sampling/custom_sampling/guiders",
     "input": {
       "required": {
         "conditioning": [
-          "CONDITIONING"
+          "CONDITIONING",
+          {
+            "tooltip": null
+          }
         ],
         "model": [
-          "MODEL"
+          "MODEL",
+          {
+            "tooltip": null
+          }
         ]
       },
       "optional": null
@@ -371,11 +586,13 @@
       "GUIDER"
     ],
     "output_node": false,
-    "output_tooltips": []
+    "output_tooltips": [
+      null
+    ]
   },
   {
     "name": "BasicScheduler",
-    "display_name": "BasicScheduler",
+    "display_name": null,
     "description": "",
     "python_module": "comfy_extras.nodes_custom_sampler",
     "category": "sampling/custom_sampling/schedulers",
@@ -392,10 +609,16 @@
           }
         ],
         "model": [
-          "MODEL"
+          "MODEL",
+          {
+            "tooltip": null
+          }
         ],
         "scheduler": [
-          []
+          "COMBO",
+          {
+            "tooltip": null
+          }
         ],
         "steps": [
           "INT",
@@ -428,11 +651,13 @@
       "SIGMAS"
     ],
     "output_node": false,
-    "output_tooltips": []
+    "output_tooltips": [
+      null
+    ]
   },
   {
     "name": "BetaSamplingScheduler",
-    "display_name": "BetaSamplingScheduler",
+    "display_name": null,
     "description": "",
     "python_module": "comfy_extras.nodes_custom_sampler",
     "category": "sampling/custom_sampling/schedulers",
@@ -461,7 +686,10 @@
           }
         ],
         "model": [
-          "MODEL"
+          "MODEL",
+          {
+            "tooltip": null
+          }
         ],
         "steps": [
           "INT",
@@ -494,7 +722,9 @@
       "SIGMAS"
     ],
     "output_node": false,
-    "output_tooltips": []
+    "output_tooltips": [
+      null
+    ]
   },
   {
     "name": "ByteDanceFirstLastFrameNode",
@@ -1254,7 +1484,7 @@
   },
   {
     "name": "CFGGuider",
-    "display_name": "CFGGuider",
+    "display_name": null,
     "description": "",
     "python_module": "comfy_extras.nodes_custom_sampler",
     "category": "sampling/custom_sampling/guiders",
@@ -1272,13 +1502,22 @@
           }
         ],
         "model": [
-          "MODEL"
+          "MODEL",
+          {
+            "tooltip": null
+          }
         ],
         "negative": [
-          "CONDITIONING"
+          "CONDITIONING",
+          {
+            "tooltip": null
+          }
         ],
         "positive": [
-          "CONDITIONING"
+          "CONDITIONING",
+          {
+            "tooltip": null
+          }
         ]
       },
       "optional": null
@@ -1302,7 +1541,9 @@
       "GUIDER"
     ],
     "output_node": false,
-    "output_tooltips": []
+    "output_tooltips": [
+      null
+    ]
   },
   {
     "name": "CFGNorm",
@@ -2440,6 +2681,63 @@
     ]
   },
   {
+    "name": "CenterCropImages",
+    "display_name": "Center Crop Images",
+    "description": "",
+    "python_module": "comfy_extras.nodes_dataset",
+    "category": "dataset/image",
+    "input": {
+      "required": {
+        "height": [
+          "INT",
+          {
+            "tooltip": "Crop height.",
+            "default": 512,
+            "max": 8192,
+            "min": 1
+          }
+        ],
+        "images": [
+          "IMAGE",
+          {
+            "tooltip": "Image to process."
+          }
+        ],
+        "width": [
+          "INT",
+          {
+            "tooltip": "Crop width.",
+            "default": 512,
+            "max": 8192,
+            "min": 1
+          }
+        ]
+      },
+      "optional": null
+    },
+    "input_order": {
+      "required": [
+        "images",
+        "width",
+        "height"
+      ],
+      "optional": null
+    },
+    "output": [
+      "IMAGE"
+    ],
+    "output_is_list": [
+      false
+    ],
+    "output_name": [
+      "images"
+    ],
+    "output_node": false,
+    "output_tooltips": [
+      "Processed images"
+    ]
+  },
+  {
     "name": "CheckpointLoader",
     "display_name": "Load Checkpoint With Config (DEPRECATED)",
     "description": "",
@@ -3500,17 +3798,23 @@
   },
   {
     "name": "ConditioningStableAudio",
-    "display_name": "ConditioningStableAudio",
+    "display_name": null,
     "description": "",
     "python_module": "comfy_extras.nodes_audio",
     "category": "conditioning",
     "input": {
       "required": {
         "negative": [
-          "CONDITIONING"
+          "CONDITIONING",
+          {
+            "tooltip": null
+          }
         ],
         "positive": [
-          "CONDITIONING"
+          "CONDITIONING",
+          {
+            "tooltip": null
+          }
         ],
         "seconds_start": [
           "FLOAT",
@@ -3557,7 +3861,10 @@
       "negative"
     ],
     "output_node": false,
-    "output_tooltips": []
+    "output_tooltips": [
+      null,
+      null
+    ]
   },
   {
     "name": "ConditioningTimestepsRange",
@@ -4965,7 +5272,7 @@
   },
   {
     "name": "DisableNoise",
-    "display_name": "DisableNoise",
+    "display_name": null,
     "description": "",
     "python_module": "comfy_extras.nodes_custom_sampler",
     "category": "sampling/custom_sampling/noise",
@@ -4987,11 +5294,13 @@
       "NOISE"
     ],
     "output_node": false,
-    "output_tooltips": []
+    "output_tooltips": [
+      null
+    ]
   },
   {
     "name": "DualCFGGuider",
-    "display_name": "DualCFGGuider",
+    "display_name": null,
     "description": "",
     "python_module": "comfy_extras.nodes_custom_sampler",
     "category": "sampling/custom_sampling/guiders",
@@ -5020,19 +5329,34 @@
           }
         ],
         "cond1": [
-          "CONDITIONING"
+          "CONDITIONING",
+          {
+            "tooltip": null
+          }
         ],
         "cond2": [
-          "CONDITIONING"
+          "CONDITIONING",
+          {
+            "tooltip": null
+          }
         ],
         "model": [
-          "MODEL"
+          "MODEL",
+          {
+            "tooltip": null
+          }
         ],
         "negative": [
-          "CONDITIONING"
+          "CONDITIONING",
+          {
+            "tooltip": null
+          }
         ],
         "style": [
-          []
+          "COMBO",
+          {
+            "tooltip": null
+          }
         ]
       },
       "optional": null
@@ -5059,7 +5383,9 @@
       "GUIDER"
     ],
     "output_node": false,
-    "output_tooltips": []
+    "output_tooltips": [
+      null
+    ]
   },
   {
     "name": "DualCLIPLoader",
@@ -5248,7 +5574,7 @@
     "input": {
       "required": {
         "channels": [
-          "INT",
+          "FLOAT",
           {
             "tooltip": "Number of audio channels (1 for mono, 2 for stereo).",
             "default": 2,
@@ -5267,7 +5593,7 @@
           }
         ],
         "sample_rate": [
-          "INT",
+          "FLOAT",
           {
             "tooltip": "Sample rate of the empty audio clip."
           }
@@ -5293,7 +5619,9 @@
       "AUDIO"
     ],
     "output_node": false,
-    "output_tooltips": []
+    "output_tooltips": [
+      null
+    ]
   },
   {
     "name": "EmptyChromaRadianceLatentImage",
@@ -5431,6 +5759,68 @@
     ]
   },
   {
+    "name": "EmptyFlux2LatentImage",
+    "display_name": "Empty Flux 2 Latent",
+    "description": "",
+    "python_module": "comfy_extras.nodes_flux",
+    "category": "latent",
+    "input": {
+      "required": {
+        "batch_size": [
+          "INT",
+          {
+            "tooltip": null,
+            "default": 1,
+            "max": 4096,
+            "min": 1
+          }
+        ],
+        "height": [
+          "INT",
+          {
+            "tooltip": null,
+            "default": 1024,
+            "max": 16384,
+            "min": 16,
+            "step": 16
+          }
+        ],
+        "width": [
+          "INT",
+          {
+            "tooltip": null,
+            "default": 1024,
+            "max": 16384,
+            "min": 16,
+            "step": 16
+          }
+        ]
+      },
+      "optional": null
+    },
+    "input_order": {
+      "required": [
+        "width",
+        "height",
+        "batch_size"
+      ],
+      "optional": null
+    },
+    "output": [
+      "LATENT"
+    ],
+    "output_is_list": [
+      false
+    ],
+    "output_name": [
+      "LATENT"
+    ],
+    "output_node": false,
+    "output_tooltips": [
+      null
+    ]
+  },
+  {
     "name": "EmptyHunyuanImageLatent",
     "display_name": null,
     "description": "",
@@ -5494,7 +5884,80 @@
   },
   {
     "name": "EmptyHunyuanLatentVideo",
-    "display_name": null,
+    "display_name": "Empty HunyuanVideo 1.0 Latent",
+    "description": "",
+    "python_module": "comfy_extras.nodes_hunyuan",
+    "category": "latent/video",
+    "input": {
+      "required": {
+        "batch_size": [
+          "INT",
+          {
+            "tooltip": null,
+            "default": 1,
+            "max": 4096,
+            "min": 1
+          }
+        ],
+        "height": [
+          "INT",
+          {
+            "tooltip": null,
+            "default": 480,
+            "max": 16384,
+            "min": 16,
+            "step": 16
+          }
+        ],
+        "length": [
+          "INT",
+          {
+            "tooltip": null,
+            "default": 25,
+            "max": 16384,
+            "min": 1,
+            "step": 4
+          }
+        ],
+        "width": [
+          "INT",
+          {
+            "tooltip": null,
+            "default": 848,
+            "max": 16384,
+            "min": 16,
+            "step": 16
+          }
+        ]
+      },
+      "optional": null
+    },
+    "input_order": {
+      "required": [
+        "width",
+        "height",
+        "length",
+        "batch_size"
+      ],
+      "optional": null
+    },
+    "output": [
+      "LATENT"
+    ],
+    "output_is_list": [
+      false
+    ],
+    "output_name": [
+      "LATENT"
+    ],
+    "output_node": false,
+    "output_tooltips": [
+      null
+    ]
+  },
+  {
+    "name": "EmptyHunyuanVideo15Latent",
+    "display_name": "Empty HunyuanVideo 1.5 Latent",
     "description": "",
     "python_module": "comfy_extras.nodes_hunyuan",
     "category": "latent/video",
@@ -5757,11 +6220,13 @@
       "LATENT"
     ],
     "output_node": false,
-    "output_tooltips": []
+    "output_tooltips": [
+      null
+    ]
   },
   {
     "name": "EmptyLatentHunyuan3Dv2",
-    "display_name": "EmptyLatentHunyuan3Dv2",
+    "display_name": null,
     "description": "",
     "python_module": "comfy_extras.nodes_hunyuan3d",
     "category": "latent/3d",
@@ -5805,7 +6270,9 @@
       "LATENT"
     ],
     "output_node": false,
-    "output_tooltips": []
+    "output_tooltips": [
+      null
+    ]
   },
   {
     "name": "EmptyLatentImage",
@@ -6055,7 +6522,7 @@
   },
   {
     "name": "ExponentialScheduler",
-    "display_name": "ExponentialScheduler",
+    "display_name": null,
     "description": "",
     "python_module": "comfy_extras.nodes_custom_sampler",
     "category": "sampling/custom_sampling/schedulers",
@@ -6113,11 +6580,13 @@
       "SIGMAS"
     ],
     "output_node": false,
-    "output_tooltips": []
+    "output_tooltips": [
+      null
+    ]
   },
   {
     "name": "ExtendIntermediateSigmas",
-    "display_name": "ExtendIntermediateSigmas",
+    "display_name": null,
     "description": "",
     "python_module": "comfy_extras.nodes_custom_sampler",
     "category": "sampling/custom_sampling/sigmas",
@@ -6135,10 +6604,16 @@
           }
         ],
         "sigmas": [
-          "SIGMAS"
+          "SIGMAS",
+          {
+            "tooltip": null
+          }
         ],
         "spacing": [
-          []
+          "COMBO",
+          {
+            "tooltip": null
+          }
         ],
         "start_at_sigma": [
           "FLOAT",
@@ -6183,7 +6658,9 @@
       "SIGMAS"
     ],
     "output_node": false,
-    "output_tooltips": []
+    "output_tooltips": [
+      null
+    ]
   },
   {
     "name": "FeatherMask",
@@ -6263,14 +6740,17 @@
   },
   {
     "name": "FlipSigmas",
-    "display_name": "FlipSigmas",
+    "display_name": null,
     "description": "",
     "python_module": "comfy_extras.nodes_custom_sampler",
     "category": "sampling/custom_sampling/sigmas",
     "input": {
       "required": {
         "sigmas": [
-          "SIGMAS"
+          "SIGMAS",
+          {
+            "tooltip": null
+          }
         ]
       },
       "optional": null
@@ -6291,7 +6771,159 @@
       "SIGMAS"
     ],
     "output_node": false,
-    "output_tooltips": []
+    "output_tooltips": [
+      null
+    ]
+  },
+  {
+    "name": "Flux2ProImageNode",
+    "display_name": "Flux.2 [pro] Image",
+    "description": "Generates images synchronously based on prompt and resolution.",
+    "python_module": "comfy_api_nodes.nodes_bfl",
+    "category": "api node/image/BFL",
+    "input": {
+      "required": {
+        "height": [
+          "INT",
+          {
+            "tooltip": null,
+            "default": 768,
+            "max": 2048,
+            "min": 256,
+            "step": 32
+          }
+        ],
+        "prompt": [
+          "STRING",
+          {
+            "tooltip": "Prompt for the image generation or edit",
+            "multiline": true,
+            "default": ""
+          }
+        ],
+        "prompt_upsampling": [
+          "BOOLEAN",
+          {
+            "tooltip": "Whether to perform upsampling on the prompt. If active, automatically modifies the prompt for more creative generation, but results are nondeterministic (same seed will not produce exactly the same result).",
+            "default": false
+          }
+        ],
+        "seed": [
+          "INT",
+          {
+            "tooltip": "The random seed used for creating the noise.",
+            "default": 0,
+            "max": 18446744073709551615,
+            "min": 0
+          }
+        ],
+        "width": [
+          "INT",
+          {
+            "tooltip": null,
+            "default": 1024,
+            "max": 2048,
+            "min": 256,
+            "step": 32
+          }
+        ]
+      },
+      "optional": {
+        "images": [
+          "IMAGE",
+          {
+            "tooltip": "Up to 4 images to be used as references."
+          }
+        ]
+      }
+    },
+    "input_order": {
+      "required": [
+        "prompt",
+        "width",
+        "height",
+        "seed",
+        "prompt_upsampling"
+      ],
+      "optional": [
+        "images"
+      ]
+    },
+    "output": [
+      "IMAGE"
+    ],
+    "output_is_list": [
+      false
+    ],
+    "output_name": [
+      "IMAGE"
+    ],
+    "output_node": false,
+    "output_tooltips": [
+      null
+    ]
+  },
+  {
+    "name": "Flux2Scheduler",
+    "display_name": null,
+    "description": "",
+    "python_module": "comfy_extras.nodes_flux",
+    "category": "sampling/custom_sampling/schedulers",
+    "input": {
+      "required": {
+        "height": [
+          "INT",
+          {
+            "tooltip": null,
+            "default": 1024,
+            "max": 16384,
+            "min": 16,
+            "step": 1
+          }
+        ],
+        "steps": [
+          "INT",
+          {
+            "tooltip": null,
+            "default": 20,
+            "max": 4096,
+            "min": 1
+          }
+        ],
+        "width": [
+          "INT",
+          {
+            "tooltip": null,
+            "default": 1024,
+            "max": 16384,
+            "min": 16,
+            "step": 1
+          }
+        ]
+      },
+      "optional": null
+    },
+    "input_order": {
+      "required": [
+        "steps",
+        "width",
+        "height"
+      ],
+      "optional": null
+    },
+    "output": [
+      "SIGMAS"
+    ],
+    "output_is_list": [
+      false
+    ],
+    "output_name": [
+      "SIGMAS"
+    ],
+    "output_node": false,
+    "output_tooltips": [
+      null
+    ]
   },
   {
     "name": "FluxDisableGuidance",
@@ -7300,8 +7932,106 @@
     "output_tooltips": []
   },
   {
+    "name": "GeminiImage2Node",
+    "display_name": "Nano Banana Pro (Google Gemini Image)",
+    "description": "Generate or edit images synchronously via Google Vertex API.",
+    "python_module": "comfy_api_nodes.nodes_gemini",
+    "category": "api node/image/Gemini",
+    "input": {
+      "required": {
+        "aspect_ratio": [
+          "COMBO",
+          {
+            "tooltip": "If set to 'auto', matches your input image's aspect ratio; if no image is provided, a 16:9 square is usually generated.",
+            "default": "auto"
+          }
+        ],
+        "model": [
+          "COMBO",
+          {
+            "tooltip": null
+          }
+        ],
+        "prompt": [
+          "STRING",
+          {
+            "tooltip": "Text prompt describing the image to generate or the edits to apply. Include any constraints, styles, or details the model should follow.",
+            "multiline": true,
+            "default": ""
+          }
+        ],
+        "resolution": [
+          "COMBO",
+          {
+            "tooltip": "Target output resolution. For 2K/4K the native Gemini upscaler is used."
+          }
+        ],
+        "response_modalities": [
+          "COMBO",
+          {
+            "tooltip": "Choose 'IMAGE' for image-only output, or 'IMAGE+TEXT' to return both the generated image and a text response."
+          }
+        ],
+        "seed": [
+          "INT",
+          {
+            "tooltip": "When the seed is fixed to a specific value, the model makes a best effort to provide the same response for repeated requests. Deterministic output isn't guaranteed. Also, changing the model or parameter settings, such as the temperature, can cause variations in the response even when you use the same seed value. By default, a random seed value is used.",
+            "default": 42,
+            "max": 18446744073709551615,
+            "min": 0
+          }
+        ]
+      },
+      "optional": {
+        "files": [
+          "GEMINI_INPUT_FILES",
+          {
+            "tooltip": "Optional file(s) to use as context for the model. Accepts inputs from the Gemini Generate Content Input Files node."
+          }
+        ],
+        "images": [
+          "IMAGE",
+          {
+            "tooltip": "Optional reference image(s). To include multiple images, use the Batch Images node (up to 14)."
+          }
+        ]
+      }
+    },
+    "input_order": {
+      "required": [
+        "prompt",
+        "model",
+        "seed",
+        "aspect_ratio",
+        "resolution",
+        "response_modalities"
+      ],
+      "optional": [
+        "images",
+        "files"
+      ]
+    },
+    "output": [
+      "IMAGE",
+      "STRING"
+    ],
+    "output_is_list": [
+      false,
+      false
+    ],
+    "output_name": [
+      "IMAGE",
+      "STRING"
+    ],
+    "output_node": false,
+    "output_tooltips": [
+      null,
+      null
+    ]
+  },
+  {
     "name": "GeminiImageNode",
-    "display_name": "Google Gemini Image",
+    "display_name": "Nano Banana (Google Gemini Image)",
     "description": "Edit images synchronously via Google API.",
     "python_module": "comfy_api_nodes.nodes_gemini",
     "category": "api node/image/Gemini",
@@ -7351,6 +8081,12 @@
           {
             "tooltip": "Optional image(s) to use as context for the model. To include multiple images, you can use the Batch Images node."
           }
+        ],
+        "response_modalities": [
+          "COMBO",
+          {
+            "tooltip": "Choose 'IMAGE' for image-only output, or 'IMAGE+TEXT' to return both the generated image and a text response."
+          }
         ]
       }
     },
@@ -7363,7 +8099,8 @@
       "optional": [
         "images",
         "files",
-        "aspect_ratio"
+        "aspect_ratio",
+        "response_modalities"
       ]
     },
     "output": [
@@ -7653,14 +8390,17 @@
   },
   {
     "name": "Hunyuan3Dv2Conditioning",
-    "display_name": "Hunyuan3Dv2Conditioning",
+    "display_name": null,
     "description": "",
     "python_module": "comfy_extras.nodes_hunyuan3d",
     "category": "conditioning/video_models",
     "input": {
       "required": {
         "clip_vision_output": [
-          "CLIP_VISION_OUTPUT"
+          "CLIP_VISION_OUTPUT",
+          {
+            "tooltip": null
+          }
         ]
       },
       "optional": null
@@ -7684,11 +8424,14 @@
       "negative"
     ],
     "output_node": false,
-    "output_tooltips": []
+    "output_tooltips": [
+      null,
+      null
+    ]
   },
   {
     "name": "Hunyuan3Dv2ConditioningMultiView",
-    "display_name": "Hunyuan3Dv2ConditioningMultiView",
+    "display_name": null,
     "description": "",
     "python_module": "comfy_extras.nodes_hunyuan3d",
     "category": "conditioning/video_models",
@@ -7696,16 +8439,28 @@
       "required": {},
       "optional": {
         "back": [
-          "CLIP_VISION_OUTPUT"
+          "CLIP_VISION_OUTPUT",
+          {
+            "tooltip": null
+          }
         ],
         "front": [
-          "CLIP_VISION_OUTPUT"
+          "CLIP_VISION_OUTPUT",
+          {
+            "tooltip": null
+          }
         ],
         "left": [
-          "CLIP_VISION_OUTPUT"
+          "CLIP_VISION_OUTPUT",
+          {
+            "tooltip": null
+          }
         ],
         "right": [
-          "CLIP_VISION_OUTPUT"
+          "CLIP_VISION_OUTPUT",
+          {
+            "tooltip": null
+          }
         ]
       }
     },
@@ -7731,7 +8486,10 @@
       "negative"
     ],
     "output_node": false,
-    "output_tooltips": []
+    "output_tooltips": [
+      null,
+      null
+    ]
   },
   {
     "name": "HunyuanImageToVideo",
@@ -7887,6 +8645,298 @@
         "noise_augmentation"
       ],
       "optional": null
+    },
+    "output": [
+      "CONDITIONING",
+      "CONDITIONING",
+      "LATENT"
+    ],
+    "output_is_list": [
+      false,
+      false,
+      false
+    ],
+    "output_name": [
+      "positive",
+      "negative",
+      "latent"
+    ],
+    "output_node": false,
+    "output_tooltips": [
+      null,
+      null,
+      null
+    ]
+  },
+  {
+    "name": "HunyuanVideo15ImageToVideo",
+    "display_name": null,
+    "description": "",
+    "python_module": "comfy_extras.nodes_hunyuan",
+    "category": "conditioning/video_models",
+    "input": {
+      "required": {
+        "batch_size": [
+          "INT",
+          {
+            "tooltip": null,
+            "default": 1,
+            "max": 4096,
+            "min": 1
+          }
+        ],
+        "height": [
+          "INT",
+          {
+            "tooltip": null,
+            "default": 480,
+            "max": 16384,
+            "min": 16,
+            "step": 16
+          }
+        ],
+        "length": [
+          "INT",
+          {
+            "tooltip": null,
+            "default": 33,
+            "max": 16384,
+            "min": 1,
+            "step": 4
+          }
+        ],
+        "negative": [
+          "CONDITIONING",
+          {
+            "tooltip": null
+          }
+        ],
+        "positive": [
+          "CONDITIONING",
+          {
+            "tooltip": null
+          }
+        ],
+        "vae": [
+          "VAE",
+          {
+            "tooltip": null
+          }
+        ],
+        "width": [
+          "INT",
+          {
+            "tooltip": null,
+            "default": 848,
+            "max": 16384,
+            "min": 16,
+            "step": 16
+          }
+        ]
+      },
+      "optional": {
+        "clip_vision_output": [
+          "CLIP_VISION_OUTPUT",
+          {
+            "tooltip": null
+          }
+        ],
+        "start_image": [
+          "IMAGE",
+          {
+            "tooltip": null
+          }
+        ]
+      }
+    },
+    "input_order": {
+      "required": [
+        "positive",
+        "negative",
+        "vae",
+        "width",
+        "height",
+        "length",
+        "batch_size"
+      ],
+      "optional": [
+        "start_image",
+        "clip_vision_output"
+      ]
+    },
+    "output": [
+      "CONDITIONING",
+      "CONDITIONING",
+      "LATENT"
+    ],
+    "output_is_list": [
+      false,
+      false,
+      false
+    ],
+    "output_name": [
+      "positive",
+      "negative",
+      "latent"
+    ],
+    "output_node": false,
+    "output_tooltips": [
+      null,
+      null,
+      null
+    ]
+  },
+  {
+    "name": "HunyuanVideo15LatentUpscaleWithModel",
+    "display_name": "Hunyuan Video 15 Latent Upscale With Model",
+    "description": "",
+    "python_module": "comfy_extras.nodes_hunyuan",
+    "category": "latent",
+    "input": {
+      "required": {
+        "crop": [
+          "COMBO",
+          {
+            "tooltip": null
+          }
+        ],
+        "height": [
+          "INT",
+          {
+            "tooltip": null,
+            "default": 720,
+            "max": 16384,
+            "min": 0,
+            "step": 8
+          }
+        ],
+        "model": [
+          "LATENT_UPSCALE_MODEL",
+          {
+            "tooltip": null
+          }
+        ],
+        "samples": [
+          "LATENT",
+          {
+            "tooltip": null
+          }
+        ],
+        "upscale_method": [
+          "COMBO",
+          {
+            "tooltip": null,
+            "default": "bilinear"
+          }
+        ],
+        "width": [
+          "INT",
+          {
+            "tooltip": null,
+            "default": 1280,
+            "max": 16384,
+            "min": 0,
+            "step": 8
+          }
+        ]
+      },
+      "optional": null
+    },
+    "input_order": {
+      "required": [
+        "model",
+        "samples",
+        "upscale_method",
+        "width",
+        "height",
+        "crop"
+      ],
+      "optional": null
+    },
+    "output": [
+      "LATENT"
+    ],
+    "output_is_list": [
+      false
+    ],
+    "output_name": [
+      "LATENT"
+    ],
+    "output_node": false,
+    "output_tooltips": [
+      null
+    ]
+  },
+  {
+    "name": "HunyuanVideo15SuperResolution",
+    "display_name": null,
+    "description": "",
+    "python_module": "comfy_extras.nodes_hunyuan",
+    "category": "sd",
+    "input": {
+      "required": {
+        "latent": [
+          "LATENT",
+          {
+            "tooltip": null
+          }
+        ],
+        "negative": [
+          "CONDITIONING",
+          {
+            "tooltip": null
+          }
+        ],
+        "noise_augmentation": [
+          "FLOAT",
+          {
+            "tooltip": null,
+            "default": 0.7,
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "positive": [
+          "CONDITIONING",
+          {
+            "tooltip": null
+          }
+        ]
+      },
+      "optional": {
+        "clip_vision_output": [
+          "CLIP_VISION_OUTPUT",
+          {
+            "tooltip": null
+          }
+        ],
+        "start_image": [
+          "IMAGE",
+          {
+            "tooltip": null
+          }
+        ],
+        "vae": [
+          "VAE",
+          {
+            "tooltip": null
+          }
+        ]
+      }
+    },
+    "input_order": {
+      "required": [
+        "positive",
+        "negative",
+        "latent",
+        "noise_augmentation"
+      ],
+      "optional": [
+        "vae",
+        "start_image",
+        "clip_vision_output"
+      ]
     },
     "output": [
       "CONDITIONING",
@@ -8780,6 +9830,53 @@
     "output_tooltips": []
   },
   {
+    "name": "ImageDeduplication",
+    "display_name": "Image Deduplication",
+    "description": "",
+    "python_module": "comfy_extras.nodes_dataset",
+    "category": "dataset/image",
+    "input": {
+      "required": {
+        "images": [
+          "IMAGE",
+          {
+            "tooltip": "List of images to process."
+          }
+        ],
+        "similarity_threshold": [
+          "FLOAT",
+          {
+            "tooltip": "Similarity threshold (0-1). Higher means more similar. Images above this threshold are considered duplicates.",
+            "default": 0.95,
+            "max": 1.0,
+            "min": 0.0
+          }
+        ]
+      },
+      "optional": null
+    },
+    "input_order": {
+      "required": [
+        "images",
+        "similarity_threshold"
+      ],
+      "optional": null
+    },
+    "output": [
+      "IMAGE"
+    ],
+    "output_is_list": [
+      true
+    ],
+    "output_name": [
+      "images"
+    ],
+    "output_node": false,
+    "output_tooltips": [
+      "Processed images"
+    ]
+  },
+  {
     "name": "ImageFlip",
     "display_name": "ImageFlip",
     "description": "",
@@ -8866,6 +9963,83 @@
     ],
     "output_node": false,
     "output_tooltips": []
+  },
+  {
+    "name": "ImageGrid",
+    "display_name": "Image Grid",
+    "description": "",
+    "python_module": "comfy_extras.nodes_dataset",
+    "category": "dataset/image",
+    "input": {
+      "required": {
+        "cell_height": [
+          "INT",
+          {
+            "tooltip": "Height of each cell in the grid.",
+            "default": 256,
+            "max": 2048,
+            "min": 32
+          }
+        ],
+        "cell_width": [
+          "INT",
+          {
+            "tooltip": "Width of each cell in the grid.",
+            "default": 256,
+            "max": 2048,
+            "min": 32
+          }
+        ],
+        "columns": [
+          "INT",
+          {
+            "tooltip": "Number of columns in the grid.",
+            "default": 4,
+            "max": 20,
+            "min": 1
+          }
+        ],
+        "images": [
+          "IMAGE",
+          {
+            "tooltip": "List of images to process."
+          }
+        ],
+        "padding": [
+          "INT",
+          {
+            "tooltip": "Padding between images.",
+            "default": 4,
+            "max": 50,
+            "min": 0
+          }
+        ]
+      },
+      "optional": null
+    },
+    "input_order": {
+      "required": [
+        "images",
+        "columns",
+        "cell_width",
+        "cell_height",
+        "padding"
+      ],
+      "optional": null
+    },
+    "output": [
+      "IMAGE"
+    ],
+    "output_is_list": [
+      false
+    ],
+    "output_name": [
+      "images"
+    ],
+    "output_node": false,
+    "output_tooltips": [
+      "Processed images"
+    ]
   },
   {
     "name": "ImageInvert",
@@ -10123,14 +11297,17 @@
   },
   {
     "name": "KSamplerSelect",
-    "display_name": "KSamplerSelect",
+    "display_name": null,
     "description": "",
     "python_module": "comfy_extras.nodes_custom_sampler",
     "category": "sampling/custom_sampling/samplers",
     "input": {
       "required": {
         "sampler_name": [
-          []
+          "COMBO",
+          {
+            "tooltip": null
+          }
         ]
       },
       "optional": null
@@ -10151,11 +11328,13 @@
       "SAMPLER"
     ],
     "output_node": false,
-    "output_tooltips": []
+    "output_tooltips": [
+      null
+    ]
   },
   {
     "name": "KarrasScheduler",
-    "display_name": "KarrasScheduler",
+    "display_name": null,
     "description": "",
     "python_module": "comfy_extras.nodes_custom_sampler",
     "category": "sampling/custom_sampling/schedulers",
@@ -10225,7 +11404,9 @@
       "SIGMAS"
     ],
     "output_node": false,
-    "output_tooltips": []
+    "output_tooltips": [
+      null
+    ]
   },
   {
     "name": "KlingCameraControlI2VNode",
@@ -10927,6 +12108,366 @@
     ]
   },
   {
+    "name": "KlingOmniProEditVideoNode",
+    "display_name": "Kling Omni Edit Video (Pro)",
+    "description": "Edit an existing video with the latest model from Kling.",
+    "python_module": "comfy_api_nodes.nodes_kling",
+    "category": "api node/video/Kling",
+    "input": {
+      "required": {
+        "keep_original_sound": [
+          "BOOLEAN",
+          {
+            "tooltip": null,
+            "default": true
+          }
+        ],
+        "model_name": [
+          "COMBO",
+          {
+            "tooltip": null
+          }
+        ],
+        "prompt": [
+          "STRING",
+          {
+            "tooltip": "A text prompt describing the video content. This can include both positive and negative descriptions.",
+            "multiline": true
+          }
+        ],
+        "video": [
+          "VIDEO",
+          {
+            "tooltip": "Video for editing. The output video length will be the same."
+          }
+        ]
+      },
+      "optional": {
+        "reference_images": [
+          "IMAGE",
+          {
+            "tooltip": "Up to 4 additional reference images."
+          }
+        ]
+      }
+    },
+    "input_order": {
+      "required": [
+        "model_name",
+        "prompt",
+        "video",
+        "keep_original_sound"
+      ],
+      "optional": [
+        "reference_images"
+      ]
+    },
+    "output": [
+      "VIDEO"
+    ],
+    "output_is_list": [
+      false
+    ],
+    "output_name": [
+      "VIDEO"
+    ],
+    "output_node": false,
+    "output_tooltips": [
+      null
+    ]
+  },
+  {
+    "name": "KlingOmniProFirstLastFrameNode",
+    "display_name": "Kling Omni First-Last-Frame to Video (Pro)",
+    "description": "Use a start frame, an optional end frame, or reference images with the latest Kling model.",
+    "python_module": "comfy_api_nodes.nodes_kling",
+    "category": "api node/video/Kling",
+    "input": {
+      "required": {
+        "duration": [
+          "COMBO",
+          {
+            "tooltip": null
+          }
+        ],
+        "first_frame": [
+          "IMAGE",
+          {
+            "tooltip": null
+          }
+        ],
+        "model_name": [
+          "COMBO",
+          {
+            "tooltip": null
+          }
+        ],
+        "prompt": [
+          "STRING",
+          {
+            "tooltip": "A text prompt describing the video content. This can include both positive and negative descriptions.",
+            "multiline": true
+          }
+        ]
+      },
+      "optional": {
+        "end_frame": [
+          "IMAGE",
+          {
+            "tooltip": "An optional end frame for the video. This cannot be used simultaneously with 'reference_images'."
+          }
+        ],
+        "reference_images": [
+          "IMAGE",
+          {
+            "tooltip": "Up to 6 additional reference images."
+          }
+        ]
+      }
+    },
+    "input_order": {
+      "required": [
+        "model_name",
+        "prompt",
+        "duration",
+        "first_frame"
+      ],
+      "optional": [
+        "end_frame",
+        "reference_images"
+      ]
+    },
+    "output": [
+      "VIDEO"
+    ],
+    "output_is_list": [
+      false
+    ],
+    "output_name": [
+      "VIDEO"
+    ],
+    "output_node": false,
+    "output_tooltips": [
+      null
+    ]
+  },
+  {
+    "name": "KlingOmniProImageToVideoNode",
+    "display_name": "Kling Omni Image to Video (Pro)",
+    "description": "Use up to 7 reference images to generate a video with the latest Kling model.",
+    "python_module": "comfy_api_nodes.nodes_kling",
+    "category": "api node/video/Kling",
+    "input": {
+      "required": {
+        "aspect_ratio": [
+          "COMBO",
+          {
+            "tooltip": null
+          }
+        ],
+        "duration": [
+          "INT",
+          {
+            "tooltip": null,
+            "default": 3,
+            "display": "slider",
+            "max": 10,
+            "min": 3
+          }
+        ],
+        "model_name": [
+          "COMBO",
+          {
+            "tooltip": null
+          }
+        ],
+        "prompt": [
+          "STRING",
+          {
+            "tooltip": "A text prompt describing the video content. This can include both positive and negative descriptions.",
+            "multiline": true
+          }
+        ],
+        "reference_images": [
+          "IMAGE",
+          {
+            "tooltip": "Up to 7 reference images."
+          }
+        ]
+      },
+      "optional": null
+    },
+    "input_order": {
+      "required": [
+        "model_name",
+        "prompt",
+        "aspect_ratio",
+        "duration",
+        "reference_images"
+      ],
+      "optional": null
+    },
+    "output": [
+      "VIDEO"
+    ],
+    "output_is_list": [
+      false
+    ],
+    "output_name": [
+      "VIDEO"
+    ],
+    "output_node": false,
+    "output_tooltips": [
+      null
+    ]
+  },
+  {
+    "name": "KlingOmniProTextToVideoNode",
+    "display_name": "Kling Omni Text to Video (Pro)",
+    "description": "Use text prompts to generate videos with the latest Kling model.",
+    "python_module": "comfy_api_nodes.nodes_kling",
+    "category": "api node/video/Kling",
+    "input": {
+      "required": {
+        "aspect_ratio": [
+          "COMBO",
+          {
+            "tooltip": null
+          }
+        ],
+        "duration": [
+          "COMBO",
+          {
+            "tooltip": null
+          }
+        ],
+        "model_name": [
+          "COMBO",
+          {
+            "tooltip": null
+          }
+        ],
+        "prompt": [
+          "STRING",
+          {
+            "tooltip": "A text prompt describing the video content. This can include both positive and negative descriptions.",
+            "multiline": true
+          }
+        ]
+      },
+      "optional": null
+    },
+    "input_order": {
+      "required": [
+        "model_name",
+        "prompt",
+        "aspect_ratio",
+        "duration"
+      ],
+      "optional": null
+    },
+    "output": [
+      "VIDEO"
+    ],
+    "output_is_list": [
+      false
+    ],
+    "output_name": [
+      "VIDEO"
+    ],
+    "output_node": false,
+    "output_tooltips": [
+      null
+    ]
+  },
+  {
+    "name": "KlingOmniProVideoToVideoNode",
+    "display_name": "Kling Omni Video to Video (Pro)",
+    "description": "Use a video and up to 4 reference images to generate a video with the latest Kling model.",
+    "python_module": "comfy_api_nodes.nodes_kling",
+    "category": "api node/video/Kling",
+    "input": {
+      "required": {
+        "aspect_ratio": [
+          "COMBO",
+          {
+            "tooltip": null
+          }
+        ],
+        "duration": [
+          "INT",
+          {
+            "tooltip": null,
+            "default": 3,
+            "display": "slider",
+            "max": 10,
+            "min": 3
+          }
+        ],
+        "keep_original_sound": [
+          "BOOLEAN",
+          {
+            "tooltip": null,
+            "default": true
+          }
+        ],
+        "model_name": [
+          "COMBO",
+          {
+            "tooltip": null
+          }
+        ],
+        "prompt": [
+          "STRING",
+          {
+            "tooltip": "A text prompt describing the video content. This can include both positive and negative descriptions.",
+            "multiline": true
+          }
+        ],
+        "reference_video": [
+          "VIDEO",
+          {
+            "tooltip": "Video to use as a reference."
+          }
+        ]
+      },
+      "optional": {
+        "reference_images": [
+          "IMAGE",
+          {
+            "tooltip": "Up to 4 additional reference images."
+          }
+        ]
+      }
+    },
+    "input_order": {
+      "required": [
+        "model_name",
+        "prompt",
+        "aspect_ratio",
+        "duration",
+        "reference_video",
+        "keep_original_sound"
+      ],
+      "optional": [
+        "reference_images"
+      ]
+    },
+    "output": [
+      "VIDEO"
+    ],
+    "output_is_list": [
+      false
+    ],
+    "output_name": [
+      "VIDEO"
+    ],
+    "output_node": false,
+    "output_tooltips": [
+      null
+    ]
+  },
+  {
     "name": "KlingSingleImageVideoEffectNode",
     "display_name": "Kling Video Effects",
     "description": "Achieve different special effects when generating a video based on the effect_scene.",
@@ -11003,8 +12544,7 @@
         "aspect_ratio": [
           "COMBO",
           {
-            "tooltip": null,
-            "default": "16:9"
+            "tooltip": null
           }
         ],
         "cfg_scale": [
@@ -11026,7 +12566,7 @@
           "COMBO",
           {
             "tooltip": "The configuration to use for the video generation following the format: mode / duration / model_name.",
-            "default": "pro mode / 5s duration / kling-v1-5"
+            "default": "pro mode / 5s duration / kling-v2-5-turbo"
           }
         ],
         "negative_prompt": [
@@ -11760,7 +13300,7 @@
   },
   {
     "name": "LaplaceScheduler",
-    "display_name": "LaplaceScheduler",
+    "display_name": null,
     "description": "",
     "python_module": "comfy_extras.nodes_custom_sampler",
     "category": "sampling/custom_sampling/schedulers",
@@ -11842,7 +13382,9 @@
       "SIGMAS"
     ],
     "output_node": false,
-    "output_tooltips": []
+    "output_tooltips": [
+      null
+    ]
   },
   {
     "name": "LatentAdd",
@@ -12884,6 +14426,43 @@
     "output_tooltips": []
   },
   {
+    "name": "LatentUpscaleModelLoader",
+    "display_name": "Load Latent Upscale Model",
+    "description": "",
+    "python_module": "comfy_extras.nodes_hunyuan",
+    "category": "loaders",
+    "input": {
+      "required": {
+        "model_name": [
+          "COMBO",
+          {
+            "tooltip": null
+          }
+        ]
+      },
+      "optional": null
+    },
+    "input_order": {
+      "required": [
+        "model_name"
+      ],
+      "optional": null
+    },
+    "output": [
+      "LATENT_UPSCALE_MODEL"
+    ],
+    "output_is_list": [
+      false
+    ],
+    "output_name": [
+      "LATENT_UPSCALE_MODEL"
+    ],
+    "output_node": false,
+    "output_tooltips": [
+      null
+    ]
+  },
+  {
     "name": "LazyCache",
     "display_name": "LazyCache",
     "description": "A homebrew version of EasyCache - even 'easier' version of EasyCache to implement. Overall works worse than EasyCache, but better in some rare cases AND universal compatibility with everything in ComfyUI.",
@@ -12963,7 +14542,7 @@
   },
   {
     "name": "Load3D",
-    "display_name": "Load 3D",
+    "display_name": "Load 3D & Animation",
     "description": "",
     "python_module": "comfy_extras.nodes_load_3d",
     "category": "3d",
@@ -12986,89 +14565,7 @@
           }
         ],
         "model_file": [
-          [],
-          {
-            "tooltip": null
-          }
-        ],
-        "width": [
-          "INT",
-          {
-            "tooltip": null,
-            "default": 1024,
-            "max": 4096,
-            "min": 1,
-            "step": 1
-          }
-        ]
-      },
-      "optional": null
-    },
-    "input_order": {
-      "required": [
-        "model_file",
-        "image",
-        "width",
-        "height"
-      ],
-      "optional": null
-    },
-    "output": [
-      "IMAGE",
-      "MASK",
-      "STRING",
-      "IMAGE",
-      "IMAGE",
-      "LOAD3D_CAMERA",
-      "VIDEO"
-    ],
-    "output_is_list": [
-      false,
-      false,
-      false,
-      false,
-      false,
-      false,
-      false
-    ],
-    "output_name": [
-      "image",
-      "mask",
-      "mesh_path",
-      "normal",
-      "lineart",
-      "camera_info",
-      "recording_video"
-    ],
-    "output_node": false,
-    "output_tooltips": []
-  },
-  {
-    "name": "Load3DAnimation",
-    "display_name": "Load 3D - Animation",
-    "description": "",
-    "python_module": "comfy_extras.nodes_load_3d",
-    "category": "3d",
-    "input": {
-      "required": {
-        "height": [
-          "INT",
-          {
-            "tooltip": null,
-            "default": 1024,
-            "max": 4096,
-            "min": 1,
-            "step": 1
-          }
-        ],
-        "image": [
-          "LOAD_3D_ANIMATION",
-          {
-            "tooltip": null
-          }
-        ],
-        "model_file": [
-          [],
+          "COMBO",
           {
             "tooltip": null
           }
@@ -13120,7 +14617,14 @@
       "recording_video"
     ],
     "output_node": false,
-    "output_tooltips": []
+    "output_tooltips": [
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
+    ]
   },
   {
     "name": "LoadAudio",
@@ -13131,7 +14635,7 @@
     "input": {
       "required": {
         "audio": [
-          [],
+          "COMBO",
           {
             "tooltip": null,
             "audio_upload": true
@@ -13156,7 +14660,9 @@
       "AUDIO"
     ],
     "output_node": false,
-    "output_tooltips": []
+    "output_tooltips": [
+      null
+    ]
   },
   {
     "name": "LoadImage",
@@ -13196,6 +14702,43 @@
     ],
     "output_node": false,
     "output_tooltips": []
+  },
+  {
+    "name": "LoadImageDataSetFromFolder",
+    "display_name": "Load Image Dataset from Folder",
+    "description": "",
+    "python_module": "comfy_extras.nodes_dataset",
+    "category": "dataset",
+    "input": {
+      "required": {
+        "folder": [
+          "COMBO",
+          {
+            "tooltip": "The folder to load images from."
+          }
+        ]
+      },
+      "optional": null
+    },
+    "input_order": {
+      "required": [
+        "folder"
+      ],
+      "optional": null
+    },
+    "output": [
+      "IMAGE"
+    ],
+    "output_is_list": [
+      true
+    ],
+    "output_name": [
+      "images"
+    ],
+    "output_node": false,
+    "output_tooltips": [
+      "List of loaded images"
+    ]
   },
   {
     "name": "LoadImageMask",
@@ -13277,126 +14820,88 @@
     "output_tooltips": []
   },
   {
-    "name": "LoadImageSetFromFolderNode",
-    "display_name": "Load Image Dataset from Folder",
-    "description": "Loads a batch of images from a directory for training.",
-    "python_module": "comfy_extras.nodes_train",
-    "category": "loaders",
+    "name": "LoadImageTextDataSetFromFolder",
+    "display_name": "Load Image and Text Dataset from Folder",
+    "description": "",
+    "python_module": "comfy_extras.nodes_dataset",
+    "category": "dataset",
     "input": {
       "required": {
         "folder": [
-          [],
+          "COMBO",
           {
             "tooltip": "The folder to load images from."
           }
         ]
       },
-      "optional": {
-        "resize_method": [
-          [],
-          {
-            "tooltip": null,
-            "default": "None"
-          }
-        ]
-      }
+      "optional": null
     },
     "input_order": {
       "required": [
         "folder"
       ],
-      "optional": [
-        "resize_method"
-      ]
+      "optional": null
     },
     "output": [
-      "IMAGE"
+      "IMAGE",
+      "STRING"
     ],
     "output_is_list": [
-      false
+      true,
+      true
     ],
     "output_name": [
-      "IMAGE"
+      "images",
+      "texts"
     ],
     "output_node": false,
-    "output_tooltips": []
+    "output_tooltips": [
+      "List of loaded images",
+      "List of text captions"
+    ]
   },
   {
-    "name": "LoadImageTextSetFromFolderNode",
-    "display_name": "Load Image and Text Dataset from Folder",
-    "description": "Loads a batch of images and caption from a directory for training.",
-    "python_module": "comfy_extras.nodes_train",
-    "category": "loaders",
+    "name": "LoadTrainingDataset",
+    "display_name": "Load Training Dataset",
+    "description": "",
+    "python_module": "comfy_extras.nodes_dataset",
+    "category": "dataset",
     "input": {
       "required": {
-        "clip": [
-          "CLIP",
+        "folder_name": [
+          "STRING",
           {
-            "tooltip": "The CLIP model used for encoding the text."
-          }
-        ],
-        "folder": [
-          [],
-          {
-            "tooltip": "The folder to load images from."
+            "tooltip": "Name of folder containing the saved dataset (inside output directory).",
+            "multiline": false,
+            "default": "training_dataset"
           }
         ]
       },
-      "optional": {
-        "height": [
-          "INT",
-          {
-            "tooltip": "The height to resize the images to. -1 means use the original height.",
-            "default": -1,
-            "max": 10000,
-            "min": -1,
-            "step": 1
-          }
-        ],
-        "resize_method": [
-          [],
-          {
-            "tooltip": null,
-            "default": "None"
-          }
-        ],
-        "width": [
-          "INT",
-          {
-            "tooltip": "The width to resize the images to. -1 means use the original width.",
-            "default": -1,
-            "max": 10000,
-            "min": -1,
-            "step": 1
-          }
-        ]
-      }
+      "optional": null
     },
     "input_order": {
       "required": [
-        "folder",
-        "clip"
+        "folder_name"
       ],
-      "optional": [
-        "resize_method",
-        "width",
-        "height"
-      ]
+      "optional": null
     },
     "output": [
-      "IMAGE",
+      "LATENT",
       "CONDITIONING"
     ],
     "output_is_list": [
-      false,
-      false
+      true,
+      true
     ],
     "output_name": [
-      "IMAGE",
-      "CONDITIONING"
+      "latents",
+      "conditioning"
     ],
     "output_node": false,
-    "output_tooltips": []
+    "output_tooltips": [
+      "List of latent dicts",
+      "List of conditioning lists"
+    ]
   },
   {
     "name": "LoadVideo",
@@ -13565,7 +15070,7 @@
   {
     "name": "LoraModelLoader",
     "display_name": "Load LoRA Model",
-    "description": "Load Trained LoRA weights from Train LoRA node.",
+    "description": "",
     "python_module": "comfy_extras.nodes_train",
     "category": "loaders",
     "input": {
@@ -13588,8 +15093,7 @@
             "tooltip": "How strongly to modify the diffusion model. This value can be negative.",
             "default": 1.0,
             "max": 100.0,
-            "min": -100.0,
-            "step": 0.01
+            "min": -100.0
           }
         ]
       },
@@ -13610,7 +15114,7 @@
       false
     ],
     "output_name": [
-      "MODEL"
+      "model"
     ],
     "output_node": false,
     "output_tooltips": [
@@ -13620,7 +15124,7 @@
   {
     "name": "LossGraphNode",
     "display_name": "Plot Loss Graph",
-    "description": "Plots the loss graph and saves it to the output directory.",
+    "description": "",
     "python_module": "comfy_extras.nodes_train",
     "category": "training",
     "input": {
@@ -13628,14 +15132,15 @@
         "filename_prefix": [
           "STRING",
           {
-            "tooltip": null,
+            "tooltip": "Prefix for the saved loss graph image.",
+            "multiline": false,
             "default": "loss_graph"
           }
         ],
         "loss": [
           "LOSS_MAP",
           {
-            "tooltip": null
+            "tooltip": "Loss map from training node."
           }
         ]
       },
@@ -14338,6 +15843,71 @@
     ]
   },
   {
+    "name": "MakeTrainingDataset",
+    "display_name": "Make Training Dataset",
+    "description": "",
+    "python_module": "comfy_extras.nodes_dataset",
+    "category": "dataset",
+    "input": {
+      "required": {
+        "clip": [
+          "CLIP",
+          {
+            "tooltip": "CLIP model for encoding text to conditioning."
+          }
+        ],
+        "images": [
+          "IMAGE",
+          {
+            "tooltip": "List of images to encode."
+          }
+        ],
+        "vae": [
+          "VAE",
+          {
+            "tooltip": "VAE model for encoding images to latents."
+          }
+        ]
+      },
+      "optional": {
+        "texts": [
+          "STRING",
+          {
+            "tooltip": "List of text captions. Can be length n (matching images), 1 (repeated for all), or omitted (uses empty string).",
+            "multiline": false
+          }
+        ]
+      }
+    },
+    "input_order": {
+      "required": [
+        "images",
+        "vae",
+        "clip"
+      ],
+      "optional": [
+        "texts"
+      ]
+    },
+    "output": [
+      "LATENT",
+      "CONDITIONING"
+    ],
+    "output_is_list": [
+      true,
+      true
+    ],
+    "output_name": [
+      "latents",
+      "conditioning"
+    ],
+    "output_node": false,
+    "output_tooltips": [
+      "List of latent dicts",
+      "List of conditioning lists"
+    ]
+  },
+  {
     "name": "MaskComposite",
     "display_name": "MaskComposite",
     "description": "",
@@ -14456,6 +16026,81 @@
     ],
     "output_node": false,
     "output_tooltips": []
+  },
+  {
+    "name": "MergeImageLists",
+    "display_name": "Merge Image Lists",
+    "description": "",
+    "python_module": "comfy_extras.nodes_dataset",
+    "category": "dataset/image",
+    "input": {
+      "required": {
+        "images": [
+          "IMAGE",
+          {
+            "tooltip": "List of images to process."
+          }
+        ]
+      },
+      "optional": null
+    },
+    "input_order": {
+      "required": [
+        "images"
+      ],
+      "optional": null
+    },
+    "output": [
+      "IMAGE"
+    ],
+    "output_is_list": [
+      true
+    ],
+    "output_name": [
+      "images"
+    ],
+    "output_node": false,
+    "output_tooltips": [
+      "Processed images"
+    ]
+  },
+  {
+    "name": "MergeTextLists",
+    "display_name": "Merge Text Lists",
+    "description": "",
+    "python_module": "comfy_extras.nodes_dataset",
+    "category": "dataset/text",
+    "input": {
+      "required": {
+        "texts": [
+          "STRING",
+          {
+            "tooltip": "List of texts to process.",
+            "multiline": false
+          }
+        ]
+      },
+      "optional": null
+    },
+    "input_order": {
+      "required": [
+        "texts"
+      ],
+      "optional": null
+    },
+    "output": [
+      "STRING"
+    ],
+    "output_is_list": [
+      null
+    ],
+    "output_name": [
+      "texts"
+    ],
+    "output_node": false,
+    "output_tooltips": [
+      "Processed texts"
+    ]
   },
   {
     "name": "MinimaxHailuoVideoNode",
@@ -23016,6 +24661,63 @@
     ]
   },
   {
+    "name": "NormalizeImages",
+    "display_name": "Normalize Images",
+    "description": "",
+    "python_module": "comfy_extras.nodes_dataset",
+    "category": "dataset/image",
+    "input": {
+      "required": {
+        "images": [
+          "IMAGE",
+          {
+            "tooltip": "Image to process."
+          }
+        ],
+        "mean": [
+          "FLOAT",
+          {
+            "tooltip": "Mean value for normalization.",
+            "default": 0.5,
+            "max": 1.0,
+            "min": 0.0
+          }
+        ],
+        "std": [
+          "FLOAT",
+          {
+            "tooltip": "Standard deviation for normalization.",
+            "default": 0.5,
+            "max": 1.0,
+            "min": 0.001
+          }
+        ]
+      },
+      "optional": null
+    },
+    "input_order": {
+      "required": [
+        "images",
+        "mean",
+        "std"
+      ],
+      "optional": null
+    },
+    "output": [
+      "IMAGE"
+    ],
+    "output_is_list": [
+      false
+    ],
+    "output_name": [
+      "images"
+    ],
+    "output_node": false,
+    "output_tooltips": [
+      "Processed images"
+    ]
+  },
+  {
     "name": "OpenAIChatConfig",
     "display_name": "OpenAI ChatGPT Advanced Options",
     "description": "Allows specifying advanced configuration options for the OpenAI Chat Nodes.",
@@ -24906,7 +26608,7 @@
   },
   {
     "name": "PolyexponentialScheduler",
-    "display_name": "PolyexponentialScheduler",
+    "display_name": null,
     "description": "",
     "python_module": "comfy_extras.nodes_custom_sampler",
     "category": "sampling/custom_sampling/schedulers",
@@ -24976,7 +26678,9 @@
       "SIGMAS"
     ],
     "output_node": false,
-    "output_tooltips": []
+    "output_tooltips": [
+      null
+    ]
   },
   {
     "name": "PorterDuffImageComposite",
@@ -25050,7 +26754,7 @@
   },
   {
     "name": "Preview3D",
-    "display_name": "Preview 3D",
+    "display_name": "Preview 3D & Animation",
     "description": "",
     "python_module": "comfy_extras.nodes_load_3d",
     "category": "3d",
@@ -25066,6 +26770,12 @@
         ]
       },
       "optional": {
+        "bg_image": [
+          "IMAGE",
+          {
+            "tooltip": null
+          }
+        ],
         "camera_info": [
           "LOAD3D_CAMERA",
           {
@@ -25079,47 +26789,8 @@
         "model_file"
       ],
       "optional": [
-        "camera_info"
-      ]
-    },
-    "output": [],
-    "output_is_list": [],
-    "output_name": [],
-    "output_node": true,
-    "output_tooltips": []
-  },
-  {
-    "name": "Preview3DAnimation",
-    "display_name": "Preview 3D - Animation",
-    "description": "",
-    "python_module": "comfy_extras.nodes_load_3d",
-    "category": "3d",
-    "input": {
-      "required": {
-        "model_file": [
-          "STRING",
-          {
-            "tooltip": null,
-            "multiline": false,
-            "default": ""
-          }
-        ]
-      },
-      "optional": {
-        "camera_info": [
-          "LOAD3D_CAMERA",
-          {
-            "tooltip": null
-          }
-        ]
-      }
-    },
-    "input_order": {
-      "required": [
-        "model_file"
-      ],
-      "optional": [
-        "camera_info"
+        "camera_info",
+        "bg_image"
       ]
     },
     "output": [],
@@ -25130,7 +26801,7 @@
   },
   {
     "name": "PreviewAny",
-    "display_name": "Preview Any",
+    "display_name": "Preview as Text",
     "description": "",
     "python_module": "comfy_extras.nodes_preview_any",
     "category": "utils",
@@ -25166,7 +26837,10 @@
     "input": {
       "required": {
         "audio": [
-          "AUDIO"
+          "AUDIO",
+          {
+            "tooltip": null
+          }
         ]
       },
       "optional": null
@@ -25516,8 +27190,75 @@
     "output_tooltips": []
   },
   {
+    "name": "RandomCropImages",
+    "display_name": "Random Crop Images",
+    "description": "",
+    "python_module": "comfy_extras.nodes_dataset",
+    "category": "dataset/image",
+    "input": {
+      "required": {
+        "height": [
+          "INT",
+          {
+            "tooltip": "Crop height.",
+            "default": 512,
+            "max": 8192,
+            "min": 1
+          }
+        ],
+        "images": [
+          "IMAGE",
+          {
+            "tooltip": "Image to process."
+          }
+        ],
+        "seed": [
+          "INT",
+          {
+            "tooltip": "Random seed.",
+            "default": 0,
+            "max": 18446744073709551615,
+            "min": 0
+          }
+        ],
+        "width": [
+          "INT",
+          {
+            "tooltip": "Crop width.",
+            "default": 512,
+            "max": 8192,
+            "min": 1
+          }
+        ]
+      },
+      "optional": null
+    },
+    "input_order": {
+      "required": [
+        "images",
+        "width",
+        "height",
+        "seed"
+      ],
+      "optional": null
+    },
+    "output": [
+      "IMAGE"
+    ],
+    "output_is_list": [
+      false
+    ],
+    "output_name": [
+      "images"
+    ],
+    "output_node": false,
+    "output_tooltips": [
+      "Processed images"
+    ]
+  },
+  {
     "name": "RandomNoise",
-    "display_name": "RandomNoise",
+    "display_name": null,
     "description": "",
     "python_module": "comfy_extras.nodes_custom_sampler",
     "category": "sampling/custom_sampling/noise",
@@ -25551,7 +27292,9 @@
       "NOISE"
     ],
     "output_node": false,
-    "output_tooltips": []
+    "output_tooltips": [
+      null
+    ]
   },
   {
     "name": "RebatchImages",
@@ -25680,7 +27423,9 @@
       "AUDIO"
     ],
     "output_node": false,
-    "output_tooltips": []
+    "output_tooltips": [
+      null
+    ]
   },
   {
     "name": "RecraftColorRGB",
@@ -26995,6 +28740,62 @@
     "output_tooltips": []
   },
   {
+    "name": "ReplaceText",
+    "display_name": "Replace Text",
+    "description": "",
+    "python_module": "comfy_extras.nodes_dataset",
+    "category": "dataset/text",
+    "input": {
+      "required": {
+        "find": [
+          "STRING",
+          {
+            "tooltip": "Text to find.",
+            "multiline": false,
+            "default": ""
+          }
+        ],
+        "replace": [
+          "STRING",
+          {
+            "tooltip": "Text to replace with.",
+            "multiline": false,
+            "default": ""
+          }
+        ],
+        "texts": [
+          "STRING",
+          {
+            "tooltip": "Text to process.",
+            "multiline": false
+          }
+        ]
+      },
+      "optional": null
+    },
+    "input_order": {
+      "required": [
+        "texts",
+        "find",
+        "replace"
+      ],
+      "optional": null
+    },
+    "output": [
+      "STRING"
+    ],
+    "output_is_list": [
+      null
+    ],
+    "output_name": [
+      "texts"
+    ],
+    "output_node": false,
+    "output_tooltips": [
+      "Processed texts"
+    ]
+  },
+  {
     "name": "RescaleCFG",
     "display_name": "RescaleCFG",
     "description": "",
@@ -27098,6 +28899,100 @@
     ],
     "output_node": false,
     "output_tooltips": []
+  },
+  {
+    "name": "ResizeImagesByLongerEdge",
+    "display_name": "Resize Images by Longer Edge",
+    "description": "",
+    "python_module": "comfy_extras.nodes_dataset",
+    "category": "dataset/image",
+    "input": {
+      "required": {
+        "images": [
+          "IMAGE",
+          {
+            "tooltip": "Image to process."
+          }
+        ],
+        "longer_edge": [
+          "INT",
+          {
+            "tooltip": "Target length for the longer edge.",
+            "default": 1024,
+            "max": 8192,
+            "min": 1
+          }
+        ]
+      },
+      "optional": null
+    },
+    "input_order": {
+      "required": [
+        "images",
+        "longer_edge"
+      ],
+      "optional": null
+    },
+    "output": [
+      "IMAGE"
+    ],
+    "output_is_list": [
+      false
+    ],
+    "output_name": [
+      "images"
+    ],
+    "output_node": false,
+    "output_tooltips": [
+      "Processed images"
+    ]
+  },
+  {
+    "name": "ResizeImagesByShorterEdge",
+    "display_name": "Resize Images by Shorter Edge",
+    "description": "",
+    "python_module": "comfy_extras.nodes_dataset",
+    "category": "dataset/image",
+    "input": {
+      "required": {
+        "images": [
+          "IMAGE",
+          {
+            "tooltip": "Image to process."
+          }
+        ],
+        "shorter_edge": [
+          "INT",
+          {
+            "tooltip": "Target length for the shorter edge.",
+            "default": 512,
+            "max": 8192,
+            "min": 1
+          }
+        ]
+      },
+      "optional": null
+    },
+    "input_order": {
+      "required": [
+        "images",
+        "shorter_edge"
+      ],
+      "optional": null
+    },
+    "output": [
+      "IMAGE"
+    ],
+    "output_is_list": [
+      false
+    ],
+    "output_name": [
+      "images"
+    ],
+    "output_node": false,
+    "output_tooltips": [
+      "Processed images"
+    ]
   },
   {
     "name": "Rodin3D_Detail",
@@ -27701,7 +29596,7 @@
   },
   {
     "name": "SDTurboScheduler",
-    "display_name": "SDTurboScheduler",
+    "display_name": null,
     "description": "",
     "python_module": "comfy_extras.nodes_custom_sampler",
     "category": "sampling/custom_sampling/schedulers",
@@ -27718,7 +29613,10 @@
           }
         ],
         "model": [
-          "MODEL"
+          "MODEL",
+          {
+            "tooltip": null
+          }
         ],
         "steps": [
           "INT",
@@ -27750,7 +29648,9 @@
       "SIGMAS"
     ],
     "output_node": false,
-    "output_tooltips": []
+    "output_tooltips": [
+      null
+    ]
   },
   {
     "name": "SD_4XUpscale_Conditioning",
@@ -28047,7 +29947,7 @@
   },
   {
     "name": "SamplerCustom",
-    "display_name": "SamplerCustom",
+    "display_name": null,
     "description": "",
     "python_module": "comfy_extras.nodes_custom_sampler",
     "category": "sampling/custom_sampling",
@@ -28072,13 +29972,22 @@
           }
         ],
         "latent_image": [
-          "LATENT"
+          "LATENT",
+          {
+            "tooltip": null
+          }
         ],
         "model": [
-          "MODEL"
+          "MODEL",
+          {
+            "tooltip": null
+          }
         ],
         "negative": [
-          "CONDITIONING"
+          "CONDITIONING",
+          {
+            "tooltip": null
+          }
         ],
         "noise_seed": [
           "INT",
@@ -28090,13 +29999,22 @@
           }
         ],
         "positive": [
-          "CONDITIONING"
+          "CONDITIONING",
+          {
+            "tooltip": null
+          }
         ],
         "sampler": [
-          "SAMPLER"
+          "SAMPLER",
+          {
+            "tooltip": null
+          }
         ],
         "sigmas": [
-          "SIGMAS"
+          "SIGMAS",
+          {
+            "tooltip": null
+          }
         ]
       },
       "optional": null
@@ -28128,30 +30046,48 @@
       "denoised_output"
     ],
     "output_node": false,
-    "output_tooltips": []
+    "output_tooltips": [
+      null,
+      null
+    ]
   },
   {
     "name": "SamplerCustomAdvanced",
-    "display_name": "SamplerCustomAdvanced",
+    "display_name": null,
     "description": "",
     "python_module": "comfy_extras.nodes_custom_sampler",
     "category": "sampling/custom_sampling",
     "input": {
       "required": {
         "guider": [
-          "GUIDER"
+          "GUIDER",
+          {
+            "tooltip": null
+          }
         ],
         "latent_image": [
-          "LATENT"
+          "LATENT",
+          {
+            "tooltip": null
+          }
         ],
         "noise": [
-          "NOISE"
+          "NOISE",
+          {
+            "tooltip": null
+          }
         ],
         "sampler": [
-          "SAMPLER"
+          "SAMPLER",
+          {
+            "tooltip": null
+          }
         ],
         "sigmas": [
-          "SIGMAS"
+          "SIGMAS",
+          {
+            "tooltip": null
+          }
         ]
       },
       "optional": null
@@ -28179,11 +30115,14 @@
       "denoised_output"
     ],
     "output_node": false,
-    "output_tooltips": []
+    "output_tooltips": [
+      null,
+      null
+    ]
   },
   {
     "name": "SamplerDPMAdaptative",
-    "display_name": "SamplerDPMAdaptative",
+    "display_name": null,
     "description": "",
     "python_module": "comfy_extras.nodes_custom_sampler",
     "category": "sampling/custom_sampling/samplers",
@@ -28325,11 +30264,13 @@
       "SAMPLER"
     ],
     "output_node": false,
-    "output_tooltips": []
+    "output_tooltips": [
+      null
+    ]
   },
   {
     "name": "SamplerDPMPP_2M_SDE",
-    "display_name": "SamplerDPMPP_2M_SDE",
+    "display_name": null,
     "description": "",
     "python_module": "comfy_extras.nodes_custom_sampler",
     "category": "sampling/custom_sampling/samplers",
@@ -28347,7 +30288,10 @@
           }
         ],
         "noise_device": [
-          []
+          "COMBO",
+          {
+            "tooltip": null
+          }
         ],
         "s_noise": [
           "FLOAT",
@@ -28361,7 +30305,10 @@
           }
         ],
         "solver_type": [
-          []
+          "COMBO",
+          {
+            "tooltip": null
+          }
         ]
       },
       "optional": null
@@ -28385,11 +30332,13 @@
       "SAMPLER"
     ],
     "output_node": false,
-    "output_tooltips": []
+    "output_tooltips": [
+      null
+    ]
   },
   {
     "name": "SamplerDPMPP_2S_Ancestral",
-    "display_name": "SamplerDPMPP_2S_Ancestral",
+    "display_name": null,
     "description": "",
     "python_module": "comfy_extras.nodes_custom_sampler",
     "category": "sampling/custom_sampling/samplers",
@@ -28437,11 +30386,13 @@
       "SAMPLER"
     ],
     "output_node": false,
-    "output_tooltips": []
+    "output_tooltips": [
+      null
+    ]
   },
   {
     "name": "SamplerDPMPP_3M_SDE",
-    "display_name": "SamplerDPMPP_3M_SDE",
+    "display_name": null,
     "description": "",
     "python_module": "comfy_extras.nodes_custom_sampler",
     "category": "sampling/custom_sampling/samplers",
@@ -28459,7 +30410,10 @@
           }
         ],
         "noise_device": [
-          []
+          "COMBO",
+          {
+            "tooltip": null
+          }
         ],
         "s_noise": [
           "FLOAT",
@@ -28493,11 +30447,13 @@
       "SAMPLER"
     ],
     "output_node": false,
-    "output_tooltips": []
+    "output_tooltips": [
+      null
+    ]
   },
   {
     "name": "SamplerDPMPP_SDE",
-    "display_name": "SamplerDPMPP_SDE",
+    "display_name": null,
     "description": "",
     "python_module": "comfy_extras.nodes_custom_sampler",
     "category": "sampling/custom_sampling/samplers",
@@ -28515,7 +30471,10 @@
           }
         ],
         "noise_device": [
-          []
+          "COMBO",
+          {
+            "tooltip": null
+          }
         ],
         "r": [
           "FLOAT",
@@ -28561,11 +30520,13 @@
       "SAMPLER"
     ],
     "output_node": false,
-    "output_tooltips": []
+    "output_tooltips": [
+      null
+    ]
   },
   {
     "name": "SamplerER_SDE",
-    "display_name": "SamplerER_SDE",
+    "display_name": null,
     "description": "",
     "python_module": "comfy_extras.nodes_custom_sampler",
     "category": "sampling/custom_sampling/samplers",
@@ -28630,11 +30591,13 @@
       "SAMPLER"
     ],
     "output_node": false,
-    "output_tooltips": []
+    "output_tooltips": [
+      null
+    ]
   },
   {
     "name": "SamplerEulerAncestral",
-    "display_name": "SamplerEulerAncestral",
+    "display_name": null,
     "description": "",
     "python_module": "comfy_extras.nodes_custom_sampler",
     "category": "sampling/custom_sampling/samplers",
@@ -28682,7 +30645,9 @@
       "SAMPLER"
     ],
     "output_node": false,
-    "output_tooltips": []
+    "output_tooltips": [
+      null
+    ]
   },
   {
     "name": "SamplerEulerAncestralCFGPP",
@@ -28734,7 +30699,9 @@
       "SAMPLER"
     ],
     "output_node": false,
-    "output_tooltips": []
+    "output_tooltips": [
+      null
+    ]
   },
   {
     "name": "SamplerLCMUpscale",
@@ -28797,7 +30764,7 @@
   },
   {
     "name": "SamplerLMS",
-    "display_name": "SamplerLMS",
+    "display_name": null,
     "description": "",
     "python_module": "comfy_extras.nodes_custom_sampler",
     "category": "sampling/custom_sampling/samplers",
@@ -28831,11 +30798,13 @@
       "SAMPLER"
     ],
     "output_node": false,
-    "output_tooltips": []
+    "output_tooltips": [
+      null
+    ]
   },
   {
     "name": "SamplerSASolver",
-    "display_name": "SamplerSASolver",
+    "display_name": null,
     "description": "",
     "python_module": "comfy_extras.nodes_custom_sampler",
     "category": "sampling/custom_sampling/samplers",
@@ -28946,11 +30915,13 @@
       "SAMPLER"
     ],
     "output_node": false,
-    "output_tooltips": []
+    "output_tooltips": [
+      null
+    ]
   },
   {
     "name": "SamplingPercentToSigma",
-    "display_name": "SamplingPercentToSigma",
+    "display_name": null,
     "description": "",
     "python_module": "comfy_extras.nodes_custom_sampler",
     "category": "sampling/custom_sampling/sigmas",
@@ -29000,7 +30971,9 @@
       "sigma_value"
     ],
     "output_node": false,
-    "output_tooltips": []
+    "output_tooltips": [
+      null
+    ]
   },
   {
     "name": "SaveAnimatedPNG",
@@ -29133,12 +31106,16 @@
     "input": {
       "required": {
         "audio": [
-          "AUDIO"
+          "AUDIO",
+          {
+            "tooltip": null
+          }
         ],
         "filename_prefix": [
           "STRING",
           {
             "tooltip": null,
+            "multiline": false,
             "default": "audio/ComfyUI"
           }
         ]
@@ -29167,17 +31144,21 @@
     "input": {
       "required": {
         "audio": [
-          "AUDIO"
+          "AUDIO",
+          {
+            "tooltip": null
+          }
         ],
         "filename_prefix": [
           "STRING",
           {
             "tooltip": null,
+            "multiline": false,
             "default": "audio/ComfyUI"
           }
         ],
         "quality": [
-          [],
+          "COMBO",
           {
             "tooltip": null,
             "default": "V0"
@@ -29209,17 +31190,21 @@
     "input": {
       "required": {
         "audio": [
-          "AUDIO"
+          "AUDIO",
+          {
+            "tooltip": null
+          }
         ],
         "filename_prefix": [
           "STRING",
           {
             "tooltip": null,
+            "multiline": false,
             "default": "audio/ComfyUI"
           }
         ],
         "quality": [
-          [],
+          "COMBO",
           {
             "tooltip": null,
             "default": "128k"
@@ -29244,7 +31229,7 @@
   },
   {
     "name": "SaveGLB",
-    "display_name": "SaveGLB",
+    "display_name": null,
     "description": "",
     "python_module": "comfy_extras.nodes_hunyuan3d",
     "category": "3d",
@@ -29254,11 +31239,15 @@
           "STRING",
           {
             "tooltip": null,
+            "multiline": false,
             "default": "mesh/ComfyUI"
           }
         ],
         "mesh": [
-          "MESH"
+          "MESH",
+          {
+            "tooltip": null
+          }
         ]
       },
       "optional": null
@@ -29314,7 +31303,109 @@
     "output_tooltips": []
   },
   {
-    "name": "SaveLoRANode",
+    "name": "SaveImageDataSetToFolder",
+    "display_name": "Save Image Dataset to Folder",
+    "description": "",
+    "python_module": "comfy_extras.nodes_dataset",
+    "category": "dataset",
+    "input": {
+      "required": {
+        "filename_prefix": [
+          "STRING",
+          {
+            "tooltip": "Prefix for saved image filenames.",
+            "multiline": false,
+            "default": "image"
+          }
+        ],
+        "folder_name": [
+          "STRING",
+          {
+            "tooltip": "Name of the folder to save images to (inside output directory).",
+            "multiline": false,
+            "default": "dataset"
+          }
+        ],
+        "images": [
+          "IMAGE",
+          {
+            "tooltip": "List of images to save."
+          }
+        ]
+      },
+      "optional": null
+    },
+    "input_order": {
+      "required": [
+        "images",
+        "folder_name",
+        "filename_prefix"
+      ],
+      "optional": null
+    },
+    "output": [],
+    "output_is_list": [],
+    "output_name": [],
+    "output_node": true,
+    "output_tooltips": []
+  },
+  {
+    "name": "SaveImageTextDataSetToFolder",
+    "display_name": "Save Image and Text Dataset to Folder",
+    "description": "",
+    "python_module": "comfy_extras.nodes_dataset",
+    "category": "dataset",
+    "input": {
+      "required": {
+        "filename_prefix": [
+          "STRING",
+          {
+            "tooltip": "Prefix for saved image filenames.",
+            "multiline": false,
+            "default": "image"
+          }
+        ],
+        "folder_name": [
+          "STRING",
+          {
+            "tooltip": "Name of the folder to save images to (inside output directory).",
+            "multiline": false,
+            "default": "dataset"
+          }
+        ],
+        "images": [
+          "IMAGE",
+          {
+            "tooltip": "List of images to save."
+          }
+        ],
+        "texts": [
+          "STRING",
+          {
+            "tooltip": "List of text captions to save.",
+            "multiline": false
+          }
+        ]
+      },
+      "optional": null
+    },
+    "input_order": {
+      "required": [
+        "images",
+        "texts",
+        "folder_name",
+        "filename_prefix"
+      ],
+      "optional": null
+    },
+    "output": [],
+    "output_is_list": [],
+    "output_name": [],
+    "output_node": true,
+    "output_tooltips": []
+  },
+  {
+    "name": "SaveLoRA",
     "display_name": "Save LoRA Weights",
     "description": "",
     "python_module": "comfy_extras.nodes_train",
@@ -29331,6 +31422,7 @@
           "STRING",
           {
             "tooltip": "The prefix to use for the saved LoRA file.",
+            "multiline": false,
             "default": "loras/ComfyUI_trained_lora"
           }
         ]
@@ -29384,6 +31476,61 @@
       "required": [
         "svg",
         "filename_prefix"
+      ],
+      "optional": null
+    },
+    "output": [],
+    "output_is_list": [],
+    "output_name": [],
+    "output_node": true,
+    "output_tooltips": []
+  },
+  {
+    "name": "SaveTrainingDataset",
+    "display_name": "Save Training Dataset",
+    "description": "",
+    "python_module": "comfy_extras.nodes_dataset",
+    "category": "dataset",
+    "input": {
+      "required": {
+        "conditioning": [
+          "CONDITIONING",
+          {
+            "tooltip": "List of conditioning lists from MakeTrainingDataset."
+          }
+        ],
+        "folder_name": [
+          "STRING",
+          {
+            "tooltip": "Name of folder to save dataset (inside output directory).",
+            "multiline": false,
+            "default": "training_dataset"
+          }
+        ],
+        "latents": [
+          "LATENT",
+          {
+            "tooltip": "List of latent dicts from MakeTrainingDataset."
+          }
+        ],
+        "shard_size": [
+          "INT",
+          {
+            "tooltip": "Number of samples per shard file.",
+            "default": 1000,
+            "max": 100000,
+            "min": 1
+          }
+        ]
+      },
+      "optional": null
+    },
+    "input_order": {
+      "required": [
+        "latents",
+        "conditioning",
+        "folder_name",
+        "shard_size"
       ],
       "optional": null
     },
@@ -29673,7 +31820,7 @@
   },
   {
     "name": "SetFirstSigma",
-    "display_name": "SetFirstSigma",
+    "display_name": null,
     "description": "",
     "python_module": "comfy_extras.nodes_custom_sampler",
     "category": "sampling/custom_sampling/sigmas",
@@ -29691,7 +31838,10 @@
           }
         ],
         "sigmas": [
-          "SIGMAS"
+          "SIGMAS",
+          {
+            "tooltip": null
+          }
         ]
       },
       "optional": null
@@ -29713,7 +31863,9 @@
       "SIGMAS"
     ],
     "output_node": false,
-    "output_tooltips": []
+    "output_tooltips": [
+      null
+    ]
   },
   {
     "name": "SetHookKeyframes",
@@ -29831,6 +31983,112 @@
     "output_node": false,
     "output_tooltips": [
       null
+    ]
+  },
+  {
+    "name": "ShuffleDataset",
+    "display_name": "Shuffle Image Dataset",
+    "description": "",
+    "python_module": "comfy_extras.nodes_dataset",
+    "category": "dataset/image",
+    "input": {
+      "required": {
+        "images": [
+          "IMAGE",
+          {
+            "tooltip": "List of images to process."
+          }
+        ],
+        "seed": [
+          "INT",
+          {
+            "tooltip": "Random seed.",
+            "default": 0,
+            "max": 18446744073709551615,
+            "min": 0
+          }
+        ]
+      },
+      "optional": null
+    },
+    "input_order": {
+      "required": [
+        "images",
+        "seed"
+      ],
+      "optional": null
+    },
+    "output": [
+      "IMAGE"
+    ],
+    "output_is_list": [
+      true
+    ],
+    "output_name": [
+      "images"
+    ],
+    "output_node": false,
+    "output_tooltips": [
+      "Processed images"
+    ]
+  },
+  {
+    "name": "ShuffleImageTextDataset",
+    "display_name": "Shuffle Image-Text Dataset",
+    "description": "",
+    "python_module": "comfy_extras.nodes_dataset",
+    "category": "dataset/image",
+    "input": {
+      "required": {
+        "images": [
+          "IMAGE",
+          {
+            "tooltip": "List of images to shuffle."
+          }
+        ],
+        "seed": [
+          "INT",
+          {
+            "tooltip": "Random seed.",
+            "default": 0,
+            "max": 18446744073709551615,
+            "min": 0
+          }
+        ],
+        "texts": [
+          "STRING",
+          {
+            "tooltip": "List of texts to shuffle.",
+            "multiline": false
+          }
+        ]
+      },
+      "optional": null
+    },
+    "input_order": {
+      "required": [
+        "images",
+        "texts",
+        "seed"
+      ],
+      "optional": null
+    },
+    "output": [
+      "IMAGE",
+      "STRING"
+    ],
+    "output_is_list": [
+      true,
+      true
+    ],
+    "output_name": [
+      "images",
+      "texts"
+    ],
+    "output_node": false,
+    "output_tooltips": [
+      "Shuffled images",
+      "Shuffled texts"
     ]
   },
   {
@@ -30158,7 +32416,10 @@
     "input": {
       "required": {
         "audio": [
-          "AUDIO"
+          "AUDIO",
+          {
+            "tooltip": null
+          }
         ]
       },
       "optional": null
@@ -30182,7 +32443,10 @@
       "right"
     ],
     "output_node": false,
-    "output_tooltips": []
+    "output_tooltips": [
+      null,
+      null
+    ]
   },
   {
     "name": "SplitImageWithAlpha",
@@ -30227,14 +32491,17 @@
   },
   {
     "name": "SplitSigmas",
-    "display_name": "SplitSigmas",
+    "display_name": null,
     "description": "",
     "python_module": "comfy_extras.nodes_custom_sampler",
     "category": "sampling/custom_sampling/sigmas",
     "input": {
       "required": {
         "sigmas": [
-          "SIGMAS"
+          "SIGMAS",
+          {
+            "tooltip": null
+          }
         ],
         "step": [
           "INT",
@@ -30268,11 +32535,14 @@
       "low_sigmas"
     ],
     "output_node": false,
-    "output_tooltips": []
+    "output_tooltips": [
+      null,
+      null
+    ]
   },
   {
     "name": "SplitSigmasDenoise",
-    "display_name": "SplitSigmasDenoise",
+    "display_name": null,
     "description": "",
     "python_module": "comfy_extras.nodes_custom_sampler",
     "category": "sampling/custom_sampling/sigmas",
@@ -30289,7 +32559,10 @@
           }
         ],
         "sigmas": [
-          "SIGMAS"
+          "SIGMAS",
+          {
+            "tooltip": null
+          }
         ]
       },
       "optional": null
@@ -30314,7 +32587,10 @@
       "low_sigmas"
     ],
     "output_node": false,
-    "output_tooltips": []
+    "output_tooltips": [
+      null,
+      null
+    ]
   },
   {
     "name": "StabilityAudioInpaint",
@@ -31816,6 +34092,44 @@
     ]
   },
   {
+    "name": "StripWhitespace",
+    "display_name": "Strip Whitespace",
+    "description": "",
+    "python_module": "comfy_extras.nodes_dataset",
+    "category": "dataset/text",
+    "input": {
+      "required": {
+        "texts": [
+          "STRING",
+          {
+            "tooltip": "Text to process.",
+            "multiline": false
+          }
+        ]
+      },
+      "optional": null
+    },
+    "input_order": {
+      "required": [
+        "texts"
+      ],
+      "optional": null
+    },
+    "output": [
+      "STRING"
+    ],
+    "output_is_list": [
+      null
+    ],
+    "output_name": [
+      "texts"
+    ],
+    "output_node": false,
+    "output_tooltips": [
+      "Processed texts"
+    ]
+  },
+  {
     "name": "StyleModelApply",
     "display_name": "Apply Style Model",
     "description": "",
@@ -32268,6 +34582,82 @@
     ]
   },
   {
+    "name": "TextToLowercase",
+    "display_name": "Text to Lowercase",
+    "description": "",
+    "python_module": "comfy_extras.nodes_dataset",
+    "category": "dataset/text",
+    "input": {
+      "required": {
+        "texts": [
+          "STRING",
+          {
+            "tooltip": "Text to process.",
+            "multiline": false
+          }
+        ]
+      },
+      "optional": null
+    },
+    "input_order": {
+      "required": [
+        "texts"
+      ],
+      "optional": null
+    },
+    "output": [
+      "STRING"
+    ],
+    "output_is_list": [
+      null
+    ],
+    "output_name": [
+      "texts"
+    ],
+    "output_node": false,
+    "output_tooltips": [
+      "Processed texts"
+    ]
+  },
+  {
+    "name": "TextToUppercase",
+    "display_name": "Text to Uppercase",
+    "description": "",
+    "python_module": "comfy_extras.nodes_dataset",
+    "category": "dataset/text",
+    "input": {
+      "required": {
+        "texts": [
+          "STRING",
+          {
+            "tooltip": "Text to process.",
+            "multiline": false
+          }
+        ]
+      },
+      "optional": null
+    },
+    "input_order": {
+      "required": [
+        "texts"
+      ],
+      "optional": null
+    },
+    "output": [
+      "STRING"
+    ],
+    "output_is_list": [
+      null
+    ],
+    "output_name": [
+      "texts"
+    ],
+    "output_node": false,
+    "output_tooltips": [
+      "Processed texts"
+    ]
+  },
+  {
     "name": "ThresholdMask",
     "display_name": "ThresholdMask",
     "description": "",
@@ -32359,6 +34749,295 @@
     ]
   },
   {
+    "name": "TopazImageEnhance",
+    "display_name": "Topaz Image Enhance",
+    "description": "Industry-standard upscaling and image enhancement.",
+    "python_module": "comfy_api_nodes.nodes_topaz",
+    "category": "api node/image/Topaz",
+    "input": {
+      "required": {
+        "image": [
+          "IMAGE",
+          {
+            "tooltip": null
+          }
+        ],
+        "model": [
+          "COMBO",
+          {
+            "tooltip": null
+          }
+        ]
+      },
+      "optional": {
+        "color_preservation": [
+          "BOOLEAN",
+          {
+            "tooltip": "Preserve the original colors.",
+            "default": true
+          }
+        ],
+        "creativity": [
+          "INT",
+          {
+            "tooltip": null,
+            "default": 3,
+            "display": "slider",
+            "max": 9,
+            "min": 1,
+            "step": 1
+          }
+        ],
+        "crop_to_fill": [
+          "BOOLEAN",
+          {
+            "tooltip": "By default, the image is letterboxed when the output aspect ratio differs. Enable to crop the image to fill the output dimensions.",
+            "default": false
+          }
+        ],
+        "face_enhancement": [
+          "BOOLEAN",
+          {
+            "tooltip": "Enhance faces (if present) during processing.",
+            "default": true
+          }
+        ],
+        "face_enhancement_creativity": [
+          "FLOAT",
+          {
+            "tooltip": "Set the creativity level for face enhancement.",
+            "default": 0.0,
+            "display": "number",
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "face_enhancement_strength": [
+          "FLOAT",
+          {
+            "tooltip": "Controls how sharp enhanced faces are relative to the background.",
+            "default": 1.0,
+            "display": "number",
+            "max": 1.0,
+            "min": 0.0,
+            "step": 0.01
+          }
+        ],
+        "face_preservation": [
+          "BOOLEAN",
+          {
+            "tooltip": "Preserve subjects' facial identity.",
+            "default": true
+          }
+        ],
+        "output_height": [
+          "INT",
+          {
+            "tooltip": "Zero value means to output in the same height as original or output width.",
+            "default": 0,
+            "display": "number",
+            "max": 32000,
+            "min": 0,
+            "step": 1
+          }
+        ],
+        "output_width": [
+          "INT",
+          {
+            "tooltip": "Zero value means to calculate automatically (usually it will be original size or output_height if specified).",
+            "default": 0,
+            "display": "number",
+            "max": 32000,
+            "min": 0,
+            "step": 1
+          }
+        ],
+        "prompt": [
+          "STRING",
+          {
+            "tooltip": "Optional text prompt for creative upscaling guidance.",
+            "multiline": true,
+            "default": ""
+          }
+        ],
+        "subject_detection": [
+          "COMBO",
+          {
+            "tooltip": null
+          }
+        ]
+      }
+    },
+    "input_order": {
+      "required": [
+        "model",
+        "image"
+      ],
+      "optional": [
+        "prompt",
+        "subject_detection",
+        "face_enhancement",
+        "face_enhancement_creativity",
+        "face_enhancement_strength",
+        "crop_to_fill",
+        "output_width",
+        "output_height",
+        "creativity",
+        "face_preservation",
+        "color_preservation"
+      ]
+    },
+    "output": [
+      "IMAGE"
+    ],
+    "output_is_list": [
+      false
+    ],
+    "output_name": [
+      "IMAGE"
+    ],
+    "output_node": false,
+    "output_tooltips": [
+      null
+    ]
+  },
+  {
+    "name": "TopazVideoEnhance",
+    "display_name": "Topaz Video Enhance",
+    "description": "Breathe new life into video with powerful upscaling and recovery technology.",
+    "python_module": "comfy_api_nodes.nodes_topaz",
+    "category": "api node/video/Topaz",
+    "input": {
+      "required": {
+        "upscaler_enabled": [
+          "BOOLEAN",
+          {
+            "tooltip": null,
+            "default": true
+          }
+        ],
+        "upscaler_model": [
+          "COMBO",
+          {
+            "tooltip": null
+          }
+        ],
+        "upscaler_resolution": [
+          "COMBO",
+          {
+            "tooltip": null
+          }
+        ],
+        "video": [
+          "VIDEO",
+          {
+            "tooltip": null
+          }
+        ]
+      },
+      "optional": {
+        "dynamic_compression_level": [
+          "COMBO",
+          {
+            "tooltip": "CQP level.",
+            "default": "Low"
+          }
+        ],
+        "interpolation_duplicate": [
+          "BOOLEAN",
+          {
+            "tooltip": "Analyze the input for duplicate frames and remove them.",
+            "default": false
+          }
+        ],
+        "interpolation_duplicate_threshold": [
+          "FLOAT",
+          {
+            "tooltip": "Detection sensitivity for duplicate frames.",
+            "default": 0.01,
+            "display": "number",
+            "max": 0.1,
+            "min": 0.001,
+            "step": 0.001
+          }
+        ],
+        "interpolation_enabled": [
+          "BOOLEAN",
+          {
+            "tooltip": null,
+            "default": false
+          }
+        ],
+        "interpolation_frame_rate": [
+          "INT",
+          {
+            "tooltip": "Output frame rate.",
+            "default": 60,
+            "display": "number",
+            "max": 240,
+            "min": 15
+          }
+        ],
+        "interpolation_model": [
+          "COMBO",
+          {
+            "tooltip": null,
+            "default": "apo-8"
+          }
+        ],
+        "interpolation_slowmo": [
+          "INT",
+          {
+            "tooltip": "Slow-motion factor applied to the input video. For example, 2 makes the output twice as slow and doubles the duration.",
+            "default": 1,
+            "display": "number",
+            "max": 16,
+            "min": 1
+          }
+        ],
+        "upscaler_creativity": [
+          "COMBO",
+          {
+            "tooltip": "Creativity level (applies only to Starlight (Astra) Creative).",
+            "default": "low"
+          }
+        ]
+      }
+    },
+    "input_order": {
+      "required": [
+        "video",
+        "upscaler_enabled",
+        "upscaler_model",
+        "upscaler_resolution"
+      ],
+      "optional": [
+        "upscaler_creativity",
+        "interpolation_enabled",
+        "interpolation_model",
+        "interpolation_slowmo",
+        "interpolation_frame_rate",
+        "interpolation_duplicate",
+        "interpolation_duplicate_threshold",
+        "dynamic_compression_level"
+      ]
+    },
+    "output": [
+      "VIDEO"
+    ],
+    "output_is_list": [
+      false
+    ],
+    "output_name": [
+      "VIDEO"
+    ],
+    "output_node": false,
+    "output_tooltips": [
+      null
+    ]
+  },
+  {
     "name": "TrainLoraNode",
     "display_name": "Train LoRA",
     "description": "",
@@ -32367,7 +35046,7 @@
     "input": {
       "required": {
         "algorithm": [
-          [],
+          "COMBO",
           {
             "tooltip": "The algorithm to use for training.",
             "default": "LoRA"
@@ -32379,12 +35058,11 @@
             "tooltip": "The batch size to use for training.",
             "default": 1,
             "max": 10000,
-            "min": 1,
-            "step": 1
+            "min": 1
           }
         ],
         "existing_lora": [
-          [],
+          "COMBO",
           {
             "tooltip": "The existing LoRA to append to. Set to None for new LoRA.",
             "default": "[None]"
@@ -32396,8 +35074,7 @@
             "tooltip": "The number of gradient accumulation steps to use for training.",
             "default": 1,
             "max": 1024,
-            "min": 1,
-            "step": 1
+            "min": 1
           }
         ],
         "gradient_checkpointing": [
@@ -32420,18 +35097,18 @@
             "default": 0.0005,
             "max": 1.0,
             "min": 1e-7,
-            "step": 1e-6
+            "step": 1e-7
           }
         ],
         "lora_dtype": [
-          [],
+          "COMBO",
           {
             "tooltip": "The dtype to use for lora.",
             "default": "bf16"
           }
         ],
         "loss_function": [
-          [],
+          "COMBO",
           {
             "tooltip": "The loss function to use for training.",
             "default": "MSE"
@@ -32444,7 +35121,7 @@
           }
         ],
         "optimizer": [
-          [],
+          "COMBO",
           {
             "tooltip": "The optimizer to use for training.",
             "default": "AdamW"
@@ -32484,7 +35161,7 @@
           }
         ],
         "training_dtype": [
-          [],
+          "COMBO",
           {
             "tooltip": "The dtype to use for training.",
             "default": "bf16"
@@ -32527,13 +35204,18 @@
       false
     ],
     "output_name": [
-      "model_with_lora",
+      "model",
       "lora",
-      "loss",
+      "loss_map",
       "steps"
     ],
     "output_node": false,
-    "output_tooltips": []
+    "output_tooltips": [
+      "Model with LoRA applied",
+      "LoRA weights",
+      "Loss history",
+      "Total training steps"
+    ]
   },
   {
     "name": "TrimAudioDuration",
@@ -32544,7 +35226,10 @@
     "input": {
       "required": {
         "audio": [
-          "AUDIO"
+          "AUDIO",
+          {
+            "tooltip": null
+          }
         ],
         "duration": [
           "FLOAT",
@@ -32583,7 +35268,9 @@
       "AUDIO"
     ],
     "output_node": false,
-    "output_tooltips": []
+    "output_tooltips": [
+      null
+    ]
   },
   {
     "name": "TrimVideoLatent",
@@ -33374,6 +36061,54 @@
     ]
   },
   {
+    "name": "TruncateText",
+    "display_name": "Truncate Text",
+    "description": "",
+    "python_module": "comfy_extras.nodes_dataset",
+    "category": "dataset/text",
+    "input": {
+      "required": {
+        "max_length": [
+          "INT",
+          {
+            "tooltip": "Maximum text length.",
+            "default": 77,
+            "max": 10000,
+            "min": 1
+          }
+        ],
+        "texts": [
+          "STRING",
+          {
+            "tooltip": "Text to process.",
+            "multiline": false
+          }
+        ]
+      },
+      "optional": null
+    },
+    "input_order": {
+      "required": [
+        "texts",
+        "max_length"
+      ],
+      "optional": null
+    },
+    "output": [
+      "STRING"
+    ],
+    "output_is_list": [
+      null
+    ],
+    "output_name": [
+      "texts"
+    ],
+    "output_node": false,
+    "output_tooltips": [
+      "Processed texts"
+    ]
+  },
+  {
     "name": "UNETLoader",
     "display_name": "Load Diffusion Model",
     "description": "",
@@ -33539,10 +36274,16 @@
     "input": {
       "required": {
         "samples": [
-          "LATENT"
+          "LATENT",
+          {
+            "tooltip": null
+          }
         ],
         "vae": [
-          "VAE"
+          "VAE",
+          {
+            "tooltip": null
+          }
         ]
       },
       "optional": null
@@ -33564,11 +36305,13 @@
       "AUDIO"
     ],
     "output_node": false,
-    "output_tooltips": []
+    "output_tooltips": [
+      null
+    ]
   },
   {
     "name": "VAEDecodeHunyuan3D",
-    "display_name": "VAEDecodeHunyuan3D",
+    "display_name": null,
     "description": "",
     "python_module": "comfy_extras.nodes_hunyuan3d",
     "category": "latent/3d",
@@ -33593,10 +36336,16 @@
           }
         ],
         "samples": [
-          "LATENT"
+          "LATENT",
+          {
+            "tooltip": null
+          }
         ],
         "vae": [
-          "VAE"
+          "VAE",
+          {
+            "tooltip": null
+          }
         ]
       },
       "optional": null
@@ -33620,7 +36369,9 @@
       "VOXEL"
     ],
     "output_node": false,
-    "output_tooltips": []
+    "output_tooltips": [
+      null
+    ]
   },
   {
     "name": "VAEEncode",
@@ -33667,10 +36418,16 @@
     "input": {
       "required": {
         "audio": [
-          "AUDIO"
+          "AUDIO",
+          {
+            "tooltip": null
+          }
         ],
         "vae": [
-          "VAE"
+          "VAE",
+          {
+            "tooltip": null
+          }
         ]
       },
       "optional": null
@@ -33692,7 +36449,9 @@
       "LATENT"
     ],
     "output_node": false,
-    "output_tooltips": []
+    "output_tooltips": [
+      null
+    ]
   },
   {
     "name": "VAEEncodeForInpaint",
@@ -33813,7 +36572,7 @@
   },
   {
     "name": "VPScheduler",
-    "display_name": "VPScheduler",
+    "display_name": null,
     "description": "",
     "python_module": "comfy_extras.nodes_custom_sampler",
     "category": "sampling/custom_sampling/schedulers",
@@ -33883,7 +36642,126 @@
       "SIGMAS"
     ],
     "output_node": false,
-    "output_tooltips": []
+    "output_tooltips": [
+      null
+    ]
+  },
+  {
+    "name": "Veo3FirstLastFrameNode",
+    "display_name": "Google Veo 3 First-Last-Frame to Video",
+    "description": "Generate video using prompt and first and last frames.",
+    "python_module": "comfy_api_nodes.nodes_veo2",
+    "category": "api node/video/Veo",
+    "input": {
+      "required": {
+        "aspect_ratio": [
+          "COMBO",
+          {
+            "tooltip": "Aspect ratio of the output video",
+            "default": "16:9"
+          }
+        ],
+        "duration": [
+          "INT",
+          {
+            "tooltip": "Duration of the output video in seconds",
+            "default": 8,
+            "display": "slider",
+            "max": 8,
+            "min": 4,
+            "step": 2
+          }
+        ],
+        "first_frame": [
+          "IMAGE",
+          {
+            "tooltip": "Start frame"
+          }
+        ],
+        "generate_audio": [
+          "BOOLEAN",
+          {
+            "tooltip": "Generate audio for the video.",
+            "default": true
+          }
+        ],
+        "last_frame": [
+          "IMAGE",
+          {
+            "tooltip": "End frame"
+          }
+        ],
+        "model": [
+          "COMBO",
+          {
+            "tooltip": null,
+            "default": "veo-3.1-fast-generate"
+          }
+        ],
+        "negative_prompt": [
+          "STRING",
+          {
+            "tooltip": "Negative text prompt to guide what to avoid in the video",
+            "multiline": true,
+            "default": ""
+          }
+        ],
+        "prompt": [
+          "STRING",
+          {
+            "tooltip": "Text description of the video",
+            "multiline": true,
+            "default": ""
+          }
+        ],
+        "resolution": [
+          "COMBO",
+          {
+            "tooltip": null
+          }
+        ],
+        "seed": [
+          "INT",
+          {
+            "tooltip": "Seed for video generation",
+            "default": 0,
+            "display": "number",
+            "max": 4294967295,
+            "min": 0,
+            "step": 1
+          }
+        ]
+      },
+      "optional": null
+    },
+    "input_order": {
+      "required": [
+        "prompt",
+        "negative_prompt",
+        "resolution",
+        "aspect_ratio",
+        "duration",
+        "seed",
+        "first_frame",
+        "last_frame",
+        "model",
+        "generate_audio"
+      ],
+      "optional": null
+    },
+    "output": [
+      "VIDEO"
+    ],
+    "output_is_list": [
+      false
+    ],
+    "output_name": [
+      "VIDEO"
+    ],
+    "output_node": false,
+    "output_tooltips": [
+      null
+    ]
   },
   {
     "name": "Veo3VideoGenerationNode",
@@ -34606,14 +37484,17 @@
   },
   {
     "name": "VoxelToMesh",
-    "display_name": "VoxelToMesh",
+    "display_name": null,
     "description": "",
     "python_module": "comfy_extras.nodes_hunyuan3d",
     "category": "3d",
     "input": {
       "required": {
         "algorithm": [
-          []
+          "COMBO",
+          {
+            "tooltip": null
+          }
         ],
         "threshold": [
           "FLOAT",
@@ -34626,7 +37507,10 @@
           }
         ],
         "voxel": [
-          "VOXEL"
+          "VOXEL",
+          {
+            "tooltip": null
+          }
         ]
       },
       "optional": null
@@ -34649,11 +37533,13 @@
       "MESH"
     ],
     "output_node": false,
-    "output_tooltips": []
+    "output_tooltips": [
+      null
+    ]
   },
   {
     "name": "VoxelToMeshBasic",
-    "display_name": "VoxelToMeshBasic",
+    "display_name": null,
     "description": "",
     "python_module": "comfy_extras.nodes_hunyuan3d",
     "category": "3d",
@@ -34670,7 +37556,10 @@
           }
         ],
         "voxel": [
-          "VOXEL"
+          "VOXEL",
+          {
+            "tooltip": null
+          }
         ]
       },
       "optional": null
@@ -34692,7 +37581,9 @@
       "MESH"
     ],
     "output_node": false,
-    "output_tooltips": []
+    "output_tooltips": [
+      null
+    ]
   },
   {
     "name": "Wan22FunControlToVideo",
@@ -37296,5 +40187,42 @@
     ],
     "output_node": false,
     "output_tooltips": []
+  },
+  {
+    "name": "wanBlockSwap",
+    "display_name": null,
+    "description": "NOP",
+    "python_module": "comfy_extras.nodes_nop",
+    "category": "",
+    "input": {
+      "required": {
+        "model": [
+          "MODEL",
+          {
+            "tooltip": null
+          }
+        ]
+      },
+      "optional": null
+    },
+    "input_order": {
+      "required": [
+        "model"
+      ],
+      "optional": null
+    },
+    "output": [
+      "MODEL"
+    ],
+    "output_is_list": [
+      false
+    ],
+    "output_name": [
+      "MODEL"
+    ],
+    "output_node": false,
+    "output_tooltips": [
+      null
+    ]
   }
 ]

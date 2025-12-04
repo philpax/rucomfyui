@@ -18,4 +18,4 @@ quote = "1.0.37"
 prettyplease = "0.2.22"
 syn = "2.0.77"
 proc-macro2 = "1.0.86"
-convert_case = "0.6.0"
+convert_case = { workspace = true }

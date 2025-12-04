@@ -63,14 +63,11 @@ impl<
 #[allow(non_camel_case_types)]
 pub struct BasicScheduler<
     ModelParam: crate::nodes::types::Model,
-    SchedulerParam: crate::nodes::types::String,
     StepsParam: crate::nodes::types::Int,
     DenoiseParam: crate::nodes::types::Float,
 > {
     ///No documentation.
     pub model: ModelParam,
-    ///No documentation.
-    pub scheduler: SchedulerParam,
     /**No documentation.
 
 **Metadata**:
@@ -91,32 +88,19 @@ pub struct BasicScheduler<
 }
 impl<
     ModelParam: crate::nodes::types::Model,
-    SchedulerParam: crate::nodes::types::String,
     StepsParam: crate::nodes::types::Int,
     DenoiseParam: crate::nodes::types::Float,
-> BasicScheduler<ModelParam, SchedulerParam, StepsParam, DenoiseParam> {
+> BasicScheduler<ModelParam, StepsParam, DenoiseParam> {
     /// Create a new node.
-    pub fn new(
-        model: ModelParam,
-        scheduler: SchedulerParam,
-        steps: StepsParam,
-        denoise: DenoiseParam,
-    ) -> Self {
-        Self {
-            model,
-            scheduler,
-            steps,
-            denoise,
-        }
+    pub fn new(model: ModelParam, steps: StepsParam, denoise: DenoiseParam) -> Self {
+        Self { model, steps, denoise }
     }
 }
 impl<
     ModelParam: crate::nodes::types::Model,
-    SchedulerParam: crate::nodes::types::String,
     StepsParam: crate::nodes::types::Int,
     DenoiseParam: crate::nodes::types::Float,
-> crate::nodes::TypedNode
-for BasicScheduler<ModelParam, SchedulerParam, StepsParam, DenoiseParam> {
+> crate::nodes::TypedNode for BasicScheduler<ModelParam, StepsParam, DenoiseParam> {
     type Output = crate::nodes::types::SigmasOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)
@@ -124,7 +108,6 @@ for BasicScheduler<ModelParam, SchedulerParam, StepsParam, DenoiseParam> {
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
         output.insert("model".to_string(), self.model.clone().into());
-        output.insert("scheduler".to_string(), self.scheduler.clone().into());
         output.insert("steps".to_string(), self.steps.clone().into());
         output.insert("denoise".to_string(), self.denoise.clone().into());
         output
@@ -288,6 +271,72 @@ for ExponentialScheduler<StepsParam, SigmaMaxParam, SigmaMinParam> {
     }
     const NAME: &'static str = "ExponentialScheduler";
     const DISPLAY_NAME: &'static str = "ExponentialScheduler";
+    const DESCRIPTION: &'static str = "";
+    const CATEGORY: &'static str = "sampling/custom_sampling/schedulers";
+}
+///**Flux2Scheduler**: No description.
+#[derive(Clone)]
+#[allow(non_camel_case_types)]
+pub struct Flux2Scheduler<
+    StepsParam: crate::nodes::types::Int,
+    WidthParam: crate::nodes::types::Int,
+    HeightParam: crate::nodes::types::Int,
+> {
+    /**No documentation.
+
+**Metadata**:
+  - Default: 20
+  - Max: 4096
+  - Min: 1
+*/
+    pub steps: StepsParam,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1024
+  - Max: 16384
+  - Min: 16
+  - Step: 1
+*/
+    pub width: WidthParam,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1024
+  - Max: 16384
+  - Min: 16
+  - Step: 1
+*/
+    pub height: HeightParam,
+}
+impl<
+    StepsParam: crate::nodes::types::Int,
+    WidthParam: crate::nodes::types::Int,
+    HeightParam: crate::nodes::types::Int,
+> Flux2Scheduler<StepsParam, WidthParam, HeightParam> {
+    /// Create a new node.
+    pub fn new(steps: StepsParam, width: WidthParam, height: HeightParam) -> Self {
+        Self { steps, width, height }
+    }
+}
+impl<
+    StepsParam: crate::nodes::types::Int,
+    WidthParam: crate::nodes::types::Int,
+    HeightParam: crate::nodes::types::Int,
+> crate::nodes::TypedNode for Flux2Scheduler<StepsParam, WidthParam, HeightParam> {
+    type Output = crate::nodes::types::SigmasOut;
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
+        Self::Output::from_dynamic(node_id, 0)
+    }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("steps".to_string(), self.steps.clone().into());
+        output.insert("width".to_string(), self.width.clone().into());
+        output.insert("height".to_string(), self.height.clone().into());
+        output
+    }
+    const NAME: &'static str = "Flux2Scheduler";
+    const DISPLAY_NAME: &'static str = "Flux2Scheduler";
     const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "sampling/custom_sampling/schedulers";
 }

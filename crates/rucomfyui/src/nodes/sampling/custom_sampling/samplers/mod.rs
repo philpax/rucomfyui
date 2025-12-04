@@ -8,26 +8,20 @@ use crate::{
 ///**KSamplerSelect**: No description.
 #[derive(Clone)]
 #[allow(non_camel_case_types)]
-pub struct KSamplerSelect<SamplerNameParam: crate::nodes::types::String> {
-    ///No documentation.
-    pub sampler_name: SamplerNameParam,
-}
-impl<SamplerNameParam: crate::nodes::types::String> KSamplerSelect<SamplerNameParam> {
+pub struct KSamplerSelect {}
+impl KSamplerSelect {
     /// Create a new node.
-    pub fn new(sampler_name: SamplerNameParam) -> Self {
-        Self { sampler_name }
+    pub fn new() -> Self {
+        Self {}
     }
 }
-impl<SamplerNameParam: crate::nodes::types::String> crate::nodes::TypedNode
-for KSamplerSelect<SamplerNameParam> {
+impl crate::nodes::TypedNode for KSamplerSelect {
     type Output = crate::nodes::types::SamplerOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
-        let mut output = HashMap::default();
-        output.insert("sampler_name".to_string(), self.sampler_name.clone().into());
-        output
+        HashMap::default()
     }
     const NAME: &'static str = "KSamplerSelect";
     const DISPLAY_NAME: &'static str = "KSamplerSelect";
@@ -249,13 +243,9 @@ for SamplerDPMAdaptative<
 #[derive(Clone)]
 #[allow(non_camel_case_types)]
 pub struct SamplerDPMPP_2M_SDE<
-    SolverTypeParam: crate::nodes::types::String,
     EtaParam: crate::nodes::types::Float,
     SNoiseParam: crate::nodes::types::Float,
-    NoiseDeviceParam: crate::nodes::types::String,
 > {
-    ///No documentation.
-    pub solver_type: SolverTypeParam,
     /**No documentation.
 
 **Metadata**:
@@ -276,47 +266,28 @@ pub struct SamplerDPMPP_2M_SDE<
   - Step: 0.01
 */
     pub s_noise: SNoiseParam,
-    ///No documentation.
-    pub noise_device: NoiseDeviceParam,
 }
 impl<
-    SolverTypeParam: crate::nodes::types::String,
     EtaParam: crate::nodes::types::Float,
     SNoiseParam: crate::nodes::types::Float,
-    NoiseDeviceParam: crate::nodes::types::String,
-> SamplerDPMPP_2M_SDE<SolverTypeParam, EtaParam, SNoiseParam, NoiseDeviceParam> {
+> SamplerDPMPP_2M_SDE<EtaParam, SNoiseParam> {
     /// Create a new node.
-    pub fn new(
-        solver_type: SolverTypeParam,
-        eta: EtaParam,
-        s_noise: SNoiseParam,
-        noise_device: NoiseDeviceParam,
-    ) -> Self {
-        Self {
-            solver_type,
-            eta,
-            s_noise,
-            noise_device,
-        }
+    pub fn new(eta: EtaParam, s_noise: SNoiseParam) -> Self {
+        Self { eta, s_noise }
     }
 }
 impl<
-    SolverTypeParam: crate::nodes::types::String,
     EtaParam: crate::nodes::types::Float,
     SNoiseParam: crate::nodes::types::Float,
-    NoiseDeviceParam: crate::nodes::types::String,
-> crate::nodes::TypedNode
-for SamplerDPMPP_2M_SDE<SolverTypeParam, EtaParam, SNoiseParam, NoiseDeviceParam> {
+> crate::nodes::TypedNode for SamplerDPMPP_2M_SDE<EtaParam, SNoiseParam> {
     type Output = crate::nodes::types::SamplerOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
         let mut output = HashMap::default();
-        output.insert("solver_type".to_string(), self.solver_type.clone().into());
         output.insert("eta".to_string(), self.eta.clone().into());
         output.insert("s_noise".to_string(), self.s_noise.clone().into());
-        output.insert("noise_device".to_string(), self.noise_device.clone().into());
         output
     }
     const NAME: &'static str = "SamplerDPMPP_2M_SDE";
@@ -386,7 +357,6 @@ impl<
 pub struct SamplerDPMPP_3M_SDE<
     EtaParam: crate::nodes::types::Float,
     SNoiseParam: crate::nodes::types::Float,
-    NoiseDeviceParam: crate::nodes::types::String,
 > {
     /**No documentation.
 
@@ -408,29 +378,20 @@ pub struct SamplerDPMPP_3M_SDE<
   - Step: 0.01
 */
     pub s_noise: SNoiseParam,
-    ///No documentation.
-    pub noise_device: NoiseDeviceParam,
 }
 impl<
     EtaParam: crate::nodes::types::Float,
     SNoiseParam: crate::nodes::types::Float,
-    NoiseDeviceParam: crate::nodes::types::String,
-> SamplerDPMPP_3M_SDE<EtaParam, SNoiseParam, NoiseDeviceParam> {
+> SamplerDPMPP_3M_SDE<EtaParam, SNoiseParam> {
     /// Create a new node.
-    pub fn new(
-        eta: EtaParam,
-        s_noise: SNoiseParam,
-        noise_device: NoiseDeviceParam,
-    ) -> Self {
-        Self { eta, s_noise, noise_device }
+    pub fn new(eta: EtaParam, s_noise: SNoiseParam) -> Self {
+        Self { eta, s_noise }
     }
 }
 impl<
     EtaParam: crate::nodes::types::Float,
     SNoiseParam: crate::nodes::types::Float,
-    NoiseDeviceParam: crate::nodes::types::String,
-> crate::nodes::TypedNode
-for SamplerDPMPP_3M_SDE<EtaParam, SNoiseParam, NoiseDeviceParam> {
+> crate::nodes::TypedNode for SamplerDPMPP_3M_SDE<EtaParam, SNoiseParam> {
     type Output = crate::nodes::types::SamplerOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)
@@ -439,7 +400,6 @@ for SamplerDPMPP_3M_SDE<EtaParam, SNoiseParam, NoiseDeviceParam> {
         let mut output = HashMap::default();
         output.insert("eta".to_string(), self.eta.clone().into());
         output.insert("s_noise".to_string(), self.s_noise.clone().into());
-        output.insert("noise_device".to_string(), self.noise_device.clone().into());
         output
     }
     const NAME: &'static str = "SamplerDPMPP_3M_SDE";
@@ -454,7 +414,6 @@ pub struct SamplerDPMPP_SDE<
     EtaParam: crate::nodes::types::Float,
     SNoiseParam: crate::nodes::types::Float,
     RParam: crate::nodes::types::Float,
-    NoiseDeviceParam: crate::nodes::types::String,
 > {
     /**No documentation.
 
@@ -486,37 +445,22 @@ pub struct SamplerDPMPP_SDE<
   - Step: 0.01
 */
     pub r: RParam,
-    ///No documentation.
-    pub noise_device: NoiseDeviceParam,
 }
 impl<
     EtaParam: crate::nodes::types::Float,
     SNoiseParam: crate::nodes::types::Float,
     RParam: crate::nodes::types::Float,
-    NoiseDeviceParam: crate::nodes::types::String,
-> SamplerDPMPP_SDE<EtaParam, SNoiseParam, RParam, NoiseDeviceParam> {
+> SamplerDPMPP_SDE<EtaParam, SNoiseParam, RParam> {
     /// Create a new node.
-    pub fn new(
-        eta: EtaParam,
-        s_noise: SNoiseParam,
-        r: RParam,
-        noise_device: NoiseDeviceParam,
-    ) -> Self {
-        Self {
-            eta,
-            s_noise,
-            r,
-            noise_device,
-        }
+    pub fn new(eta: EtaParam, s_noise: SNoiseParam, r: RParam) -> Self {
+        Self { eta, s_noise, r }
     }
 }
 impl<
     EtaParam: crate::nodes::types::Float,
     SNoiseParam: crate::nodes::types::Float,
     RParam: crate::nodes::types::Float,
-    NoiseDeviceParam: crate::nodes::types::String,
-> crate::nodes::TypedNode
-for SamplerDPMPP_SDE<EtaParam, SNoiseParam, RParam, NoiseDeviceParam> {
+> crate::nodes::TypedNode for SamplerDPMPP_SDE<EtaParam, SNoiseParam, RParam> {
     type Output = crate::nodes::types::SamplerOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)
@@ -526,7 +470,6 @@ for SamplerDPMPP_SDE<EtaParam, SNoiseParam, RParam, NoiseDeviceParam> {
         output.insert("eta".to_string(), self.eta.clone().into());
         output.insert("s_noise".to_string(), self.s_noise.clone().into());
         output.insert("r".to_string(), self.r.clone().into());
-        output.insert("noise_device".to_string(), self.noise_device.clone().into());
         output
     }
     const NAME: &'static str = "SamplerDPMPP_SDE";

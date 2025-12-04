@@ -5,5 +5,7 @@ use crate::{
     workflow::{WorkflowNodeId, WorkflowInput},
     nodes::types::Out,
 };
+#[rustfmt::skip]
 pub mod chroma_radiance;
+#[rustfmt::skip]
 pub mod unet;

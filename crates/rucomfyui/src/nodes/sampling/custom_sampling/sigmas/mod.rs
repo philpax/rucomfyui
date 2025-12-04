@@ -34,7 +34,6 @@ pub struct ExtendIntermediateSigmas<
     StepsParam: crate::nodes::types::Int,
     StartAtSigmaParam: crate::nodes::types::Float,
     EndAtSigmaParam: crate::nodes::types::Float,
-    SpacingParam: crate::nodes::types::String,
 > {
     ///No documentation.
     pub sigmas: SigmasParam,
@@ -66,36 +65,25 @@ pub struct ExtendIntermediateSigmas<
   - Step: 0.01
 */
     pub end_at_sigma: EndAtSigmaParam,
-    ///No documentation.
-    pub spacing: SpacingParam,
 }
 impl<
     SigmasParam: crate::nodes::types::Sigmas,
     StepsParam: crate::nodes::types::Int,
     StartAtSigmaParam: crate::nodes::types::Float,
     EndAtSigmaParam: crate::nodes::types::Float,
-    SpacingParam: crate::nodes::types::String,
-> ExtendIntermediateSigmas<
-    SigmasParam,
-    StepsParam,
-    StartAtSigmaParam,
-    EndAtSigmaParam,
-    SpacingParam,
-> {
+> ExtendIntermediateSigmas<SigmasParam, StepsParam, StartAtSigmaParam, EndAtSigmaParam> {
     /// Create a new node.
     pub fn new(
         sigmas: SigmasParam,
         steps: StepsParam,
         start_at_sigma: StartAtSigmaParam,
         end_at_sigma: EndAtSigmaParam,
-        spacing: SpacingParam,
     ) -> Self {
         Self {
             sigmas,
             steps,
             start_at_sigma,
             end_at_sigma,
-            spacing,
         }
     }
 }
@@ -104,14 +92,12 @@ impl<
     StepsParam: crate::nodes::types::Int,
     StartAtSigmaParam: crate::nodes::types::Float,
     EndAtSigmaParam: crate::nodes::types::Float,
-    SpacingParam: crate::nodes::types::String,
 > crate::nodes::TypedNode
 for ExtendIntermediateSigmas<
     SigmasParam,
     StepsParam,
     StartAtSigmaParam,
     EndAtSigmaParam,
-    SpacingParam,
 > {
     type Output = crate::nodes::types::SigmasOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
@@ -123,7 +109,6 @@ for ExtendIntermediateSigmas<
         output.insert("steps".to_string(), self.steps.clone().into());
         output.insert("start_at_sigma".to_string(), self.start_at_sigma.clone().into());
         output.insert("end_at_sigma".to_string(), self.end_at_sigma.clone().into());
-        output.insert("spacing".to_string(), self.spacing.clone().into());
         output
     }
     const NAME: &'static str = "ExtendIntermediateSigmas";

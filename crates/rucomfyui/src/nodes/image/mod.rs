@@ -5,13 +5,21 @@ use crate::{
     workflow::{WorkflowNodeId, WorkflowInput},
     nodes::types::Out,
 };
+#[rustfmt::skip]
 pub mod animation;
+#[rustfmt::skip]
 pub mod batch;
+#[rustfmt::skip]
 pub mod postprocessing;
+#[rustfmt::skip]
 pub mod preprocessors;
+#[rustfmt::skip]
 pub mod save;
+#[rustfmt::skip]
 pub mod transform;
+#[rustfmt::skip]
 pub mod upscaling;
+#[rustfmt::skip]
 pub mod video;
 /// Output types for nodes.
 pub mod out {

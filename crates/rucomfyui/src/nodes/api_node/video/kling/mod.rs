@@ -705,6 +705,382 @@ for KlingLipSyncTextToVideoNode<VideoParam, TextParam, VoiceSpeedParam> {
     const DESCRIPTION: &'static str = "Kling Lip Sync Text to Video Node. Syncs mouth movements in a video file to a text prompt. The video file should not be larger than 100MB, should have height/width between 720px and 1920px, and should be between 2s and 10s in length.";
     const CATEGORY: &'static str = "api node/video/Kling";
 }
+///**Kling Omni Edit Video (Pro)**: Edit an existing video with the latest model from Kling.
+#[derive(Clone)]
+#[allow(non_camel_case_types)]
+pub struct KlingOmniProEditVideoNode<
+    PromptParam: crate::nodes::types::String,
+    VideoParam: crate::nodes::types::Video,
+    KeepOriginalSoundParam: crate::nodes::types::Boolean,
+    ReferenceImagesParam: crate::nodes::types::Image = crate::nodes::types::ImageOut,
+> {
+    /**A text prompt describing the video content. This can include both positive and negative descriptions.
+
+**Metadata**:
+  - Multiline: true
+*/
+    pub prompt: PromptParam,
+    ///Video for editing. The output video length will be the same.
+    pub video: VideoParam,
+    /**No documentation.
+
+**Metadata**:
+  - Default: true
+*/
+    pub keep_original_sound: KeepOriginalSoundParam,
+    ///Up to 4 additional reference images.
+    pub reference_images: Option<ReferenceImagesParam>,
+}
+impl<
+    PromptParam: crate::nodes::types::String,
+    VideoParam: crate::nodes::types::Video,
+    KeepOriginalSoundParam: crate::nodes::types::Boolean,
+    ReferenceImagesParam: crate::nodes::types::Image,
+> KlingOmniProEditVideoNode<
+    PromptParam,
+    VideoParam,
+    KeepOriginalSoundParam,
+    ReferenceImagesParam,
+> {
+    /// Create a new node.
+    pub fn new(
+        prompt: PromptParam,
+        video: VideoParam,
+        keep_original_sound: KeepOriginalSoundParam,
+        reference_images: Option<ReferenceImagesParam>,
+    ) -> Self {
+        Self {
+            prompt,
+            video,
+            keep_original_sound,
+            reference_images,
+        }
+    }
+}
+impl<
+    PromptParam: crate::nodes::types::String,
+    VideoParam: crate::nodes::types::Video,
+    KeepOriginalSoundParam: crate::nodes::types::Boolean,
+    ReferenceImagesParam: crate::nodes::types::Image,
+> crate::nodes::TypedNode
+for KlingOmniProEditVideoNode<
+    PromptParam,
+    VideoParam,
+    KeepOriginalSoundParam,
+    ReferenceImagesParam,
+> {
+    type Output = crate::nodes::types::VideoOut;
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
+        Self::Output::from_dynamic(node_id, 0)
+    }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("prompt".to_string(), self.prompt.clone().into());
+        output.insert("video".to_string(), self.video.clone().into());
+        output
+            .insert(
+                "keep_original_sound".to_string(),
+                self.keep_original_sound.clone().into(),
+            );
+        if let Some(v) = &self.reference_images {
+            output.insert("reference_images".to_string(), v.clone().into());
+        }
+        output
+    }
+    const NAME: &'static str = "KlingOmniProEditVideoNode";
+    const DISPLAY_NAME: &'static str = "Kling Omni Edit Video (Pro)";
+    const DESCRIPTION: &'static str = "Edit an existing video with the latest model from Kling.";
+    const CATEGORY: &'static str = "api node/video/Kling";
+}
+///**Kling Omni First-Last-Frame to Video (Pro)**: Use a start frame, an optional end frame, or reference images with the latest Kling model.
+#[derive(Clone)]
+#[allow(non_camel_case_types)]
+pub struct KlingOmniProFirstLastFrameNode<
+    PromptParam: crate::nodes::types::String,
+    FirstFrameParam: crate::nodes::types::Image,
+    EndFrameParam: crate::nodes::types::Image = crate::nodes::types::ImageOut,
+    ReferenceImagesParam: crate::nodes::types::Image = crate::nodes::types::ImageOut,
+> {
+    /**A text prompt describing the video content. This can include both positive and negative descriptions.
+
+**Metadata**:
+  - Multiline: true
+*/
+    pub prompt: PromptParam,
+    ///No documentation.
+    pub first_frame: FirstFrameParam,
+    ///An optional end frame for the video. This cannot be used simultaneously with 'reference_images'.
+    pub end_frame: Option<EndFrameParam>,
+    ///Up to 6 additional reference images.
+    pub reference_images: Option<ReferenceImagesParam>,
+}
+impl<
+    PromptParam: crate::nodes::types::String,
+    FirstFrameParam: crate::nodes::types::Image,
+    EndFrameParam: crate::nodes::types::Image,
+    ReferenceImagesParam: crate::nodes::types::Image,
+> KlingOmniProFirstLastFrameNode<
+    PromptParam,
+    FirstFrameParam,
+    EndFrameParam,
+    ReferenceImagesParam,
+> {
+    /// Create a new node.
+    pub fn new(
+        prompt: PromptParam,
+        first_frame: FirstFrameParam,
+        end_frame: Option<EndFrameParam>,
+        reference_images: Option<ReferenceImagesParam>,
+    ) -> Self {
+        Self {
+            prompt,
+            first_frame,
+            end_frame,
+            reference_images,
+        }
+    }
+}
+impl<
+    PromptParam: crate::nodes::types::String,
+    FirstFrameParam: crate::nodes::types::Image,
+    EndFrameParam: crate::nodes::types::Image,
+    ReferenceImagesParam: crate::nodes::types::Image,
+> crate::nodes::TypedNode
+for KlingOmniProFirstLastFrameNode<
+    PromptParam,
+    FirstFrameParam,
+    EndFrameParam,
+    ReferenceImagesParam,
+> {
+    type Output = crate::nodes::types::VideoOut;
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
+        Self::Output::from_dynamic(node_id, 0)
+    }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("prompt".to_string(), self.prompt.clone().into());
+        output.insert("first_frame".to_string(), self.first_frame.clone().into());
+        if let Some(v) = &self.end_frame {
+            output.insert("end_frame".to_string(), v.clone().into());
+        }
+        if let Some(v) = &self.reference_images {
+            output.insert("reference_images".to_string(), v.clone().into());
+        }
+        output
+    }
+    const NAME: &'static str = "KlingOmniProFirstLastFrameNode";
+    const DISPLAY_NAME: &'static str = "Kling Omni First-Last-Frame to Video (Pro)";
+    const DESCRIPTION: &'static str = "Use a start frame, an optional end frame, or reference images with the latest Kling model.";
+    const CATEGORY: &'static str = "api node/video/Kling";
+}
+///**Kling Omni Image to Video (Pro)**: Use up to 7 reference images to generate a video with the latest Kling model.
+#[derive(Clone)]
+#[allow(non_camel_case_types)]
+pub struct KlingOmniProImageToVideoNode<
+    PromptParam: crate::nodes::types::String,
+    DurationParam: crate::nodes::types::Int,
+    ReferenceImagesParam: crate::nodes::types::Image,
+> {
+    /**A text prompt describing the video content. This can include both positive and negative descriptions.
+
+**Metadata**:
+  - Multiline: true
+*/
+    pub prompt: PromptParam,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 3
+  - Display: slider
+  - Max: 10
+  - Min: 3
+*/
+    pub duration: DurationParam,
+    ///Up to 7 reference images.
+    pub reference_images: ReferenceImagesParam,
+}
+impl<
+    PromptParam: crate::nodes::types::String,
+    DurationParam: crate::nodes::types::Int,
+    ReferenceImagesParam: crate::nodes::types::Image,
+> KlingOmniProImageToVideoNode<PromptParam, DurationParam, ReferenceImagesParam> {
+    /// Create a new node.
+    pub fn new(
+        prompt: PromptParam,
+        duration: DurationParam,
+        reference_images: ReferenceImagesParam,
+    ) -> Self {
+        Self {
+            prompt,
+            duration,
+            reference_images,
+        }
+    }
+}
+impl<
+    PromptParam: crate::nodes::types::String,
+    DurationParam: crate::nodes::types::Int,
+    ReferenceImagesParam: crate::nodes::types::Image,
+> crate::nodes::TypedNode
+for KlingOmniProImageToVideoNode<PromptParam, DurationParam, ReferenceImagesParam> {
+    type Output = crate::nodes::types::VideoOut;
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
+        Self::Output::from_dynamic(node_id, 0)
+    }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("prompt".to_string(), self.prompt.clone().into());
+        output.insert("duration".to_string(), self.duration.clone().into());
+        output
+            .insert(
+                "reference_images".to_string(),
+                self.reference_images.clone().into(),
+            );
+        output
+    }
+    const NAME: &'static str = "KlingOmniProImageToVideoNode";
+    const DISPLAY_NAME: &'static str = "Kling Omni Image to Video (Pro)";
+    const DESCRIPTION: &'static str = "Use up to 7 reference images to generate a video with the latest Kling model.";
+    const CATEGORY: &'static str = "api node/video/Kling";
+}
+///**Kling Omni Text to Video (Pro)**: Use text prompts to generate videos with the latest Kling model.
+#[derive(Clone)]
+#[allow(non_camel_case_types)]
+pub struct KlingOmniProTextToVideoNode<PromptParam: crate::nodes::types::String> {
+    /**A text prompt describing the video content. This can include both positive and negative descriptions.
+
+**Metadata**:
+  - Multiline: true
+*/
+    pub prompt: PromptParam,
+}
+impl<PromptParam: crate::nodes::types::String> KlingOmniProTextToVideoNode<PromptParam> {
+    /// Create a new node.
+    pub fn new(prompt: PromptParam) -> Self {
+        Self { prompt }
+    }
+}
+impl<PromptParam: crate::nodes::types::String> crate::nodes::TypedNode
+for KlingOmniProTextToVideoNode<PromptParam> {
+    type Output = crate::nodes::types::VideoOut;
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
+        Self::Output::from_dynamic(node_id, 0)
+    }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("prompt".to_string(), self.prompt.clone().into());
+        output
+    }
+    const NAME: &'static str = "KlingOmniProTextToVideoNode";
+    const DISPLAY_NAME: &'static str = "Kling Omni Text to Video (Pro)";
+    const DESCRIPTION: &'static str = "Use text prompts to generate videos with the latest Kling model.";
+    const CATEGORY: &'static str = "api node/video/Kling";
+}
+///**Kling Omni Video to Video (Pro)**: Use a video and up to 4 reference images to generate a video with the latest Kling model.
+#[derive(Clone)]
+#[allow(non_camel_case_types)]
+pub struct KlingOmniProVideoToVideoNode<
+    PromptParam: crate::nodes::types::String,
+    DurationParam: crate::nodes::types::Int,
+    ReferenceVideoParam: crate::nodes::types::Video,
+    KeepOriginalSoundParam: crate::nodes::types::Boolean,
+    ReferenceImagesParam: crate::nodes::types::Image = crate::nodes::types::ImageOut,
+> {
+    /**A text prompt describing the video content. This can include both positive and negative descriptions.
+
+**Metadata**:
+  - Multiline: true
+*/
+    pub prompt: PromptParam,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 3
+  - Display: slider
+  - Max: 10
+  - Min: 3
+*/
+    pub duration: DurationParam,
+    ///Video to use as a reference.
+    pub reference_video: ReferenceVideoParam,
+    /**No documentation.
+
+**Metadata**:
+  - Default: true
+*/
+    pub keep_original_sound: KeepOriginalSoundParam,
+    ///Up to 4 additional reference images.
+    pub reference_images: Option<ReferenceImagesParam>,
+}
+impl<
+    PromptParam: crate::nodes::types::String,
+    DurationParam: crate::nodes::types::Int,
+    ReferenceVideoParam: crate::nodes::types::Video,
+    KeepOriginalSoundParam: crate::nodes::types::Boolean,
+    ReferenceImagesParam: crate::nodes::types::Image,
+> KlingOmniProVideoToVideoNode<
+    PromptParam,
+    DurationParam,
+    ReferenceVideoParam,
+    KeepOriginalSoundParam,
+    ReferenceImagesParam,
+> {
+    /// Create a new node.
+    pub fn new(
+        prompt: PromptParam,
+        duration: DurationParam,
+        reference_video: ReferenceVideoParam,
+        keep_original_sound: KeepOriginalSoundParam,
+        reference_images: Option<ReferenceImagesParam>,
+    ) -> Self {
+        Self {
+            prompt,
+            duration,
+            reference_video,
+            keep_original_sound,
+            reference_images,
+        }
+    }
+}
+impl<
+    PromptParam: crate::nodes::types::String,
+    DurationParam: crate::nodes::types::Int,
+    ReferenceVideoParam: crate::nodes::types::Video,
+    KeepOriginalSoundParam: crate::nodes::types::Boolean,
+    ReferenceImagesParam: crate::nodes::types::Image,
+> crate::nodes::TypedNode
+for KlingOmniProVideoToVideoNode<
+    PromptParam,
+    DurationParam,
+    ReferenceVideoParam,
+    KeepOriginalSoundParam,
+    ReferenceImagesParam,
+> {
+    type Output = crate::nodes::types::VideoOut;
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
+        Self::Output::from_dynamic(node_id, 0)
+    }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("prompt".to_string(), self.prompt.clone().into());
+        output.insert("duration".to_string(), self.duration.clone().into());
+        output
+            .insert("reference_video".to_string(), self.reference_video.clone().into());
+        output
+            .insert(
+                "keep_original_sound".to_string(),
+                self.keep_original_sound.clone().into(),
+            );
+        if let Some(v) = &self.reference_images {
+            output.insert("reference_images".to_string(), v.clone().into());
+        }
+        output
+    }
+    const NAME: &'static str = "KlingOmniProVideoToVideoNode";
+    const DISPLAY_NAME: &'static str = "Kling Omni Video to Video (Pro)";
+    const DESCRIPTION: &'static str = "Use a video and up to 4 reference images to generate a video with the latest Kling model.";
+    const CATEGORY: &'static str = "api node/video/Kling";
+}
 ///**Kling Video Effects**: Achieve different special effects when generating a video based on the effect_scene.
 #[derive(Clone)]
 #[allow(non_camel_case_types)]
