@@ -53,7 +53,7 @@ pub fn name_to_ident(name: &str, case: NameToIdentCase) -> Result<syn::Ident> {
         name = "type_".to_string();
     }
 
-    syn::parse_str::<syn::Ident>(&name).with_context(|| format!("Error parsing {name}"))
+    syn::parse_str::<syn::Ident>(&name).with_context(|| format!("Error parsing `{name}`"))
 }
 
 fn remove_emoji(s: &str) -> String {

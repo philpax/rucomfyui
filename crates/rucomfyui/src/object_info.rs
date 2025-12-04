@@ -554,9 +554,18 @@ impl std::fmt::Debug for CategoryTreeNode<'_> {
 ///
 /// Recommended use is with a values iterator over [`Client::get_object_info`] with whatever filtering
 /// is appropriate for your usecase.
+///
+/// Objects with empty category strings will be placed at the root of the tree.
 pub fn categorize<'a>(objects: impl Iterator<Item = &'a Object>) -> CategoryTree<'a> {
     let mut tree = CategoryTree::new();
     for object in objects {
+        // Handle empty category by placing object at root
+        if object.category.is_empty() {
+            tree.entry(object.name.to_string())
+                .or_insert(CategoryTreeNode::Object(object));
+            continue;
+        }
+
         let categories: Vec<&str> = object.category.split('/').collect();
         insert_object(&mut tree, &categories, object);
     }
