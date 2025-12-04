@@ -34,6 +34,17 @@ pub mod out {
         ///No documentation.
         pub latent: crate::nodes::types::LatentOut,
     }
+    ///Output for [`HunyuanVideo15ImageToVideo`](super::HunyuanVideo15ImageToVideo).
+    #[derive(Clone)]
+    #[allow(non_camel_case_types)]
+    pub struct HunyuanVideo15ImageToVideoOutput {
+        ///No documentation.
+        pub positive: crate::nodes::types::ConditioningOut,
+        ///No documentation.
+        pub negative: crate::nodes::types::ConditioningOut,
+        ///No documentation.
+        pub latent: crate::nodes::types::LatentOut,
+    }
     ///Output for [`LTXVAddGuide`](super::LTXVAddGuide).
     #[derive(Clone)]
     #[allow(non_camel_case_types)]
@@ -487,6 +498,165 @@ for HunyuanImageToVideo<
     }
     const NAME: &'static str = "HunyuanImageToVideo";
     const DISPLAY_NAME: &'static str = "HunyuanImageToVideo";
+    const DESCRIPTION: &'static str = "";
+    const CATEGORY: &'static str = "conditioning/video_models";
+}
+///**HunyuanVideo15ImageToVideo**: No description.
+#[derive(Clone)]
+#[allow(non_camel_case_types)]
+pub struct HunyuanVideo15ImageToVideo<
+    PositiveParam: crate::nodes::types::Conditioning,
+    NegativeParam: crate::nodes::types::Conditioning,
+    VaeParam: crate::nodes::types::Vae,
+    WidthParam: crate::nodes::types::Int,
+    HeightParam: crate::nodes::types::Int,
+    LengthParam: crate::nodes::types::Int,
+    BatchSizeParam: crate::nodes::types::Int,
+    StartImageParam: crate::nodes::types::Image = crate::nodes::types::ImageOut,
+    ClipVisionOutputParam: crate::nodes::types::ClipVisionOutput
+        = crate::nodes::types::ClipVisionOutputOut,
+> {
+    ///No documentation.
+    pub positive: PositiveParam,
+    ///No documentation.
+    pub negative: NegativeParam,
+    ///No documentation.
+    pub vae: VaeParam,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 848
+  - Max: 16384
+  - Min: 16
+  - Step: 16
+*/
+    pub width: WidthParam,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 480
+  - Max: 16384
+  - Min: 16
+  - Step: 16
+*/
+    pub height: HeightParam,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 33
+  - Max: 16384
+  - Min: 1
+  - Step: 4
+*/
+    pub length: LengthParam,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 4096
+  - Min: 1
+*/
+    pub batch_size: BatchSizeParam,
+    ///No documentation.
+    pub start_image: Option<StartImageParam>,
+    ///No documentation.
+    pub clip_vision_output: Option<ClipVisionOutputParam>,
+}
+impl<
+    PositiveParam: crate::nodes::types::Conditioning,
+    NegativeParam: crate::nodes::types::Conditioning,
+    VaeParam: crate::nodes::types::Vae,
+    WidthParam: crate::nodes::types::Int,
+    HeightParam: crate::nodes::types::Int,
+    LengthParam: crate::nodes::types::Int,
+    BatchSizeParam: crate::nodes::types::Int,
+    StartImageParam: crate::nodes::types::Image,
+    ClipVisionOutputParam: crate::nodes::types::ClipVisionOutput,
+> HunyuanVideo15ImageToVideo<
+    PositiveParam,
+    NegativeParam,
+    VaeParam,
+    WidthParam,
+    HeightParam,
+    LengthParam,
+    BatchSizeParam,
+    StartImageParam,
+    ClipVisionOutputParam,
+> {
+    /// Create a new node.
+    pub fn new(
+        positive: PositiveParam,
+        negative: NegativeParam,
+        vae: VaeParam,
+        width: WidthParam,
+        height: HeightParam,
+        length: LengthParam,
+        batch_size: BatchSizeParam,
+        start_image: Option<StartImageParam>,
+        clip_vision_output: Option<ClipVisionOutputParam>,
+    ) -> Self {
+        Self {
+            positive,
+            negative,
+            vae,
+            width,
+            height,
+            length,
+            batch_size,
+            start_image,
+            clip_vision_output,
+        }
+    }
+}
+impl<
+    PositiveParam: crate::nodes::types::Conditioning,
+    NegativeParam: crate::nodes::types::Conditioning,
+    VaeParam: crate::nodes::types::Vae,
+    WidthParam: crate::nodes::types::Int,
+    HeightParam: crate::nodes::types::Int,
+    LengthParam: crate::nodes::types::Int,
+    BatchSizeParam: crate::nodes::types::Int,
+    StartImageParam: crate::nodes::types::Image,
+    ClipVisionOutputParam: crate::nodes::types::ClipVisionOutput,
+> crate::nodes::TypedNode
+for HunyuanVideo15ImageToVideo<
+    PositiveParam,
+    NegativeParam,
+    VaeParam,
+    WidthParam,
+    HeightParam,
+    LengthParam,
+    BatchSizeParam,
+    StartImageParam,
+    ClipVisionOutputParam,
+> {
+    type Output = out::HunyuanVideo15ImageToVideoOutput;
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
+        Self::Output {
+            positive: crate::nodes::types::ConditioningOut::from_dynamic(node_id, 0u32),
+            negative: crate::nodes::types::ConditioningOut::from_dynamic(node_id, 1u32),
+            latent: crate::nodes::types::LatentOut::from_dynamic(node_id, 2u32),
+        }
+    }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("positive".to_string(), self.positive.clone().into());
+        output.insert("negative".to_string(), self.negative.clone().into());
+        output.insert("vae".to_string(), self.vae.clone().into());
+        output.insert("width".to_string(), self.width.clone().into());
+        output.insert("height".to_string(), self.height.clone().into());
+        output.insert("length".to_string(), self.length.clone().into());
+        output.insert("batch_size".to_string(), self.batch_size.clone().into());
+        if let Some(v) = &self.start_image {
+            output.insert("start_image".to_string(), v.clone().into());
+        }
+        if let Some(v) = &self.clip_vision_output {
+            output.insert("clip_vision_output".to_string(), v.clone().into());
+        }
+        output
+    }
+    const NAME: &'static str = "HunyuanVideo15ImageToVideo";
+    const DISPLAY_NAME: &'static str = "HunyuanVideo15ImageToVideo";
     const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "conditioning/video_models";
 }

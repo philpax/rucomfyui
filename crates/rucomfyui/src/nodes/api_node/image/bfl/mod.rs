@@ -5,6 +5,134 @@ use crate::{
     workflow::{WorkflowNodeId, WorkflowInput},
     nodes::types::Out,
 };
+///**Flux.2 \[pro\] Image**: Generates images synchronously based on prompt and resolution.
+#[derive(Clone)]
+#[allow(non_camel_case_types)]
+pub struct Flux2ProImageNode<
+    PromptParam: crate::nodes::types::String,
+    WidthParam: crate::nodes::types::Int,
+    HeightParam: crate::nodes::types::Int,
+    SeedParam: crate::nodes::types::Int,
+    PromptUpsamplingParam: crate::nodes::types::Boolean,
+    ImagesParam: crate::nodes::types::Image = crate::nodes::types::ImageOut,
+> {
+    /**Prompt for the image generation or edit
+
+**Metadata**:
+  - Multiline: true
+  - Default:
+*/
+    pub prompt: PromptParam,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1024
+  - Max: 2048
+  - Min: 256
+  - Step: 32
+*/
+    pub width: WidthParam,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 768
+  - Max: 2048
+  - Min: 256
+  - Step: 32
+*/
+    pub height: HeightParam,
+    /**The random seed used for creating the noise.
+
+**Metadata**:
+  - Default: 0
+  - Max: 18446744073709551615
+  - Min: 0
+*/
+    pub seed: SeedParam,
+    /**Whether to perform upsampling on the prompt. If active, automatically modifies the prompt for more creative generation, but results are nondeterministic (same seed will not produce exactly the same result).
+
+**Metadata**:
+  - Default: false
+*/
+    pub prompt_upsampling: PromptUpsamplingParam,
+    ///Up to 4 images to be used as references.
+    pub images: Option<ImagesParam>,
+}
+impl<
+    PromptParam: crate::nodes::types::String,
+    WidthParam: crate::nodes::types::Int,
+    HeightParam: crate::nodes::types::Int,
+    SeedParam: crate::nodes::types::Int,
+    PromptUpsamplingParam: crate::nodes::types::Boolean,
+    ImagesParam: crate::nodes::types::Image,
+> Flux2ProImageNode<
+    PromptParam,
+    WidthParam,
+    HeightParam,
+    SeedParam,
+    PromptUpsamplingParam,
+    ImagesParam,
+> {
+    /// Create a new node.
+    pub fn new(
+        prompt: PromptParam,
+        width: WidthParam,
+        height: HeightParam,
+        seed: SeedParam,
+        prompt_upsampling: PromptUpsamplingParam,
+        images: Option<ImagesParam>,
+    ) -> Self {
+        Self {
+            prompt,
+            width,
+            height,
+            seed,
+            prompt_upsampling,
+            images,
+        }
+    }
+}
+impl<
+    PromptParam: crate::nodes::types::String,
+    WidthParam: crate::nodes::types::Int,
+    HeightParam: crate::nodes::types::Int,
+    SeedParam: crate::nodes::types::Int,
+    PromptUpsamplingParam: crate::nodes::types::Boolean,
+    ImagesParam: crate::nodes::types::Image,
+> crate::nodes::TypedNode
+for Flux2ProImageNode<
+    PromptParam,
+    WidthParam,
+    HeightParam,
+    SeedParam,
+    PromptUpsamplingParam,
+    ImagesParam,
+> {
+    type Output = crate::nodes::types::ImageOut;
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
+        Self::Output::from_dynamic(node_id, 0)
+    }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("prompt".to_string(), self.prompt.clone().into());
+        output.insert("width".to_string(), self.width.clone().into());
+        output.insert("height".to_string(), self.height.clone().into());
+        output.insert("seed".to_string(), self.seed.clone().into());
+        output
+            .insert(
+                "prompt_upsampling".to_string(),
+                self.prompt_upsampling.clone().into(),
+            );
+        if let Some(v) = &self.images {
+            output.insert("images".to_string(), v.clone().into());
+        }
+        output
+    }
+    const NAME: &'static str = "Flux2ProImageNode";
+    const DISPLAY_NAME: &'static str = "Flux.2 [pro] Image";
+    const DESCRIPTION: &'static str = "Generates images synchronously based on prompt and resolution.";
+    const CATEGORY: &'static str = "api node/image/BFL";
+}
 ///**Flux.1 Kontext \[max\] Image**: Edits images using Flux.1 Kontext \[max\] via api based on prompt and aspect ratio.
 #[derive(Clone)]
 #[allow(non_camel_case_types)]

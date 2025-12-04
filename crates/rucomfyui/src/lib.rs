@@ -9,6 +9,7 @@ pub mod workflow;
 pub use workflow::{Workflow, WorkflowGraph, WorkflowNodeId};
 
 #[cfg(feature = "typed_nodes")]
+#[rustfmt::skip]
 pub mod nodes;
 
 // This order is intentional as it is the order it will be displayed in Rustdoc.

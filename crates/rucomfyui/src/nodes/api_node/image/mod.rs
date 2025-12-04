@@ -26,4 +26,6 @@ pub mod runway;
 #[rustfmt::skip]
 pub mod stability_ai;
 #[rustfmt::skip]
+pub mod topaz;
+#[rustfmt::skip]
 pub mod wan;

@@ -20,15 +20,6 @@ pub mod out {
         ///The VAE model used for encoding and decoding images to and from latent space.
         pub vae: crate::nodes::types::VaeOut,
     }
-    ///Output for [`LoadImageTextSetFromFolderNode`](super::LoadImageTextSetFromFolderNode).
-    #[derive(Clone)]
-    #[allow(non_camel_case_types)]
-    pub struct LoadImageTextSetFromFolderNodeOutput {
-        ///No documentation.
-        pub image: crate::nodes::types::ImageOut,
-        ///No documentation.
-        pub conditioning: crate::nodes::types::ConditioningOut,
-    }
     ///Output for [`LoraLoader`](super::LoraLoader).
     #[derive(Clone)]
     #[allow(non_camel_case_types)]
@@ -292,164 +283,27 @@ impl<
     const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "loaders";
 }
-///**Load Image Dataset from Folder**: Loads a batch of images from a directory for training.
+///**Load Latent Upscale Model**: No description.
 #[derive(Clone)]
 #[allow(non_camel_case_types)]
-pub struct LoadImageSetFromFolderNode<
-    FolderParam: crate::nodes::types::String,
-    ResizeMethodParam: crate::nodes::types::String = crate::nodes::types::StringOut,
-> {
-    ///The folder to load images from.
-    pub folder: FolderParam,
-    /**No documentation.
-
-**Metadata**:
-  - Default: None
-*/
-    pub resize_method: Option<ResizeMethodParam>,
-}
-impl<
-    FolderParam: crate::nodes::types::String,
-    ResizeMethodParam: crate::nodes::types::String,
-> LoadImageSetFromFolderNode<FolderParam, ResizeMethodParam> {
+pub struct LatentUpscaleModelLoader {}
+impl LatentUpscaleModelLoader {
     /// Create a new node.
-    pub fn new(folder: FolderParam, resize_method: Option<ResizeMethodParam>) -> Self {
-        Self { folder, resize_method }
+    pub fn new() -> Self {
+        Self {}
     }
 }
-impl<
-    FolderParam: crate::nodes::types::String,
-    ResizeMethodParam: crate::nodes::types::String,
-> crate::nodes::TypedNode
-for LoadImageSetFromFolderNode<FolderParam, ResizeMethodParam> {
-    type Output = crate::nodes::types::ImageOut;
+impl crate::nodes::TypedNode for LatentUpscaleModelLoader {
+    type Output = crate::nodes::types::LatentUpscaleModelOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
-        let mut output = HashMap::default();
-        output.insert("folder".to_string(), self.folder.clone().into());
-        if let Some(v) = &self.resize_method {
-            output.insert("resize_method".to_string(), v.clone().into());
-        }
-        output
+        HashMap::default()
     }
-    const NAME: &'static str = "LoadImageSetFromFolderNode";
-    const DISPLAY_NAME: &'static str = "Load Image Dataset from Folder";
-    const DESCRIPTION: &'static str = "Loads a batch of images from a directory for training.";
-    const CATEGORY: &'static str = "loaders";
-}
-///**Load Image and Text Dataset from Folder**: Loads a batch of images and caption from a directory for training.
-#[derive(Clone)]
-#[allow(non_camel_case_types)]
-pub struct LoadImageTextSetFromFolderNode<
-    FolderParam: crate::nodes::types::String,
-    ClipParam: crate::nodes::types::Clip,
-    ResizeMethodParam: crate::nodes::types::String = crate::nodes::types::StringOut,
-    WidthParam: crate::nodes::types::Int = crate::nodes::types::IntOut,
-    HeightParam: crate::nodes::types::Int = crate::nodes::types::IntOut,
-> {
-    ///The folder to load images from.
-    pub folder: FolderParam,
-    ///The CLIP model used for encoding the text.
-    pub clip: ClipParam,
-    /**No documentation.
-
-**Metadata**:
-  - Default: None
-*/
-    pub resize_method: Option<ResizeMethodParam>,
-    /**The width to resize the images to. -1 means use the original width.
-
-**Metadata**:
-  - Default: -1
-  - Max: 10000
-  - Min: -1
-  - Step: 1
-*/
-    pub width: Option<WidthParam>,
-    /**The height to resize the images to. -1 means use the original height.
-
-**Metadata**:
-  - Default: -1
-  - Max: 10000
-  - Min: -1
-  - Step: 1
-*/
-    pub height: Option<HeightParam>,
-}
-impl<
-    FolderParam: crate::nodes::types::String,
-    ClipParam: crate::nodes::types::Clip,
-    ResizeMethodParam: crate::nodes::types::String,
-    WidthParam: crate::nodes::types::Int,
-    HeightParam: crate::nodes::types::Int,
-> LoadImageTextSetFromFolderNode<
-    FolderParam,
-    ClipParam,
-    ResizeMethodParam,
-    WidthParam,
-    HeightParam,
-> {
-    /// Create a new node.
-    pub fn new(
-        folder: FolderParam,
-        clip: ClipParam,
-        resize_method: Option<ResizeMethodParam>,
-        width: Option<WidthParam>,
-        height: Option<HeightParam>,
-    ) -> Self {
-        Self {
-            folder,
-            clip,
-            resize_method,
-            width,
-            height,
-        }
-    }
-}
-impl<
-    FolderParam: crate::nodes::types::String,
-    ClipParam: crate::nodes::types::Clip,
-    ResizeMethodParam: crate::nodes::types::String,
-    WidthParam: crate::nodes::types::Int,
-    HeightParam: crate::nodes::types::Int,
-> crate::nodes::TypedNode
-for LoadImageTextSetFromFolderNode<
-    FolderParam,
-    ClipParam,
-    ResizeMethodParam,
-    WidthParam,
-    HeightParam,
-> {
-    type Output = out::LoadImageTextSetFromFolderNodeOutput;
-    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
-        Self::Output {
-            image: crate::nodes::types::ImageOut::from_dynamic(node_id, 0u32),
-            conditioning: crate::nodes::types::ConditioningOut::from_dynamic(
-                node_id,
-                1u32,
-            ),
-        }
-    }
-    fn inputs(&self) -> HashMap<String, WorkflowInput> {
-        let mut output = HashMap::default();
-        output.insert("folder".to_string(), self.folder.clone().into());
-        output.insert("clip".to_string(), self.clip.clone().into());
-        if let Some(v) = &self.resize_method {
-            output.insert("resize_method".to_string(), v.clone().into());
-        }
-        if let Some(v) = &self.width {
-            output.insert("width".to_string(), v.clone().into());
-        }
-        if let Some(v) = &self.height {
-            output.insert("height".to_string(), v.clone().into());
-        }
-        output
-    }
-    const NAME: &'static str = "LoadImageTextSetFromFolderNode";
-    const DISPLAY_NAME: &'static str = "Load Image and Text Dataset from Folder";
-    const DESCRIPTION: &'static str = "Loads a batch of images and caption from a directory for training.";
+    const NAME: &'static str = "LatentUpscaleModelLoader";
+    const DISPLAY_NAME: &'static str = "Load Latent Upscale Model";
+    const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "loaders";
 }
 ///**Load LoRA**: LoRAs are used to modify diffusion and CLIP models, altering the way in which latents are denoised such as applying styles. Multiple LoRA nodes can be linked together.
@@ -614,7 +468,7 @@ for LoraLoaderModelOnly<ModelParam, LoraNameParam, StrengthModelParam> {
     const DESCRIPTION: &'static str = "LoRAs are used to modify diffusion and CLIP models, altering the way in which latents are denoised such as applying styles. Multiple LoRA nodes can be linked together.";
     const CATEGORY: &'static str = "loaders";
 }
-///**Load LoRA Model**: Load Trained LoRA weights from Train LoRA node.
+///**Load LoRA Model**: No description.
 #[derive(Clone)]
 #[allow(non_camel_case_types)]
 pub struct LoraModelLoader<
@@ -632,7 +486,6 @@ pub struct LoraModelLoader<
   - Default: 1
   - Max: 100
   - Min: -100
-  - Step: 0.01
 */
     pub strength_model: StrengthModelParam,
 }
@@ -673,13 +526,13 @@ for LoraModelLoader<ModelParam, LoraParam, StrengthModelParam> {
     }
     const NAME: &'static str = "LoraModelLoader";
     const DISPLAY_NAME: &'static str = "Load LoRA Model";
-    const DESCRIPTION: &'static str = "Load Trained LoRA weights from Train LoRA node.";
+    const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "loaders";
 }
 ///**Save LoRA Weights**: No description.
 #[derive(Clone)]
 #[allow(non_camel_case_types)]
-pub struct SaveLoRANode<
+pub struct SaveLoRA<
     LoraParam: crate::nodes::types::LoraModel,
     PrefixParam: crate::nodes::types::String,
     StepsParam: crate::nodes::types::Int = crate::nodes::types::IntOut,
@@ -689,6 +542,7 @@ pub struct SaveLoRANode<
     /**The prefix to use for the saved LoRA file.
 
 **Metadata**:
+  - Multiline: false
   - Default: loras/ComfyUI_trained_lora
 */
     pub prefix: PrefixParam,
@@ -699,7 +553,7 @@ impl<
     LoraParam: crate::nodes::types::LoraModel,
     PrefixParam: crate::nodes::types::String,
     StepsParam: crate::nodes::types::Int,
-> SaveLoRANode<LoraParam, PrefixParam, StepsParam> {
+> SaveLoRA<LoraParam, PrefixParam, StepsParam> {
     /// Create a new node.
     pub fn new(lora: LoraParam, prefix: PrefixParam, steps: Option<StepsParam>) -> Self {
         Self { lora, prefix, steps }
@@ -709,7 +563,7 @@ impl<
     LoraParam: crate::nodes::types::LoraModel,
     PrefixParam: crate::nodes::types::String,
     StepsParam: crate::nodes::types::Int,
-> crate::nodes::TypedNode for SaveLoRANode<LoraParam, PrefixParam, StepsParam> {
+> crate::nodes::TypedNode for SaveLoRA<LoraParam, PrefixParam, StepsParam> {
     type Output = WorkflowNodeId;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         node_id
@@ -723,7 +577,7 @@ impl<
         }
         output
     }
-    const NAME: &'static str = "SaveLoRANode";
+    const NAME: &'static str = "SaveLoRA";
     const DISPLAY_NAME: &'static str = "Save LoRA Weights";
     const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "loaders";
@@ -732,7 +586,7 @@ impl<
     LoraParam: crate::nodes::types::LoraModel,
     PrefixParam: crate::nodes::types::String,
     StepsParam: crate::nodes::types::Int,
-> crate::nodes::TypedOutputNode for SaveLoRANode<LoraParam, PrefixParam, StepsParam> {}
+> crate::nodes::TypedOutputNode for SaveLoRA<LoraParam, PrefixParam, StepsParam> {}
 ///**Load Style Model**: No description.
 #[derive(Clone)]
 #[allow(non_camel_case_types)]

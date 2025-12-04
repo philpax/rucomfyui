@@ -26,6 +26,8 @@ pub mod runway;
 #[rustfmt::skip]
 pub mod sora;
 #[rustfmt::skip]
+pub mod topaz;
+#[rustfmt::skip]
 pub mod veo;
 #[rustfmt::skip]
 pub mod vidu;
