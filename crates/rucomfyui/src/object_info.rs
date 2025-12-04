@@ -497,6 +497,7 @@ define_object_type! {
     (Int, "INT"),
     (Latent, "LATENT"),
     (LatentOperation, "LATENT_OPERATION"),
+    (LatentUpscaleModel, "LATENT_UPSCALE_MODEL"),
     (Load3DCamera, "LOAD3D_CAMERA"),
     (LoraModel, "LORA_MODEL"),
     (LossMap, "LOSS_MAP"),
