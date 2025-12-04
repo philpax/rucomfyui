@@ -51,7 +51,7 @@ pub struct Object {
     /// Outputs from the object.
     pub output: Vec<ObjectType>,
     /// Whether the output is a list.
-    pub output_is_list: Vec<bool>,
+    pub output_is_list: Vec<Option<bool>>,
     /// The name of the output.
     pub output_name: Vec<String>,
     /// Whether this node is an output node (i.e. terminates a workflow).
@@ -74,7 +74,7 @@ impl Object {
             .enumerate()
             .map(|(idx, ((ty, is_list), name))| ObjectProcessedOutput {
                 ty: ty.clone(),
-                is_list: *is_list,
+                is_list: is_list.unwrap_or_default(),
                 name: name.as_str(),
                 tooltip: self.output_tooltips.get(idx).and_then(|s| s.as_deref()),
             })
@@ -691,7 +691,7 @@ mod tests {
                 optional: None,
             },
             output: vec![ObjectType::Latent],
-            output_is_list: vec![false],
+            output_is_list: vec![Some(false)],
             output_name: vec!["LATENT".into()],
             output_node: false,
             output_tooltips: vec![],
