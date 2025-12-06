@@ -468,4 +468,9 @@ impl WorkflowMeta {
             title: title.into(),
         }
     }
+
+    /// Get the title.
+    pub fn title(&self) -> &str {
+        &self.title
+    }
 }
