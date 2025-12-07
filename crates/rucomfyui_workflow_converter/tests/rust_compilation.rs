@@ -5,6 +5,8 @@
 
 #![cfg(feature = "rust")]
 
+use proc_macro2::TokenStream;
+use quote::quote;
 use rucomfyui::object_info::ObjectInfo;
 use rucomfyui_workflow_converter::convert_to_rust;
 use std::fs;
@@ -31,6 +33,38 @@ fn load_object_info() -> ObjectInfo {
         serde_json::from_str(&json).expect("Failed to parse object_info.json");
 
     objects.into_iter().map(|o| (o.name.clone(), o)).collect()
+}
+
+/// Format a TokenStream as a snippet string using prettyplease.
+fn format_tokens_as_snippet(tokens: TokenStream) -> String {
+    let wrapped = quote! {
+        fn __wrapper() {
+            #tokens
+        }
+    };
+    let syntax_tree = syn::parse2::<syn::File>(wrapped).expect("Failed to parse tokens");
+    let formatted = prettyplease::unparse(&syntax_tree);
+
+    // Extract just the function body (between the first { and the last })
+    if let Some(start) = formatted.find('{') {
+        if let Some(end) = formatted.rfind('}') {
+            let body = &formatted[start + 1..end];
+            return body
+                .lines()
+                .map(|line| {
+                    if let Some(stripped) = line.strip_prefix("    ") {
+                        stripped
+                    } else {
+                        line.trim_start()
+                    }
+                })
+                .collect::<Vec<_>>()
+                .join("\n")
+                .trim()
+                .to_string();
+        }
+    }
+    formatted
 }
 
 /// Wrap generated code snippet in a compilable module.
@@ -109,18 +143,57 @@ fn check_compiles(temp_dir: &tempfile::TempDir) -> Result<(), String> {
 fn test_example_workflow_compiles() {
     let object_info = load_object_info();
     let snippet = convert_to_rust(EXAMPLE_WORKFLOW, &object_info).expect("Conversion failed");
-    let code = wrap_in_module(&snippet, "example_workflow");
 
-    // Verify it contains expected elements
-    assert!(code.contains("pub fn example_workflow()"));
-    assert!(code.contains("CheckpointLoaderSimple"));
-    assert!(code.contains("CLIPTextEncode"));
-    assert!(code.contains("EmptyLatentImage"));
-    assert!(code.contains("KSampler"));
-    assert!(code.contains("VAEDecode"));
-    assert!(code.contains("PreviewImage"));
+    // Verify the snippet matches expected TokenStream
+    let expected = format_tokens_as_snippet(quote! {
+        let g = WorkflowGraph::new();
+
+        let checkpoint_loader_simple = g.add(CheckpointLoaderSimple {
+            ckpt_name: "model.safetensors"
+        });
+
+        let empty_latent_image = g.add(EmptyLatentImage {
+            batch_size: 1,
+            height: 1024,
+            width: 1024
+        });
+
+        let clip_text_encode = g.add(CLIPTextEncode {
+            clip: checkpoint_loader_simple.clip,
+            text: "a beautiful landscape"
+        });
+
+        let clip_text_encode_1 = g.add(CLIPTextEncode {
+            clip: checkpoint_loader_simple.clip,
+            text: "ugly, blurry"
+        });
+
+        let k_sampler = g.add(KSampler {
+            cfg: 7.5,
+            denoise: 1.0,
+            latent_image: empty_latent_image,
+            model: checkpoint_loader_simple.model,
+            negative: clip_text_encode_1,
+            positive: clip_text_encode,
+            sampler_name: "euler",
+            scheduler: "normal",
+            seed: 42,
+            steps: 20
+        });
+
+        let vae_decode = g.add(VAEDecode {
+            samples: k_sampler,
+            vae: checkpoint_loader_simple.vae
+        });
+
+        let preview_image = g.add(PreviewImage {
+            images: vae_decode
+        });
+    });
+    assert_eq!(snippet, expected);
 
     // Actually compile the code
+    let code = wrap_in_module(&snippet, "example_workflow");
     let temp_dir = create_test_crate(&code);
     check_compiles(&temp_dir).expect("Generated code should compile");
 }
@@ -151,10 +224,15 @@ fn test_existing_workflow_file_compiles() {
 #[test]
 fn test_snippet_generates_valid_code() {
     let object_info = load_object_info();
-    let code = convert_to_rust(SIMPLE_WORKFLOW, &object_info).expect("Conversion failed");
+    let snippet = convert_to_rust(SIMPLE_WORKFLOW, &object_info).expect("Conversion failed");
 
-    // Should not contain function wrapper
-    assert!(!code.contains("pub fn"));
-    // Should contain the workflow construction
-    assert!(code.contains("let g = WorkflowGraph::new()"));
+    // Verify the snippet matches expected TokenStream
+    let expected = format_tokens_as_snippet(quote! {
+        let g = WorkflowGraph::new();
+
+        let checkpoint_loader_simple = g.add(CheckpointLoaderSimple {
+            ckpt_name: "model.safetensors"
+        });
+    });
+    assert_eq!(snippet, expected);
 }

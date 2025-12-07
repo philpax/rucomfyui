@@ -21,4 +21,8 @@ syn = { version = "2", optional = true }
 thiserror = { workspace = true }
 
 [dev-dependencies]
+prettyplease = "0.2"
+proc-macro2 = "1"
+quote = "1"
+syn = "2"
 tempfile = "3"
