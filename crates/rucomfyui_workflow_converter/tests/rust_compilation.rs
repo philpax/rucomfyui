@@ -6,7 +6,7 @@
 #![cfg(feature = "rust")]
 
 use rucomfyui::object_info::ObjectInfo;
-use rucomfyui_workflow_converter::{convert_to_rust_with_object_info, RustGeneratorConfig};
+use rucomfyui_workflow_converter::convert_to_rust;
 use std::fs;
 use std::process::Command;
 
@@ -31,6 +31,25 @@ fn load_object_info() -> ObjectInfo {
         serde_json::from_str(&json).expect("Failed to parse object_info.json");
 
     objects.into_iter().map(|o| (o.name.clone(), o)).collect()
+}
+
+/// Wrap generated code snippet in a compilable module.
+fn wrap_in_module(snippet: &str, function_name: &str) -> String {
+    format!(
+        r#"//! Generated workflow code from ComfyUI API workflow.
+
+use rucomfyui::{{Workflow, WorkflowGraph, WorkflowNodeId}};
+use rucomfyui::nodes::all::*;
+
+/// Constructs the workflow.
+#[allow(unused_variables)]
+pub fn {function_name}() -> (Workflow, WorkflowNodeId) {{
+    {snippet}
+
+    (g.into_workflow(), WorkflowNodeId(0))
+}}
+"#
+    )
 }
 
 /// Example workflow JSON for testing.
@@ -156,9 +175,8 @@ fn check_compiles(temp_dir: &tempfile::TempDir) -> Result<(), String> {
 #[test]
 fn test_example_workflow_compiles() {
     let object_info = load_object_info();
-    let config = RustGeneratorConfig::complete("example_workflow");
-    let code = convert_to_rust_with_object_info(EXAMPLE_WORKFLOW, &object_info, &config)
-        .expect("Conversion failed");
+    let snippet = convert_to_rust(EXAMPLE_WORKFLOW, &object_info).expect("Conversion failed");
+    let code = wrap_in_module(&snippet, "example_workflow");
 
     // Verify it contains expected elements
     assert!(code.contains("pub fn example_workflow()"));
@@ -177,9 +195,8 @@ fn test_example_workflow_compiles() {
 #[test]
 fn test_simple_workflow_compiles() {
     let object_info = load_object_info();
-    let config = RustGeneratorConfig::complete("simple_workflow");
-    let code = convert_to_rust_with_object_info(SIMPLE_WORKFLOW, &object_info, &config)
-        .expect("Conversion failed");
+    let snippet = convert_to_rust(SIMPLE_WORKFLOW, &object_info).expect("Conversion failed");
+    let code = wrap_in_module(&snippet, "simple_workflow");
 
     // Actually compile the code
     let temp_dir = create_test_crate(&code);
@@ -191,20 +208,17 @@ fn test_existing_workflow_file_compiles() {
     let object_info = load_object_info();
     // Test with the actual example workflow file from rucomfyui
     let workflow_json = include_str!("../../rucomfyui/examples/existing_workflow.json");
-    let config = RustGeneratorConfig::complete("existing_workflow");
-    let code = convert_to_rust_with_object_info(workflow_json, &object_info, &config)
-        .expect("Conversion failed");
+    let snippet = convert_to_rust(workflow_json, &object_info).expect("Conversion failed");
+    let code = wrap_in_module(&snippet, "existing_workflow");
 
     let temp_dir = create_test_crate(&code);
     check_compiles(&temp_dir).expect("Generated code should compile");
 }
 
 #[test]
-fn test_snippet_mode_generates_valid_code() {
+fn test_snippet_generates_valid_code() {
     let object_info = load_object_info();
-    let config = RustGeneratorConfig::snippet();
-    let code = convert_to_rust_with_object_info(SIMPLE_WORKFLOW, &object_info, &config)
-        .expect("Conversion failed");
+    let code = convert_to_rust(SIMPLE_WORKFLOW, &object_info).expect("Conversion failed");
 
     // Should not contain function wrapper
     assert!(!code.contains("pub fn"));

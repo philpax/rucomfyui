@@ -3,10 +3,7 @@
 use anyhow::{Context, Result};
 use clap::{Parser, ValueEnum};
 use rucomfyui::object_info::ObjectInfo;
-use rucomfyui_workflow_converter::{
-    convert_to_lua_with_object_info, convert_to_rust_with_object_info, LuaGeneratorConfig,
-    RustGeneratorConfig,
-};
+use rucomfyui_workflow_converter::{convert_to_lua, convert_to_rust};
 use std::fs;
 use std::io::{self, Write};
 use std::path::PathBuf;
@@ -26,20 +23,17 @@ enum OutputFormat {
 #[derive(Parser, Debug)]
 #[command(author, version, about, long_about = None)]
 #[command(after_help = "EXAMPLES:
-    # Convert to Rust with typed nodes (uses bundled object_info)
+    # Convert to Rust
     rucomfyui_workflow_converter workflow.json
 
-    # Convert to Rust with full wrapper function
-    rucomfyui_workflow_converter workflow.json --complete
-
-    # Convert to Lua with full boilerplate
-    rucomfyui_workflow_converter workflow.json --format lua --complete
+    # Convert to Lua
+    rucomfyui_workflow_converter workflow.json --format lua
 
     # Use custom object_info.json
     rucomfyui_workflow_converter workflow.json --object-info custom_object_info.json
 
     # Output to file
-    rucomfyui_workflow_converter workflow.json --complete -o workflow.rs")]
+    rucomfyui_workflow_converter workflow.json -o workflow.rs")]
 struct Args {
     /// Path to the ComfyUI API workflow JSON file
     input: PathBuf,
@@ -51,10 +45,6 @@ struct Args {
     /// Output format
     #[arg(short, long, value_enum, default_value_t = OutputFormat::Rust)]
     format: OutputFormat,
-
-    /// Include boilerplate/wrapper code
-    #[arg(short, long)]
-    complete: bool,
 
     /// Write to file instead of stdout
     #[arg(short, long, value_name = "FILE")]
@@ -76,22 +66,8 @@ fn main() -> Result<()> {
 
     // Convert
     let output = match args.format {
-        OutputFormat::Lua => {
-            let config = if args.complete {
-                LuaGeneratorConfig::complete()
-            } else {
-                LuaGeneratorConfig::snippet()
-            };
-            convert_to_lua_with_object_info(&json, &object_info, &config)?
-        }
-        OutputFormat::Rust => {
-            let config = if args.complete {
-                RustGeneratorConfig::complete("workflow")
-            } else {
-                RustGeneratorConfig::snippet()
-            };
-            convert_to_rust_with_object_info(&json, &object_info, &config)?
-        }
+        OutputFormat::Lua => convert_to_lua(&json, &object_info)?,
+        OutputFormat::Rust => convert_to_rust(&json, &object_info)?,
     };
 
     // Write output

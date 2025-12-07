@@ -7,60 +7,14 @@ use rucomfyui::object_info::{Object, ObjectInfo};
 use std::collections::HashMap;
 use std::fmt::Write;
 
-/// Configuration for Lua code generation.
-#[derive(Debug, Clone, Default)]
-pub struct LuaGeneratorConfig {
-    /// Whether to include the boilerplate code (get_object_info, graph creation).
-    pub include_boilerplate: bool,
-    /// Whether to include the execution code (client:easy_queue).
-    pub include_execution: bool,
-}
-
-impl LuaGeneratorConfig {
-    /// Create a config that generates just the workflow building code.
-    pub fn snippet() -> Self {
-        Self {
-            include_boilerplate: false,
-            include_execution: false,
-        }
-    }
-
-    /// Create a config that generates a complete executable script.
-    pub fn complete() -> Self {
-        Self {
-            include_boilerplate: true,
-            include_execution: true,
-        }
-    }
-}
-
 /// Convert a workflow JSON to Lua code using ObjectInfo for type information.
-pub fn convert_to_lua_with_object_info(
-    json: &str,
-    object_info: &ObjectInfo,
-    config: &LuaGeneratorConfig,
-) -> Result<String> {
+pub fn convert_to_lua(json: &str, object_info: &ObjectInfo) -> Result<String> {
     let analyzed = AnalyzedWorkflow::from_json(json)?;
-    generate_lua_code(&analyzed, object_info, config)
+    generate_lua_code(&analyzed, object_info)
 }
 
-fn generate_lua_code(
-    analyzed: &AnalyzedWorkflow,
-    object_info: &ObjectInfo,
-    config: &LuaGeneratorConfig,
-) -> Result<String> {
+fn generate_lua_code(analyzed: &AnalyzedWorkflow, object_info: &ObjectInfo) -> Result<String> {
     let mut output = String::new();
-
-    if config.include_boilerplate {
-        writeln!(output, "-- Generated workflow from ComfyUI API workflow").unwrap();
-        writeln!(output, "-- Requires: comfy module and client to be set up").unwrap();
-        writeln!(output).unwrap();
-        writeln!(output, "-- Get object info and create graph").unwrap();
-        writeln!(output, "local object_info = client:get_object_info()").unwrap();
-        writeln!(output, "local g = comfy.graph(object_info)").unwrap();
-        writeln!(output).unwrap();
-        writeln!(output, "-- Build the workflow").unwrap();
-    }
 
     // Track generated variables with their ObjectInfo
     let mut generated_vars: HashMap<String, (&AnalyzedNode, Option<&Object>)> = HashMap::new();
@@ -102,38 +56,6 @@ fn generate_lua_code(
         }
 
         generated_vars.insert(node.var_name.clone(), (node, obj));
-    }
-
-    if config.include_execution {
-        writeln!(output).unwrap();
-        writeln!(output, "-- Queue the workflow and wait for results").unwrap();
-        writeln!(output, "local result = client:easy_queue(g)").unwrap();
-
-        // Find output nodes using ObjectInfo
-        let output_nodes: Vec<_> = analyzed
-            .nodes
-            .iter()
-            .filter(|n| {
-                object_info
-                    .get(&n.class_type)
-                    .map(|o| o.output_node)
-                    .unwrap_or(false)
-            })
-            .collect();
-
-        if !output_nodes.is_empty() {
-            writeln!(output).unwrap();
-            writeln!(output, "-- Return results from output nodes").unwrap();
-            if output_nodes.len() == 1 {
-                writeln!(output, "return result[{}]", output_nodes[0].var_name).unwrap();
-            } else {
-                writeln!(output, "return {{").unwrap();
-                for node in &output_nodes {
-                    writeln!(output, "    {} = result[{}],", node.var_name, node.var_name).unwrap();
-                }
-                writeln!(output, "}}").unwrap();
-            }
-        }
     }
 
     Ok(output)
@@ -220,9 +142,7 @@ mod tests {
             }
         }"#;
 
-        let result =
-            convert_to_lua_with_object_info(json, &object_info, &LuaGeneratorConfig::snippet())
-                .unwrap();
+        let result = convert_to_lua(json, &object_info).unwrap();
         assert!(result.contains("g:CheckpointLoaderSimple"));
         assert!(result.contains("sd_xl_base_1.0.safetensors"));
     }
@@ -244,31 +164,8 @@ mod tests {
             }
         }"#;
 
-        let result =
-            convert_to_lua_with_object_info(json, &object_info, &LuaGeneratorConfig::snippet())
-                .unwrap();
+        let result = convert_to_lua(json, &object_info).unwrap();
         assert!(result.contains("checkpoint_loader_simple.clip"));
-    }
-
-    #[test]
-    fn test_convert_with_boilerplate() {
-        let object_info = load_test_object_info();
-        let json = r#"{
-            "1": {
-                "inputs": { "ckpt_name": "model.safetensors" },
-                "class_type": "CheckpointLoaderSimple"
-            },
-            "2": {
-                "inputs": { "images": ["1", 0] },
-                "class_type": "PreviewImage"
-            }
-        }"#;
-
-        let config = LuaGeneratorConfig::complete();
-        let result = convert_to_lua_with_object_info(json, &object_info, &config).unwrap();
-        assert!(result.contains("client:get_object_info()"));
-        assert!(result.contains("comfy.graph(object_info)"));
-        assert!(result.contains("client:easy_queue(g)"));
     }
 
     #[test]
@@ -308,9 +205,7 @@ mod tests {
             }
         }"#;
 
-        let result =
-            convert_to_lua_with_object_info(json, &object_info, &LuaGeneratorConfig::snippet())
-                .unwrap();
+        let result = convert_to_lua(json, &object_info).unwrap();
         assert!(result.contains("checkpoint_loader_simple.model"));
         assert!(result.contains("checkpoint_loader_simple.clip"));
         assert!(result.contains("clip_text_encode"));

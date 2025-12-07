@@ -8,155 +8,14 @@ use quote::{format_ident, quote};
 use rucomfyui::object_info::{Object, ObjectInfo, ObjectType};
 use std::collections::HashMap;
 
-/// Configuration for Rust code generation.
-#[derive(Debug, Clone, Default)]
-pub struct RustGeneratorConfig {
-    /// Whether to generate a complete compilable file with imports and function wrapper.
-    /// If false, generates just the workflow construction code.
-    pub include_wrapper: bool,
-    /// The function name to use when generating a complete file.
-    pub function_name: String,
-}
-
-impl RustGeneratorConfig {
-    /// Create a config that generates just the workflow code snippet.
-    pub fn snippet() -> Self {
-        Self {
-            include_wrapper: false,
-            function_name: String::new(),
-        }
-    }
-
-    /// Create a config that generates a complete file with the given function name.
-    pub fn complete(function_name: impl Into<String>) -> Self {
-        Self {
-            include_wrapper: true,
-            function_name: function_name.into(),
-        }
-    }
-}
-
-/// Convert a workflow JSON to Rust code without ObjectInfo (uses dynamic nodes).
-pub fn convert_to_rust(json: &str) -> Result<String> {
-    convert_to_rust_with_config(json, &RustGeneratorConfig::snippet())
-}
-
-/// Convert a workflow JSON to Rust code with configuration but without ObjectInfo.
-pub fn convert_to_rust_with_config(json: &str, config: &RustGeneratorConfig) -> Result<String> {
-    let analyzed = AnalyzedWorkflow::from_json(json)?;
-    generate_rust_code_dynamic(&analyzed, config)
-}
-
 /// Convert a workflow JSON to Rust code using ObjectInfo for type information.
-pub fn convert_to_rust_with_object_info(
-    json: &str,
-    object_info: &ObjectInfo,
-    config: &RustGeneratorConfig,
-) -> Result<String> {
+pub fn convert_to_rust(json: &str, object_info: &ObjectInfo) -> Result<String> {
     let analyzed = AnalyzedWorkflow::from_json(json)?;
-    generate_rust_code_typed(&analyzed, object_info, config)
-}
-
-/// Generate Rust code using dynamic nodes (without ObjectInfo).
-fn generate_rust_code_dynamic(
-    analyzed: &AnalyzedWorkflow,
-    config: &RustGeneratorConfig,
-) -> Result<String> {
-    let mut nodes_tokens = Vec::new();
-    let mut generated_vars: HashMap<String, &AnalyzedNode> = HashMap::new();
-
-    for node in &analyzed.nodes {
-        let var_ident = format_ident!("{}", &node.var_name);
-        let class_type = &node.class_type;
-
-        let comment = if let Some(display_name) = &node.display_name {
-            format!("// {} ({})", display_name, class_type)
-        } else {
-            format!("// {}", class_type)
-        };
-        let comment_tokens: TokenStream = comment.parse().unwrap();
-
-        let mut input_calls = Vec::new();
-        for (name, input) in &node.inputs {
-            let value = format_dynamic_input_value(input, &generated_vars);
-            let value_tokens: TokenStream = value.parse().unwrap();
-            input_calls.push(quote! {
-                .with_input(#name, #value_tokens)
-            });
-        }
-
-        nodes_tokens.push(quote! {
-            #comment_tokens
-            let #var_ident = g.add_dynamic(
-                rucomfyui::workflow::WorkflowNode::new(#class_type)
-                    #(#input_calls)*
-            );
-        });
-
-        generated_vars.insert(node.var_name.clone(), node);
-    }
-
-    let output_node = analyzed
-        .nodes
-        .iter()
-        .rev()
-        .find(|n| is_likely_output_node(&n.class_type));
-
-    let output_ident = output_node
-        .map(|n| format_ident!("{}", &n.var_name))
-        .unwrap_or_else(|| format_ident!("WorkflowNodeId"));
-
-    let output_expr = if output_node.is_some() {
-        quote! { #output_ident }
-    } else {
-        quote! { WorkflowNodeId(0) }
-    };
-
-    let tokens = if config.include_wrapper {
-        let func_name = format_ident!(
-            "{}",
-            if config.function_name.is_empty() {
-                "workflow"
-            } else {
-                &config.function_name
-            }
-        );
-
-        quote! {
-            //! Generated workflow code from ComfyUI API workflow.
-
-            use rucomfyui::{Workflow, WorkflowGraph, WorkflowNodeId};
-
-            /// Constructs the workflow.
-            pub fn #func_name() -> (Workflow, WorkflowNodeId) {
-                let g = WorkflowGraph::new();
-
-                #(#nodes_tokens)*
-
-                (g.into_workflow(), #output_expr)
-            }
-        }
-    } else {
-        quote! {
-            let g = WorkflowGraph::new();
-
-            #(#nodes_tokens)*
-        }
-    };
-
-    if config.include_wrapper {
-        format_tokens_as_file(tokens)
-    } else {
-        format_tokens_as_snippet(tokens)
-    }
+    generate_rust_code(&analyzed, object_info)
 }
 
 /// Generate Rust code using typed nodes with ObjectInfo.
-fn generate_rust_code_typed(
-    analyzed: &AnalyzedWorkflow,
-    object_info: &ObjectInfo,
-    config: &RustGeneratorConfig,
-) -> Result<String> {
+fn generate_rust_code(analyzed: &AnalyzedWorkflow, object_info: &ObjectInfo) -> Result<String> {
     let mut nodes_tokens = Vec::new();
     let mut generated_vars: HashMap<String, (&AnalyzedNode, Option<&Object>)> = HashMap::new();
 
@@ -230,68 +89,13 @@ fn generate_rust_code_typed(
         generated_vars.insert(node.var_name.clone(), (node, obj));
     }
 
-    // Find output node using ObjectInfo
-    let output_node = analyzed.nodes.iter().rev().find(|n| {
-        object_info
-            .get(&n.class_type)
-            .map(|o| o.output_node)
-            .unwrap_or(false)
-    });
+    let tokens = quote! {
+        let g = WorkflowGraph::new();
 
-    let output_ident = output_node
-        .map(|n| format_ident!("{}", &n.var_name))
-        .unwrap_or_else(|| format_ident!("WorkflowNodeId"));
-
-    let output_expr = if output_node.is_some() {
-        quote! { #output_ident }
-    } else {
-        quote! { WorkflowNodeId(0) }
+        #(#nodes_tokens)*
     };
 
-    let tokens = if config.include_wrapper {
-        let func_name = format_ident!(
-            "{}",
-            if config.function_name.is_empty() {
-                "workflow"
-            } else {
-                &config.function_name
-            }
-        );
-
-        quote! {
-            //! Generated workflow code from ComfyUI API workflow.
-
-            use rucomfyui::{Workflow, WorkflowGraph, WorkflowNodeId};
-            use rucomfyui::nodes::all::*;
-
-            /// Constructs the workflow.
-            pub fn #func_name() -> (Workflow, WorkflowNodeId) {
-                let g = WorkflowGraph::new();
-
-                #(#nodes_tokens)*
-
-                (g.into_workflow(), #output_expr)
-            }
-        }
-    } else {
-        quote! {
-            let g = WorkflowGraph::new();
-
-            #(#nodes_tokens)*
-        }
-    };
-
-    if config.include_wrapper {
-        format_tokens_as_file(tokens)
-    } else {
-        format_tokens_as_snippet(tokens)
-    }
-}
-
-fn format_tokens_as_file(tokens: TokenStream) -> Result<String> {
-    let syntax_tree = syn::parse2::<syn::File>(tokens.clone())
-        .map_err(|e| crate::ConversionError::InvalidNodeReference(format!("Parse error: {}", e)))?;
-    Ok(prettyplease::unparse(&syntax_tree))
+    format_tokens_as_snippet(tokens)
 }
 
 fn format_tokens_as_snippet(tokens: TokenStream) -> Result<String> {
@@ -405,31 +209,31 @@ fn escape_string(s: &str) -> String {
         .replace('\t', "\\t")
 }
 
-/// Check if a node is likely an output node (used when ObjectInfo is not available).
-fn is_likely_output_node(class_type: &str) -> bool {
-    matches!(
-        class_type,
-        "PreviewImage"
-            | "SaveImage"
-            | "PreviewAudio"
-            | "SaveAudio"
-            | "SaveAudioMP3"
-            | "SaveAudioOpus"
-            | "SaveVideo"
-            | "SaveAnimatedPNG"
-            | "SaveAnimatedWEBP"
-            | "SaveWEBM"
-            | "SaveGLB"
-            | "SaveSVGNode"
-    )
-}
-
 #[cfg(test)]
 mod tests {
     use super::*;
 
+    fn load_test_object_info() -> ObjectInfo {
+        let manifest_dir = std::path::Path::new(env!("CARGO_MANIFEST_DIR"));
+        let object_info_path = manifest_dir
+            .parent()
+            .unwrap()
+            .join("rucomfyui")
+            .join("generate_nodes")
+            .join("object_info.json");
+
+        let json = std::fs::read_to_string(&object_info_path)
+            .unwrap_or_else(|e| panic!("Failed to read object_info.json: {}", e));
+
+        let objects: Vec<rucomfyui::object_info::Object> =
+            serde_json::from_str(&json).expect("Failed to parse object_info.json");
+
+        objects.into_iter().map(|o| (o.name.clone(), o)).collect()
+    }
+
     #[test]
     fn test_convert_simple_workflow() {
+        let object_info = load_test_object_info();
         let json = r#"{
             "1": {
                 "inputs": { "ckpt_name": "sd_xl_base_1.0.safetensors" },
@@ -438,24 +242,30 @@ mod tests {
             }
         }"#;
 
-        let result = convert_to_rust(json).unwrap();
+        let result = convert_to_rust(json, &object_info).unwrap();
         assert!(result.contains("let g = WorkflowGraph::new()"));
         assert!(result.contains("CheckpointLoaderSimple"));
         assert!(result.contains("ckpt_name"));
     }
 
     #[test]
-    fn test_convert_with_wrapper() {
+    fn test_convert_workflow_with_dependencies() {
+        let object_info = load_test_object_info();
         let json = r#"{
             "1": {
                 "inputs": { "ckpt_name": "model.safetensors" },
                 "class_type": "CheckpointLoaderSimple"
+            },
+            "2": {
+                "inputs": {
+                    "text": "a cat",
+                    "clip": ["1", 1]
+                },
+                "class_type": "CLIPTextEncode"
             }
         }"#;
 
-        let config = RustGeneratorConfig::complete("my_workflow");
-        let result = convert_to_rust_with_config(json, &config).unwrap();
-        assert!(result.contains("pub fn my_workflow()"));
-        assert!(result.contains("use rucomfyui::"));
+        let result = convert_to_rust(json, &object_info).unwrap();
+        assert!(result.contains("checkpoint_loader_simple.clip"));
     }
 }

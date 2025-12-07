@@ -9,10 +9,7 @@
 //! # Example
 //!
 //! ```ignore
-//! use rucomfyui_workflow_converter::{
-//!     convert_to_rust_with_object_info, convert_to_lua_with_object_info,
-//!     RustGeneratorConfig, LuaGeneratorConfig,
-//! };
+//! use rucomfyui_workflow_converter::{convert_to_rust, convert_to_lua};
 //!
 //! let workflow_json = r#"{
 //!     "1": {
@@ -24,17 +21,8 @@
 //! // Load ObjectInfo from ComfyUI or a saved file
 //! let object_info = load_object_info();
 //!
-//! let rust_code = convert_to_rust_with_object_info(
-//!     workflow_json,
-//!     &object_info,
-//!     &RustGeneratorConfig::snippet(),
-//! ).unwrap();
-//!
-//! let lua_code = convert_to_lua_with_object_info(
-//!     workflow_json,
-//!     &object_info,
-//!     &LuaGeneratorConfig::snippet(),
-//! ).unwrap();
+//! let rust_code = convert_to_rust(workflow_json, &object_info).unwrap();
+//! let lua_code = convert_to_lua(workflow_json, &object_info).unwrap();
 //! ```
 
 #[cfg(feature = "lua")]
@@ -44,12 +32,9 @@ mod rust_generator;
 mod workflow_analyzer;
 
 #[cfg(feature = "lua")]
-pub use lua_generator::{convert_to_lua_with_object_info, LuaGeneratorConfig};
+pub use lua_generator::convert_to_lua;
 #[cfg(feature = "rust")]
-pub use rust_generator::{
-    convert_to_rust, convert_to_rust_with_config, convert_to_rust_with_object_info,
-    RustGeneratorConfig,
-};
+pub use rust_generator::convert_to_rust;
 pub use workflow_analyzer::{AnalyzedNode, AnalyzedWorkflow};
 
 use thiserror::Error;
