@@ -32,7 +32,7 @@ mod rust_generator;
 mod workflow_analyzer;
 
 #[cfg(feature = "lua")]
-pub use lua_generator::convert_to_lua;
+pub use lua_generator::{convert_to_lua, convert_to_lua_ast};
 #[cfg(feature = "rust")]
 pub use rust_generator::convert_to_rust;
 pub use workflow_analyzer::{AnalyzedNode, AnalyzedWorkflow};
