@@ -59,24 +59,24 @@ fn dedent(code: &str) -> String {
         .to_string()
 }
 
-/// Parse Lua code and return a normalized string for comparison.
-fn normalize_lua(code: &str) -> String {
+/// Parse Lua code and return the AST.
+fn parse_lua(code: &str) -> full_moon::ast::Ast {
     let dedented = dedent(code);
-    let ast = full_moon::parse(&dedented).expect("Failed to parse Lua code");
-    ast.to_string().trim().to_string()
+    full_moon::parse(&dedented).expect("Failed to parse Lua code")
 }
 
-/// Assert that two Lua code strings parse to equivalent ASTs.
+/// Assert that two Lua code strings parse to semantically similar ASTs.
 fn assert_lua_eq(actual: &str, expected: &str) {
-    let actual_normalized = normalize_lua(actual);
-    let expected_normalized = normalize_lua(expected);
+    use full_moon::node::Node;
 
-    assert_eq!(
-        actual_normalized,
-        expected_normalized,
-        "\n\nActual (normalized):\n{}\n\nExpected (normalized):\n{}",
-        actual_normalized,
-        expected_normalized
+    let actual_ast = parse_lua(actual);
+    let expected_ast = parse_lua(expected);
+
+    assert!(
+        actual_ast.nodes().similar(expected_ast.nodes()),
+        "\n\nActual:\n{}\n\nExpected:\n{}",
+        actual_ast,
+        expected_ast
     );
 }
 
