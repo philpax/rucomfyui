@@ -15,6 +15,266 @@ use rucomfyui::object_info::{Object, ObjectInfo};
 use std::collections::HashMap;
 
 // =============================================================================
+// Public API
+// =============================================================================
+
+/// Convert a workflow JSON to Lua code using ObjectInfo for type information.
+pub fn convert_to_lua(json: &str, object_info: &ObjectInfo) -> Result<String> {
+    let ast = convert_to_lua_ast(json, object_info)?;
+    Ok(ast.to_string())
+}
+
+/// Convert a workflow JSON to a full_moon AST.
+pub fn convert_to_lua_ast(json: &str, object_info: &ObjectInfo) -> Result<full_moon::ast::Ast> {
+    let analyzed = AnalyzedWorkflow::from_json(json)?;
+    generate_lua_ast(&analyzed, object_info)
+}
+
+// =============================================================================
+// AST generation
+// =============================================================================
+
+fn generate_lua_ast(
+    analyzed: &AnalyzedWorkflow,
+    object_info: &ObjectInfo,
+) -> Result<full_moon::ast::Ast> {
+    let mut stmts: Vec<(Stmt, Option<TokenReference>)> = Vec::new();
+
+    // Track generated variables with their ObjectInfo
+    let mut generated_vars: HashMap<String, (&AnalyzedNode, Option<&Object>)> = HashMap::new();
+
+    // Generate code for each node
+    for (i, node) in analyzed.nodes.iter().enumerate() {
+        let obj = object_info.get(&node.class_type);
+
+        // Build the function call expression
+        let func_call_expr = build_node_call(node, &generated_vars)?;
+
+        // Determine the local token (with or without comment, first or not)
+        let local_tok = match (&node.display_name, i == 0) {
+            (Some(display_name), true) => {
+                let comment = format!("{} ({})", display_name, node.class_type);
+                local_token_first_with_comment(&comment)
+            }
+            (Some(display_name), false) => {
+                let comment = format!("{} ({})", display_name, node.class_type);
+                local_token_with_comment(&comment)
+            }
+            (None, true) => local_token(),
+            (None, false) => local_token_with_leading_newline(),
+        };
+
+        let stmt = local_assignment(
+            local_tok,
+            &node.var_name,
+            Expression::FunctionCall(func_call_expr),
+        );
+
+        stmts.push((stmt, None));
+        generated_vars.insert(node.var_name.clone(), (node, obj));
+    }
+
+    let block = Block::new().with_stmts(stmts);
+    let empty_ast = full_moon::parse("").expect("empty string is valid lua");
+    Ok(empty_ast.with_nodes(block))
+}
+
+// =============================================================================
+// Node and input expression building
+// =============================================================================
+
+fn build_node_call(
+    node: &AnalyzedNode,
+    generated_vars: &HashMap<String, (&AnalyzedNode, Option<&Object>)>,
+) -> Result<FunctionCall> {
+    // Check if we can use positional or need named arguments
+    let use_table = node.inputs.len() > 1
+        || node
+            .inputs
+            .iter()
+            .any(|(_, v)| matches!(v, AnalyzedInput::NodeRef { .. }));
+
+    let args = if node.inputs.is_empty() {
+        empty_paren_args()
+    } else if !use_table && node.inputs.len() == 1 {
+        // Single simple argument - can use positional
+        let (_, input) = node.inputs.iter().next().unwrap();
+        let expr = build_input_expr(input, generated_vars)?;
+        paren_args(expr)
+    } else {
+        // Multiple arguments or node references - use table syntax
+        let fields: Vec<(String, Expression)> = node
+            .inputs
+            .iter()
+            .map(|(name, input)| {
+                let expr = build_input_expr(input, generated_vars)?;
+                Ok((name.clone(), expr))
+            })
+            .collect::<Result<Vec<_>>>()?;
+        table_args(fields)
+    };
+
+    Ok(method_call("g", &node.class_type, args))
+}
+
+fn build_input_expr(
+    input: &AnalyzedInput,
+    generated_vars: &HashMap<String, (&AnalyzedNode, Option<&Object>)>,
+) -> Result<Expression> {
+    match input {
+        AnalyzedInput::String(s) => Ok(string_expr(s)),
+        AnalyzedInput::Integer(i) => Ok(number_expr(&i.to_string())),
+        AnalyzedInput::Float(f) => {
+            let s = f.to_string();
+            if s.contains('.') || s.contains('e') || s.contains('E') {
+                Ok(number_expr(&s))
+            } else {
+                Ok(number_expr(&format!("{}.0", s)))
+            }
+        }
+        AnalyzedInput::Boolean(b) => Ok(bool_expr(*b)),
+        AnalyzedInput::NodeRef { var_name, slot } => {
+            // Look up the referenced node to get its output field name from ObjectInfo
+            if let Some((_ref_node, Some(ref_obj))) = generated_vars.get(var_name) {
+                let outputs: Vec<_> = ref_obj.processed_output().collect();
+                if outputs.len() > 1 {
+                    // Multi-output node - use field name
+                    if let Some(output) = outputs.get(*slot as usize) {
+                        let field_name = output.name.to_case(Case::Snake);
+                        return Ok(field_access_expr(var_name, &field_name));
+                    }
+                }
+            }
+            // Single-output or unknown - use variable directly
+            if *slot == 0 {
+                Ok(var_expr(var_name))
+            } else {
+                // For unknown multi-output nodes, use array-style access
+                // Lua is 1-indexed, so we add 1
+                Ok(index_access_expr(var_name, *slot + 1))
+            }
+        }
+    }
+}
+
+// =============================================================================
+// Statement builders
+// =============================================================================
+
+/// Build a local assignment: `local name = expr`
+fn local_assignment(local_tok: TokenReference, name: &str, expr: Expression) -> Stmt {
+    let mut names = Punctuated::new();
+    names.push(Pair::End(ident_with_leading_space(name)));
+
+    let mut exprs = Punctuated::new();
+    exprs.push(Pair::End(expr));
+
+    Stmt::LocalAssignment(
+        LocalAssignment::new(names)
+            .with_local_token(local_tok)
+            .with_equal_token(Some(symbol_with_leading_space("=")))
+            .with_expressions(exprs),
+    )
+}
+
+/// Build a method call: `prefix:method(args)` or `prefix:method { table }`
+fn method_call(prefix_name: &str, method_name: &str, args: FunctionArgs) -> FunctionCall {
+    FunctionCall::new(Prefix::Name(ident(prefix_name))).with_suffixes(vec![Suffix::Call(
+        Call::MethodCall(
+            full_moon::ast::MethodCall::new(ident(method_name), args).with_colon_token(symbol(":")),
+        ),
+    )])
+}
+
+/// Build parenthesized arguments: `(expr)`
+fn paren_args(expr: Expression) -> FunctionArgs {
+    let mut exprs = Punctuated::new();
+    exprs.push(Pair::End(expr));
+    FunctionArgs::Parentheses {
+        parentheses: ContainedSpan::new(symbol("("), symbol(")")),
+        arguments: exprs,
+    }
+}
+
+/// Build empty parenthesized arguments: `()`
+fn empty_paren_args() -> FunctionArgs {
+    FunctionArgs::Parentheses {
+        parentheses: ContainedSpan::new(symbol("("), symbol(")")),
+        arguments: Punctuated::new(),
+    }
+}
+
+/// Build table constructor arguments: `{ fields }`
+fn table_args(fields: Vec<(String, Expression)>) -> FunctionArgs {
+    let mut punctuated_fields: Punctuated<Field> = Punctuated::new();
+
+    for (name, expr) in fields.into_iter() {
+        let field = Field::NameKey {
+            key: ident_with_leading_newline_indent(&name),
+            equal: symbol_with_leading_space("="),
+            value: expr,
+        };
+        punctuated_fields.push(Pair::Punctuated(field, symbol(",")));
+    }
+
+    FunctionArgs::TableConstructor(
+        TableConstructor::new()
+            .with_braces(ContainedSpan::new(
+                symbol_with_trailing_space("{"),
+                symbol("\n}"),
+            ))
+            .with_fields(punctuated_fields),
+    )
+}
+
+// =============================================================================
+// Expression builders
+// =============================================================================
+
+fn string_expr(value: &str) -> Expression {
+    Expression::String(string_token(&escape_lua_string(value)))
+}
+
+fn number_expr(value: &str) -> Expression {
+    Expression::Number(number_token(value))
+}
+
+fn var_expr(name: &str) -> Expression {
+    Expression::Var(Var::Name(ident(name)))
+}
+
+fn field_access_expr(var_name: &str, field_name: &str) -> Expression {
+    Expression::Var(Var::Expression(Box::new(
+        VarExpression::new(Prefix::Name(ident(var_name))).with_suffixes(vec![Suffix::Index(
+            Index::Dot {
+                dot: symbol("."),
+                name: ident(field_name),
+            },
+        )]),
+    )))
+}
+
+fn index_access_expr(var_name: &str, index: u32) -> Expression {
+    Expression::Var(Var::Expression(Box::new(
+        VarExpression::new(Prefix::Name(ident(var_name))).with_suffixes(vec![Suffix::Index(
+            Index::Brackets {
+                brackets: ContainedSpan::new(symbol("["), symbol("]")),
+                expression: number_expr(&index.to_string()),
+            },
+        )]),
+    )))
+}
+
+fn bool_expr(value: bool) -> Expression {
+    let token = if value {
+        TokenReference::symbol("true").unwrap()
+    } else {
+        TokenReference::symbol("false").unwrap()
+    };
+    Expression::Symbol(token)
+}
+
+// =============================================================================
 // Token creation helpers
 // =============================================================================
 
@@ -148,256 +408,8 @@ fn local_token_first_with_comment(comment: &str) -> TokenReference {
 }
 
 // =============================================================================
-// Expression builders
+// String utilities
 // =============================================================================
-
-fn string_expr(value: &str) -> Expression {
-    Expression::String(string_token(&escape_lua_string(value)))
-}
-
-fn number_expr(value: &str) -> Expression {
-    Expression::Number(number_token(value))
-}
-
-fn var_expr(name: &str) -> Expression {
-    Expression::Var(Var::Name(ident(name)))
-}
-
-fn field_access_expr(var_name: &str, field_name: &str) -> Expression {
-    Expression::Var(Var::Expression(Box::new(
-        VarExpression::new(Prefix::Name(ident(var_name))).with_suffixes(vec![Suffix::Index(
-            Index::Dot {
-                dot: symbol("."),
-                name: ident(field_name),
-            },
-        )]),
-    )))
-}
-
-fn index_access_expr(var_name: &str, index: u32) -> Expression {
-    Expression::Var(Var::Expression(Box::new(
-        VarExpression::new(Prefix::Name(ident(var_name))).with_suffixes(vec![Suffix::Index(
-            Index::Brackets {
-                brackets: ContainedSpan::new(symbol("["), symbol("]")),
-                expression: number_expr(&index.to_string()),
-            },
-        )]),
-    )))
-}
-
-fn bool_expr(value: bool) -> Expression {
-    let token = if value {
-        TokenReference::symbol("true").unwrap()
-    } else {
-        TokenReference::symbol("false").unwrap()
-    };
-    Expression::Symbol(token)
-}
-
-// =============================================================================
-// Statement builders
-// =============================================================================
-
-/// Build a local assignment: `local name = expr`
-fn local_assignment(local_tok: TokenReference, name: &str, expr: Expression) -> Stmt {
-    let mut names = Punctuated::new();
-    names.push(Pair::End(ident_with_leading_space(name)));
-
-    let mut exprs = Punctuated::new();
-    exprs.push(Pair::End(expr));
-
-    Stmt::LocalAssignment(
-        LocalAssignment::new(names)
-            .with_local_token(local_tok)
-            .with_equal_token(Some(symbol_with_leading_space("=")))
-            .with_expressions(exprs),
-    )
-}
-
-/// Build a method call: `prefix:method(args)` or `prefix:method { table }`
-fn method_call(prefix_name: &str, method_name: &str, args: FunctionArgs) -> FunctionCall {
-    FunctionCall::new(Prefix::Name(ident(prefix_name))).with_suffixes(vec![Suffix::Call(
-        Call::MethodCall(
-            full_moon::ast::MethodCall::new(ident(method_name), args).with_colon_token(symbol(":")),
-        ),
-    )])
-}
-
-/// Build parenthesized arguments: `(expr)`
-fn paren_args(expr: Expression) -> FunctionArgs {
-    let mut exprs = Punctuated::new();
-    exprs.push(Pair::End(expr));
-    FunctionArgs::Parentheses {
-        parentheses: ContainedSpan::new(symbol("("), symbol(")")),
-        arguments: exprs,
-    }
-}
-
-/// Build empty parenthesized arguments: `()`
-fn empty_paren_args() -> FunctionArgs {
-    FunctionArgs::Parentheses {
-        parentheses: ContainedSpan::new(symbol("("), symbol(")")),
-        arguments: Punctuated::new(),
-    }
-}
-
-/// Build table constructor arguments: `{ fields }`
-fn table_args(fields: Vec<(String, Expression)>) -> FunctionArgs {
-    let mut punctuated_fields: Punctuated<Field> = Punctuated::new();
-
-    for (name, expr) in fields.into_iter() {
-        let field = Field::NameKey {
-            key: ident_with_leading_newline_indent(&name),
-            equal: symbol_with_leading_space("="),
-            value: expr,
-        };
-        punctuated_fields.push(Pair::Punctuated(field, symbol(",")));
-    }
-
-    FunctionArgs::TableConstructor(
-        TableConstructor::new()
-            .with_braces(ContainedSpan::new(
-                symbol_with_trailing_space("{"),
-                symbol("\n}"),
-            ))
-            .with_fields(punctuated_fields),
-    )
-}
-
-// =============================================================================
-// Main conversion functions
-// =============================================================================
-
-/// Convert a workflow JSON to Lua code using ObjectInfo for type information.
-pub fn convert_to_lua(json: &str, object_info: &ObjectInfo) -> Result<String> {
-    let ast = convert_to_lua_ast(json, object_info)?;
-    Ok(ast.to_string())
-}
-
-/// Convert a workflow JSON to a full_moon AST.
-pub fn convert_to_lua_ast(json: &str, object_info: &ObjectInfo) -> Result<full_moon::ast::Ast> {
-    let analyzed = AnalyzedWorkflow::from_json(json)?;
-    generate_lua_ast(&analyzed, object_info)
-}
-
-fn generate_lua_ast(
-    analyzed: &AnalyzedWorkflow,
-    object_info: &ObjectInfo,
-) -> Result<full_moon::ast::Ast> {
-    let mut stmts: Vec<(Stmt, Option<TokenReference>)> = Vec::new();
-
-    // Track generated variables with their ObjectInfo
-    let mut generated_vars: HashMap<String, (&AnalyzedNode, Option<&Object>)> = HashMap::new();
-
-    // Generate code for each node
-    for (i, node) in analyzed.nodes.iter().enumerate() {
-        let obj = object_info.get(&node.class_type);
-
-        // Build the function call expression
-        let func_call_expr = build_node_call(node, &generated_vars)?;
-
-        // Determine the local token (with or without comment, first or not)
-        let local_tok = match (&node.display_name, i == 0) {
-            (Some(display_name), true) => {
-                let comment = format!("{} ({})", display_name, node.class_type);
-                local_token_first_with_comment(&comment)
-            }
-            (Some(display_name), false) => {
-                let comment = format!("{} ({})", display_name, node.class_type);
-                local_token_with_comment(&comment)
-            }
-            (None, true) => local_token(),
-            (None, false) => local_token_with_leading_newline(),
-        };
-
-        let stmt = local_assignment(
-            local_tok,
-            &node.var_name,
-            Expression::FunctionCall(func_call_expr),
-        );
-
-        stmts.push((stmt, None));
-        generated_vars.insert(node.var_name.clone(), (node, obj));
-    }
-
-    let block = Block::new().with_stmts(stmts);
-    let empty_ast = full_moon::parse("").expect("empty string is valid lua");
-    Ok(empty_ast.with_nodes(block))
-}
-
-fn build_node_call(
-    node: &AnalyzedNode,
-    generated_vars: &HashMap<String, (&AnalyzedNode, Option<&Object>)>,
-) -> Result<FunctionCall> {
-    // Check if we can use positional or need named arguments
-    let use_table = node.inputs.len() > 1
-        || node
-            .inputs
-            .iter()
-            .any(|(_, v)| matches!(v, AnalyzedInput::NodeRef { .. }));
-
-    let args = if node.inputs.is_empty() {
-        empty_paren_args()
-    } else if !use_table && node.inputs.len() == 1 {
-        // Single simple argument - can use positional
-        let (_, input) = node.inputs.iter().next().unwrap();
-        let expr = build_input_expr(input, generated_vars)?;
-        paren_args(expr)
-    } else {
-        // Multiple arguments or node references - use table syntax
-        let fields: Vec<(String, Expression)> = node
-            .inputs
-            .iter()
-            .map(|(name, input)| {
-                let expr = build_input_expr(input, generated_vars)?;
-                Ok((name.clone(), expr))
-            })
-            .collect::<Result<Vec<_>>>()?;
-        table_args(fields)
-    };
-
-    Ok(method_call("g", &node.class_type, args))
-}
-
-fn build_input_expr(
-    input: &AnalyzedInput,
-    generated_vars: &HashMap<String, (&AnalyzedNode, Option<&Object>)>,
-) -> Result<Expression> {
-    match input {
-        AnalyzedInput::String(s) => Ok(string_expr(s)),
-        AnalyzedInput::Integer(i) => Ok(number_expr(&i.to_string())),
-        AnalyzedInput::Float(f) => {
-            let s = f.to_string();
-            if s.contains('.') || s.contains('e') || s.contains('E') {
-                Ok(number_expr(&s))
-            } else {
-                Ok(number_expr(&format!("{}.0", s)))
-            }
-        }
-        AnalyzedInput::Boolean(b) => Ok(bool_expr(*b)),
-        AnalyzedInput::NodeRef { var_name, slot } => {
-            // Look up the referenced node to get its output field name from ObjectInfo
-            if let Some((_ref_node, Some(ref_obj))) = generated_vars.get(var_name) {
-                let outputs: Vec<_> = ref_obj.processed_output().collect();
-                if outputs.len() > 1 {
-                    // Multi-output node - use field name
-                    if let Some(output) = outputs.get(*slot as usize) {
-                        let field_name = output.name.to_case(Case::Snake);
-                        return Ok(field_access_expr(var_name, &field_name));
-                    }
-                }
-            }
-            // Single-output or unknown - use variable directly
-            if *slot == 0 {
-                Ok(var_expr(var_name))
-            } else {
-                // For unknown multi-output nodes, use array-style access
-                // Lua is 1-indexed, so we add 1
-                Ok(index_access_expr(var_name, *slot + 1))
-            }
-        }
-    }
-}
 
 fn escape_lua_string(s: &str) -> String {
     s.replace('\\', "\\\\")
@@ -406,6 +418,10 @@ fn escape_lua_string(s: &str) -> String {
         .replace('\r', "\\r")
         .replace('\t', "\\t")
 }
+
+// =============================================================================
+// Tests
+// =============================================================================
 
 #[cfg(test)]
 mod tests {
