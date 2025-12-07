@@ -8,7 +8,7 @@
 use proc_macro2::TokenStream;
 use quote::quote;
 use rucomfyui::object_info::ObjectInfo;
-use rucomfyui_workflow_converter::convert_to_rust;
+use rucomfyui_workflow_converter::convert_to_rust_tokens;
 use std::fs;
 use std::process::Command;
 
@@ -67,23 +67,26 @@ fn format_tokens_as_snippet(tokens: TokenStream) -> String {
     formatted
 }
 
-/// Wrap generated code snippet in a compilable module.
-fn wrap_in_module(snippet: &str, function_name: &str) -> String {
-    format!(
-        r#"//! Generated workflow code from ComfyUI API workflow.
+/// Wrap generated code TokenStream in a compilable module.
+fn wrap_in_module(snippet: TokenStream, function_name: &str) -> String {
+    let function_ident = quote::format_ident!("{}", function_name);
+    let module = quote! {
+        //! Generated workflow code from ComfyUI API workflow.
 
-use rucomfyui::{{Workflow, WorkflowGraph, WorkflowNodeId}};
-use rucomfyui::nodes::all::*;
+        use rucomfyui::{Workflow, WorkflowGraph, WorkflowNodeId};
+        use rucomfyui::nodes::all::*;
 
-/// Constructs the workflow.
-#[allow(unused_variables)]
-pub fn {function_name}() -> (Workflow, WorkflowNodeId) {{
-    {snippet}
+        /// Constructs the workflow.
+        #[allow(unused_variables)]
+        pub fn #function_ident() -> (Workflow, WorkflowNodeId) {
+            #snippet
 
-    (g.into_workflow(), WorkflowNodeId(0))
-}}
-"#
-    )
+            (g.into_workflow(), WorkflowNodeId(0))
+        }
+    };
+
+    let syntax_tree = syn::parse2::<syn::File>(module).expect("Failed to parse module");
+    prettyplease::unparse(&syntax_tree)
 }
 
 /// Example workflow JSON for testing (loaded from testdata/).
@@ -142,9 +145,10 @@ fn check_compiles(temp_dir: &tempfile::TempDir) -> Result<(), String> {
 #[test]
 fn test_example_workflow_compiles() {
     let object_info = load_object_info();
-    let snippet = convert_to_rust(EXAMPLE_WORKFLOW, &object_info).expect("Conversion failed");
+    let tokens = convert_to_rust_tokens(EXAMPLE_WORKFLOW, &object_info).expect("Conversion failed");
 
     // Verify the snippet matches expected TokenStream
+    let actual = format_tokens_as_snippet(tokens.clone());
     let expected = format_tokens_as_snippet(quote! {
         let g = WorkflowGraph::new();
 
@@ -190,10 +194,10 @@ fn test_example_workflow_compiles() {
             images: vae_decode
         });
     });
-    assert_eq!(snippet, expected);
+    assert_eq!(actual, expected);
 
     // Actually compile the code
-    let code = wrap_in_module(&snippet, "example_workflow");
+    let code = wrap_in_module(tokens, "example_workflow");
     let temp_dir = create_test_crate(&code);
     check_compiles(&temp_dir).expect("Generated code should compile");
 }
@@ -201,8 +205,8 @@ fn test_example_workflow_compiles() {
 #[test]
 fn test_simple_workflow_compiles() {
     let object_info = load_object_info();
-    let snippet = convert_to_rust(SIMPLE_WORKFLOW, &object_info).expect("Conversion failed");
-    let code = wrap_in_module(&snippet, "simple_workflow");
+    let tokens = convert_to_rust_tokens(SIMPLE_WORKFLOW, &object_info).expect("Conversion failed");
+    let code = wrap_in_module(tokens, "simple_workflow");
 
     // Actually compile the code
     let temp_dir = create_test_crate(&code);
@@ -214,8 +218,8 @@ fn test_existing_workflow_file_compiles() {
     let object_info = load_object_info();
     // Test with the actual example workflow file from rucomfyui
     let workflow_json = include_str!("../../rucomfyui/examples/existing_workflow.json");
-    let snippet = convert_to_rust(workflow_json, &object_info).expect("Conversion failed");
-    let code = wrap_in_module(&snippet, "existing_workflow");
+    let tokens = convert_to_rust_tokens(workflow_json, &object_info).expect("Conversion failed");
+    let code = wrap_in_module(tokens, "existing_workflow");
 
     let temp_dir = create_test_crate(&code);
     check_compiles(&temp_dir).expect("Generated code should compile");
@@ -224,9 +228,10 @@ fn test_existing_workflow_file_compiles() {
 #[test]
 fn test_snippet_generates_valid_code() {
     let object_info = load_object_info();
-    let snippet = convert_to_rust(SIMPLE_WORKFLOW, &object_info).expect("Conversion failed");
+    let tokens = convert_to_rust_tokens(SIMPLE_WORKFLOW, &object_info).expect("Conversion failed");
 
     // Verify the snippet matches expected TokenStream
+    let actual = format_tokens_as_snippet(tokens);
     let expected = format_tokens_as_snippet(quote! {
         let g = WorkflowGraph::new();
 
@@ -234,5 +239,5 @@ fn test_snippet_generates_valid_code() {
             ckpt_name: "model.safetensors"
         });
     });
-    assert_eq!(snippet, expected);
+    assert_eq!(actual, expected);
 }

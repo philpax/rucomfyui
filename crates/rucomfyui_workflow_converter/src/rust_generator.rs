@@ -10,12 +10,18 @@ use std::collections::HashMap;
 
 /// Convert a workflow JSON to Rust code using ObjectInfo for type information.
 pub fn convert_to_rust(json: &str, object_info: &ObjectInfo) -> Result<String> {
-    let analyzed = AnalyzedWorkflow::from_json(json)?;
-    generate_rust_code(&analyzed, object_info)
+    let tokens = convert_to_rust_tokens(json, object_info)?;
+    format_tokens_as_snippet(tokens)
 }
 
-/// Generate Rust code using typed nodes with ObjectInfo.
-fn generate_rust_code(analyzed: &AnalyzedWorkflow, object_info: &ObjectInfo) -> Result<String> {
+/// Convert a workflow JSON to a proc_macro2 TokenStream.
+pub fn convert_to_rust_tokens(json: &str, object_info: &ObjectInfo) -> Result<TokenStream> {
+    let analyzed = AnalyzedWorkflow::from_json(json)?;
+    Ok(generate_rust_tokens(&analyzed, object_info))
+}
+
+/// Generate Rust TokenStream using typed nodes with ObjectInfo.
+fn generate_rust_tokens(analyzed: &AnalyzedWorkflow, object_info: &ObjectInfo) -> TokenStream {
     let mut nodes_tokens = Vec::new();
     let mut generated_vars: HashMap<String, (&AnalyzedNode, Option<&Object>)> = HashMap::new();
 
@@ -89,13 +95,11 @@ fn generate_rust_code(analyzed: &AnalyzedWorkflow, object_info: &ObjectInfo) -> 
         generated_vars.insert(node.var_name.clone(), (node, obj));
     }
 
-    let tokens = quote! {
+    quote! {
         let g = WorkflowGraph::new();
 
         #(#nodes_tokens)*
-    };
-
-    format_tokens_as_snippet(tokens)
+    }
 }
 
 fn format_tokens_as_snippet(tokens: TokenStream) -> Result<String> {
