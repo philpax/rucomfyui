@@ -4,10 +4,15 @@
 //! - Typed Rust code compatible with `rucomfyui`'s `typed_nodes` feature (requires `rust` feature)
 //! - Lua code compatible with `rucomfyui_mlua` (requires `lua` feature)
 //!
+//! Both generators require an `ObjectInfo` to provide type information about nodes.
+//!
 //! # Example
 //!
-//! ```no_run
-//! use rucomfyui_workflow_converter::{convert_to_rust, convert_to_lua};
+//! ```ignore
+//! use rucomfyui_workflow_converter::{
+//!     convert_to_rust_with_object_info, convert_to_lua_with_object_info,
+//!     RustGeneratorConfig, LuaGeneratorConfig,
+//! };
 //!
 //! let workflow_json = r#"{
 //!     "1": {
@@ -16,8 +21,20 @@
 //!     }
 //! }"#;
 //!
-//! let rust_code = convert_to_rust(workflow_json).unwrap();
-//! let lua_code = convert_to_lua(workflow_json).unwrap();
+//! // Load ObjectInfo from ComfyUI or a saved file
+//! let object_info = load_object_info();
+//!
+//! let rust_code = convert_to_rust_with_object_info(
+//!     workflow_json,
+//!     &object_info,
+//!     &RustGeneratorConfig::snippet(),
+//! ).unwrap();
+//!
+//! let lua_code = convert_to_lua_with_object_info(
+//!     workflow_json,
+//!     &object_info,
+//!     &LuaGeneratorConfig::snippet(),
+//! ).unwrap();
 //! ```
 
 #[cfg(feature = "lua")]
@@ -27,7 +44,7 @@ mod rust_generator;
 mod workflow_analyzer;
 
 #[cfg(feature = "lua")]
-pub use lua_generator::{convert_to_lua, convert_to_lua_with_config, LuaGeneratorConfig};
+pub use lua_generator::{convert_to_lua_with_object_info, LuaGeneratorConfig};
 #[cfg(feature = "rust")]
 pub use rust_generator::{
     convert_to_rust, convert_to_rust_with_config, convert_to_rust_with_object_info,

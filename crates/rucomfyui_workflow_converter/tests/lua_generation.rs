@@ -4,10 +4,27 @@
 
 #![cfg(feature = "lua")]
 
-use rucomfyui_workflow_converter::{
-    convert_to_lua, convert_to_lua_with_config, LuaGeneratorConfig,
-};
+use rucomfyui::object_info::ObjectInfo;
+use rucomfyui_workflow_converter::{convert_to_lua_with_object_info, LuaGeneratorConfig};
 use std::collections::HashSet;
+
+fn load_object_info() -> ObjectInfo {
+    let manifest_dir = std::path::Path::new(env!("CARGO_MANIFEST_DIR"));
+    let object_info_path = manifest_dir
+        .parent()
+        .unwrap()
+        .join("rucomfyui")
+        .join("generate_nodes")
+        .join("object_info.json");
+
+    let json = std::fs::read_to_string(&object_info_path)
+        .unwrap_or_else(|e| panic!("Failed to read object_info.json: {}", e));
+
+    let objects: Vec<rucomfyui::object_info::Object> =
+        serde_json::from_str(&json).expect("Failed to parse object_info.json");
+
+    objects.into_iter().map(|o| (o.name.clone(), o)).collect()
+}
 
 fn extract_lua_lines(code: &str) -> HashSet<String> {
     code.lines()
@@ -18,6 +35,7 @@ fn extract_lua_lines(code: &str) -> HashSet<String> {
 
 #[test]
 fn test_simple_checkpoint_loader() {
+    let object_info = load_object_info();
     let workflow = r#"{
         "1": {
             "inputs": { "ckpt_name": "model.safetensors" },
@@ -25,7 +43,9 @@ fn test_simple_checkpoint_loader() {
         }
     }"#;
 
-    let code = convert_to_lua(workflow).expect("Conversion failed");
+    let code =
+        convert_to_lua_with_object_info(workflow, &object_info, &LuaGeneratorConfig::snippet())
+            .expect("Conversion failed");
     assert_eq!(
         code.trim(),
         r#"local checkpoint_loader_simple = g:CheckpointLoaderSimple("model.safetensors")"#
@@ -34,6 +54,7 @@ fn test_simple_checkpoint_loader() {
 
 #[test]
 fn test_clip_text_encode_with_reference() {
+    let object_info = load_object_info();
     let workflow = r#"{
         "1": {
             "inputs": { "ckpt_name": "model.safetensors" },
@@ -48,7 +69,9 @@ fn test_clip_text_encode_with_reference() {
         }
     }"#;
 
-    let code = convert_to_lua(workflow).expect("Conversion failed");
+    let code =
+        convert_to_lua_with_object_info(workflow, &object_info, &LuaGeneratorConfig::snippet())
+            .expect("Conversion failed");
     let lines = extract_lua_lines(&code);
 
     // Check checkpoint loader
@@ -65,6 +88,7 @@ fn test_clip_text_encode_with_reference() {
 
 #[test]
 fn test_empty_latent_image() {
+    let object_info = load_object_info();
     let workflow = r#"{
         "1": {
             "inputs": {
@@ -76,7 +100,9 @@ fn test_empty_latent_image() {
         }
     }"#;
 
-    let code = convert_to_lua(workflow).expect("Conversion failed");
+    let code =
+        convert_to_lua_with_object_info(workflow, &object_info, &LuaGeneratorConfig::snippet())
+            .expect("Conversion failed");
     let lines = extract_lua_lines(&code);
 
     assert!(lines.contains("local empty_latent_image = g:EmptyLatentImage {"));
@@ -88,6 +114,7 @@ fn test_empty_latent_image() {
 
 #[test]
 fn test_ksampler() {
+    let object_info = load_object_info();
     let workflow = r#"{
         "1": {
             "inputs": { "ckpt_name": "model.safetensors" },
@@ -118,7 +145,9 @@ fn test_ksampler() {
         }
     }"#;
 
-    let code = convert_to_lua(workflow).expect("Conversion failed");
+    let code =
+        convert_to_lua_with_object_info(workflow, &object_info, &LuaGeneratorConfig::snippet())
+            .expect("Conversion failed");
     let lines = extract_lua_lines(&code);
 
     // Verify the structure
@@ -137,6 +166,7 @@ fn test_ksampler() {
 
 #[test]
 fn test_complete_workflow_with_boilerplate() {
+    let object_info = load_object_info();
     let workflow = r#"{
         "1": {
             "inputs": { "ckpt_name": "model.safetensors" },
@@ -149,7 +179,8 @@ fn test_complete_workflow_with_boilerplate() {
     }"#;
 
     let config = LuaGeneratorConfig::complete();
-    let code = convert_to_lua_with_config(workflow, &config).expect("Conversion failed");
+    let code = convert_to_lua_with_object_info(workflow, &object_info, &config)
+        .expect("Conversion failed");
 
     // Check boilerplate lines
     assert!(code.contains("local object_info = client:get_object_info()"));
@@ -162,15 +193,22 @@ fn test_complete_workflow_with_boilerplate() {
 
 #[test]
 fn test_string_with_quotes() {
+    let object_info = load_object_info();
     // The JSON parser will unescape the string, so we use escaped quotes in JSON
     let workflow = r#"{
         "1": {
-            "inputs": { "text": "a \"quoted\" string" },
+            "inputs": { "text": "a \"quoted\" string", "clip": ["2", 0] },
             "class_type": "CLIPTextEncode"
+        },
+        "2": {
+            "inputs": { "ckpt_name": "model.safetensors" },
+            "class_type": "CheckpointLoaderSimple"
         }
     }"#;
 
-    let code = convert_to_lua(workflow).expect("Conversion failed");
+    let code =
+        convert_to_lua_with_object_info(workflow, &object_info, &LuaGeneratorConfig::snippet())
+            .expect("Conversion failed");
     // The Lua generator should escape the quotes
     assert!(
         code.contains(r#"\"quoted\""#),
@@ -181,6 +219,7 @@ fn test_string_with_quotes() {
 
 #[test]
 fn test_multi_output_node_references() {
+    let object_info = load_object_info();
     let workflow = r#"{
         "1": {
             "inputs": { "ckpt_name": "model.safetensors" },
@@ -192,7 +231,9 @@ fn test_multi_output_node_references() {
         }
     }"#;
 
-    let code = convert_to_lua(workflow).expect("Conversion failed");
+    let code =
+        convert_to_lua_with_object_info(workflow, &object_info, &LuaGeneratorConfig::snippet())
+            .expect("Conversion failed");
     let lines = extract_lua_lines(&code);
 
     // Model is slot 0, VAE is slot 2
@@ -203,6 +244,7 @@ fn test_multi_output_node_references() {
 
 #[test]
 fn test_variable_naming() {
+    let object_info = load_object_info();
     let workflow = r#"{
         "1": {
             "inputs": { "ckpt_name": "model.safetensors" },
@@ -218,7 +260,9 @@ fn test_variable_naming() {
         }
     }"#;
 
-    let code = convert_to_lua(workflow).expect("Conversion failed");
+    let code =
+        convert_to_lua_with_object_info(workflow, &object_info, &LuaGeneratorConfig::snippet())
+            .expect("Conversion failed");
 
     // Should have two different variable names for the two CLIPTextEncode nodes
     assert!(code.contains("local clip_text_encode = g:CLIPTextEncode"));

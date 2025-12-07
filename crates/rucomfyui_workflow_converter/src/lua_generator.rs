@@ -1,7 +1,9 @@
 //! Lua code generation from workflows.
 
-use crate::workflow_analyzer::{AnalyzedInput, AnalyzedWorkflow};
+use crate::workflow_analyzer::{AnalyzedInput, AnalyzedNode, AnalyzedWorkflow};
 use crate::Result;
+use convert_case::{Case, Casing};
+use rucomfyui::object_info::{Object, ObjectInfo};
 use std::collections::HashMap;
 use std::fmt::Write;
 
@@ -32,51 +34,22 @@ impl LuaGeneratorConfig {
     }
 }
 
-/// Mapping of node class types to their output field names for Lua.
-fn get_node_output_fields() -> HashMap<&'static str, Vec<&'static str>> {
-    let mut map = HashMap::new();
-
-    // Loaders with multiple outputs
-    map.insert("CheckpointLoaderSimple", vec!["model", "clip", "vae"]);
-    map.insert("CheckpointLoader", vec!["model", "clip", "vae"]);
-    map.insert(
-        "unCLIPCheckpointLoader",
-        vec!["model", "clip", "vae", "clip_vision"],
-    );
-    map.insert("LoraLoader", vec!["model", "clip"]);
-    map.insert(
-        "ImageOnlyCheckpointLoader",
-        vec!["model", "clip_vision", "vae"],
-    );
-    map.insert("DualCLIPLoader", vec!["clip"]);
-    map.insert("TripleCLIPLoader", vec!["clip"]);
-    map.insert("QuadrupleCLIPLoader", vec!["clip"]);
-
-    // Split nodes
-    map.insert("SplitImageWithAlpha", vec!["image", "mask"]);
-    map.insert("LoadImage", vec!["image", "mask"]);
-
-    // Sampling outputs
-    map.insert("SamplerCustom", vec!["output", "denoised_output"]);
-    map.insert("SamplerCustomAdvanced", vec!["output", "denoised_output"]);
-
-    map
-}
-
-/// Convert a workflow JSON to Lua code.
-pub fn convert_to_lua(json: &str) -> Result<String> {
-    convert_to_lua_with_config(json, &LuaGeneratorConfig::snippet())
-}
-
-/// Convert a workflow JSON to Lua code with configuration.
-pub fn convert_to_lua_with_config(json: &str, config: &LuaGeneratorConfig) -> Result<String> {
+/// Convert a workflow JSON to Lua code using ObjectInfo for type information.
+pub fn convert_to_lua_with_object_info(
+    json: &str,
+    object_info: &ObjectInfo,
+    config: &LuaGeneratorConfig,
+) -> Result<String> {
     let analyzed = AnalyzedWorkflow::from_json(json)?;
-    generate_lua_code(&analyzed, config)
+    generate_lua_code(&analyzed, object_info, config)
 }
 
-fn generate_lua_code(analyzed: &AnalyzedWorkflow, config: &LuaGeneratorConfig) -> Result<String> {
+fn generate_lua_code(
+    analyzed: &AnalyzedWorkflow,
+    object_info: &ObjectInfo,
+    config: &LuaGeneratorConfig,
+) -> Result<String> {
     let mut output = String::new();
-    let node_outputs = get_node_output_fields();
 
     if config.include_boilerplate {
         writeln!(output, "-- Generated workflow from ComfyUI API workflow").unwrap();
@@ -89,11 +62,13 @@ fn generate_lua_code(analyzed: &AnalyzedWorkflow, config: &LuaGeneratorConfig) -
         writeln!(output, "-- Build the workflow").unwrap();
     }
 
-    // Track generated variables
-    let mut generated_vars: HashMap<String, String> = HashMap::new();
+    // Track generated variables with their ObjectInfo
+    let mut generated_vars: HashMap<String, (&AnalyzedNode, Option<&Object>)> = HashMap::new();
 
     // Generate code for each node
     for node in &analyzed.nodes {
+        let obj = object_info.get(&node.class_type);
+
         // Add comment
         if let Some(display_name) = &node.display_name {
             writeln!(output, "-- {} ({})", display_name, node.class_type).unwrap();
@@ -114,19 +89,19 @@ fn generate_lua_code(analyzed: &AnalyzedWorkflow, config: &LuaGeneratorConfig) -
         } else if !use_table && node.inputs.len() == 1 {
             // Single simple argument - can use positional
             let (_, input) = node.inputs.iter().next().unwrap();
-            let value = format_lua_value(input, &node_outputs, &generated_vars)?;
+            let value = format_lua_value(input, &generated_vars)?;
             writeln!(output, "({})", value).unwrap();
         } else {
             // Multiple arguments or node references - use table syntax
             writeln!(output, " {{").unwrap();
             for (name, input) in &node.inputs {
-                let value = format_lua_value(input, &node_outputs, &generated_vars)?;
+                let value = format_lua_value(input, &generated_vars)?;
                 writeln!(output, "    {} = {},", name, value).unwrap();
             }
             writeln!(output, "}}").unwrap();
         }
 
-        generated_vars.insert(node.var_name.clone(), node.class_type.clone());
+        generated_vars.insert(node.var_name.clone(), (node, obj));
     }
 
     if config.include_execution {
@@ -134,15 +109,15 @@ fn generate_lua_code(analyzed: &AnalyzedWorkflow, config: &LuaGeneratorConfig) -
         writeln!(output, "-- Queue the workflow and wait for results").unwrap();
         writeln!(output, "local result = client:easy_queue(g)").unwrap();
 
-        // Find likely output nodes
+        // Find output nodes using ObjectInfo
         let output_nodes: Vec<_> = analyzed
             .nodes
             .iter()
             .filter(|n| {
-                matches!(
-                    n.class_type.as_str(),
-                    "PreviewImage" | "SaveImage" | "SaveVideo" | "PreviewAudio" | "SaveAudio"
-                )
+                object_info
+                    .get(&n.class_type)
+                    .map(|o| o.output_node)
+                    .unwrap_or(false)
             })
             .collect();
 
@@ -166,8 +141,7 @@ fn generate_lua_code(analyzed: &AnalyzedWorkflow, config: &LuaGeneratorConfig) -
 
 fn format_lua_value(
     input: &AnalyzedInput,
-    node_outputs: &HashMap<&str, Vec<&str>>,
-    generated_vars: &HashMap<String, String>,
+    generated_vars: &HashMap<String, (&AnalyzedNode, Option<&Object>)>,
 ) -> Result<String> {
     match input {
         AnalyzedInput::String(s) => Ok(format!("\"{}\"", escape_lua_string(s))),
@@ -182,15 +156,18 @@ fn format_lua_value(
         }
         AnalyzedInput::Boolean(b) => Ok(b.to_string()),
         AnalyzedInput::NodeRef { var_name, slot } => {
-            // Look up the referenced node to get its output field name
-            if let Some(class_type) = generated_vars.get(var_name) {
-                if let Some(fields) = node_outputs.get(class_type.as_str()) {
-                    if let Some(field_name) = fields.get(*slot as usize) {
+            // Look up the referenced node to get its output field name from ObjectInfo
+            if let Some((_ref_node, Some(ref_obj))) = generated_vars.get(var_name) {
+                let outputs: Vec<_> = ref_obj.processed_output().collect();
+                if outputs.len() > 1 {
+                    // Multi-output node - use field name
+                    if let Some(output) = outputs.get(*slot as usize) {
+                        let field_name = output.name.to_case(Case::Snake);
                         return Ok(format!("{}.{}", var_name, field_name));
                     }
                 }
             }
-            // For single-output nodes or unknown slots, just reference the variable
+            // Single-output or unknown - use variable directly
             if *slot == 0 {
                 Ok(var_name.clone())
             } else {
@@ -214,8 +191,27 @@ fn escape_lua_string(s: &str) -> String {
 mod tests {
     use super::*;
 
+    fn load_test_object_info() -> ObjectInfo {
+        let manifest_dir = std::path::Path::new(env!("CARGO_MANIFEST_DIR"));
+        let object_info_path = manifest_dir
+            .parent()
+            .unwrap()
+            .join("rucomfyui")
+            .join("generate_nodes")
+            .join("object_info.json");
+
+        let json = std::fs::read_to_string(&object_info_path)
+            .unwrap_or_else(|e| panic!("Failed to read object_info.json: {}", e));
+
+        let objects: Vec<rucomfyui::object_info::Object> =
+            serde_json::from_str(&json).expect("Failed to parse object_info.json");
+
+        objects.into_iter().map(|o| (o.name.clone(), o)).collect()
+    }
+
     #[test]
     fn test_convert_simple_workflow() {
+        let object_info = load_test_object_info();
         let json = r#"{
             "1": {
                 "inputs": { "ckpt_name": "sd_xl_base_1.0.safetensors" },
@@ -224,13 +220,16 @@ mod tests {
             }
         }"#;
 
-        let result = convert_to_lua(json).unwrap();
+        let result =
+            convert_to_lua_with_object_info(json, &object_info, &LuaGeneratorConfig::snippet())
+                .unwrap();
         assert!(result.contains("g:CheckpointLoaderSimple"));
         assert!(result.contains("sd_xl_base_1.0.safetensors"));
     }
 
     #[test]
     fn test_convert_workflow_with_dependencies() {
+        let object_info = load_test_object_info();
         let json = r#"{
             "1": {
                 "inputs": { "ckpt_name": "model.safetensors" },
@@ -245,12 +244,15 @@ mod tests {
             }
         }"#;
 
-        let result = convert_to_lua(json).unwrap();
+        let result =
+            convert_to_lua_with_object_info(json, &object_info, &LuaGeneratorConfig::snippet())
+                .unwrap();
         assert!(result.contains("checkpoint_loader_simple.clip"));
     }
 
     #[test]
     fn test_convert_with_boilerplate() {
+        let object_info = load_test_object_info();
         let json = r#"{
             "1": {
                 "inputs": { "ckpt_name": "model.safetensors" },
@@ -263,7 +265,7 @@ mod tests {
         }"#;
 
         let config = LuaGeneratorConfig::complete();
-        let result = convert_to_lua_with_config(json, &config).unwrap();
+        let result = convert_to_lua_with_object_info(json, &object_info, &config).unwrap();
         assert!(result.contains("client:get_object_info()"));
         assert!(result.contains("comfy.graph(object_info)"));
         assert!(result.contains("client:easy_queue(g)"));
@@ -271,6 +273,7 @@ mod tests {
 
     #[test]
     fn test_nested_workflow() {
+        let object_info = load_test_object_info();
         let json = r#"{
             "1": {
                 "inputs": { "ckpt_name": "model.safetensors" },
@@ -305,7 +308,9 @@ mod tests {
             }
         }"#;
 
-        let result = convert_to_lua(json).unwrap();
+        let result =
+            convert_to_lua_with_object_info(json, &object_info, &LuaGeneratorConfig::snippet())
+                .unwrap();
         assert!(result.contains("checkpoint_loader_simple.model"));
         assert!(result.contains("checkpoint_loader_simple.clip"));
         assert!(result.contains("clip_text_encode"));
