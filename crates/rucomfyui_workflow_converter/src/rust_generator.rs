@@ -231,6 +231,11 @@ mod tests {
         objects.into_iter().map(|o| (o.name.clone(), o)).collect()
     }
 
+    /// Format expected TokenStream the same way as the generator.
+    fn format_expected(tokens: TokenStream) -> String {
+        format_tokens_as_snippet(tokens).unwrap()
+    }
+
     #[test]
     fn test_convert_simple_workflow() {
         let object_info = load_test_object_info();
@@ -243,9 +248,17 @@ mod tests {
         }"#;
 
         let result = convert_to_rust(json, &object_info).unwrap();
-        assert!(result.contains("let g = WorkflowGraph::new()"));
-        assert!(result.contains("CheckpointLoaderSimple"));
-        assert!(result.contains("ckpt_name"));
+
+        // Note: Comments are stripped during tokenization, fields are alphabetically ordered
+        let expected = format_expected(quote! {
+            let g = WorkflowGraph::new();
+
+            let checkpoint_loader_simple = g.add(CheckpointLoaderSimple {
+                ckpt_name: "sd_xl_base_1.0.safetensors"
+            });
+        });
+
+        assert_eq!(result, expected);
     }
 
     #[test]
@@ -266,6 +279,128 @@ mod tests {
         }"#;
 
         let result = convert_to_rust(json, &object_info).unwrap();
-        assert!(result.contains("checkpoint_loader_simple.clip"));
+
+        // Fields are alphabetically ordered from HashMap iteration
+        let expected = format_expected(quote! {
+            let g = WorkflowGraph::new();
+
+            let checkpoint_loader_simple = g.add(CheckpointLoaderSimple {
+                ckpt_name: "model.safetensors"
+            });
+
+            let clip_text_encode = g.add(CLIPTextEncode {
+                clip: checkpoint_loader_simple.clip,
+                text: "a cat"
+            });
+        });
+
+        assert_eq!(result, expected);
+    }
+
+    #[test]
+    fn test_multi_output_node_references() {
+        let object_info = load_test_object_info();
+        let json = r#"{
+            "1": {
+                "inputs": { "ckpt_name": "model.safetensors" },
+                "class_type": "CheckpointLoaderSimple"
+            },
+            "2": {
+                "inputs": {
+                    "samples": ["1", 0],
+                    "vae": ["1", 2]
+                },
+                "class_type": "VAEDecode"
+            }
+        }"#;
+
+        let result = convert_to_rust(json, &object_info).unwrap();
+
+        let expected = format_expected(quote! {
+            let g = WorkflowGraph::new();
+
+            let checkpoint_loader_simple = g.add(CheckpointLoaderSimple {
+                ckpt_name: "model.safetensors"
+            });
+
+            let vae_decode = g.add(VAEDecode {
+                samples: checkpoint_loader_simple.model,
+                vae: checkpoint_loader_simple.vae
+            });
+        });
+
+        assert_eq!(result, expected);
+    }
+
+    #[test]
+    fn test_numeric_inputs() {
+        let object_info = load_test_object_info();
+        let json = r#"{
+            "1": {
+                "inputs": {
+                    "width": 1024,
+                    "height": 768,
+                    "batch_size": 1
+                },
+                "class_type": "EmptyLatentImage"
+            }
+        }"#;
+
+        let result = convert_to_rust(json, &object_info).unwrap();
+
+        // Fields are alphabetically ordered: batch_size, height, width
+        let expected = format_expected(quote! {
+            let g = WorkflowGraph::new();
+
+            let empty_latent_image = g.add(EmptyLatentImage {
+                batch_size: 1,
+                height: 768,
+                width: 1024
+            });
+        });
+
+        assert_eq!(result, expected);
+    }
+
+    #[test]
+    fn test_variable_naming_dedup() {
+        let object_info = load_test_object_info();
+        let json = r#"{
+            "1": {
+                "inputs": { "ckpt_name": "model.safetensors" },
+                "class_type": "CheckpointLoaderSimple"
+            },
+            "2": {
+                "inputs": { "text": "first", "clip": ["1", 1] },
+                "class_type": "CLIPTextEncode"
+            },
+            "3": {
+                "inputs": { "text": "second", "clip": ["1", 1] },
+                "class_type": "CLIPTextEncode"
+            }
+        }"#;
+
+        let result = convert_to_rust(json, &object_info).unwrap();
+
+        // Fields are alphabetically ordered: clip, text
+        let expected = format_expected(quote! {
+            let g = WorkflowGraph::new();
+
+            let checkpoint_loader_simple = g.add(CheckpointLoaderSimple {
+                ckpt_name: "model.safetensors"
+            });
+
+            let clip_text_encode = g.add(CLIPTextEncode {
+                clip: checkpoint_loader_simple.clip,
+                text: "first"
+            });
+
+            let clip_text_encode_1 = g.add(CLIPTextEncode {
+                clip: checkpoint_loader_simple.clip,
+                text: "second"
+            });
+        });
+
+        assert_eq!(result, expected);
     }
 }
