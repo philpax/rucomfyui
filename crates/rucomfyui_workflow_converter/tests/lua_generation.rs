@@ -1,12 +1,11 @@
 //! Tests for Lua code generation.
 //!
-//! These tests verify the output of the Lua generator.
+//! These tests verify the output of the Lua generator using AST comparison.
 
 #![cfg(feature = "lua")]
 
 use rucomfyui::object_info::ObjectInfo;
 use rucomfyui_workflow_converter::convert_to_lua;
-use std::collections::HashSet;
 
 fn load_object_info() -> ObjectInfo {
     let manifest_dir = std::path::Path::new(env!("CARGO_MANIFEST_DIR"));
@@ -26,11 +25,59 @@ fn load_object_info() -> ObjectInfo {
     objects.into_iter().map(|o| (o.name.clone(), o)).collect()
 }
 
-fn extract_lua_lines(code: &str) -> HashSet<String> {
-    code.lines()
-        .map(|l| l.trim().to_string())
-        .filter(|l| !l.is_empty() && !l.starts_with("--"))
-        .collect()
+/// Dedent a string by removing common leading whitespace from all lines.
+fn dedent(code: &str) -> String {
+    let lines: Vec<&str> = code.lines().collect();
+    let non_empty_lines: Vec<&str> = lines
+        .iter()
+        .filter(|l| !l.trim().is_empty())
+        .copied()
+        .collect();
+
+    if non_empty_lines.is_empty() {
+        return String::new();
+    }
+
+    let min_indent = non_empty_lines
+        .iter()
+        .map(|line| line.len() - line.trim_start().len())
+        .min()
+        .unwrap_or(0);
+
+    lines
+        .iter()
+        .map(|line| {
+            if line.len() >= min_indent {
+                &line[min_indent..]
+            } else {
+                line.trim()
+            }
+        })
+        .collect::<Vec<_>>()
+        .join("\n")
+        .trim()
+        .to_string()
+}
+
+/// Parse Lua code and return a normalized string for comparison.
+fn normalize_lua(code: &str) -> String {
+    let dedented = dedent(code);
+    let ast = full_moon::parse(&dedented).expect("Failed to parse Lua code");
+    ast.to_string().trim().to_string()
+}
+
+/// Assert that two Lua code strings parse to equivalent ASTs.
+fn assert_lua_eq(actual: &str, expected: &str) {
+    let actual_normalized = normalize_lua(actual);
+    let expected_normalized = normalize_lua(expected);
+
+    assert_eq!(
+        actual_normalized,
+        expected_normalized,
+        "\n\nActual (normalized):\n{}\n\nExpected (normalized):\n{}",
+        actual_normalized,
+        expected_normalized
+    );
 }
 
 #[test]
@@ -44,10 +91,12 @@ fn test_simple_checkpoint_loader() {
     }"#;
 
     let code = convert_to_lua(workflow, &object_info).expect("Conversion failed");
-    assert_eq!(
-        code.trim(),
-        r#"local checkpoint_loader_simple = g:CheckpointLoaderSimple("model.safetensors")"#
-    );
+
+    let expected = r#"
+        local checkpoint_loader_simple = g:CheckpointLoaderSimple("model.safetensors")
+    "#;
+
+    assert_lua_eq(&code, expected);
 }
 
 #[test]
@@ -68,18 +117,16 @@ fn test_clip_text_encode_with_reference() {
     }"#;
 
     let code = convert_to_lua(workflow, &object_info).expect("Conversion failed");
-    let lines = extract_lua_lines(&code);
 
-    // Check checkpoint loader
-    assert!(lines.contains(
-        r#"local checkpoint_loader_simple = g:CheckpointLoaderSimple("model.safetensors")"#
-    ));
+    let expected = r#"
+        local checkpoint_loader_simple = g:CheckpointLoaderSimple("model.safetensors")
+        local clip_text_encode = g:CLIPTextEncode {
+            clip = checkpoint_loader_simple.clip,
+            text = "a cat",
+        }
+    "#;
 
-    // Check CLIPTextEncode
-    assert!(lines.contains("local clip_text_encode = g:CLIPTextEncode {"));
-    assert!(lines.contains(r#"text = "a cat","#));
-    assert!(lines.contains("clip = checkpoint_loader_simple.clip,"));
-    assert!(lines.contains("}"));
+    assert_lua_eq(&code, expected);
 }
 
 #[test]
@@ -97,13 +144,16 @@ fn test_empty_latent_image() {
     }"#;
 
     let code = convert_to_lua(workflow, &object_info).expect("Conversion failed");
-    let lines = extract_lua_lines(&code);
 
-    assert!(lines.contains("local empty_latent_image = g:EmptyLatentImage {"));
-    assert!(lines.contains("width = 1024.0,"));
-    assert!(lines.contains("height = 1024.0,"));
-    assert!(lines.contains("batch_size = 1.0,"));
-    assert!(lines.contains("}"));
+    let expected = r#"
+        local empty_latent_image = g:EmptyLatentImage {
+            batch_size = 1.0,
+            height = 1024.0,
+            width = 1024.0,
+        }
+    "#;
+
+    assert_lua_eq(&code, expected);
 }
 
 #[test]
@@ -140,29 +190,41 @@ fn test_ksampler() {
     }"#;
 
     let code = convert_to_lua(workflow, &object_info).expect("Conversion failed");
-    let lines = extract_lua_lines(&code);
 
-    // Verify the structure
-    assert!(lines.contains(
-        r#"local checkpoint_loader_simple = g:CheckpointLoaderSimple("model.safetensors")"#
-    ));
-    assert!(lines.contains("local empty_latent_image = g:EmptyLatentImage {"));
-    assert!(lines.contains("local clip_text_encode = g:CLIPTextEncode {"));
-    assert!(lines.contains("local k_sampler = g:KSampler {"));
+    let expected = r#"
+        local checkpoint_loader_simple = g:CheckpointLoaderSimple("model.safetensors")
+        local empty_latent_image = g:EmptyLatentImage {
+            batch_size = 1.0,
+            height = 512.0,
+            width = 512.0,
+        }
+        local clip_text_encode = g:CLIPTextEncode {
+            clip = checkpoint_loader_simple.clip,
+            text = "a cat",
+        }
+        local k_sampler = g:KSampler {
+            cfg = 8.0,
+            denoise = 1.0,
+            latent_image = empty_latent_image,
+            model = checkpoint_loader_simple.model,
+            negative = clip_text_encode,
+            positive = clip_text_encode,
+            sampler_name = "euler",
+            scheduler = "normal",
+            seed = 0.0,
+            steps = 20.0,
+        }
+    "#;
 
-    // Verify references
-    assert!(lines.contains("model = checkpoint_loader_simple.model,"));
-    assert!(lines.contains("latent_image = empty_latent_image,"));
-    assert!(lines.contains("positive = clip_text_encode,"));
+    assert_lua_eq(&code, expected);
 }
 
 #[test]
 fn test_string_with_quotes() {
     let object_info = load_object_info();
-    // The JSON parser will unescape the string, so we use escaped quotes in JSON
     let workflow = r#"{
         "1": {
-            "inputs": { "text": "a \"quoted\" string", "clip": ["2", 0] },
+            "inputs": { "text": "a \"quoted\" string", "clip": ["2", 1] },
             "class_type": "CLIPTextEncode"
         },
         "2": {
@@ -172,12 +234,16 @@ fn test_string_with_quotes() {
     }"#;
 
     let code = convert_to_lua(workflow, &object_info).expect("Conversion failed");
-    // The Lua generator should escape the quotes
-    assert!(
-        code.contains(r#"\"quoted\""#),
-        "Code should contain escaped quotes: {}",
-        code
-    );
+
+    let expected = r#"
+        local checkpoint_loader_simple = g:CheckpointLoaderSimple("model.safetensors")
+        local clip_text_encode = g:CLIPTextEncode {
+            clip = checkpoint_loader_simple.clip,
+            text = "a \"quoted\" string",
+        }
+    "#;
+
+    assert_lua_eq(&code, expected);
 }
 
 #[test]
@@ -195,12 +261,16 @@ fn test_multi_output_node_references() {
     }"#;
 
     let code = convert_to_lua(workflow, &object_info).expect("Conversion failed");
-    let lines = extract_lua_lines(&code);
 
-    // Model is slot 0, VAE is slot 2
-    // Since CheckpointLoaderSimple has multiple outputs, we should use named fields
-    assert!(lines.contains("samples = checkpoint_loader_simple.model,"));
-    assert!(lines.contains("vae = checkpoint_loader_simple.vae,"));
+    let expected = r#"
+        local checkpoint_loader_simple = g:CheckpointLoaderSimple("model.safetensors")
+        local vae_decode = g:VAEDecode {
+            samples = checkpoint_loader_simple.model,
+            vae = checkpoint_loader_simple.vae,
+        }
+    "#;
+
+    assert_lua_eq(&code, expected);
 }
 
 #[test]
@@ -223,7 +293,72 @@ fn test_variable_naming() {
 
     let code = convert_to_lua(workflow, &object_info).expect("Conversion failed");
 
-    // Should have two different variable names for the two CLIPTextEncode nodes
-    assert!(code.contains("local clip_text_encode = g:CLIPTextEncode"));
-    assert!(code.contains("local clip_text_encode_1 = g:CLIPTextEncode"));
+    let expected = r#"
+        local checkpoint_loader_simple = g:CheckpointLoaderSimple("model.safetensors")
+        local clip_text_encode = g:CLIPTextEncode {
+            clip = checkpoint_loader_simple.clip,
+            text = "first",
+        }
+        local clip_text_encode_1 = g:CLIPTextEncode {
+            clip = checkpoint_loader_simple.clip,
+            text = "second",
+        }
+    "#;
+
+    assert_lua_eq(&code, expected);
+}
+
+/// Test the complete example workflow from testdata/.
+#[test]
+fn test_example_workflow() {
+    let object_info = load_object_info();
+    let workflow = include_str!("../testdata/example_workflow.json");
+
+    let code = convert_to_lua(workflow, &object_info).expect("Conversion failed");
+
+    // Comments from _meta.title; node order by topological sort; fields alphabetically ordered
+    let expected = r#"
+        -- Load Checkpoint (CheckpointLoaderSimple)
+        local checkpoint_loader_simple = g:CheckpointLoaderSimple("model.safetensors")
+        -- Empty Latent (EmptyLatentImage)
+        local empty_latent_image = g:EmptyLatentImage {
+            batch_size = 1.0,
+            height = 1024.0,
+            width = 1024.0,
+        }
+        -- Positive Prompt (CLIPTextEncode)
+        local clip_text_encode = g:CLIPTextEncode {
+            clip = checkpoint_loader_simple.clip,
+            text = "a beautiful landscape",
+        }
+        -- Negative Prompt (CLIPTextEncode)
+        local clip_text_encode_1 = g:CLIPTextEncode {
+            clip = checkpoint_loader_simple.clip,
+            text = "ugly, blurry",
+        }
+        -- Sampler (KSampler)
+        local k_sampler = g:KSampler {
+            cfg = 7.5,
+            denoise = 1.0,
+            latent_image = empty_latent_image,
+            model = checkpoint_loader_simple.model,
+            negative = clip_text_encode_1,
+            positive = clip_text_encode,
+            sampler_name = "euler",
+            scheduler = "normal",
+            seed = 42.0,
+            steps = 20.0,
+        }
+        -- VAE Decode (VAEDecode)
+        local vae_decode = g:VAEDecode {
+            samples = k_sampler,
+            vae = checkpoint_loader_simple.vae,
+        }
+        -- Preview (PreviewImage)
+        local preview_image = g:PreviewImage {
+            images = vae_decode,
+        }
+    "#;
+
+    assert_lua_eq(&code, expected);
 }

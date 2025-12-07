@@ -131,6 +131,61 @@ mod tests {
         objects.into_iter().map(|o| (o.name.clone(), o)).collect()
     }
 
+    /// Dedent a string by removing common leading whitespace from all lines.
+    fn dedent(code: &str) -> String {
+        let lines: Vec<&str> = code.lines().collect();
+        let non_empty_lines: Vec<&str> = lines.iter().filter(|l| !l.trim().is_empty()).copied().collect();
+
+        if non_empty_lines.is_empty() {
+            return String::new();
+        }
+
+        // Find minimum indentation
+        let min_indent = non_empty_lines
+            .iter()
+            .map(|line| line.len() - line.trim_start().len())
+            .min()
+            .unwrap_or(0);
+
+        // Remove that indentation from all lines
+        lines
+            .iter()
+            .map(|line| {
+                if line.len() >= min_indent {
+                    &line[min_indent..]
+                } else {
+                    line.trim()
+                }
+            })
+            .collect::<Vec<_>>()
+            .join("\n")
+            .trim()
+            .to_string()
+    }
+
+    /// Parse Lua code and return a normalized string for comparison.
+    fn normalize_lua(code: &str) -> String {
+        // First dedent to remove raw string indentation
+        let dedented = dedent(code);
+        let ast = full_moon::parse(&dedented).expect("Failed to parse Lua code");
+        // Use Display trait which preserves comments
+        ast.to_string().trim().to_string()
+    }
+
+    /// Assert that two Lua code strings parse to equivalent ASTs.
+    fn assert_lua_eq(actual: &str, expected: &str) {
+        let actual_normalized = normalize_lua(actual);
+        let expected_normalized = normalize_lua(expected);
+
+        assert_eq!(
+            actual_normalized,
+            expected_normalized,
+            "\n\nActual (normalized):\n{}\n\nExpected (normalized):\n{}",
+            actual_normalized,
+            expected_normalized
+        );
+    }
+
     #[test]
     fn test_convert_simple_workflow() {
         let object_info = load_test_object_info();
@@ -143,8 +198,14 @@ mod tests {
         }"#;
 
         let result = convert_to_lua(json, &object_info).unwrap();
-        assert!(result.contains("g:CheckpointLoaderSimple"));
-        assert!(result.contains("sd_xl_base_1.0.safetensors"));
+
+        // Comment is generated from _meta.title
+        let expected = r#"
+            -- Load Checkpoint (CheckpointLoaderSimple)
+            local checkpoint_loader_simple = g:CheckpointLoaderSimple("sd_xl_base_1.0.safetensors")
+        "#;
+
+        assert_lua_eq(&result, expected);
     }
 
     #[test]
@@ -165,11 +226,21 @@ mod tests {
         }"#;
 
         let result = convert_to_lua(json, &object_info).unwrap();
-        assert!(result.contains("checkpoint_loader_simple.clip"));
+
+        // No comments since no _meta.title; fields are alphabetically ordered
+        let expected = r#"
+            local checkpoint_loader_simple = g:CheckpointLoaderSimple("model.safetensors")
+            local clip_text_encode = g:CLIPTextEncode {
+                clip = checkpoint_loader_simple.clip,
+                text = "a cat",
+            }
+        "#;
+
+        assert_lua_eq(&result, expected);
     }
 
     #[test]
-    fn test_nested_workflow() {
+    fn test_multi_output_node_references() {
         let object_info = load_test_object_info();
         let json = r#"{
             "1": {
@@ -177,39 +248,85 @@ mod tests {
                 "class_type": "CheckpointLoaderSimple"
             },
             "2": {
-                "inputs": { "width": 1024, "height": 1024, "batch_size": 1 },
-                "class_type": "EmptyLatentImage"
-            },
-            "3": {
+                "inputs": { "samples": ["1", 0], "vae": ["1", 2] },
+                "class_type": "VAEDecode"
+            }
+        }"#;
+
+        let result = convert_to_lua(json, &object_info).unwrap();
+
+        let expected = r#"
+            local checkpoint_loader_simple = g:CheckpointLoaderSimple("model.safetensors")
+            local vae_decode = g:VAEDecode {
+                samples = checkpoint_loader_simple.model,
+                vae = checkpoint_loader_simple.vae,
+            }
+        "#;
+
+        assert_lua_eq(&result, expected);
+    }
+
+    #[test]
+    fn test_numeric_inputs() {
+        let object_info = load_test_object_info();
+        let json = r#"{
+            "1": {
                 "inputs": {
-                    "model": ["1", 0],
-                    "seed": 0,
-                    "steps": 20,
-                    "cfg": 8.0,
-                    "sampler_name": "euler",
-                    "scheduler": "normal",
-                    "positive": ["4", 0],
-                    "negative": ["5", 0],
-                    "latent_image": ["2", 0],
-                    "denoise": 1.0
+                    "width": 1024,
+                    "height": 768,
+                    "batch_size": 1
                 },
-                "class_type": "KSampler"
+                "class_type": "EmptyLatentImage"
+            }
+        }"#;
+
+        let result = convert_to_lua(json, &object_info).unwrap();
+
+        // Fields are alphabetically ordered; floats have .0 suffix
+        let expected = r#"
+            local empty_latent_image = g:EmptyLatentImage {
+                batch_size = 1.0,
+                height = 768.0,
+                width = 1024.0,
+            }
+        "#;
+
+        assert_lua_eq(&result, expected);
+    }
+
+    #[test]
+    fn test_variable_naming_dedup() {
+        let object_info = load_test_object_info();
+        let json = r#"{
+            "1": {
+                "inputs": { "ckpt_name": "model.safetensors" },
+                "class_type": "CheckpointLoaderSimple"
             },
-            "4": {
-                "inputs": { "text": "a cat", "clip": ["1", 1] },
+            "2": {
+                "inputs": { "text": "first", "clip": ["1", 1] },
                 "class_type": "CLIPTextEncode"
             },
-            "5": {
-                "inputs": { "text": "bad", "clip": ["1", 1] },
+            "3": {
+                "inputs": { "text": "second", "clip": ["1", 1] },
                 "class_type": "CLIPTextEncode"
             }
         }"#;
 
         let result = convert_to_lua(json, &object_info).unwrap();
-        assert!(result.contains("checkpoint_loader_simple.model"));
-        assert!(result.contains("checkpoint_loader_simple.clip"));
-        assert!(result.contains("clip_text_encode"));
-        assert!(result.contains("k_sampler"));
+
+        let expected = r#"
+            local checkpoint_loader_simple = g:CheckpointLoaderSimple("model.safetensors")
+            local clip_text_encode = g:CLIPTextEncode {
+                clip = checkpoint_loader_simple.clip,
+                text = "first",
+            }
+            local clip_text_encode_1 = g:CLIPTextEncode {
+                clip = checkpoint_loader_simple.clip,
+                text = "second",
+            }
+        "#;
+
+        assert_lua_eq(&result, expected);
     }
 
     /// Test the complete example workflow from testdata/.
@@ -220,20 +337,50 @@ mod tests {
 
         let result = convert_to_lua(json, &object_info).unwrap();
 
-        // Verify all nodes are present
-        assert!(result.contains("local checkpoint_loader_simple = g:CheckpointLoaderSimple"));
-        assert!(result.contains("local clip_text_encode = g:CLIPTextEncode"));
-        assert!(result.contains("local clip_text_encode_1 = g:CLIPTextEncode"));
-        assert!(result.contains("local empty_latent_image = g:EmptyLatentImage"));
-        assert!(result.contains("local k_sampler = g:KSampler"));
-        assert!(result.contains("local vae_decode = g:VAEDecode"));
-        assert!(result.contains("local preview_image = g:PreviewImage"));
+        // Comments from _meta.title; node order by topological sort; fields alphabetically ordered
+        let expected = r#"
+            -- Load Checkpoint (CheckpointLoaderSimple)
+            local checkpoint_loader_simple = g:CheckpointLoaderSimple("model.safetensors")
+            -- Empty Latent (EmptyLatentImage)
+            local empty_latent_image = g:EmptyLatentImage {
+                batch_size = 1.0,
+                height = 1024.0,
+                width = 1024.0,
+            }
+            -- Positive Prompt (CLIPTextEncode)
+            local clip_text_encode = g:CLIPTextEncode {
+                clip = checkpoint_loader_simple.clip,
+                text = "a beautiful landscape",
+            }
+            -- Negative Prompt (CLIPTextEncode)
+            local clip_text_encode_1 = g:CLIPTextEncode {
+                clip = checkpoint_loader_simple.clip,
+                text = "ugly, blurry",
+            }
+            -- Sampler (KSampler)
+            local k_sampler = g:KSampler {
+                cfg = 7.5,
+                denoise = 1.0,
+                latent_image = empty_latent_image,
+                model = checkpoint_loader_simple.model,
+                negative = clip_text_encode_1,
+                positive = clip_text_encode,
+                sampler_name = "euler",
+                scheduler = "normal",
+                seed = 42.0,
+                steps = 20.0,
+            }
+            -- VAE Decode (VAEDecode)
+            local vae_decode = g:VAEDecode {
+                samples = k_sampler,
+                vae = checkpoint_loader_simple.vae,
+            }
+            -- Preview (PreviewImage)
+            local preview_image = g:PreviewImage {
+                images = vae_decode,
+            }
+        "#;
 
-        // Verify key references
-        assert!(result.contains("checkpoint_loader_simple.model"));
-        assert!(result.contains("checkpoint_loader_simple.clip"));
-        assert!(result.contains("checkpoint_loader_simple.vae"));
-        assert!(result.contains("positive = clip_text_encode,"));
-        assert!(result.contains("negative = clip_text_encode_1,"));
+        assert_lua_eq(&result, expected);
     }
 }
