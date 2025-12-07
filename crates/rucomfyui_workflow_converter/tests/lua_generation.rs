@@ -4,8 +4,9 @@
 
 #![cfg(feature = "lua")]
 
+use full_moon::node::Node;
 use rucomfyui::object_info::ObjectInfo;
-use rucomfyui_workflow_converter::convert_to_lua;
+use rucomfyui_workflow_converter::convert_to_lua_ast;
 
 fn load_object_info() -> ObjectInfo {
     let manifest_dir = std::path::Path::new(env!("CARGO_MANIFEST_DIR"));
@@ -65,17 +66,14 @@ fn parse_lua(code: &str) -> full_moon::ast::Ast {
     full_moon::parse(&dedented).expect("Failed to parse Lua code")
 }
 
-/// Assert that two Lua code strings parse to semantically similar ASTs.
-fn assert_lua_eq(actual: &str, expected: &str) {
-    use full_moon::node::Node;
-
-    let actual_ast = parse_lua(actual);
+/// Assert that a generated AST is semantically similar to expected code.
+fn assert_ast_eq(actual: &full_moon::ast::Ast, expected: &str) {
     let expected_ast = parse_lua(expected);
 
     assert!(
-        actual_ast.nodes().similar(expected_ast.nodes()),
+        actual.nodes().similar(expected_ast.nodes()),
         "\n\nActual:\n{}\n\nExpected:\n{}",
-        actual_ast,
+        actual,
         expected_ast
     );
 }
@@ -90,13 +88,13 @@ fn test_simple_checkpoint_loader() {
         }
     }"#;
 
-    let code = convert_to_lua(workflow, &object_info).expect("Conversion failed");
+    let ast = convert_to_lua_ast(workflow, &object_info).expect("Conversion failed");
 
     let expected = r#"
         local checkpoint_loader_simple = g:CheckpointLoaderSimple("model.safetensors")
     "#;
 
-    assert_lua_eq(&code, expected);
+    assert_ast_eq(&ast, expected);
 }
 
 #[test]
@@ -116,7 +114,7 @@ fn test_clip_text_encode_with_reference() {
         }
     }"#;
 
-    let code = convert_to_lua(workflow, &object_info).expect("Conversion failed");
+    let ast = convert_to_lua_ast(workflow, &object_info).expect("Conversion failed");
 
     let expected = r#"
         local checkpoint_loader_simple = g:CheckpointLoaderSimple("model.safetensors")
@@ -126,7 +124,7 @@ fn test_clip_text_encode_with_reference() {
         }
     "#;
 
-    assert_lua_eq(&code, expected);
+    assert_ast_eq(&ast, expected);
 }
 
 #[test]
@@ -143,7 +141,7 @@ fn test_empty_latent_image() {
         }
     }"#;
 
-    let code = convert_to_lua(workflow, &object_info).expect("Conversion failed");
+    let ast = convert_to_lua_ast(workflow, &object_info).expect("Conversion failed");
 
     let expected = r#"
         local empty_latent_image = g:EmptyLatentImage {
@@ -153,7 +151,7 @@ fn test_empty_latent_image() {
         }
     "#;
 
-    assert_lua_eq(&code, expected);
+    assert_ast_eq(&ast, expected);
 }
 
 #[test]
@@ -189,7 +187,7 @@ fn test_ksampler() {
         }
     }"#;
 
-    let code = convert_to_lua(workflow, &object_info).expect("Conversion failed");
+    let ast = convert_to_lua_ast(workflow, &object_info).expect("Conversion failed");
 
     let expected = r#"
         local checkpoint_loader_simple = g:CheckpointLoaderSimple("model.safetensors")
@@ -216,7 +214,7 @@ fn test_ksampler() {
         }
     "#;
 
-    assert_lua_eq(&code, expected);
+    assert_ast_eq(&ast, expected);
 }
 
 #[test]
@@ -233,7 +231,7 @@ fn test_string_with_quotes() {
         }
     }"#;
 
-    let code = convert_to_lua(workflow, &object_info).expect("Conversion failed");
+    let ast = convert_to_lua_ast(workflow, &object_info).expect("Conversion failed");
 
     let expected = r#"
         local checkpoint_loader_simple = g:CheckpointLoaderSimple("model.safetensors")
@@ -243,7 +241,7 @@ fn test_string_with_quotes() {
         }
     "#;
 
-    assert_lua_eq(&code, expected);
+    assert_ast_eq(&ast, expected);
 }
 
 #[test]
@@ -260,7 +258,7 @@ fn test_multi_output_node_references() {
         }
     }"#;
 
-    let code = convert_to_lua(workflow, &object_info).expect("Conversion failed");
+    let ast = convert_to_lua_ast(workflow, &object_info).expect("Conversion failed");
 
     let expected = r#"
         local checkpoint_loader_simple = g:CheckpointLoaderSimple("model.safetensors")
@@ -270,7 +268,7 @@ fn test_multi_output_node_references() {
         }
     "#;
 
-    assert_lua_eq(&code, expected);
+    assert_ast_eq(&ast, expected);
 }
 
 #[test]
@@ -291,7 +289,7 @@ fn test_variable_naming() {
         }
     }"#;
 
-    let code = convert_to_lua(workflow, &object_info).expect("Conversion failed");
+    let ast = convert_to_lua_ast(workflow, &object_info).expect("Conversion failed");
 
     let expected = r#"
         local checkpoint_loader_simple = g:CheckpointLoaderSimple("model.safetensors")
@@ -305,7 +303,7 @@ fn test_variable_naming() {
         }
     "#;
 
-    assert_lua_eq(&code, expected);
+    assert_ast_eq(&ast, expected);
 }
 
 /// Test the complete example workflow from testdata/.
@@ -314,7 +312,7 @@ fn test_example_workflow() {
     let object_info = load_object_info();
     let workflow = include_str!("../testdata/example_workflow.json");
 
-    let code = convert_to_lua(workflow, &object_info).expect("Conversion failed");
+    let ast = convert_to_lua_ast(workflow, &object_info).expect("Conversion failed");
 
     // Comments from _meta.title; node order by topological sort; fields alphabetically ordered
     let expected = r#"
@@ -360,5 +358,5 @@ fn test_example_workflow() {
         }
     "#;
 
-    assert_lua_eq(&code, expected);
+    assert_ast_eq(&ast, expected);
 }
