@@ -52,78 +52,11 @@ pub fn {function_name}() -> (Workflow, WorkflowNodeId) {{
     )
 }
 
-/// Example workflow JSON for testing.
-const EXAMPLE_WORKFLOW: &str = r#"{
-    "1": {
-        "inputs": { "ckpt_name": "model.safetensors" },
-        "class_type": "CheckpointLoaderSimple",
-        "_meta": { "title": "Load Checkpoint" }
-    },
-    "2": {
-        "inputs": {
-            "text": "a beautiful landscape",
-            "clip": ["1", 1]
-        },
-        "class_type": "CLIPTextEncode",
-        "_meta": { "title": "Positive Prompt" }
-    },
-    "3": {
-        "inputs": {
-            "text": "ugly, blurry",
-            "clip": ["1", 1]
-        },
-        "class_type": "CLIPTextEncode",
-        "_meta": { "title": "Negative Prompt" }
-    },
-    "4": {
-        "inputs": {
-            "width": 1024,
-            "height": 1024,
-            "batch_size": 1
-        },
-        "class_type": "EmptyLatentImage",
-        "_meta": { "title": "Empty Latent" }
-    },
-    "5": {
-        "inputs": {
-            "model": ["1", 0],
-            "seed": 42,
-            "steps": 20,
-            "cfg": 7.5,
-            "sampler_name": "euler",
-            "scheduler": "normal",
-            "positive": ["2", 0],
-            "negative": ["3", 0],
-            "latent_image": ["4", 0],
-            "denoise": 1.0
-        },
-        "class_type": "KSampler",
-        "_meta": { "title": "Sampler" }
-    },
-    "6": {
-        "inputs": {
-            "samples": ["5", 0],
-            "vae": ["1", 2]
-        },
-        "class_type": "VAEDecode",
-        "_meta": { "title": "VAE Decode" }
-    },
-    "7": {
-        "inputs": {
-            "images": ["6", 0]
-        },
-        "class_type": "PreviewImage",
-        "_meta": { "title": "Preview" }
-    }
-}"#;
+/// Example workflow JSON for testing (loaded from testdata/).
+const EXAMPLE_WORKFLOW: &str = include_str!("../testdata/example_workflow.json");
 
 /// Simple workflow with just a checkpoint loader.
-const SIMPLE_WORKFLOW: &str = r#"{
-    "1": {
-        "inputs": { "ckpt_name": "model.safetensors" },
-        "class_type": "CheckpointLoaderSimple"
-    }
-}"#;
+const SIMPLE_WORKFLOW: &str = include_str!("../testdata/simple_workflow.json");
 
 fn create_test_crate(code: &str) -> tempfile::TempDir {
     let temp_dir = tempfile::tempdir().expect("Failed to create temp directory");

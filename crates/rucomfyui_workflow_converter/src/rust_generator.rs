@@ -403,4 +403,62 @@ mod tests {
 
         assert_eq!(result, expected);
     }
+
+    /// Test the complete example workflow from testdata/.
+    #[test]
+    fn test_example_workflow() {
+        let object_info = load_test_object_info();
+        let json = include_str!("../testdata/example_workflow.json");
+
+        let result = convert_to_rust(json, &object_info).unwrap();
+
+        // Node order is determined by topological sort; fields are alphabetically ordered
+        let expected = format_expected(quote! {
+            let g = WorkflowGraph::new();
+
+            let checkpoint_loader_simple = g.add(CheckpointLoaderSimple {
+                ckpt_name: "model.safetensors"
+            });
+
+            let empty_latent_image = g.add(EmptyLatentImage {
+                batch_size: 1,
+                height: 1024,
+                width: 1024
+            });
+
+            let clip_text_encode = g.add(CLIPTextEncode {
+                clip: checkpoint_loader_simple.clip,
+                text: "a beautiful landscape"
+            });
+
+            let clip_text_encode_1 = g.add(CLIPTextEncode {
+                clip: checkpoint_loader_simple.clip,
+                text: "ugly, blurry"
+            });
+
+            let k_sampler = g.add(KSampler {
+                cfg: 7.5,
+                denoise: 1.0,
+                latent_image: empty_latent_image,
+                model: checkpoint_loader_simple.model,
+                negative: clip_text_encode_1,
+                positive: clip_text_encode,
+                sampler_name: "euler",
+                scheduler: "normal",
+                seed: 42,
+                steps: 20
+            });
+
+            let vae_decode = g.add(VAEDecode {
+                samples: k_sampler,
+                vae: checkpoint_loader_simple.vae
+            });
+
+            let preview_image = g.add(PreviewImage {
+                images: vae_decode
+            });
+        });
+
+        assert_eq!(result, expected);
+    }
 }

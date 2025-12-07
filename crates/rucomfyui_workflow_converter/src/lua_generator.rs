@@ -211,4 +211,29 @@ mod tests {
         assert!(result.contains("clip_text_encode"));
         assert!(result.contains("k_sampler"));
     }
+
+    /// Test the complete example workflow from testdata/.
+    #[test]
+    fn test_example_workflow() {
+        let object_info = load_test_object_info();
+        let json = include_str!("../testdata/example_workflow.json");
+
+        let result = convert_to_lua(json, &object_info).unwrap();
+
+        // Verify all nodes are present
+        assert!(result.contains("local checkpoint_loader_simple = g:CheckpointLoaderSimple"));
+        assert!(result.contains("local clip_text_encode = g:CLIPTextEncode"));
+        assert!(result.contains("local clip_text_encode_1 = g:CLIPTextEncode"));
+        assert!(result.contains("local empty_latent_image = g:EmptyLatentImage"));
+        assert!(result.contains("local k_sampler = g:KSampler"));
+        assert!(result.contains("local vae_decode = g:VAEDecode"));
+        assert!(result.contains("local preview_image = g:PreviewImage"));
+
+        // Verify key references
+        assert!(result.contains("checkpoint_loader_simple.model"));
+        assert!(result.contains("checkpoint_loader_simple.clip"));
+        assert!(result.contains("checkpoint_loader_simple.vae"));
+        assert!(result.contains("positive = clip_text_encode,"));
+        assert!(result.contains("negative = clip_text_encode_1,"));
+    }
 }
