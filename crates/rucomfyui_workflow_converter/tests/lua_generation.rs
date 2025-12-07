@@ -2,6 +2,8 @@
 //!
 //! These tests verify the output of the Lua generator.
 
+#![cfg(feature = "lua")]
+
 use rucomfyui_workflow_converter::{
     convert_to_lua, convert_to_lua_with_config, LuaGeneratorConfig,
 };

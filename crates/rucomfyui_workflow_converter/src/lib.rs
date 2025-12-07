@@ -1,8 +1,8 @@
 //! Convert ComfyUI API workflows to typed Rust or Lua code.
 //!
 //! This library takes a ComfyUI API workflow JSON and converts it to either:
-//! - Typed Rust code compatible with `rucomfyui`'s `typed_nodes` feature
-//! - Lua code compatible with `rucomfyui_mlua`
+//! - Typed Rust code compatible with `rucomfyui`'s `typed_nodes` feature (requires `rust` feature)
+//! - Lua code compatible with `rucomfyui_mlua` (requires `lua` feature)
 //!
 //! # Example
 //!
@@ -20,11 +20,15 @@
 //! let lua_code = convert_to_lua(workflow_json).unwrap();
 //! ```
 
+#[cfg(feature = "lua")]
 mod lua_generator;
+#[cfg(feature = "rust")]
 mod rust_generator;
 mod workflow_analyzer;
 
+#[cfg(feature = "lua")]
 pub use lua_generator::{convert_to_lua, convert_to_lua_with_config, LuaGeneratorConfig};
+#[cfg(feature = "rust")]
 pub use rust_generator::{
     convert_to_rust, convert_to_rust_with_config, convert_to_rust_with_object_info,
     RustGeneratorConfig,

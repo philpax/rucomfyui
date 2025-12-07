@@ -3,6 +3,8 @@
 //! These tests convert workflow JSON to Rust code and then verify the code
 //! compiles by creating a temporary crate and running `cargo check`.
 
+#![cfg(feature = "rust")]
+
 use rucomfyui::object_info::ObjectInfo;
 use rucomfyui_workflow_converter::{convert_to_rust_with_object_info, RustGeneratorConfig};
 use std::fs;
