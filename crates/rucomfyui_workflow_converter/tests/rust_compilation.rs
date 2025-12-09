@@ -147,7 +147,7 @@ fn test_example_workflow_compiles() {
     let object_info = load_object_info();
     let tokens = convert_to_rust_tokens(EXAMPLE_WORKFLOW, &object_info).expect("Conversion failed");
 
-    // Verify the snippet matches expected TokenStream
+    // Verify the snippet matches expected TokenStream (with inlining)
     let actual = format_tokens_as_snippet(tokens.clone());
     let expected = format_tokens_as_snippet(quote! {
         let g = WorkflowGraph::new();
@@ -156,42 +156,32 @@ fn test_example_workflow_compiles() {
             ckpt_name: "model.safetensors"
         });
 
-        let empty_latent_image = g.add(EmptyLatentImage {
-            batch_size: 1,
-            height: 1024,
-            width: 1024
-        });
-
-        let clip_text_encode = g.add(CLIPTextEncode {
-            clip: checkpoint_loader_simple.clip,
-            text: "a beautiful landscape"
-        });
-
-        let clip_text_encode_1 = g.add(CLIPTextEncode {
-            clip: checkpoint_loader_simple.clip,
-            text: "ugly, blurry"
-        });
-
-        let k_sampler = g.add(KSampler {
-            cfg: 7.5,
-            denoise: 1.0,
-            latent_image: empty_latent_image,
-            model: checkpoint_loader_simple.model,
-            negative: clip_text_encode_1,
-            positive: clip_text_encode,
-            sampler_name: "euler",
-            scheduler: "normal",
-            seed: 42,
-            steps: 20
-        });
-
-        let vae_decode = g.add(VAEDecode {
-            samples: k_sampler,
-            vae: checkpoint_loader_simple.vae
-        });
-
         let preview_image = g.add(PreviewImage {
-            images: vae_decode
+            images: g.add(VAEDecode {
+                samples: g.add(KSampler {
+                    cfg: 7.5,
+                    denoise: 1.0,
+                    latent_image: g.add(EmptyLatentImage {
+                        batch_size: 1,
+                        height: 1024,
+                        width: 1024
+                    }),
+                    model: checkpoint_loader_simple.model,
+                    negative: g.add(CLIPTextEncode {
+                        clip: checkpoint_loader_simple.clip,
+                        text: "ugly, blurry"
+                    }),
+                    positive: g.add(CLIPTextEncode {
+                        clip: checkpoint_loader_simple.clip,
+                        text: "a beautiful landscape"
+                    }),
+                    sampler_name: "euler",
+                    scheduler: "normal",
+                    seed: 42,
+                    steps: 20
+                }),
+                vae: checkpoint_loader_simple.vae
+            })
         });
     });
     assert_eq!(actual, expected);

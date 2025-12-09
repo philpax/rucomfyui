@@ -6,7 +6,12 @@ use convert_case::{Case, Casing};
 use proc_macro2::TokenStream;
 use quote::{format_ident, quote};
 use rucomfyui::object_info::{Object, ObjectInfo, ObjectType};
+use rucomfyui::workflow::WorkflowNodeId;
 use std::collections::HashMap;
+
+// =============================================================================
+// Public API
+// =============================================================================
 
 /// Convert a workflow JSON to Rust code using ObjectInfo for type information.
 pub fn convert_to_rust(json: &str, object_info: &ObjectInfo) -> Result<String> {
@@ -20,14 +25,49 @@ pub fn convert_to_rust_tokens(json: &str, object_info: &ObjectInfo) -> Result<To
     Ok(generate_rust_tokens(&analyzed, object_info))
 }
 
+// =============================================================================
+// Code generation
+// =============================================================================
+
+/// Context for code generation, holding references to workflow data.
+struct GeneratorContext<'a> {
+    object_info: &'a ObjectInfo,
+    nodes_by_id: HashMap<WorkflowNodeId, &'a AnalyzedNode>,
+}
+
+impl<'a> GeneratorContext<'a> {
+    fn new(analyzed: &'a AnalyzedWorkflow, object_info: &'a ObjectInfo) -> Self {
+        let nodes_by_id = analyzed.nodes.iter().map(|n| (n.id, n)).collect();
+        Self {
+            object_info,
+            nodes_by_id,
+        }
+    }
+
+    fn get_node(&self, id: WorkflowNodeId) -> Option<&'a AnalyzedNode> {
+        self.nodes_by_id.get(&id).copied()
+    }
+
+    fn get_object(&self, class_type: &str) -> Option<&'a Object> {
+        self.object_info.get(class_type)
+    }
+}
+
 /// Generate Rust TokenStream using typed nodes with ObjectInfo.
 fn generate_rust_tokens(analyzed: &AnalyzedWorkflow, object_info: &ObjectInfo) -> TokenStream {
+    let ctx = GeneratorContext::new(analyzed, object_info);
     let mut nodes_tokens = Vec::new();
-    let mut generated_vars: HashMap<String, (&AnalyzedNode, Option<&Object>)> = HashMap::new();
 
+    // Only generate statements for nodes that need variables:
+    // - ref_count == 0: terminal nodes (outputs)
+    // - ref_count > 1: nodes referenced multiple times
+    // Nodes with ref_count == 1 will be inlined at their use site
     for node in &analyzed.nodes {
+        if node.ref_count == 1 {
+            continue; // Will be inlined
+        }
+
         let var_ident = format_ident!("{}", &node.var_name);
-        let obj = object_info.get(&node.class_type);
 
         let comment = if let Some(display_name) = &node.display_name {
             format!("// {} ({})", display_name, node.class_type)
@@ -36,63 +76,12 @@ fn generate_rust_tokens(analyzed: &AnalyzedWorkflow, object_info: &ObjectInfo) -
         };
         let comment_tokens: TokenStream = comment.parse().unwrap();
 
-        if let Some(obj) = obj {
-            // Known node - use typed node construction
-            let struct_ident = format_ident!("{}", &node.class_type);
+        let node_expr = build_node_expr(&ctx, node);
 
-            let mut field_assignments = Vec::new();
-            for (name, input) in &node.inputs {
-                let field_ident = format_ident!("{}", name.to_case(Case::Snake));
-
-                // Get expected type for this input
-                let expected_type = obj
-                    .all_inputs()
-                    .find(|(n, _, _)| *n == name)
-                    .and_then(|(_, input, _)| input.as_type().cloned());
-
-                let value =
-                    format_typed_input_value(input, expected_type.as_ref(), &generated_vars);
-                let value_tokens: TokenStream = value.parse().unwrap();
-
-                field_assignments.push(quote! {
-                    #field_ident: #value_tokens
-                });
-            }
-
-            nodes_tokens.push(quote! {
-                #comment_tokens
-                let #var_ident = g.add(#struct_ident {
-                    #(#field_assignments),*
-                });
-            });
-        } else {
-            // Unknown node - use dynamic construction
-            let class_type = &node.class_type;
-            let mut input_calls = Vec::new();
-            for (name, input) in &node.inputs {
-                let value = format_dynamic_input_value(
-                    input,
-                    &generated_vars
-                        .iter()
-                        .map(|(k, (n, _))| (k.clone(), *n))
-                        .collect(),
-                );
-                let value_tokens: TokenStream = value.parse().unwrap();
-                input_calls.push(quote! {
-                    .with_input(#name, #value_tokens)
-                });
-            }
-
-            nodes_tokens.push(quote! {
-                #comment_tokens
-                let #var_ident = g.add_dynamic(
-                    rucomfyui::workflow::WorkflowNode::new(#class_type)
-                        #(#input_calls)*
-                );
-            });
-        }
-
-        generated_vars.insert(node.var_name.clone(), (node, obj));
+        nodes_tokens.push(quote! {
+            #comment_tokens
+            let #var_ident = g.add(#node_expr);
+        });
     }
 
     quote! {
@@ -101,6 +90,151 @@ fn generate_rust_tokens(analyzed: &AnalyzedWorkflow, object_info: &ObjectInfo) -
         #(#nodes_tokens)*
     }
 }
+
+/// Build an expression for a node: `NodeType { field: value, ... }`
+fn build_node_expr(ctx: &GeneratorContext, node: &AnalyzedNode) -> TokenStream {
+    let obj = ctx.get_object(&node.class_type);
+
+    if let Some(obj) = obj {
+        // Known node - use typed node construction
+        let struct_ident = format_ident!("{}", &node.class_type);
+
+        let field_assignments: Vec<TokenStream> = node
+            .inputs
+            .iter()
+            .map(|(name, input)| {
+                let field_ident = format_ident!("{}", name.to_case(Case::Snake));
+
+                // Get expected type for this input
+                let expected_type = obj
+                    .all_inputs()
+                    .find(|(n, _, _)| *n == name)
+                    .and_then(|(_, input, _)| input.as_type().cloned());
+
+                let value_tokens = build_input_expr(ctx, input, expected_type.as_ref());
+
+                quote! {
+                    #field_ident: #value_tokens
+                }
+            })
+            .collect();
+
+        quote! {
+            #struct_ident {
+                #(#field_assignments),*
+            }
+        }
+    } else {
+        // Unknown node - use dynamic construction
+        // Note: This doesn't support inlining for dynamic nodes
+        let class_type = &node.class_type;
+        let input_calls: Vec<TokenStream> = node
+            .inputs
+            .iter()
+            .map(|(name, input)| {
+                let value_tokens = build_input_expr(ctx, input, None);
+                quote! {
+                    .with_input(#name, #value_tokens)
+                }
+            })
+            .collect();
+
+        quote! {
+            rucomfyui::workflow::WorkflowNode::new(#class_type)
+                #(#input_calls)*
+        }
+    }
+}
+
+/// Build an expression for an input value, inlining single-use node references.
+fn build_input_expr(
+    ctx: &GeneratorContext,
+    input: &AnalyzedInput,
+    expected_type: Option<&ObjectType>,
+) -> TokenStream {
+    match input {
+        AnalyzedInput::String(s) => {
+            let escaped = escape_string(s);
+            quote! { #escaped }
+        }
+        AnalyzedInput::Integer(i) => {
+            let lit = proc_macro2::Literal::i64_unsuffixed(*i);
+            quote! { #lit }
+        }
+        AnalyzedInput::Float(f) => {
+            // Check if expected type is Int - if so, output as integer
+            if let Some(ObjectType::Int) = expected_type {
+                if f.fract() == 0.0 && f.abs() < i64::MAX as f64 {
+                    let lit = proc_macro2::Literal::i64_unsuffixed(*f as i64);
+                    return quote! { #lit };
+                }
+            }
+            let lit = proc_macro2::Literal::f64_unsuffixed(*f);
+            quote! { #lit }
+        }
+        AnalyzedInput::Boolean(b) => {
+            quote! { #b }
+        }
+        AnalyzedInput::NodeRef {
+            node_id,
+            var_name,
+            slot,
+        } => {
+            // Look up the referenced node
+            let ref_node = ctx.get_node(*node_id);
+            let ref_obj = ref_node.and_then(|n| ctx.get_object(&n.class_type));
+
+            // Check if we should inline this node
+            if let Some(ref_node) = ref_node {
+                if ref_node.ref_count == 1 {
+                    // Inline the node - build its full expression
+                    let node_expr = build_node_expr(ctx, ref_node);
+
+                    // If this is a multi-output node and we need a specific output, add field access
+                    if let Some(ref_obj) = ref_obj {
+                        let outputs: Vec<_> = ref_obj.processed_output().collect();
+                        if outputs.len() > 1 {
+                            if let Some(output) = outputs.get(*slot as usize) {
+                                let field_ident =
+                                    format_ident!("{}", output.name.to_case(Case::Snake));
+                                return quote! { g.add(#node_expr).#field_ident };
+                            }
+                        }
+                    }
+
+                    // Single output - just the add expression
+                    return quote! { g.add(#node_expr) };
+                }
+            }
+
+            // Not inlining - use variable reference
+            let var_ident = format_ident!("{}", var_name);
+
+            // Check if we need field access for multi-output nodes
+            if let Some(ref_obj) = ref_obj {
+                let outputs: Vec<_> = ref_obj.processed_output().collect();
+                if outputs.len() > 1 {
+                    if let Some(output) = outputs.get(*slot as usize) {
+                        let field_ident = format_ident!("{}", output.name.to_case(Case::Snake));
+                        return quote! { #var_ident.#field_ident };
+                    }
+                }
+            }
+
+            // Single-output or unknown - use variable directly
+            if *slot == 0 {
+                quote! { #var_ident }
+            } else {
+                let slot_lit = proc_macro2::Literal::u32_unsuffixed(*slot);
+                quote! { #var_ident.#slot_lit }
+            }
+        }
+    }
+}
+
+// =============================================================================
+// Formatting
+// =============================================================================
 
 fn format_tokens_as_snippet(tokens: TokenStream) -> Result<String> {
     // For snippets, wrap in a function to parse, then extract just the body
@@ -137,73 +271,9 @@ fn format_tokens_as_snippet(tokens: TokenStream) -> Result<String> {
     Ok(formatted)
 }
 
-fn format_dynamic_input_value(
-    input: &AnalyzedInput,
-    _generated_vars: &HashMap<String, &AnalyzedNode>,
-) -> String {
-    match input {
-        AnalyzedInput::String(s) => format!("\"{}\"", escape_string(s)),
-        AnalyzedInput::Integer(i) => format!("{}i64", i),
-        AnalyzedInput::Float(f) => {
-            let s = f.to_string();
-            if s.contains('.') || s.contains('e') || s.contains('E') {
-                s
-            } else {
-                format!("{}.0", s)
-            }
-        }
-        AnalyzedInput::Boolean(b) => b.to_string(),
-        AnalyzedInput::NodeRef { var_name, slot } => {
-            format!("{}.to_input_with_slot({})", var_name, slot)
-        }
-    }
-}
-
-fn format_typed_input_value(
-    input: &AnalyzedInput,
-    expected_type: Option<&ObjectType>,
-    generated_vars: &HashMap<String, (&AnalyzedNode, Option<&Object>)>,
-) -> String {
-    match input {
-        AnalyzedInput::String(s) => format!("\"{}\"", escape_string(s)),
-        AnalyzedInput::Integer(i) => i.to_string(),
-        AnalyzedInput::Float(f) => {
-            // Check if expected type is Int - if so, output as integer
-            if let Some(ObjectType::Int) = expected_type {
-                if f.fract() == 0.0 && f.abs() < i64::MAX as f64 {
-                    return format!("{}", *f as i64);
-                }
-            }
-            // Otherwise output as float
-            let s = f.to_string();
-            if s.contains('.') || s.contains('e') || s.contains('E') {
-                s
-            } else {
-                format!("{}.0", s)
-            }
-        }
-        AnalyzedInput::Boolean(b) => b.to_string(),
-        AnalyzedInput::NodeRef { var_name, slot } => {
-            // Look up the referenced node to get output field name
-            if let Some((_ref_node, Some(ref_obj))) = generated_vars.get(var_name) {
-                let outputs: Vec<_> = ref_obj.processed_output().collect();
-                if outputs.len() > 1 {
-                    // Multi-output node - use field name
-                    if let Some(output) = outputs.get(*slot as usize) {
-                        let field_name = output.name.to_case(Case::Snake);
-                        return format!("{}.{}", var_name, field_name);
-                    }
-                }
-            }
-            // Single-output or unknown - use variable directly
-            if *slot == 0 {
-                var_name.clone()
-            } else {
-                format!("{}.{}", var_name, slot)
-            }
-        }
-    }
-}
+// =============================================================================
+// String utilities
+// =============================================================================
 
 fn escape_string(s: &str) -> String {
     s.replace('\\', "\\\\")
@@ -212,6 +282,10 @@ fn escape_string(s: &str) -> String {
         .replace('\r', "\\r")
         .replace('\t', "\\t")
 }
+
+// =============================================================================
+// Tests
+// =============================================================================
 
 #[cfg(test)]
 mod tests {
@@ -253,7 +327,7 @@ mod tests {
 
         let result = convert_to_rust(json, &object_info).unwrap();
 
-        // Note: Comments are stripped during tokenization, fields are alphabetically ordered
+        // Single terminal node - still gets a variable
         let expected = format_expected(quote! {
             let g = WorkflowGraph::new();
 
@@ -266,8 +340,9 @@ mod tests {
     }
 
     #[test]
-    fn test_convert_workflow_with_dependencies() {
+    fn test_single_use_node_inlined() {
         let object_info = load_test_object_info();
+        // checkpoint_loader_simple is referenced only once by clip_text_encode
         let json = r#"{
             "1": {
                 "inputs": { "ckpt_name": "model.safetensors" },
@@ -284,7 +359,43 @@ mod tests {
 
         let result = convert_to_rust(json, &object_info).unwrap();
 
-        // Fields are alphabetically ordered from HashMap iteration
+        // checkpoint_loader_simple should be inlined
+        let expected = format_expected(quote! {
+            let g = WorkflowGraph::new();
+
+            let clip_text_encode = g.add(CLIPTextEncode {
+                clip: g.add(CheckpointLoaderSimple {
+                    ckpt_name: "model.safetensors"
+                }).clip,
+                text: "a cat"
+            });
+        });
+
+        assert_eq!(result, expected);
+    }
+
+    #[test]
+    fn test_multi_use_node_not_inlined() {
+        let object_info = load_test_object_info();
+        // checkpoint_loader_simple is referenced twice (by two CLIPTextEncode nodes)
+        let json = r#"{
+            "1": {
+                "inputs": { "ckpt_name": "model.safetensors" },
+                "class_type": "CheckpointLoaderSimple"
+            },
+            "2": {
+                "inputs": { "text": "first", "clip": ["1", 1] },
+                "class_type": "CLIPTextEncode"
+            },
+            "3": {
+                "inputs": { "text": "second", "clip": ["1", 1] },
+                "class_type": "CLIPTextEncode"
+            }
+        }"#;
+
+        let result = convert_to_rust(json, &object_info).unwrap();
+
+        // checkpoint_loader_simple should NOT be inlined (used twice)
         let expected = format_expected(quote! {
             let g = WorkflowGraph::new();
 
@@ -294,7 +405,12 @@ mod tests {
 
             let clip_text_encode = g.add(CLIPTextEncode {
                 clip: checkpoint_loader_simple.clip,
-                text: "a cat"
+                text: "first"
+            });
+
+            let clip_text_encode_1 = g.add(CLIPTextEncode {
+                clip: checkpoint_loader_simple.clip,
+                text: "second"
             });
         });
 
@@ -302,24 +418,23 @@ mod tests {
     }
 
     #[test]
-    fn test_multi_output_node_references() {
+    fn test_multi_output_node_not_inlined_when_multiple_refs() {
         let object_info = load_test_object_info();
+        // checkpoint_loader_simple is referenced twice (samples and vae)
         let json = r#"{
             "1": {
                 "inputs": { "ckpt_name": "model.safetensors" },
                 "class_type": "CheckpointLoaderSimple"
             },
             "2": {
-                "inputs": {
-                    "samples": ["1", 0],
-                    "vae": ["1", 2]
-                },
+                "inputs": { "samples": ["1", 0], "vae": ["1", 2] },
                 "class_type": "VAEDecode"
             }
         }"#;
 
         let result = convert_to_rust(json, &object_info).unwrap();
 
+        // checkpoint_loader_simple is referenced twice, so NOT inlined
         let expected = format_expected(quote! {
             let g = WorkflowGraph::new();
 
@@ -352,7 +467,6 @@ mod tests {
 
         let result = convert_to_rust(json, &object_info).unwrap();
 
-        // Fields are alphabetically ordered: batch_size, height, width
         let expected = format_expected(quote! {
             let g = WorkflowGraph::new();
 
@@ -367,7 +481,7 @@ mod tests {
     }
 
     #[test]
-    fn test_variable_naming_dedup() {
+    fn test_deeply_nested_inlining() {
         let object_info = load_test_object_info();
         let json = r#"{
             "1": {
@@ -375,18 +489,25 @@ mod tests {
                 "class_type": "CheckpointLoaderSimple"
             },
             "2": {
-                "inputs": { "text": "first", "clip": ["1", 1] },
+                "inputs": { "text": "test", "clip": ["1", 1] },
                 "class_type": "CLIPTextEncode"
             },
             "3": {
-                "inputs": { "text": "second", "clip": ["1", 1] },
-                "class_type": "CLIPTextEncode"
+                "inputs": { "width": 512, "height": 512, "batch_size": 1 },
+                "class_type": "EmptyLatentImage"
+            },
+            "4": {
+                "inputs": { "samples": ["3", 0], "vae": ["1", 2] },
+                "class_type": "VAEDecode"
             }
         }"#;
 
         let result = convert_to_rust(json, &object_info).unwrap();
 
-        // Fields are alphabetically ordered: clip, text
+        // CheckpointLoaderSimple is referenced twice (by CLIPTextEncode and VAEDecode)
+        // CLIPTextEncode is referenced 0 times (terminal) - gets a variable
+        // EmptyLatentImage is referenced once - inlined
+        // VAEDecode is referenced 0 times (terminal) - gets a variable
         let expected = format_expected(quote! {
             let g = WorkflowGraph::new();
 
@@ -396,12 +517,16 @@ mod tests {
 
             let clip_text_encode = g.add(CLIPTextEncode {
                 clip: checkpoint_loader_simple.clip,
-                text: "first"
+                text: "test"
             });
 
-            let clip_text_encode_1 = g.add(CLIPTextEncode {
-                clip: checkpoint_loader_simple.clip,
-                text: "second"
+            let vae_decode = g.add(VAEDecode {
+                samples: g.add(EmptyLatentImage {
+                    batch_size: 1,
+                    height: 512,
+                    width: 512
+                }),
+                vae: checkpoint_loader_simple.vae
             });
         });
 
@@ -416,7 +541,14 @@ mod tests {
 
         let result = convert_to_rust(json, &object_info).unwrap();
 
-        // Node order is determined by topological sort; fields are alphabetically ordered
+        // In the example workflow:
+        // - CheckpointLoaderSimple: ref_count > 1 (model, clip x2, vae) -> variable
+        // - EmptyLatentImage: ref_count = 1 (latent_image) -> inlined
+        // - CLIPTextEncode (positive): ref_count = 1 -> inlined
+        // - CLIPTextEncode (negative): ref_count = 1 -> inlined
+        // - KSampler: ref_count = 1 (samples) -> inlined
+        // - VAEDecode: ref_count = 1 (images) -> inlined
+        // - PreviewImage: ref_count = 0 (terminal) -> variable
         let expected = format_expected(quote! {
             let g = WorkflowGraph::new();
 
@@ -424,42 +556,32 @@ mod tests {
                 ckpt_name: "model.safetensors"
             });
 
-            let empty_latent_image = g.add(EmptyLatentImage {
-                batch_size: 1,
-                height: 1024,
-                width: 1024
-            });
-
-            let clip_text_encode = g.add(CLIPTextEncode {
-                clip: checkpoint_loader_simple.clip,
-                text: "a beautiful landscape"
-            });
-
-            let clip_text_encode_1 = g.add(CLIPTextEncode {
-                clip: checkpoint_loader_simple.clip,
-                text: "ugly, blurry"
-            });
-
-            let k_sampler = g.add(KSampler {
-                cfg: 7.5,
-                denoise: 1.0,
-                latent_image: empty_latent_image,
-                model: checkpoint_loader_simple.model,
-                negative: clip_text_encode_1,
-                positive: clip_text_encode,
-                sampler_name: "euler",
-                scheduler: "normal",
-                seed: 42,
-                steps: 20
-            });
-
-            let vae_decode = g.add(VAEDecode {
-                samples: k_sampler,
-                vae: checkpoint_loader_simple.vae
-            });
-
             let preview_image = g.add(PreviewImage {
-                images: vae_decode
+                images: g.add(VAEDecode {
+                    samples: g.add(KSampler {
+                        cfg: 7.5,
+                        denoise: 1.0,
+                        latent_image: g.add(EmptyLatentImage {
+                            batch_size: 1,
+                            height: 1024,
+                            width: 1024
+                        }),
+                        model: checkpoint_loader_simple.model,
+                        negative: g.add(CLIPTextEncode {
+                            clip: checkpoint_loader_simple.clip,
+                            text: "ugly, blurry"
+                        }),
+                        positive: g.add(CLIPTextEncode {
+                            clip: checkpoint_loader_simple.clip,
+                            text: "a beautiful landscape"
+                        }),
+                        sampler_name: "euler",
+                        scheduler: "normal",
+                        seed: 42,
+                        steps: 20
+                    }),
+                    vae: checkpoint_loader_simple.vae
+                })
             });
         });
 

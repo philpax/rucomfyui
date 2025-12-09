@@ -27,6 +27,9 @@ pub struct AnalyzedNode {
     pub inputs: BTreeMap<String, AnalyzedInput>,
     /// The variable name to use for this node in generated code.
     pub var_name: String,
+    /// How many times this node is referenced by other nodes.
+    /// Nodes with ref_count > 1 need variables; nodes with ref_count == 1 can be inlined.
+    pub ref_count: usize,
 }
 
 /// An analyzed input value.
@@ -42,6 +45,8 @@ pub enum AnalyzedInput {
     Boolean(bool),
     /// A reference to another node's output.
     NodeRef {
+        /// The original node ID of the referenced node.
+        node_id: WorkflowNodeId,
         /// The variable name of the referenced node.
         var_name: String,
         /// The output slot index.
@@ -59,6 +64,23 @@ impl AnalyzedWorkflow {
     /// Analyze a workflow.
     pub fn from_workflow(workflow: &Workflow) -> Result<Self> {
         let sorted_ids = topological_sort(workflow)?;
+
+        // Count how many times each node is referenced
+        let mut ref_counts: HashMap<WorkflowNodeId, usize> = HashMap::new();
+        for &id in &sorted_ids {
+            ref_counts.insert(id, 0);
+        }
+        for node in workflow.0.values() {
+            for input in node.inputs.values() {
+                if let WorkflowInput::Slot(node_id_str, _) = input {
+                    if let Ok(ref_id) = node_id_str.parse::<WorkflowNodeId>() {
+                        if let Some(count) = ref_counts.get_mut(&ref_id) {
+                            *count += 1;
+                        }
+                    }
+                }
+            }
+        }
 
         // Generate variable names for each node
         let mut node_var_names = HashMap::new();
@@ -91,6 +113,7 @@ impl AnalyzedWorkflow {
 
             let var_name = node_var_names.get(&id).unwrap().clone();
             let display_name = node.meta.as_ref().map(|m| m.title().to_string());
+            let ref_count = ref_counts.get(&id).copied().unwrap_or(0);
 
             let mut inputs = BTreeMap::new();
             for (name, input) in &node.inputs {
@@ -108,6 +131,7 @@ impl AnalyzedWorkflow {
                             ConversionError::InvalidNodeReference(node_id_str.clone())
                         })?;
                         AnalyzedInput::NodeRef {
+                            node_id: ref_id,
                             var_name: ref_var_name.clone(),
                             slot: *slot,
                         }
@@ -122,6 +146,7 @@ impl AnalyzedWorkflow {
                 display_name,
                 inputs,
                 var_name,
+                ref_count,
             });
         }
 
@@ -129,6 +154,11 @@ impl AnalyzedWorkflow {
             nodes,
             node_var_names,
         })
+    }
+
+    /// Get a node by its ID.
+    pub fn get_node(&self, id: WorkflowNodeId) -> Option<&AnalyzedNode> {
+        self.nodes.iter().find(|n| n.id == id)
     }
 }
 
@@ -263,7 +293,7 @@ mod tests {
         assert_eq!(analyzed.nodes[1].var_name, "k_sampler");
 
         // Check that KSampler references the checkpoint loader
-        if let Some(AnalyzedInput::NodeRef { var_name, slot }) =
+        if let Some(AnalyzedInput::NodeRef { var_name, slot, .. }) =
             analyzed.nodes[1].inputs.get("model")
         {
             assert_eq!(var_name, "checkpoint_loader_simple");
@@ -271,5 +301,9 @@ mod tests {
         } else {
             panic!("Expected NodeRef for model input");
         }
+
+        // Check reference counts
+        assert_eq!(analyzed.nodes[0].ref_count, 1); // checkpoint_loader_simple is referenced once
+        assert_eq!(analyzed.nodes[1].ref_count, 0); // k_sampler is not referenced (terminal)
     }
 }

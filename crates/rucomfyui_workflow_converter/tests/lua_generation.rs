@@ -116,10 +116,10 @@ fn test_clip_text_encode_with_reference() {
 
     let ast = convert_to_lua_ast(workflow, &object_info).expect("Conversion failed");
 
+    // checkpoint_loader_simple is only referenced once, so it's inlined
     let expected = r#"
-        local checkpoint_loader_simple = g:CheckpointLoaderSimple("model.safetensors")
         local clip_text_encode = g:CLIPTextEncode {
-            clip = checkpoint_loader_simple.clip,
+            clip = g:CheckpointLoaderSimple("model.safetensors").clip,
             text = "a cat",
         }
     "#;
@@ -189,13 +189,12 @@ fn test_ksampler() {
 
     let ast = convert_to_lua_ast(workflow, &object_info).expect("Conversion failed");
 
+    // checkpoint_loader_simple: ref_count = 2 (model + clip) -> variable
+    // empty_latent_image: ref_count = 1 -> inlined
+    // clip_text_encode: ref_count = 2 (positive + negative) -> variable
+    // k_sampler: ref_count = 0 (terminal) -> variable
     let expected = r#"
         local checkpoint_loader_simple = g:CheckpointLoaderSimple("model.safetensors")
-        local empty_latent_image = g:EmptyLatentImage {
-            batch_size = 1.0,
-            height = 512.0,
-            width = 512.0,
-        }
         local clip_text_encode = g:CLIPTextEncode {
             clip = checkpoint_loader_simple.clip,
             text = "a cat",
@@ -203,7 +202,11 @@ fn test_ksampler() {
         local k_sampler = g:KSampler {
             cfg = 8.0,
             denoise = 1.0,
-            latent_image = empty_latent_image,
+            latent_image = g:EmptyLatentImage {
+                batch_size = 1.0,
+                height = 512.0,
+                width = 512.0,
+            },
             model = checkpoint_loader_simple.model,
             negative = clip_text_encode,
             positive = clip_text_encode,
@@ -233,10 +236,10 @@ fn test_string_with_quotes() {
 
     let ast = convert_to_lua_ast(workflow, &object_info).expect("Conversion failed");
 
+    // checkpoint_loader_simple is only referenced once, so it's inlined
     let expected = r#"
-        local checkpoint_loader_simple = g:CheckpointLoaderSimple("model.safetensors")
         local clip_text_encode = g:CLIPTextEncode {
-            clip = checkpoint_loader_simple.clip,
+            clip = g:CheckpointLoaderSimple("model.safetensors").clip,
             text = "a \"quoted\" string",
         }
     "#;
@@ -260,6 +263,7 @@ fn test_multi_output_node_references() {
 
     let ast = convert_to_lua_ast(workflow, &object_info).expect("Conversion failed");
 
+    // checkpoint_loader_simple is referenced twice (samples and vae), so NOT inlined
     let expected = r#"
         local checkpoint_loader_simple = g:CheckpointLoaderSimple("model.safetensors")
         local vae_decode = g:VAEDecode {
@@ -291,6 +295,7 @@ fn test_variable_naming() {
 
     let ast = convert_to_lua_ast(workflow, &object_info).expect("Conversion failed");
 
+    // checkpoint_loader_simple is referenced twice, so NOT inlined
     let expected = r#"
         local checkpoint_loader_simple = g:CheckpointLoaderSimple("model.safetensors")
         local clip_text_encode = g:CLIPTextEncode {
@@ -314,47 +319,44 @@ fn test_example_workflow() {
 
     let ast = convert_to_lua_ast(workflow, &object_info).expect("Conversion failed");
 
-    // Comments from _meta.title; node order by topological sort; fields alphabetically ordered
+    // In the example workflow:
+    // - CheckpointLoaderSimple: ref_count > 1 (model, clip x2, vae) -> variable
+    // - EmptyLatentImage: ref_count = 1 (latent_image) -> inlined
+    // - CLIPTextEncode (positive): ref_count = 1 -> inlined
+    // - CLIPTextEncode (negative): ref_count = 1 -> inlined
+    // - KSampler: ref_count = 1 (samples) -> inlined
+    // - VAEDecode: ref_count = 1 (images) -> inlined
+    // - PreviewImage: ref_count = 0 (terminal) -> variable
     let expected = r#"
         -- Load Checkpoint (CheckpointLoaderSimple)
         local checkpoint_loader_simple = g:CheckpointLoaderSimple("model.safetensors")
-        -- Empty Latent (EmptyLatentImage)
-        local empty_latent_image = g:EmptyLatentImage {
-            batch_size = 1.0,
-            height = 1024.0,
-            width = 1024.0,
-        }
-        -- Positive Prompt (CLIPTextEncode)
-        local clip_text_encode = g:CLIPTextEncode {
-            clip = checkpoint_loader_simple.clip,
-            text = "a beautiful landscape",
-        }
-        -- Negative Prompt (CLIPTextEncode)
-        local clip_text_encode_1 = g:CLIPTextEncode {
-            clip = checkpoint_loader_simple.clip,
-            text = "ugly, blurry",
-        }
-        -- Sampler (KSampler)
-        local k_sampler = g:KSampler {
-            cfg = 7.5,
-            denoise = 1.0,
-            latent_image = empty_latent_image,
-            model = checkpoint_loader_simple.model,
-            negative = clip_text_encode_1,
-            positive = clip_text_encode,
-            sampler_name = "euler",
-            scheduler = "normal",
-            seed = 42.0,
-            steps = 20.0,
-        }
-        -- VAE Decode (VAEDecode)
-        local vae_decode = g:VAEDecode {
-            samples = k_sampler,
-            vae = checkpoint_loader_simple.vae,
-        }
         -- Preview (PreviewImage)
         local preview_image = g:PreviewImage {
-            images = vae_decode,
+            images = g:VAEDecode {
+                samples = g:KSampler {
+                    cfg = 7.5,
+                    denoise = 1.0,
+                    latent_image = g:EmptyLatentImage {
+                        batch_size = 1.0,
+                        height = 1024.0,
+                        width = 1024.0,
+                    },
+                    model = checkpoint_loader_simple.model,
+                    negative = g:CLIPTextEncode {
+                        clip = checkpoint_loader_simple.clip,
+                        text = "ugly, blurry",
+                    },
+                    positive = g:CLIPTextEncode {
+                        clip = checkpoint_loader_simple.clip,
+                        text = "a beautiful landscape",
+                    },
+                    sampler_name = "euler",
+                    scheduler = "normal",
+                    seed = 42.0,
+                    steps = 20.0,
+                },
+                vae = checkpoint_loader_simple.vae,
+            },
         }
     "#;
 

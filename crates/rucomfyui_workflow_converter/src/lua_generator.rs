@@ -12,6 +12,7 @@ use full_moon::ast::{
 use full_moon::tokenizer::{Token, TokenReference, TokenType};
 use full_moon::ShortString;
 use rucomfyui::object_info::{Object, ObjectInfo};
+use rucomfyui::workflow::WorkflowNodeId;
 use std::collections::HashMap;
 
 // =============================================================================
@@ -34,24 +35,52 @@ pub fn convert_to_lua_ast(json: &str, object_info: &ObjectInfo) -> Result<full_m
 // AST generation
 // =============================================================================
 
+/// Context for code generation, holding references to workflow data.
+struct GeneratorContext<'a> {
+    object_info: &'a ObjectInfo,
+    nodes_by_id: HashMap<WorkflowNodeId, &'a AnalyzedNode>,
+}
+
+impl<'a> GeneratorContext<'a> {
+    fn new(analyzed: &'a AnalyzedWorkflow, object_info: &'a ObjectInfo) -> Self {
+        let nodes_by_id = analyzed.nodes.iter().map(|n| (n.id, n)).collect();
+        Self {
+            object_info,
+            nodes_by_id,
+        }
+    }
+
+    fn get_node(&self, id: WorkflowNodeId) -> Option<&'a AnalyzedNode> {
+        self.nodes_by_id.get(&id).copied()
+    }
+
+    fn get_object(&self, class_type: &str) -> Option<&'a Object> {
+        self.object_info.get(class_type)
+    }
+}
+
 fn generate_lua_ast(
     analyzed: &AnalyzedWorkflow,
     object_info: &ObjectInfo,
 ) -> Result<full_moon::ast::Ast> {
+    let ctx = GeneratorContext::new(analyzed, object_info);
     let mut stmts: Vec<(Stmt, Option<TokenReference>)> = Vec::new();
+    let mut is_first = true;
 
-    // Track generated variables with their ObjectInfo
-    let mut generated_vars: HashMap<String, (&AnalyzedNode, Option<&Object>)> = HashMap::new();
+    // Only generate statements for nodes that need variables:
+    // - ref_count == 0: terminal nodes (outputs)
+    // - ref_count > 1: nodes referenced multiple times
+    // Nodes with ref_count == 1 will be inlined at their use site
+    for node in &analyzed.nodes {
+        if node.ref_count == 1 {
+            continue; // Will be inlined
+        }
 
-    // Generate code for each node
-    for (i, node) in analyzed.nodes.iter().enumerate() {
-        let obj = object_info.get(&node.class_type);
-
-        // Build the function call expression
-        let func_call_expr = build_node_call(node, &generated_vars)?;
+        // Build the function call expression (may recursively inline dependencies)
+        let func_call_expr = build_node_call(&ctx, node)?;
 
         // Determine the local token (with or without comment, first or not)
-        let local_tok = match (&node.display_name, i == 0) {
+        let local_tok = match (&node.display_name, is_first) {
             (Some(display_name), true) => {
                 let comment = format!("{} ({})", display_name, node.class_type);
                 local_token_first_with_comment(&comment)
@@ -71,7 +100,7 @@ fn generate_lua_ast(
         );
 
         stmts.push((stmt, None));
-        generated_vars.insert(node.var_name.clone(), (node, obj));
+        is_first = false;
     }
 
     let block = Block::new().with_stmts(stmts);
@@ -83,10 +112,8 @@ fn generate_lua_ast(
 // Node and input expression building
 // =============================================================================
 
-fn build_node_call(
-    node: &AnalyzedNode,
-    generated_vars: &HashMap<String, (&AnalyzedNode, Option<&Object>)>,
-) -> Result<FunctionCall> {
+/// Build a function call expression for a node: `g:NodeType { ... }` or `g:NodeType(arg)`
+fn build_node_call(ctx: &GeneratorContext, node: &AnalyzedNode) -> Result<FunctionCall> {
     // Check if we can use positional or need named arguments
     let use_table = node.inputs.len() > 1
         || node
@@ -99,7 +126,7 @@ fn build_node_call(
     } else if !use_table && node.inputs.len() == 1 {
         // Single simple argument - can use positional
         let (_, input) = node.inputs.iter().next().unwrap();
-        let expr = build_input_expr(input, generated_vars)?;
+        let expr = build_input_expr(ctx, input)?;
         paren_args(expr)
     } else {
         // Multiple arguments or node references - use table syntax
@@ -107,7 +134,7 @@ fn build_node_call(
             .inputs
             .iter()
             .map(|(name, input)| {
-                let expr = build_input_expr(input, generated_vars)?;
+                let expr = build_input_expr(ctx, input)?;
                 Ok((name.clone(), expr))
             })
             .collect::<Result<Vec<_>>>()?;
@@ -117,10 +144,8 @@ fn build_node_call(
     Ok(method_call("g", &node.class_type, args))
 }
 
-fn build_input_expr(
-    input: &AnalyzedInput,
-    generated_vars: &HashMap<String, (&AnalyzedNode, Option<&Object>)>,
-) -> Result<Expression> {
+/// Build an expression for an input value, inlining single-use node references.
+fn build_input_expr(ctx: &GeneratorContext, input: &AnalyzedInput) -> Result<Expression> {
     match input {
         AnalyzedInput::String(s) => Ok(string_expr(s)),
         AnalyzedInput::Integer(i) => Ok(number_expr(&i.to_string())),
@@ -133,18 +158,49 @@ fn build_input_expr(
             }
         }
         AnalyzedInput::Boolean(b) => Ok(bool_expr(*b)),
-        AnalyzedInput::NodeRef { var_name, slot } => {
-            // Look up the referenced node to get its output field name from ObjectInfo
-            if let Some((_ref_node, Some(ref_obj))) = generated_vars.get(var_name) {
+        AnalyzedInput::NodeRef {
+            node_id,
+            var_name,
+            slot,
+        } => {
+            // Look up the referenced node
+            let ref_node = ctx.get_node(*node_id);
+            let ref_obj = ref_node.and_then(|n| ctx.get_object(&n.class_type));
+
+            // Check if we should inline this node
+            if let Some(ref_node) = ref_node {
+                if ref_node.ref_count == 1 {
+                    // Inline the node - build its full expression
+                    let func_call = build_node_call(ctx, ref_node)?;
+
+                    // If this is a multi-output node and we need a specific output, add field access
+                    if let Some(ref_obj) = ref_obj {
+                        let outputs: Vec<_> = ref_obj.processed_output().collect();
+                        if outputs.len() > 1 {
+                            if let Some(output) = outputs.get(*slot as usize) {
+                                let field_name = output.name.to_case(Case::Snake);
+                                return Ok(func_call_field_access_expr(func_call, &field_name));
+                            }
+                        }
+                    }
+
+                    // Single output or unknown - just the function call
+                    return Ok(Expression::FunctionCall(func_call));
+                }
+            }
+
+            // Not inlining - use variable reference
+            // Check if we need field access for multi-output nodes
+            if let Some(ref_obj) = ref_obj {
                 let outputs: Vec<_> = ref_obj.processed_output().collect();
                 if outputs.len() > 1 {
-                    // Multi-output node - use field name
                     if let Some(output) = outputs.get(*slot as usize) {
                         let field_name = output.name.to_case(Case::Snake);
                         return Ok(field_access_expr(var_name, &field_name));
                     }
                 }
             }
+
             // Single-output or unknown - use variable directly
             if *slot == 0 {
                 Ok(var_expr(var_name))
@@ -251,6 +307,20 @@ fn field_access_expr(var_name: &str, field_name: &str) -> Expression {
                 name: ident(field_name),
             },
         )]),
+    )))
+}
+
+/// Build a field access on a function call result: `func_call.field`
+fn func_call_field_access_expr(func_call: FunctionCall, field_name: &str) -> Expression {
+    // Get the existing suffixes and add the field access
+    let mut suffixes = func_call.suffixes().cloned().collect::<Vec<_>>();
+    suffixes.push(Suffix::Index(Index::Dot {
+        dot: symbol("."),
+        name: ident(field_name),
+    }));
+
+    Expression::Var(Var::Expression(Box::new(
+        VarExpression::new(func_call.prefix().clone()).with_suffixes(suffixes),
     )))
 }
 
@@ -509,9 +579,9 @@ mod tests {
             }
         }"#;
 
-        // Test AST generation directly
         let ast = convert_to_lua_ast(json, &object_info).unwrap();
 
+        // Single terminal node - still gets a variable
         let expected = r#"
             -- Load Checkpoint (CheckpointLoaderSimple)
             local checkpoint_loader_simple = g:CheckpointLoaderSimple("sd_xl_base_1.0.safetensors")
@@ -521,8 +591,9 @@ mod tests {
     }
 
     #[test]
-    fn test_convert_workflow_with_dependencies() {
+    fn test_single_use_node_inlined() {
         let object_info = load_test_object_info();
+        // checkpoint_loader_simple is referenced only once by clip_text_encode
         let json = r#"{
             "1": {
                 "inputs": { "ckpt_name": "model.safetensors" },
@@ -539,10 +610,10 @@ mod tests {
 
         let ast = convert_to_lua_ast(json, &object_info).unwrap();
 
+        // checkpoint_loader_simple should be inlined
         let expected = r#"
-            local checkpoint_loader_simple = g:CheckpointLoaderSimple("model.safetensors")
             local clip_text_encode = g:CLIPTextEncode {
-                clip = checkpoint_loader_simple.clip,
+                clip = g:CheckpointLoaderSimple("model.safetensors").clip,
                 text = "a cat",
             }
         "#;
@@ -551,8 +622,48 @@ mod tests {
     }
 
     #[test]
-    fn test_multi_output_node_references() {
+    fn test_multi_use_node_not_inlined() {
         let object_info = load_test_object_info();
+        // checkpoint_loader_simple is referenced twice (by two CLIPTextEncode nodes)
+        let json = r#"{
+            "1": {
+                "inputs": { "ckpt_name": "model.safetensors" },
+                "class_type": "CheckpointLoaderSimple"
+            },
+            "2": {
+                "inputs": { "text": "first", "clip": ["1", 1] },
+                "class_type": "CLIPTextEncode"
+            },
+            "3": {
+                "inputs": { "text": "second", "clip": ["1", 1] },
+                "class_type": "CLIPTextEncode"
+            }
+        }"#;
+
+        let ast = convert_to_lua_ast(json, &object_info).unwrap();
+
+        // checkpoint_loader_simple should NOT be inlined (used twice)
+        // But the CLIPTextEncode nodes are only used once each (terminal), so they get variables
+        let expected = r#"
+            local checkpoint_loader_simple = g:CheckpointLoaderSimple("model.safetensors")
+            local clip_text_encode = g:CLIPTextEncode {
+                clip = checkpoint_loader_simple.clip,
+                text = "first",
+            }
+            local clip_text_encode_1 = g:CLIPTextEncode {
+                clip = checkpoint_loader_simple.clip,
+                text = "second",
+            }
+        "#;
+
+        assert_ast_eq(&ast, expected);
+    }
+
+    #[test]
+    fn test_multi_output_node_inlined() {
+        let object_info = load_test_object_info();
+        // checkpoint_loader_simple is referenced only by VAEDecode (twice for different outputs)
+        // But that still counts as 2 references!
         let json = r#"{
             "1": {
                 "inputs": { "ckpt_name": "model.safetensors" },
@@ -566,6 +677,7 @@ mod tests {
 
         let ast = convert_to_lua_ast(json, &object_info).unwrap();
 
+        // checkpoint_loader_simple is referenced twice (samples and vae), so NOT inlined
         let expected = r#"
             local checkpoint_loader_simple = g:CheckpointLoaderSimple("model.safetensors")
             local vae_decode = g:VAEDecode {
@@ -605,34 +717,49 @@ mod tests {
     }
 
     #[test]
-    fn test_variable_naming_dedup() {
+    fn test_deeply_nested_inlining() {
         let object_info = load_test_object_info();
+        // A chain where each node is only referenced once:
+        // CheckpointLoaderSimple -> CLIPTextEncode -> PreviewImage (hypothetically)
+        // In practice, PreviewImage takes images not conditioning, but let's test the concept
         let json = r#"{
             "1": {
                 "inputs": { "ckpt_name": "model.safetensors" },
                 "class_type": "CheckpointLoaderSimple"
             },
             "2": {
-                "inputs": { "text": "first", "clip": ["1", 1] },
+                "inputs": { "text": "test", "clip": ["1", 1] },
                 "class_type": "CLIPTextEncode"
             },
             "3": {
-                "inputs": { "text": "second", "clip": ["1", 1] },
-                "class_type": "CLIPTextEncode"
+                "inputs": { "width": 512, "height": 512, "batch_size": 1 },
+                "class_type": "EmptyLatentImage"
+            },
+            "4": {
+                "inputs": { "samples": ["3", 0], "vae": ["1", 2] },
+                "class_type": "VAEDecode"
             }
         }"#;
 
         let ast = convert_to_lua_ast(json, &object_info).unwrap();
 
+        // CheckpointLoaderSimple is referenced twice (by CLIPTextEncode and VAEDecode)
+        // CLIPTextEncode is referenced 0 times (terminal) - gets a variable
+        // EmptyLatentImage is referenced once - inlined
+        // VAEDecode is referenced 0 times (terminal) - gets a variable
         let expected = r#"
             local checkpoint_loader_simple = g:CheckpointLoaderSimple("model.safetensors")
             local clip_text_encode = g:CLIPTextEncode {
                 clip = checkpoint_loader_simple.clip,
-                text = "first",
+                text = "test",
             }
-            local clip_text_encode_1 = g:CLIPTextEncode {
-                clip = checkpoint_loader_simple.clip,
-                text = "second",
+            local vae_decode = g:VAEDecode {
+                samples = g:EmptyLatentImage {
+                    batch_size = 1.0,
+                    height = 512.0,
+                    width = 512.0,
+                },
+                vae = checkpoint_loader_simple.vae,
             }
         "#;
 
@@ -646,46 +773,44 @@ mod tests {
 
         let ast = convert_to_lua_ast(json, &object_info).unwrap();
 
+        // In the example workflow:
+        // - CheckpointLoaderSimple: ref_count > 1 (model, clip x2, vae) -> variable
+        // - EmptyLatentImage: ref_count = 1 (latent_image) -> inlined
+        // - CLIPTextEncode (positive): ref_count = 1 -> inlined
+        // - CLIPTextEncode (negative): ref_count = 1 -> inlined
+        // - KSampler: ref_count = 1 (samples) -> inlined
+        // - VAEDecode: ref_count = 1 (images) -> inlined
+        // - PreviewImage: ref_count = 0 (terminal) -> variable
         let expected = r#"
             -- Load Checkpoint (CheckpointLoaderSimple)
             local checkpoint_loader_simple = g:CheckpointLoaderSimple("model.safetensors")
-            -- Empty Latent (EmptyLatentImage)
-            local empty_latent_image = g:EmptyLatentImage {
-                batch_size = 1.0,
-                height = 1024.0,
-                width = 1024.0,
-            }
-            -- Positive Prompt (CLIPTextEncode)
-            local clip_text_encode = g:CLIPTextEncode {
-                clip = checkpoint_loader_simple.clip,
-                text = "a beautiful landscape",
-            }
-            -- Negative Prompt (CLIPTextEncode)
-            local clip_text_encode_1 = g:CLIPTextEncode {
-                clip = checkpoint_loader_simple.clip,
-                text = "ugly, blurry",
-            }
-            -- Sampler (KSampler)
-            local k_sampler = g:KSampler {
-                cfg = 7.5,
-                denoise = 1.0,
-                latent_image = empty_latent_image,
-                model = checkpoint_loader_simple.model,
-                negative = clip_text_encode_1,
-                positive = clip_text_encode,
-                sampler_name = "euler",
-                scheduler = "normal",
-                seed = 42.0,
-                steps = 20.0,
-            }
-            -- VAE Decode (VAEDecode)
-            local vae_decode = g:VAEDecode {
-                samples = k_sampler,
-                vae = checkpoint_loader_simple.vae,
-            }
             -- Preview (PreviewImage)
             local preview_image = g:PreviewImage {
-                images = vae_decode,
+                images = g:VAEDecode {
+                    samples = g:KSampler {
+                        cfg = 7.5,
+                        denoise = 1.0,
+                        latent_image = g:EmptyLatentImage {
+                            batch_size = 1.0,
+                            height = 1024.0,
+                            width = 1024.0,
+                        },
+                        model = checkpoint_loader_simple.model,
+                        negative = g:CLIPTextEncode {
+                            clip = checkpoint_loader_simple.clip,
+                            text = "ugly, blurry",
+                        },
+                        positive = g:CLIPTextEncode {
+                            clip = checkpoint_loader_simple.clip,
+                            text = "a beautiful landscape",
+                        },
+                        sampler_name = "euler",
+                        scheduler = "normal",
+                        seed = 42.0,
+                        steps = 20.0,
+                    },
+                    vae = checkpoint_loader_simple.vae,
+                },
             }
         "#;
 
