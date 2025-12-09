@@ -12,6 +12,7 @@ web-time = { workspace = true }
 # We don't need the typed nodes, so disable them
 rucomfyui = { path = "../../crates/rucomfyui", default-features = false }
 rucomfyui_node_graph = { path = "../../crates/rucomfyui_node_graph", default-features = false }
+rucomfyui_workflow_converter = { path = "../../crates/rucomfyui_workflow_converter", features = ["lua", "rust"] }
 
 eframe = { version = "0.29", features = ["persistence"] }
 egui_extras = { version = "0.29", features = ["all_loaders"] }
