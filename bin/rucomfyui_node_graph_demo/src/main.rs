@@ -245,6 +245,13 @@ impl eframe::App for Application {
                         if ui.button("Save API workflow").clicked() {
                             self.request_api_save();
                         }
+                        ui.separator();
+                        if ui.button("Copy as Lua").clicked() {
+                            self.copy_as_lua(ui.ctx());
+                        }
+                        if ui.button("Copy as Rust").clicked() {
+                            self.copy_as_rust(ui.ctx());
+                        }
                     });
                     if ui.button("System stats").clicked() {
                         self.request_system_stats();
@@ -834,6 +841,73 @@ impl Application {
                 tx.send(AsyncResponse::error("Save", err)).unwrap();
             }
         });
+    }
+    /// Copy the current graph as Lua code to the clipboard.
+    fn copy_as_lua(&mut self, ctx: &egui::Context) {
+        let Some(graph) = self.graph.as_ref() else {
+            self.async_output_tx
+                .send(AsyncResponse::error("Copy Lua", "No graph to copy"))
+                .unwrap();
+            return;
+        };
+
+        let workflow = graph.save_api_workflow();
+        let workflow_json = match workflow.to_json() {
+            Ok(json) => json,
+            Err(err) => {
+                self.async_output_tx
+                    .send(AsyncResponse::error("Copy Lua", err))
+                    .unwrap();
+                return;
+            }
+        };
+        let lua_code = match rucomfyui_workflow_converter::convert_to_lua(
+            &workflow_json,
+            &graph.object_info,
+        ) {
+            Ok(code) => code,
+            Err(err) => {
+                self.async_output_tx
+                    .send(AsyncResponse::error("Copy Lua", err))
+                    .unwrap();
+                return;
+            }
+        };
+
+        ctx.copy_text(lua_code);
+    }
+    /// Copy the current graph as Rust code to the clipboard.
+    fn copy_as_rust(&mut self, ctx: &egui::Context) {
+        let Some(graph) = self.graph.as_ref() else {
+            self.async_output_tx
+                .send(AsyncResponse::error("Copy Rust", "No graph to copy"))
+                .unwrap();
+            return;
+        };
+
+        let workflow = graph.save_api_workflow();
+        let workflow_json = match workflow.to_json() {
+            Ok(json) => json,
+            Err(err) => {
+                self.async_output_tx
+                    .send(AsyncResponse::error("Copy Rust", err))
+                    .unwrap();
+                return;
+            }
+        };
+        let rust_code =
+            match rucomfyui_workflow_converter::convert_to_rust(&workflow_json, &graph.object_info)
+            {
+                Ok(code) => code,
+                Err(err) => {
+                    self.async_output_tx
+                        .send(AsyncResponse::error("Copy Rust", err))
+                        .unwrap();
+                    return;
+                }
+            };
+
+        ctx.copy_text(rust_code);
     }
 
     /// Connect to ComfyUI at the address specified in [`Self::comfyui_address`].
