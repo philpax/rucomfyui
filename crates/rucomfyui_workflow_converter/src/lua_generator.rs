@@ -288,7 +288,7 @@ fn table_args(fields: Vec<(String, Expression)>, indent: usize) -> FunctionArgs 
     FunctionArgs::TableConstructor(
         TableConstructor::new()
             .with_braces(ContainedSpan::new(
-                symbol("{"),
+                symbol_with_leading_space("{"),
                 symbol_with_leading_whitespace("}", &format!("\n{}", closing_indent)),
             ))
             .with_fields(punctuated_fields),
@@ -401,6 +401,10 @@ fn make_indent(level: usize) -> String {
 
 fn symbol(s: &str) -> TokenReference {
     TokenReference::symbol(s).expect("valid symbol")
+}
+
+fn symbol_with_leading_space(s: &str) -> TokenReference {
+    TokenReference::symbol(&format!(" {}", s)).expect("valid symbol")
 }
 
 fn symbol_with_surrounding_space(s: &str) -> TokenReference {
