@@ -59,6 +59,9 @@ impl<'a> GeneratorContext<'a> {
     }
 }
 
+/// Base indentation level for top-level table arguments
+const BASE_INDENT: usize = 1;
+
 fn generate_lua_ast(
     analyzed: &AnalyzedWorkflow,
     object_info: &ObjectInfo,
@@ -77,7 +80,7 @@ fn generate_lua_ast(
         }
 
         // Build the function call expression (may recursively inline dependencies)
-        let func_call_expr = build_node_call(&ctx, node)?;
+        let func_call_expr = build_node_call(&ctx, node, BASE_INDENT)?;
 
         // Determine the local token (with or without comment, first or not)
         let local_tok = match (&node.display_name, is_first) {
@@ -113,7 +116,11 @@ fn generate_lua_ast(
 // =============================================================================
 
 /// Build a function call expression for a node: `g:NodeType { ... }` or `g:NodeType(arg)`
-fn build_node_call(ctx: &GeneratorContext, node: &AnalyzedNode) -> Result<FunctionCall> {
+fn build_node_call(
+    ctx: &GeneratorContext,
+    node: &AnalyzedNode,
+    indent: usize,
+) -> Result<FunctionCall> {
     // Check if we can use positional or need named arguments
     let use_table = node.inputs.len() > 1
         || node
@@ -126,7 +133,7 @@ fn build_node_call(ctx: &GeneratorContext, node: &AnalyzedNode) -> Result<Functi
     } else if !use_table && node.inputs.len() == 1 {
         // Single simple argument - can use positional
         let (_, input) = node.inputs.iter().next().unwrap();
-        let expr = build_input_expr(ctx, input)?;
+        let expr = build_input_expr(ctx, input, indent)?;
         paren_args(expr)
     } else {
         // Multiple arguments or node references - use table syntax
@@ -134,18 +141,22 @@ fn build_node_call(ctx: &GeneratorContext, node: &AnalyzedNode) -> Result<Functi
             .inputs
             .iter()
             .map(|(name, input)| {
-                let expr = build_input_expr(ctx, input)?;
+                let expr = build_input_expr(ctx, input, indent + 1)?;
                 Ok((name.clone(), expr))
             })
             .collect::<Result<Vec<_>>>()?;
-        table_args(fields)
+        table_args(fields, indent)
     };
 
     Ok(method_call("g", &node.class_type, args))
 }
 
 /// Build an expression for an input value, inlining single-use node references.
-fn build_input_expr(ctx: &GeneratorContext, input: &AnalyzedInput) -> Result<Expression> {
+fn build_input_expr(
+    ctx: &GeneratorContext,
+    input: &AnalyzedInput,
+    indent: usize,
+) -> Result<Expression> {
     match input {
         AnalyzedInput::String(s) => Ok(string_expr(s)),
         AnalyzedInput::Integer(i) => Ok(number_expr(&i.to_string())),
@@ -171,7 +182,7 @@ fn build_input_expr(ctx: &GeneratorContext, input: &AnalyzedInput) -> Result<Exp
             if let Some(ref_node) = ref_node {
                 if ref_node.ref_count == 1 {
                     // Inline the node - build its full expression
-                    let func_call = build_node_call(ctx, ref_node)?;
+                    let func_call = build_node_call(ctx, ref_node, indent)?;
 
                     // If this is a multi-output node and we need a specific output, add field access
                     if let Some(ref_obj) = ref_obj {
@@ -228,7 +239,7 @@ fn local_assignment(local_tok: TokenReference, name: &str, expr: Expression) -> 
     Stmt::LocalAssignment(
         LocalAssignment::new(names)
             .with_local_token(local_tok)
-            .with_equal_token(Some(symbol_with_leading_space("=")))
+            .with_equal_token(Some(symbol_with_surrounding_space("=")))
             .with_expressions(exprs),
     )
 }
@@ -261,23 +272,24 @@ fn empty_paren_args() -> FunctionArgs {
 }
 
 /// Build table constructor arguments: `{ fields }`
-fn table_args(fields: Vec<(String, Expression)>) -> FunctionArgs {
+fn table_args(fields: Vec<(String, Expression)>, indent: usize) -> FunctionArgs {
     let mut punctuated_fields: Punctuated<Field> = Punctuated::new();
 
     for (name, expr) in fields.into_iter() {
         let field = Field::NameKey {
-            key: ident_with_leading_newline_indent(&name),
-            equal: symbol_with_leading_space("="),
+            key: ident_with_indent(&name, indent),
+            equal: symbol_with_surrounding_space("="),
             value: expr,
         };
         punctuated_fields.push(Pair::Punctuated(field, symbol(",")));
     }
 
+    let closing_indent = make_indent(indent - 1);
     FunctionArgs::TableConstructor(
         TableConstructor::new()
             .with_braces(ContainedSpan::new(
-                symbol_with_trailing_space("{"),
-                symbol("\n}"),
+                symbol("{"),
+                symbol_with_leading_whitespace("}", &format!("\n{}", closing_indent)),
             ))
             .with_fields(punctuated_fields),
     )
@@ -370,10 +382,11 @@ fn ident_with_leading_space(name: &str) -> TokenReference {
     )
 }
 
-fn ident_with_leading_newline_indent(name: &str) -> TokenReference {
+fn ident_with_indent(name: &str, indent: usize) -> TokenReference {
+    let indent_str = format!("\n{}", make_indent(indent));
     TokenReference::new(
         vec![Token::new(TokenType::Whitespace {
-            characters: ShortString::new("\n    "),
+            characters: ShortString::new(&indent_str),
         })],
         Token::new(TokenType::Identifier {
             identifier: ShortString::new(name),
@@ -382,16 +395,31 @@ fn ident_with_leading_newline_indent(name: &str) -> TokenReference {
     )
 }
 
+fn make_indent(level: usize) -> String {
+    "    ".repeat(level)
+}
+
 fn symbol(s: &str) -> TokenReference {
     TokenReference::symbol(s).expect("valid symbol")
 }
 
-fn symbol_with_leading_space(s: &str) -> TokenReference {
-    TokenReference::symbol(&format!(" {}", s)).expect("valid symbol")
+fn symbol_with_surrounding_space(s: &str) -> TokenReference {
+    TokenReference::symbol(&format!(" {} ", s)).expect("valid symbol")
 }
 
-fn symbol_with_trailing_space(s: &str) -> TokenReference {
-    TokenReference::symbol(&format!("{} ", s)).expect("valid symbol")
+fn symbol_with_leading_whitespace(s: &str, whitespace: &str) -> TokenReference {
+    TokenReference::new(
+        vec![Token::new(TokenType::Whitespace {
+            characters: ShortString::new(whitespace),
+        })],
+        Token::new(TokenType::Symbol {
+            symbol: match s {
+                "}" => full_moon::tokenizer::Symbol::RightBrace,
+                _ => panic!("unsupported symbol: {}", s),
+            },
+        }),
+        vec![],
+    )
 }
 
 fn number_token(value: &str) -> TokenReference {
