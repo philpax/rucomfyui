@@ -861,16 +861,18 @@ impl Application {
                 return;
             }
         };
-        let lua_code =
-            match rucomfyui_workflow_converter::convert_to_lua(&workflow_json, &graph.object_info) {
-                Ok(code) => code,
-                Err(err) => {
-                    self.async_output_tx
-                        .send(AsyncResponse::error("Copy Lua", err))
-                        .unwrap();
-                    return;
-                }
-            };
+        let lua_code = match rucomfyui_workflow_converter::convert_to_lua(
+            &workflow_json,
+            &graph.object_info,
+        ) {
+            Ok(code) => code,
+            Err(err) => {
+                self.async_output_tx
+                    .send(AsyncResponse::error("Copy Lua", err))
+                    .unwrap();
+                return;
+            }
+        };
 
         ctx.copy_text(lua_code);
     }
