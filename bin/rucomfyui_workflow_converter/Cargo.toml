@@ -1,0 +1,12 @@
+[package]
+name = "rucomfyui_workflow_converter_cli"
+version = "0.1.0"
+edition = "2021"
+description = "CLI tool to convert ComfyUI API workflows to Rust or Lua code"
+
+[dependencies]
+anyhow = { workspace = true }
+clap = { version = "4", features = ["derive"] }
+rucomfyui = { path = "../../crates/rucomfyui" }
+rucomfyui_workflow_converter = { path = "../../crates/rucomfyui_workflow_converter" }
+serde_json = { workspace = true }

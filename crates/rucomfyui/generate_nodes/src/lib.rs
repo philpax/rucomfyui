@@ -251,6 +251,8 @@ fn type_module_definitions() -> Result<TokenStream> {
 
 fn write_category_tree_root(root: &CategoryTree, directory: &Path) -> Result<()> {
     let mut modules = vec![];
+    let mut nodes = vec![];
+    let mut node_outputs = vec![];
 
     for (key, node) in root {
         match node {
@@ -259,22 +261,37 @@ fn write_category_tree_root(root: &CategoryTree, directory: &Path) -> Result<()>
                 write_category_tree((name, tree), &directory.join(key.to_string()))
                     .context(name.clone())?;
                 modules.push(quote! {
+                    #[rustfmt::skip]
                     pub mod #key;
                 });
             }
-            CategoryTreeNode::Object(_) => unreachable!("There should be no top-level nodes."),
+            CategoryTreeNode::Object(object) => {
+                write_node_and_output(object, &mut nodes, &mut node_outputs)?;
+            }
         }
     }
 
+    let out_section = (!node_outputs.is_empty()).then(|| {
+        quote! {
+            /// Output types for nodes.
+            pub mod out {
+                #(#node_outputs)*
+            }
+        }
+    });
+
     let output = quote! {
         //! Typed node definitions for ComfyUI that provide a type-safe abstraction over the API.
+        #![allow(unused_imports, clippy::too_many_arguments, clippy::new_without_default)]
         #(#modules)*
+        #[rustfmt::skip]
         pub mod all;
+        #[rustfmt::skip]
         pub mod types;
 
         use std::collections::HashMap;
 
-        use crate::workflow::{WorkflowNodeId, WorkflowInput};
+        use crate::{workflow::{WorkflowNodeId, WorkflowInput}, nodes::types::Out};
 
         /// Implemented for all typed nodes; provides the node's output and metadata.
         pub trait TypedNode: Clone {
@@ -298,6 +315,10 @@ fn write_category_tree_root(root: &CategoryTree, directory: &Path) -> Result<()>
 
         /// Implemented for all output nodes (i.e. nodes at which a workflow terminates).
         pub trait TypedOutputNode {}
+
+        #out_section
+
+        #(#nodes)*
     };
     let path = directory.join("mod.rs");
     util::write_tokenstream(&path, output)?;
@@ -320,34 +341,12 @@ fn write_category_tree((name, tree): (&str, &CategoryTree), directory: &Path) ->
                 write_category_tree((name, tree), &directory.join(key.to_string()))
                     .context(name.clone())?;
                 modules.push(quote! {
+                    #[rustfmt::skip]
                     pub mod #key;
                 });
             }
             CategoryTreeNode::Object(object) => {
-                let struct_name =
-                    util::name_to_ident(&object.name, util::NameToIdentCase::Preserve)?;
-                let node_output_struct_name = (!object.output_node && object.output.len() > 1)
-                    .then(|| {
-                        util::name_to_ident(
-                            &format!("{}Output", object.name),
-                            util::NameToIdentCase::Preserve,
-                        )
-                    })
-                    .transpose()?;
-
-                nodes.push(write_node(
-                    object,
-                    &struct_name,
-                    node_output_struct_name.as_ref(),
-                )?);
-
-                if let Some(node_output_struct_name) = &node_output_struct_name {
-                    node_outputs.push(write_node_output_struct(
-                        object,
-                        &struct_name,
-                        node_output_struct_name,
-                    )?);
-                }
+                write_node_and_output(object, &mut nodes, &mut node_outputs)?;
             }
         }
     }
@@ -377,6 +376,39 @@ fn write_category_tree((name, tree): (&str, &CategoryTree), directory: &Path) ->
     };
     let path = directory.join("mod.rs");
     util::write_tokenstream(&path, output)?;
+    Ok(())
+}
+
+/// Generates node and output struct tokens for an object, pushing them to the provided vectors.
+fn write_node_and_output(
+    object: &Object,
+    nodes: &mut Vec<TokenStream>,
+    node_outputs: &mut Vec<TokenStream>,
+) -> Result<()> {
+    let struct_name = util::name_to_ident(&object.name, util::NameToIdentCase::Preserve)?;
+    let node_output_struct_name = (!object.output_node && object.output.len() > 1)
+        .then(|| {
+            util::name_to_ident(
+                &format!("{}Output", object.name),
+                util::NameToIdentCase::Preserve,
+            )
+        })
+        .transpose()?;
+
+    nodes.push(write_node(
+        object,
+        &struct_name,
+        node_output_struct_name.as_ref(),
+    )?);
+
+    if let Some(node_output_struct_name) = &node_output_struct_name {
+        node_outputs.push(write_node_output_struct(
+            object,
+            &struct_name,
+            node_output_struct_name,
+        )?);
+    }
+
     Ok(())
 }
 

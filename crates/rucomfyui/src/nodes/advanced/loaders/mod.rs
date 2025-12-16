@@ -5,7 +5,9 @@ use crate::{
     workflow::{WorkflowNodeId, WorkflowInput},
     nodes::types::Out,
 };
+#[rustfmt::skip]
 pub mod deprecated;
+#[rustfmt::skip]
 pub mod qwen;
 /// Output types for nodes.
 pub mod out {

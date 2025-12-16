@@ -69,42 +69,25 @@ impl<
 pub struct AudioConcat<
     Audio1Param: crate::nodes::types::Audio,
     Audio2Param: crate::nodes::types::Audio,
-    DirectionParam: crate::nodes::types::String,
 > {
     ///No documentation.
     pub audio_1: Audio1Param,
     ///No documentation.
     pub audio_2: Audio2Param,
-    /**Whether to append audio2 after or before audio1.
-
-**Metadata**:
-  - Default: after
-*/
-    pub direction: DirectionParam,
 }
 impl<
     Audio1Param: crate::nodes::types::Audio,
     Audio2Param: crate::nodes::types::Audio,
-    DirectionParam: crate::nodes::types::String,
-> AudioConcat<Audio1Param, Audio2Param, DirectionParam> {
+> AudioConcat<Audio1Param, Audio2Param> {
     /// Create a new node.
-    pub fn new(
-        audio_1: Audio1Param,
-        audio_2: Audio2Param,
-        direction: DirectionParam,
-    ) -> Self {
-        Self {
-            audio_1,
-            audio_2,
-            direction,
-        }
+    pub fn new(audio_1: Audio1Param, audio_2: Audio2Param) -> Self {
+        Self { audio_1, audio_2 }
     }
 }
 impl<
     Audio1Param: crate::nodes::types::Audio,
     Audio2Param: crate::nodes::types::Audio,
-    DirectionParam: crate::nodes::types::String,
-> crate::nodes::TypedNode for AudioConcat<Audio1Param, Audio2Param, DirectionParam> {
+> crate::nodes::TypedNode for AudioConcat<Audio1Param, Audio2Param> {
     type Output = crate::nodes::types::AudioOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)
@@ -113,7 +96,6 @@ impl<
         let mut output = HashMap::default();
         output.insert("audio1".to_string(), self.audio_1.clone().into());
         output.insert("audio2".to_string(), self.audio_2.clone().into());
-        output.insert("direction".to_string(), self.direction.clone().into());
         output
     }
     const NAME: &'static str = "AudioConcat";
@@ -127,38 +109,25 @@ impl<
 pub struct AudioMerge<
     Audio1Param: crate::nodes::types::Audio,
     Audio2Param: crate::nodes::types::Audio,
-    MergeMethodParam: crate::nodes::types::String,
 > {
     ///No documentation.
     pub audio_1: Audio1Param,
     ///No documentation.
     pub audio_2: Audio2Param,
-    ///The method used to combine the audio waveforms.
-    pub merge_method: MergeMethodParam,
 }
 impl<
     Audio1Param: crate::nodes::types::Audio,
     Audio2Param: crate::nodes::types::Audio,
-    MergeMethodParam: crate::nodes::types::String,
-> AudioMerge<Audio1Param, Audio2Param, MergeMethodParam> {
+> AudioMerge<Audio1Param, Audio2Param> {
     /// Create a new node.
-    pub fn new(
-        audio_1: Audio1Param,
-        audio_2: Audio2Param,
-        merge_method: MergeMethodParam,
-    ) -> Self {
-        Self {
-            audio_1,
-            audio_2,
-            merge_method,
-        }
+    pub fn new(audio_1: Audio1Param, audio_2: Audio2Param) -> Self {
+        Self { audio_1, audio_2 }
     }
 }
 impl<
     Audio1Param: crate::nodes::types::Audio,
     Audio2Param: crate::nodes::types::Audio,
-    MergeMethodParam: crate::nodes::types::String,
-> crate::nodes::TypedNode for AudioMerge<Audio1Param, Audio2Param, MergeMethodParam> {
+> crate::nodes::TypedNode for AudioMerge<Audio1Param, Audio2Param> {
     type Output = crate::nodes::types::AudioOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)
@@ -167,7 +136,6 @@ impl<
         let mut output = HashMap::default();
         output.insert("audio1".to_string(), self.audio_1.clone().into());
         output.insert("audio2".to_string(), self.audio_2.clone().into());
-        output.insert("merge_method".to_string(), self.merge_method.clone().into());
         output
     }
     const NAME: &'static str = "AudioMerge";
@@ -180,8 +148,8 @@ impl<
 #[allow(non_camel_case_types)]
 pub struct EmptyAudio<
     DurationParam: crate::nodes::types::Float,
-    SampleRateParam: crate::nodes::types::Int,
-    ChannelsParam: crate::nodes::types::Int,
+    SampleRateParam: crate::nodes::types::Float,
+    ChannelsParam: crate::nodes::types::Float,
 > {
     /**Duration of the empty audio clip in seconds
 
@@ -205,8 +173,8 @@ pub struct EmptyAudio<
 }
 impl<
     DurationParam: crate::nodes::types::Float,
-    SampleRateParam: crate::nodes::types::Int,
-    ChannelsParam: crate::nodes::types::Int,
+    SampleRateParam: crate::nodes::types::Float,
+    ChannelsParam: crate::nodes::types::Float,
 > EmptyAudio<DurationParam, SampleRateParam, ChannelsParam> {
     /// Create a new node.
     pub fn new(
@@ -223,8 +191,8 @@ impl<
 }
 impl<
     DurationParam: crate::nodes::types::Float,
-    SampleRateParam: crate::nodes::types::Int,
-    ChannelsParam: crate::nodes::types::Int,
+    SampleRateParam: crate::nodes::types::Float,
+    ChannelsParam: crate::nodes::types::Float,
 > crate::nodes::TypedNode for EmptyAudio<DurationParam, SampleRateParam, ChannelsParam> {
     type Output = crate::nodes::types::AudioOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
@@ -245,30 +213,20 @@ impl<
 ///**Load Audio**: No description.
 #[derive(Clone)]
 #[allow(non_camel_case_types)]
-pub struct LoadAudio<AudioParam: crate::nodes::types::String> {
-    /**No documentation.
-
-**Metadata**:
-  - Audio upload: true
-*/
-    pub audio: AudioParam,
-}
-impl<AudioParam: crate::nodes::types::String> LoadAudio<AudioParam> {
+pub struct LoadAudio {}
+impl LoadAudio {
     /// Create a new node.
-    pub fn new(audio: AudioParam) -> Self {
-        Self { audio }
+    pub fn new() -> Self {
+        Self {}
     }
 }
-impl<AudioParam: crate::nodes::types::String> crate::nodes::TypedNode
-for LoadAudio<AudioParam> {
+impl crate::nodes::TypedNode for LoadAudio {
     type Output = crate::nodes::types::AudioOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)
     }
     fn inputs(&self) -> HashMap<String, WorkflowInput> {
-        let mut output = HashMap::default();
-        output.insert("audio".to_string(), self.audio.clone().into());
-        output
+        HashMap::default()
     }
     const NAME: &'static str = "LoadAudio";
     const DISPLAY_NAME: &'static str = "Load Audio";
@@ -341,6 +299,7 @@ pub struct SaveAudio<
     /**No documentation.
 
 **Metadata**:
+  - Multiline: false
   - Default: audio/ComfyUI
 */
     pub filename_prefix: FilenamePrefixParam,
@@ -384,47 +343,30 @@ impl<
 pub struct SaveAudioMP3<
     AudioParam: crate::nodes::types::Audio,
     FilenamePrefixParam: crate::nodes::types::String,
-    QualityParam: crate::nodes::types::String,
 > {
     ///No documentation.
     pub audio: AudioParam,
     /**No documentation.
 
 **Metadata**:
+  - Multiline: false
   - Default: audio/ComfyUI
 */
     pub filename_prefix: FilenamePrefixParam,
-    /**No documentation.
-
-**Metadata**:
-  - Default: V0
-*/
-    pub quality: QualityParam,
 }
 impl<
     AudioParam: crate::nodes::types::Audio,
     FilenamePrefixParam: crate::nodes::types::String,
-    QualityParam: crate::nodes::types::String,
-> SaveAudioMP3<AudioParam, FilenamePrefixParam, QualityParam> {
+> SaveAudioMP3<AudioParam, FilenamePrefixParam> {
     /// Create a new node.
-    pub fn new(
-        audio: AudioParam,
-        filename_prefix: FilenamePrefixParam,
-        quality: QualityParam,
-    ) -> Self {
-        Self {
-            audio,
-            filename_prefix,
-            quality,
-        }
+    pub fn new(audio: AudioParam, filename_prefix: FilenamePrefixParam) -> Self {
+        Self { audio, filename_prefix }
     }
 }
 impl<
     AudioParam: crate::nodes::types::Audio,
     FilenamePrefixParam: crate::nodes::types::String,
-    QualityParam: crate::nodes::types::String,
-> crate::nodes::TypedNode
-for SaveAudioMP3<AudioParam, FilenamePrefixParam, QualityParam> {
+> crate::nodes::TypedNode for SaveAudioMP3<AudioParam, FilenamePrefixParam> {
     type Output = WorkflowNodeId;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         node_id
@@ -434,7 +376,6 @@ for SaveAudioMP3<AudioParam, FilenamePrefixParam, QualityParam> {
         output.insert("audio".to_string(), self.audio.clone().into());
         output
             .insert("filename_prefix".to_string(), self.filename_prefix.clone().into());
-        output.insert("quality".to_string(), self.quality.clone().into());
         output
     }
     const NAME: &'static str = "SaveAudioMP3";
@@ -445,56 +386,37 @@ for SaveAudioMP3<AudioParam, FilenamePrefixParam, QualityParam> {
 impl<
     AudioParam: crate::nodes::types::Audio,
     FilenamePrefixParam: crate::nodes::types::String,
-    QualityParam: crate::nodes::types::String,
-> crate::nodes::TypedOutputNode
-for SaveAudioMP3<AudioParam, FilenamePrefixParam, QualityParam> {}
+> crate::nodes::TypedOutputNode for SaveAudioMP3<AudioParam, FilenamePrefixParam> {}
 ///**Save Audio (Opus)**: No description.
 #[derive(Clone)]
 #[allow(non_camel_case_types)]
 pub struct SaveAudioOpus<
     AudioParam: crate::nodes::types::Audio,
     FilenamePrefixParam: crate::nodes::types::String,
-    QualityParam: crate::nodes::types::String,
 > {
     ///No documentation.
     pub audio: AudioParam,
     /**No documentation.
 
 **Metadata**:
+  - Multiline: false
   - Default: audio/ComfyUI
 */
     pub filename_prefix: FilenamePrefixParam,
-    /**No documentation.
-
-**Metadata**:
-  - Default: 128k
-*/
-    pub quality: QualityParam,
 }
 impl<
     AudioParam: crate::nodes::types::Audio,
     FilenamePrefixParam: crate::nodes::types::String,
-    QualityParam: crate::nodes::types::String,
-> SaveAudioOpus<AudioParam, FilenamePrefixParam, QualityParam> {
+> SaveAudioOpus<AudioParam, FilenamePrefixParam> {
     /// Create a new node.
-    pub fn new(
-        audio: AudioParam,
-        filename_prefix: FilenamePrefixParam,
-        quality: QualityParam,
-    ) -> Self {
-        Self {
-            audio,
-            filename_prefix,
-            quality,
-        }
+    pub fn new(audio: AudioParam, filename_prefix: FilenamePrefixParam) -> Self {
+        Self { audio, filename_prefix }
     }
 }
 impl<
     AudioParam: crate::nodes::types::Audio,
     FilenamePrefixParam: crate::nodes::types::String,
-    QualityParam: crate::nodes::types::String,
-> crate::nodes::TypedNode
-for SaveAudioOpus<AudioParam, FilenamePrefixParam, QualityParam> {
+> crate::nodes::TypedNode for SaveAudioOpus<AudioParam, FilenamePrefixParam> {
     type Output = WorkflowNodeId;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         node_id
@@ -504,7 +426,6 @@ for SaveAudioOpus<AudioParam, FilenamePrefixParam, QualityParam> {
         output.insert("audio".to_string(), self.audio.clone().into());
         output
             .insert("filename_prefix".to_string(), self.filename_prefix.clone().into());
-        output.insert("quality".to_string(), self.quality.clone().into());
         output
     }
     const NAME: &'static str = "SaveAudioOpus";
@@ -515,9 +436,7 @@ for SaveAudioOpus<AudioParam, FilenamePrefixParam, QualityParam> {
 impl<
     AudioParam: crate::nodes::types::Audio,
     FilenamePrefixParam: crate::nodes::types::String,
-    QualityParam: crate::nodes::types::String,
-> crate::nodes::TypedOutputNode
-for SaveAudioOpus<AudioParam, FilenamePrefixParam, QualityParam> {}
+> crate::nodes::TypedOutputNode for SaveAudioOpus<AudioParam, FilenamePrefixParam> {}
 ///**Split Audio Channels**: Separates the audio into left and right channels.
 #[derive(Clone)]
 #[allow(non_camel_case_types)]

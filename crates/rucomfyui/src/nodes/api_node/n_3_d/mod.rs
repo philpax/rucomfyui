@@ -5,5 +5,7 @@ use crate::{
     workflow::{WorkflowNodeId, WorkflowInput},
     nodes::types::Out,
 };
+#[rustfmt::skip]
 pub mod rodin;
+#[rustfmt::skip]
 pub mod tripo;

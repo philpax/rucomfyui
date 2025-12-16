@@ -5,16 +5,97 @@ use crate::{
     workflow::{WorkflowNodeId, WorkflowInput},
     nodes::types::Out,
 };
+#[rustfmt::skip]
 pub mod n_3_d;
+#[rustfmt::skip]
 pub mod advanced;
+#[rustfmt::skip]
 pub mod audio;
+#[rustfmt::skip]
 pub mod batch;
+#[rustfmt::skip]
 pub mod chroma_radiance;
+#[rustfmt::skip]
 pub mod inpaint;
+#[rustfmt::skip]
 pub mod sd_3;
+#[rustfmt::skip]
 pub mod stable_cascade;
+#[rustfmt::skip]
 pub mod transform;
+#[rustfmt::skip]
 pub mod video;
+///**Empty Flux 2 Latent**: No description.
+#[derive(Clone)]
+#[allow(non_camel_case_types)]
+pub struct EmptyFlux2LatentImage<
+    WidthParam: crate::nodes::types::Int,
+    HeightParam: crate::nodes::types::Int,
+    BatchSizeParam: crate::nodes::types::Int,
+> {
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1024
+  - Max: 16384
+  - Min: 16
+  - Step: 16
+*/
+    pub width: WidthParam,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1024
+  - Max: 16384
+  - Min: 16
+  - Step: 16
+*/
+    pub height: HeightParam,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1
+  - Max: 4096
+  - Min: 1
+*/
+    pub batch_size: BatchSizeParam,
+}
+impl<
+    WidthParam: crate::nodes::types::Int,
+    HeightParam: crate::nodes::types::Int,
+    BatchSizeParam: crate::nodes::types::Int,
+> EmptyFlux2LatentImage<WidthParam, HeightParam, BatchSizeParam> {
+    /// Create a new node.
+    pub fn new(
+        width: WidthParam,
+        height: HeightParam,
+        batch_size: BatchSizeParam,
+    ) -> Self {
+        Self { width, height, batch_size }
+    }
+}
+impl<
+    WidthParam: crate::nodes::types::Int,
+    HeightParam: crate::nodes::types::Int,
+    BatchSizeParam: crate::nodes::types::Int,
+> crate::nodes::TypedNode
+for EmptyFlux2LatentImage<WidthParam, HeightParam, BatchSizeParam> {
+    type Output = crate::nodes::types::LatentOut;
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
+        Self::Output::from_dynamic(node_id, 0)
+    }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("width".to_string(), self.width.clone().into());
+        output.insert("height".to_string(), self.height.clone().into());
+        output.insert("batch_size".to_string(), self.batch_size.clone().into());
+        output
+    }
+    const NAME: &'static str = "EmptyFlux2LatentImage";
+    const DISPLAY_NAME: &'static str = "Empty Flux 2 Latent";
+    const DESCRIPTION: &'static str = "";
+    const CATEGORY: &'static str = "latent";
+}
 ///**EmptyHunyuanImageLatent**: No description.
 #[derive(Clone)]
 #[allow(non_camel_case_types)]
@@ -154,6 +235,93 @@ impl<
     const NAME: &'static str = "EmptyLatentImage";
     const DISPLAY_NAME: &'static str = "Empty Latent Image";
     const DESCRIPTION: &'static str = "Create a new batch of empty latent images to be denoised via sampling.";
+    const CATEGORY: &'static str = "latent";
+}
+///**Hunyuan Video 15 Latent Upscale With Model**: No description.
+#[derive(Clone)]
+#[allow(non_camel_case_types)]
+pub struct HunyuanVideo15LatentUpscaleWithModel<
+    ModelParam: crate::nodes::types::LatentUpscaleModel,
+    SamplesParam: crate::nodes::types::Latent,
+    WidthParam: crate::nodes::types::Int,
+    HeightParam: crate::nodes::types::Int,
+> {
+    ///No documentation.
+    pub model: ModelParam,
+    ///No documentation.
+    pub samples: SamplesParam,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1280
+  - Max: 16384
+  - Min: 0
+  - Step: 8
+*/
+    pub width: WidthParam,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 720
+  - Max: 16384
+  - Min: 0
+  - Step: 8
+*/
+    pub height: HeightParam,
+}
+impl<
+    ModelParam: crate::nodes::types::LatentUpscaleModel,
+    SamplesParam: crate::nodes::types::Latent,
+    WidthParam: crate::nodes::types::Int,
+    HeightParam: crate::nodes::types::Int,
+> HunyuanVideo15LatentUpscaleWithModel<
+    ModelParam,
+    SamplesParam,
+    WidthParam,
+    HeightParam,
+> {
+    /// Create a new node.
+    pub fn new(
+        model: ModelParam,
+        samples: SamplesParam,
+        width: WidthParam,
+        height: HeightParam,
+    ) -> Self {
+        Self {
+            model,
+            samples,
+            width,
+            height,
+        }
+    }
+}
+impl<
+    ModelParam: crate::nodes::types::LatentUpscaleModel,
+    SamplesParam: crate::nodes::types::Latent,
+    WidthParam: crate::nodes::types::Int,
+    HeightParam: crate::nodes::types::Int,
+> crate::nodes::TypedNode
+for HunyuanVideo15LatentUpscaleWithModel<
+    ModelParam,
+    SamplesParam,
+    WidthParam,
+    HeightParam,
+> {
+    type Output = crate::nodes::types::LatentOut;
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
+        Self::Output::from_dynamic(node_id, 0)
+    }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("model".to_string(), self.model.clone().into());
+        output.insert("samples".to_string(), self.samples.clone().into());
+        output.insert("width".to_string(), self.width.clone().into());
+        output.insert("height".to_string(), self.height.clone().into());
+        output
+    }
+    const NAME: &'static str = "HunyuanVideo15LatentUpscaleWithModel";
+    const DISPLAY_NAME: &'static str = "Hunyuan Video 15 Latent Upscale With Model";
+    const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "latent";
 }
 ///**Latent Composite**: No description.

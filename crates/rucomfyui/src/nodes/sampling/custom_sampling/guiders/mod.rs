@@ -126,7 +126,6 @@ pub struct DualCFGGuider<
     NegativeParam: crate::nodes::types::Conditioning,
     CfgCondsParam: crate::nodes::types::Float,
     CfgCond2NegativeParam: crate::nodes::types::Float,
-    StyleParam: crate::nodes::types::String,
 > {
     ///No documentation.
     pub model: ModelParam,
@@ -156,8 +155,6 @@ pub struct DualCFGGuider<
   - Step: 0.1
 */
     pub cfg_cond_2_negative: CfgCond2NegativeParam,
-    ///No documentation.
-    pub style: StyleParam,
 }
 impl<
     ModelParam: crate::nodes::types::Model,
@@ -166,7 +163,6 @@ impl<
     NegativeParam: crate::nodes::types::Conditioning,
     CfgCondsParam: crate::nodes::types::Float,
     CfgCond2NegativeParam: crate::nodes::types::Float,
-    StyleParam: crate::nodes::types::String,
 > DualCFGGuider<
     ModelParam,
     Cond1Param,
@@ -174,7 +170,6 @@ impl<
     NegativeParam,
     CfgCondsParam,
     CfgCond2NegativeParam,
-    StyleParam,
 > {
     /// Create a new node.
     pub fn new(
@@ -184,7 +179,6 @@ impl<
         negative: NegativeParam,
         cfg_conds: CfgCondsParam,
         cfg_cond_2_negative: CfgCond2NegativeParam,
-        style: StyleParam,
     ) -> Self {
         Self {
             model,
@@ -193,7 +187,6 @@ impl<
             negative,
             cfg_conds,
             cfg_cond_2_negative,
-            style,
         }
     }
 }
@@ -204,7 +197,6 @@ impl<
     NegativeParam: crate::nodes::types::Conditioning,
     CfgCondsParam: crate::nodes::types::Float,
     CfgCond2NegativeParam: crate::nodes::types::Float,
-    StyleParam: crate::nodes::types::String,
 > crate::nodes::TypedNode
 for DualCFGGuider<
     ModelParam,
@@ -213,7 +205,6 @@ for DualCFGGuider<
     NegativeParam,
     CfgCondsParam,
     CfgCond2NegativeParam,
-    StyleParam,
 > {
     type Output = crate::nodes::types::GuiderOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
@@ -231,7 +222,6 @@ for DualCFGGuider<
                 "cfg_cond2_negative".to_string(),
                 self.cfg_cond_2_negative.clone().into(),
             );
-        output.insert("style".to_string(), self.style.clone().into());
         output
     }
     const NAME: &'static str = "DualCFGGuider";

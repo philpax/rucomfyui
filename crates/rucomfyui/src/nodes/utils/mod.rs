@@ -5,9 +5,11 @@ use crate::{
     workflow::{WorkflowNodeId, WorkflowInput},
     nodes::types::Out,
 };
+#[rustfmt::skip]
 pub mod primitive;
+#[rustfmt::skip]
 pub mod string;
-///**Preview Any**: No description.
+///**Preview as Text**: No description.
 #[derive(Clone)]
 #[allow(non_camel_case_types)]
 pub struct PreviewAny<SourceParam: crate::nodes::types::Wildcard> {
@@ -32,7 +34,7 @@ for PreviewAny<SourceParam> {
         output
     }
     const NAME: &'static str = "PreviewAny";
-    const DISPLAY_NAME: &'static str = "Preview Any";
+    const DISPLAY_NAME: &'static str = "Preview as Text";
     const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "utils";
 }
