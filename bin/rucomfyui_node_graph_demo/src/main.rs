@@ -1114,7 +1114,10 @@ impl Application {
         self.runtime.spawn(async move {
             let history = client.get_history(max_items).await;
             tx.send(match history {
-                Ok(history) => AsyncResponse::History { history, open_window },
+                Ok(history) => AsyncResponse::History {
+                    history,
+                    open_window,
+                },
                 Err(err) => AsyncResponse::error("History", err),
             })
             .unwrap();
@@ -1291,7 +1294,10 @@ impl Application {
                     self.models = models;
                     self.models_open = true;
                 }
-                AsyncResponse::History { history, open_window } => {
+                AsyncResponse::History {
+                    history,
+                    open_window,
+                } => {
                     self.history = Some(history);
                     if open_window {
                         self.history_open = true;

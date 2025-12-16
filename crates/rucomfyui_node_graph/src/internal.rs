@@ -322,11 +322,7 @@ impl FlowNodeData {
                     ObjectType::String,
                     FlowValueType::Array {
                         options: vec.iter().map(|v| v.as_str().to_string()).collect(),
-                        selected: vec
-                            .first()
-                            .cloned()
-                            .map(String::from)
-                            .unwrap_or_default(),
+                        selected: vec.first().cloned().map(String::from).unwrap_or_default(),
                     },
                 ),
                 ObjectInputType::Typed(object_type) => (
@@ -428,7 +424,9 @@ impl SnarlViewer<FlowNodeData> for FlowViewer<'_> {
             }
         } else {
             // No connection and not connection-only - show editable widget
-            input.value.render_input_widget(ui, &input.name, input.tooltip.as_ref());
+            input
+                .value
+                .render_input_widget(ui, &input.name, input.tooltip.as_ref());
         }
 
         // Determine pin color based on type
