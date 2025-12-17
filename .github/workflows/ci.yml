@@ -20,7 +20,7 @@ jobs:
         run: cargo fmt --all -- --check
 
       - name: Run Clippy without features
-        run: cargo clippy --all --no-default-features -- -D warnings
+        run: cargo clippy --all --no-default-features --features default-tls -- -D warnings
 
       - name: Run Clippy
         run: cargo clippy --all --all-features -- -D warnings
