@@ -7,6 +7,6 @@ description = "CLI tool to convert ComfyUI API workflows to Rust or Lua code"
 [dependencies]
 anyhow = { workspace = true }
 clap = { version = "4", features = ["derive"] }
-rucomfyui = { path = "../../crates/rucomfyui" }
+rucomfyui = { workspace = true }
 rucomfyui_workflow_converter = { path = "../../crates/rucomfyui_workflow_converter" }
 serde_json = { workspace = true }

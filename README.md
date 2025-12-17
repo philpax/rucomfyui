@@ -6,6 +6,14 @@ A Rust client for ComfyUI with an emphasis on type safety and ergonomics.
 
 The client library. See [the README](./crates/rucomfyui/README.md).
 
+### TLS Features
+
+`rucomfyui` uses `reqwest` for HTTP requests. By default, it enables `reqwest`'s `default-tls` feature. You can choose a different TLS backend by disabling default features and enabling one of the following:
+
+- `default-tls`: Uses the system's native TLS implementation (default)
+- `native-tls`: Explicitly use the native TLS backend
+- `rustls-tls`: Use `rustls` for TLS
+
 ## `rucomfyui_node_graph`
 
 ![A screenshot of the node graph showing a SDXL Turbo workflow](crates/rucomfyui_node_graph/rucomfyui_node_graph.png)
