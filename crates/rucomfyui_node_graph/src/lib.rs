@@ -178,6 +178,15 @@ impl ComfyUiNodeGraph {
                     if let Some(workflow_input) = workflow_node.inputs.get(&input.name) {
                         // Don't override if it's a slot (connection)
                         if !matches!(workflow_input, WorkflowInput::Slot(_, _)) {
+                            // If the input is an Array (dropdown), just update the selected value
+                            // rather than replacing the whole input (which would lose the options)
+                            if let FlowValueType::Array { selected, .. } = &mut input.value {
+                                if let WorkflowInput::String(s) = workflow_input {
+                                    *selected = s.clone();
+                                    continue;
+                                }
+                            }
+
                             let meta_typed = object
                                 .all_inputs()
                                 .find(|(name, _, _)| name == &input.name.as_str())
