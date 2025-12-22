@@ -157,7 +157,7 @@ impl ComfyUiNodeGraph {
         self.clear();
 
         for node_ids in sorted_node_ids {
-            node_position.x += 300.0;
+            node_position.x += 600.0;
             node_position.y = 0.0;
 
             for node_id in node_ids {
@@ -205,7 +205,7 @@ impl ComfyUiNodeGraph {
                 let snarl_node_id = self.snarl.insert_node(node_position, node_data);
                 mapping.insert(node_id, snarl_node_id);
 
-                node_position.y += 200.0;
+                node_position.y += 400.0;
             }
         }
 
