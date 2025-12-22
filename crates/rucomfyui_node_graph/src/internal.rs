@@ -515,13 +515,22 @@ impl SnarlViewer<FlowNodeData> for FlowViewer<'_> {
                 }
             });
 
-            if let Some(image) = images.get(*selected) {
-                let available_width = ui.available_width();
-                ui.add(
-                    egui::Image::new(image.clone())
-                        .max_width(available_width)
-                        .shrink_to_fit(),
-                );
+            if let Some(image_source) = images.get(*selected) {
+                let image = egui::Image::new(image_source.clone());
+
+                // Try to get the natural image size for the default resize dimensions
+                let default_size = image
+                    .load_for_size(ui.ctx(), egui::Vec2::splat(f32::INFINITY))
+                    .ok()
+                    .and_then(|poll| poll.size())
+                    .unwrap_or(egui::Vec2::new(256.0, 256.0));
+
+                egui::Resize::default()
+                    .id_salt(format!("{node_id:?}_image_resize"))
+                    .default_size(default_size)
+                    .show(ui, |ui| {
+                        ui.add(image.shrink_to_fit());
+                    });
             }
         }
     }
