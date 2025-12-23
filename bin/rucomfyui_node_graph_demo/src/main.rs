@@ -246,6 +246,10 @@ impl eframe::App for Application {
                             self.request_api_save();
                         }
                         ui.separator();
+                        if ui.button("Upload image").clicked() {
+                            self.request_upload_image();
+                        }
+                        ui.separator();
                         if ui.button("Copy as Lua").clicked() {
                             self.copy_as_lua(ui.ctx());
                         }
@@ -1153,6 +1157,31 @@ impl Application {
             .unwrap();
         });
     }
+
+    /// Request that an image be uploaded via file dialog.
+    fn request_upload_image(&mut self) {
+        let tx = self.async_output_tx.clone();
+        let Some(client) = self.get_client_or_send_error(&tx) else {
+            return;
+        };
+        let file_dialog = rfd::AsyncFileDialog::new()
+            .add_filter("Images", &["png", "jpg", "jpeg", "gif", "webp", "bmp"]);
+        self.runtime.spawn(async move {
+            let Some(handle) = file_dialog.pick_file().await else {
+                return;
+            };
+            let filename = handle.file_name();
+            let data = handle.read().await;
+            let result = client
+                .upload_image(&filename, data, rucomfyui::upload::UploadType::Input, true)
+                .await;
+            tx.send(match result {
+                Ok(response) => AsyncResponse::UploadImageResult(response),
+                Err(err) => AsyncResponse::error("Upload image", err),
+            })
+            .unwrap();
+        });
+    }
 }
 
 /// Output from the async handler.
@@ -1202,6 +1231,8 @@ pub enum AsyncResponse {
     },
     /// The history needs to be refreshed.
     RefreshHistory,
+    /// An image was uploaded.
+    UploadImageResult(rucomfyui::upload::UploadImageResponse),
 }
 impl AsyncResponse {
     /// Create an error response.
@@ -1305,6 +1336,12 @@ impl Application {
                 }
                 AsyncResponse::RefreshHistory => {
                     refresh_history = true;
+                }
+                AsyncResponse::UploadImageResult(response) => {
+                    eprintln!(
+                        "Uploaded image: {} to {}/{}",
+                        response.name, response.upload_type, response.subfolder
+                    );
                 }
             }
             needs_repaint = true;
