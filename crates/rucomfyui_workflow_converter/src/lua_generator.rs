@@ -161,11 +161,17 @@ fn build_input_expr(
         AnalyzedInput::String(s) => Ok(string_expr(s)),
         AnalyzedInput::Integer(i) => Ok(number_expr(&i.to_string())),
         AnalyzedInput::Float(f) => {
-            let s = f.to_string();
-            if s.contains('.') || s.contains('e') || s.contains('E') {
-                Ok(number_expr(&s))
+            // If the float has no fractional part and fits in i64, emit as integer
+            if f.fract() == 0.0 && f.abs() < i64::MAX as f64 {
+                Ok(number_expr(&(*f as i64).to_string()))
             } else {
-                Ok(number_expr(&format!("{}.0", s)))
+                let s = f.to_string();
+                // Ensure floats are displayed with a decimal point in Lua
+                if s.contains('.') || s.contains('e') || s.contains('E') {
+                    Ok(number_expr(&s))
+                } else {
+                    Ok(number_expr(&format!("{}.0", s)))
+                }
             }
         }
         AnalyzedInput::Boolean(b) => Ok(bool_expr(*b)),
@@ -739,9 +745,9 @@ mod tests {
 
         let expected = r#"
             local empty_latent_image = g:EmptyLatentImage {
-                batch_size = 1.0,
-                height = 768.0,
-                width = 1024.0,
+                batch_size = 1,
+                height = 768,
+                width = 1024,
             }
         "#;
 
@@ -787,9 +793,9 @@ mod tests {
             }
             local vae_decode = g:VAEDecode {
                 samples = g:EmptyLatentImage {
-                    batch_size = 1.0,
-                    height = 512.0,
-                    width = 512.0,
+                    batch_size = 1,
+                    height = 512,
+                    width = 512,
                 },
                 vae = checkpoint_loader_simple.vae,
             }
@@ -821,11 +827,11 @@ mod tests {
                 images = g:VAEDecode {
                     samples = g:KSampler {
                         cfg = 7.5,
-                        denoise = 1.0,
+                        denoise = 1,
                         latent_image = g:EmptyLatentImage {
-                            batch_size = 1.0,
-                            height = 1024.0,
-                            width = 1024.0,
+                            batch_size = 1,
+                            height = 1024,
+                            width = 1024,
                         },
                         model = checkpoint_loader_simple.model,
                         negative = g:CLIPTextEncode {
@@ -838,8 +844,8 @@ mod tests {
                         },
                         sampler_name = "euler",
                         scheduler = "normal",
-                        seed = 42.0,
-                        steps = 20.0,
+                        seed = 42,
+                        steps = 20,
                     },
                     vae = checkpoint_loader_simple.vae,
                 },

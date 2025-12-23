@@ -145,9 +145,9 @@ fn test_empty_latent_image() {
 
     let expected = r#"
         local empty_latent_image = g:EmptyLatentImage {
-            batch_size = 1.0,
-            height = 1024.0,
-            width = 1024.0,
+            batch_size = 1,
+            height = 1024,
+            width = 1024,
         }
     "#;
 
@@ -200,20 +200,20 @@ fn test_ksampler() {
             text = "a cat",
         }
         local k_sampler = g:KSampler {
-            cfg = 8.0,
-            denoise = 1.0,
+            cfg = 8,
+            denoise = 1,
             latent_image = g:EmptyLatentImage {
-                batch_size = 1.0,
-                height = 512.0,
-                width = 512.0,
+                batch_size = 1,
+                height = 512,
+                width = 512,
             },
             model = checkpoint_loader_simple.model,
             negative = clip_text_encode,
             positive = clip_text_encode,
             sampler_name = "euler",
             scheduler = "normal",
-            seed = 0.0,
-            steps = 20.0,
+            seed = 0,
+            steps = 20,
         }
     "#;
 
@@ -335,11 +335,11 @@ fn test_example_workflow() {
             images = g:VAEDecode {
                 samples = g:KSampler {
                     cfg = 7.5,
-                    denoise = 1.0,
+                    denoise = 1,
                     latent_image = g:EmptyLatentImage {
-                        batch_size = 1.0,
-                        height = 1024.0,
-                        width = 1024.0,
+                        batch_size = 1,
+                        height = 1024,
+                        width = 1024,
                     },
                     model = checkpoint_loader_simple.model,
                     negative = g:CLIPTextEncode {
@@ -352,8 +352,8 @@ fn test_example_workflow() {
                     },
                     sampler_name = "euler",
                     scheduler = "normal",
-                    seed = 42.0,
-                    steps = 20.0,
+                    seed = 42,
+                    steps = 20,
                 },
                 vae = checkpoint_loader_simple.vae,
             },

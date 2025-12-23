@@ -348,12 +348,14 @@ impl WorkflowNode {
 pub enum WorkflowInput {
     /// A string input.
     String(String),
-    /// A F64 input.
-    F64(f64),
+    // NOTE: Integer variants must come before F64 for serde untagged deserialization
+    // to correctly distinguish integers from floats in JSON.
     /// A i64 input.
     I64(i64),
     /// A u64 input.
     U64(u64),
+    /// A F64 input.
+    F64(f64),
     /// A boolean input.
     Boolean(bool),
     /// A slot input. First value is the node ID (integer-as-string), second is the slot index.
