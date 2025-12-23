@@ -44,7 +44,14 @@ pub async fn main() -> anyhow::Result<()> {
             std::fs::write(filename, image)?;
         }
 
-        client.upload(INPUT_FILENAME, images[0].clone()).await?;
+        client
+            .upload_image(
+                INPUT_FILENAME,
+                images[0].clone(),
+                rucomfyui::upload::UploadType::Input,
+                true,
+            )
+            .await?;
         load_image = Some(INPUT_FILENAME);
     }
 
