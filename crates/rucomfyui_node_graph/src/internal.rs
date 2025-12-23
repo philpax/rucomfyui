@@ -86,20 +86,29 @@ pub enum FlowValueType {
 impl FlowValueType {
     fn convert_float(value: Option<f64>, typed_meta: Option<&ObjectInputMetaTyped>) -> Self {
         let typed_meta = typed_meta.and_then(|m| m.as_number());
+        let min = typed_meta.map(|m| m.min.into()).unwrap_or(f64::MIN);
+        let max = typed_meta.map(|m| m.max.into()).unwrap_or(f64::MAX);
+        // Calculate a sensible default step based on the range (1% of range, clamped)
+        let default_step = if min.is_finite() && max.is_finite() {
+            ((max - min) / 100.0).clamp(0.001, 1.0)
+        } else {
+            0.01
+        };
         Self::Float {
             value: value
                 .or(typed_meta.map(|m| f64::from(m.default)))
                 .unwrap_or(0.0),
-            min: typed_meta.map(|m| m.min.into()).unwrap_or(f64::MIN),
-            max: typed_meta.map(|m| m.max.into()).unwrap_or(f64::MAX),
+            min,
+            max,
             round: typed_meta.and_then(|m| m.round).and_then(|r| match r {
-                ObjectInputMetaTypedRoundValue::Bool(b) => b.then_some(1.0),
+                // Bool(true) just means "round to step", which DragValue does anyway
+                ObjectInputMetaTypedRoundValue::Bool(_) => None,
                 ObjectInputMetaTypedRoundValue::Number(v) => Some(v),
             }),
             step: typed_meta
                 .and_then(|m| m.step)
                 .map(|s| s.into())
-                .unwrap_or(1.0),
+                .unwrap_or(default_step),
         }
     }
 
@@ -169,13 +178,42 @@ impl FlowValueType {
         input: &WorkflowInput,
         typed_meta: Option<&ObjectInputMetaTyped>,
     ) -> Self {
-        match input {
-            WorkflowInput::String(s) => Self::convert_string(s, typed_meta),
-            WorkflowInput::F64(v) => Self::convert_float(Some(*v), typed_meta),
-            WorkflowInput::I64(v) => Self::convert_i64(Some(*v), typed_meta),
-            WorkflowInput::U64(v) => Self::convert_u64(Some(*v), typed_meta),
-            WorkflowInput::Boolean(b) => Self::convert_bool(Some(*b), typed_meta),
-            WorkflowInput::Slot(_, _) => Self::Other(object_type.clone()),
+        // Respect the object_type to ensure floats stay floats even if the workflow
+        // saved them as integers (e.g., 1 instead of 1.0)
+        match object_type {
+            ObjectType::Float => {
+                let value = match input {
+                    WorkflowInput::F64(v) => Some(*v),
+                    WorkflowInput::I64(v) => Some(*v as f64),
+                    WorkflowInput::U64(v) => Some(*v as f64),
+                    _ => None,
+                };
+                Self::convert_float(value, typed_meta)
+            }
+            ObjectType::Int => {
+                let value = match input {
+                    WorkflowInput::I64(v) => Some(*v),
+                    WorkflowInput::U64(v) => Some(*v as i64),
+                    WorkflowInput::F64(v) => Some(*v as i64),
+                    _ => None,
+                };
+                Self::convert_i64(value, typed_meta)
+            }
+            ObjectType::Boolean => {
+                let value = match input {
+                    WorkflowInput::Boolean(b) => Some(*b),
+                    _ => None,
+                };
+                Self::convert_bool(value, typed_meta)
+            }
+            ObjectType::String => {
+                let value = match input {
+                    WorkflowInput::String(s) => s.as_str(),
+                    _ => "",
+                };
+                Self::convert_string(value, typed_meta)
+            }
+            _ => Self::Other(object_type.clone()),
         }
     }
 
@@ -232,8 +270,22 @@ impl FlowValueType {
                 round,
                 step,
             } => {
-                ui.add(egui::DragValue::new(value).range(*min..=*max).speed(*step));
-                *value = round.map(|r| (*value / r).round() * r).unwrap_or(*value);
+                // Calculate decimal places based on step size (e.g., 0.01 -> 2 decimals)
+                let decimals = if *step > 0.0 && step.is_finite() {
+                    ((-step.log10().floor()) as usize).clamp(0, 6)
+                } else {
+                    2
+                };
+                ui.add(
+                    egui::DragValue::new(value)
+                        .range(*min..=*max)
+                        .speed(*step)
+                        .max_decimals(decimals)
+                        .update_while_editing(false),
+                );
+                if let Some(r) = *round {
+                    *value = (*value / r).round() * r;
+                }
             }
             FlowValueType::SignedInt {
                 value,
