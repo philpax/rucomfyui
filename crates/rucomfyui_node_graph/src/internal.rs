@@ -379,9 +379,33 @@ pub struct FlowUserState {
     #[cfg_attr(feature = "serde", serde(skip))]
     /// A mapping from node IDs to output images and the selected image.
     pub output_images: HashMap<NodeId, (Vec<egui::ImageSource<'static>>, usize)>,
-    #[cfg_attr(feature = "serde", serde(skip))]
-    /// The search string for the node finder menu.
-    pub node_finder_search: String,
+}
+
+/// Recursively renders a category tree as nested menus
+fn render_category_tree(
+    ui: &mut egui::Ui,
+    tree: &rucomfyui::object_info::CategoryTree<'_>,
+    pos: egui::Pos2,
+    snarl: &mut Snarl<FlowNodeData>,
+) {
+    use rucomfyui::object_info::CategoryTreeNode;
+
+    for (name, node) in tree {
+        match node {
+            CategoryTreeNode::Category(_category_name, subtree) => {
+                ui.menu_button(name, |ui| {
+                    render_category_tree(ui, subtree, pos, snarl);
+                });
+            }
+            CategoryTreeNode::Object(object) => {
+                if ui.button(object.display_name()).clicked() {
+                    let node_data = FlowNodeData::new((*object).clone());
+                    snarl.insert_node(pos, node_data);
+                    ui.close();
+                }
+            }
+        }
+    }
 }
 
 /// The viewer for the ComfyUI flow graph
@@ -554,55 +578,38 @@ impl SnarlViewer<FlowNodeData> for FlowViewer<'_> {
         ui.label("Add Node");
         ui.separator();
 
-        // Search box
-        let response = ui.text_edit_singleline(&mut self.user_state.node_finder_search);
-        if response.changed() {
-            response.request_focus();
+        // Build category tree from object info
+        let category_tree = rucomfyui::object_info::categorize(self.object_info.values());
+
+        // Render nested category menus
+        render_category_tree(ui, &category_tree, pos, snarl);
+    }
+
+    fn has_node_menu(&mut self, _node: &FlowNodeData) -> bool {
+        true
+    }
+
+    fn show_node_menu(
+        &mut self,
+        node_id: NodeId,
+        _inputs: &[InPin],
+        _outputs: &[OutPin],
+        ui: &mut egui::Ui,
+        snarl: &mut Snarl<FlowNodeData>,
+    ) {
+        let node = &snarl[node_id];
+        ui.label(node.object.display_name());
+        ui.label(
+            egui::RichText::new(&node.object.category)
+                .small()
+                .color(ui.visuals().weak_text_color()),
+        );
+        ui.separator();
+
+        if ui.button("Delete").clicked() {
+            snarl.remove_node(node_id);
+            ui.close();
         }
-
-        let search = self.user_state.node_finder_search.to_lowercase();
-
-        // Collect and sort nodes by category
-        let mut nodes_by_category: HashMap<&str, Vec<&Object>> = HashMap::new();
-        for object in self.object_info.values() {
-            // Filter by search string
-            if !search.is_empty() {
-                let name_matches = object.display_name().to_lowercase().contains(&search);
-                let category_matches = object.category.to_lowercase().contains(&search);
-                if !name_matches && !category_matches {
-                    continue;
-                }
-            }
-            nodes_by_category
-                .entry(&object.category)
-                .or_default()
-                .push(object);
-        }
-
-        // Sort categories
-        let mut categories: Vec<_> = nodes_by_category.keys().copied().collect();
-        categories.sort();
-
-        // Show nodes in a scrollable area
-        egui::ScrollArea::vertical()
-            .max_height(300.0)
-            .show(ui, |ui| {
-                for category in categories {
-                    let nodes = nodes_by_category.get(category).unwrap();
-                    ui.collapsing(category, |ui| {
-                        let mut sorted_nodes = nodes.clone();
-                        sorted_nodes.sort_by_key(|n| n.display_name());
-                        for object in sorted_nodes {
-                            if ui.button(object.display_name()).clicked() {
-                                let node_data = FlowNodeData::new(object.clone());
-                                snarl.insert_node(pos, node_data);
-                                self.user_state.node_finder_search.clear();
-                                ui.close();
-                            }
-                        }
-                    });
-                }
-            });
     }
 }
 
