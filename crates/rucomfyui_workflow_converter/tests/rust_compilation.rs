@@ -112,7 +112,7 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
-rucomfyui = {{ path = "{}" }}
+rucomfyui = {{ path = "{}", default-features = false, features = ["rustls-tls", "typed_nodes"] }}
 "#,
         rucomfyui_path.display()
     );

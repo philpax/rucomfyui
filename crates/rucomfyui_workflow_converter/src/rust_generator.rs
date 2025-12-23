@@ -158,6 +158,11 @@ fn build_input_expr(
             quote! { #escaped }
         }
         AnalyzedInput::Integer(i) => {
+            // Check if expected type is Float - if so, output as float
+            if let Some(ObjectType::Float) = expected_type {
+                let lit = proc_macro2::Literal::f64_unsuffixed(*i as f64);
+                return quote! { #lit };
+            }
             let lit = proc_macro2::Literal::i64_unsuffixed(*i);
             quote! { #lit }
         }
