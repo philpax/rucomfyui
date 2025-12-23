@@ -15,7 +15,8 @@ use egui_snarl::{
 
 use rucomfyui::{
     object_info::{
-        Object, ObjectInputMetaTyped, ObjectInputMetaTypedRoundValue, ObjectInputType, ObjectType,
+        Object, ObjectInfo, ObjectInputMetaTyped, ObjectInputMetaTypedRoundValue, ObjectInputType,
+        ObjectType,
     },
     workflow::WorkflowInput,
 };
@@ -378,12 +379,17 @@ pub struct FlowUserState {
     #[cfg_attr(feature = "serde", serde(skip))]
     /// A mapping from node IDs to output images and the selected image.
     pub output_images: HashMap<NodeId, (Vec<egui::ImageSource<'static>>, usize)>,
+    #[cfg_attr(feature = "serde", serde(skip))]
+    /// The search string for the node finder menu.
+    pub node_finder_search: String,
 }
 
 /// The viewer for the ComfyUI flow graph
 pub struct FlowViewer<'a> {
     /// The user state
     pub user_state: &'a mut FlowUserState,
+    /// The object info containing available node types
+    pub object_info: &'a ObjectInfo,
 }
 
 impl SnarlViewer<FlowNodeData> for FlowViewer<'_> {
@@ -536,8 +542,67 @@ impl SnarlViewer<FlowNodeData> for FlowViewer<'_> {
     }
 
     fn has_graph_menu(&mut self, _pos: egui::Pos2, _snarl: &mut Snarl<FlowNodeData>) -> bool {
-        // Graph menu will be handled by the application
-        false
+        true
+    }
+
+    fn show_graph_menu(
+        &mut self,
+        pos: egui::Pos2,
+        ui: &mut egui::Ui,
+        snarl: &mut Snarl<FlowNodeData>,
+    ) {
+        ui.label("Add Node");
+        ui.separator();
+
+        // Search box
+        let response = ui.text_edit_singleline(&mut self.user_state.node_finder_search);
+        if response.changed() {
+            response.request_focus();
+        }
+
+        let search = self.user_state.node_finder_search.to_lowercase();
+
+        // Collect and sort nodes by category
+        let mut nodes_by_category: HashMap<&str, Vec<&Object>> = HashMap::new();
+        for object in self.object_info.values() {
+            // Filter by search string
+            if !search.is_empty() {
+                let name_matches = object.display_name().to_lowercase().contains(&search);
+                let category_matches = object.category.to_lowercase().contains(&search);
+                if !name_matches && !category_matches {
+                    continue;
+                }
+            }
+            nodes_by_category
+                .entry(&object.category)
+                .or_default()
+                .push(object);
+        }
+
+        // Sort categories
+        let mut categories: Vec<_> = nodes_by_category.keys().copied().collect();
+        categories.sort();
+
+        // Show nodes in a scrollable area
+        egui::ScrollArea::vertical()
+            .max_height(300.0)
+            .show(ui, |ui| {
+                for category in categories {
+                    let nodes = nodes_by_category.get(category).unwrap();
+                    ui.collapsing(category, |ui| {
+                        let mut sorted_nodes = nodes.clone();
+                        sorted_nodes.sort_by_key(|n| n.display_name());
+                        for object in sorted_nodes {
+                            if ui.button(object.display_name()).clicked() {
+                                let node_data = FlowNodeData::new(object.clone());
+                                snarl.insert_node(pos, node_data);
+                                self.user_state.node_finder_search.clear();
+                                ui.close();
+                            }
+                        }
+                    });
+                }
+            });
     }
 }
 

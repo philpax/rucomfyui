@@ -266,6 +266,7 @@ impl ComfyUiNodeGraph {
     pub fn show(&mut self, ui: &mut egui::Ui) {
         let mut viewer = FlowViewer {
             user_state: &mut self.user_state,
+            object_info: &self.object_info,
         };
 
         SnarlWidget::new()
