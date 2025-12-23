@@ -10,3 +10,9 @@ tokio = { workspace = true, features = ["rt-multi-thread", "macros", "fs"] }
 rucomfyui = { path = "../../crates/rucomfyui", default-features = false }
 rucomfyui_mlua = { path = "../../crates/rucomfyui_mlua" }
 mlua = { workspace = true, features = ["lua54"] }
+
+[features]
+default = ["default-tls"]
+default-tls = ["rucomfyui/default-tls"]
+native-tls = ["rucomfyui/native-tls"]
+rustls-tls = ["rucomfyui/rustls-tls"]

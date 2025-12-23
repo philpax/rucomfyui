@@ -1,11 +1,14 @@
 #![deny(missing_docs)]
 //! A recreation of the ComfyUI node graph in Rust using [`egui`] and [`rucomfyui`].
 //!
-//! Wraps around [`egui_node_graph2`] to provide a node graph for [`rucomfyui`].
+//! Wraps around [`egui-snarl`] to provide a node graph for [`rucomfyui`].
 
 use std::collections::HashMap;
 
-use egui_node_graph2::*;
+use egui_snarl::{
+    ui::{SnarlStyle, SnarlWidget},
+    InPinId, NodeId, OutPinId, Snarl,
+};
 
 use rucomfyui::{
     object_info::ObjectInfo,
@@ -15,6 +18,8 @@ use rucomfyui::{
 
 pub mod internal;
 
+use internal::{FlowNodeData, FlowUserState, FlowValueType, FlowViewer};
+
 /// A mapping from graph node IDs to workflow node IDs.
 ///
 /// Produced by [`ComfyUiNodeGraph::as_workflow_graph_with_mapping`].
@@ -23,97 +28,112 @@ pub type NodeToWorkflowNodeMapping = HashMap<NodeId, WorkflowNodeId>;
 /// The main struct for the node graph.
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub struct ComfyUiNodeGraph {
-    /// The state of the node graph.
-    pub state: internal::FlowEditorState,
+    /// The snarl graph.
+    pub snarl: Snarl<FlowNodeData>,
     /// The user state of the node graph.
-    pub user_state: internal::FlowUserState,
+    pub user_state: FlowUserState,
     /// The object info for the node graph.
     pub object_info: ObjectInfo,
 }
+
 impl ComfyUiNodeGraph {
     /// Create a new node graph.
     pub fn new(object_info: ObjectInfo) -> Self {
         Self {
-            state: internal::FlowEditorState::default(),
-            user_state: internal::FlowUserState::default(),
+            snarl: Snarl::new(),
+            user_state: FlowUserState::default(),
             object_info,
         }
     }
 
     /// Clear the graph and reset the state.
     pub fn clear(&mut self) {
-        let state = &mut self.state;
-        state.node_finder = None;
-        state.node_order.clear();
-        state.node_positions.clear();
-        state.selected_nodes.clear();
-        state.graph.connections.clear();
-        state.graph.inputs.clear();
-        state.graph.outputs.clear();
-        state.graph.nodes.clear();
+        self.snarl = Snarl::new();
+        self.user_state.output_images.clear();
     }
 
     /// Converts this graph to a [`rucomfyui::WorkflowGraph`], complete with a mapping from graph node IDs to workflow node IDs.
     pub fn as_workflow_graph_with_mapping(&self) -> (WorkflowGraph, NodeToWorkflowNodeMapping) {
         let g = WorkflowGraph::new();
         let mut mapping: HashMap<NodeId, WorkflowNodeId> = HashMap::new();
-        let mut input_mapping: HashMap<InputId, (WorkflowNodeId, String)> = HashMap::new();
-        let mut output_mapping: HashMap<OutputId, (WorkflowNodeId, usize)> = HashMap::new();
+        let mut input_mapping: HashMap<(NodeId, usize), (WorkflowNodeId, String)> = HashMap::new();
+        let mut output_mapping: HashMap<(NodeId, usize), (WorkflowNodeId, usize)> = HashMap::new();
 
-        let graph = &self.state.graph;
-        for (node_id, node) in &graph.nodes {
-            let object = &node.user_data.template.0;
+        // First pass: create all nodes
+        for (node_id, node) in self.snarl.node_ids() {
+            let object = &node.object;
             let mut g_node = WorkflowNode::new(object.name.clone())
                 .with_meta(WorkflowMeta::new(object.display_name()));
 
-            let mut connections = vec![];
-            for (input_name, input_id) in &node.inputs {
-                let input = graph.inputs.get(*input_id).unwrap();
-                use internal::FlowValueType as FVT;
-                let workflow_input = match &input.value {
-                    FVT::Array { selected, .. } => WorkflowInput::String(selected.clone()),
-                    FVT::String { value, .. } => WorkflowInput::String(value.clone()),
-                    FVT::Float { value, .. } => WorkflowInput::F64(*value),
-                    FVT::SignedInt { value, .. } => WorkflowInput::I64(*value),
-                    FVT::UnsignedInt { value, .. } => WorkflowInput::U64(*value),
-                    FVT::Boolean(value) => WorkflowInput::Boolean(*value),
-                    FVT::Other(_) => {
-                        connections.push((*input_id, input_name.clone()));
-                        continue;
-                    }
-                    FVT::Unknown => continue,
-                };
-                g_node.add_input(input_name.clone(), workflow_input);
+            // Add constant inputs (non-connected inputs)
+            for (input_idx, input) in node.inputs.iter().enumerate() {
+                // Check if this input is connected
+                let in_pin = self.snarl.in_pin(InPinId {
+                    node: node_id,
+                    input: input_idx,
+                });
+
+                if in_pin.remotes.is_empty() {
+                    // Not connected - add as constant value
+                    let workflow_input = match &input.value {
+                        FlowValueType::Array { selected, .. } => {
+                            WorkflowInput::String(selected.clone())
+                        }
+                        FlowValueType::String { value, .. } => WorkflowInput::String(value.clone()),
+                        FlowValueType::Float { value, .. } => WorkflowInput::F64(*value),
+                        FlowValueType::SignedInt { value, .. } => WorkflowInput::I64(*value),
+                        FlowValueType::UnsignedInt { value, .. } => WorkflowInput::U64(*value),
+                        FlowValueType::Boolean(value) => WorkflowInput::Boolean(*value),
+                        FlowValueType::Other(_) | FlowValueType::Unknown => continue,
+                    };
+                    g_node.add_input(input.name.clone(), workflow_input);
+                } else {
+                    // Connected - store for second pass
+                    // We'll process connections after all nodes are created
+                }
             }
 
             let g_node_id = g.add_dynamic(g_node);
             mapping.insert(node_id, g_node_id);
-            for (input_id, input_name) in connections {
-                input_mapping.insert(input_id, (g_node_id, input_name));
+
+            // Store input and output mappings for connection processing
+            for (input_idx, input) in node.inputs.iter().enumerate() {
+                input_mapping.insert((node_id, input_idx), (g_node_id, input.name.clone()));
             }
-            for (output_slot, (_output_name, output_id)) in node.outputs.iter().enumerate() {
-                output_mapping.insert(*output_id, (g_node_id, output_slot));
+            for (output_idx, _output) in node.outputs.iter().enumerate() {
+                output_mapping.insert((node_id, output_idx), (g_node_id, output_idx));
             }
         }
 
-        for (input_id, output_ids) in &graph.connections {
-            let Some(output_id) = output_ids.first().copied() else {
-                continue;
-            };
+        // Second pass: process connections
+        for (node_id, node) in self.snarl.node_ids() {
+            for (input_idx, _input) in node.inputs.iter().enumerate() {
+                let in_pin = self.snarl.in_pin(InPinId {
+                    node: node_id,
+                    input: input_idx,
+                });
 
-            let Some((g_input_node_id, input_name)) = input_mapping.get(&input_id) else {
-                continue;
-            };
-            let Some((g_output_node_id, output_slot)) = output_mapping.get(&output_id) else {
-                continue;
-            };
-            let Some(mut g_input_node) = g.get_node_mut(*g_input_node_id) else {
-                continue;
-            };
-            g_input_node.add_input(
-                input_name.clone(),
-                WorkflowInput::slot(*g_output_node_id, *output_slot as u32),
-            );
+                // If there's a connection, add it as a slot input
+                if let Some(&remote) = in_pin.remotes.first() {
+                    let Some((g_input_node_id, input_name)) =
+                        input_mapping.get(&(node_id, input_idx))
+                    else {
+                        continue;
+                    };
+                    let Some((g_output_node_id, output_slot)) =
+                        output_mapping.get(&(remote.node, remote.output))
+                    else {
+                        continue;
+                    };
+                    let Some(mut g_input_node) = g.get_node_mut(*g_input_node_id) else {
+                        continue;
+                    };
+                    g_input_node.add_input(
+                        input_name.clone(),
+                        WorkflowInput::slot(*g_output_node_id, *output_slot as u32),
+                    );
+                }
+            }
         }
 
         (g, mapping)
@@ -131,52 +151,112 @@ impl ComfyUiNodeGraph {
     pub fn load_api_workflow(&mut self, workflow: &Workflow) -> Result<(), UnknownClassTypeError> {
         let sorted_node_ids = workflow.topological_sort_with_depth();
 
-        let mut mapping = HashMap::<WorkflowNodeId, internal::BuildNodeOutput>::new();
+        let mut mapping = HashMap::<WorkflowNodeId, NodeId>::new();
         let mut node_position = egui::Pos2::ZERO;
 
         self.clear();
-        let state = &mut self.state;
+
         for node_ids in sorted_node_ids {
-            node_position.x += 300.0;
+            node_position.x += 600.0;
             node_position.y = 0.0;
 
             for node_id in node_ids {
-                let node = workflow.0.get(&node_id).unwrap();
-                let object = self.object_info.get(&node.class_type).ok_or_else(|| {
-                    UnknownClassTypeError {
+                let workflow_node = workflow.0.get(&node_id).unwrap();
+                let object = self
+                    .object_info
+                    .get(&workflow_node.class_type)
+                    .ok_or_else(|| UnknownClassTypeError {
                         node_id,
-                        class_type: node.class_type.clone(),
-                    }
-                })?;
-                let template = internal::FlowNodeTemplate(object.clone());
-                let g_node_id = state.graph.add_node(
-                    object.display_name().into(),
-                    template.user_data(&mut self.user_state),
-                    |g, g_node_id| {
-                        let bno = internal::build_node(&template, g, g_node_id, Some(node));
-                        for (name, input) in node.inputs.iter() {
-                            let Some(&input_id) = bno.input_ids.get(name) else {
-                                continue;
-                            };
-                            let Some((output_node_id, slot)) = input.as_slot() else {
-                                continue;
-                            };
-                            let Some(output_bno) = mapping.get(&output_node_id) else {
-                                continue;
-                            };
-                            let Some(&output_id) = output_bno.output_ids.get(slot as usize) else {
-                                continue;
-                            };
-                            g.add_connection(output_id, input_id, 0);
-                        }
-                        mapping.insert(node_id, bno);
-                    },
-                );
+                        class_type: workflow_node.class_type.clone(),
+                    })?;
 
-                state.node_positions.insert(g_node_id, node_position);
-                node_position.y += 200.0;
-                state.node_order.push(g_node_id);
+                // Create node data with values from workflow
+                let mut node_data = FlowNodeData::new(object.clone());
+
+                // Update input values from workflow
+                for input in &mut node_data.inputs {
+                    if let Some(workflow_input) = workflow_node.inputs.get(&input.name) {
+                        // Don't override if it's a slot (connection)
+                        if !matches!(workflow_input, WorkflowInput::Slot(_, _)) {
+                            // If the input is an Array (dropdown), just update the selected value
+                            // rather than replacing the whole input (which would lose the options)
+                            if let FlowValueType::Array { selected, .. } = &mut input.value {
+                                if let WorkflowInput::String(s) = workflow_input {
+                                    *selected = s.clone();
+                                    continue;
+                                }
+                            }
+
+                            let meta_typed = object
+                                .all_inputs()
+                                .find(|(name, _, _)| name == &input.name.as_str())
+                                .and_then(|(_, inp, _)| inp.as_meta_typed());
+
+                            input.value = FlowValueType::from_object_type_and_input(
+                                &input.typ,
+                                workflow_input,
+                                meta_typed,
+                            );
+                        }
+                    }
+                }
+
+                // Insert the node into the snarl
+                let snarl_node_id = self.snarl.insert_node(node_position, node_data);
+                mapping.insert(node_id, snarl_node_id);
+
+                node_position.y += 400.0;
             }
+        }
+
+        // Second pass: create connections
+        // Collect all connections first to avoid borrow checker issues
+        let mut connections = Vec::new();
+
+        for (workflow_node_id, workflow_node) in &workflow.0 {
+            let Some(&snarl_node_id) = mapping.get(workflow_node_id) else {
+                continue;
+            };
+
+            let node = &self.snarl[snarl_node_id];
+
+            for (input_name, workflow_input) in &workflow_node.inputs {
+                if let WorkflowInput::Slot(output_node_id_str, output_slot) = workflow_input {
+                    // Parse the node ID from string
+                    let Ok(output_node_id) = output_node_id_str.parse::<WorkflowNodeId>() else {
+                        continue;
+                    };
+
+                    // Find the input index for this input name
+                    let Some(input_idx) =
+                        node.inputs.iter().position(|inp| inp.name == *input_name)
+                    else {
+                        continue;
+                    };
+
+                    // Find the source node
+                    let Some(&source_snarl_node_id) = mapping.get(&output_node_id) else {
+                        continue;
+                    };
+
+                    // Store the connection for later
+                    let from = OutPinId {
+                        node: source_snarl_node_id,
+                        output: *output_slot as usize,
+                    };
+                    let to = InPinId {
+                        node: snarl_node_id,
+                        input: input_idx,
+                    };
+
+                    connections.push((from, to));
+                }
+            }
+        }
+
+        // Apply all connections
+        for (from, to) in connections {
+            self.snarl.connect(from, to);
         }
 
         Ok(())
@@ -184,12 +264,14 @@ impl ComfyUiNodeGraph {
 
     /// Render the node graph in the given [`egui::Ui`].
     pub fn show(&mut self, ui: &mut egui::Ui) {
-        let _ = self.state.draw_graph_editor(
-            ui,
-            internal::NodeTemplates(&self.object_info),
-            &mut self.user_state,
-            Vec::default(),
-        );
+        let mut viewer = FlowViewer {
+            user_state: &mut self.user_state,
+            object_info: &self.object_info,
+        };
+
+        SnarlWidget::new()
+            .style(SnarlStyle::default())
+            .show(&mut self.snarl, &mut viewer, ui);
     }
 
     /// Populate the output images for rendering in the graph.
@@ -232,6 +314,7 @@ pub struct UnknownClassTypeError {
     /// The class type of the node.
     pub class_type: String,
 }
+
 impl std::fmt::Display for UnknownClassTypeError {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         write!(
@@ -241,4 +324,5 @@ impl std::fmt::Display for UnknownClassTypeError {
         )
     }
 }
+
 impl std::error::Error for UnknownClassTypeError {}
