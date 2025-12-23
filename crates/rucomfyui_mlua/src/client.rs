@@ -228,11 +228,28 @@ impl LuaUserData for Client {
         // ==================== Upload Operations ====================
 
         methods.add_async_method(
-            "upload",
-            |lua, this, (filename, bytes): (String, LuaString)| async move {
-                this.check_allowed("upload", this.config.upload)?;
+            "upload_image",
+            |lua,
+             this,
+             (filename, bytes, upload_type, overwrite): (
+                String,
+                LuaString,
+                Option<String>,
+                Option<bool>,
+            )| async move {
+                this.check_allowed("upload_image", this.config.upload)?;
                 let bytes_vec = bytes.as_bytes().to_vec();
-                let result = to_lua_result(this.inner.upload(&filename, bytes_vec).await)?;
+                let upload_type = upload_type
+                    .as_deref()
+                    .unwrap_or("input")
+                    .parse::<rucomfyui::upload::UploadType>()
+                    .map_err(LuaError::runtime)?;
+                let overwrite = overwrite.unwrap_or(true);
+                let result = to_lua_result(
+                    this.inner
+                        .upload_image(&filename, bytes_vec, upload_type, overwrite)
+                        .await,
+                )?;
                 lua.to_value(&result)
             },
         );

@@ -1,8 +1,6 @@
 //! A Rust client for ComfyUI with an emphasis on type safety and ergonomics.
 #![deny(missing_docs)]
 
-use reqwest::multipart::{Form, Part};
-
 mod constructor;
 
 pub mod workflow;
@@ -22,6 +20,8 @@ pub mod models;
 pub mod object_info;
 
 pub mod system;
+
+pub mod upload;
 
 pub mod error;
 use error::parse_response;
@@ -43,20 +43,6 @@ pub struct Client {
 }
 /// Functions for interacting with the ComfyUI API.
 impl Client {
-    /// Upload a file to the ComfyUI API.
-    pub async fn upload(
-        &self,
-        filename: &str,
-        bytes: impl Into<BorrowedBytes<'static>>,
-    ) -> Result<serde_json::Value> {
-        let form = Form::new()
-            .part("image", Part::bytes(bytes).file_name(filename.to_string()))
-            .text("type", "input")
-            .text("overwrite", "true");
-
-        self.post_multipart::<(), _>("upload/image", form).await
-    }
-
     /// Get a resource from the ComfyUI API.
     pub async fn get<T: serde::de::DeserializeOwned>(&self, path: &str) -> Result<T> {
         parse_response(
