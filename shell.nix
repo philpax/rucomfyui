@@ -3,10 +3,6 @@
 with pkgs;
 
 mkShell rec {
-  nativeBuildInputs = [
-    pkg-config
-    openssl
-  ];
   buildInputs = [
     xorg.libX11
     xorg.libXrandr

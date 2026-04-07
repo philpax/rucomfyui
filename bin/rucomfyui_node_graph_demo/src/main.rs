@@ -115,9 +115,6 @@ pub struct Application {
 
     /// Whether the settings window is open.
     settings_open: bool,
-    /// Whether to allow insecure HTTPS.
-    #[cfg(not(target_arch = "wasm32"))]
-    allow_insecure_https: bool,
     /// The authorization token to pass (`Bearer {authorization_token}` in the `Authorization` header).
     authorization_token: String,
 
@@ -169,11 +166,6 @@ impl Application {
             models_open: false,
 
             settings_open: false,
-            #[cfg(not(target_arch = "wasm32"))]
-            allow_insecure_https: cc
-                .storage
-                .and_then(|s| eframe::get_value(s, "allow_insecure_https"))
-                .unwrap_or_default(),
             authorization_token: cc
                 .storage
                 .and_then(|s| eframe::get_value(s, "authorization_token"))
@@ -203,8 +195,6 @@ impl eframe::App for Application {
     /// at deserialization time.
     fn save(&mut self, storage: &mut dyn eframe::Storage) {
         eframe::set_value(storage, "comfyui_address", &self.comfyui_address);
-        #[cfg(not(target_arch = "wasm32"))]
-        eframe::set_value(storage, "allow_insecure_https", &self.allow_insecure_https);
         eframe::set_value(storage, "authorization_token", &self.authorization_token);
         eframe::set_value(storage, "history_max_items", &self.history_max_items);
     }
@@ -427,11 +417,6 @@ impl eframe::App for Application {
             egui::Window::new("Settings")
                 .open(&mut self.settings_open)
                 .show(ctx, |ui| {
-                    #[cfg(not(target_arch = "wasm32"))]
-                    {
-                        ui.label("Allow insecure HTTPS:");
-                        ui.checkbox(&mut self.allow_insecure_https, "");
-                    }
                     ui.label("Authorization token:");
                     ui.text_edit_singleline(&mut self.authorization_token);
                 });
@@ -917,10 +902,6 @@ impl Application {
     /// Connect to ComfyUI at the address specified in [`Self::comfyui_address`].
     fn connect(&mut self) {
         let mut builder = reqwest::Client::builder();
-        #[cfg(not(target_arch = "wasm32"))]
-        if self.allow_insecure_https {
-            builder = builder.danger_accept_invalid_certs(true);
-        }
         if !self.authorization_token.is_empty() {
             builder = builder.default_headers(
                 std::iter::once((

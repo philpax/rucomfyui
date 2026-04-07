@@ -4,7 +4,7 @@
 
 ```bash
 # Full check (use this)
-cargo clippy --no-default-features -F rustls-tls -F typed_nodes --all --workspace --examples
+cargo clippy --no-default-features -F typed_nodes --all --workspace --examples
 
 # Format code
 cargo fmt
@@ -14,7 +14,7 @@ cargo fmt
 
 ### Core Libraries (`crates/`)
 
-- **`rucomfyui`**: The main Rust client for ComfyUI. Provides typed API access, workflow construction, and queue management. Features include `typed_nodes` for generated node types and TLS backend selection (`default-tls`, `native-tls`, `rustls-tls`).
+- **`rucomfyui`**: The main Rust client for ComfyUI. Provides typed API access, workflow construction, and queue management. Features include `typed_nodes` for generated node types.
 
 - **`rucomfyui_node_graph`**: An egui-based visual node graph editor that recreates the ComfyUI interface in Rust using `egui-snarl`.
 
@@ -34,6 +34,5 @@ cargo fmt
 
 ## Key Conventions
 
-- Use `rustls-tls` feature and disable default features for consistent cross-platform TLS
 - The `typed_nodes` feature enables generated node types in `rucomfyui::nodes`
 - Workflows are represented as `WorkflowGraph` (builder) or `Workflow` (serializable JSON)

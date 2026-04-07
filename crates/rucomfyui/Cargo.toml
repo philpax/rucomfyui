@@ -22,8 +22,5 @@ anyhow = { workspace = true }
 tokio = { workspace = true, features = ["full"] }
 
 [features]
-default = ["typed_nodes", "default-tls"]
+default = ["typed_nodes"]
 typed_nodes = []
-default-tls = ["reqwest/default-tls"]
-native-tls = ["reqwest/native-tls"]
-rustls-tls = ["reqwest/rustls-tls"]
