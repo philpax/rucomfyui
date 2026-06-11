@@ -40,9 +40,18 @@ pub type BorrowedBytes<'a> = std::borrow::Cow<'a, [u8]>;
 pub struct Client {
     api_base: String,
     client: reqwest::Client,
+    client_id: String,
 }
 /// Functions for interacting with the ComfyUI API.
 impl Client {
+    /// The client ID for this client.
+    ///
+    /// This is sent with every queued prompt and used to correlate
+    /// WebSocket events (see [`Client::execute`]) with this client.
+    pub fn client_id(&self) -> &str {
+        &self.client_id
+    }
+
     /// Get a resource from the ComfyUI API.
     pub async fn get<T: serde::de::DeserializeOwned>(&self, path: &str) -> Result<T> {
         parse_response(

@@ -51,12 +51,18 @@ pub struct QueueEntry {
 
 /// Functions for queuing workflows to the ComfyUI API, or for retrieving the queue.
 impl Client {
-    /// Send a workflow to the ComfyUI API.
-    pub async fn queue(&self, workflow: &Workflow) -> Result<QueueResult> {
+    /// Send a workflow to the ComfyUI API, returning immediately with a
+    /// [`QueueResult`] containing the prompt ID.
+    ///
+    /// This is the low-level fire-and-forget primitive; see [`Client::execute`]
+    /// for a higher-level helper that tracks the prompt's execution and yields
+    /// progress events.
+    pub async fn queue_prompt(&self, workflow: &Workflow) -> Result<QueueResult> {
         self.post_json(
             "prompt",
             &serde_json::json!({
                 "prompt": workflow,
+                "client_id": self.client_id,
             }),
         )
         .await
@@ -67,7 +73,7 @@ impl Client {
         &self,
         workflow: &Workflow,
     ) -> Result<HashMap<WorkflowNodeId, EasyQueueNodeOutput>> {
-        let output = self.queue(workflow).await?;
+        let output = self.queue_prompt(workflow).await?;
 
         // Poll for the prompt's completion.
         let prompt_id = output.prompt_id;

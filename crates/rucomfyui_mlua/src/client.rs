@@ -71,7 +71,7 @@ impl LuaUserData for Client {
             let workflow = graph_ref.to_workflow();
             drop(graph_ref);
 
-            let result = to_lua_result(this.inner.queue(&workflow).await)?;
+            let result = to_lua_result(this.inner.queue_prompt(&workflow).await)?;
             lua.to_value(&result)
         });
 
