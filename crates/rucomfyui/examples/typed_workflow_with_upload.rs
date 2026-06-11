@@ -34,7 +34,7 @@ pub async fn main() -> anyhow::Result<()> {
     {
         // Create the workflow and queue it.
         let (workflow, preview_image) = workflow(animal, idx as u64, load_image);
-        let result = client.easy_queue(&workflow).await?;
+        let result = client.execute(&workflow).await?.outputs().await?;
 
         // Save the output images to disk.
         let images = &result[&preview_image].images;

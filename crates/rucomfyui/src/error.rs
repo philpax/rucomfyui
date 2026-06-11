@@ -47,6 +47,17 @@ pub enum ClientError {
         /// The name of the object that was not found.
         name: String,
     },
+
+    /// A workflow failed during execution (reported via [`crate::Client::execute`]).
+    #[error("execution error for prompt {prompt_id}: {message}")]
+    Execution {
+        /// The ID of the prompt that failed.
+        prompt_id: String,
+        /// The node that failed, if known.
+        node: Option<WorkflowNodeId>,
+        /// The error message.
+        message: String,
+    },
 }
 
 #[derive(Debug, Deserialize)]

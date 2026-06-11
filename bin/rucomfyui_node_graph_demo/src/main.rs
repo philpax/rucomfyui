@@ -970,7 +970,10 @@ impl Application {
 
         let (graph, mapping) = graph.as_workflow_graph_with_mapping();
         self.runtime.spawn(async move {
-            let output = client.easy_queue(&graph.into_workflow()).await;
+            let output = match client.execute(&graph.into_workflow()).await {
+                Ok(execution) => execution.outputs().await,
+                Err(err) => Err(err),
+            };
             tx.send(match output {
                 Ok(output) => AsyncResponse::QueueWorkflowResult { mapping, output },
                 Err(err) => AsyncResponse::error("Queue", err),
@@ -1179,7 +1182,7 @@ pub enum AsyncResponse {
         /// The mapping from graph nodes to workflow nodes.
         mapping: rucomfyui_node_graph::NodeToWorkflowNodeMapping,
         /// The output from the workflow.
-        output: HashMap<WorkflowNodeId, rucomfyui::queue::EasyQueueNodeOutput>,
+        output: HashMap<WorkflowNodeId, rucomfyui::NodeOutput>,
     },
     /// Some error occurred.
     Error {

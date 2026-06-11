@@ -15,7 +15,7 @@ impl Client {
 
     /// Get the history for a given prompt.
     ///
-    /// Used by [`Self::easy_queue`] to poll and retrieve the results of a queued prompt.
+    /// Used by [`Self::execute`] to poll and retrieve the results of a queued prompt.
     pub async fn get_history_for_prompt(&self, prompt_id: &str) -> Result<History> {
         self.get(&format!("history/{prompt_id}")).await
     }

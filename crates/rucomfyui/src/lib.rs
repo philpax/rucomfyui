@@ -13,6 +13,9 @@ pub mod nodes;
 // This order is intentional as it is the order it will be displayed in Rustdoc.
 pub mod queue;
 
+pub mod execute;
+pub use execute::{Event, Execution, NodeOutput};
+
 pub mod history;
 
 pub mod models;
@@ -37,6 +40,7 @@ pub type OwnedBytes = Vec<u8>;
 pub type BorrowedBytes<'a> = std::borrow::Cow<'a, [u8]>;
 
 /// Client for the ComfyUI API.
+#[derive(Clone)]
 pub struct Client {
     api_base: String,
     client: reqwest::Client,

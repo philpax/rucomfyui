@@ -42,7 +42,7 @@
 //!         }
 //!     )
 //!
-//!     local result = client:easy_queue(g)
+//!     local result = client:execute(g)
 //!     for i, image in ipairs(result[preview].images) do
 //!         -- image is raw bytes
 //!     end
@@ -70,8 +70,8 @@
 //! let custom_config = IntegrationConfig {
 //!     client: ClientConfig {
 //!         get_object_info: true,
-//!         queue: true,
-//!         easy_queue: true,
+//!         queue_prompt: true,
+//!         execute: true,
 //!         ..ClientConfig::none()
 //!     },
 //! };

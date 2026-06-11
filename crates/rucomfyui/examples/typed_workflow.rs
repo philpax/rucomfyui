@@ -16,7 +16,7 @@ pub async fn main() -> anyhow::Result<()> {
 
     // Create the workflow and queue it.
     let (workflow, preview_image) = workflow();
-    let result = client.easy_queue(&workflow).await?;
+    let result = client.execute(&workflow).await?.outputs().await?;
 
     // Save the output images to disk.
     for (idx, image) in result[&preview_image].images.iter().enumerate() {

@@ -12,7 +12,7 @@ pub async fn main() -> anyhow::Result<()> {
 
     // Load the workflow from JSON and queue it.
     let workflow = rucomfyui::Workflow::from_json(include_str!("existing_workflow.json"))?;
-    let result = client.easy_queue(&workflow).await?;
+    let result = client.execute(&workflow).await?.outputs().await?;
 
     // Save the output images to disk.
     for (idx, image) in result

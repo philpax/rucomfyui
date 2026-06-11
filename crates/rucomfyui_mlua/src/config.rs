@@ -15,10 +15,10 @@ pub struct ClientConfig {
     pub get_object_for_name: bool,
 
     // Queue Operations
-    /// Allow `queue` - queues a workflow for execution.
-    pub queue: bool,
-    /// Allow `easy_queue` - queues a workflow and waits for results.
-    pub easy_queue: bool,
+    /// Allow `queue_prompt` - queues a workflow for execution.
+    pub queue_prompt: bool,
+    /// Allow `execute` - queues a workflow and waits for results.
+    pub execute: bool,
     /// Allow `get_queue` - gets the current queue status.
     pub get_queue: bool,
     /// Allow `interrupt` - interrupts the current workflow.
@@ -61,8 +61,8 @@ impl ClientConfig {
         Self {
             get_object_info: true,
             get_object_for_name: true,
-            queue: true,
-            easy_queue: true,
+            queue_prompt: true,
+            execute: true,
             get_queue: true,
             interrupt: true,
             delete_from_queue: true,
@@ -104,11 +104,11 @@ impl ClientConfig {
 
     /// Create a config suitable for executing workflows.
     ///
-    /// This includes read operations plus: queue, easy_queue
+    /// This includes read operations plus: queue_prompt, execute
     pub fn execute() -> Self {
         Self {
-            queue: true,
-            easy_queue: true,
+            queue_prompt: true,
+            execute: true,
             ..Self::read_only()
         }
     }

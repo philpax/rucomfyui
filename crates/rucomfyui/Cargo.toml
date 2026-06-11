@@ -9,6 +9,7 @@ license = "MIT"
 [dependencies]
 futures = "0.3"
 
+async-stream = { workspace = true }
 futures-timer = { workspace = true }
 indexmap = { workspace = true }
 reqwest = { workspace = true }

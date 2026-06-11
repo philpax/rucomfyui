@@ -33,7 +33,7 @@ local preview = g:PreviewImage(
 )
 
 -- Queue the workflow and wait for results
-local result = client:easy_queue(g)
+local result = client:execute(g)
 
 -- Return the images from the preview node
 return result[preview].images
