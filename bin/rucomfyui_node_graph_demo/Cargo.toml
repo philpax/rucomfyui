@@ -6,11 +6,15 @@ description = "A demonstration of how to use `rucomfyui_node_graph` that talks t
 
 [dependencies]
 anyhow = { workspace = true }
+futures = "0.3"
 reqwest = { workspace = true }
 web-time = { workspace = true }
 
-# We don't need the typed nodes, so disable them
-rucomfyui = { path = "../../crates/rucomfyui", default-features = false }
+# We don't need the typed nodes, so disable them; opt into websocket for live
+# progress events and previews while a workflow executes.
+rucomfyui = { path = "../../crates/rucomfyui", default-features = false, features = [
+    "websocket",
+] }
 rucomfyui_node_graph = { path = "../../crates/rucomfyui_node_graph", default-features = false }
 rucomfyui_workflow_converter = { path = "../../crates/rucomfyui_workflow_converter", features = ["lua", "rust"] }
 

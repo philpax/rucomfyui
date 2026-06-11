@@ -13,7 +13,8 @@ use web_time::{Instant, SystemTime};
 use anyhow::Context;
 use eframe::egui;
 
-use rucomfyui::{object_info::ObjectInfo, queue::QueueEntry, workflow::WorkflowNodeId};
+use rucomfyui::{object_info::ObjectInfo, queue::QueueEntry, workflow::WorkflowNodeId, Event};
+use rucomfyui_node_graph::NodeToWorkflowNodeMapping;
 
 #[cfg(not(target_arch = "wasm32"))]
 fn main() {
@@ -124,6 +125,38 @@ pub struct Application {
     history_open: bool,
     /// The maximum number of history items to fetch.
     history_max_items: u32,
+
+    /// Live progress for the workflow currently being executed, if any.
+    execution: Option<ExecutionState>,
+}
+
+/// Tracks the live progress of a single [`rucomfyui::Client::execute`] call.
+struct ExecutionState {
+    /// Mapping from graph nodes to workflow nodes, used to attribute outputs.
+    mapping: NodeToWorkflowNodeMapping,
+    /// The node currently being executed, if known.
+    current_node: Option<WorkflowNodeId>,
+    /// Progress within the current node as `(value, max)`, if known.
+    progress: Option<(u32, u32)>,
+    /// Final per-node output images, accumulated as `Executed` events arrive.
+    outputs: HashMap<WorkflowNodeId, Vec<Vec<u8>>>,
+    /// The latest preview frame as `(unique_uri, bytes)`, if any.
+    preview: Option<(String, Vec<u8>)>,
+    /// Counter used to give each preview frame a unique image URI.
+    preview_counter: u64,
+}
+impl ExecutionState {
+    /// Create a fresh execution state for the given node mapping.
+    fn new(mapping: NodeToWorkflowNodeMapping) -> Self {
+        Self {
+            mapping,
+            current_node: None,
+            progress: None,
+            outputs: HashMap::new(),
+            preview: None,
+            preview_counter: 0,
+        }
+    }
 }
 impl Application {
     /// Create a new application.
@@ -177,6 +210,8 @@ impl Application {
                 .storage
                 .and_then(|s| eframe::get_value(s, "history_max_items"))
                 .unwrap_or(100),
+
+            execution: None,
         };
 
         // If comfyui_address came from command line args, connect immediately
@@ -219,7 +254,7 @@ impl eframe::App for Application {
             }
         }
 
-        if self.handle_async_responses() {
+        if self.handle_async_responses(ctx) {
             ctx.request_repaint();
         }
 
@@ -385,6 +420,38 @@ impl eframe::App for Application {
                 Default::default()
             }
         });
+
+        if let Some(execution) = self.execution.as_ref() {
+            egui::Window::new("Executing")
+                .anchor(egui::Align2::LEFT_BOTTOM, egui::vec2(8.0, -8.0))
+                .resizable(false)
+                .collapsible(false)
+                .show(ctx, |ui| {
+                    match execution.current_node {
+                        Some(node) => ui.label(format!("Running node {}…", node.0)),
+                        None => ui.label("Starting…"),
+                    };
+                    if let Some((value, max)) = execution.progress {
+                        let fraction = if max > 0 {
+                            value as f32 / max as f32
+                        } else {
+                            0.0
+                        };
+                        ui.add(
+                            egui::ProgressBar::new(fraction)
+                                .text(format!("{value}/{max}"))
+                                .desired_width(220.0),
+                        );
+                    }
+                    if let Some((uri, bytes)) = &execution.preview {
+                        ui.add(
+                            egui::Image::from_bytes(uri.clone(), bytes.clone())
+                                .max_height(256.0)
+                                .maintain_aspect_ratio(true),
+                        );
+                    }
+                });
+        }
 
         if let Some((category, error)) = self.error.clone() {
             let mut open = true;
@@ -969,18 +1036,111 @@ impl Application {
         };
 
         let (graph, mapping) = graph.as_workflow_graph_with_mapping();
+        // Start tracking live progress for this execution.
+        self.execution = Some(ExecutionState::new(mapping));
         self.runtime.spawn(async move {
-            let output = match client.execute(&graph.into_workflow()).await {
-                Ok(execution) => execution.outputs().await,
-                Err(err) => Err(err),
+            use futures::StreamExt as _;
+
+            let mut execution = match client.execute(&graph.into_workflow()).await {
+                Ok(execution) => execution,
+                Err(err) => {
+                    tx.send(AsyncResponse::error("Queue", err)).unwrap();
+                    return;
+                }
             };
-            tx.send(match output {
-                Ok(output) => AsyncResponse::QueueWorkflowResult { mapping, output },
-                Err(err) => AsyncResponse::error("Queue", err),
-            })
-            .unwrap();
+            while let Some(event) = execution.next().await {
+                match event {
+                    Ok(event) => tx
+                        .send(AsyncResponse::ExecutionEvent(Box::new(event)))
+                        .unwrap(),
+                    Err(err) => {
+                        tx.send(AsyncResponse::error("Queue", err)).unwrap();
+                        break;
+                    }
+                }
+            }
         });
     }
+
+    /// Apply a streamed execution [`Event`] to the live progress state.
+    fn handle_execution_event(&mut self, ctx: &egui::Context, event: Event) {
+        match event {
+            Event::Executing { node, .. } => {
+                if let Some(exec) = self.execution.as_mut() {
+                    exec.current_node = node;
+                    exec.progress = None;
+                }
+            }
+            Event::Progress {
+                node, value, max, ..
+            } => {
+                if let Some(exec) = self.execution.as_mut() {
+                    if node.is_some() {
+                        exec.current_node = node;
+                    }
+                    exec.progress = Some((value, max));
+                }
+            }
+            Event::Preview { image, .. } => {
+                if let Some(exec) = self.execution.as_mut() {
+                    exec.preview_counter += 1;
+                    let uri = format!("bytes://exec_preview_{}", exec.preview_counter);
+                    if let Some((old_uri, _)) = exec.preview.replace((uri, image.data)) {
+                        ctx.forget_image(&old_uri);
+                    }
+                }
+            }
+            Event::Executed { node, output, .. } => {
+                if let Some(exec) = self.execution.as_mut() {
+                    if !output.images.is_empty() {
+                        exec.outputs.insert(node, output.images);
+                    }
+                }
+            }
+            Event::Completed { .. } => self.finish_execution(ctx),
+            Event::Error { node, message, .. } => {
+                let location = node.map(|n| format!(" (node {})", n.0)).unwrap_or_default();
+                self.error = Some(("Execution".to_string(), format!("{message}{location}")));
+                self.finish_execution(ctx);
+            }
+            Event::Status { .. } | Event::ExecutionStart { .. } => {}
+        }
+    }
+
+    /// Finalise the current execution: render its accumulated output images in
+    /// the graph and clear the live progress state.
+    fn finish_execution(&mut self, ctx: &egui::Context) {
+        let Some(exec) = self.execution.take() else {
+            return;
+        };
+        if let Some((old_uri, _)) = &exec.preview {
+            ctx.forget_image(old_uri);
+        }
+        let Some(graph) = self.graph.as_mut() else {
+            return;
+        };
+        let now_timestamp = SystemTime::now()
+            .duration_since(SystemTime::UNIX_EPOCH)
+            .map(|t| t.as_secs_f64())
+            .unwrap_or_default();
+        let reverse_mapping = exec
+            .mapping
+            .into_iter()
+            .map(|(k, v)| (v, k))
+            .collect::<HashMap<_, _>>();
+        graph.populate_output_images(
+            &now_timestamp.to_string(),
+            exec.outputs
+                .into_iter()
+                .flat_map(|(workflow_node_id, images)| {
+                    reverse_mapping
+                        .get(&workflow_node_id)
+                        .copied()
+                        .map(|id| (id, images))
+                }),
+        );
+    }
+
     /// Request that the queue be cleared.
     fn request_clear_queue(&mut self) {
         let tx = self.async_output_tx.clone();
@@ -1177,13 +1337,8 @@ pub enum AsyncResponse {
         /// The client.
         client: rucomfyui::Client,
     },
-    /// We have successfully executed the workflow and obtained output images.
-    QueueWorkflowResult {
-        /// The mapping from graph nodes to workflow nodes.
-        mapping: rucomfyui_node_graph::NodeToWorkflowNodeMapping,
-        /// The output from the workflow.
-        output: HashMap<WorkflowNodeId, rucomfyui::NodeOutput>,
-    },
+    /// A progress event for the currently-executing workflow.
+    ExecutionEvent(Box<Event>),
     /// Some error occurred.
     Error {
         /// The category of the error.
@@ -1228,15 +1383,17 @@ impl AsyncResponse {
     }
 }
 impl Application {
-    fn handle_async_responses(&mut self) -> bool {
+    fn handle_async_responses(&mut self, ctx: &egui::Context) -> bool {
         let mut needs_repaint = false;
 
         let mut load_workflow = None;
         let mut refresh_system_stats = false;
         let mut refresh_history = false;
 
-        // Process async events
-        for event in self.async_output_rx.try_iter() {
+        // Process async events. Collect them first so we don't hold a borrow of
+        // `async_output_rx` while dispatching to `&mut self` handlers.
+        let events: Vec<AsyncResponse> = self.async_output_rx.try_iter().collect();
+        for event in events {
             match event {
                 AsyncResponse::ObjectInfo {
                     object_info: info,
@@ -1251,31 +1408,8 @@ impl Application {
                         .unwrap(),
                     );
                 }
-                AsyncResponse::QueueWorkflowResult { mapping, output } => {
-                    let Some(graph) = self.graph.as_mut() else {
-                        continue;
-                    };
-
-                    let now_timestamp = SystemTime::now()
-                        .duration_since(SystemTime::UNIX_EPOCH)
-                        .map(|t| t.as_secs_f64())
-                        .unwrap_or_default();
-                    let reverse_mapping = mapping
-                        .into_iter()
-                        .map(|(k, v)| (v, k))
-                        .collect::<HashMap<_, _>>();
-                    graph.populate_output_images(
-                        &now_timestamp.to_string(),
-                        output
-                            .into_iter()
-                            .filter(|(_, output)| !output.images.is_empty())
-                            .flat_map(|(workflow_node_id, output)| {
-                                reverse_mapping
-                                    .get(&workflow_node_id)
-                                    .copied()
-                                    .map(|id| (id, output.images))
-                            }),
-                    );
+                AsyncResponse::ExecutionEvent(event) => {
+                    self.handle_execution_event(ctx, *event);
                 }
                 AsyncResponse::Error { category, error } => {
                     self.error = Some((category, error));
