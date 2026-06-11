@@ -48,6 +48,10 @@ pub enum ClientError {
         name: String,
     },
 
+    /// A WebSocket transport error occurred (with the `websocket` feature).
+    #[error("websocket error: {0}")]
+    WebSocket(String),
+
     /// A workflow failed during execution (reported via [`crate::Client::execute`]).
     #[error("execution error for prompt {prompt_id}: {message}")]
     Execution {

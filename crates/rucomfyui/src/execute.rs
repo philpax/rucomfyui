@@ -189,7 +189,20 @@ impl Client {
     /// The returned [`Execution`] is a [`Stream`] of [`Event`]s. Call
     /// [`Execution::outputs`] for the common "run and collect outputs" case, or
     /// consume the stream to observe progress.
+    ///
+    /// With the `websocket` feature, this prefers a WebSocket connection for
+    /// live progress (and previews), falling back to HTTP polling if the socket
+    /// is unavailable. Without it, the events are synthesised from polling.
     pub async fn execute(&self, workflow: &Workflow) -> Result<Execution> {
+        #[cfg(feature = "websocket")]
+        {
+            // Connect the socket *before* queueing so we don't miss early
+            // events; fall back to polling if anything goes wrong.
+            if let Some(execution) = self.try_execute_websocket(workflow).await? {
+                return Ok(execution);
+            }
+        }
+
         let prompt_id = self.queue_prompt(workflow).await?.prompt_id;
         let stream = Box::pin(poll_execution(self.clone(), prompt_id.clone()));
         Ok(Execution { prompt_id, stream })
@@ -205,25 +218,40 @@ impl Client {
 fn poll_execution(client: Client, prompt_id: String) -> impl Stream<Item = Result<Event>> {
     async_stream::try_stream! {
         yield Event::ExecutionStart { prompt_id: prompt_id.clone() };
-        loop {
-            let history = client.get_history_for_prompt(&prompt_id).await?;
-            if let Some(data) = history.data.get(&prompt_id) {
-                if data.status.completed {
-                    for (node_name, node_output) in &data.outputs.nodes {
-                        let node = node_name.parse::<WorkflowNodeId>()?;
-                        let output = download_node_output(&client, node_output).await?;
-                        yield Event::Executed {
-                            prompt_id: prompt_id.clone(),
-                            node,
-                            output,
-                        };
-                    }
-                    yield Event::Completed { prompt_id: prompt_id.clone() };
-                    break;
-                }
-            }
-            futures_timer::Delay::new(web_time::Duration::from_millis(100)).await;
+        for event in final_events(&client, &prompt_id).await? {
+            yield event;
         }
+    }
+}
+
+/// Polls the history endpoint until the prompt completes, then returns its
+/// terminal events: an `Executed` per node (with images downloaded) followed by
+/// `Completed`.
+///
+/// Used both by the polling transport and to reconcile final outputs for the
+/// WebSocket transport (so a dropped socket never costs us the results).
+async fn final_events(client: &Client, prompt_id: &str) -> Result<Vec<Event>> {
+    loop {
+        let history = client.get_history_for_prompt(prompt_id).await?;
+        if let Some(data) = history.data.get(prompt_id) {
+            if data.status.completed {
+                let mut events = Vec::new();
+                for (node_name, node_output) in &data.outputs.nodes {
+                    let node = node_name.parse::<WorkflowNodeId>()?;
+                    let output = download_node_output(client, node_output).await?;
+                    events.push(Event::Executed {
+                        prompt_id: prompt_id.to_string(),
+                        node,
+                        output,
+                    });
+                }
+                events.push(Event::Completed {
+                    prompt_id: prompt_id.to_string(),
+                });
+                return Ok(events);
+            }
+        }
+        futures_timer::Delay::new(web_time::Duration::from_millis(100)).await;
     }
 }
 
@@ -240,3 +268,6 @@ async fn download_node_output(
         texts: node_output.text.clone(),
     })
 }
+
+#[cfg(feature = "websocket")]
+mod websocket;

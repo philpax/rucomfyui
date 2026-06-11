@@ -10,6 +10,7 @@ license = "MIT"
 futures = "0.3"
 
 async-stream = { workspace = true }
+ewebsock = { workspace = true, optional = true }
 futures-timer = { workspace = true }
 indexmap = { workspace = true }
 reqwest = { workspace = true }
@@ -25,3 +26,7 @@ tokio = { workspace = true, features = ["full"] }
 [features]
 default = ["typed_nodes"]
 typed_nodes = []
+# Use a WebSocket connection for `Client::execute` to receive live progress
+# events (and previews), falling back to HTTP polling if the socket is
+# unavailable. Opt-in, as the ComfyUI WebSocket API can be brittle.
+websocket = ["dep:ewebsock"]
