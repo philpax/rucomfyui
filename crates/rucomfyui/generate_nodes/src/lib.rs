@@ -282,7 +282,7 @@ fn write_category_tree_root(root: &CategoryTree, directory: &Path) -> Result<()>
 
     let output = quote! {
         //! Typed node definitions for ComfyUI that provide a type-safe abstraction over the API.
-        #![allow(unused_imports, clippy::too_many_arguments, clippy::new_without_default)]
+        #![allow(unused_imports, clippy::too_many_arguments, clippy::new_without_default, clippy::doc_lazy_continuation)]
         #(#modules)*
         #[rustfmt::skip]
         pub mod all;
@@ -362,7 +362,7 @@ fn write_category_tree((name, tree): (&str, &CategoryTree), directory: &Path) ->
 
     let output = quote! {
         #![doc = #doc]
-        #![allow(unused_imports, clippy::too_many_arguments, clippy::new_without_default)]
+        #![allow(unused_imports, clippy::too_many_arguments, clippy::new_without_default, clippy::doc_lazy_continuation)]
 
         use std::collections::HashMap;
 

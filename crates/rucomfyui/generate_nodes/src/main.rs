@@ -47,7 +47,7 @@ async fn load_or_get_object_info(
         .get_object_info()
         .await?
         .values()
-        .filter(|n| !(n.python_module.starts_with("custom_nodes") || n.category.starts_with("_")))
+        .filter(|n| is_core_node(n))
         .cloned()
         .collect();
     object_info.sort_by(|a, b| a.name.cmp(&b.name));
@@ -67,4 +67,22 @@ async fn load_or_get_object_info(
     }
     std::fs::write(&path, serde_json::to_string_pretty(&object_info)?)?;
     Ok(object_info)
+}
+
+/// Returns whether the given node ships with the core ComfyUI distribution.
+///
+/// We use an allowlist of known-core Python module prefixes rather than a
+/// denylist of `custom_nodes`, because third-party node packs can register
+/// themselves under arbitrary module names (not just `custom_nodes.*`).
+///
+/// The core modules are:
+/// - `nodes`: the base node definitions (`nodes.py`)
+/// - `comfy_extras.*`: bundled extra nodes shipped in the ComfyUI repo
+/// - `comfy_api_nodes.*`: bundled first-party API/partner nodes
+fn is_core_node(node: &Object) -> bool {
+    let module = node.python_module.as_str();
+    let is_core_module = module == "nodes"
+        || module.starts_with("comfy_extras.")
+        || module.starts_with("comfy_api_nodes.");
+    is_core_module && !node.category.starts_with('_')
 }
