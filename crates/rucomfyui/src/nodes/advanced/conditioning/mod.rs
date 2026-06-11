@@ -1,14 +1,23 @@
 //!`conditioning` definitions/categories.
-#![allow(unused_imports, clippy::too_many_arguments, clippy::new_without_default)]
+#![allow(
+    unused_imports,
+    clippy::too_many_arguments,
+    clippy::new_without_default,
+    clippy::doc_lazy_continuation
+)]
 use std::collections::HashMap;
 use crate::{
     workflow::{WorkflowNodeId, WorkflowInput},
     nodes::types::Out,
 };
 #[rustfmt::skip]
+pub mod audio;
+#[rustfmt::skip]
 pub mod edit_models;
 #[rustfmt::skip]
 pub mod flux;
+#[rustfmt::skip]
+pub mod kandinsky_5;
 ///**CLIPTextEncodeHiDream**: No description.
 #[derive(Clone)]
 #[allow(non_camel_case_types)]
@@ -676,6 +685,68 @@ for ConditioningZeroOut<ConditioningParam> {
     const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "advanced/conditioning";
 }
+///**PiD Conditioning**: Attaches a latent and a degrade_sigma scalar to a CONDITIONING for PiD decoding/upscaling
+#[derive(Clone)]
+#[allow(non_camel_case_types)]
+pub struct PiDConditioning<
+    PositiveParam: crate::nodes::types::Conditioning,
+    LatentParam: crate::nodes::types::Latent,
+    DegradeSigmaParam: crate::nodes::types::Float,
+> {
+    ///No documentation.
+    pub positive: PositiveParam,
+    ///latent (from VAEEncode or a KSampler).
+    pub latent: LatentParam,
+    /**0 = clean latent. Increase to denoise corrupted latent outputs.
+
+**Metadata**:
+  - Default: 0
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub degrade_sigma: DegradeSigmaParam,
+}
+impl<
+    PositiveParam: crate::nodes::types::Conditioning,
+    LatentParam: crate::nodes::types::Latent,
+    DegradeSigmaParam: crate::nodes::types::Float,
+> PiDConditioning<PositiveParam, LatentParam, DegradeSigmaParam> {
+    /// Create a new node.
+    pub fn new(
+        positive: PositiveParam,
+        latent: LatentParam,
+        degrade_sigma: DegradeSigmaParam,
+    ) -> Self {
+        Self {
+            positive,
+            latent,
+            degrade_sigma,
+        }
+    }
+}
+impl<
+    PositiveParam: crate::nodes::types::Conditioning,
+    LatentParam: crate::nodes::types::Latent,
+    DegradeSigmaParam: crate::nodes::types::Float,
+> crate::nodes::TypedNode
+for PiDConditioning<PositiveParam, LatentParam, DegradeSigmaParam> {
+    type Output = crate::nodes::types::ConditioningOut;
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
+        Self::Output::from_dynamic(node_id, 0)
+    }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("positive".to_string(), self.positive.clone().into());
+        output.insert("latent".to_string(), self.latent.clone().into());
+        output.insert("degrade_sigma".to_string(), self.degrade_sigma.clone().into());
+        output
+    }
+    const NAME: &'static str = "PiDConditioning";
+    const DISPLAY_NAME: &'static str = "PiD Conditioning";
+    const DESCRIPTION: &'static str = "Attaches a latent and a degrade_sigma scalar to a CONDITIONING for PiD decoding/upscaling";
+    const CATEGORY: &'static str = "advanced/conditioning";
+}
 ///**TextEncodeHunyuanVideo_ImageToVideo**: No description.
 #[derive(Clone)]
 #[allow(non_camel_case_types)]
@@ -938,6 +1009,143 @@ for TextEncodeQwenImageEditPlus<
     }
     const NAME: &'static str = "TextEncodeQwenImageEditPlus";
     const DISPLAY_NAME: &'static str = "TextEncodeQwenImageEditPlus";
+    const DESCRIPTION: &'static str = "";
+    const CATEGORY: &'static str = "advanced/conditioning";
+}
+///**TextEncodeZImageOmni**: No description.
+#[derive(Clone)]
+#[allow(non_camel_case_types)]
+pub struct TextEncodeZImageOmni<
+    ClipParam: crate::nodes::types::Clip,
+    PromptParam: crate::nodes::types::String,
+    AutoResizeImagesParam: crate::nodes::types::Boolean,
+    ImageEncoderParam: crate::nodes::types::ClipVision
+        = crate::nodes::types::ClipVisionOut,
+    VaeParam: crate::nodes::types::Vae = crate::nodes::types::VaeOut,
+    Image1Param: crate::nodes::types::Image = crate::nodes::types::ImageOut,
+    Image2Param: crate::nodes::types::Image = crate::nodes::types::ImageOut,
+    Image3Param: crate::nodes::types::Image = crate::nodes::types::ImageOut,
+> {
+    ///No documentation.
+    pub clip: ClipParam,
+    /**No documentation.
+
+**Metadata**:
+  - Dynamic prompts: true
+  - Multiline: true
+*/
+    pub prompt: PromptParam,
+    /**No documentation.
+
+**Metadata**:
+  - Default: true
+*/
+    pub auto_resize_images: AutoResizeImagesParam,
+    ///No documentation.
+    pub image_encoder: Option<ImageEncoderParam>,
+    ///No documentation.
+    pub vae: Option<VaeParam>,
+    ///No documentation.
+    pub image_1: Option<Image1Param>,
+    ///No documentation.
+    pub image_2: Option<Image2Param>,
+    ///No documentation.
+    pub image_3: Option<Image3Param>,
+}
+impl<
+    ClipParam: crate::nodes::types::Clip,
+    PromptParam: crate::nodes::types::String,
+    AutoResizeImagesParam: crate::nodes::types::Boolean,
+    ImageEncoderParam: crate::nodes::types::ClipVision,
+    VaeParam: crate::nodes::types::Vae,
+    Image1Param: crate::nodes::types::Image,
+    Image2Param: crate::nodes::types::Image,
+    Image3Param: crate::nodes::types::Image,
+> TextEncodeZImageOmni<
+    ClipParam,
+    PromptParam,
+    AutoResizeImagesParam,
+    ImageEncoderParam,
+    VaeParam,
+    Image1Param,
+    Image2Param,
+    Image3Param,
+> {
+    /// Create a new node.
+    pub fn new(
+        clip: ClipParam,
+        prompt: PromptParam,
+        auto_resize_images: AutoResizeImagesParam,
+        image_encoder: Option<ImageEncoderParam>,
+        vae: Option<VaeParam>,
+        image_1: Option<Image1Param>,
+        image_2: Option<Image2Param>,
+        image_3: Option<Image3Param>,
+    ) -> Self {
+        Self {
+            clip,
+            prompt,
+            auto_resize_images,
+            image_encoder,
+            vae,
+            image_1,
+            image_2,
+            image_3,
+        }
+    }
+}
+impl<
+    ClipParam: crate::nodes::types::Clip,
+    PromptParam: crate::nodes::types::String,
+    AutoResizeImagesParam: crate::nodes::types::Boolean,
+    ImageEncoderParam: crate::nodes::types::ClipVision,
+    VaeParam: crate::nodes::types::Vae,
+    Image1Param: crate::nodes::types::Image,
+    Image2Param: crate::nodes::types::Image,
+    Image3Param: crate::nodes::types::Image,
+> crate::nodes::TypedNode
+for TextEncodeZImageOmni<
+    ClipParam,
+    PromptParam,
+    AutoResizeImagesParam,
+    ImageEncoderParam,
+    VaeParam,
+    Image1Param,
+    Image2Param,
+    Image3Param,
+> {
+    type Output = crate::nodes::types::ConditioningOut;
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
+        Self::Output::from_dynamic(node_id, 0)
+    }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("clip".to_string(), self.clip.clone().into());
+        output.insert("prompt".to_string(), self.prompt.clone().into());
+        output
+            .insert(
+                "auto_resize_images".to_string(),
+                self.auto_resize_images.clone().into(),
+            );
+        if let Some(v) = &self.image_encoder {
+            output.insert("image_encoder".to_string(), v.clone().into());
+        }
+        if let Some(v) = &self.vae {
+            output.insert("vae".to_string(), v.clone().into());
+        }
+        if let Some(v) = &self.image_1 {
+            output.insert("image1".to_string(), v.clone().into());
+        }
+        if let Some(v) = &self.image_2 {
+            output.insert("image2".to_string(), v.clone().into());
+        }
+        if let Some(v) = &self.image_3 {
+            output.insert("image3".to_string(), v.clone().into());
+        }
+        output
+    }
+    const NAME: &'static str = "TextEncodeZImageOmni";
+    const DISPLAY_NAME: &'static str = "TextEncodeZImageOmni";
     const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "advanced/conditioning";
 }

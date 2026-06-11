@@ -1,39 +1,34 @@
 //! Typed node definitions for ComfyUI that provide a type-safe abstraction over the API.
-#![allow(unused_imports, clippy::too_many_arguments, clippy::new_without_default)]
+#![allow(
+    unused_imports,
+    clippy::too_many_arguments,
+    clippy::new_without_default,
+    clippy::doc_lazy_continuation
+)]
 #[rustfmt::skip]
 pub mod n_3_d;
 #[rustfmt::skip]
 pub mod advanced;
 #[rustfmt::skip]
-pub mod api_node;
-#[rustfmt::skip]
 pub mod audio;
-#[rustfmt::skip]
-pub mod camera;
 #[rustfmt::skip]
 pub mod conditioning;
 #[rustfmt::skip]
-pub mod context;
-#[rustfmt::skip]
-pub mod dataset;
+pub mod experimental;
 #[rustfmt::skip]
 pub mod image;
 #[rustfmt::skip]
-pub mod latent;
+pub mod model;
 #[rustfmt::skip]
-pub mod loaders;
-#[rustfmt::skip]
-pub mod mask;
-#[rustfmt::skip]
-pub mod model_patches;
+pub mod partner;
 #[rustfmt::skip]
 pub mod sampling;
 #[rustfmt::skip]
-pub mod sd;
+pub mod text;
 #[rustfmt::skip]
-pub mod training;
+pub mod utilities;
 #[rustfmt::skip]
-pub mod utils;
+pub mod video;
 #[rustfmt::skip]
 pub mod all;
 #[rustfmt::skip]
@@ -62,7 +57,7 @@ pub trait TypedNode: Clone {
 }
 /// Implemented for all output nodes (i.e. nodes at which a workflow terminates).
 pub trait TypedOutputNode {}
-///**wanBlockSwap**: NOP
+///**wanBlockSwap**: Intercept wanBlockSwap custom node that causes major instability and make it no-op.
 #[derive(Clone)]
 #[allow(non_camel_case_types)]
 pub struct wanBlockSwap<ModelParam: crate::nodes::types::Model> {
@@ -88,6 +83,6 @@ for wanBlockSwap<ModelParam> {
     }
     const NAME: &'static str = "wanBlockSwap";
     const DISPLAY_NAME: &'static str = "wanBlockSwap";
-    const DESCRIPTION: &'static str = "NOP";
+    const DESCRIPTION: &'static str = "Intercept wanBlockSwap custom node that causes major instability and make it no-op.";
     const CATEGORY: &'static str = "";
 }

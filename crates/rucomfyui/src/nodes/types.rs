@@ -87,6 +87,20 @@ impl Out for AudioEncoderOutputOut {
     }
 }
 impl AudioEncoderOutput for AudioEncoderOutputOut {}
+///A value of ComfyUI type `BACKGROUND_REMOVAL`.
+pub trait BackgroundRemoval: Clone + Into<WorkflowInput> {}
+///A node output of type [`BackgroundRemoval`].
+#[derive(Clone, Copy)]
+pub struct BackgroundRemovalOut(pub UntypedOut);
+impl Out for BackgroundRemovalOut {
+    fn from_dynamic(node_id: WorkflowNodeId, node_slot: u32) -> Self {
+        Self(UntypedOut::from_dynamic(node_id, node_slot))
+    }
+    fn into_input(self) -> WorkflowInput {
+        self.0.into_input()
+    }
+}
+impl BackgroundRemoval for BackgroundRemovalOut {}
 ///A value of ComfyUI type `BOOLEAN`.
 pub trait Boolean: Clone + Into<WorkflowInput> {}
 ///A node output of type [`Boolean`].
@@ -101,6 +115,20 @@ impl Out for BooleanOut {
     }
 }
 impl Boolean for BooleanOut {}
+///A value of ComfyUI type `BOUNDING_BOX`.
+pub trait BoundingBox: Clone + Into<WorkflowInput> {}
+///A node output of type [`BoundingBox`].
+#[derive(Clone, Copy)]
+pub struct BoundingBoxOut(pub UntypedOut);
+impl Out for BoundingBoxOut {
+    fn from_dynamic(node_id: WorkflowNodeId, node_slot: u32) -> Self {
+        Self(UntypedOut::from_dynamic(node_id, node_slot))
+    }
+    fn into_input(self) -> WorkflowInput {
+        self.0.into_input()
+    }
+}
+impl BoundingBox for BoundingBoxOut {}
 ///A value of ComfyUI type `CAMERA_CONTROL`.
 pub trait CameraControl: Clone + Into<WorkflowInput> {}
 ///A node output of type [`CameraControl`].
@@ -157,6 +185,34 @@ impl Out for ClipVisionOutputOut {
     }
 }
 impl ClipVisionOutput for ClipVisionOutputOut {}
+///A value of ComfyUI type `COLOR`.
+pub trait Color: Clone + Into<WorkflowInput> {}
+///A node output of type [`Color`].
+#[derive(Clone, Copy)]
+pub struct ColorOut(pub UntypedOut);
+impl Out for ColorOut {
+    fn from_dynamic(node_id: WorkflowNodeId, node_slot: u32) -> Self {
+        Self(UntypedOut::from_dynamic(node_id, node_slot))
+    }
+    fn into_input(self) -> WorkflowInput {
+        self.0.into_input()
+    }
+}
+impl Color for ColorOut {}
+///A value of ComfyUI type `COMFY_MATCH_TYPE_V_3`.
+pub trait ComfyMatchTypeV3: Clone + Into<WorkflowInput> {}
+///A node output of type [`ComfyMatchTypeV3`].
+#[derive(Clone, Copy)]
+pub struct ComfyMatchTypeV3Out(pub UntypedOut);
+impl Out for ComfyMatchTypeV3Out {
+    fn from_dynamic(node_id: WorkflowNodeId, node_slot: u32) -> Self {
+        Self(UntypedOut::from_dynamic(node_id, node_slot))
+    }
+    fn into_input(self) -> WorkflowInput {
+        self.0.into_input()
+    }
+}
+impl ComfyMatchTypeV3 for ComfyMatchTypeV3Out {}
 ///A value of ComfyUI type `CONDITIONING`.
 pub trait Conditioning: Clone + Into<WorkflowInput> {}
 ///A node output of type [`Conditioning`].
@@ -185,6 +241,174 @@ impl Out for ControlNetOut {
     }
 }
 impl ControlNet for ControlNetOut {}
+///A value of ComfyUI type `CURVE`.
+pub trait Curve: Clone + Into<WorkflowInput> {}
+///A node output of type [`Curve`].
+#[derive(Clone, Copy)]
+pub struct CurveOut(pub UntypedOut);
+impl Out for CurveOut {
+    fn from_dynamic(node_id: WorkflowNodeId, node_slot: u32) -> Self {
+        Self(UntypedOut::from_dynamic(node_id, node_slot))
+    }
+    fn into_input(self) -> WorkflowInput {
+        self.0.into_input()
+    }
+}
+impl Curve for CurveOut {}
+///A value of ComfyUI type `DA_3_GEOMETRY`.
+pub trait Da3Geometry: Clone + Into<WorkflowInput> {}
+///A node output of type [`Da3Geometry`].
+#[derive(Clone, Copy)]
+pub struct Da3GeometryOut(pub UntypedOut);
+impl Out for Da3GeometryOut {
+    fn from_dynamic(node_id: WorkflowNodeId, node_slot: u32) -> Self {
+        Self(UntypedOut::from_dynamic(node_id, node_slot))
+    }
+    fn into_input(self) -> WorkflowInput {
+        self.0.into_input()
+    }
+}
+impl Da3Geometry for Da3GeometryOut {}
+///A value of ComfyUI type `DA_3_MODEL`.
+pub trait Da3Model: Clone + Into<WorkflowInput> {}
+///A node output of type [`Da3Model`].
+#[derive(Clone, Copy)]
+pub struct Da3ModelOut(pub UntypedOut);
+impl Out for Da3ModelOut {
+    fn from_dynamic(node_id: WorkflowNodeId, node_slot: u32) -> Self {
+        Self(UntypedOut::from_dynamic(node_id, node_slot))
+    }
+    fn into_input(self) -> WorkflowInput {
+        self.0.into_input()
+    }
+}
+impl Da3Model for Da3ModelOut {}
+///A value of ComfyUI type `ELEVEN_LABS_VOICE`.
+pub trait ElevenLabsVoice: Clone + Into<WorkflowInput> {}
+///A node output of type [`ElevenLabsVoice`].
+#[derive(Clone, Copy)]
+pub struct ElevenLabsVoiceOut(pub UntypedOut);
+impl Out for ElevenLabsVoiceOut {
+    fn from_dynamic(node_id: WorkflowNodeId, node_slot: u32) -> Self {
+        Self(UntypedOut::from_dynamic(node_id, node_slot))
+    }
+    fn into_input(self) -> WorkflowInput {
+        self.0.into_input()
+    }
+}
+impl ElevenLabsVoice for ElevenLabsVoiceOut {}
+///A value of ComfyUI type `FACE_DETECTION_MODEL`.
+pub trait FaceDetectionModel: Clone + Into<WorkflowInput> {}
+///A node output of type [`FaceDetectionModel`].
+#[derive(Clone, Copy)]
+pub struct FaceDetectionModelOut(pub UntypedOut);
+impl Out for FaceDetectionModelOut {
+    fn from_dynamic(node_id: WorkflowNodeId, node_slot: u32) -> Self {
+        Self(UntypedOut::from_dynamic(node_id, node_slot))
+    }
+    fn into_input(self) -> WorkflowInput {
+        self.0.into_input()
+    }
+}
+impl FaceDetectionModel for FaceDetectionModelOut {}
+///A value of ComfyUI type `FACE_LANDMARKS`.
+pub trait FaceLandmarks: Clone + Into<WorkflowInput> {}
+///A node output of type [`FaceLandmarks`].
+#[derive(Clone, Copy)]
+pub struct FaceLandmarksOut(pub UntypedOut);
+impl Out for FaceLandmarksOut {
+    fn from_dynamic(node_id: WorkflowNodeId, node_slot: u32) -> Self {
+        Self(UntypedOut::from_dynamic(node_id, node_slot))
+    }
+    fn into_input(self) -> WorkflowInput {
+        self.0.into_input()
+    }
+}
+impl FaceLandmarks for FaceLandmarksOut {}
+///A value of ComfyUI type `FILE_3_D`.
+pub trait File3D: Clone + Into<WorkflowInput> {}
+///A node output of type [`File3D`].
+#[derive(Clone, Copy)]
+pub struct File3DOut(pub UntypedOut);
+impl Out for File3DOut {
+    fn from_dynamic(node_id: WorkflowNodeId, node_slot: u32) -> Self {
+        Self(UntypedOut::from_dynamic(node_id, node_slot))
+    }
+    fn into_input(self) -> WorkflowInput {
+        self.0.into_input()
+    }
+}
+impl File3D for File3DOut {}
+///A value of ComfyUI type `FILE_3_D_FBX`.
+pub trait File3DFbx: Clone + Into<WorkflowInput> {}
+///A node output of type [`File3DFbx`].
+#[derive(Clone, Copy)]
+pub struct File3DFbxOut(pub UntypedOut);
+impl Out for File3DFbxOut {
+    fn from_dynamic(node_id: WorkflowNodeId, node_slot: u32) -> Self {
+        Self(UntypedOut::from_dynamic(node_id, node_slot))
+    }
+    fn into_input(self) -> WorkflowInput {
+        self.0.into_input()
+    }
+}
+impl File3DFbx for File3DFbxOut {}
+///A value of ComfyUI type `FILE_3_D_GLB`.
+pub trait File3DGlb: Clone + Into<WorkflowInput> {}
+///A node output of type [`File3DGlb`].
+#[derive(Clone, Copy)]
+pub struct File3DGlbOut(pub UntypedOut);
+impl Out for File3DGlbOut {
+    fn from_dynamic(node_id: WorkflowNodeId, node_slot: u32) -> Self {
+        Self(UntypedOut::from_dynamic(node_id, node_slot))
+    }
+    fn into_input(self) -> WorkflowInput {
+        self.0.into_input()
+    }
+}
+impl File3DGlb for File3DGlbOut {}
+///A value of ComfyUI type `FILE_3_D_OBJ`.
+pub trait File3DObj: Clone + Into<WorkflowInput> {}
+///A node output of type [`File3DObj`].
+#[derive(Clone, Copy)]
+pub struct File3DObjOut(pub UntypedOut);
+impl Out for File3DObjOut {
+    fn from_dynamic(node_id: WorkflowNodeId, node_slot: u32) -> Self {
+        Self(UntypedOut::from_dynamic(node_id, node_slot))
+    }
+    fn into_input(self) -> WorkflowInput {
+        self.0.into_input()
+    }
+}
+impl File3DObj for File3DObjOut {}
+///A value of ComfyUI type `FILE_3_D_POINT_CLOUD_ANY`.
+pub trait File3DPointCloudAny: Clone + Into<WorkflowInput> {}
+///A node output of type [`File3DPointCloudAny`].
+#[derive(Clone, Copy)]
+pub struct File3DPointCloudAnyOut(pub UntypedOut);
+impl Out for File3DPointCloudAnyOut {
+    fn from_dynamic(node_id: WorkflowNodeId, node_slot: u32) -> Self {
+        Self(UntypedOut::from_dynamic(node_id, node_slot))
+    }
+    fn into_input(self) -> WorkflowInput {
+        self.0.into_input()
+    }
+}
+impl File3DPointCloudAny for File3DPointCloudAnyOut {}
+///A value of ComfyUI type `FILE_3_D_SPLAT_ANY`.
+pub trait File3DSplatAny: Clone + Into<WorkflowInput> {}
+///A node output of type [`File3DSplatAny`].
+#[derive(Clone, Copy)]
+pub struct File3DSplatAnyOut(pub UntypedOut);
+impl Out for File3DSplatAnyOut {
+    fn from_dynamic(node_id: WorkflowNodeId, node_slot: u32) -> Self {
+        Self(UntypedOut::from_dynamic(node_id, node_slot))
+    }
+    fn into_input(self) -> WorkflowInput {
+        self.0.into_input()
+    }
+}
+impl File3DSplatAny for File3DSplatAnyOut {}
 ///A value of ComfyUI type `FLOAT`.
 pub trait Float: Clone + Into<WorkflowInput> {}
 ///A node output of type [`Float`].
@@ -241,6 +465,20 @@ impl Out for GuiderOut {
     }
 }
 impl Guider for GuiderOut {}
+///A value of ComfyUI type `HISTOGRAM`.
+pub trait Histogram: Clone + Into<WorkflowInput> {}
+///A node output of type [`Histogram`].
+#[derive(Clone, Copy)]
+pub struct HistogramOut(pub UntypedOut);
+impl Out for HistogramOut {
+    fn from_dynamic(node_id: WorkflowNodeId, node_slot: u32) -> Self {
+        Self(UntypedOut::from_dynamic(node_id, node_slot))
+    }
+    fn into_input(self) -> WorkflowInput {
+        self.0.into_input()
+    }
+}
+impl Histogram for HistogramOut {}
 ///A value of ComfyUI type `HOOK_KEYFRAMES`.
 pub trait HookKeyframes: Clone + Into<WorkflowInput> {}
 ///A node output of type [`HookKeyframes`].
@@ -269,6 +507,20 @@ impl Out for HooksOut {
     }
 }
 impl Hooks for HooksOut {}
+///A value of ComfyUI type `IC_LORA_PARAMETERS`.
+pub trait IcLoraParameters: Clone + Into<WorkflowInput> {}
+///A node output of type [`IcLoraParameters`].
+#[derive(Clone, Copy)]
+pub struct IcLoraParametersOut(pub UntypedOut);
+impl Out for IcLoraParametersOut {
+    fn from_dynamic(node_id: WorkflowNodeId, node_slot: u32) -> Self {
+        Self(UntypedOut::from_dynamic(node_id, node_slot))
+    }
+    fn into_input(self) -> WorkflowInput {
+        self.0.into_input()
+    }
+}
+impl IcLoraParameters for IcLoraParametersOut {}
 ///A value of ComfyUI type `IMAGE`.
 pub trait Image: Clone + Into<WorkflowInput> {}
 ///A node output of type [`Image`].
@@ -325,6 +577,34 @@ impl Out for IntOut {
     }
 }
 impl Int for IntOut {}
+///A value of ComfyUI type `INTERP_MODEL`.
+pub trait InterpModel: Clone + Into<WorkflowInput> {}
+///A node output of type [`InterpModel`].
+#[derive(Clone, Copy)]
+pub struct InterpModelOut(pub UntypedOut);
+impl Out for InterpModelOut {
+    fn from_dynamic(node_id: WorkflowNodeId, node_slot: u32) -> Self {
+        Self(UntypedOut::from_dynamic(node_id, node_slot))
+    }
+    fn into_input(self) -> WorkflowInput {
+        self.0.into_input()
+    }
+}
+impl InterpModel for InterpModelOut {}
+///A value of ComfyUI type `KREA_STYLE_REF`.
+pub trait KreaStyleRef: Clone + Into<WorkflowInput> {}
+///A node output of type [`KreaStyleRef`].
+#[derive(Clone, Copy)]
+pub struct KreaStyleRefOut(pub UntypedOut);
+impl Out for KreaStyleRefOut {
+    fn from_dynamic(node_id: WorkflowNodeId, node_slot: u32) -> Self {
+        Self(UntypedOut::from_dynamic(node_id, node_slot))
+    }
+    fn into_input(self) -> WorkflowInput {
+        self.0.into_input()
+    }
+}
+impl KreaStyleRef for KreaStyleRefOut {}
 ///A value of ComfyUI type `LATENT`.
 pub trait Latent: Clone + Into<WorkflowInput> {}
 ///A node output of type [`Latent`].
@@ -381,6 +661,20 @@ impl Out for Load3DCameraOut {
     }
 }
 impl Load3DCamera for Load3DCameraOut {}
+///A value of ComfyUI type `LOAD_3_D_MODEL_INFO`.
+pub trait Load3DModelInfo: Clone + Into<WorkflowInput> {}
+///A node output of type [`Load3DModelInfo`].
+#[derive(Clone, Copy)]
+pub struct Load3DModelInfoOut(pub UntypedOut);
+impl Out for Load3DModelInfoOut {
+    fn from_dynamic(node_id: WorkflowNodeId, node_slot: u32) -> Self {
+        Self(UntypedOut::from_dynamic(node_id, node_slot))
+    }
+    fn into_input(self) -> WorkflowInput {
+        self.0.into_input()
+    }
+}
+impl Load3DModelInfo for Load3DModelInfoOut {}
 ///A value of ComfyUI type `LORA_MODEL`.
 pub trait LoraModel: Clone + Into<WorkflowInput> {}
 ///A node output of type [`LoraModel`].
@@ -465,6 +759,34 @@ impl Out for MeshOut {
     }
 }
 impl Mesh for MeshOut {}
+///A value of ComfyUI type `MESHY_RIGGED_TASK_ID`.
+pub trait MeshyRiggedTaskId: Clone + Into<WorkflowInput> {}
+///A node output of type [`MeshyRiggedTaskId`].
+#[derive(Clone, Copy)]
+pub struct MeshyRiggedTaskIdOut(pub UntypedOut);
+impl Out for MeshyRiggedTaskIdOut {
+    fn from_dynamic(node_id: WorkflowNodeId, node_slot: u32) -> Self {
+        Self(UntypedOut::from_dynamic(node_id, node_slot))
+    }
+    fn into_input(self) -> WorkflowInput {
+        self.0.into_input()
+    }
+}
+impl MeshyRiggedTaskId for MeshyRiggedTaskIdOut {}
+///A value of ComfyUI type `MESHY_TASK_ID`.
+pub trait MeshyTaskId: Clone + Into<WorkflowInput> {}
+///A node output of type [`MeshyTaskId`].
+#[derive(Clone, Copy)]
+pub struct MeshyTaskIdOut(pub UntypedOut);
+impl Out for MeshyTaskIdOut {
+    fn from_dynamic(node_id: WorkflowNodeId, node_slot: u32) -> Self {
+        Self(UntypedOut::from_dynamic(node_id, node_slot))
+    }
+    fn into_input(self) -> WorkflowInput {
+        self.0.into_input()
+    }
+}
+impl MeshyTaskId for MeshyTaskIdOut {}
 ///A value of ComfyUI type `MODEL`.
 pub trait Model: Clone + Into<WorkflowInput> {}
 ///A node output of type [`Model`].
@@ -493,6 +815,48 @@ impl Out for ModelPatchOut {
     }
 }
 impl ModelPatch for ModelPatchOut {}
+///A value of ComfyUI type `MODEL_TASK_ID`.
+pub trait ModelTaskId: Clone + Into<WorkflowInput> {}
+///A node output of type [`ModelTaskId`].
+#[derive(Clone, Copy)]
+pub struct ModelTaskIdOut(pub UntypedOut);
+impl Out for ModelTaskIdOut {
+    fn from_dynamic(node_id: WorkflowNodeId, node_slot: u32) -> Self {
+        Self(UntypedOut::from_dynamic(node_id, node_slot))
+    }
+    fn into_input(self) -> WorkflowInput {
+        self.0.into_input()
+    }
+}
+impl ModelTaskId for ModelTaskIdOut {}
+///A value of ComfyUI type `MOGE_GEOMETRY`.
+pub trait MogeGeometry: Clone + Into<WorkflowInput> {}
+///A node output of type [`MogeGeometry`].
+#[derive(Clone, Copy)]
+pub struct MogeGeometryOut(pub UntypedOut);
+impl Out for MogeGeometryOut {
+    fn from_dynamic(node_id: WorkflowNodeId, node_slot: u32) -> Self {
+        Self(UntypedOut::from_dynamic(node_id, node_slot))
+    }
+    fn into_input(self) -> WorkflowInput {
+        self.0.into_input()
+    }
+}
+impl MogeGeometry for MogeGeometryOut {}
+///A value of ComfyUI type `MOGE_MODEL`.
+pub trait MogeModel: Clone + Into<WorkflowInput> {}
+///A node output of type [`MogeModel`].
+#[derive(Clone, Copy)]
+pub struct MogeModelOut(pub UntypedOut);
+impl Out for MogeModelOut {
+    fn from_dynamic(node_id: WorkflowNodeId, node_slot: u32) -> Self {
+        Self(UntypedOut::from_dynamic(node_id, node_slot))
+    }
+    fn into_input(self) -> WorkflowInput {
+        self.0.into_input()
+    }
+}
+impl MogeModel for MogeModelOut {}
 ///A value of ComfyUI type `NOISE`.
 pub trait Noise: Clone + Into<WorkflowInput> {}
 ///A node output of type [`Noise`].
@@ -535,6 +899,20 @@ impl Out for OpenAiInputFilesOut {
     }
 }
 impl OpenAiInputFiles for OpenAiInputFilesOut {}
+///A value of ComfyUI type `OPTICAL_FLOW`.
+pub trait OpticalFlow: Clone + Into<WorkflowInput> {}
+///A node output of type [`OpticalFlow`].
+#[derive(Clone, Copy)]
+pub struct OpticalFlowOut(pub UntypedOut);
+impl Out for OpticalFlowOut {
+    fn from_dynamic(node_id: WorkflowNodeId, node_slot: u32) -> Self {
+        Self(UntypedOut::from_dynamic(node_id, node_slot))
+    }
+    fn into_input(self) -> WorkflowInput {
+        self.0.into_input()
+    }
+}
+impl OpticalFlow for OpticalFlowOut {}
 ///A value of ComfyUI type `PHOTOMAKER`.
 pub trait Photomaker: Clone + Into<WorkflowInput> {}
 ///A node output of type [`Photomaker`].
@@ -563,6 +941,20 @@ impl Out for PixverseTemplateOut {
     }
 }
 impl PixverseTemplate for PixverseTemplateOut {}
+///A value of ComfyUI type `POSE_KEYPOINT`.
+pub trait PoseKeypoint: Clone + Into<WorkflowInput> {}
+///A node output of type [`PoseKeypoint`].
+#[derive(Clone, Copy)]
+pub struct PoseKeypointOut(pub UntypedOut);
+impl Out for PoseKeypointOut {
+    fn from_dynamic(node_id: WorkflowNodeId, node_slot: u32) -> Self {
+        Self(UntypedOut::from_dynamic(node_id, node_slot))
+    }
+    fn into_input(self) -> WorkflowInput {
+        self.0.into_input()
+    }
+}
+impl PoseKeypoint for PoseKeypointOut {}
 ///A value of ComfyUI type `RECRAFT_COLOR`.
 pub trait RecraftColor: Clone + Into<WorkflowInput> {}
 ///A node output of type [`RecraftColor`].
@@ -605,6 +997,48 @@ impl Out for RecraftV3StyleOut {
     }
 }
 impl RecraftV3Style for RecraftV3StyleOut {}
+///A value of ComfyUI type `RETARGET_TASK_ID`.
+pub trait RetargetTaskId: Clone + Into<WorkflowInput> {}
+///A node output of type [`RetargetTaskId`].
+#[derive(Clone, Copy)]
+pub struct RetargetTaskIdOut(pub UntypedOut);
+impl Out for RetargetTaskIdOut {
+    fn from_dynamic(node_id: WorkflowNodeId, node_slot: u32) -> Self {
+        Self(UntypedOut::from_dynamic(node_id, node_slot))
+    }
+    fn into_input(self) -> WorkflowInput {
+        self.0.into_input()
+    }
+}
+impl RetargetTaskId for RetargetTaskIdOut {}
+///A value of ComfyUI type `RIG_TASK_ID`.
+pub trait RigTaskId: Clone + Into<WorkflowInput> {}
+///A node output of type [`RigTaskId`].
+#[derive(Clone, Copy)]
+pub struct RigTaskIdOut(pub UntypedOut);
+impl Out for RigTaskIdOut {
+    fn from_dynamic(node_id: WorkflowNodeId, node_slot: u32) -> Self {
+        Self(UntypedOut::from_dynamic(node_id, node_slot))
+    }
+    fn into_input(self) -> WorkflowInput {
+        self.0.into_input()
+    }
+}
+impl RigTaskId for RigTaskIdOut {}
+///A value of ComfyUI type `SAM_3_TRACK_DATA`.
+pub trait Sam3TrackData: Clone + Into<WorkflowInput> {}
+///A node output of type [`Sam3TrackData`].
+#[derive(Clone, Copy)]
+pub struct Sam3TrackDataOut(pub UntypedOut);
+impl Out for Sam3TrackDataOut {
+    fn from_dynamic(node_id: WorkflowNodeId, node_slot: u32) -> Self {
+        Self(UntypedOut::from_dynamic(node_id, node_slot))
+    }
+    fn into_input(self) -> WorkflowInput {
+        self.0.into_input()
+    }
+}
+impl Sam3TrackData for Sam3TrackDataOut {}
 ///A value of ComfyUI type `SAMPLER`.
 pub trait Sampler: Clone + Into<WorkflowInput> {}
 ///A node output of type [`Sampler`].
@@ -633,6 +1067,20 @@ impl Out for SigmasOut {
     }
 }
 impl Sigmas for SigmasOut {}
+///A value of ComfyUI type `SPLAT`.
+pub trait Splat: Clone + Into<WorkflowInput> {}
+///A node output of type [`Splat`].
+#[derive(Clone, Copy)]
+pub struct SplatOut(pub UntypedOut);
+impl Out for SplatOut {
+    fn from_dynamic(node_id: WorkflowNodeId, node_slot: u32) -> Self {
+        Self(UntypedOut::from_dynamic(node_id, node_slot))
+    }
+    fn into_input(self) -> WorkflowInput {
+        self.0.into_input()
+    }
+}
+impl Splat for SplatOut {}
 ///A value of ComfyUI type `STRING`.
 pub trait String: Clone + Into<WorkflowInput> {}
 ///A node output of type [`String`].
@@ -689,6 +1137,20 @@ impl Out for TimestepsRangeOut {
     }
 }
 impl TimestepsRange for TimestepsRangeOut {}
+///A value of ComfyUI type `TRACKS`.
+pub trait Tracks: Clone + Into<WorkflowInput> {}
+///A node output of type [`Tracks`].
+#[derive(Clone, Copy)]
+pub struct TracksOut(pub UntypedOut);
+impl Out for TracksOut {
+    fn from_dynamic(node_id: WorkflowNodeId, node_slot: u32) -> Self {
+        Self(UntypedOut::from_dynamic(node_id, node_slot))
+    }
+    fn into_input(self) -> WorkflowInput {
+        self.0.into_input()
+    }
+}
+impl Tracks for TracksOut {}
 ///A value of ComfyUI type `UPSCALE_MODEL`.
 pub trait UpscaleModel: Clone + Into<WorkflowInput> {}
 ///A node output of type [`UpscaleModel`].

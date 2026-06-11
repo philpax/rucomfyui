@@ -1,5 +1,10 @@
 //!`guidance` definitions/categories.
-#![allow(unused_imports, clippy::too_many_arguments, clippy::new_without_default)]
+#![allow(
+    unused_imports,
+    clippy::too_many_arguments,
+    clippy::new_without_default,
+    clippy::doc_lazy_continuation
+)]
 use std::collections::HashMap;
 use crate::{
     workflow::{WorkflowNodeId, WorkflowInput},
@@ -11,6 +16,7 @@ use crate::{
 pub struct CFGNorm<
     ModelParam: crate::nodes::types::Model,
     StrengthParam: crate::nodes::types::Float,
+    PreCfgParam: crate::nodes::types::Boolean = crate::nodes::types::BooleanOut,
 > {
     ///No documentation.
     pub model: ModelParam,
@@ -23,20 +29,32 @@ pub struct CFGNorm<
   - Step: 0.01
 */
     pub strength: StrengthParam,
+    /**If true, rescale the combined noise BEFORE the sampler's CFG combine, without clamping (can amplify). Matches the norm-scaled CFG used by models like Lens. Default false keeps the original post-CFG x0-space attenuate-only behavior.
+
+**Metadata**:
+  - Default: false
+*/
+    pub pre_cfg: Option<PreCfgParam>,
 }
 impl<
     ModelParam: crate::nodes::types::Model,
     StrengthParam: crate::nodes::types::Float,
-> CFGNorm<ModelParam, StrengthParam> {
+    PreCfgParam: crate::nodes::types::Boolean,
+> CFGNorm<ModelParam, StrengthParam, PreCfgParam> {
     /// Create a new node.
-    pub fn new(model: ModelParam, strength: StrengthParam) -> Self {
-        Self { model, strength }
+    pub fn new(
+        model: ModelParam,
+        strength: StrengthParam,
+        pre_cfg: Option<PreCfgParam>,
+    ) -> Self {
+        Self { model, strength, pre_cfg }
     }
 }
 impl<
     ModelParam: crate::nodes::types::Model,
     StrengthParam: crate::nodes::types::Float,
-> crate::nodes::TypedNode for CFGNorm<ModelParam, StrengthParam> {
+    PreCfgParam: crate::nodes::types::Boolean,
+> crate::nodes::TypedNode for CFGNorm<ModelParam, StrengthParam, PreCfgParam> {
     type Output = crate::nodes::types::ModelOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
         Self::Output::from_dynamic(node_id, 0)
@@ -45,6 +63,9 @@ impl<
         let mut output = HashMap::default();
         output.insert("model".to_string(), self.model.clone().into());
         output.insert("strength".to_string(), self.strength.clone().into());
+        if let Some(v) = &self.pre_cfg {
+            output.insert("pre_cfg".to_string(), v.clone().into());
+        }
         output
     }
     const NAME: &'static str = "CFGNorm";
@@ -79,6 +100,90 @@ for CFGZeroStar<ModelParam> {
     const NAME: &'static str = "CFGZeroStar";
     const DISPLAY_NAME: &'static str = "CFGZeroStar";
     const DESCRIPTION: &'static str = "";
+    const CATEGORY: &'static str = "advanced/guidance";
+}
+///**Normalized Attention Guidance**: Applies Normalized Attention Guidance to models, enabling negative prompts on distilled/schnell models.
+#[derive(Clone)]
+#[allow(non_camel_case_types)]
+pub struct NAGuidance<
+    ModelParam: crate::nodes::types::Model,
+    NagScaleParam: crate::nodes::types::Float,
+    NagAlphaParam: crate::nodes::types::Float,
+    NagTauParam: crate::nodes::types::Float,
+> {
+    ///The model to apply NAG to.
+    pub model: ModelParam,
+    /**The guidance scale factor. Higher values push further from the negative prompt.
+
+**Metadata**:
+  - Default: 5
+  - Max: 50
+  - Min: 0
+  - Step: 0.1
+*/
+    pub nag_scale: NagScaleParam,
+    /**Blending factor for the normalized attention. 1.0 is full replacement, 0.0 is no effect.
+
+**Metadata**:
+  - Default: 0.5
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub nag_alpha: NagAlphaParam,
+    /**No documentation.
+
+**Metadata**:
+  - Default: 1.5
+  - Max: 10
+  - Min: 1
+  - Step: 0.01
+*/
+    pub nag_tau: NagTauParam,
+}
+impl<
+    ModelParam: crate::nodes::types::Model,
+    NagScaleParam: crate::nodes::types::Float,
+    NagAlphaParam: crate::nodes::types::Float,
+    NagTauParam: crate::nodes::types::Float,
+> NAGuidance<ModelParam, NagScaleParam, NagAlphaParam, NagTauParam> {
+    /// Create a new node.
+    pub fn new(
+        model: ModelParam,
+        nag_scale: NagScaleParam,
+        nag_alpha: NagAlphaParam,
+        nag_tau: NagTauParam,
+    ) -> Self {
+        Self {
+            model,
+            nag_scale,
+            nag_alpha,
+            nag_tau,
+        }
+    }
+}
+impl<
+    ModelParam: crate::nodes::types::Model,
+    NagScaleParam: crate::nodes::types::Float,
+    NagAlphaParam: crate::nodes::types::Float,
+    NagTauParam: crate::nodes::types::Float,
+> crate::nodes::TypedNode
+for NAGuidance<ModelParam, NagScaleParam, NagAlphaParam, NagTauParam> {
+    type Output = crate::nodes::types::ModelOut;
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
+        Self::Output::from_dynamic(node_id, 0)
+    }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("model".to_string(), self.model.clone().into());
+        output.insert("nag_scale".to_string(), self.nag_scale.clone().into());
+        output.insert("nag_alpha".to_string(), self.nag_alpha.clone().into());
+        output.insert("nag_tau".to_string(), self.nag_tau.clone().into());
+        output
+    }
+    const NAME: &'static str = "NAGuidance";
+    const DISPLAY_NAME: &'static str = "Normalized Attention Guidance";
+    const DESCRIPTION: &'static str = "Applies Normalized Attention Guidance to models, enabling negative prompts on distilled/schnell models.";
     const CATEGORY: &'static str = "advanced/guidance";
 }
 ///**SkipLayerGuidanceDiT**: Generic version of SkipLayerGuidance node that can be used on every DiT model.

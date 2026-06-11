@@ -1,5 +1,10 @@
 //!`loaders` definitions/categories.
-#![allow(unused_imports, clippy::too_many_arguments, clippy::new_without_default)]
+#![allow(
+    unused_imports,
+    clippy::too_many_arguments,
+    clippy::new_without_default,
+    clippy::doc_lazy_continuation
+)]
 use std::collections::HashMap;
 use crate::{
     workflow::{WorkflowNodeId, WorkflowInput},
@@ -9,6 +14,8 @@ use crate::{
 pub mod deprecated;
 #[rustfmt::skip]
 pub mod qwen;
+#[rustfmt::skip]
+pub mod zimage;
 /// Output types for nodes.
 pub mod out {
     ///Output for [`CheckpointLoader`](super::CheckpointLoader).
@@ -23,7 +30,7 @@ pub mod out {
         pub vae: crate::nodes::types::VaeOut,
     }
 }
-#[doc = "**Load CLIP**: \\[Recipes\\]\n\n\n\nstable_diffusion: clip-l\n\nstable_cascade: clip-g\n\nsd3: t5 xxl/ clip-g / clip-l\n\nstable_audio: t5 base\n\nmochi: t5 xxl\n\ncosmos: old t5 xxl\n\nlumina2: gemma 2 2B\n\nwan: umt5 xxl\n\n hidream: llama-3.1 (Recommend) or t5\n\nomnigen2: qwen vl 2.5 3B"]
+#[doc = "**Load CLIP**: \\[Recipes\\]\n\n\n\nstable_diffusion: clip-l\n\nstable_cascade: clip-g\n\nsd3: t5 xxl/ clip-g / clip-l\n\nstable_audio: t5 base\n\nmochi: t5 xxl\n\ncogvideox: t5 xxl (226-token padding)\n\ncosmos: old t5 xxl\n\nlumina2: gemma 2 2B\n\nwan: umt5 xxl\n\n hidream: llama-3.1 (Recommend) or t5\n\nomnigen2: qwen vl 2.5 3B\n\nlens: gpt-oss-20b\n\n pixeldit: gemma 2 2B elm"]
 #[derive(Clone)]
 #[allow(non_camel_case_types)]
 pub struct CLIPLoader<
@@ -72,7 +79,7 @@ impl<
     }
     const NAME: &'static str = "CLIPLoader";
     const DISPLAY_NAME: &'static str = "Load CLIP";
-    const DESCRIPTION: &'static str = "[Recipes]\n\nstable_diffusion: clip-l\nstable_cascade: clip-g\nsd3: t5 xxl/ clip-g / clip-l\nstable_audio: t5 base\nmochi: t5 xxl\ncosmos: old t5 xxl\nlumina2: gemma 2 2B\nwan: umt5 xxl\n hidream: llama-3.1 (Recommend) or t5\nomnigen2: qwen vl 2.5 3B";
+    const DESCRIPTION: &'static str = "[Recipes]\n\nstable_diffusion: clip-l\nstable_cascade: clip-g\nsd3: t5 xxl/ clip-g / clip-l\nstable_audio: t5 base\nmochi: t5 xxl\ncogvideox: t5 xxl (226-token padding)\ncosmos: old t5 xxl\nlumina2: gemma 2 2B\nwan: umt5 xxl\n hidream: llama-3.1 (Recommend) or t5\nomnigen2: qwen vl 2.5 3B\nlens: gpt-oss-20b\n pixeldit: gemma 2 2B elm";
     const CATEGORY: &'static str = "advanced/loaders";
 }
 ///**Load Checkpoint With Config (DEPRECATED)**: No description.
@@ -119,7 +126,7 @@ impl<
     const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "advanced/loaders";
 }
-#[doc = "**DualCLIPLoader**: \\[Recipes\\]\n\n\n\nsdxl: clip-l, clip-g\n\nsd3: clip-l, clip-g / clip-l, t5 / clip-g, t5\n\nflux: clip-l, t5\n\nhidream: at least one of t5 or llama, recommended t5 and llama\n\nhunyuan_image: qwen2.5vl 7b and byt5 small"]
+#[doc = "**DualCLIPLoader**: \\[Recipes\\]\n\n\n\nsdxl: clip-l, clip-g\n\nsd3: clip-l, clip-g / clip-l, t5 / clip-g, t5\n\nflux: clip-l, t5\n\nhidream: at least one of t5 or llama, recommended t5 and llama\n\nhunyuan_image: qwen2.5vl 7b and byt5 small\n\nnewbie: gemma-3-4b-it, jina clip v2"]
 #[derive(Clone)]
 #[allow(non_camel_case_types)]
 pub struct DualCLIPLoader<
@@ -181,7 +188,30 @@ for DualCLIPLoader<ClipName1Param, ClipName2Param, TypeParam, DeviceParam> {
     }
     const NAME: &'static str = "DualCLIPLoader";
     const DISPLAY_NAME: &'static str = "DualCLIPLoader";
-    const DESCRIPTION: &'static str = "[Recipes]\n\nsdxl: clip-l, clip-g\nsd3: clip-l, clip-g / clip-l, t5 / clip-g, t5\nflux: clip-l, t5\nhidream: at least one of t5 or llama, recommended t5 and llama\nhunyuan_image: qwen2.5vl 7b and byt5 small";
+    const DESCRIPTION: &'static str = "[Recipes]\n\nsdxl: clip-l, clip-g\nsd3: clip-l, clip-g / clip-l, t5 / clip-g, t5\nflux: clip-l, t5\nhidream: at least one of t5 or llama, recommended t5 and llama\nhunyuan_image: qwen2.5vl 7b and byt5 small\nnewbie: gemma-3-4b-it, jina clip v2";
+    const CATEGORY: &'static str = "advanced/loaders";
+}
+#[doc = "**LTXV Audio Text Encoder Loader**: \\[Recipes\\]\n\n\n\nltxav: gemma 3 12B"]
+#[derive(Clone)]
+#[allow(non_camel_case_types)]
+pub struct LTXAVTextEncoderLoader {}
+impl LTXAVTextEncoderLoader {
+    /// Create a new node.
+    pub fn new() -> Self {
+        Self {}
+    }
+}
+impl crate::nodes::TypedNode for LTXAVTextEncoderLoader {
+    type Output = crate::nodes::types::ClipOut;
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
+        Self::Output::from_dynamic(node_id, 0)
+    }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        HashMap::default()
+    }
+    const NAME: &'static str = "LTXAVTextEncoderLoader";
+    const DISPLAY_NAME: &'static str = "LTXV Audio Text Encoder Loader";
+    const DESCRIPTION: &'static str = "[Recipes]\n\nltxav: gemma 3 12B";
     const CATEGORY: &'static str = "advanced/loaders";
 }
 ///**ModelPatchLoader**: No description.

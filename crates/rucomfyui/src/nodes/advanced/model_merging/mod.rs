@@ -1,5 +1,10 @@
 //!`model_merging` definitions/categories.
-#![allow(unused_imports, clippy::too_many_arguments, clippy::new_without_default)]
+#![allow(
+    unused_imports,
+    clippy::too_many_arguments,
+    clippy::new_without_default,
+    clippy::doc_lazy_continuation
+)]
 use std::collections::HashMap;
 use crate::{
     workflow::{WorkflowNodeId, WorkflowInput},
@@ -653,6 +658,64 @@ impl<
     ModelParam: crate::nodes::types::Model,
     FilenamePrefixParam: crate::nodes::types::String,
 > crate::nodes::TypedOutputNode for ModelSave<ModelParam, FilenamePrefixParam> {}
+///**Save LoRA Weights**: No description.
+#[derive(Clone)]
+#[allow(non_camel_case_types)]
+pub struct SaveLoRA<
+    LoraParam: crate::nodes::types::LoraModel,
+    PrefixParam: crate::nodes::types::String,
+    StepsParam: crate::nodes::types::Int = crate::nodes::types::IntOut,
+> {
+    ///The LoRA model to save. Do not use the model with LoRA layers.
+    pub lora: LoraParam,
+    /**The prefix to use for the saved LoRA file.
+
+**Metadata**:
+  - Multiline: false
+  - Default: loras/ComfyUI_trained_lora
+*/
+    pub prefix: PrefixParam,
+    ///Optional: The number of steps the LoRA has been trained for, used to name the saved file.
+    pub steps: Option<StepsParam>,
+}
+impl<
+    LoraParam: crate::nodes::types::LoraModel,
+    PrefixParam: crate::nodes::types::String,
+    StepsParam: crate::nodes::types::Int,
+> SaveLoRA<LoraParam, PrefixParam, StepsParam> {
+    /// Create a new node.
+    pub fn new(lora: LoraParam, prefix: PrefixParam, steps: Option<StepsParam>) -> Self {
+        Self { lora, prefix, steps }
+    }
+}
+impl<
+    LoraParam: crate::nodes::types::LoraModel,
+    PrefixParam: crate::nodes::types::String,
+    StepsParam: crate::nodes::types::Int,
+> crate::nodes::TypedNode for SaveLoRA<LoraParam, PrefixParam, StepsParam> {
+    type Output = WorkflowNodeId;
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
+        node_id
+    }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("lora".to_string(), self.lora.clone().into());
+        output.insert("prefix".to_string(), self.prefix.clone().into());
+        if let Some(v) = &self.steps {
+            output.insert("steps".to_string(), v.clone().into());
+        }
+        output
+    }
+    const NAME: &'static str = "SaveLoRA";
+    const DISPLAY_NAME: &'static str = "Save LoRA Weights";
+    const DESCRIPTION: &'static str = "";
+    const CATEGORY: &'static str = "advanced/model_merging";
+}
+impl<
+    LoraParam: crate::nodes::types::LoraModel,
+    PrefixParam: crate::nodes::types::String,
+    StepsParam: crate::nodes::types::Int,
+> crate::nodes::TypedOutputNode for SaveLoRA<LoraParam, PrefixParam, StepsParam> {}
 ///**VAESave**: No description.
 #[derive(Clone)]
 #[allow(non_camel_case_types)]

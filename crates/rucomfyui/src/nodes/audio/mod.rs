@@ -1,5 +1,10 @@
 //!`audio` definitions/categories.
-#![allow(unused_imports, clippy::too_many_arguments, clippy::new_without_default)]
+#![allow(
+    unused_imports,
+    clippy::too_many_arguments,
+    clippy::new_without_default,
+    clippy::doc_lazy_continuation
+)]
 use std::collections::HashMap;
 use crate::{
     workflow::{WorkflowNodeId, WorkflowInput},
@@ -17,7 +22,7 @@ pub mod out {
         pub right: crate::nodes::types::AudioOut,
     }
 }
-///**Audio Adjust Volume**: No description.
+///**Adjust Audio Volume**: Adjust the volume of the audio by a specified amount in decibels (dB).
 #[derive(Clone)]
 #[allow(non_camel_case_types)]
 pub struct AudioAdjustVolume<
@@ -59,11 +64,11 @@ impl<
         output
     }
     const NAME: &'static str = "AudioAdjustVolume";
-    const DISPLAY_NAME: &'static str = "Audio Adjust Volume";
-    const DESCRIPTION: &'static str = "";
+    const DISPLAY_NAME: &'static str = "Adjust Audio Volume";
+    const DESCRIPTION: &'static str = "Adjust the volume of the audio by a specified amount in decibels (dB).";
     const CATEGORY: &'static str = "audio";
 }
-///**Audio Concat**: Concatenates the audio1 to audio2 in the specified direction.
+///**Concatenate Audio**: Concatenates the audio1 to audio2 in the specified direction.
 #[derive(Clone)]
 #[allow(non_camel_case_types)]
 pub struct AudioConcat<
@@ -99,11 +104,170 @@ impl<
         output
     }
     const NAME: &'static str = "AudioConcat";
-    const DISPLAY_NAME: &'static str = "Audio Concat";
+    const DISPLAY_NAME: &'static str = "Concatenate Audio";
     const DESCRIPTION: &'static str = "Concatenates the audio1 to audio2 in the specified direction.";
     const CATEGORY: &'static str = "audio";
 }
-///**Audio Merge**: Combine two audio tracks by overlaying their waveforms.
+///**Audio Equalizer (3-Band)**: No description.
+#[derive(Clone)]
+#[allow(non_camel_case_types)]
+pub struct AudioEqualizer3Band<
+    AudioParam: crate::nodes::types::Audio,
+    LowGainDBParam: crate::nodes::types::Float,
+    LowFreqParam: crate::nodes::types::Int,
+    MidGainDBParam: crate::nodes::types::Float,
+    MidFreqParam: crate::nodes::types::Int,
+    MidQParam: crate::nodes::types::Float,
+    HighGainDBParam: crate::nodes::types::Float,
+    HighFreqParam: crate::nodes::types::Int,
+> {
+    ///No documentation.
+    pub audio: AudioParam,
+    /**Gain for Low frequencies (Bass)
+
+**Metadata**:
+  - Default: 0
+  - Max: 24
+  - Min: -24
+  - Step: 0.1
+*/
+    pub low_gain_d_b: LowGainDBParam,
+    /**Cutoff frequency for Low shelf
+
+**Metadata**:
+  - Default: 100
+  - Max: 500
+  - Min: 20
+*/
+    pub low_freq: LowFreqParam,
+    /**Gain for Mid frequencies
+
+**Metadata**:
+  - Default: 0
+  - Max: 24
+  - Min: -24
+  - Step: 0.1
+*/
+    pub mid_gain_d_b: MidGainDBParam,
+    /**Center frequency for Mids
+
+**Metadata**:
+  - Default: 1000
+  - Max: 4000
+  - Min: 200
+*/
+    pub mid_freq: MidFreqParam,
+    /**Q factor (bandwidth) for Mids
+
+**Metadata**:
+  - Default: 0.707
+  - Max: 10
+  - Min: 0.1
+  - Step: 0.1
+*/
+    pub mid_q: MidQParam,
+    /**Gain for High frequencies (Treble)
+
+**Metadata**:
+  - Default: 0
+  - Max: 24
+  - Min: -24
+  - Step: 0.1
+*/
+    pub high_gain_d_b: HighGainDBParam,
+    /**Cutoff frequency for High shelf
+
+**Metadata**:
+  - Default: 5000
+  - Max: 15000
+  - Min: 1000
+*/
+    pub high_freq: HighFreqParam,
+}
+impl<
+    AudioParam: crate::nodes::types::Audio,
+    LowGainDBParam: crate::nodes::types::Float,
+    LowFreqParam: crate::nodes::types::Int,
+    MidGainDBParam: crate::nodes::types::Float,
+    MidFreqParam: crate::nodes::types::Int,
+    MidQParam: crate::nodes::types::Float,
+    HighGainDBParam: crate::nodes::types::Float,
+    HighFreqParam: crate::nodes::types::Int,
+> AudioEqualizer3Band<
+    AudioParam,
+    LowGainDBParam,
+    LowFreqParam,
+    MidGainDBParam,
+    MidFreqParam,
+    MidQParam,
+    HighGainDBParam,
+    HighFreqParam,
+> {
+    /// Create a new node.
+    pub fn new(
+        audio: AudioParam,
+        low_gain_d_b: LowGainDBParam,
+        low_freq: LowFreqParam,
+        mid_gain_d_b: MidGainDBParam,
+        mid_freq: MidFreqParam,
+        mid_q: MidQParam,
+        high_gain_d_b: HighGainDBParam,
+        high_freq: HighFreqParam,
+    ) -> Self {
+        Self {
+            audio,
+            low_gain_d_b,
+            low_freq,
+            mid_gain_d_b,
+            mid_freq,
+            mid_q,
+            high_gain_d_b,
+            high_freq,
+        }
+    }
+}
+impl<
+    AudioParam: crate::nodes::types::Audio,
+    LowGainDBParam: crate::nodes::types::Float,
+    LowFreqParam: crate::nodes::types::Int,
+    MidGainDBParam: crate::nodes::types::Float,
+    MidFreqParam: crate::nodes::types::Int,
+    MidQParam: crate::nodes::types::Float,
+    HighGainDBParam: crate::nodes::types::Float,
+    HighFreqParam: crate::nodes::types::Int,
+> crate::nodes::TypedNode
+for AudioEqualizer3Band<
+    AudioParam,
+    LowGainDBParam,
+    LowFreqParam,
+    MidGainDBParam,
+    MidFreqParam,
+    MidQParam,
+    HighGainDBParam,
+    HighFreqParam,
+> {
+    type Output = crate::nodes::types::AudioOut;
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
+        Self::Output::from_dynamic(node_id, 0)
+    }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("audio".to_string(), self.audio.clone().into());
+        output.insert("low_gain_dB".to_string(), self.low_gain_d_b.clone().into());
+        output.insert("low_freq".to_string(), self.low_freq.clone().into());
+        output.insert("mid_gain_dB".to_string(), self.mid_gain_d_b.clone().into());
+        output.insert("mid_freq".to_string(), self.mid_freq.clone().into());
+        output.insert("mid_q".to_string(), self.mid_q.clone().into());
+        output.insert("high_gain_dB".to_string(), self.high_gain_d_b.clone().into());
+        output.insert("high_freq".to_string(), self.high_freq.clone().into());
+        output
+    }
+    const NAME: &'static str = "AudioEqualizer3Band";
+    const DISPLAY_NAME: &'static str = "Audio Equalizer (3-Band)";
+    const DESCRIPTION: &'static str = "";
+    const CATEGORY: &'static str = "audio";
+}
+///**Merge Audio**: Combine two audio tracks by overlaying their waveforms.
 #[derive(Clone)]
 #[allow(non_camel_case_types)]
 pub struct AudioMerge<
@@ -139,7 +303,7 @@ impl<
         output
     }
     const NAME: &'static str = "AudioMerge";
-    const DISPLAY_NAME: &'static str = "Audio Merge";
+    const DISPLAY_NAME: &'static str = "Merge Audio";
     const DESCRIPTION: &'static str = "Combine two audio tracks by overlaying their waveforms.";
     const CATEGORY: &'static str = "audio";
 }
@@ -148,8 +312,8 @@ impl<
 #[allow(non_camel_case_types)]
 pub struct EmptyAudio<
     DurationParam: crate::nodes::types::Float,
-    SampleRateParam: crate::nodes::types::Float,
-    ChannelsParam: crate::nodes::types::Float,
+    SampleRateParam: crate::nodes::types::Int,
+    ChannelsParam: crate::nodes::types::Int,
 > {
     /**Duration of the empty audio clip in seconds
 
@@ -160,7 +324,13 @@ pub struct EmptyAudio<
   - Step: 0.01
 */
     pub duration: DurationParam,
-    ///Sample rate of the empty audio clip.
+    /**Sample rate of the empty audio clip.
+
+**Metadata**:
+  - Default: 44100
+  - Max: 192000
+  - Min: 1
+*/
     pub sample_rate: SampleRateParam,
     /**Number of audio channels (1 for mono, 2 for stereo).
 
@@ -173,8 +343,8 @@ pub struct EmptyAudio<
 }
 impl<
     DurationParam: crate::nodes::types::Float,
-    SampleRateParam: crate::nodes::types::Float,
-    ChannelsParam: crate::nodes::types::Float,
+    SampleRateParam: crate::nodes::types::Int,
+    ChannelsParam: crate::nodes::types::Int,
 > EmptyAudio<DurationParam, SampleRateParam, ChannelsParam> {
     /// Create a new node.
     pub fn new(
@@ -191,8 +361,8 @@ impl<
 }
 impl<
     DurationParam: crate::nodes::types::Float,
-    SampleRateParam: crate::nodes::types::Float,
-    ChannelsParam: crate::nodes::types::Float,
+    SampleRateParam: crate::nodes::types::Int,
+    ChannelsParam: crate::nodes::types::Int,
 > crate::nodes::TypedNode for EmptyAudio<DurationParam, SampleRateParam, ChannelsParam> {
     type Output = crate::nodes::types::AudioOut;
     fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
@@ -208,6 +378,46 @@ impl<
     const NAME: &'static str = "EmptyAudio";
     const DISPLAY_NAME: &'static str = "Empty Audio";
     const DESCRIPTION: &'static str = "";
+    const CATEGORY: &'static str = "audio";
+}
+///**Join Audio Channels**: Joins left and right mono audio channels into a stereo audio.
+#[derive(Clone)]
+#[allow(non_camel_case_types)]
+pub struct JoinAudioChannels<
+    AudioLeftParam: crate::nodes::types::Audio,
+    AudioRightParam: crate::nodes::types::Audio,
+> {
+    ///No documentation.
+    pub audio_left: AudioLeftParam,
+    ///No documentation.
+    pub audio_right: AudioRightParam,
+}
+impl<
+    AudioLeftParam: crate::nodes::types::Audio,
+    AudioRightParam: crate::nodes::types::Audio,
+> JoinAudioChannels<AudioLeftParam, AudioRightParam> {
+    /// Create a new node.
+    pub fn new(audio_left: AudioLeftParam, audio_right: AudioRightParam) -> Self {
+        Self { audio_left, audio_right }
+    }
+}
+impl<
+    AudioLeftParam: crate::nodes::types::Audio,
+    AudioRightParam: crate::nodes::types::Audio,
+> crate::nodes::TypedNode for JoinAudioChannels<AudioLeftParam, AudioRightParam> {
+    type Output = crate::nodes::types::AudioOut;
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
+        Self::Output::from_dynamic(node_id, 0)
+    }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("audio_left".to_string(), self.audio_left.clone().into());
+        output.insert("audio_right".to_string(), self.audio_right.clone().into());
+        output
+    }
+    const NAME: &'static str = "JoinAudioChannels";
+    const DISPLAY_NAME: &'static str = "Join Audio Channels";
+    const DESCRIPTION: &'static str = "Joins left and right mono audio channels into a stereo audio.";
     const CATEGORY: &'static str = "audio";
 }
 ///**Load Audio**: No description.
@@ -287,7 +497,7 @@ impl crate::nodes::TypedNode for RecordAudio {
     const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "audio";
 }
-///**Save Audio (FLAC)**: No description.
+///**Save Audio (FLAC) (Deprecated)**: No description.
 #[derive(Clone)]
 #[allow(non_camel_case_types)]
 pub struct SaveAudio<
@@ -329,7 +539,7 @@ impl<
         output
     }
     const NAME: &'static str = "SaveAudio";
-    const DISPLAY_NAME: &'static str = "Save Audio (FLAC)";
+    const DISPLAY_NAME: &'static str = "Save Audio (FLAC) (Deprecated)";
     const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "audio";
 }
@@ -337,7 +547,57 @@ impl<
     AudioParam: crate::nodes::types::Audio,
     FilenamePrefixParam: crate::nodes::types::String,
 > crate::nodes::TypedOutputNode for SaveAudio<AudioParam, FilenamePrefixParam> {}
-///**Save Audio (MP3)**: No description.
+///**Save Audio (Advanced)**: Saves the input audio to your ComfyUI output directory.
+#[derive(Clone)]
+#[allow(non_camel_case_types)]
+pub struct SaveAudioAdvanced<
+    AudioParam: crate::nodes::types::Audio,
+    FilenamePrefixParam: crate::nodes::types::String,
+> {
+    ///The audio to save.
+    pub audio: AudioParam,
+    /**The prefix for the file to save. May include formatting tokens such as %date:yyyy-MM-dd%.
+
+**Metadata**:
+  - Multiline: false
+  - Default: audio/ComfyUI
+*/
+    pub filename_prefix: FilenamePrefixParam,
+}
+impl<
+    AudioParam: crate::nodes::types::Audio,
+    FilenamePrefixParam: crate::nodes::types::String,
+> SaveAudioAdvanced<AudioParam, FilenamePrefixParam> {
+    /// Create a new node.
+    pub fn new(audio: AudioParam, filename_prefix: FilenamePrefixParam) -> Self {
+        Self { audio, filename_prefix }
+    }
+}
+impl<
+    AudioParam: crate::nodes::types::Audio,
+    FilenamePrefixParam: crate::nodes::types::String,
+> crate::nodes::TypedNode for SaveAudioAdvanced<AudioParam, FilenamePrefixParam> {
+    type Output = WorkflowNodeId;
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
+        node_id
+    }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("audio".to_string(), self.audio.clone().into());
+        output
+            .insert("filename_prefix".to_string(), self.filename_prefix.clone().into());
+        output
+    }
+    const NAME: &'static str = "SaveAudioAdvanced";
+    const DISPLAY_NAME: &'static str = "Save Audio (Advanced)";
+    const DESCRIPTION: &'static str = "Saves the input audio to your ComfyUI output directory.";
+    const CATEGORY: &'static str = "audio";
+}
+impl<
+    AudioParam: crate::nodes::types::Audio,
+    FilenamePrefixParam: crate::nodes::types::String,
+> crate::nodes::TypedOutputNode for SaveAudioAdvanced<AudioParam, FilenamePrefixParam> {}
+///**Save Audio (MP3) (Deprecated)**: No description.
 #[derive(Clone)]
 #[allow(non_camel_case_types)]
 pub struct SaveAudioMP3<
@@ -379,7 +639,7 @@ impl<
         output
     }
     const NAME: &'static str = "SaveAudioMP3";
-    const DISPLAY_NAME: &'static str = "Save Audio (MP3)";
+    const DISPLAY_NAME: &'static str = "Save Audio (MP3) (Deprecated)";
     const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "audio";
 }
@@ -387,7 +647,7 @@ impl<
     AudioParam: crate::nodes::types::Audio,
     FilenamePrefixParam: crate::nodes::types::String,
 > crate::nodes::TypedOutputNode for SaveAudioMP3<AudioParam, FilenamePrefixParam> {}
-///**Save Audio (Opus)**: No description.
+///**Save Audio (Opus) (Deprecated)**: No description.
 #[derive(Clone)]
 #[allow(non_camel_case_types)]
 pub struct SaveAudioOpus<
@@ -429,7 +689,7 @@ impl<
         output
     }
     const NAME: &'static str = "SaveAudioOpus";
-    const DISPLAY_NAME: &'static str = "Save Audio (Opus)";
+    const DISPLAY_NAME: &'static str = "Save Audio (Opus) (Deprecated)";
     const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "audio";
 }

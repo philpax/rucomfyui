@@ -1,5 +1,10 @@
 //!`advanced` definitions/categories.
-#![allow(unused_imports, clippy::too_many_arguments, clippy::new_without_default)]
+#![allow(
+    unused_imports,
+    clippy::too_many_arguments,
+    clippy::new_without_default,
+    clippy::doc_lazy_continuation
+)]
 use std::collections::HashMap;
 use crate::{
     workflow::{WorkflowNodeId, WorkflowInput},
@@ -20,4 +25,4 @@ pub mod model;
 #[rustfmt::skip]
 pub mod model_merging;
 #[rustfmt::skip]
-pub mod model_patches;
+pub mod multigpu;

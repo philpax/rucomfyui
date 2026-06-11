@@ -1,10 +1,156 @@
 //!`model` definitions/categories.
-#![allow(unused_imports, clippy::too_many_arguments, clippy::new_without_default)]
+#![allow(
+    unused_imports,
+    clippy::too_many_arguments,
+    clippy::new_without_default,
+    clippy::doc_lazy_continuation
+)]
 use std::collections::HashMap;
 use crate::{
     workflow::{WorkflowNodeId, WorkflowInput},
     nodes::types::Out,
 };
+///**HiDream-O1 Patch Seam Smoothing**: Average the model output across multiple shifted patch-grid positions during the late portion of sampling. Cancels seams.
+#[derive(Clone)]
+#[allow(non_camel_case_types)]
+pub struct HiDreamO1PatchSeamSmoothing<
+    ModelParam: crate::nodes::types::Model,
+    StartPercentParam: crate::nodes::types::Float,
+    EndPercentParam: crate::nodes::types::Float,
+    StrengthParam: crate::nodes::types::Float,
+> {
+    ///No documentation.
+    pub model: ModelParam,
+    /**Sampling progress (0=start, 1=end) at which the blend turns ON.
+
+**Metadata**:
+  - Default: 0.8
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub start_percent: StartPercentParam,
+    /**Sampling progress at which the blend turns OFF.
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub end_percent: EndPercentParam,
+    /**Interpolation between the natural-grid pred (0) and the averaged result (1).
+
+**Metadata**:
+  - Default: 1
+  - Max: 1
+  - Min: 0
+  - Step: 0.01
+*/
+    pub strength: StrengthParam,
+}
+impl<
+    ModelParam: crate::nodes::types::Model,
+    StartPercentParam: crate::nodes::types::Float,
+    EndPercentParam: crate::nodes::types::Float,
+    StrengthParam: crate::nodes::types::Float,
+> HiDreamO1PatchSeamSmoothing<
+    ModelParam,
+    StartPercentParam,
+    EndPercentParam,
+    StrengthParam,
+> {
+    /// Create a new node.
+    pub fn new(
+        model: ModelParam,
+        start_percent: StartPercentParam,
+        end_percent: EndPercentParam,
+        strength: StrengthParam,
+    ) -> Self {
+        Self {
+            model,
+            start_percent,
+            end_percent,
+            strength,
+        }
+    }
+}
+impl<
+    ModelParam: crate::nodes::types::Model,
+    StartPercentParam: crate::nodes::types::Float,
+    EndPercentParam: crate::nodes::types::Float,
+    StrengthParam: crate::nodes::types::Float,
+> crate::nodes::TypedNode
+for HiDreamO1PatchSeamSmoothing<
+    ModelParam,
+    StartPercentParam,
+    EndPercentParam,
+    StrengthParam,
+> {
+    type Output = crate::nodes::types::ModelOut;
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
+        Self::Output::from_dynamic(node_id, 0)
+    }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("model".to_string(), self.model.clone().into());
+        output.insert("start_percent".to_string(), self.start_percent.clone().into());
+        output.insert("end_percent".to_string(), self.end_percent.clone().into());
+        output.insert("strength".to_string(), self.strength.clone().into());
+        output
+    }
+    const NAME: &'static str = "HiDreamO1PatchSeamSmoothing";
+    const DISPLAY_NAME: &'static str = "HiDream-O1 Patch Seam Smoothing";
+    const DESCRIPTION: &'static str = "Average the model output across multiple shifted patch-grid positions during the late portion of sampling. Cancels seams.";
+    const CATEGORY: &'static str = "advanced/model";
+}
+///**ModelNoiseScale**: No description.
+#[derive(Clone)]
+#[allow(non_camel_case_types)]
+pub struct ModelNoiseScale<
+    ModelParam: crate::nodes::types::Model,
+    NoiseScaleParam: crate::nodes::types::Float,
+> {
+    ///No documentation.
+    pub model: ModelParam,
+    /**Absolute training noise scale. For example HiDream-O1 base: 8.0, dev: 7.5.
+
+**Metadata**:
+  - Default: 1
+  - Max: 64
+  - Min: 0
+  - Step: 0.01
+*/
+    pub noise_scale: NoiseScaleParam,
+}
+impl<
+    ModelParam: crate::nodes::types::Model,
+    NoiseScaleParam: crate::nodes::types::Float,
+> ModelNoiseScale<ModelParam, NoiseScaleParam> {
+    /// Create a new node.
+    pub fn new(model: ModelParam, noise_scale: NoiseScaleParam) -> Self {
+        Self { model, noise_scale }
+    }
+}
+impl<
+    ModelParam: crate::nodes::types::Model,
+    NoiseScaleParam: crate::nodes::types::Float,
+> crate::nodes::TypedNode for ModelNoiseScale<ModelParam, NoiseScaleParam> {
+    type Output = crate::nodes::types::ModelOut;
+    fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
+        Self::Output::from_dynamic(node_id, 0)
+    }
+    fn inputs(&self) -> HashMap<String, WorkflowInput> {
+        let mut output = HashMap::default();
+        output.insert("model".to_string(), self.model.clone().into());
+        output.insert("noise_scale".to_string(), self.noise_scale.clone().into());
+        output
+    }
+    const NAME: &'static str = "ModelNoiseScale";
+    const DISPLAY_NAME: &'static str = "ModelNoiseScale";
+    const DESCRIPTION: &'static str = "";
+    const CATEGORY: &'static str = "advanced/model";
+}
 ///**ModelSamplingAuraFlow**: No description.
 #[derive(Clone)]
 #[allow(non_camel_case_types)]

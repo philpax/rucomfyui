@@ -1,5 +1,10 @@
 //!`flux` definitions/categories.
-#![allow(unused_imports, clippy::too_many_arguments, clippy::new_without_default)]
+#![allow(
+    unused_imports,
+    clippy::too_many_arguments,
+    clippy::new_without_default,
+    clippy::doc_lazy_continuation
+)]
 use std::collections::HashMap;
 use crate::{
     workflow::{WorkflowNodeId, WorkflowInput},
@@ -192,7 +197,7 @@ for FluxKontextImageScale<ImageParam> {
     const DESCRIPTION: &'static str = "This node resizes the image to one that is more optimal for flux kontext.";
     const CATEGORY: &'static str = "advanced/conditioning/flux";
 }
-///**FluxKontextMultiReferenceLatentMethod**: No description.
+///**Edit Model Reference Method**: No description.
 #[derive(Clone)]
 #[allow(non_camel_case_types)]
 pub struct FluxKontextMultiReferenceLatentMethod<
@@ -221,7 +226,7 @@ for FluxKontextMultiReferenceLatentMethod<ConditioningParam> {
         output
     }
     const NAME: &'static str = "FluxKontextMultiReferenceLatentMethod";
-    const DISPLAY_NAME: &'static str = "FluxKontextMultiReferenceLatentMethod";
+    const DISPLAY_NAME: &'static str = "Edit Model Reference Method";
     const DESCRIPTION: &'static str = "";
     const CATEGORY: &'static str = "advanced/conditioning/flux";
 }
