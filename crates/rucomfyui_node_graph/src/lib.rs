@@ -7,7 +7,7 @@ use std::collections::HashMap;
 
 use egui_snarl::{
     ui::{SnarlStyle, SnarlWidget},
-    InPinId, NodeId, OutPinId, Snarl,
+    InPinId, OutPinId, Snarl,
 };
 
 use rucomfyui::{
@@ -19,6 +19,8 @@ use rucomfyui::{
 pub mod internal;
 
 use internal::{FlowNodeData, FlowUserState, FlowValueType, FlowViewer};
+
+pub use egui_snarl::NodeId;
 
 /// A mapping from graph node IDs to workflow node IDs.
 ///
@@ -303,6 +305,27 @@ impl ComfyUiNodeGraph {
                 Some((node_id, (images, 0)))
             })
             .collect();
+    }
+
+    /// Set the live execution status to display in the graph.
+    ///
+    /// - `node`: the node currently being executed (highlighted in the graph).
+    /// - `progress`: progress within the current node as `(value, max)`.
+    /// - `preview`: a live preview image for the current node.
+    ///
+    /// Pass all-`None` to clear the status (e.g. once execution finishes).
+    ///
+    /// As with [`Self::populate_output_images`], `egui_extras::install_image_loaders`
+    /// must have been called for the preview to display.
+    pub fn set_live_execution(
+        &mut self,
+        node: Option<NodeId>,
+        progress: Option<(u32, u32)>,
+        preview: Option<egui::ImageSource<'static>>,
+    ) {
+        self.user_state.executing_node = node;
+        self.user_state.node_progress = progress;
+        self.user_state.preview_image = preview;
     }
 }
 

@@ -14,7 +14,7 @@ use anyhow::Context;
 use eframe::egui;
 
 use rucomfyui::{object_info::ObjectInfo, queue::QueueEntry, workflow::WorkflowNodeId, Event};
-use rucomfyui_node_graph::NodeToWorkflowNodeMapping;
+use rucomfyui_node_graph::{NodeId, NodeToWorkflowNodeMapping};
 
 #[cfg(not(target_arch = "wasm32"))]
 fn main() {
@@ -132,8 +132,9 @@ pub struct Application {
 
 /// Tracks the live progress of a single [`rucomfyui::Client::execute`] call.
 struct ExecutionState {
-    /// Mapping from graph nodes to workflow nodes, used to attribute outputs.
-    mapping: NodeToWorkflowNodeMapping,
+    /// Mapping from workflow nodes back to graph nodes, used to attribute
+    /// progress and outputs to the right node in the graph.
+    reverse_mapping: HashMap<WorkflowNodeId, NodeId>,
     /// The node currently being executed, if known.
     current_node: Option<WorkflowNodeId>,
     /// Progress within the current node as `(value, max)`, if known.
@@ -149,13 +150,19 @@ impl ExecutionState {
     /// Create a fresh execution state for the given node mapping.
     fn new(mapping: NodeToWorkflowNodeMapping) -> Self {
         Self {
-            mapping,
+            reverse_mapping: mapping.into_iter().map(|(k, v)| (v, k)).collect(),
             current_node: None,
             progress: None,
             outputs: HashMap::new(),
             preview: None,
             preview_counter: 0,
         }
+    }
+
+    /// The graph node currently executing, if it maps to a node in the graph.
+    fn current_graph_node(&self) -> Option<NodeId> {
+        self.current_node
+            .and_then(|node| self.reverse_mapping.get(&node).copied())
     }
 }
 impl Application {
@@ -409,6 +416,23 @@ impl eframe::App for Application {
             });
         }
 
+        // Push the current live-execution status into the graph so the
+        // executing node is highlighted with its progress and preview.
+        let live = self.execution.as_ref().map(|exec| {
+            let preview = exec
+                .preview
+                .as_ref()
+                .map(|(uri, bytes)| egui::ImageSource::Bytes {
+                    uri: uri.clone().into(),
+                    bytes: bytes.clone().into(),
+                });
+            (exec.current_graph_node(), exec.progress, preview)
+        });
+        if let Some(graph) = self.graph.as_mut() {
+            let (node, progress, preview) = live.unwrap_or((None, None, None));
+            graph.set_live_execution(node, progress, preview);
+        }
+
         egui::CentralPanel::default().show(ctx, |ui| {
             if let Some(graph) = self.graph.as_mut() {
                 graph.show(ui);
@@ -420,38 +444,6 @@ impl eframe::App for Application {
                 Default::default()
             }
         });
-
-        if let Some(execution) = self.execution.as_ref() {
-            egui::Window::new("Executing")
-                .anchor(egui::Align2::LEFT_BOTTOM, egui::vec2(8.0, -8.0))
-                .resizable(false)
-                .collapsible(false)
-                .show(ctx, |ui| {
-                    match execution.current_node {
-                        Some(node) => ui.label(format!("Running node {}…", node.0)),
-                        None => ui.label("Starting…"),
-                    };
-                    if let Some((value, max)) = execution.progress {
-                        let fraction = if max > 0 {
-                            value as f32 / max as f32
-                        } else {
-                            0.0
-                        };
-                        ui.add(
-                            egui::ProgressBar::new(fraction)
-                                .text(format!("{value}/{max}"))
-                                .desired_width(220.0),
-                        );
-                    }
-                    if let Some((uri, bytes)) = &execution.preview {
-                        ui.add(
-                            egui::Image::from_bytes(uri.clone(), bytes.clone())
-                                .max_height(256.0)
-                                .maintain_aspect_ratio(true),
-                        );
-                    }
-                });
-        }
 
         if let Some((category, error)) = self.error.clone() {
             let mut open = true;
@@ -1119,21 +1111,19 @@ impl Application {
         let Some(graph) = self.graph.as_mut() else {
             return;
         };
+        // Clear the live-execution overlay now that the run has finished.
+        graph.set_live_execution(None, None, None);
+
         let now_timestamp = SystemTime::now()
             .duration_since(SystemTime::UNIX_EPOCH)
             .map(|t| t.as_secs_f64())
             .unwrap_or_default();
-        let reverse_mapping = exec
-            .mapping
-            .into_iter()
-            .map(|(k, v)| (v, k))
-            .collect::<HashMap<_, _>>();
         graph.populate_output_images(
             &now_timestamp.to_string(),
             exec.outputs
                 .into_iter()
                 .flat_map(|(workflow_node_id, images)| {
-                    reverse_mapping
+                    exec.reverse_mapping
                         .get(&workflow_node_id)
                         .copied()
                         .map(|id| (id, images))

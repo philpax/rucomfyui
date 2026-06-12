@@ -431,6 +431,15 @@ pub struct FlowUserState {
     #[cfg_attr(feature = "serde", serde(skip))]
     /// A mapping from node IDs to output images and the selected image.
     pub output_images: HashMap<NodeId, (Vec<egui::ImageSource<'static>>, usize)>,
+    #[cfg_attr(feature = "serde", serde(skip))]
+    /// The node currently being executed, highlighted in the graph.
+    pub executing_node: Option<NodeId>,
+    #[cfg_attr(feature = "serde", serde(skip))]
+    /// Progress within the executing node as `(value, max)`.
+    pub node_progress: Option<(u32, u32)>,
+    #[cfg_attr(feature = "serde", serde(skip))]
+    /// A live preview image for the executing node.
+    pub preview_image: Option<egui::ImageSource<'static>>,
 }
 
 /// Recursively renders a category tree as nested menus
@@ -563,6 +572,25 @@ impl SnarlViewer<FlowNodeData> for FlowViewer<'_> {
         snarl.connect(from.id, to.id);
     }
 
+    fn node_frame(
+        &mut self,
+        default: egui::Frame,
+        node: NodeId,
+        _inputs: &[InPin],
+        _outputs: &[OutPin],
+        _snarl: &Snarl<FlowNodeData>,
+    ) -> egui::Frame {
+        // Highlight the node that is currently executing.
+        if self.user_state.executing_node == Some(node) {
+            default.stroke(egui::Stroke::new(
+                2.0,
+                egui::Color32::from_rgb(0x4c, 0xaf, 0x50),
+            ))
+        } else {
+            default
+        }
+    }
+
     fn has_body(&mut self, _node: &FlowNodeData) -> bool {
         false
     }
@@ -613,6 +641,29 @@ impl SnarlViewer<FlowNodeData> for FlowViewer<'_> {
                     .show(ui, |ui| {
                         ui.add(image.shrink_to_fit());
                     });
+            }
+        }
+
+        // While this node is executing, show its live progress and preview.
+        if self.user_state.executing_node == Some(node_id) {
+            if let Some((value, max)) = self.user_state.node_progress {
+                let fraction = if max > 0 {
+                    value as f32 / max as f32
+                } else {
+                    0.0
+                };
+                ui.add(
+                    egui::ProgressBar::new(fraction)
+                        .desired_width(180.0)
+                        .text(format!("{value}/{max}")),
+                );
+            }
+            if let Some(preview) = &self.user_state.preview_image {
+                ui.add(
+                    egui::Image::new(preview.clone())
+                        .max_height(192.0)
+                        .maintain_aspect_ratio(true),
+                );
             }
         }
     }
