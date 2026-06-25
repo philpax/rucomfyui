@@ -12,8 +12,8 @@ use ewebsock::{WsEvent, WsMessage, WsReceiver, WsSender};
 use futures::Stream;
 use serde::{Deserialize, Serialize};
 
-use super::{final_events, Event, Execution, PreviewImage, PreviewImageFormat};
-use crate::{workflow::WorkflowNodeId, Client, ClientError, Result, Workflow};
+use super::{Event, Execution, PreviewImage, PreviewImageFormat, final_events};
+use crate::{Client, ClientError, Result, Workflow, workflow::WorkflowNodeId};
 
 /// How long to wait for the socket to open before falling back to polling.
 const OPEN_TIMEOUT: web_time::Duration = web_time::Duration::from_secs(5);

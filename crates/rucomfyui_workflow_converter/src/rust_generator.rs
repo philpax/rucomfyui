@@ -1,7 +1,7 @@
 //! Rust code generation from workflows using ObjectInfo.
 
-use crate::workflow_analyzer::{AnalyzedInput, AnalyzedNode, AnalyzedWorkflow};
 use crate::Result;
+use crate::workflow_analyzer::{AnalyzedInput, AnalyzedNode, AnalyzedWorkflow};
 use convert_case::{Case, Casing};
 use proc_macro2::TokenStream;
 use quote::{format_ident, quote};
@@ -168,11 +168,12 @@ fn build_input_expr(
         }
         AnalyzedInput::Float(f) => {
             // Check if expected type is Int - if so, output as integer
-            if let Some(ObjectType::Int) = expected_type {
-                if f.fract() == 0.0 && f.abs() < i64::MAX as f64 {
-                    let lit = proc_macro2::Literal::i64_unsuffixed(*f as i64);
-                    return quote! { #lit };
-                }
+            if let Some(ObjectType::Int) = expected_type
+                && f.fract() == 0.0
+                && f.abs() < i64::MAX as f64
+            {
+                let lit = proc_macro2::Literal::i64_unsuffixed(*f as i64);
+                return quote! { #lit };
             }
             let lit = proc_macro2::Literal::f64_unsuffixed(*f);
             quote! { #lit }
@@ -190,26 +191,25 @@ fn build_input_expr(
             let ref_obj = ref_node.and_then(|n| ctx.get_object(&n.class_type));
 
             // Check if we should inline this node
-            if let Some(ref_node) = ref_node {
-                if ref_node.ref_count == 1 {
-                    // Inline the node - build its full expression
-                    let node_expr = build_node_expr(ctx, ref_node);
+            if let Some(ref_node) = ref_node
+                && ref_node.ref_count == 1
+            {
+                // Inline the node - build its full expression
+                let node_expr = build_node_expr(ctx, ref_node);
 
-                    // If this is a multi-output node and we need a specific output, add field access
-                    if let Some(ref_obj) = ref_obj {
-                        let outputs: Vec<_> = ref_obj.processed_output().collect();
-                        if outputs.len() > 1 {
-                            if let Some(output) = outputs.get(*slot as usize) {
-                                let field_ident =
-                                    format_ident!("{}", output.name.to_case(Case::Snake));
-                                return quote! { g.add(#node_expr).#field_ident };
-                            }
-                        }
+                // If this is a multi-output node and we need a specific output, add field access
+                if let Some(ref_obj) = ref_obj {
+                    let outputs: Vec<_> = ref_obj.processed_output().collect();
+                    if outputs.len() > 1
+                        && let Some(output) = outputs.get(*slot as usize)
+                    {
+                        let field_ident = format_ident!("{}", output.name.to_case(Case::Snake));
+                        return quote! { g.add(#node_expr).#field_ident };
                     }
-
-                    // Single output - just the add expression
-                    return quote! { g.add(#node_expr) };
                 }
+
+                // Single output - just the add expression
+                return quote! { g.add(#node_expr) };
             }
 
             // Not inlining - use variable reference
@@ -218,11 +218,11 @@ fn build_input_expr(
             // Check if we need field access for multi-output nodes
             if let Some(ref_obj) = ref_obj {
                 let outputs: Vec<_> = ref_obj.processed_output().collect();
-                if outputs.len() > 1 {
-                    if let Some(output) = outputs.get(*slot as usize) {
-                        let field_ident = format_ident!("{}", output.name.to_case(Case::Snake));
-                        return quote! { #var_ident.#field_ident };
-                    }
+                if outputs.len() > 1
+                    && let Some(output) = outputs.get(*slot as usize)
+                {
+                    let field_ident = format_ident!("{}", output.name.to_case(Case::Snake));
+                    return quote! { #var_ident.#field_ident };
                 }
             }
 
@@ -253,25 +253,25 @@ fn format_tokens_as_snippet(tokens: TokenStream) -> Result<String> {
     let formatted = prettyplease::unparse(&syntax_tree);
 
     // Extract just the function body (between the first { and the last })
-    if let Some(start) = formatted.find('{') {
-        if let Some(end) = formatted.rfind('}') {
-            let body = &formatted[start + 1..end];
-            // Remove leading and trailing whitespace from each line and dedent
-            return Ok(body
-                .lines()
-                .map(|line| {
-                    // Remove exactly 4 spaces of indentation if present
-                    if let Some(stripped) = line.strip_prefix("    ") {
-                        stripped
-                    } else {
-                        line.trim_start()
-                    }
-                })
-                .collect::<Vec<_>>()
-                .join("\n")
-                .trim()
-                .to_string());
-        }
+    if let Some(start) = formatted.find('{')
+        && let Some(end) = formatted.rfind('}')
+    {
+        let body = &formatted[start + 1..end];
+        // Remove leading and trailing whitespace from each line and dedent
+        return Ok(body
+            .lines()
+            .map(|line| {
+                // Remove exactly 4 spaces of indentation if present
+                if let Some(stripped) = line.strip_prefix("    ") {
+                    stripped
+                } else {
+                    line.trim_start()
+                }
+            })
+            .collect::<Vec<_>>()
+            .join("\n")
+            .trim()
+            .to_string());
     }
     Ok(formatted)
 }

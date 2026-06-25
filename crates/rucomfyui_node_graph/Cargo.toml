@@ -1,7 +1,7 @@
 [package]
 name = "rucomfyui_node_graph"
 version = "0.1.0"
-edition = "2021"
+edition = "2024"
 description = "A recreation of the ComfyUI node graph in Rust using `egui` and `rucomfyui`."
 authors = ["Philpax <me@philpax.me>"]
 license = "MIT"

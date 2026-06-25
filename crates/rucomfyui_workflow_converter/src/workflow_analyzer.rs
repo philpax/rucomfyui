@@ -72,12 +72,11 @@ impl AnalyzedWorkflow {
         }
         for node in workflow.0.values() {
             for input in node.inputs.values() {
-                if let WorkflowInput::Slot(node_id_str, _) = input {
-                    if let Ok(ref_id) = node_id_str.parse::<WorkflowNodeId>() {
-                        if let Some(count) = ref_counts.get_mut(&ref_id) {
-                            *count += 1;
-                        }
-                    }
+                if let WorkflowInput::Slot(node_id_str, _) = input
+                    && let Ok(ref_id) = node_id_str.parse::<WorkflowNodeId>()
+                    && let Some(count) = ref_counts.get_mut(&ref_id)
+                {
+                    *count += 1;
                 }
             }
         }
@@ -191,13 +190,13 @@ fn topological_sort(workflow: &Workflow) -> Result<Vec<WorkflowNodeId>> {
     // Calculate in-degrees and dependencies
     for (&node_id, node) in &workflow.0 {
         for input in node.inputs.values() {
-            if let WorkflowInput::Slot(dep_id_str, _) = input {
-                if let Ok(dep_id) = dep_id_str.parse::<u32>() {
-                    let dep_node_id = WorkflowNodeId(dep_id);
-                    if workflow.0.contains_key(&dep_node_id) {
-                        *in_degree.entry(node_id).or_insert(0) += 1;
-                        dependents.entry(dep_node_id).or_default().push(node_id);
-                    }
+            if let WorkflowInput::Slot(dep_id_str, _) = input
+                && let Ok(dep_id) = dep_id_str.parse::<u32>()
+            {
+                let dep_node_id = WorkflowNodeId(dep_id);
+                if workflow.0.contains_key(&dep_node_id) {
+                    *in_degree.entry(node_id).or_insert(0) += 1;
+                    dependents.entry(dep_node_id).or_default().push(node_id);
                 }
             }
         }
@@ -206,7 +205,7 @@ fn topological_sort(workflow: &Workflow) -> Result<Vec<WorkflowNodeId>> {
     // Kahn's algorithm for topological sort
     let mut queue: VecDeque<WorkflowNodeId> = in_degree
         .iter()
-        .filter(|(_, &degree)| degree == 0)
+        .filter(|(_, degree)| **degree == 0)
         .map(|(&id, _)| id)
         .collect();
 

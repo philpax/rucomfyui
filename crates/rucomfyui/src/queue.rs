@@ -2,7 +2,7 @@
 
 use serde::{Deserialize, Serialize};
 
-use crate::{workflow::WorkflowNodeId, Client, Result, Workflow};
+use crate::{Client, Result, Workflow, workflow::WorkflowNodeId};
 
 #[derive(Serialize, Deserialize, Debug)]
 /// Result of the queueing of a prompt.

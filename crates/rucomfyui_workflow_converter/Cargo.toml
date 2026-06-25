@@ -1,7 +1,7 @@
 [package]
 name = "rucomfyui_workflow_converter"
 version = "0.1.0"
-edition = "2021"
+edition = "2024"
 description = "Convert ComfyUI API workflows to typed Rust or Lua code"
 
 [features]

@@ -6,14 +6,14 @@
 use std::collections::HashMap;
 
 use egui_snarl::{
-    ui::{SnarlStyle, SnarlWidget},
     InPinId, OutPinId, Snarl,
+    ui::{SnarlStyle, SnarlWidget},
 };
 
 use rucomfyui::{
+    Workflow, WorkflowGraph,
     object_info::ObjectInfo,
     workflow::{WorkflowInput, WorkflowMeta, WorkflowNode, WorkflowNodeId},
-    Workflow, WorkflowGraph,
 };
 
 pub mod internal;
@@ -182,11 +182,11 @@ impl ComfyUiNodeGraph {
                         if !matches!(workflow_input, WorkflowInput::Slot(_, _)) {
                             // If the input is an Array (dropdown), just update the selected value
                             // rather than replacing the whole input (which would lose the options)
-                            if let FlowValueType::Array { selected, .. } = &mut input.value {
-                                if let WorkflowInput::String(s) = workflow_input {
-                                    *selected = s.clone();
-                                    continue;
-                                }
+                            if let FlowValueType::Array { selected, .. } = &mut input.value
+                                && let WorkflowInput::String(s) = workflow_input
+                            {
+                                *selected = s.clone();
+                                continue;
                             }
 
                             let meta_typed = object

@@ -1,7 +1,7 @@
 [package]
 name = "rucomfyui_node_graph_demo"
 version = "0.1.0"
-edition = "2021"
+edition = "2024"
 description = "A demonstration of how to use `rucomfyui_node_graph` that talks to a ComfyUI server."
 
 [dependencies]

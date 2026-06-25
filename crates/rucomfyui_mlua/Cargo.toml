@@ -1,7 +1,7 @@
 [package]
 name = "rucomfyui_mlua"
 version = "0.1.0"
-edition = "2021"
+edition = "2024"
 description = "Lua bindings for rucomfyui - a fluent ComfyUI workflow builder"
 license = "MIT OR Apache-2.0"
 repository = "https://github.com/philpax/rucomfyui"

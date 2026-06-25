@@ -19,8 +19,8 @@ use std::{collections::HashMap, pin::Pin, task::Poll};
 use futures::{Stream, StreamExt};
 
 use crate::{
-    history::HistoryNodeOutput, workflow::WorkflowNodeId, Client, ClientError, OwnedBytes, Result,
-    Workflow,
+    Client, ClientError, OwnedBytes, Result, Workflow, history::HistoryNodeOutput,
+    workflow::WorkflowNodeId,
 };
 
 /// The outputs produced by a single node during execution.
@@ -233,23 +233,23 @@ fn poll_execution(client: Client, prompt_id: String) -> impl Stream<Item = Resul
 async fn final_events(client: &Client, prompt_id: &str) -> Result<Vec<Event>> {
     loop {
         let history = client.get_history_for_prompt(prompt_id).await?;
-        if let Some(data) = history.data.get(prompt_id) {
-            if data.status.completed {
-                let mut events = Vec::new();
-                for (node_name, node_output) in &data.outputs.nodes {
-                    let node = node_name.parse::<WorkflowNodeId>()?;
-                    let output = download_node_output(client, node_output).await?;
-                    events.push(Event::Executed {
-                        prompt_id: prompt_id.to_string(),
-                        node,
-                        output,
-                    });
-                }
-                events.push(Event::Completed {
+        if let Some(data) = history.data.get(prompt_id)
+            && data.status.completed
+        {
+            let mut events = Vec::new();
+            for (node_name, node_output) in &data.outputs.nodes {
+                let node = node_name.parse::<WorkflowNodeId>()?;
+                let output = download_node_output(client, node_output).await?;
+                events.push(Event::Executed {
                     prompt_id: prompt_id.to_string(),
+                    node,
+                    output,
                 });
-                return Ok(events);
             }
+            events.push(Event::Completed {
+                prompt_id: prompt_id.to_string(),
+            });
+            return Ok(events);
         }
         futures_timer::Delay::new(web_time::Duration::from_millis(100)).await;
     }

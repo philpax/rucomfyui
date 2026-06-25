@@ -4,8 +4,8 @@
 use std::{
     collections::HashMap,
     sync::{
-        mpsc::{Receiver, Sender},
         Arc,
+        mpsc::{Receiver, Sender},
     },
 };
 use web_time::{Instant, SystemTime};
@@ -13,7 +13,7 @@ use web_time::{Instant, SystemTime};
 use anyhow::Context;
 use eframe::egui;
 
-use rucomfyui::{object_info::ObjectInfo, queue::QueueEntry, workflow::WorkflowNodeId, Event};
+use rucomfyui::{Event, object_info::ObjectInfo, queue::QueueEntry, workflow::WorkflowNodeId};
 use rucomfyui_node_graph::{NodeId, NodeToWorkflowNodeMapping};
 
 #[cfg(not(target_arch = "wasm32"))]
@@ -254,20 +254,20 @@ impl eframe::App for Application {
     fn update(&mut self, ctx: &egui::Context, _frame: &mut eframe::Frame) {
         ctx.request_repaint_after(web_time::Duration::from_millis(100));
 
-        if let Some(client) = self.client.as_ref() {
-            if self.last_queue_update_time.elapsed().as_millis() > 100 {
-                let tx = self.async_output_tx.clone();
-                let client = client.clone();
-                self.runtime.spawn(async move {
-                    let queue = client.get_queue().await;
-                    tx.send(match queue {
-                        Ok(queue) => AsyncResponse::Queue(queue),
-                        Err(err) => AsyncResponse::error("Queue", err),
-                    })
-                    .unwrap();
-                });
-                self.last_queue_update_time = Instant::now();
-            }
+        if let Some(client) = self.client.as_ref()
+            && self.last_queue_update_time.elapsed().as_millis() > 100
+        {
+            let tx = self.async_output_tx.clone();
+            let client = client.clone();
+            self.runtime.spawn(async move {
+                let queue = client.get_queue().await;
+                tx.send(match queue {
+                    Ok(queue) => AsyncResponse::Queue(queue),
+                    Err(err) => AsyncResponse::error("Queue", err),
+                })
+                .unwrap();
+            });
+            self.last_queue_update_time = Instant::now();
         }
 
         if self.handle_async_responses(ctx) {
@@ -1081,26 +1081,26 @@ impl Application {
             Event::Preview { image, .. } => {
                 // Decode into a texture we update in place, so the preview never
                 // flickers through the image loader's spinner.
-                if let Some(color) = decode_preview_image(&image.data) {
-                    if let Some(exec) = self.execution.as_mut() {
-                        match &mut exec.preview_texture {
-                            Some(texture) => texture.set(color, egui::TextureOptions::NEAREST),
-                            None => {
-                                exec.preview_texture = Some(ctx.load_texture(
-                                    "execution_preview",
-                                    color,
-                                    egui::TextureOptions::NEAREST,
-                                ))
-                            }
+                if let Some(color) = decode_preview_image(&image.data)
+                    && let Some(exec) = self.execution.as_mut()
+                {
+                    match &mut exec.preview_texture {
+                        Some(texture) => texture.set(color, egui::TextureOptions::NEAREST),
+                        None => {
+                            exec.preview_texture = Some(ctx.load_texture(
+                                "execution_preview",
+                                color,
+                                egui::TextureOptions::NEAREST,
+                            ))
                         }
                     }
                 }
             }
             Event::Executed { node, output, .. } => {
-                if let Some(exec) = self.execution.as_mut() {
-                    if !output.images.is_empty() {
-                        exec.outputs.insert(node, output.images);
-                    }
+                if let Some(exec) = self.execution.as_mut()
+                    && !output.images.is_empty()
+                {
+                    exec.outputs.insert(node, output.images);
                 }
             }
             Event::Completed { .. } => self.finish_execution(),
@@ -1466,12 +1466,12 @@ impl Application {
             needs_repaint = true;
         }
 
-        if let Some(workflow) = load_workflow {
-            if let Err(err) = self.api_load(workflow) {
-                self.async_output_tx
-                    .send(AsyncResponse::error("Load", err))
-                    .unwrap();
-            }
+        if let Some(workflow) = load_workflow
+            && let Err(err) = self.api_load(workflow)
+        {
+            self.async_output_tx
+                .send(AsyncResponse::error("Load", err))
+                .unwrap();
         }
 
         if refresh_system_stats {

@@ -16,8 +16,8 @@ pub async fn main() -> anyhow::Result<()> {
 
     // Save the output images to disk.
     for (idx, image) in result
-        .iter()
-        .flat_map(|(_, output)| output.images.iter())
+        .values()
+        .flat_map(|output| output.images.iter())
         .enumerate()
     {
         std::fs::write(format!("output_{idx}.png"), image)?;

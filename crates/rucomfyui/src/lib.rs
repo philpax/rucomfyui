@@ -27,8 +27,8 @@ pub mod system;
 pub mod upload;
 
 pub mod error;
-use error::parse_response;
 pub use error::ClientError;
+use error::parse_response;
 
 /// Result type for the client.
 pub type Result<T> = std::result::Result<T, ClientError>;

@@ -46,23 +46,23 @@ fn format_tokens_as_snippet(tokens: TokenStream) -> String {
     let formatted = prettyplease::unparse(&syntax_tree);
 
     // Extract just the function body (between the first { and the last })
-    if let Some(start) = formatted.find('{') {
-        if let Some(end) = formatted.rfind('}') {
-            let body = &formatted[start + 1..end];
-            return body
-                .lines()
-                .map(|line| {
-                    if let Some(stripped) = line.strip_prefix("    ") {
-                        stripped
-                    } else {
-                        line.trim_start()
-                    }
-                })
-                .collect::<Vec<_>>()
-                .join("\n")
-                .trim()
-                .to_string();
-        }
+    if let Some(start) = formatted.find('{')
+        && let Some(end) = formatted.rfind('}')
+    {
+        let body = &formatted[start + 1..end];
+        return body
+            .lines()
+            .map(|line| {
+                if let Some(stripped) = line.strip_prefix("    ") {
+                    stripped
+                } else {
+                    line.trim_start()
+                }
+            })
+            .collect::<Vec<_>>()
+            .join("\n")
+            .trim()
+            .to_string();
     }
     formatted
 }

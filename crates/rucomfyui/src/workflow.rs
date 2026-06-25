@@ -7,10 +7,10 @@ use std::{
     str::FromStr,
 };
 
-use serde::{de, Deserialize, Deserializer, Serialize};
+use serde::{Deserialize, Deserializer, Serialize, de};
 
 #[cfg(feature = "typed_nodes")]
-use crate::nodes::{types::Out, TypedNode};
+use crate::nodes::{TypedNode, types::Out};
 
 /// A workflow is a graph of nodes that are executed in order.
 /// Each node is a step in the workflow.
@@ -50,11 +50,11 @@ impl Workflow {
         for (&node_id, node) in &self.0 {
             in_degree.entry(node_id).or_insert(0);
             for input in node.inputs.values() {
-                if let WorkflowInput::Slot(dep_id, _) = input {
-                    if let Ok(dep_id) = dep_id.parse::<u32>() {
-                        let dep_node_id = WorkflowNodeId(dep_id);
-                        *in_degree.entry(dep_node_id).or_insert(0) += 1;
-                    }
+                if let WorkflowInput::Slot(dep_id, _) = input
+                    && let Ok(dep_id) = dep_id.parse::<u32>()
+                {
+                    let dep_node_id = WorkflowNodeId(dep_id);
+                    *in_degree.entry(dep_node_id).or_insert(0) += 1;
                 }
             }
         }
@@ -80,14 +80,14 @@ impl Workflow {
 
                     if let Some(node) = self.0.get(&node_id) {
                         for input in node.inputs.values() {
-                            if let WorkflowInput::Slot(dep_id, _) = input {
-                                if let Ok(dep_id) = dep_id.parse::<u32>() {
-                                    let dep_node_id = WorkflowNodeId(dep_id);
-                                    if let Some(degree) = in_degree.get_mut(&dep_node_id) {
-                                        *degree -= 1;
-                                        if *degree == 0 {
-                                            queue.push_back(dep_node_id);
-                                        }
+                            if let WorkflowInput::Slot(dep_id, _) = input
+                                && let Ok(dep_id) = dep_id.parse::<u32>()
+                            {
+                                let dep_node_id = WorkflowNodeId(dep_id);
+                                if let Some(degree) = in_degree.get_mut(&dep_node_id) {
+                                    *degree -= 1;
+                                    if *degree == 0 {
+                                        queue.push_back(dep_node_id);
                                     }
                                 }
                             }

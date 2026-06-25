@@ -1,16 +1,16 @@
 //! Lua code generation from workflows using full_moon AST.
 
-use crate::workflow_analyzer::{AnalyzedInput, AnalyzedNode, AnalyzedWorkflow};
 use crate::Result;
+use crate::workflow_analyzer::{AnalyzedInput, AnalyzedNode, AnalyzedWorkflow};
 use convert_case::{Case, Casing};
+use full_moon::ShortString;
 use full_moon::ast::{
-    punctuated::{Pair, Punctuated},
-    span::ContainedSpan,
     Block, Call, Expression, Field, FunctionArgs, FunctionCall, Index, LocalAssignment, Prefix,
     Stmt, Suffix, TableConstructor, Var, VarExpression,
+    punctuated::{Pair, Punctuated},
+    span::ContainedSpan,
 };
 use full_moon::tokenizer::{Token, TokenReference, TokenType};
-use full_moon::ShortString;
 use rucomfyui::object_info::{Object, ObjectInfo};
 use rucomfyui::workflow::WorkflowNodeId;
 use std::collections::HashMap;
@@ -185,36 +185,36 @@ fn build_input_expr(
             let ref_obj = ref_node.and_then(|n| ctx.get_object(&n.class_type));
 
             // Check if we should inline this node
-            if let Some(ref_node) = ref_node {
-                if ref_node.ref_count == 1 {
-                    // Inline the node - build its full expression
-                    let func_call = build_node_call(ctx, ref_node, indent)?;
+            if let Some(ref_node) = ref_node
+                && ref_node.ref_count == 1
+            {
+                // Inline the node - build its full expression
+                let func_call = build_node_call(ctx, ref_node, indent)?;
 
-                    // If this is a multi-output node and we need a specific output, add field access
-                    if let Some(ref_obj) = ref_obj {
-                        let outputs: Vec<_> = ref_obj.processed_output().collect();
-                        if outputs.len() > 1 {
-                            if let Some(output) = outputs.get(*slot as usize) {
-                                let field_name = output.name.to_case(Case::Snake);
-                                return Ok(func_call_field_access_expr(func_call, &field_name));
-                            }
-                        }
+                // If this is a multi-output node and we need a specific output, add field access
+                if let Some(ref_obj) = ref_obj {
+                    let outputs: Vec<_> = ref_obj.processed_output().collect();
+                    if outputs.len() > 1
+                        && let Some(output) = outputs.get(*slot as usize)
+                    {
+                        let field_name = output.name.to_case(Case::Snake);
+                        return Ok(func_call_field_access_expr(func_call, &field_name));
                     }
-
-                    // Single output or unknown - just the function call
-                    return Ok(Expression::FunctionCall(func_call));
                 }
+
+                // Single output or unknown - just the function call
+                return Ok(Expression::FunctionCall(func_call));
             }
 
             // Not inlining - use variable reference
             // Check if we need field access for multi-output nodes
             if let Some(ref_obj) = ref_obj {
                 let outputs: Vec<_> = ref_obj.processed_output().collect();
-                if outputs.len() > 1 {
-                    if let Some(output) = outputs.get(*slot as usize) {
-                        let field_name = output.name.to_case(Case::Snake);
-                        return Ok(field_access_expr(var_name, &field_name));
-                    }
+                if outputs.len() > 1
+                    && let Some(output) = outputs.get(*slot as usize)
+                {
+                    let field_name = output.name.to_case(Case::Snake);
+                    return Ok(field_access_expr(var_name, &field_name));
                 }
             }
 

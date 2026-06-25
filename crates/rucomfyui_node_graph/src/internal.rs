@@ -9,8 +9,8 @@ use std::{
 };
 
 use egui_snarl::{
-    ui::{PinInfo, SnarlViewer},
     InPin, NodeId, OutPin, Snarl,
+    ui::{PinInfo, SnarlViewer},
 };
 
 use rucomfyui::{
