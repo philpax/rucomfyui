@@ -47,12 +47,33 @@ impl Client {
     /// for a higher-level helper that tracks the prompt's execution and yields
     /// progress events.
     pub async fn queue_prompt(&self, workflow: &Workflow) -> Result<QueueResult> {
+        #[derive(Serialize)]
+        struct NoExtraData {}
+        self.queue_prompt_with_extra_data(workflow, NoExtraData {})
+            .await
+    }
+
+    /// Like [`Self::queue_prompt`], but attaches an `extra_data` object to the
+    /// request. ComfyUI threads this through to execution; e.g. a
+    /// `preview_method` of `"auto"` enables live sampler previews for this prompt.
+    pub(crate) async fn queue_prompt_with_extra_data(
+        &self,
+        workflow: &Workflow,
+        extra_data: impl Serialize,
+    ) -> Result<QueueResult> {
+        #[derive(Serialize)]
+        struct QueuePromptRequest<'a, E: Serialize> {
+            prompt: &'a Workflow,
+            client_id: &'a str,
+            extra_data: E,
+        }
         self.post_json(
             "prompt",
-            &serde_json::json!({
-                "prompt": workflow,
-                "client_id": self.client_id,
-            }),
+            &QueuePromptRequest {
+                prompt: workflow,
+                client_id: &self.client_id,
+                extra_data,
+            },
         )
         .await
     }
