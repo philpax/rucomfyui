@@ -172,7 +172,7 @@ fn type_module_definitions() -> Result<TokenStream> {
     let types = ObjectType::ALL
         .iter()
         .map(|ty| {
-            let recased_ty = format!("{ty:?}").to_case(Case::ScreamingSnake);
+            let recased_ty = format!("{ty:?}").to_case(Case::UpperSnake);
             let doc = format!("A value of ComfyUI type `{recased_ty}`.");
             let name = util::name_to_ident(&format!("{ty:?}"), util::NameToIdentCase::Pascal)?;
 

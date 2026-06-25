@@ -251,7 +251,8 @@ impl eframe::App for Application {
     }
 
     /// Update the application and render the UI.
-    fn update(&mut self, ctx: &egui::Context, _frame: &mut eframe::Frame) {
+    fn ui(&mut self, ui: &mut egui::Ui, _frame: &mut eframe::Frame) {
+        let ctx = ui.ctx().clone();
         ctx.request_repaint_after(web_time::Duration::from_millis(100));
 
         if let Some(client) = self.client.as_ref()
@@ -270,11 +271,11 @@ impl eframe::App for Application {
             self.last_queue_update_time = Instant::now();
         }
 
-        if self.handle_async_responses(ctx) {
+        if self.handle_async_responses(&ctx) {
             ctx.request_repaint();
         }
 
-        egui::TopBottomPanel::top("top").show(ctx, |ui| {
+        egui::Panel::top("top").show_inside(ui, |ui| {
             let is_connected = self.graph.is_some();
             egui::MenuBar::new().ui(ui, |ui| {
                 egui::widgets::global_theme_preference_switch(ui);
@@ -334,7 +335,7 @@ impl eframe::App for Application {
         });
 
         if self.graph.is_some() {
-            egui::SidePanel::right("right").show(ctx, |ui| {
+            egui::Panel::right("right").show_inside(ui, |ui| {
                 ui.heading("Queue");
                 let mut requested_deletions = vec![];
                 let mut requested_interrupt = false;
@@ -438,7 +439,7 @@ impl eframe::App for Application {
             graph.set_live_execution(node, progress, preview);
         }
 
-        egui::CentralPanel::default().show(ctx, |ui| {
+        egui::CentralPanel::default().show_inside(ui, |ui| {
             if let Some(graph) = self.graph.as_mut() {
                 graph.show(ui);
             } else {
@@ -452,7 +453,7 @@ impl eframe::App for Application {
 
         if let Some((category, error)) = self.error.clone() {
             let mut open = true;
-            egui::Window::new("Error").open(&mut open).show(ctx, |ui| {
+            egui::Window::new("Error").open(&mut open).show(&ctx, |ui| {
                 ui.label(egui::RichText::new(category).strong());
                 ui.label(error);
                 if ui.button("Close").clicked() {
@@ -468,7 +469,7 @@ impl eframe::App for Application {
             let mut open = true;
             egui::Window::new("Viewed workflow")
                 .open(&mut open)
-                .show(ctx, |ui| {
+                .show(&ctx, |ui| {
                     // TODO: fix ID conflict with main graph
                     workflow.show(ui);
                 });
@@ -480,22 +481,22 @@ impl eframe::App for Application {
         if self.settings_open {
             egui::Window::new("Settings")
                 .open(&mut self.settings_open)
-                .show(ctx, |ui| {
+                .show(&ctx, |ui| {
                     ui.label("Authorization token:");
                     ui.text_edit_singleline(&mut self.authorization_token);
                 });
         }
 
         if self.system_stats_open {
-            self.draw_system_stats(ctx);
+            self.draw_system_stats(&ctx);
         }
 
         if self.models_open {
-            self.draw_models_window(ctx);
+            self.draw_models_window(&ctx);
         }
 
         if self.history_open {
-            self.draw_history_window(ctx);
+            self.draw_history_window(&ctx);
         }
     }
 }

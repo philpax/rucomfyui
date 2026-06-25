@@ -10,6 +10,7 @@ mkShell rec {
     xorg.libXi
     libxkbcommon
     libGL
+    vulkan-loader
     fontconfig
     wayland
   ];
