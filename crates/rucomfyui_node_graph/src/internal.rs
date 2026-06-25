@@ -438,9 +438,14 @@ pub struct FlowUserState {
     /// Progress within the executing node as `(value, max)`.
     pub node_progress: Option<(u32, u32)>,
     #[cfg_attr(feature = "serde", serde(skip))]
-    /// A live preview image for the executing node.
+    /// A live preview image, rendered on the executing node (matching ComfyUI,
+    /// which shows the preview on the node generating it).
     pub preview_image: Option<egui::ImageSource<'static>>,
 }
+
+/// The display size, in points, for images shown on a node (both live previews
+/// and final outputs), so the two stay visually consistent.
+const NODE_IMAGE_SIZE: f32 = 256.0;
 
 /// Recursively renders a category tree as nested menus
 fn render_category_tree(
@@ -626,45 +631,47 @@ impl SnarlViewer<FlowNodeData> for FlowViewer<'_> {
             });
 
             if let Some(image_source) = images.get(*selected) {
-                let image = egui::Image::new(image_source.clone());
-
-                // Try to get the natural image size for the default resize dimensions
-                let default_size = image
-                    .load_for_size(ui.ctx(), egui::Vec2::splat(f32::INFINITY))
-                    .ok()
-                    .and_then(|poll| poll.size())
-                    .unwrap_or(egui::Vec2::new(256.0, 256.0));
-
+                let image = egui::Image::new(image_source.clone()).show_loading_spinner(false);
+                // Default to the shared image size so output images match the
+                // live preview; the user can still resize from there.
                 egui::Resize::default()
                     .id_salt(format!("{node_id:?}_image_resize"))
-                    .default_size(default_size)
+                    .default_size(egui::Vec2::splat(NODE_IMAGE_SIZE))
                     .show(ui, |ui| {
                         ui.add(image.shrink_to_fit());
                     });
             }
         }
 
-        // While this node is executing, show its live progress and preview.
+        // The executing node shows its live progress and preview, below its
+        // controls (the footer is rendered beneath the node's inputs/outputs).
+        // Stack them vertically so the preview sits below the progress bar.
         if self.user_state.executing_node == Some(node_id) {
-            if let Some((value, max)) = self.user_state.node_progress {
-                let fraction = if max > 0 {
-                    value as f32 / max as f32
-                } else {
-                    0.0
-                };
-                ui.add(
-                    egui::ProgressBar::new(fraction)
-                        .desired_width(180.0)
-                        .text(format!("{value}/{max}")),
-                );
-            }
-            if let Some(preview) = &self.user_state.preview_image {
-                ui.add(
-                    egui::Image::new(preview.clone())
-                        .max_height(192.0)
-                        .maintain_aspect_ratio(true),
-                );
-            }
+            ui.vertical(|ui| {
+                if let Some((value, max)) = self.user_state.node_progress {
+                    let fraction = if max > 0 {
+                        value as f32 / max as f32
+                    } else {
+                        0.0
+                    };
+                    ui.add(
+                        egui::ProgressBar::new(fraction)
+                            .desired_width(NODE_IMAGE_SIZE)
+                            .text(format!("{value}/{max}")),
+                    );
+                }
+                // Latent previews are tiny (e.g. 128x128 for a 1024x1024
+                // generation), so scale them to the shared size with
+                // nearest-neighbour filtering to keep them crisp rather than blurry.
+                if let Some(preview) = &self.user_state.preview_image {
+                    ui.add(
+                        egui::Image::new(preview.clone())
+                            .fit_to_exact_size(egui::Vec2::splat(NODE_IMAGE_SIZE))
+                            .maintain_aspect_ratio(true)
+                            .texture_options(egui::TextureOptions::NEAREST),
+                    );
+                }
+            });
         }
     }
 

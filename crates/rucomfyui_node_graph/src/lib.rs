@@ -309,9 +309,11 @@ impl ComfyUiNodeGraph {
 
     /// Set the live execution status to display in the graph.
     ///
-    /// - `node`: the node currently being executed (highlighted in the graph).
+    /// - `node`: the node currently being executed. It is highlighted in the
+    ///   graph and shows its progress bar and live preview (matching ComfyUI,
+    ///   which renders the preview on the node generating it).
     /// - `progress`: progress within the current node as `(value, max)`.
-    /// - `preview`: a live preview image for the current node.
+    /// - `preview`: a live preview image.
     ///
     /// Pass all-`None` to clear the status (e.g. once execution finishes).
     ///
