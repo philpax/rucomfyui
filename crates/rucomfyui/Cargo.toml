@@ -1,10 +1,15 @@
 [package]
 name = "rucomfyui"
-version = "0.1.0"
-edition = "2024"
 description = "A Rust client for ComfyUI with an emphasis on type safety and ergonomics."
-authors = ["Philpax <me@philpax.me>"]
-license = "MIT"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+authors.workspace = true
+license.workspace = true
+repository.workspace = true
+readme = "README.md"
+keywords = ["comfyui", "stable-diffusion", "client", "api"]
+categories = ["api-bindings", "multimedia::images"]
 
 [dependencies]
 futures = "0.3"

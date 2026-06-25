@@ -1,8 +1,13 @@
 [package]
 name = "rucomfyui_lua_script_runner"
-version = "0.1.0"
-edition = "2024"
 description = "Example demonstrating rucomfyui_mlua - run Lua workflow scripts against a ComfyUI server"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+authors.workspace = true
+license.workspace = true
+repository.workspace = true
+publish = false
 
 [dependencies]
 anyhow = { workspace = true }

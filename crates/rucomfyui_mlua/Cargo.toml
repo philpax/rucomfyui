@@ -1,15 +1,18 @@
 [package]
 name = "rucomfyui_mlua"
-version = "0.1.0"
-edition = "2024"
 description = "Lua bindings for rucomfyui - a fluent ComfyUI workflow builder"
-license = "MIT OR Apache-2.0"
-repository = "https://github.com/philpax/rucomfyui"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+authors.workspace = true
+license.workspace = true
+repository.workspace = true
+readme = "README.md"
 keywords = ["comfyui", "lua", "mlua", "stable-diffusion"]
 categories = ["api-bindings", "multimedia::images"]
 
 [dependencies]
-rucomfyui = { path = "../rucomfyui", default-features = false }
+rucomfyui = { path = "../rucomfyui", version = "1.0.0-rc1", default-features = false }
 mlua = { workspace = true }
 convert_case = { workspace = true }
 thiserror = { workspace = true }

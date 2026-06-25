@@ -24,3 +24,8 @@ set of crates built on top of it for converting, building and visualising workfl
   wrapping `rucomfyui_workflow_converter`.
 - [`rucomfyui_lua_script_runner`](./bin/rucomfyui_lua_script_runner) — runs Lua
   workflow scripts against a ComfyUI server using `rucomfyui_mlua`.
+
+## License
+
+Licensed under either of [Apache License, Version 2.0](LICENSE-APACHE) or
+[MIT license](LICENSE-MIT) at your option.
