@@ -1,6 +1,6 @@
 # `rucomfyui_node_graph`
 
-A recreation of the ComfyUI node graph in Rust using `egui`, `egui_node_graph2` and `rucomfyui`.
+A recreation of the ComfyUI node graph in Rust using `egui`, `egui-snarl` and `rucomfyui`.
 
 ![A screenshot of the node graph showing a SDXL Turbo workflow](rucomfyui_node_graph.png)
 
