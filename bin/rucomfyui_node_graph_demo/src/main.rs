@@ -141,10 +141,10 @@ struct ExecutionState {
     progress: Option<(u32, u32)>,
     /// Final per-node output images, accumulated as `Executed` events arrive.
     outputs: HashMap<WorkflowNodeId, Vec<Vec<u8>>>,
-    /// The latest preview frame as `(unique_uri, bytes)`, if any.
-    preview: Option<(String, Vec<u8>)>,
-    /// Counter used to give each preview frame a unique image URI.
-    preview_counter: u64,
+    /// The latest preview frame, decoded into a texture we update in place. Using
+    /// a managed texture (rather than a fresh `bytes://` image source per frame)
+    /// avoids the loader spinner and keeps the previous frame visible.
+    preview_texture: Option<egui::TextureHandle>,
 }
 impl ExecutionState {
     /// Create a fresh execution state for the given node mapping.
@@ -154,8 +154,7 @@ impl ExecutionState {
             current_node: None,
             progress: None,
             outputs: HashMap::new(),
-            preview: None,
-            preview_counter: 0,
+            preview_texture: None,
         }
     }
 
@@ -164,6 +163,16 @@ impl ExecutionState {
         self.current_node
             .and_then(|node| self.reverse_mapping.get(&node).copied())
     }
+}
+
+/// Decodes preview image bytes (JPEG or PNG) into an egui [`egui::ColorImage`].
+fn decode_preview_image(bytes: &[u8]) -> Option<egui::ColorImage> {
+    let rgba = image::load_from_memory(bytes).ok()?.to_rgba8();
+    let (width, height) = rgba.dimensions();
+    Some(egui::ColorImage::from_rgba_unmultiplied(
+        [width as usize, height as usize],
+        rgba.as_raw(),
+    ))
 }
 impl Application {
     /// Create a new application.
@@ -419,13 +428,9 @@ impl eframe::App for Application {
         // Push the current live-execution status into the graph so the
         // executing node is highlighted with its progress and preview.
         let live = self.execution.as_ref().map(|exec| {
-            let preview = exec
-                .preview
-                .as_ref()
-                .map(|(uri, bytes)| egui::ImageSource::Bytes {
-                    uri: uri.clone().into(),
-                    bytes: bytes.clone().into(),
-                });
+            let preview = exec.preview_texture.as_ref().map(|texture| {
+                egui::ImageSource::Texture(egui::load::SizedTexture::from_handle(texture))
+            });
             (exec.current_graph_node(), exec.progress, preview)
         });
         if let Some(graph) = self.graph.as_mut() {
@@ -1074,11 +1079,20 @@ impl Application {
                 }
             }
             Event::Preview { image, .. } => {
-                if let Some(exec) = self.execution.as_mut() {
-                    exec.preview_counter += 1;
-                    let uri = format!("bytes://exec_preview_{}", exec.preview_counter);
-                    if let Some((old_uri, _)) = exec.preview.replace((uri, image.data)) {
-                        ctx.forget_image(&old_uri);
+                // Decode into a texture we update in place, so the preview never
+                // flickers through the image loader's spinner.
+                if let Some(color) = decode_preview_image(&image.data) {
+                    if let Some(exec) = self.execution.as_mut() {
+                        match &mut exec.preview_texture {
+                            Some(texture) => texture.set(color, egui::TextureOptions::NEAREST),
+                            None => {
+                                exec.preview_texture = Some(ctx.load_texture(
+                                    "execution_preview",
+                                    color,
+                                    egui::TextureOptions::NEAREST,
+                                ))
+                            }
+                        }
                     }
                 }
             }
@@ -1089,11 +1103,11 @@ impl Application {
                     }
                 }
             }
-            Event::Completed { .. } => self.finish_execution(ctx),
+            Event::Completed { .. } => self.finish_execution(),
             Event::Error { node, message, .. } => {
                 let location = node.map(|n| format!(" (node {})", n.0)).unwrap_or_default();
                 self.error = Some(("Execution".to_string(), format!("{message}{location}")));
-                self.finish_execution(ctx);
+                self.finish_execution();
             }
             Event::Status { .. } | Event::ExecutionStart { .. } => {}
         }
@@ -1101,13 +1115,10 @@ impl Application {
 
     /// Finalise the current execution: render its accumulated output images in
     /// the graph and clear the live progress state.
-    fn finish_execution(&mut self, ctx: &egui::Context) {
+    fn finish_execution(&mut self) {
         let Some(exec) = self.execution.take() else {
             return;
         };
-        if let Some((old_uri, _)) = &exec.preview {
-            ctx.forget_image(old_uri);
-        }
         let Some(graph) = self.graph.as_mut() else {
             return;
         };
