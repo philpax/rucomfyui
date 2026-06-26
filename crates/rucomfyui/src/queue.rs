@@ -16,7 +16,7 @@ pub struct QueueResult {
 }
 
 #[derive(Serialize, Deserialize, Debug, Default)]
-/// The queue of the ComfyUI instance from [`Client::queue`].
+/// The queue of the ComfyUI instance from [`Client::get_queue`].
 pub struct Queue {
     /// Running entries.
     pub running: Vec<QueueEntry>,

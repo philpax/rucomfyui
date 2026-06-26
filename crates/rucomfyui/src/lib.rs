@@ -1,4 +1,13 @@
-//! A Rust client for ComfyUI with an emphasis on type safety and ergonomics.
+//! A Rust client for [ComfyUI](https://github.com/comfyanonymous/ComfyUI).
+//!
+//! Build workflows with [`WorkflowGraph`], using the typed node definitions in
+//! [`nodes`] (the `typed_nodes` feature, on by default) or dynamic nodes, then
+//! queue them with [`Client::execute`]. That returns a stream of progress
+//! [`Event`]s and the final outputs; the `websocket` feature adds live progress
+//! and previews. The rest of the API - object info, history, the queue, models,
+//! system stats, image upload - hangs off [`Client`].
+//!
+//! See the `examples` directory for runnable programs.
 #![deny(missing_docs)]
 
 mod constructor;

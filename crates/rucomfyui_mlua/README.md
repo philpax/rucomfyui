@@ -1,18 +1,16 @@
 # `rucomfyui_mlua`
 
-Lua bindings for [`rucomfyui`](../rucomfyui), exposing a fluent ComfyUI workflow
-builder to Lua. Designed to be embedded in Rust applications using
-[`mlua`](https://crates.io/crates/mlua).
+Lua bindings for [`rucomfyui`](https://crates.io/crates/rucomfyui), for building and running ComfyUI workflows from Lua. You embed it in a Rust program with [`mlua`](https://crates.io/crates/mlua).
 
 ## Usage
 
-Add this to your `Cargo.toml`'s `[dependencies]`:
+Add this to your `Cargo.toml`:
 
 ```toml
 rucomfyui_mlua = { git = "https://github.com/philpax/rucomfyui" }
 ```
 
-Install the module into a Lua state, then build and execute workflows from Lua:
+Install the module into a Lua state, then build and run workflows from Lua:
 
 ```rust,ignore
 use mlua::Lua;
@@ -44,7 +42,13 @@ lua.load(r#"
 "#).exec()?;
 ```
 
-[`IntegrationConfig`] controls which client methods are exposed to Lua (see
-`ClientConfig::all`/`read_only`/`execute`). See
-[`rucomfyui_lua_script_runner`](../../bin/rucomfyui_lua_script_runner) for a
-runnable example.
+`IntegrationConfig` decides which client methods Lua can reach (`ClientConfig::all`, `read_only`, `execute`). For a runnable example, see [`rucomfyui_lua_script_runner`](https://github.com/philpax/rucomfyui/tree/main/bin/rucomfyui_lua_script_runner).
+
+## Related crates
+
+The rest of the [`rucomfyui`](https://github.com/philpax/rucomfyui) workspace:
+
+- [`rucomfyui`](https://crates.io/crates/rucomfyui) - the ComfyUI client.
+- [`rucomfyui_node_graph`](https://crates.io/crates/rucomfyui_node_graph) - the node graph editor.
+- [`rucomfyui_workflow_converter`](https://crates.io/crates/rucomfyui_workflow_converter) - workflow-to-code conversion.
+- [`rucomfyui_mlua`](https://crates.io/crates/rucomfyui_mlua) - Lua bindings (this crate).

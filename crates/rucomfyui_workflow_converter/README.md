@@ -1,18 +1,17 @@
 # `rucomfyui_workflow_converter`
 
-Converts ComfyUI API workflows (JSON) to typed Rust or Lua code.
+Turns ComfyUI API workflows (JSON) into typed Rust or Lua code.
 
 ## Usage
 
-Add this to your `Cargo.toml`'s `[dependencies]`:
+Add this to your `Cargo.toml`:
 
 ```toml
 rucomfyui = { git = "https://github.com/philpax/rucomfyui" }
 rucomfyui_workflow_converter = { git = "https://github.com/philpax/rucomfyui" }
 ```
 
-Given an API workflow (as exported by ComfyUI's "Save (API Format)") and the
-server's object info, convert it to Rust or Lua:
+Take a workflow exported with ComfyUI's "Save (API Format)", along with the server's object info, and convert it:
 
 ```rust,ignore
 let client = rucomfyui::Client::new("http://127.0.0.1:8188");
@@ -23,6 +22,13 @@ let rust = rucomfyui_workflow_converter::convert_to_rust(&workflow_json, &object
 let lua = rucomfyui_workflow_converter::convert_to_lua(&workflow_json, &object_info)?;
 ```
 
-The `rust` and `lua` features (both enabled by default) gate the respective
-converters. See [`rucomfyui_workflow_converter_cli`](../../bin/rucomfyui_workflow_converter)
-for a command-line wrapper.
+The `rust` and `lua` features (both on by default) decide which converters are built. There's also a CLI, [`rucomfyui_workflow_converter_cli`](https://github.com/philpax/rucomfyui/tree/main/bin/rucomfyui_workflow_converter).
+
+## Related crates
+
+The rest of the [`rucomfyui`](https://github.com/philpax/rucomfyui) workspace:
+
+- [`rucomfyui`](https://crates.io/crates/rucomfyui) - the ComfyUI client.
+- [`rucomfyui_node_graph`](https://crates.io/crates/rucomfyui_node_graph) - the node graph editor.
+- [`rucomfyui_workflow_converter`](https://crates.io/crates/rucomfyui_workflow_converter) - workflow-to-code conversion (this crate).
+- [`rucomfyui_mlua`](https://crates.io/crates/rucomfyui_mlua) - Lua bindings.
