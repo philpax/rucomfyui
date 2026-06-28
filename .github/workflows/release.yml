@@ -10,6 +10,7 @@ on:
       - "rucomfyui_mlua-v*"
       - "rucomfyui_node_graph-v*"
       - "rucomfyui_workflow_converter-v*"
+  workflow_dispatch:
 
 jobs:
   publish:
