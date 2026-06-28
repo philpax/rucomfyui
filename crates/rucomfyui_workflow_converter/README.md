@@ -7,8 +7,8 @@ Turns ComfyUI API workflows (JSON) into typed Rust or Lua code.
 Add this to your `Cargo.toml`:
 
 ```toml
-rucomfyui = { git = "https://github.com/philpax/rucomfyui" }
-rucomfyui_workflow_converter = { git = "https://github.com/philpax/rucomfyui" }
+rucomfyui = "1.0.0-rc2"
+rucomfyui_workflow_converter = "1.0.0-rc2"
 ```
 
 Take a workflow exported with ComfyUI's "Save (API Format)", along with the server's object info, and convert it:

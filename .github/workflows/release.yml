@@ -1,0 +1,56 @@
+name: Release
+
+on:
+  push:
+    tags:
+      # cargo-release with consolidate-commits creates per-crate tags
+      # like `rucomfyui-v1.0.0-rc2`. We trigger on any of the publishable
+      # crate tags; the workflow publishes all four in dependency order.
+      - "rucomfyui-v*"
+      - "rucomfyui_mlua-v*"
+      - "rucomfyui_node_graph-v*"
+      - "rucomfyui_workflow_converter-v*"
+
+jobs:
+  publish:
+    name: Publish to crates.io
+    runs-on: ubuntu-latest
+    if: ${{ github.repository_owner == 'philpax' }}
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+
+      - name: Install Rust toolchain
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Publish rucomfyui
+        run: cargo publish -p rucomfyui
+        env:
+          CARGO_REGISTRY_TOKEN: ${{ secrets.CARGO_REGISTRY_TOKEN }}
+
+      - name: Publish rucomfyui_mlua
+        run: cargo publish -p rucomfyui_mlua
+        env:
+          CARGO_REGISTRY_TOKEN: ${{ secrets.CARGO_REGISTRY_TOKEN }}
+
+      - name: Publish rucomfyui_node_graph
+        run: cargo publish -p rucomfyui_node_graph
+        env:
+          CARGO_REGISTRY_TOKEN: ${{ secrets.CARGO_REGISTRY_TOKEN }}
+
+      - name: Publish rucomfyui_workflow_converter
+        run: cargo publish -p rucomfyui_workflow_converter
+        env:
+          CARGO_REGISTRY_TOKEN: ${{ secrets.CARGO_REGISTRY_TOKEN }}
+
+      - name: Create GitHub release
+        uses: softprops/action-gh-release@v2
+        with:
+          generate_release_notes: true
+          prerelease: ${{ contains(github.ref_name, '-') }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

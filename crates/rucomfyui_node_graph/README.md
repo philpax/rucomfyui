@@ -9,8 +9,8 @@ The ComfyUI node graph, rebuilt in Rust with `egui`, `egui-snarl` and `rucomfyui
 Add this to your `Cargo.toml`:
 
 ```toml
-rucomfyui = { git = "https://github.com/philpax/rucomfyui" }
-rucomfyui_node_graph = { git = "https://github.com/philpax/rucomfyui" }
+rucomfyui = "1.0.0-rc2"
+rucomfyui_node_graph = "1.0.0-rc2"
 ```
 
 The [demo app](https://github.com/philpax/rucomfyui/tree/main/bin/rucomfyui_node_graph_demo) shows it driving a real ComfyUI instance.

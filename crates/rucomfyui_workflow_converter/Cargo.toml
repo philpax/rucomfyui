@@ -35,3 +35,9 @@ proc-macro2 = "1"
 quote = "1"
 syn = "2"
 tempfile = "3"
+
+[package.metadata.release]
+pre-release-replacements = [
+    { file = "README.md", search = 'rucomfyui = "[^"]*"', replace = 'rucomfyui = "{{version}}"', exactly = 1, prerelease = true },
+    { file = "README.md", search = 'rucomfyui_workflow_converter = "[^"]*"', replace = 'rucomfyui_workflow_converter = "{{version}}"', exactly = 1, prerelease = true },
+]

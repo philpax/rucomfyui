@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.0.0-rc2]
+
+### Changed
+
+- READMEs now reference crates.io versions, automatically synced from `Cargo.toml` by the release workflow.
+
 ## [1.0.0-rc1]
 
 ### Added

@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.0-rc2]
+
+### Changed
+
+- `rucomfyui_mlua` now forwards `mlua`'s Lua-version features (`lua54`, `luajit`, `luajit52`, `lua53`, `lua52`, `lua51`, `luau`) instead of hard-coding `lua54`. Consumers can select a Lua version via `default-features = false, features = ["luajit"]` etc. `lua54` remains the default for out-of-the-box usability.
+- READMEs now reference crates.io versions, automatically synced from `Cargo.toml` by the release workflow.
+
 ## [1.0.0-rc1]
 
 ### Added

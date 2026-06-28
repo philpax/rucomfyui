@@ -35,3 +35,8 @@ typed_nodes = []
 # events (and previews), falling back to HTTP polling if the socket is
 # unavailable. Opt-in, as the ComfyUI WebSocket API can be brittle.
 websocket = ["dep:ewebsock"]
+
+[package.metadata.release]
+pre-release-replacements = [
+    { file = "README.md", search = 'rucomfyui = "[^"]*"', replace = 'rucomfyui = "{{version}}"', exactly = 1, prerelease = true },
+]

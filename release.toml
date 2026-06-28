@@ -1,0 +1,13 @@
+# cargo-release configuration
+# https://github.com/crate-ci/cargo-release
+
+# Single commit for all workspace packages
+consolidate-commits = true
+
+# Don't publish during the local prep step; CI handles the actual publish.
+# Usage: `cargo release <version> --no-publish --execute`
+# Then push tags to trigger CI publish.
+
+# Per-crate README version sync is configured in each crate's Cargo.toml
+# under [package.metadata.release] pre-release-replacements.
+# File paths there are relative to the crate's Cargo.toml directory.

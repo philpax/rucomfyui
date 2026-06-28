@@ -12,11 +12,28 @@ keywords = ["comfyui", "lua", "mlua", "stable-diffusion"]
 categories = ["api-bindings", "multimedia::images"]
 
 [dependencies]
-rucomfyui = { path = "../rucomfyui", version = "1.0.0-rc1", default-features = false }
+rucomfyui = { path = "../rucomfyui", version = "1.0.0-rc2", default-features = false }
 mlua = { workspace = true }
 convert_case = { workspace = true }
 thiserror = { workspace = true }
 
+[features]
+# Forward mlua's mutually-exclusive Lua-version features so consumers can choose.
+# Exactly one should be enabled; `lua54` is the default for out-of-the-box usability.
+default = ["lua54"]
+lua54 = ["mlua/lua54"]
+luajit = ["mlua/luajit"]
+luajit52 = ["mlua/luajit52"]
+lua53 = ["mlua/lua53"]
+lua52 = ["mlua/lua52"]
+lua51 = ["mlua/lua51"]
+luau = ["mlua/luau"]
+
 [dev-dependencies]
 anyhow = { workspace = true }
 tokio = { workspace = true, features = ["rt-multi-thread", "macros"] }
+
+[package.metadata.release]
+pre-release-replacements = [
+    { file = "README.md", search = 'rucomfyui_mlua = "[^"]*"', replace = 'rucomfyui_mlua = "{{version}}"', exactly = 1, prerelease = true },
+]
