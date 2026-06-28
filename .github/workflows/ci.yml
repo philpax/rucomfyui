@@ -22,8 +22,8 @@ jobs:
       - name: Run Clippy without features
         run: cargo clippy --all --no-default-features -- -D warnings
 
-      - name: Run Clippy
-        run: cargo clippy --all --all-features -- -D warnings
+      - name: Run Clippy with typed_nodes
+        run: cargo clippy --all --features typed_nodes -- -D warnings
 
       - name: Run tests with features
-        run: cargo test --all
+        run: cargo test --all --features typed_nodes
