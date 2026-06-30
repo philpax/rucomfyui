@@ -27,3 +27,6 @@ prettyplease = "0.2.22"
 syn = "2.0.77"
 proc-macro2 = "1.0.86"
 convert_case = { workspace = true }
+
+[dev-dependencies]
+tempfile = "3"

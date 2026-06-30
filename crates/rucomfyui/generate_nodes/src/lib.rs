@@ -44,16 +44,33 @@ use rucomfyui::object_info::{
 
 /// Configuration options for node generation.
 #[derive(Debug, Clone)]
-pub struct GenerateConfig {
+pub struct GenerateConfig<'a> {
     /// Whether to scrub array values from inputs for determinism.
     /// Default: true
     pub scrub_array_values: bool,
+    /// The base crate path to use for shared type/trait references in generated code.
+    ///
+    /// When `"crate"` (the default), generated code references shared types and traits
+    /// via `crate::` paths — this is the correct setting when generating nodes **inside**
+    /// the `rucomfyui` crate itself.
+    ///
+    /// When set to `"rucomfyui"` (or any other crate name), generated code references
+    /// shared types and traits via that crate's path (e.g. `rucomfyui::`). This is the
+    /// correct setting when generating nodes in an **external** crate that depends on
+    /// `rucomfyui`. In this mode, the generator also:
+    /// - Skips generating `types.rs` (types come from `rucomfyui::nodes::types`)
+    /// - Skips defining `TypedNode`/`TypedOutputNode` traits (they come from `rucomfyui::nodes`)
+    /// - Still generates `all.rs` using `super::` relative paths
+    ///
+    /// Default: `"crate"`
+    pub base_crate_path: &'a str,
 }
 
-impl Default for GenerateConfig {
+impl Default for GenerateConfig<'_> {
     fn default() -> Self {
         Self {
             scrub_array_values: true,
+            base_crate_path: "crate",
         }
     }
 }
@@ -97,8 +114,16 @@ pub fn generate_nodes(nodes: &[Object], output_dir: &Path) -> Result<()> {
 pub fn generate_nodes_with_config(
     nodes: &[Object],
     output_dir: &Path,
-    config: GenerateConfig,
+    config: GenerateConfig<'_>,
 ) -> Result<()> {
+    let base: syn::Path = syn::parse_str(config.base_crate_path).with_context(|| {
+        format!(
+            "Failed to parse base_crate_path: {}",
+            config.base_crate_path
+        )
+    })?;
+    let is_internal = config.base_crate_path == "crate";
+
     let mut nodes = nodes.to_vec();
 
     // Scrub array values if requested
@@ -125,8 +150,13 @@ pub fn generate_nodes_with_config(
     std::fs::create_dir_all(output_dir)?;
 
     // Write all the generated files
-    write_category_tree_root(&category_tree, output_dir).context("root")?;
-    util::write_tokenstream(&output_dir.join("types.rs"), type_module_definitions()?)?;
+    write_category_tree_root(&category_tree, output_dir, &base, is_internal).context("root")?;
+    if is_internal {
+        util::write_tokenstream(
+            &output_dir.join("types.rs"),
+            type_module_definitions(&base)?,
+        )?;
+    }
     util::write_tokenstream(&output_dir.join("all.rs"), all_nodes(&category_tree, &[])?)?;
 
     Ok(())
@@ -151,7 +181,7 @@ fn all_nodes(tree: &CategoryTree, ctx: &[syn::Ident]) -> Result<TokenStream> {
                 CategoryTreeNode::Object(object) => {
                     let name = util::name_to_ident(&object.name, util::NameToIdentCase::Preserve)?;
                     statements.push(quote! {
-                        pub use crate :: nodes :: #(#ctx::)* #name;
+                        pub use super :: #(#ctx::)* #name;
                     });
                 }
             }
@@ -168,7 +198,7 @@ fn all_nodes(tree: &CategoryTree, ctx: &[syn::Ident]) -> Result<TokenStream> {
     })
 }
 
-fn type_module_definitions() -> Result<TokenStream> {
+fn type_module_definitions(base: &syn::Path) -> Result<TokenStream> {
     let types = ObjectType::ALL
         .iter()
         .map(|ty| {
@@ -200,7 +230,7 @@ fn type_module_definitions() -> Result<TokenStream> {
 
     Ok(quote! {
         //! Definitions for all ComfyUI types.
-        use crate::workflow::{WorkflowInput, WorkflowNodeId};
+        use #base::workflow::{WorkflowInput, WorkflowNodeId};
 
         /// Implemented for all `*Out` types.
         pub trait Out: Sized {
@@ -249,7 +279,12 @@ fn type_module_definitions() -> Result<TokenStream> {
     })
 }
 
-fn write_category_tree_root(root: &CategoryTree, directory: &Path) -> Result<()> {
+fn write_category_tree_root(
+    root: &CategoryTree,
+    directory: &Path,
+    base: &syn::Path,
+    is_internal: bool,
+) -> Result<()> {
     let mut modules = vec![];
     let mut nodes = vec![];
     let mut node_outputs = vec![];
@@ -258,7 +293,7 @@ fn write_category_tree_root(root: &CategoryTree, directory: &Path) -> Result<()>
         match node {
             CategoryTreeNode::Category(name, tree) => {
                 let key = util::name_to_ident(key, util::NameToIdentCase::Snake)?;
-                write_category_tree((name, tree), &directory.join(key.to_string()))
+                write_category_tree((name, tree), &directory.join(key.to_string()), base)
                     .context(name.clone())?;
                 modules.push(quote! {
                     #[rustfmt::skip]
@@ -266,7 +301,7 @@ fn write_category_tree_root(root: &CategoryTree, directory: &Path) -> Result<()>
                 });
             }
             CategoryTreeNode::Object(object) => {
-                write_node_and_output(object, &mut nodes, &mut node_outputs)?;
+                write_node_and_output(object, &mut nodes, &mut node_outputs, base)?;
             }
         }
     }
@@ -280,41 +315,53 @@ fn write_category_tree_root(root: &CategoryTree, directory: &Path) -> Result<()>
         }
     });
 
+    let types_mod_decl = is_internal.then(|| {
+        quote! {
+            #[rustfmt::skip]
+            pub mod types;
+        }
+    });
+
+    let typed_node_traits = is_internal.then(|| {
+        quote! {
+            /// Implemented for all typed nodes; provides the node's output and metadata.
+            pub trait TypedNode: Clone {
+                /// The type of the node's output.
+                type Output;
+                /// Returns the node's output.
+                fn output(&self, node_id: WorkflowNodeId) -> Self::Output;
+
+                /// Returns the inputs for this node after conversion to [`WorkflowInput`].
+                fn inputs(&self) -> HashMap<String, WorkflowInput>;
+
+                /// The name of the node.
+                const NAME: &'static str;
+                /// The display name of the node.
+                const DISPLAY_NAME: &'static str;
+                /// The description of the node.
+                const DESCRIPTION: &'static str;
+                /// The category of the node.
+                const CATEGORY: &'static str;
+            }
+
+            /// Implemented for all output nodes (i.e. nodes at which a workflow terminates).
+            pub trait TypedOutputNode {}
+        }
+    });
+
     let output = quote! {
         //! Typed node definitions for ComfyUI that provide a type-safe abstraction over the API.
         #![allow(unused_imports, clippy::too_many_arguments, clippy::new_without_default, clippy::doc_lazy_continuation)]
         #(#modules)*
         #[rustfmt::skip]
         pub mod all;
-        #[rustfmt::skip]
-        pub mod types;
+        #types_mod_decl
 
         use std::collections::HashMap;
 
-        use crate::{workflow::{WorkflowNodeId, WorkflowInput}, nodes::types::Out};
+        use #base::{workflow::{WorkflowNodeId, WorkflowInput}, nodes::types::Out};
 
-        /// Implemented for all typed nodes; provides the node's output and metadata.
-        pub trait TypedNode: Clone {
-            /// The type of the node's output.
-            type Output;
-            /// Returns the node's output.
-            fn output(&self, node_id: WorkflowNodeId) -> Self::Output;
-
-            /// Returns the inputs for this node after conversion to [`WorkflowInput`].
-            fn inputs(&self) -> HashMap<String, WorkflowInput>;
-
-            /// The name of the node.
-            const NAME: &'static str;
-            /// The display name of the node.
-            const DISPLAY_NAME: &'static str;
-            /// The description of the node.
-            const DESCRIPTION: &'static str;
-            /// The category of the node.
-            const CATEGORY: &'static str;
-        }
-
-        /// Implemented for all output nodes (i.e. nodes at which a workflow terminates).
-        pub trait TypedOutputNode {}
+        #typed_node_traits
 
         #out_section
 
@@ -325,7 +372,11 @@ fn write_category_tree_root(root: &CategoryTree, directory: &Path) -> Result<()>
     Ok(())
 }
 
-fn write_category_tree((name, tree): (&str, &CategoryTree), directory: &Path) -> Result<()> {
+fn write_category_tree(
+    (name, tree): (&str, &CategoryTree),
+    directory: &Path,
+    base: &syn::Path,
+) -> Result<()> {
     std::fs::create_dir(directory).ok();
 
     let doc = format!("`{name}` definitions/categories.");
@@ -338,7 +389,7 @@ fn write_category_tree((name, tree): (&str, &CategoryTree), directory: &Path) ->
         match node {
             CategoryTreeNode::Category(name, tree) => {
                 let key = util::name_to_ident(key, util::NameToIdentCase::Snake)?;
-                write_category_tree((name, tree), &directory.join(key.to_string()))
+                write_category_tree((name, tree), &directory.join(key.to_string()), base)
                     .context(name.clone())?;
                 modules.push(quote! {
                     #[rustfmt::skip]
@@ -346,7 +397,7 @@ fn write_category_tree((name, tree): (&str, &CategoryTree), directory: &Path) ->
                 });
             }
             CategoryTreeNode::Object(object) => {
-                write_node_and_output(object, &mut nodes, &mut node_outputs)?;
+                write_node_and_output(object, &mut nodes, &mut node_outputs, base)?;
             }
         }
     }
@@ -366,7 +417,7 @@ fn write_category_tree((name, tree): (&str, &CategoryTree), directory: &Path) ->
 
         use std::collections::HashMap;
 
-        use crate::{workflow::{WorkflowNodeId, WorkflowInput}, nodes::types::Out};
+        use #base::{workflow::{WorkflowNodeId, WorkflowInput}, nodes::types::Out};
 
         #(#modules)*
 
@@ -384,6 +435,7 @@ fn write_node_and_output(
     object: &Object,
     nodes: &mut Vec<TokenStream>,
     node_outputs: &mut Vec<TokenStream>,
+    base: &syn::Path,
 ) -> Result<()> {
     let struct_name = util::name_to_ident(&object.name, util::NameToIdentCase::Preserve)?;
     let node_output_struct_name = (!object.output_node && object.output.len() > 1)
@@ -399,6 +451,7 @@ fn write_node_and_output(
         object,
         &struct_name,
         node_output_struct_name.as_ref(),
+        base,
     )?);
 
     if let Some(node_output_struct_name) = &node_output_struct_name {
@@ -406,6 +459,7 @@ fn write_node_and_output(
             object,
             &struct_name,
             node_output_struct_name,
+            base,
         )?);
     }
 
@@ -416,15 +470,17 @@ fn write_node(
     node: &Object,
     struct_name: &syn::Ident,
     node_output_struct_name: Option<&syn::Ident>,
+    base: &syn::Path,
 ) -> Result<TokenStream> {
     let processed_inputs = node_processed_inputs(node)?;
 
-    let node_struct = write_node_struct(node, struct_name, &processed_inputs);
+    let node_struct = write_node_struct(node, struct_name, &processed_inputs, base);
     let trait_impl = write_node_trait_impl(
         node,
         struct_name,
         &processed_inputs,
         node_output_struct_name,
+        base,
     )?;
 
     Ok(quote! {
@@ -472,6 +528,7 @@ fn write_node_struct(
     node: &Object,
     struct_name: &syn::Ident,
     processed_inputs: &[ProcessedInput<'_>],
+    base: &syn::Path,
 ) -> TokenStream {
     let input_generics = processed_inputs
         .iter()
@@ -480,12 +537,12 @@ fn write_node_struct(
             let ty = &input.generic_ty;
             let default = if input.optional {
                 let output_struct_name = util::object_type_out_struct_ident(&input.ty);
-                quote! { = crate :: nodes :: types :: #output_struct_name }
+                quote! { = #base :: nodes :: types :: #output_struct_name }
             } else {
                 quote! {}
             };
             quote! {
-                #generic_name : crate :: nodes :: types :: #ty #default
+                #generic_name : #base :: nodes :: types :: #ty #default
             }
         })
         .collect::<Vec<_>>();
@@ -494,7 +551,7 @@ fn write_node_struct(
         let generic_name = &input.generic_name;
         let ty = &input.generic_ty;
         quote! {
-            #generic_name : crate :: nodes :: types :: #ty
+            #generic_name : #base :: nodes :: types :: #ty
         }
     });
 
@@ -615,6 +672,7 @@ fn write_node_trait_impl(
     inputs_name: &syn::Ident,
     processed_inputs: &[ProcessedInput<'_>],
     node_output_struct_name: Option<&syn::Ident>,
+    base: &syn::Path,
 ) -> Result<TokenStream> {
     let node_name = node.name.as_str();
     let display_name = node.display_name();
@@ -627,7 +685,7 @@ fn write_node_trait_impl(
             let generic_name = &input.generic_name;
             let generic_ty = &input.generic_ty;
             quote! {
-                #generic_name: crate :: nodes :: types :: #generic_ty
+                #generic_name: #base :: nodes :: types :: #generic_ty
             }
         })
         .collect::<Vec<_>>();
@@ -651,7 +709,7 @@ fn write_node_trait_impl(
                 let ty = util::object_type_out_struct_ident(&output.ty);
                 let i = i as u32;
                 Ok(quote! {
-                    #name: crate :: nodes :: types :: #ty :: from_dynamic(node_id, #i)
+                    #name: #base :: nodes :: types :: #ty :: from_dynamic(node_id, #i)
                 })
             })
             .collect::<Result<Vec<_>>>()?;
@@ -677,7 +735,7 @@ fn write_node_trait_impl(
         // If it's just a single output, use that type directly
         let ty = util::object_type_out_struct_ident(&node.output[0]);
         quote! {
-            type Output = crate :: nodes :: types :: #ty;
+            type Output = #base :: nodes :: types :: #ty;
             fn output(&self, node_id: WorkflowNodeId) -> Self::Output {
                 Self::Output::from_dynamic(node_id, 0)
             }
@@ -690,7 +748,7 @@ fn write_node_trait_impl(
         quote! {
             impl
                 < #(#generic_list),* >
-                crate :: nodes :: TypedOutputNode
+                #base :: nodes :: TypedOutputNode
                 for
                 #inputs_name < #(#generic_instantiation_list),* >
             {}
@@ -734,7 +792,7 @@ fn write_node_trait_impl(
     Ok(quote! {
         impl
             < #(#generic_list),* >
-            crate :: nodes :: TypedNode
+            #base :: nodes :: TypedNode
             for
             #inputs_name
             < #(#generic_instantiation_list),* >
@@ -755,6 +813,7 @@ fn write_node_output_struct(
     node: &Object,
     node_struct_name: &syn::Ident,
     node_output_struct_name: &syn::Ident,
+    base: &syn::Path,
 ) -> Result<TokenStream> {
     let doc = format!("Output for [`{node_struct_name}`](super::{node_struct_name}).");
     let fields = node
@@ -765,7 +824,7 @@ fn write_node_output_struct(
             let doc = output.tooltip.unwrap_or("No documentation.");
             Ok(quote! {
                 #[doc = #doc]
-                pub #name: crate :: nodes :: types :: #ty
+                pub #name: #base :: nodes :: types :: #ty
             })
         })
         .collect::<Result<Vec<_>>>()?;

@@ -97,6 +97,7 @@ async fn main() -> anyhow::Result<()> {
 
     let config = GenerateConfig {
         scrub_array_values: false, // Keep array values from inputs
+        ..Default::default()
     };
 
     generate_nodes_with_config(&nodes, Path::new("src/nodes"), config)?;
@@ -104,6 +105,54 @@ async fn main() -> anyhow::Result<()> {
     Ok(())
 }
 ```
+
+### External Generation
+
+By default, generated code references shared types and traits via `crate::`
+paths, which is correct when generating nodes **inside** the `rucomfyui` crate
+itself. To generate nodes in an **external** crate that depends on `rucomfyui`,
+set `base_crate_path` to `"rucomfyui"`:
+
+```rust
+use std::path::Path;
+use rucomfyui_generate_nodes::{generate_nodes_with_config, GenerateConfig};
+
+#[tokio::main]
+async fn main() -> anyhow::Result<()> {
+    let client = rucomfyui::Client::new("http://127.0.0.1:8188");
+    let object_info = client.get_object_info().await?;
+
+    let nodes: Vec<_> = object_info.values().cloned().collect();
+
+    let config = GenerateConfig {
+        base_crate_path: "rucomfyui",
+        ..Default::default()
+    };
+
+    // Generated code will reference rucomfyui::nodes::types::Model etc.
+    // instead of crate::nodes::types::Model
+    generate_nodes_with_config(&nodes, Path::new("src/custom_nodes"), config)?;
+
+    Ok(())
+}
+```
+
+When `base_crate_path` is set to a non-`"crate"` value, the generator:
+
+- Emits `<base_crate_path>::` instead of `crate::` for all shared type/trait references
+- Skips generating `types.rs` (types come from `rucomfyui::nodes::types`)
+- Skips defining `TypedNode`/`TypedOutputNode` traits (they come from `rucomfyui::nodes`)
+- Still generates `all.rs` using `super::` relative paths
+
+This ensures that outputs from built-in nodes (e.g. `ModelOut`) are the same type
+as what custom nodes expect as input (e.g. `T: rucomfyui::nodes::types::Model`),
+enabling full bidirectional interoperability between custom and built-in nodes.
+
+> **Note:** Custom nodes that introduce new ComfyUI output types not in the
+> standard `ObjectType` enum will trigger a panic in
+> `object_type_out_struct_ident()`. This is a known limitation — see
+> [Custom Types](#custom-types) below. Most custom nodes use standard types
+> (MODEL, IMAGE, LATENT, etc.) and are fully supported.
 
 ### Using in a Build Script
 
