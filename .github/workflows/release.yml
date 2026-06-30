@@ -3,14 +3,8 @@ name: Release
 on:
   push:
     tags:
-      # cargo-release with consolidate-commits creates per-crate tags
-      # like `rucomfyui-v1.0.0-rc2`. We trigger on any of the publishable
-      # crate tags; the workflow publishes all four in dependency order.
-      - "rucomfyui-v*"
-      - "rucomfyui_mlua-v*"
-      - "rucomfyui_node_graph-v*"
-      - "rucomfyui_workflow_converter-v*"
-      - "rucomfyui_generate_nodes-v*"
+      # cargo-release creates a single consolidated tag `v<version>`
+      - "v*"
   workflow_dispatch:
     inputs:
       tag:

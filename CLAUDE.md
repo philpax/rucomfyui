@@ -81,7 +81,7 @@ git push --tags
 - Bumps the version in `Cargo.toml` (workspace) and all internal dep pins
 - Runs `pre-release-replacements` to sync `rucomfyui* = "<version>"` lines in each crate's README via `{{version}}` templates
 - Creates a single consolidated commit (`consolidate-commits = true`)
-- Creates per-crate tags: `rucomfyui-v<version>`, `rucomfyui_mlua-v<version>`, etc.
+- Creates a single tag: `v<version>` (e.g. `v1.0.0-rc3`)
 - Does **not** publish (`--no-publish`); CI handles that
 
 ### What CI does

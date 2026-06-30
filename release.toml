@@ -1,8 +1,9 @@
 # cargo-release configuration
 # https://github.com/crate-ci/cargo-release
 
-# Single commit for all workspace packages
+# Single commit and single tag for all workspace packages
 consolidate-commits = true
+tag-name = "v{{version}}"
 
 # Don't publish during the local prep step; CI handles the actual publish.
 # Usage: `cargo release <version> --no-publish --execute`
