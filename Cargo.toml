@@ -3,7 +3,7 @@ members = ["crates/rucomfyui/generate_nodes", "crates/*", "bin/*"]
 resolver = "2"
 
 [workspace.package]
-version = "1.0.0-rc3"
+version = "1.0.0-rc4"
 edition = "2024"
 rust-version = "1.92"
 authors = ["Philpax <me@philpax.me>"]
@@ -19,7 +19,7 @@ futures-timer = { version = "3.0", features = ["wasm-bindgen"] }
 indexmap = { version = "2", features = ["serde"] }
 mlua = { version = "0.11", features = ["vendored", "async", "send", "serialize"] }
 reqwest = { version = "0.13", default-features = false, features = ["json", "multipart"] }
-rucomfyui = { path = "crates/rucomfyui", version = "1.0.0-rc3", default-features = false, features = ["typed_nodes"] }
+rucomfyui = { path = "crates/rucomfyui", version = "1.0.0-rc4", default-features = false, features = ["typed_nodes"] }
 serde = { version = "1.0", features = ["derive"] }
 serde_json = { version = "1.0", features = ["preserve_order"] }
 thiserror = "2.0"

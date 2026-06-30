@@ -12,7 +12,7 @@ keywords = ["comfyui", "lua", "mlua", "stable-diffusion"]
 categories = ["api-bindings", "multimedia::images"]
 
 [dependencies]
-rucomfyui = { path = "../rucomfyui", version = "1.0.0-rc3", default-features = false }
+rucomfyui = { path = "../rucomfyui", version = "1.0.0-rc4", default-features = false }
 mlua = { workspace = true }
 convert_case = { workspace = true }
 thiserror = { workspace = true }
