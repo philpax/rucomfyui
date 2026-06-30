@@ -275,7 +275,7 @@ impl eframe::App for Application {
             ctx.request_repaint();
         }
 
-        egui::Panel::top("top").show_inside(ui, |ui| {
+        egui::Panel::top("top").show(ui, |ui| {
             let is_connected = self.graph.is_some();
             egui::MenuBar::new().ui(ui, |ui| {
                 egui::widgets::global_theme_preference_switch(ui);
@@ -335,7 +335,7 @@ impl eframe::App for Application {
         });
 
         if self.graph.is_some() {
-            egui::Panel::right("right").show_inside(ui, |ui| {
+            egui::Panel::right("right").show(ui, |ui| {
                 ui.heading("Queue");
                 let mut requested_deletions = vec![];
                 let mut requested_interrupt = false;
@@ -439,7 +439,7 @@ impl eframe::App for Application {
             graph.set_live_execution(node, progress, preview);
         }
 
-        egui::CentralPanel::default().show_inside(ui, |ui| {
+        egui::CentralPanel::default().show(ui, |ui| {
             if let Some(graph) = self.graph.as_mut() {
                 graph.show(ui);
             } else {
