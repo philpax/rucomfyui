@@ -5,7 +5,7 @@ resolver = "2"
 [workspace.package]
 version = "1.0.0-rc3"
 edition = "2024"
-rust-version = "1.88"
+rust-version = "1.92"
 authors = ["Philpax <me@philpax.me>"]
 license = "MIT OR Apache-2.0"
 repository = "https://github.com/philpax/rucomfyui"
