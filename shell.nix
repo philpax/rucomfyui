@@ -4,10 +4,10 @@ with pkgs;
 
 mkShell rec {
   buildInputs = [
-    xorg.libX11
-    xorg.libXrandr
-    xorg.libXcursor
-    xorg.libXi
+    libX11
+    libXrandr
+    libXcursor
+    libXi
     libxkbcommon
     libGL
     vulkan-loader
