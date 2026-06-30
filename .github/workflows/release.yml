@@ -13,9 +13,58 @@ on:
         type: string
 
 jobs:
+  check-ci:
+    name: Wait for CI
+    runs-on: ubuntu-latest
+    outputs:
+      result: ${{ steps.check.outputs.result }}
+    steps:
+      - name: Wait for Rust CI to pass
+        id: check
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const owner = context.repo.owner;
+            const repo = context.repo.repo;
+            // The commit being released
+            const sha = context.sha;
+            
+            // Poll for the CI workflow run on this commit
+            const maxAttempts = 60;
+            const delayMs = 10000;
+            
+            for (let i = 0; i < maxAttempts; i++) {
+              const runs = await github.rest.actions.listWorkflowRuns({
+                owner,
+                repo,
+                workflow_id: 'ci.yml',
+                head_sha: sha,
+                status: 'completed',
+              });
+              
+              if (runs.data.workflow_runs.length > 0) {
+                const run = runs.data.workflow_runs[0];
+                if (run.conclusion === 'success') {
+                  core.setOutput('result', 'success');
+                  core.info(`CI passed: ${run.html_url}`);
+                  return;
+                } else {
+                  core.setFailed(`CI failed with conclusion: ${run.conclusion}`);
+                  core.info(`See: ${run.html_url}`);
+                  return;
+                }
+              }
+              
+              core.info(`Waiting for CI to complete on ${sha} (attempt ${i + 1}/${maxAttempts})...`);
+              await new Promise(r => setTimeout(r, delayMs));
+            }
+            
+            core.setFailed('Timed out waiting for CI to complete');
+
   publish:
     name: Publish to crates.io
     runs-on: ubuntu-latest
+    needs: check-ci
     if: ${{ github.repository_owner == 'philpax' }}
     permissions:
       contents: write
