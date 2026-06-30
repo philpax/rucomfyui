@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.0.0-rc3]
+
+### Added
+
+- `rucomfyui_generate_nodes` is now a publishable crate, enabling external crates to generate typed node bindings via `base_crate_path`.
+
 ## [1.0.0-rc2]
 
 ### Changed

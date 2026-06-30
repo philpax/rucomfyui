@@ -39,7 +39,7 @@ cargo fmt
 
 ## Releasing
 
-Releases use [cargo-release](https://github.com/crate-ci/cargo-release) with a local-prep + CI-publish model. All four publishable crates (`rucomfyui`, `rucomfyui_mlua`, `rucomfyui_node_graph`, `rucomfyui_workflow_converter`) share a single version via `version.workspace = true`.
+Releases use [cargo-release](https://github.com/crate-ci/cargo-release) with a local-prep + CI-publish model. All five publishable crates (`rucomfyui`, `rucomfyui_mlua`, `rucomfyui_node_graph`, `rucomfyui_workflow_converter`, `rucomfyui_generate_nodes`) share a single version via `version.workspace = true`.
 
 ### Prerequisites
 
@@ -66,6 +66,7 @@ git tag --list 'rucomfyui*'  # per-crate tags created
 
 # 4. Verify the publishable crates build from the exact committed tree
 cargo publish --dry-run -p rucomfyui
+cargo publish --dry-run -p rucomfyui_generate_nodes
 cargo publish --dry-run -p rucomfyui_mlua
 cargo publish --dry-run -p rucomfyui_node_graph
 cargo publish --dry-run -p rucomfyui_workflow_converter
@@ -87,7 +88,7 @@ git push --tags
 
 When tags are pushed, `.github/workflows/release.yml` triggers and:
 1. Checks out the tagged commit
-2. Publishes all four crates in dependency order (`rucomfyui` → `rucomfyui_mlua` → `rucomfyui_node_graph` → `rucomfyui_workflow_converter`)
+2. Publishes all five crates in dependency order (`rucomfyui` → `rucomfyui_generate_nodes` → `rucomfyui_mlua` → `rucomfyui_node_graph` → `rucomfyui_workflow_converter`)
 3. Creates a GitHub release with auto-generated notes
 
 ### Pre-release → final transition

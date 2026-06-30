@@ -16,7 +16,7 @@ egui = "0.34"
 egui-snarl = "0.10"
 
 # We don't need the typed nodes, so we are opting out of them
-rucomfyui = { path = "../rucomfyui", version = "1.0.0-rc2", default-features = false }
+rucomfyui = { path = "../rucomfyui", version = "1.0.0-rc3", default-features = false }
 
 serde = { workspace = true, optional = true }
 

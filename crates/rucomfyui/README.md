@@ -9,7 +9,7 @@ The main thing it gives you is a typed Rust interface for every node in ComfyUI'
 Add this to your `Cargo.toml`:
 
 ```toml
-rucomfyui = "1.0.0-rc2"
+rucomfyui = "1.0.0-rc3"
 ```
 
 ### Building a workflow with typed nodes

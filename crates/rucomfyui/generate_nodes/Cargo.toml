@@ -7,10 +7,9 @@ rust-version.workspace = true
 authors.workspace = true
 license.workspace = true
 repository.workspace = true
-publish = false
-
-[package.metadata.release]
-release = false
+readme = "README.md"
+keywords = ["comfyui", "codegen", "stable-diffusion", "node"]
+categories = ["development-tools::build-utils", "api-bindings"]
 
 [dependencies]
 anyhow = { workspace = true }
@@ -20,7 +19,7 @@ serde_json = { workspace = true }
 tokio = { workspace = true, features = ["full"] }
 
 # Yes, we're using the client we're generating files for. Wacky, right?
-rucomfyui = { path = "../", default-features = false }
+rucomfyui = { path = "../", version = "1.0.0-rc3", default-features = false }
 
 quote = "1.0.37"
 prettyplease = "0.2.22"
@@ -30,3 +29,9 @@ convert_case = { workspace = true }
 
 [dev-dependencies]
 tempfile = "3"
+
+[package.metadata.release]
+pre-release-replacements = [
+    { file = "README.md", search = 'rucomfyui_generate_nodes = "[^"]*"', replace = 'rucomfyui_generate_nodes = "{{version}}"', exactly = 1, prerelease = true },
+    { file = "README.md", search = 'rucomfyui = "[^"]*"', replace = 'rucomfyui = "{{version}}"', exactly = 1, prerelease = true },
+]

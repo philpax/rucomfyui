@@ -10,6 +10,7 @@ on:
       - "rucomfyui_mlua-v*"
       - "rucomfyui_node_graph-v*"
       - "rucomfyui_workflow_converter-v*"
+      - "rucomfyui_generate_nodes-v*"
   workflow_dispatch:
     inputs:
       tag:
@@ -36,6 +37,11 @@ jobs:
 
       - name: Publish rucomfyui
         run: cargo publish -p rucomfyui
+        env:
+          CARGO_REGISTRY_TOKEN: ${{ secrets.CARGO_REGISTRY_TOKEN }}
+
+      - name: Publish rucomfyui_generate_nodes
+        run: cargo publish -p rucomfyui_generate_nodes
         env:
           CARGO_REGISTRY_TOKEN: ${{ secrets.CARGO_REGISTRY_TOKEN }}
 
