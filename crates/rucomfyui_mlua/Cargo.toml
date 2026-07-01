@@ -20,7 +20,7 @@ thiserror = { workspace = true }
 [features]
 # Forward mlua's mutually-exclusive Lua-version features so consumers can choose.
 # Exactly one should be enabled; `lua54` is the default for out-of-the-box usability.
-default = ["lua54"]
+default = ["lua54", "websocket"]
 lua54 = ["mlua/lua54"]
 luajit = ["mlua/luajit"]
 luajit52 = ["mlua/luajit52"]
@@ -28,6 +28,9 @@ lua53 = ["mlua/lua53"]
 lua52 = ["mlua/lua52"]
 lua51 = ["mlua/lua51"]
 luau = ["mlua/luau"]
+# Enable WebSocket streaming for progress/preview events during workflow
+# execution. Falls back to HTTP polling if the socket is unavailable.
+websocket = ["rucomfyui/websocket"]
 
 [dev-dependencies]
 anyhow = { workspace = true }

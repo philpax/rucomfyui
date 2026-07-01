@@ -19,7 +19,7 @@ futures-timer = { version = "3.0", features = ["wasm-bindgen"] }
 indexmap = { version = "2", features = ["serde"] }
 mlua = { version = "0.11", features = ["vendored", "async", "send", "serialize"] }
 reqwest = { version = "0.13", default-features = false, features = ["json", "multipart"] }
-rucomfyui = { path = "crates/rucomfyui", version = "1.0.0", default-features = false, features = ["typed_nodes"] }
+rucomfyui = { path = "crates/rucomfyui", version = "1.0.0", default-features = false, features = ["typed_nodes", "websocket"] }
 serde = { version = "1.0", features = ["derive"] }
 serde_json = { version = "1.0", features = ["preserve_order"] }
 thiserror = "2.0"

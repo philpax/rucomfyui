@@ -29,11 +29,11 @@ anyhow = { workspace = true }
 tokio = { workspace = true, features = ["full"] }
 
 [features]
-default = ["typed_nodes"]
+default = ["typed_nodes", "websocket"]
 typed_nodes = []
 # Use a WebSocket connection for `Client::execute` to receive live progress
 # events (and previews), falling back to HTTP polling if the socket is
-# unavailable. Opt-in, as the ComfyUI WebSocket API can be brittle.
+# unavailable.
 websocket = ["dep:ewebsock"]
 
 [package.metadata.release]
