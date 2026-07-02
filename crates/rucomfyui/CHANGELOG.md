@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.0]
+
+### Changed
+
+- The `websocket` feature is now enabled by default, providing live progress/preview events via WebSocket with automatic fallback to HTTP polling.
+- `PreviewImageFormat` now derives `Serialize` with `rename_all = "lowercase"`.
+
 ## [1.0.0]
 
 Initial stable release of `rucomfyui`, a Rust client for ComfyUI with an emphasis on type safety and ergonomics.

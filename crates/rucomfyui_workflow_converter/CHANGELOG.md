@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.1.0]
+
+### Changed
+
+- Updated `rucomfyui` dependency to 1.1.0.
+
 ## [1.0.0]
 
 Initial stable release of `rucomfyui_workflow_converter`, which converts ComfyUI API workflows (JSON) to typed Rust or Lua code.

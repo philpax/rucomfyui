@@ -1,5 +1,19 @@
 # Changelog
 
+## [1.1.0]
+
+### Added
+
+- `client:execute` now accepts an optional `opts` table with an `on_event` callback that receives streaming progress events (status, execution_start, executing, progress, executed, preview) during workflow execution. The return value is unchanged. Errors raise a Lua error catchable with `pcall`.
+- Forwarded `websocket` feature (enabled by default) for live streaming events.
+- Expanded documentation: building workflows, client methods reference, return value shape, event field reference, callback contract.
+
+### Changed
+
+- Event-to-Lua conversion uses mlua's serde serializer with `serde_bytes` for binary fields.
+- The example script now uses `on_event`, includes an interactive checkpoint picker, and writes output directly to disk.
+- `futures` and `serde_bytes` normalized to workspace dependencies.
+
 ## [1.0.0]
 
 Initial stable release of `rucomfyui_mlua`, Lua bindings for building and running ComfyUI workflows via `mlua`.

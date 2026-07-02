@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.1.0]
+
+### Changed
+
+- Updated `rucomfyui` dependency to 1.1.0.
+
 ## [1.0.0]
 
 Initial stable release of `rucomfyui_node_graph`, the ComfyUI node graph rebuilt in Rust with `egui` and `egui-snarl`.
