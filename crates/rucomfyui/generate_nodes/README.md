@@ -185,8 +185,8 @@ Then in your `Cargo.toml`:
 
 ```toml
 [build-dependencies]
-rucomfyui_generate_nodes = "1.1.0"
-rucomfyui = "1.1.0"
+rucomfyui_generate_nodes = "1.1.1"
+rucomfyui = "1.1.1"
 tokio = { version = "1", features = ["full"] }
 anyhow = "1"
 ```
