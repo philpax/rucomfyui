@@ -8,12 +8,33 @@
 
 local prompt = prompt or "a cat sleeping on a red chair"
 
+-- List available checkpoints and let the user choose
+local checkpoints = client:get_models("checkpoints")
+if #checkpoints == 0 then
+    error("No checkpoints found on the server")
+end
+
+print("Available checkpoints:")
+for i, name in ipairs(checkpoints) do
+    print(string.format("  %d. %s", i, name))
+end
+
+io.write("\nSelect a checkpoint [1]: ")
+io.stdout:flush()
+local input = io.read()
+local choice = tonumber(input) or 1
+if choice < 1 or choice > #checkpoints then
+    error(string.format("Invalid choice: %d (must be 1-%d)", choice, #checkpoints))
+end
+local checkpoint_name = checkpoints[choice]
+print(string.format("Using: %s\n", checkpoint_name))
+
 -- Get object info and create a graph
 local object_info = client:get_object_info()
 local g = comfy.graph(object_info)
 
 -- Build the workflow
-local c = g:CheckpointLoaderSimple("sd_xl_base_1.0.safetensors")
+local c = g:CheckpointLoaderSimple(checkpoint_name)
 local preview = g:PreviewImage(
     g:VAEDecode {
         vae = c.vae,
@@ -32,8 +53,33 @@ local preview = g:PreviewImage(
     }
 )
 
--- Queue the workflow and wait for results
-local result = client:execute(g)
+local output_path = "output.png"
 
--- Return the images from the preview node
-return result[preview].images
+-- Queue the workflow and wait for results, observing streaming progress.
+local result = client:execute(g, {
+    on_event = function(event)
+        if event.type == "progress" then
+            print(string.format("  progress: %d/%d (node %s)", event.value, event.max, event.node or "?"))
+        elseif event.type == "executing" then
+            print(string.format("  executing: node %s", event.node or "done"))
+        elseif event.type == "preview" then
+            -- Overwrite the output file on each preview update
+            local f = io.open(output_path, "wb")
+            f:write(event.data)
+            f:close()
+            print(string.format("  preview saved: %s", output_path))
+        elseif event.type == "executed" then
+            print(string.format("  executed: node %d (%d images)", event.node, #event.images))
+        end
+    end,
+})
+
+-- Save the final image from the preview node to disk
+for _, image in ipairs(result[preview].images) do
+    local f = io.open(output_path, "wb")
+    f:write(image)
+    f:close()
+    print(string.format("Saved: %s", output_path))
+end
+
+print("Done!")

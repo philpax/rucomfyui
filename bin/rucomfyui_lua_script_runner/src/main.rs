@@ -55,16 +55,7 @@ async fn main() -> anyhow::Result<()> {
         println!("Prompt: {}", prompt);
     }
 
-    let images: Vec<mlua::String> = lua.load(&script).set_name(script_path).eval_async().await?;
-
-    // Save the images
-    for (idx, image) in images.iter().enumerate() {
-        let filename = format!("output_{}.png", idx);
-        std::fs::write(&filename, image.as_bytes())?;
-        println!("Saved: {}", filename);
-    }
-
-    println!("Done! Generated {} image(s)", images.len());
+    lua.load(&script).set_name(script_path).exec_async().await?;
 
     Ok(())
 }

@@ -51,6 +51,39 @@
 //! # }
 //! ```
 //!
+//! # Observing progress with `on_event`
+//!
+//! Pass an `on_event` callback to `client:execute` to observe streaming events:
+//!
+//! ```no_run
+//! use mlua::Lua;
+//! use rucomfyui_mlua::{IntegrationConfig, module};
+//!
+//! # fn main() -> mlua::Result<()> {
+//! let lua = Lua::new();
+//! let config = IntegrationConfig::all();
+//! let comfy = module(&lua, &config)?;
+//! lua.globals().set("comfy", comfy)?;
+//!
+//! lua.load(r#"
+//!     local client = comfy.client("http://127.0.0.1:8188")
+//!     local object_info = client:get_object_info()
+//!     local g = comfy.graph(object_info)
+//!     -- ... build workflow ...
+//!     local result = client:execute(g, {
+//!         on_event = function(event)
+//!             if event.type == "progress" then
+//!                 print(string.format("progress: %d/%d", event.value, event.max))
+//!             elseif event.type == "preview" then
+//!                 -- event.data is raw image bytes, event.format is "jpeg"|"png"|"unknown"
+//!             end
+//!         end,
+//!     })
+//! "#).exec()?;
+//! # Ok(())
+//! # }
+//! ```
+//!
 //! # Configuration
 //!
 //! Use [`IntegrationConfig`] to control which functionality is exposed to Lua:

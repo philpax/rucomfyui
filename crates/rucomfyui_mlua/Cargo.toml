@@ -16,6 +16,9 @@ rucomfyui = { path = "../rucomfyui", version = "1.0.0", default-features = false
 mlua = { workspace = true }
 convert_case = { workspace = true }
 thiserror = { workspace = true }
+futures = { workspace = true }
+serde = { workspace = true }
+serde_bytes = { workspace = true }
 
 [features]
 # Forward mlua's mutually-exclusive Lua-version features so consumers can choose.

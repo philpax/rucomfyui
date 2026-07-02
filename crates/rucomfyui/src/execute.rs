@@ -17,6 +17,7 @@
 use std::{collections::HashMap, pin::Pin, task::Poll};
 
 use futures::{Stream, StreamExt};
+use serde::Serialize;
 
 use crate::{
     Client, ClientError, OwnedBytes, Result, Workflow, history::HistoryNodeOutput,
@@ -33,7 +34,8 @@ pub struct NodeOutput {
 }
 
 /// The encoding of a [`PreviewImage`].
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize)]
+#[serde(rename_all = "lowercase")]
 pub enum PreviewImageFormat {
     /// JPEG.
     Jpeg,

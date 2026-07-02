@@ -12,7 +12,7 @@ keywords = ["comfyui", "stable-diffusion", "client", "api"]
 categories = ["api-bindings", "multimedia::images"]
 
 [dependencies]
-futures = "0.3"
+futures = { workspace = true }
 
 async-stream = { workspace = true }
 ewebsock = { workspace = true, optional = true }
