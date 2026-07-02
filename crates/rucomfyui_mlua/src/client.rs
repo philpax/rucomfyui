@@ -126,11 +126,11 @@ impl LuaUserData for Client {
                                         output,
                                     },
                                 )?;
-                                on_event.call_async::<()>(event_table).await?;
+                                on_event.call::<()>(event_table)?;
                             }
                             other => {
                                 let event_table = event_to_lua_table(&lua, &other)?;
-                                on_event.call_async::<()>(event_table).await?;
+                                on_event.call::<()>(event_table)?;
                             }
                         }
                     }

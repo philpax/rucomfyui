@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.1.1]
+
+### Changed
+
+- Switched `on_event` callback invocations from async to synchronous for better compatibility with Lua environments that don't support async callbacks.
+
 ## [1.1.0]
 
 ### Added
