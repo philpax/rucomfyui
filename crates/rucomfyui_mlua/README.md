@@ -7,7 +7,7 @@ Lua bindings for [`rucomfyui`](https://crates.io/crates/rucomfyui), for building
 Add this to your `Cargo.toml`:
 
 ```toml
-rucomfyui_mlua = "1.0.0"
+rucomfyui_mlua = "1.1.0"
 ```
 
 Install the module into a Lua state, then build and run workflows from Lua:
